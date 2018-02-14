@@ -7,6 +7,7 @@ LIBDIR =
 LIBS =
 OBJS = \
 	console.o \
+	save.o \
 	spacecraft.o \
 	terminal.o \
 	vector.o \
@@ -25,5 +26,6 @@ clean:
 
 console.o:    header.h console.cpp
 main.o:       header.h main.cpp
+save.o:       header.h save.cpp
 spacecraft.o: header.h spacecraft.cpp
 vector.o:     header.h vector.cpp

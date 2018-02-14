@@ -124,7 +124,7 @@ int main(int argc, char** argv) {
       if (key == 'Q') run = false;
       }
     }
-
+  save();
   GotoXY(1,25);
   ShowCursor();
   CloseTerminal();

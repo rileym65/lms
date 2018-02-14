@@ -38,13 +38,15 @@
 #define MOON  4.9075e12
 #define GROUND 1738300
 
+#define LE   "\n"
+
 LINK Int8        cabinPressurized;
 LINK Int32       clockBu;
 LINK Int32       clockDk;
 LINK Int32       clockEv;
 LINK Int32       clockOr;
-LINK Int32       clockUt;
 LINK Int32       clockMi;
+LINK Int32       clockUt;
 LINK Console    *console;
 LINK Int8        docked;
 LINK Int8        dockingRadarOn;
@@ -69,7 +71,9 @@ LINK SpaceCraft *lm;
 LINK Int8        plssOn;
 LINK Int8        spaceSuitOn;
 
+extern void   save();
 extern Double sgn(Double d);
+
 
 #endif
 

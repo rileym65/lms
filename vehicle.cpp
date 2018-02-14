@@ -63,15 +63,6 @@ Double Vehicle::Longitude(Double d) {
   return longitude;
   }
 
-Vector Vehicle::Orientation() {
-  return orientation;
-  }
-
-Vector Vehicle::Orientation(Vector o) {
-  orientation = o;
-  return orientation;
-  }
-
 Vector Vehicle::Position() {
   return position;
   }
@@ -139,5 +130,18 @@ Double Vehicle::VelocityEast() {
 
 Double Vehicle::VelocityNorth() {
   return velocity.Z();
+  }
+
+void Vehicle::Save(FILE* file) {
+  fprintf(file,"  Altitude %f%s",altitude,LE);
+  fprintf(file,"  Latitude %f%s",latitude,LE);
+  fprintf(file,"  Longitude %f%s",longitude,LE);
+  fprintf(file,"  Radius %f%s",radius,LE);
+  fprintf(file,"  FaceFront %f %f %f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
+  fprintf(file,"  FaceUp %f %f %f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
+  fprintf(file,"  FaceLeft %f %f %f%s",faceLeft.X(),faceLeft.Y(),faceLeft.Z(),LE);
+  fprintf(file,"  Position %f %f %f%s",position.X(),position.Y(),position.Z(),LE);
+  fprintf(file,"  Velocity %f %f %f%s",velocity.X(),velocity.Y(),velocity.Z(),LE);
+  fprintf(file,"  Thrust %f %f %f%s",thrust.X(),thrust.Y(),thrust.Z(),LE);
   }
 

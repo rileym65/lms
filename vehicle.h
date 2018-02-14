@@ -1,6 +1,7 @@
 #ifndef _VEHICLE_H
 #define _VEHICLE_H
 
+#include <stdio.h>
 #include "types.h"
 #include "vector.h"
 
@@ -12,7 +13,6 @@ class Vehicle {
     Vector faceUp;
     Double latitude;
     Double longitude;
-    Vector orientation;
     Vector position;
     Double radius;
     Vector thrust;
@@ -32,8 +32,6 @@ class Vehicle {
     virtual Double Latitude(Double d);
     virtual Double Longitude();
     virtual Double Longitude(Double d);
-    virtual Vector Orientation();
-    virtual Vector Orientation(Vector v);
     virtual Vector Position();
     virtual Vector Position(Vector v);
     virtual Double Radius();
@@ -45,6 +43,7 @@ class Vehicle {
     virtual Double VelocityEast();
     virtual Double VelocityNorth();
     virtual void   Cycle();
+    virtual void   Save(FILE* file);
   };
 
 #endif
