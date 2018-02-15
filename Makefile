@@ -8,6 +8,7 @@ LIBS =
 OBJS = \
 	console.o \
 	csm.o \
+	load.o \
 	save.o \
 	spacecraft.o \
 	terminal.o \

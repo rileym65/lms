@@ -44,6 +44,7 @@ class Vehicle {
     virtual Double VelocityNorth();
     virtual void   Cycle();
     virtual void   Save(FILE* file);
+    virtual void   Load(FILE* file);
   };
 
 #endif

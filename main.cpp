@@ -99,8 +99,10 @@ int main(int argc, char** argv) {
   simSpeed = 100000;
   csm = new CSM();
   lm = new SpaceCraft();
-  console = new Console();
   setup();
+  if (load((char*)"lms.sav") == 0) {
+    }
+  console = new Console();
   drawPanel();
   run = true;
   ticks = 10;

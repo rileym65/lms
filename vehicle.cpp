@@ -1,6 +1,7 @@
 #include <math.h>
 #include "header.h"
 #include "vehicle.h"
+#include "terminal.h"
 
 Vehicle::Vehicle() {
   }
@@ -143,5 +144,28 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Position %f %f %f%s",position.X(),position.Y(),position.Z(),LE);
   fprintf(file,"  Velocity %f %f %f%s",velocity.X(),velocity.Y(),velocity.Z(),LE);
   fprintf(file,"  Thrust %f %f %f%s",thrust.X(),thrust.Y(),thrust.Z(),LE);
+  }
+
+void Vehicle::Load(FILE* file) {
+  char* pline;
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"altitude ")) altitude = atof(nw(pline));
+    else if (startsWith(pline,"latitude ")) latitude = atof(nw(pline));
+    else if (startsWith(pline,"longitude ")) longitude = atof(nw(pline));
+    else if (startsWith(pline,"radius ")) radius = atof(nw(pline));
+    else if (startsWith(pline,"facefront ")) faceFront = atov(nw(pline));
+    else if (startsWith(pline,"faceup ")) faceUp = atov(nw(pline));
+    else if (startsWith(pline,"faceleft ")) faceLeft = atov(nw(pline));
+    else if (startsWith(pline,"position ")) position = atov(nw(pline));
+    else if (startsWith(pline,"velocity ")) velocity = atov(nw(pline));
+    else if (startsWith(pline,"thrust ")) thrust = atov(nw(pline));
+    else {
+      printf("Unknown line found in save file: %s\n",pline);
+      ShowCursor();
+      CloseTerminal();
+      exit(1);
+      }
+    }
   }
 

@@ -72,8 +72,13 @@ LINK SpaceCraft *lm;
 LINK Int8        plssOn;
 LINK Int8        spaceSuitOn;
 
+extern Vector atov(char* buffer);
+extern Int8   load(char* filename);
+extern char*  nextLine(FILE* file);
+extern char*  nw(char* buffer);
 extern void   save();
 extern Double sgn(Double d);
+extern Int8   startsWith(char* buffer, const char* check);
 
 
 #endif
