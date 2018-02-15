@@ -40,6 +40,7 @@
 #define GROUND 1738300
 #define SEQ_MOVE_LM      1
 #define SEQ_MOVE_CSM     2
+#define SEQ_UNDOCK       3
 
 #define LE   "\n"
 

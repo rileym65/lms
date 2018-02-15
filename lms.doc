@@ -14,4 +14,7 @@ Available while in CSM:
 -----------------------
 M - Move to and check out LM
 
-
+Available while in LM:
+----------------------
+M - Move to CSM if docked
+U - Undock if docked

@@ -122,6 +122,11 @@ void lmCommands(int key) {
       seqFunction = SEQ_MOVE_CSM;
       }
     }
+  if (key == 'U' && docked) {
+    seqTime = 60;
+    strcpy(message,"    UNDOCK");
+    seqFunction = SEQ_UNDOCK;
+    }
   }
 
 void executeSequencer() {
@@ -132,6 +137,15 @@ void executeSequencer() {
     case SEQ_MOVE_CSM:
          pilotLocation = PILOT_CSM;
          run = false;
+         break;
+    case SEQ_UNDOCK:
+         lm->Position(csm->Position() + Vector(0,0,19));
+         lm->Velocity(csm->Velocity() + Vector(0,0,0.1));
+         lm->Altitude(csm->Altitude());
+         lm->Latitude(csm->Latitude());
+         lm->Longitude(csm->Longitude());
+         lm->Radius(csm->Radius());
+         docked = 0;
          break;
     }
   }
@@ -156,6 +170,7 @@ int main(int argc, char** argv) {
   while (run) {
     if (ticks >= 10) {
       clockUt++;
+      if (!docked) clockMi++;
       cycle();
       ticks = 0;
       if (seqTime > 0) {
