@@ -5,12 +5,13 @@ INCDIR =
 INCS =
 LIBDIR =
 LIBS =
+HEADERS = header.h console.h vehicle.h csm.h lunarmodule.h
 OBJS = \
 	console.o \
 	csm.o \
 	load.o \
 	save.o \
-	spacecraft.o \
+	lunarmodule.o \
 	terminal.o \
 	vector.o \
 	vehicle.o \
@@ -26,8 +27,11 @@ clean:
 	-rm $(PROJECT)
 	-rm *.o
 
-console.o:    header.h console.cpp
-main.o:       header.h main.cpp
-save.o:       header.h save.cpp
-spacecraft.o: header.h spacecraft.cpp
-vector.o:     header.h vector.cpp
+console.o:     $(HEADERS) console.cpp
+csm.o:         $(HEADERS) csm.cpp
+load.o:        $(HEADERS) load.cpp
+main.o:        $(HEADERS) main.cpp
+save.o:        $(HEADERS) save.cpp
+lunarmodule.o: $(HEADERS) lunarmodule.cpp
+terminal.o:    $(HEADERS) terminal.cpp
+vector.o:      $(HEADERS) vector.cpp

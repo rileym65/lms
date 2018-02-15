@@ -1,10 +1,10 @@
-#ifndef _SPACECRAFT_H
-#define _SPACECRAFT_H
+#ifndef _LUNARMODULE_H
+#define _LUNARMODULE_H
 
 #include "vector.h"
 #include "vehicle.h"
 
-class SpaceCraft : public Vehicle {
+class LunarModule : public Vehicle {
   protected:
     
     char   rcsFbMode;
@@ -21,8 +21,8 @@ class SpaceCraft : public Vehicle {
     Double rollRate;
     Double yawRate;
   public:
-    SpaceCraft();
-    ~SpaceCraft();
+    LunarModule();
+    ~LunarModule();
     char   RcsFbMode();
     char   RcsFbMode(char c);
     char   RcsLrMode();

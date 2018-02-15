@@ -14,7 +14,7 @@
 #include <math.h>
 #include "types.h"
 #include "vector.h"
-#include "spacecraft.h"
+#include "lunarmodule.h"
 #include "csm.h"
 #include "console.h"
 
@@ -41,36 +41,36 @@
 
 #define LE   "\n"
 
-LINK Int8        cabinPressurized;
-LINK Int32       clockBu;
-LINK Int32       clockDk;
-LINK Int32       clockEv;
-LINK Int32       clockOr;
-LINK Int32       clockMi;
-LINK Int32       clockUt;
-LINK Console    *console;
-LINK Int8        docked;
-LINK Int8        dockingRadarOn;
-LINK Int8        dsnOn;
-LINK Double      efficiency;
-LINK Double      injury;
-LINK Int8        insMode;
-LINK Int8        landingRadarOn;
-LINK Int16       lmRock;
-LINK Double      lrvBattery;
-LINK Int8        lrvRock;
-LINK Double      metabolicRate;
-LINK char        pilotLocation;
-LINK Double      plssOxygen;
-LINK Double      plssBattery;
-LINK Int8        plssPacks;
-LINK Int8        sampleBoxes;
-LINK Int32       simSpeed;
-LINK Int8        ticks;
-LINK CSM        *csm;
-LINK SpaceCraft *lm;
-LINK Int8        plssOn;
-LINK Int8        spaceSuitOn;
+LINK Int8         cabinPressurized;
+LINK Int32        clockBu;
+LINK Int32        clockDk;
+LINK Int32        clockEv;
+LINK Int32        clockOr;
+LINK Int32        clockMi;
+LINK Int32        clockUt;
+LINK Console     *console;
+LINK Int8         docked;
+LINK Int8         dockingRadarOn;
+LINK Int8         dsnOn;
+LINK Double       efficiency;
+LINK Double       injury;
+LINK Int8         insMode;
+LINK Int8         landingRadarOn;
+LINK Int16        lmRock;
+LINK Double       lrvBattery;
+LINK Int8         lrvRock;
+LINK Double       metabolicRate;
+LINK char         pilotLocation;
+LINK Double       plssOxygen;
+LINK Double       plssBattery;
+LINK Int8         plssPacks;
+LINK Int8         sampleBoxes;
+LINK Int32        simSpeed;
+LINK Int8         ticks;
+LINK CSM         *csm;
+LINK LunarModule *lm;
+LINK Int8         plssOn;
+LINK Int8         spaceSuitOn;
 
 extern Vector atov(char* buffer);
 extern Int8   load(char* filename);

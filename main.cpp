@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
   HideCursor();
   simSpeed = 100000;
   csm = new CSM();
-  lm = new SpaceCraft();
+  lm = new LunarModule();
   setup();
   if (load((char*)"lms.sav") == 0) {
     }
