@@ -133,6 +133,10 @@ Double Vehicle::VelocityNorth() {
   return velocity.Z();
   }
 
+Int8 Vehicle::SubLoad(char* line) {
+  return 0;
+  }
+
 void Vehicle::Save(FILE* file) {
   fprintf(file,"  Altitude %f%s",altitude,LE);
   fprintf(file,"  Latitude %f%s",latitude,LE);
@@ -160,7 +164,7 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"position ")) position = atov(nw(pline));
     else if (startsWith(pline,"velocity ")) velocity = atov(nw(pline));
     else if (startsWith(pline,"thrust ")) thrust = atov(nw(pline));
-    else {
+    else if (SubLoad(pline) == 0) {
       printf("Unknown line found in save file: %s\n",pline);
       ShowCursor();
       CloseTerminal();

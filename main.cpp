@@ -74,7 +74,17 @@ void setup() {
   }
 
 void cycle() {
+  Vector v;
   csm->Cycle();
+  if (docked) {
+    lm->Position(csm->Position() + Vector(0,0,19));
+    lm->Velocity(csm->Velocity());
+    lm->Altitude(csm->Altitude());
+    lm->Latitude(csm->Latitude());
+    lm->Longitude(csm->Longitude());
+    lm->Radius(csm->Radius());
+    }
+  else lm->Cycle();
   console->UpdateConsole();
   }
 

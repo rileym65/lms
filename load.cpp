@@ -28,7 +28,6 @@ Int8 startsWith(char* buffer, const char* check) {
 char* nw(char* buffer) {
   while (buffer[0] > 0 && buffer[0] != ' ') buffer++;
   while (buffer[0] > 0 && buffer[0] == ' ') buffer++;
-printf("nw->%s\n",buffer);
   return buffer;
   }
 
@@ -39,7 +38,6 @@ Vector atov(char* buffer) {
   ret.Y(atof(buffer));
   buffer = nw(buffer);
   ret.Z(atof(buffer));
-printf("-->%f %f %f\n",ret.X(),ret.Y(),ret.Z());
   return ret;
   }
 
@@ -88,9 +86,8 @@ Int8 load(char* filename) {
   if (file == NULL) return 0;
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"simulation {")) loadSimulation(file);
-    else if (startsWith(pline,"csm {")) {
-      csm->Load(file);
-      }
+    else if (startsWith(pline,"csm {")) csm->Load(file);
+    else if (startsWith(pline,"lunarmodule {")) lm->Load(file);
     else {
       printf("Unknown line found in save file: %s\n",pline);
       ShowCursor();

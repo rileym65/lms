@@ -1,3 +1,4 @@
+#include "header.h"
 #include "lunarmodule.h"
 
 LunarModule::LunarModule() {
@@ -130,5 +131,41 @@ Double LunarModule::YawRate(Double d) {
   return yawRate;
   }
 
+void LunarModule::Save(FILE* file) {
+  fprintf(file,"LunarModule {%s",LE);
+  Vehicle::Save(file);
+  fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
+  fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
+  fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
+  fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
+  fprintf(file,"  Throttle %d%s",throttle,LE);
+  fprintf(file,"  AscentFuel %f%s",ascentFuel,LE);
+  fprintf(file,"  Battery %f%s",battery,LE);
+  fprintf(file,"  DescentFuel %f%s",descentFuel,LE);
+  fprintf(file,"  Oxygen %f%s",oxygen,LE);
+  fprintf(file,"  PitchRate %f%s",pitchRate,LE);
+  fprintf(file,"  RcsFuel %f%s",rcsFuel,LE);
+  fprintf(file,"  RollRate %f%s",rollRate,LE);
+  fprintf(file,"  YawRate %f%s",yawRate,LE);
+  fprintf(file,"  }%s",LE);
+  }
+
+Int8 LunarModule::SubLoad(char* pline) {
+  if (startsWith(pline,"rcsfbmode ")) rcsFbMode = atoi(nw(pline));
+  else if (startsWith(pline,"rcslrmode ")) rcsLrMode = atoi(nw(pline));
+  else if (startsWith(pline,"rcsudmode ")) rcsUdMode = atoi(nw(pline));
+  else if (startsWith(pline,"rcsthrottle ")) rcsThrottle = atoi(nw(pline));
+  else if (startsWith(pline,"throttle ")) throttle = atoi(nw(pline));
+  else if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
+  else if (startsWith(pline,"battery ")) battery = atof(nw(pline));
+  else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
+  else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
+  else if (startsWith(pline,"pitchrate ")) pitchRate = atof(nw(pline));
+  else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
+  else if (startsWith(pline,"rollrate ")) rollRate = atof(nw(pline));
+  else if (startsWith(pline,"yawrate ")) yawRate = atof(nw(pline));
+  else return 0;
+  return -1;
+  }
 
 

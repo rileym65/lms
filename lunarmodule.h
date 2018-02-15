@@ -49,6 +49,8 @@ class LunarModule : public Vehicle {
     Double RollRate(Double d);
     Double YawRate();
     Double YawRate(Double d);
+    virtual void Save(FILE* file);
+    virtual Int8 SubLoad(char* line);
   };
 
 #endif

@@ -32,6 +32,7 @@ void save() {
   fprintf(file,"  SpaceSuitOn %d%s",spaceSuitOn,LE);
   fprintf(file,"  }%s",LE);
   csm->Save(file);
+  lm->Save(file);
   fclose(file);
   }
 
