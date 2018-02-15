@@ -26,6 +26,7 @@ Console::Console() {
   lastLrvBattery = 0;
   lastLrvRock = -1;
   lastLs = -999;
+  strcpy(lastMessage,"");
   lastMetabolicRate = 0;
   lastPilotLocation = ' ';
   lastPitchRate = 99;
@@ -39,6 +40,7 @@ Console::Console() {
   lastRcsFuel = 0;
   lastRcsThrottle = 0;
   lastRollRate = 99;
+  lastSeqTime = 0;
   lastThrottle = -99;
   lastUr = -999;
   lastSampleBoxes = 0;
@@ -157,7 +159,7 @@ void Console::displayRightAxis(Vehicle *vehicle) {
   GotoXY(rightUpX, rightUpY); printf(" ");
   /* ***** Face ***** */
   rightFaceX = 67 + ((vehicle->FaceFront().Dot(Vector(0,0,1))) * 10 + 0.5);
-  rightFaceY = 10 - ((vehicle->FaceFront().Dot(pos)) * 5 + 0.5);
+  rightFaceY = 10 - ((vehicle->FaceFront().Dot(vel)) * 5 + 0.5);
   df = vehicle->FaceFront().Dot(pos);
   /* ***** Left ***** */
   rightLeftX = 67 + ((vehicle->FaceLeft().Dot(Vector(0,0,1))) * 10 + 0.5);
@@ -287,8 +289,12 @@ void Console::displayIns(Vehicle* vehicle) {
 void Console::UpdateConsole() {
   Int8 i;
   if (pilotLocation != lastPilotLocation) {
+    GotoXY(32,2); printf(" ");
+    GotoXY(37,2); printf(" ");
+    GotoXY(42,2); printf(" ");
+    GotoXY(47,2); printf(" ");
     switch (pilotLocation) {
-      case PILOT_LOL:
+      case PILOT_CSM:
            GotoXY(32,2); printf("*");
            break;
       case PILOT_LM:
@@ -506,6 +512,21 @@ void Console::UpdateConsole() {
     lastPlssPacks = plssPacks;
     }
 
+  if (strcmp(message,lastMessage) != 0) {
+    GotoXY(37,23); printf("%s",message);
+    strcpy(lastMessage,message);
+    }
+  if (seqTime != lastSeqTime) {
+    GotoXY(48,23);
+    if (seqTime == 0) {
+      printf("    ");
+      }
+    else {
+      printf("%4d",seqTime);
+      }
+    lastSeqTime = seqTime;
+    }
+
   /* *************** */
   /* ***** LRV ***** */
   /* *************** */
@@ -541,7 +562,8 @@ void Console::UpdateConsole() {
     lastInsMode = insMode;
     }
 
-  if (pilotLocation == PILOT_LOL) displayIns(csm);
+  if (pilotLocation == PILOT_CSM) displayIns(csm);
+  if (pilotLocation == PILOT_LM)  displayIns(lm);
   fflush(stdout);
   }
 

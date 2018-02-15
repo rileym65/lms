@@ -27,12 +27,12 @@ void drawPanel() {
   printf("|l/s:   |YAW:  | DES:  |ACC:       :       :       | U/D| CB|IN:  |BU:         |\n");
   printf("|--------------| THR:  |MOM:       :       :       | RAD| --|--:  |EV:         |\n");
   printf("| ABO| KIL| PIL| OXY:  |PER:       +---------------+ LOL| DK|--:  |DK:         |\n");
-  printf("| JET| LIF| ---| BAT:  |APO:       |----------:    | DSN| TD|--:  |OR:         |\n");
+  printf("| JET| LIF| ---| BAT:  |APO:       |          :    | DSN| TD|--:  |OR:         |\n");
   printf("+------------------------------------------------------------------------------+\n");
   }
 
 void setup() {
-  pilotLocation = PILOT_LOL;
+  pilotLocation = PILOT_CSM;
   csm->Position(Vector(99810+1738300,0,100));
   csm->Velocity(Vector(0,-1634,0.0));
   csm->FaceFront(Vector(0,0,1));
@@ -47,6 +47,9 @@ void setup() {
   lm->RcsUdMode(' ');
   lm->RcsFuel(FUEL_RCS);
   lm->RcsThrottle(1);
+  lm->FaceFront(Vector(1,0,0));
+  lm->FaceLeft(Vector(0,-1,0));
+  lm->FaceUp(Vector(0,0,-1));
   cabinPressurized = -1;
   clockBu = 0;
   clockDk = 0;
@@ -65,11 +68,13 @@ void setup() {
   lrvBattery = LRV_BATTERY;
   lrvRock = 0;
   metabolicRate = 30.0;
+  strcpy(message,"----------");
   plssOn = 0;
   plssOxygen = PLSS_OXYGEN;
   plssBattery = PLSS_BATTERY;
   plssPacks = 4;
   sampleBoxes = 8;
+  seqTime = 0;
   spaceSuitOn = 0;
   }
 
@@ -99,6 +104,22 @@ printf("%12.4f %12.4f %12.4f\n",v1.X(),v1.Y(),v1.Z());
   printf("angle: %12.4f\n",acos(v1.Dot(v2))*180/M_PI);
   }
 
+void csmCommands(int key) {
+  if (key == 'M') {
+    seqTime = 2400;
+    strcpy(message,"  MOVE->LM");
+    seqFunction = SEQ_MOVE_LM;
+    }
+  }
+
+void executeSequencer() {
+  switch (seqFunction) {
+    case SEQ_MOVE_LM:
+         pilotLocation = PILOT_LM;
+         break;
+    }
+  }
+
 int main(int argc, char** argv) {
   int key;
   Boolean run;
@@ -122,18 +143,29 @@ int main(int argc, char** argv) {
       clockUt++;
       cycle();
       ticks = 0;
+      if (seqTime > 0) {
+        seqTime--;
+        if (seqTime == 0) {
+          strcpy(message,"----------");
+          simSpeed = 100000;
+          executeSequencer();
+          }
+        }
       }
     else ticks++;
     usleep(simSpeed);
     if (KeyPressed()) {
       key = Inkey();
-      if (key == '1') insMode = INS_MODE_POS_ABS;
-      if (key == '4') insMode = INS_MODE_ORB_ABS;
       if (key == '!') simSpeed = 100000;
       if (key == '@') simSpeed = 10000;
       if (key == '#') simSpeed = 1000;
       if (key == '$') simSpeed = 100;
-      if (key == 'Q') run = false;
+      if (seqTime == 0) {
+        if (key == '1') insMode = INS_MODE_POS_ABS;
+        if (key == '4') insMode = INS_MODE_ORB_ABS;
+        if (key == 'Q') run = false;
+        if (pilotLocation == PILOT_CSM) csmCommands(key);
+        }
       }
     }
   save();

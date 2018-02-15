@@ -18,7 +18,7 @@
 #include "csm.h"
 #include "console.h"
 
-#define PILOT_LOL 'L'
+#define PILOT_CSM 'c'
 #define PILOT_LRV 'v'
 #define PILOT_LM  'm'
 #define PILOT_EVA 'e'
@@ -38,6 +38,7 @@
 #define INS_MODE_ORB_REL 6
 #define MOON  4.9075e12
 #define GROUND 1738300
+#define SEQ_MOVE_LM      1
 
 #define LE   "\n"
 
@@ -59,12 +60,15 @@ LINK Int8         landingRadarOn;
 LINK Int16        lmRock;
 LINK Double       lrvBattery;
 LINK Int8         lrvRock;
+LINK char         message[32];
 LINK Double       metabolicRate;
 LINK char         pilotLocation;
 LINK Double       plssOxygen;
 LINK Double       plssBattery;
 LINK Int8         plssPacks;
 LINK Int8         sampleBoxes;
+LINK Int32        seqTime;
+LINK Int8         seqFunction;
 LINK Int32        simSpeed;
 LINK Int8         ticks;
 LINK CSM         *csm;

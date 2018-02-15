@@ -29,6 +29,7 @@ class Console {
     Int8  lastLrvBattery;
     Int8  lastLrvRock;
     Int16 lastLs;
+    char  lastMessage[32];
     Int8  lastMetabolicRate;
     char  lastPilotLocation;
     Int8  lastPitchRate;
@@ -43,6 +44,7 @@ class Console {
     Int8  lastRcsThrottle;
     Int8  lastRollRate;
     Int8  lastSampleBoxes;
+    Int32 lastSeqTime;
     Int8  lastSpaceSuitOn;
     Int8  lastThrottle;
     Int16 lastUr;
