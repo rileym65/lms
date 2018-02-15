@@ -7,6 +7,7 @@ LIBDIR =
 LIBS =
 OBJS = \
 	console.o \
+	csm.o \
 	save.o \
 	spacecraft.o \
 	terminal.o \

@@ -31,9 +31,7 @@ void save() {
   fprintf(file,"  SampleBoxes %d%s",sampleBoxes,LE);
   fprintf(file,"  SpaceSuitOn %d%s",spaceSuitOn,LE);
   fprintf(file,"  }%s",LE);
-  fprintf(file,"CSM {%s",LE);
   csm->Save(file);
-  fprintf(file,"  }%s",LE);
   fclose(file);
   }
 

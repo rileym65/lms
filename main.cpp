@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
   OpenTerminal();
   HideCursor();
   simSpeed = 100000;
-  csm = new Vehicle();
+  csm = new CSM();
   lm = new SpaceCraft();
   console = new Console();
   setup();

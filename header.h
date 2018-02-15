@@ -15,6 +15,7 @@
 #include "types.h"
 #include "vector.h"
 #include "spacecraft.h"
+#include "csm.h"
 #include "console.h"
 
 #define PILOT_LOL 'L'
@@ -66,7 +67,7 @@ LINK Int8        plssPacks;
 LINK Int8        sampleBoxes;
 LINK Int32       simSpeed;
 LINK Int8        ticks;
-LINK Vehicle    *csm;
+LINK CSM        *csm;
 LINK SpaceCraft *lm;
 LINK Int8        plssOn;
 LINK Int8        spaceSuitOn;
