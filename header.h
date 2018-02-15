@@ -39,6 +39,7 @@
 #define MOON  4.9075e12
 #define GROUND 1738300
 #define SEQ_MOVE_LM      1
+#define SEQ_MOVE_CSM     2
 
 #define LE   "\n"
 

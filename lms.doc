@@ -1,0 +1,17 @@
+Keys:
+
+Available in all modes:
+-----------------------
+! - Normal time
+@ - 10x time
+# - 100x time
+$ - 1000x time
+Q - Quit.  Current simulation will be saved in lms.sav
+1 - Select POS^ABS mode for the INS
+4 - Select ORB^ABS mode for the INS
+
+Available while in CSM:
+-----------------------
+M - Move to and check out LM
+
+

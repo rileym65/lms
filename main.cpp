@@ -3,6 +3,8 @@
 #include "header.h"
 #include "terminal.h"
 
+Boolean run;
+
 void drawPanel() {
   ClrScr();
   printf("+-------------------------+--------------------------+-------------------------+\n");
@@ -112,17 +114,30 @@ void csmCommands(int key) {
     }
   }
 
+void lmCommands(int key) {
+  if (key == 'M') {
+    if (docked) {
+      seqTime = 900;
+      strcpy(message," MOVE->CSM");
+      seqFunction = SEQ_MOVE_CSM;
+      }
+    }
+  }
+
 void executeSequencer() {
   switch (seqFunction) {
     case SEQ_MOVE_LM:
          pilotLocation = PILOT_LM;
+         break;
+    case SEQ_MOVE_CSM:
+         pilotLocation = PILOT_CSM;
+         run = false;
          break;
     }
   }
 
 int main(int argc, char** argv) {
   int key;
-  Boolean run;
 //test();
 //exit(1);
   OpenTerminal();
@@ -149,6 +164,7 @@ int main(int argc, char** argv) {
           strcpy(message,"----------");
           simSpeed = 100000;
           executeSequencer();
+          console->UpdateConsole();
           }
         }
       }
@@ -165,6 +181,7 @@ int main(int argc, char** argv) {
         if (key == '4') insMode = INS_MODE_ORB_ABS;
         if (key == 'Q') run = false;
         if (pilotLocation == PILOT_CSM) csmCommands(key);
+        if (pilotLocation == PILOT_LM)  lmCommands(key);
         }
       }
     }
