@@ -4,6 +4,7 @@
 #include "terminal.h"
 
 Vehicle::Vehicle() {
+  velocityAltitude = 0;
   }
 
 Vehicle::~Vehicle() {
@@ -79,6 +80,7 @@ Double Vehicle::Radius() {
   }
 
 Double Vehicle::Radius(Double d) {
+  velocityAltitude = d - radius;;
   radius = d;
   altitude = radius - 1738300;
   return radius;
@@ -120,6 +122,10 @@ void Vehicle::Cycle() {
   hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
   latitude = position.Z() / hyp;
   latitude = asin(latitude) * 180 / M_PI;
+  }
+
+Double Vehicle::VelocityAltitude() {
+  return velocityAltitude;
   }
 
 Double Vehicle::VelocityEast() {

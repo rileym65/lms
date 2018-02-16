@@ -1,14 +1,15 @@
 PROJECT = lms
 CC = g++
-DEFS =
+DEFS = -Wall
 INCDIR =
 INCS =
 LIBDIR =
 LIBS =
-HEADERS = header.h console.h vehicle.h csm.h lunarmodule.h
+HEADERS = header.h console.h vehicle.h csm.h lunarmodule.h ins.h
 OBJS = \
 	console.o \
 	csm.o \
+	ins.o \
 	load.o \
 	save.o \
 	lunarmodule.o \
@@ -23,12 +24,16 @@ $(PROJECT): $(OBJS)
 .cpp.o:
 	$(CC) $(DEFS) $(INCDIR) $(INCS) -c $<
 
+rmsave:
+	-rm *.sav
+
 clean:
 	-rm $(PROJECT)
 	-rm *.o
 
 console.o:     $(HEADERS) console.cpp
 csm.o:         $(HEADERS) csm.cpp
+ins.o:         $(HEADERS) ins.cpp
 load.o:        $(HEADERS) load.cpp
 main.o:        $(HEADERS) main.cpp
 save.o:        $(HEADERS) save.cpp

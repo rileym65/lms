@@ -16,6 +16,7 @@
 #include "vector.h"
 #include "lunarmodule.h"
 #include "csm.h"
+#include "ins.h"
 #include "console.h"
 
 #define PILOT_CSM 'c'
@@ -77,6 +78,7 @@ LINK CSM         *csm;
 LINK LunarModule *lm;
 LINK Int8         plssOn;
 LINK Int8         spaceSuitOn;
+LINK INS         *ins;
 
 extern Vector atov(char* buffer);
 extern Int8   load(char* filename);

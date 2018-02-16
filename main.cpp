@@ -92,6 +92,7 @@ void cycle() {
     lm->Radius(csm->Radius());
     }
   else lm->Cycle();
+  ins->Cycle();
   console->UpdateConsole();
   }
 
@@ -127,15 +128,22 @@ void lmCommands(int key) {
     strcpy(message,"    UNDOCK");
     seqFunction = SEQ_UNDOCK;
     }
+  if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
+  if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
+  if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
   }
 
 void executeSequencer() {
   switch (seqFunction) {
     case SEQ_MOVE_LM:
          pilotLocation = PILOT_LM;
+         ins->Spacecraft(lm);
+         ins->Target(csm);
          break;
     case SEQ_MOVE_CSM:
          pilotLocation = PILOT_CSM;
+         ins->Spacecraft(csm);
+         ins->Target(lm);
          run = false;
          break;
     case SEQ_UNDOCK:
@@ -159,8 +167,17 @@ int main(int argc, char** argv) {
   simSpeed = 100000;
   csm = new CSM();
   lm = new LunarModule();
+  ins = new INS();
   setup();
   if (load((char*)"lms.sav") == 0) {
+    }
+  if (pilotLocation == PILOT_CSM) {
+    ins->Spacecraft(csm);
+    ins->Target(lm);
+    }
+  if (pilotLocation == PILOT_LM) {
+    ins->Spacecraft(lm);
+    ins->Target(csm);
     }
   console = new Console();
   drawPanel();
@@ -170,7 +187,13 @@ int main(int argc, char** argv) {
   while (run) {
     if (ticks >= 10) {
       clockUt++;
-      if (!docked) clockMi++;
+      if (!docked) {
+        clockMi++;
+        lm->Battery(lm->Battery() - 1);
+        if (pilotLocation == PILOT_LM) {
+          lm->Oxygen(lm->Oxygen() - 1);
+          }
+        }
       cycle();
       ticks = 0;
       if (seqTime > 0) {
@@ -192,8 +215,9 @@ int main(int argc, char** argv) {
       if (key == '#') simSpeed = 1000;
       if (key == '$') simSpeed = 100;
       if (seqTime == 0) {
-        if (key == '1') insMode = INS_MODE_POS_ABS;
-        if (key == '4') insMode = INS_MODE_ORB_ABS;
+        if (key == '1') { insMode = INS_MODE_POS_ABS; ins->Mode(insMode); }
+        if (key == '3') { insMode = INS_MODE_POS_REL; ins->Mode(insMode); }
+        if (key == '4') { insMode = INS_MODE_ORB_ABS; ins->Mode(insMode); }
         if (key == 'Q') run = false;
         if (pilotLocation == PILOT_CSM) csmCommands(key);
         if (pilotLocation == PILOT_LM)  lmCommands(key);

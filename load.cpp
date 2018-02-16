@@ -97,6 +97,7 @@ Int8 load(char* filename) {
     }
 
   fclose(file);
+  ins->Mode(insMode);
   return -1;
   }
 

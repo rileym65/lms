@@ -86,11 +86,9 @@ void Console::displayClock(Int32 x, Int32 y, Int32 clock) {
 void Console::displayLeftAxis(Vehicle *vehicle) {
   Int8   i;
   Boolean flag;
-  Double tmp;
   Double du,dl,df;
   Vector pos;
   Vector vel;
-  Int32  x,y;
   Int32  dx[3], dy[3];
   Double d[3];
   char   c[3];
@@ -141,11 +139,9 @@ void Console::displayLeftAxis(Vehicle *vehicle) {
 void Console::displayRightAxis(Vehicle *vehicle) {
   Int8   i;
   Boolean flag;
-  Double tmp;
   Double du,dl,df;
   Vector pos;
   Vector vel;
-  Int32  x,y;
   Int32  dx[3], dy[3];
   Double d[3];
   char   c[3];
@@ -193,96 +189,41 @@ void Console::displayRightAxis(Vehicle *vehicle) {
     }
   }
 
-void Console::displayIns(Vehicle* vehicle) {
-  Double altVelocity;
-  Vector pos;
-  Vector vel;
-  Vector L;
-  Double e;
-  Double E;
-  Double s;
-  Double al;
-  Double pl;
-  Double T;
-  Double tmp;
-  Double hyp;
+void Console::displayIns(Vehicle* vehicle,Vehicle* target) {
   Int32  i;
   displayLeftAxis(vehicle);
   displayRightAxis(vehicle);
-  pos = vehicle->Position();
-  vel = vehicle->Velocity();
-  tmp = pos.Norm().Dot(vehicle->FaceUp());
-  tmp = acos(tmp) * 180 / M_PI;
-  i = (int)(tmp+.4);
+  i = (int)(ins->AttUr()+.4);
   if (lastUr != i) {
     GotoXY(6, 18); printf("%3d",i);
     lastUr = i;
     }
-  tmp = pos.Norm().Dot(vehicle->FaceFront());
-  tmp = acos(tmp) * 180 / M_PI;
-  i = (int)(tmp+.4);
+  i = (int)(ins->AttFr()+.4);
   if (lastFr != i) {
     GotoXY(6, 19); printf("%3d",i);
     lastFr = i;
     }
-  tmp = vehicle->FaceLeft().Dot(Vector(0,0,-1));
-  tmp = acos(tmp) * 180 / M_PI;
-  i = (int)(tmp+.4);
+  i = (int)(ins->AttLs()+.4);
   if (lastLs != i) {
     GotoXY(6, 20); printf("%3d",i);
     lastLs = i;
     }
-  switch (insMode) {
-    case INS_MODE_POS_ABS:
-         GotoXY(29,18); printf("%7d",(int)vehicle->Altitude());
-         GotoXY(37,18); printf("%7.2f",vehicle->Longitude());
-         GotoXY(46,18); printf("%6.2f",vehicle->Latitude());
-         GotoXY(37,19); printf("%7.1f",vehicle->VelocityEast());
-         GotoXY(45,19); printf("%7.1f",vehicle->VelocityNorth());
-         if (priorAltitude < 0) priorAltitude = vehicle->Radius();
-         altVelocity = vehicle->Radius() - priorAltitude;
-         if (altVelocity > 9999) altVelocity = 9999;
-         if (altVelocity < -9999) altVelocity = -9999;
-         GotoXY(29, 19); printf("%7.1f",altVelocity);
-         priorAltitude = vehicle->Radius();
-         if (altVelocity != priorVelAltitude) {
-           GotoXY(29,20); printf("%7.1f",altVelocity-priorVelAltitude);
-           priorVelAltitude = altVelocity;
-           }
-         if (vehicle->VelocityEast() != priorVelEast) {
-           GotoXY(37,20); printf("%7.1f",vehicle->VelocityEast() - priorVelEast);
-           priorVelEast = vehicle->VelocityEast();
-           }
-         if (vehicle->VelocityNorth() != priorVelNorth) {
-           GotoXY(45,20); printf("%7.1f",vehicle->VelocityNorth() - priorVelNorth);
-           priorVelNorth = vehicle->VelocityNorth();
-           }
-         break;
-    case INS_MODE_ORB_ABS:
-         L = vel.Cross(pos);
-         E = vel.Length() * vel.Length() / 2 - MOON / pos.Length();
-         s = -MOON / (2 * E);
-         e = sqrt(1+2*E*(L.Length()*L.Length())/(MOON*MOON));
-         al = s * (1 + e);
-         pl = s * (1 - e);
-         T = sqrt(4*(M_PI*M_PI)*(s*s*s)/MOON);
-         GotoXY(29,22); printf("%7.1f",(pl-GROUND)/1000);
-         GotoXY(29,23); printf("%7.1f",(al-GROUND)/1000);
-         clockOr = (int)T;
-         displayClock(71, 23, clockOr);
-         hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
-         tmp = L.Y() / hyp;
-         tmp = asin(tmp) * 180 / M_PI;
-//         if (L.X() < 0 && L.Y() >= 0) tmp = -180 - tmp;
-//         if (L.X() >=0 && L.Y() >= 0) tmp = 180 - tmp;
-         if (L.X() < 0 && L.Y() < 0) tmp = -180 - tmp;
-         if (L.X() < 0 && L.Y() >= 0) tmp = 180 - tmp;
-         GotoXY(37,21); printf("%7.2f",tmp);
-         hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
-         tmp = L.Z() / hyp;
-         tmp = asin(tmp) * 180 / M_PI;
-         GotoXY(45,21); printf("%7.2f",tmp);
-         break;
+  if (ins->Mode() < 4) {
+    GotoXY(29,18); printf("%7s",ins->DisplayPosAltitude());
+    GotoXY(37,18); printf("%7s",ins->DisplayPosEast());
+    GotoXY(45,18); printf("%7s",ins->DisplayPosNorth());
+    GotoXY(29,19); printf("%7s",ins->DisplayVelAltitude());
+    GotoXY(37,19); printf("%7s",ins->DisplayVelEast());
+    GotoXY(45,19); printf("%7s",ins->DisplayVelNorth());
+    GotoXY(29,20); printf("%7s",ins->DisplayAccAltitude());
+    GotoXY(37,20); printf("%7s",ins->DisplayAccEast());
+    GotoXY(45,20); printf("%7s",ins->DisplayAccNorth());
+    }
+  else {
+    GotoXY(29,22); printf("%7s",ins->DisplayPerilune());
+    GotoXY(29,23); printf("%7s",ins->DisplayApolune());
+    GotoXY(37,21); printf("%7s",ins->DisplayMomEast());
+    GotoXY(45,21); printf("%7s",ins->DisplayMomNorth());
     }
   }
 
@@ -557,13 +498,14 @@ void Console::UpdateConsole() {
     GotoXY(29, 21);
     switch (insMode) {
       case INS_MODE_POS_ABS: printf("POS^ABS"); break;
+      case INS_MODE_POS_REL: printf("POS^REL"); break;
       case INS_MODE_ORB_ABS: printf("ORBvABS"); break;
       }
     lastInsMode = insMode;
     }
 
-  if (pilotLocation == PILOT_CSM) displayIns(csm);
-  if (pilotLocation == PILOT_LM)  displayIns(lm);
+  if (pilotLocation == PILOT_CSM) displayIns(csm, lm);
+  if (pilotLocation == PILOT_LM)  displayIns(lm, csm);
   fflush(stdout);
   }
 

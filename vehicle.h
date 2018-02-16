@@ -17,6 +17,7 @@ class Vehicle {
     Double radius;
     Vector thrust;
     Vector velocity;
+    Double velocityAltitude;
   public:
     Vehicle();
     ~Vehicle();
@@ -40,6 +41,7 @@ class Vehicle {
     virtual Vector Thrust(Vector v);
     virtual Vector Velocity();
     virtual Vector Velocity(Vector v);
+    virtual Double VelocityAltitude();
     virtual Double VelocityEast();
     virtual Double VelocityNorth();
     virtual void   Cycle();

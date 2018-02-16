@@ -53,7 +53,7 @@ class Console {
     Int16 leftUpX, leftUpY;
     Int8  lastYawRate;
     void  displayClock(Int32 x, Int32 y, Int32 clock);
-    void  displayIns(Vehicle *vehicle);
+    void  displayIns(Vehicle *vehicle,Vehicle* target);
     void  displayLeftAxis(Vehicle *vehicle);
     void  displayRightAxis(Vehicle * vehicle);
     Double priorAltitude;
