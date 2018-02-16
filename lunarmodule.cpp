@@ -216,9 +216,7 @@ void LunarModule::Cycle() {
         }
       }
     }
-GotoXY(1,25); printf("%f %f %f\n",thrust.X(),thrust.Y(),thrust.Z());
   Vehicle::Cycle();
-GotoXY(1,26); printf("%f %f %f\n",velocity.X(),velocity.Y(),velocity.Z());
   }
 
 void LunarModule::Save(FILE* file) {

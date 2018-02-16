@@ -45,6 +45,7 @@ class INS {
     void     populatePosAbs();
     void     populatePosRel();
     void     populateOrbAbs();
+    void     printVelocity(Double v,char* buffer);
   public:
     INS();
     ~INS();

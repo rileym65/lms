@@ -28,7 +28,7 @@ void drawPanel() {
   printf("|f/r:   |ROL:  | RCS:  |VEL:       :       :       | L/R| PL|EF:  |MI:         |\n");
   printf("|l/s:   |YAW:  | DES:  |ACC:       :       :       | U/D| CB|IN:  |BU:         |\n");
   printf("|--------------| THR:  |MOM:       :       :       | RAD| --|--:  |EV:         |\n");
-  printf("| ABO| KIL| PIL| OXY:  |PER:       +---------------+ LOL| DK|--:  |DK:         |\n");
+  printf("| ABO| KIL| PIL| OXY:  |PER:       +---------------+ DOK| DK|--:  |DK:         |\n");
   printf("| JET| LIF| ---| BAT:  |APO:       |          :    | DSN| TD|--:  |OR:         |\n");
   printf("+------------------------------------------------------------------------------+\n");
   }
