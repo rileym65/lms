@@ -6,6 +6,7 @@
 Vehicle::Vehicle() {
   velocityAltitude = 0;
   thrust = Vector(0,0,0);
+  orientation = Matrix::Identity();
   }
 
 Vehicle::~Vehicle() {
@@ -27,6 +28,7 @@ Vector Vehicle::FaceFront() {
 
 Vector Vehicle::FaceFront(Vector v) {
   faceFront = v;
+  baseFront = v;
   return faceFront;
   }
 
@@ -36,6 +38,7 @@ Vector Vehicle::FaceLeft() {
 
 Vector Vehicle::FaceLeft(Vector v) {
   faceLeft = v;
+  baseLeft = v;
   return faceLeft;
   }
 
@@ -45,6 +48,7 @@ Vector Vehicle::FaceUp() {
 
 Vector Vehicle::FaceUp(Vector v) {
   faceUp = v;
+  baseUp = v;
   return faceUp;
   }
 
@@ -150,12 +154,19 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Latitude %f%s",latitude,LE);
   fprintf(file,"  Longitude %f%s",longitude,LE);
   fprintf(file,"  Radius %f%s",radius,LE);
+  fprintf(file,"  BaseFront %f %f %f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
+  fprintf(file,"  BaseUp %f %f %f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
+  fprintf(file,"  BaseLeft %f %f %f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
   fprintf(file,"  FaceFront %f %f %f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
   fprintf(file,"  FaceUp %f %f %f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
   fprintf(file,"  FaceLeft %f %f %f%s",faceLeft.X(),faceLeft.Y(),faceLeft.Z(),LE);
   fprintf(file,"  Position %f %f %f%s",position.X(),position.Y(),position.Z(),LE);
   fprintf(file,"  Velocity %f %f %f%s",velocity.X(),velocity.Y(),velocity.Z(),LE);
   fprintf(file,"  Thrust %f %f %f%s",thrust.X(),thrust.Y(),thrust.Z(),LE);
+  fprintf(file,"  Orientation %f %f %f %f %f %f %f %f %f%s",
+    orientation.Cell(0,0), orientation.Cell(0,1), orientation.Cell(0,2),
+    orientation.Cell(1,0), orientation.Cell(1,1), orientation.Cell(1,2),
+    orientation.Cell(2,0), orientation.Cell(2,1), orientation.Cell(2,2),LE);
   }
 
 void Vehicle::Load(FILE* file) {
@@ -166,12 +177,16 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"latitude ")) latitude = atof(nw(pline));
     else if (startsWith(pline,"longitude ")) longitude = atof(nw(pline));
     else if (startsWith(pline,"radius ")) radius = atof(nw(pline));
+    else if (startsWith(pline,"basefront ")) baseFront = atov(nw(pline));
+    else if (startsWith(pline,"baseup ")) baseUp = atov(nw(pline));
+    else if (startsWith(pline,"baseleft ")) baseLeft = atov(nw(pline));
     else if (startsWith(pline,"facefront ")) faceFront = atov(nw(pline));
     else if (startsWith(pline,"faceup ")) faceUp = atov(nw(pline));
     else if (startsWith(pline,"faceleft ")) faceLeft = atov(nw(pline));
     else if (startsWith(pline,"position ")) position = atov(nw(pline));
     else if (startsWith(pline,"velocity ")) velocity = atov(nw(pline));
     else if (startsWith(pline,"thrust ")) thrust = atov(nw(pline));
+    else if (startsWith(pline,"orientation ")) orientation = atom(nw(pline));
     else if (SubLoad(pline) == 0) {
       printf("Unknown line found in save file: %s\n",pline);
       ShowCursor();

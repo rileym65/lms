@@ -4,15 +4,20 @@
 #include <stdio.h>
 #include "types.h"
 #include "vector.h"
+#include "matrix.h"
 
 class Vehicle {
   protected:
     Double altitude;
+    Vector baseFront;
+    Vector baseLeft;
+    Vector baseUp;
     Vector faceFront;
     Vector faceLeft;
     Vector faceUp;
     Double latitude;
     Double longitude;
+    Matrix orientation;
     Vector position;
     Double radius;
     Vector thrust;

@@ -80,6 +80,7 @@ LINK Int8         plssOn;
 LINK Int8         spaceSuitOn;
 LINK INS         *ins;
 
+extern Matrix atom(char* buffer);
 extern Vector atov(char* buffer);
 extern Int8   load(char* filename);
 extern char*  nextLine(FILE* file);

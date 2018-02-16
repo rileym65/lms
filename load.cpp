@@ -41,6 +41,30 @@ Vector atov(char* buffer) {
   return ret;
   }
 
+Matrix atom(char* buffer) {
+  Double ax,ay,az;
+  Double bx,by,bz;
+  Double cx,cy,cz;
+  ax = atof(buffer);
+  buffer = nw(buffer);
+  ay = atof(buffer);
+  buffer = nw(buffer);
+  az = atof(buffer);
+  buffer = nw(buffer);
+  bx = atof(buffer);
+  buffer = nw(buffer);
+  by = atof(buffer);
+  buffer = nw(buffer);
+  bz = atof(buffer);
+  buffer = nw(buffer);
+  cx = atof(buffer);
+  buffer = nw(buffer);
+  cy = atof(buffer);
+  buffer = nw(buffer);
+  cz = atof(buffer);
+  return Matrix(ax,ay,az,bx,by,bz,cx,cy,cz);
+  }
+
 void loadSimulation(FILE* file) {
   char* pline;
   while ((pline = nextLine(file)) != NULL) {

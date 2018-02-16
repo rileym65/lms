@@ -105,6 +105,7 @@ Double LunarModule::PitchRate() {
 
 Double LunarModule::PitchRate(Double d) {
   pitchRate = d;
+  pitchMatrix = Matrix::RotateY(-pitchRate);
   return pitchRate;
   }
 
@@ -123,6 +124,7 @@ Double LunarModule::RollRate() {
 
 Double LunarModule::RollRate(Double d) {
   rollRate = d;
+  rollMatrix = Matrix::RotateZ(-rollRate);
   return rollRate;
   }
 
@@ -132,6 +134,7 @@ Double LunarModule::YawRate() {
 
 Double LunarModule::YawRate(Double d) {
   yawRate = d;
+  yawMatrix = Matrix::RotateX(yawRate);
   return yawRate;
   }
 
@@ -153,6 +156,14 @@ void LunarModule::Cycle() {
   Double newtons;
   Double mainThrust;
   Double mainfuel;
+  if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
+    if (rollRate != 0) orientation.MultipliedBy(rollMatrix);
+    if (pitchRate != 0) orientation.MultipliedBy(pitchMatrix);
+    if (yawRate != 0) orientation.MultipliedBy(yawMatrix);
+    faceFront = orientation.Transform(baseFront).Norm();
+    faceLeft = orientation.Transform(baseLeft).Norm();
+    faceUp = orientation.Transform(baseUp).Norm();
+    }
   switch (rcsThrottle) {
     case 1: rcsThrust = 19.7; rcsfuel = 0.05; break;
     case 10: rcsThrust = 197.0; rcsfuel = 0.05; break;
@@ -239,10 +250,10 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"battery ")) battery = atof(nw(pline));
   else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
   else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
-  else if (startsWith(pline,"pitchrate ")) pitchRate = atof(nw(pline));
+  else if (startsWith(pline,"pitchrate ")) PitchRate(atof(nw(pline)));
   else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
-  else if (startsWith(pline,"rollrate ")) rollRate = atof(nw(pline));
-  else if (startsWith(pline,"yawrate ")) yawRate = atof(nw(pline));
+  else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
+  else if (startsWith(pline,"yawrate ")) YawRate(atof(nw(pline)));
   else return 0;
   return -1;
   }

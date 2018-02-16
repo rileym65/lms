@@ -34,4 +34,11 @@ I      - Ignite main engine
 i      - Shutdown main engine
 <PGDN> - Increase main engine throttle 2%
 <END>  - Decrease main engine throttle 2%
+<HOME> - Roll counter clockwise around up
+<PgUp> - Roll clockwise around up
+<up>   - Pitch counter clockwise around left
+<down> - Pitch clockwise around left
+<left> - Yaw counter clockwise around front
+<right>- Yaw clockwise around front
+
 

@@ -150,6 +150,13 @@ void lmCommands(int key) {
     if (key == '-' && lm->RcsThrottle() == 100) lm->RcsThrottle(10);
     if (key == 'I' && lm->Throttle() == 0) lm->Throttle(10);
     if (key == 'i') lm->Throttle(0);
+    if (key == KEY_KP_HOME) lm->RollRate(lm->RollRate()+1);
+    if (key == KEY_HOME) lm->RollRate(lm->RollRate()+1);
+    if (key == KEY_PGUP) lm->RollRate(lm->RollRate()-1);
+    if (key == KEY_UP_ARROW) lm->PitchRate(lm->PitchRate()+1);
+    if (key == KEY_DOWN_ARROW) lm->PitchRate(lm->PitchRate()-1);
+    if (key == KEY_RIGHT_ARROW) lm->YawRate(lm->YawRate()+1);
+    if (key == KEY_LEFT_ARROW) lm->YawRate(lm->YawRate()-1);
     if (lm->Throttle() > 0) {
       if (key == KEY_PGDN) lm->Throttle(lm->Throttle()+2);
       if (key == KEY_END) lm->Throttle(lm->Throttle()-2);

@@ -5,7 +5,7 @@ INCDIR =
 INCS =
 LIBDIR =
 LIBS =
-HEADERS = header.h console.h vehicle.h csm.h lunarmodule.h ins.h
+HEADERS = header.h console.h vehicle.h csm.h lunarmodule.h ins.h matrix.h
 OBJS = \
 	console.o \
 	csm.o \
@@ -13,6 +13,7 @@ OBJS = \
 	load.o \
 	save.o \
 	lunarmodule.o \
+	matrix.o \
 	terminal.o \
 	vector.o \
 	vehicle.o \
@@ -36,6 +37,7 @@ csm.o:         $(HEADERS) csm.cpp
 ins.o:         $(HEADERS) ins.cpp
 load.o:        $(HEADERS) load.cpp
 main.o:        $(HEADERS) main.cpp
+matrix.o:      $(HEADERS) matrix.cpp
 save.o:        $(HEADERS) save.cpp
 lunarmodule.o: $(HEADERS) lunarmodule.cpp
 terminal.o:    $(HEADERS) terminal.cpp
