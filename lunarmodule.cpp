@@ -1,5 +1,6 @@
 #include "header.h"
 #include "lunarmodule.h"
+#include "terminal.h"
 
 LunarModule::LunarModule() {
   throttle = 0;
@@ -9,6 +10,7 @@ LunarModule::LunarModule() {
   rcsUdMode = ' ';
   rollRate = 0;
   yawRate = 0;
+  descentJettisoned = 0;
   }
 
 LunarModule::~LunarModule() {
@@ -129,6 +131,35 @@ Double LunarModule::YawRate() {
 Double LunarModule::YawRate(Double d) {
   yawRate = d;
   return yawRate;
+  }
+
+Double LunarModule::Mass() {
+  Double ret;
+  ret = 2234;
+  ret += ascentFuel;
+  ret += rcsFuel;
+  if (!descentJettisoned) {
+    ret += 2346;
+    ret += descentFuel;
+    }
+  return ret;
+  }
+
+void LunarModule::Cycle() {
+  Double rcsThrust;
+  switch (rcsThrottle) {
+    case 1: rcsThrust = 19.7; break;
+    case 10: rcsThrust = 197.0; break;
+    case 100: rcsThrust = 1970.0; break;
+    default : rcsThrust = 0;
+    }
+  rcsThrust = rcsThrust / Mass();
+  thrust = Vector(0,0,0);
+  if (rcsUdMode == 'D') thrust = thrust + (faceUp.Neg().Scale(rcsThrust));
+  if (rcsUdMode == 'U') thrust = thrust + (faceUp.Scale(rcsThrust));
+GotoXY(1,25); printf("%f %f %f\n",thrust.X(),thrust.Y(),thrust.Z());
+  Vehicle::Cycle();
+GotoXY(1,26); printf("%f %f %f\n",velocity.X(),velocity.Y(),velocity.Z());
   }
 
 void LunarModule::Save(FILE* file) {

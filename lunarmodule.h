@@ -7,6 +7,7 @@
 class LunarModule : public Vehicle {
   protected:
     
+    Int8   descentJettisoned;
     char   rcsFbMode;
     char   rcsLrMode;
     char   rcsUdMode;
@@ -37,6 +38,7 @@ class LunarModule : public Vehicle {
     Double AscentFuel(Double d);
     Double Battery();
     Double Battery(Double d);
+
     Double DescentFuel();
     Double DescentFuel(Double d);
     Double Oxygen();
@@ -49,8 +51,10 @@ class LunarModule : public Vehicle {
     Double RollRate(Double d);
     Double YawRate();
     Double YawRate(Double d);
-    virtual void Save(FILE* file);
-    virtual Int8 SubLoad(char* line);
+    virtual void   Cycle();
+    virtual Double Mass();
+    virtual void   Save(FILE* file);
+    virtual Int8   SubLoad(char* line);
   };
 
 #endif

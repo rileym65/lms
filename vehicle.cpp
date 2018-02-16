@@ -5,6 +5,7 @@
 
 Vehicle::Vehicle() {
   velocityAltitude = 0;
+  thrust = Vector(0,0,0);
   }
 
 Vehicle::~Vehicle() {
@@ -112,6 +113,7 @@ void Vehicle::Cycle() {
   a = position.Scale(-4.9075e12);
   a = a.Scale(1/alt3);
   velocity = velocity + a;
+  velocity = velocity + thrust;
   position = position + velocity;
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());

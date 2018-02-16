@@ -8,6 +8,7 @@ Available in all modes:
 $ - 1000x time
 Q - Quit.  Current simulation will be saved in lms.sav
 1 - Select POS^ABS mode for the INS
+3 - Select POS^REL mode for the INS
 4 - Select ORB^ABS mode for the INS
 
 Available while in CSM:
@@ -16,5 +17,13 @@ M - Move to and check out LM
 
 Available while in LM:
 ----------------------
-M - Move to CSM if docked
+M - Move to CSM if docked.  This will end the simulation
 U - Undock if docked
+< - Turn on/off the landing radar
+> - Turn on/off the docking radar
+? - Turn on/off the dsn transponder
+= - Increase rcs translation thrust (1->10->100)
+- - Decrease rcs trnaslation thrust (100->10->1)
+u - Increase rcs up thrust (Down->off->Up)
+d - Increase rcs down thrust (Up->off->Down)
+

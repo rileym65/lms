@@ -131,6 +131,16 @@ void lmCommands(int key) {
   if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
   if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
   if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
+  if (!docked) {
+    if (key == 'd' && lm->RcsUdMode() == ' ') lm->RcsUdMode('D');
+    if (key == 'd' && lm->RcsUdMode() == 'U') lm->RcsUdMode(' ');
+    if (key == 'u' && lm->RcsUdMode() == ' ') lm->RcsUdMode('U');
+    if (key == 'u' && lm->RcsUdMode() == 'D') lm->RcsUdMode(' ');
+    if (key == '=' && lm->RcsThrottle() == 10) lm->RcsThrottle(100);
+    if (key == '=' && lm->RcsThrottle() == 1) lm->RcsThrottle(10);
+    if (key == '-' && lm->RcsThrottle() == 10) lm->RcsThrottle(1);
+    if (key == '-' && lm->RcsThrottle() == 100) lm->RcsThrottle(10);
+    }
   }
 
 void executeSequencer() {
