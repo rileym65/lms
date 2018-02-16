@@ -148,6 +148,13 @@ void lmCommands(int key) {
     if (key == '=' && lm->RcsThrottle() == 1) lm->RcsThrottle(10);
     if (key == '-' && lm->RcsThrottle() == 10) lm->RcsThrottle(1);
     if (key == '-' && lm->RcsThrottle() == 100) lm->RcsThrottle(10);
+    if (key == 'I' && lm->Throttle() == 0) lm->Throttle(10);
+    if (key == 'i') lm->Throttle(0);
+    if (lm->Throttle() > 0) {
+      if (key == KEY_PGDN) lm->Throttle(lm->Throttle()+2);
+      if (key == KEY_END) lm->Throttle(lm->Throttle()-2);
+      if (key == KEY_KP_END) lm->Throttle(lm->Throttle()-2);
+      }
     }
   }
 

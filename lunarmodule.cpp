@@ -58,6 +58,8 @@ Int8   LunarModule::Throttle() {
 
 Int8   LunarModule::Throttle(Int8 i) {
   throttle = i;
+  if (throttle > 100) throttle = 100;
+  if (throttle > 0 && throttle < 10) throttle = 10;
   return throttle;
   }
 
@@ -146,21 +148,63 @@ Double LunarModule::Mass() {
   }
 
 void LunarModule::Cycle() {
+  Double rcsfuel;
   Double rcsThrust;
+  Double newtons;
+  Double mainThrust;
+  Double mainfuel;
   switch (rcsThrottle) {
-    case 1: rcsThrust = 19.7; break;
-    case 10: rcsThrust = 197.0; break;
-    case 100: rcsThrust = 1970.0; break;
+    case 1: rcsThrust = 19.7; rcsfuel = 0.05; break;
+    case 10: rcsThrust = 197.0; rcsfuel = 0.05; break;
+    case 100: rcsThrust = 1970.0; rcsfuel = 0.5; break;
     default : rcsThrust = 0;
     }
   rcsThrust = rcsThrust / Mass();
   thrust = Vector(0,0,0);
-  if (rcsUdMode == 'D') thrust = thrust + (faceUp.Neg().Scale(rcsThrust));
-  if (rcsUdMode == 'U') thrust = thrust + (faceUp.Scale(rcsThrust));
-  if (rcsLrMode == 'R') thrust = thrust + (faceLeft.Neg().Scale(rcsThrust));
-  if (rcsLrMode == 'L') thrust = thrust + (faceLeft.Scale(rcsThrust));
-  if (rcsFbMode == 'F') thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
-  if (rcsFbMode == 'B') thrust = thrust + (faceFront.Scale(rcsThrust));
+  if (rcsUdMode == 'D' && rcsfuel <= rcsFuel) {
+    thrust = thrust + (faceUp.Neg().Scale(rcsThrust));
+    rcsFuel -= rcsfuel;
+    }
+  if (rcsUdMode == 'U' && rcsfuel <= rcsFuel) {
+    thrust = thrust + (faceUp.Scale(rcsThrust));
+    rcsFuel -= rcsfuel;
+    }
+  if (rcsLrMode == 'R' && rcsfuel <= rcsFuel) {
+    thrust = thrust + (faceLeft.Neg().Scale(rcsThrust));
+    rcsFuel -= rcsfuel;
+    }
+  if (rcsLrMode == 'L' && rcsfuel <= rcsFuel) {
+    thrust = thrust + (faceLeft.Scale(rcsThrust));
+    rcsFuel -= rcsfuel;
+    }
+  if (rcsFbMode == 'F' && rcsfuel <= rcsFuel) {
+    thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
+    rcsFuel -= rcsfuel;
+    }
+  if (rcsFbMode == 'B' && rcsfuel <= rcsFuel) {
+    thrust = thrust + (faceFront.Scale(rcsThrust));
+    rcsFuel -= rcsfuel;
+    }
+  if (throttle != 0) {
+    if (descentJettisoned) {
+      throttle = 100;
+      mainThrust = 16890.0 / Mass();
+      if (ascentFuel >= 5) {
+        thrust = thrust + faceUp.Scale(mainThrust);
+        ascentFuel -= 5;
+        }
+      }
+    else {
+      newtons = (double)throttle / 100.0;
+      mainfuel = 15.0 * newtons;
+      newtons *= 49215;
+      mainThrust = newtons / Mass();
+      if (mainfuel <= descentFuel) {
+        thrust = thrust + faceUp.Scale(mainThrust);
+        descentFuel -= mainfuel;
+        }
+      }
+    }
 GotoXY(1,25); printf("%f %f %f\n",thrust.X(),thrust.Y(),thrust.Z());
   Vehicle::Cycle();
 GotoXY(1,26); printf("%f %f %f\n",velocity.X(),velocity.Y(),velocity.Z());
