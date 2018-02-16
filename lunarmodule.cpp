@@ -157,6 +157,10 @@ void LunarModule::Cycle() {
   thrust = Vector(0,0,0);
   if (rcsUdMode == 'D') thrust = thrust + (faceUp.Neg().Scale(rcsThrust));
   if (rcsUdMode == 'U') thrust = thrust + (faceUp.Scale(rcsThrust));
+  if (rcsLrMode == 'R') thrust = thrust + (faceLeft.Neg().Scale(rcsThrust));
+  if (rcsLrMode == 'L') thrust = thrust + (faceLeft.Scale(rcsThrust));
+  if (rcsFbMode == 'F') thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
+  if (rcsFbMode == 'B') thrust = thrust + (faceFront.Scale(rcsThrust));
 GotoXY(1,25); printf("%f %f %f\n",thrust.X(),thrust.Y(),thrust.Z());
   Vehicle::Cycle();
 GotoXY(1,26); printf("%f %f %f\n",velocity.X(),velocity.Y(),velocity.Z());

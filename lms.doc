@@ -24,6 +24,10 @@ U - Undock if docked
 ? - Turn on/off the dsn transponder
 = - Increase rcs translation thrust (1->10->100)
 - - Decrease rcs trnaslation thrust (100->10->1)
+f - Increase rcs face thrust (Back->off->Face);
+b - Increase rcs back thrust (Face->off->Back);
+l - Increase rcs left thrust (Right->off->Left)
+r - Increase rcs right thrust (left->off->right)
 u - Increase rcs up thrust (Down->off->Up)
 d - Increase rcs down thrust (Up->off->Down)
 

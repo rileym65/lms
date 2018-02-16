@@ -132,6 +132,14 @@ void lmCommands(int key) {
   if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
   if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
   if (!docked) {
+    if (key == 'f' && lm->RcsFbMode() == ' ') lm->RcsFbMode('F');
+    if (key == 'f' && lm->RcsFbMode() == 'B') lm->RcsFbMode(' ');
+    if (key == 'b' && lm->RcsFbMode() == ' ') lm->RcsFbMode('B');
+    if (key == 'b' && lm->RcsFbMode() == 'F') lm->RcsFbMode(' ');
+    if (key == 'l' && lm->RcsLrMode() == ' ') lm->RcsLrMode('L');
+    if (key == 'l' && lm->RcsLrMode() == 'R') lm->RcsLrMode(' ');
+    if (key == 'r' && lm->RcsLrMode() == ' ') lm->RcsLrMode('R');
+    if (key == 'r' && lm->RcsLrMode() == 'L') lm->RcsLrMode(' ');
     if (key == 'd' && lm->RcsUdMode() == ' ') lm->RcsUdMode('D');
     if (key == 'd' && lm->RcsUdMode() == 'U') lm->RcsUdMode(' ');
     if (key == 'u' && lm->RcsUdMode() == ' ') lm->RcsUdMode('U');
