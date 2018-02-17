@@ -238,6 +238,7 @@ GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot
     PitchRate(0);
     YawRate(0);
     velocity = Vector(0,0,0);
+    velocityAltitude = 0;
     landed = -1;
     throttle = 0;
     position = position.Norm().Scale(GROUND);

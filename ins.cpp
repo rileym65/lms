@@ -35,8 +35,10 @@ void INS::Cycle() {
   Double hyp;
   Vector pos;
   Vector vel;
+  Vector orbit;
   pos = spacecraft->Position();
   vel = spacecraft->Velocity();
+  orbit = Vector(pos.Y(),-pos.X(),0).Norm();
   accAltitude = spacecraft->VelocityAltitude() - lastVelAltitude;
   lastVelAltitude = spacecraft->VelocityAltitude();
   accEast = spacecraft->VelocityEast() - lastVelEast;
@@ -64,8 +66,10 @@ void INS::Cycle() {
   momNorth = L.Z() / hyp;
   momNorth = asin(momNorth) * 180 / M_PI;
   attUr = acos(pos.Norm().Dot(spacecraft->FaceUp())) * 180 / M_PI;
-  attFr = acos(pos.Norm().Dot(spacecraft->FaceFront())) * 180 / M_PI;
+//  attFr = acos(pos.Norm().Dot(spacecraft->FaceFront())) * 180 / M_PI;
+  attFr = acos(spacecraft->FaceFront().Norm().Dot(orbit) ) * 180 / M_PI;
   attLs = acos(spacecraft->FaceLeft().Dot(Vector(0,0,-1))) * 180 / M_PI;
+
   if (mode == INS_MODE_POS_ABS) populatePosAbs();
   if (mode == INS_MODE_POS_REL) populatePosRel();
   if (mode == INS_MODE_ORB_ABS) populateOrbAbs();

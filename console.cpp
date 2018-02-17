@@ -84,41 +84,31 @@ void Console::displayClock(Int32 x, Int32 y, Int32 clock) {
   printf("%3d:%2d:%2d",hours,minutes,seconds);
   }
 
-void Console::displayLeftAxis(Vehicle *vehicle) {
-  Int8   i;
+void Console::displayFaces(char side) {
   Boolean flag;
-  Double du,dl,df;
-  Vector pos;
-  Vector vel;
+  Int8 i;
   Int32  dx[3], dy[3];
   Double d[3];
   char   c[3];
   char   tc;
   Int32  ti;
   Double td;
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
-  GotoXY(leftFaceX, leftFaceY); printf(" ");
-  GotoXY(leftLeftX, leftLeftY); printf(" ");
-  GotoXY(leftUpX, leftUpY); printf(" ");
-  /* ***** Face ***** */
-  leftFaceX = 14 + ((vehicle->FaceFront().Dot(Vector(0,0,1))) * 10 + 0.5);
-  leftFaceY = 10 - ((vehicle->FaceFront().Dot(pos)) * 5 + 0.5);
-  df = vehicle->FaceFront().Dot(vel);
-  /* ***** Left ***** */
-  leftLeftX = 14 + ((vehicle->FaceLeft().Dot(Vector(0,0,1))) * 10 + 0.5);
-  leftLeftY = 10 - ((vehicle->FaceLeft().Dot(pos)) * 5 + 0.5);
-  dl = vehicle->FaceLeft().Dot(vel);
-  /* ***** Up ***** */
-  leftUpX = 14 + ((vehicle->FaceUp().Dot(Vector(0,0,1))) * 10 + 0.5);
-  leftUpY = 10 - ((vehicle->FaceUp().Dot(pos)) * 5 + 0.5);
-  du = vehicle->FaceUp().Dot(vel);
-  dx[0] = leftFaceX; dy[0] = leftFaceY; d[0] = df;
-  c[0] = (df <= 0) ? 'F' : 'f';
-  dx[1] = leftLeftX; dy[1] = leftLeftY; d[1] = dl;
-  c[1] = (dl <= 0) ? 'L' : 'l';
-  dx[2] = leftUpX; dy[2] = leftUpY; d[2] = du;
-  c[2] = (du <= 0) ? 'U' : 'u';
+  if (side == 'L') {
+    dx[0] = leftFaceX; dy[0] = leftFaceY; d[0] = faceD;
+    c[0] = (faceD <= 0) ? 'F' : 'f';
+    dx[1] = leftLeftX; dy[1] = leftLeftY; d[1] = leftD;
+    c[1] = (leftD <= 0) ? 'L' : 'l';
+    dx[2] = leftUpX; dy[2] = leftUpY; d[2] = upD;
+    c[2] = (upD <= 0) ? 'U' : 'u';
+    }
+  else {
+    dx[0] = rightFaceX; dy[0] = rightFaceY; d[0] = faceD;
+    c[0] = (faceD <= 0) ? 'F' : 'f';
+    dx[1] = rightLeftX; dy[1] = rightLeftY; d[1] = leftD;
+    c[1] = (leftD <= 0) ? 'L' : 'l';
+    dx[2] = rightUpX; dy[2] = rightUpY; d[2] = upD;
+    c[2] = (upD <= 0) ? 'U' : 'u';
+    }
   flag = true;
   while (flag) {
     flag = false;
@@ -137,57 +127,62 @@ void Console::displayLeftAxis(Vehicle *vehicle) {
     }
   }
 
-void Console::displayRightAxis(Vehicle *vehicle) {
-  Int8   i;
-  Boolean flag;
-  Double du,dl,df;
+void Console::displayLeftAxis(Vehicle *vehicle) {
   Vector pos;
   Vector vel;
-  Int32  dx[3], dy[3];
-  Double d[3];
-  char   c[3];
-  char   tc;
-  Int32  ti;
-  Double td;
+  Vector xVec;
+  Vector yVec;
+  Vector zVec;
+  vel = vehicle->Velocity().Norm();
+  xVec = Vector(0,0,1);
+  yVec = vehicle->Position().Norm();
+  zVec = Vector(yVec.Y(), -yVec.X(), 0).Norm();
+  GotoXY(leftFaceX, leftFaceY); printf(" ");
+  GotoXY(leftLeftX, leftLeftY); printf(" ");
+  GotoXY(leftUpX, leftUpY); printf(" ");
+  /* ***** Face ***** */
+  leftFaceX = 14 + ((vehicle->FaceFront().Dot(xVec)) * 10 + 0.5);
+  leftFaceY = 10 - ((vehicle->FaceFront().Dot(yVec)) * 5 + 0.5);
+  faceD = vehicle->FaceFront().Dot(zVec);
+  /* ***** Left ***** */
+  leftLeftX = 14 + ((vehicle->FaceLeft().Dot(xVec)) * 10 + 0.5);
+  leftLeftY = 10 - ((vehicle->FaceLeft().Dot(yVec)) * 5 + 0.5);
+  leftD = vehicle->FaceLeft().Dot(zVec);
+  /* ***** Up ***** */
+  leftUpX = 14 + ((vehicle->FaceUp().Dot(xVec)) * 10 + 0.5);
+  leftUpY = 10 - ((vehicle->FaceUp().Dot(yVec)) * 5 + 0.5);
+  upD = vehicle->FaceUp().Dot(zVec);
+  displayFaces('L');
+  }
+
+void Console::displayRightAxis(Vehicle *vehicle) {
+  Vector pos;
+  Vector vel;
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
+  Vector xVec;
+  Vector yVec;
+  Vector zVec;
+  xVec = Vector(0,0,1);
+//  yVec = vehicle->Velocity().Norm();
+  yVec = Vector(pos.Y(),-pos.X(),0);
+  zVec = vehicle->Position().Norm();
   GotoXY(rightFaceX, rightFaceY); printf(" ");
   GotoXY(rightLeftX, rightLeftY); printf(" ");
   GotoXY(rightUpX, rightUpY); printf(" ");
   /* ***** Face ***** */
-  rightFaceX = 67 + ((vehicle->FaceFront().Dot(Vector(0,0,1))) * 10 + 0.5);
-  rightFaceY = 10 - ((vehicle->FaceFront().Dot(vel)) * 5 + 0.5);
-  df = vehicle->FaceFront().Dot(pos);
+  rightFaceX = 67 + ((vehicle->FaceFront().Dot(xVec)) * 10 + 0.5);
+  rightFaceY = 10 - ((vehicle->FaceFront().Dot(yVec)) * 5 + 0.5);
+  faceD = -vehicle->FaceFront().Dot(zVec);
   /* ***** Left ***** */
-  rightLeftX = 67 + ((vehicle->FaceLeft().Dot(Vector(0,0,1))) * 10 + 0.5);
-  rightLeftY = 10 - ((vehicle->FaceLeft().Dot(vel)) * 5 + 0.5);
-  dl = vehicle->FaceLeft().Dot(pos);
+  rightLeftX = 67 + ((vehicle->FaceLeft().Dot(xVec)) * 10 + 0.5);
+  rightLeftY = 10 - ((vehicle->FaceLeft().Dot(yVec)) * 5 + 0.5);
+  leftD = -vehicle->FaceLeft().Dot(zVec);
   /* ***** Up ***** */
-  rightUpX = 67 + ((vehicle->FaceUp().Dot(Vector(0,0,1))) * 10 + 0.5);
-  rightUpY = 10 - ((vehicle->FaceUp().Dot(vel)) * 5 + 0.5);
-  du = vehicle->FaceUp().Dot(pos);
-  dx[0] = rightFaceX; dy[0] = rightFaceY; d[0] = df;
-  c[0] = (df >= 0) ? 'F' : 'f';
-  dx[1] = rightLeftX; dy[1] = rightLeftY; d[1] = dl;
-  c[1] = (dl >= 0) ? 'L' : 'l';
-  dx[2] = rightUpX; dy[2] = rightUpY; d[2] = du;
-  c[2] = (du >= 0) ? 'U' : 'u';
-  flag = true;
-  while (flag) {
-    flag = false;
-    for (i=0; i<2; i++)
-      if (d[i] > d[i+1]) {
-        ti = dx[i]; dx[i] = dx[i+1]; dx[i+1] = ti;
-        ti = dy[i]; dy[i] = dy[i+1]; dy[i+1] = ti;
-        tc = c[i]; c[i] = c[i+1]; c[i+1] = tc;
-        td = d[i]; d[i] = d[i+1]; d[i+1] = td;
-        flag = true;
-        }
-    }
-  for (i=0; i<3; i++) {
-    GotoXY(dx[i], dy[i]);
-    printf("%c",c[i]);
-    }
+  rightUpX = 67 + ((vehicle->FaceUp().Dot(xVec)) * 10 + 0.5);
+  rightUpY = 10 - ((vehicle->FaceUp().Dot(yVec)) * 5 + 0.5);
+  upD = -vehicle->FaceUp().Dot(zVec);
+  displayFaces('R');
   }
 
 void Console::displayIns(Vehicle* vehicle,Vehicle* target) {

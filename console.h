@@ -52,11 +52,8 @@ class Console {
     Int16 leftFaceX, leftFaceY;
     Int16 leftLeftX, leftLeftY;
     Int16 leftUpX, leftUpY;
+    Double faceD, leftD, upD;
     Int8  lastYawRate;
-    void  displayClock(Int32 x, Int32 y, Int32 clock);
-    void  displayIns(Vehicle *vehicle,Vehicle* target);
-    void  displayLeftAxis(Vehicle *vehicle);
-    void  displayRightAxis(Vehicle * vehicle);
     Double priorAltitude;
     Double priorVelAltitude;
     Double priorVelEast;
@@ -64,6 +61,11 @@ class Console {
     Int16 rightFaceX, rightFaceY;
     Int16 rightLeftX, rightLeftY;
     Int16 rightUpX, rightUpY;
+    void  displayClock(Int32 x, Int32 y, Int32 clock);
+    void  displayFaces(char side);
+    void  displayIns(Vehicle *vehicle,Vehicle* target);
+    void  displayLeftAxis(Vehicle *vehicle);
+    void  displayRightAxis(Vehicle * vehicle);
   public:
     Console();
     ~Console();

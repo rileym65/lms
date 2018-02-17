@@ -82,7 +82,7 @@ Vector t;
   }
 
 void cycle() {
-  Vector v;
+  Vector v,v1;
   csm->Cycle();
   if (docked) {
     lm->Position(csm->Position() + Vector(0,0,19));
