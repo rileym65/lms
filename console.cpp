@@ -504,6 +504,7 @@ void Console::UpdateConsole() {
     GotoXY(29, 21);
     switch (insMode) {
       case INS_MODE_POS_ABS: printf("POS^ABS"); break;
+      case INS_MODE_POS_TAR: printf("POS^TAR"); break;
       case INS_MODE_POS_REL: printf("POS^REL"); break;
       case INS_MODE_ORB_ABS: printf("ORBvABS"); break;
       }

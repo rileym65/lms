@@ -72,6 +72,8 @@ Vector t;
   lrvRock = 0;
   metabolicRate = 30.0;
   strcpy(message,"----------");
+  targetLatitude = 0.0;
+  targetLongitude = 0.0;
   plssOn = 0;
   plssOxygen = PLSS_OXYGEN;
   plssBattery = PLSS_BATTERY;
@@ -165,6 +167,16 @@ void lmCommands(int key) {
       if (key == KEY_PGDN) lm->Throttle(lm->Throttle()+2);
       if (key == KEY_END) lm->Throttle(lm->Throttle()-2);
       if (key == KEY_KP_END) lm->Throttle(lm->Throttle()-2);
+      if (key == KEY_F1) lm->Throttle(10);
+      if (key == KEY_F2) lm->Throttle(20);
+      if (key == KEY_F3) lm->Throttle(30);
+      if (key == KEY_F4) lm->Throttle(40);
+      if (key == KEY_F5) lm->Throttle(50);
+      if (key == KEY_F6) lm->Throttle(60);
+      if (key == KEY_F7) lm->Throttle(70);
+      if (key == KEY_F8) lm->Throttle(80);
+      if (key == KEY_F9) lm->Throttle(90);
+      if (key == KEY_F10) lm->Throttle(100);
       }
     }
   }
@@ -198,15 +210,25 @@ int main(int argc, char** argv) {
   int key;
 //test();
 //exit(1);
-  OpenTerminal();
-  HideCursor();
   simSpeed = 100000;
   csm = new CSM();
   lm = new LunarModule();
   ins = new INS();
   setup();
   if (load((char*)"lms.sav") == 0) {
+    targetLatitude = -9999.99;
+    while (targetLatitude <-90 || targetLatitude > 90) {
+      printf("Target latitude: ");
+      scanf("%lf",&targetLatitude);
+      }
+    targetLongitude = -9999.99;
+    while (targetLongitude <-180 || targetLongitude > 180) {
+      printf("Target longitude: ");
+      scanf("%lf",&targetLongitude);
+      }
     }
+  OpenTerminal();
+  HideCursor();
   if (pilotLocation == PILOT_CSM) {
     ins->Spacecraft(csm);
     ins->Target(lm);
@@ -253,6 +275,7 @@ int main(int argc, char** argv) {
       if (key == '$') simSpeed = 100;
       if (seqTime == 0) {
         if (key == '1') { insMode = INS_MODE_POS_ABS; ins->Mode(insMode); }
+        if (key == '2') { insMode = INS_MODE_POS_TAR; ins->Mode(insMode); }
         if (key == '3') { insMode = INS_MODE_POS_REL; ins->Mode(insMode); }
         if (key == '4') { insMode = INS_MODE_ORB_ABS; ins->Mode(insMode); }
         if (key == 'Q') run = false;

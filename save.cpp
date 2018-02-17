@@ -30,6 +30,8 @@ void save() {
   fprintf(file,"  PlssOn %d%s",plssOn,LE);
   fprintf(file,"  SampleBoxes %d%s",sampleBoxes,LE);
   fprintf(file,"  SpaceSuitOn %d%s",spaceSuitOn,LE);
+  fprintf(file,"  TargetLatitude %f%s",targetLatitude,LE);
+  fprintf(file,"  TargetLongitude %f%s",targetLongitude,LE);
   fprintf(file,"  }%s",LE);
   csm->Save(file);
   lm->Save(file);

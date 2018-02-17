@@ -16,6 +16,8 @@ INS::INS() {
   relAccAltitude = 0;
   relAccEast = 0;
   relAccNorth = 0;
+  tarLatitude = 0;
+  tarLongitude = 0;
   mode = INS_MODE_POS_ABS;
   target = NULL;
   spacecraft = NULL;
@@ -70,8 +72,13 @@ void INS::Cycle() {
 //  attFr = acos(spacecraft->FaceFront().Norm().Dot(orbit) ) * 180 / M_PI;
   attFr = acos(pos.Norm().Dot(spacecraft->FaceFront())) * 180 / M_PI;
   attLs = acos(spacecraft->FaceLeft().Dot(Vector(0,0,-1))) * 180 / M_PI;
+  tarLatitude = spacecraft->Latitude() - targetLatitude;
+  tarLongitude = spacecraft->Longitude() - targetLongitude;
+  if (tarLongitude <= -180) tarLongitude += 360;
+  if (tarLongitude >= 180) tarLongitude -= 360;
 
   if (mode == INS_MODE_POS_ABS) populatePosAbs();
+  if (mode == INS_MODE_POS_TAR) populatePosTar();
   if (mode == INS_MODE_POS_REL) populatePosRel();
   if (mode == INS_MODE_ORB_ABS) populateOrbAbs();
   }
@@ -149,6 +156,21 @@ Int8 INS::Mode(Int8 i) {
   return mode;
   }
 
+Boolean INS::hasSignal() {
+  if (pilotLocation == PILOT_LM && !dsnOn && !dockingRadarOn &&
+      !landingRadarOn) return false;
+  if (pilotLocation == PILOT_LM && dsnOn && (dockingRadarOn ||
+      landingRadarOn)) return false;
+  if (pilotLocation == PILOT_LM && dockingRadarOn && landingRadarOn)
+    return false;
+  if (pilotLocation == PILOT_LM && dockingRadarOn &&
+      (spacecraft->Position() - target->Position()).Length() > 30000)
+    return false;
+  if (pilotLocation == PILOT_LM && landingRadarOn &&
+    (spacecraft->Altitude() > 18000 || attUr > 45)) return false;
+  return true;
+  }
+
 void INS::noData() {
   strcpy(displayAccAltitude,"-------");
   strcpy(displayAccEast,"-------");
@@ -162,6 +184,10 @@ void INS::noData() {
   }
 
 void INS::populatePosAbs() {
+  if (!hasSignal()) {
+    noData();
+    return;
+    }
   sprintf(displayPosAltitude,"%7d",(int)spacecraft->Altitude());
   sprintf(displayPosEast,"%7.2f",spacecraft->Longitude());
   sprintf(displayPosNorth,"%7.2f",spacecraft->Latitude());
@@ -171,6 +197,28 @@ void INS::populatePosAbs() {
   sprintf(displayAccAltitude,"%7.1f",accAltitude);
   sprintf(displayAccEast,"%7.1f",accEast);
   sprintf(displayAccNorth,"%7.1f",accNorth);
+  }
+
+void INS::populatePosTar() {
+  if (!hasSignal()) {
+    noData();
+    return;
+    }
+  sprintf(displayPosAltitude,"%7d",(int)spacecraft->Altitude());
+  sprintf(displayVelAltitude,"%7.1f",lastVelAltitude);
+  sprintf(displayVelEast,"%7.1f",spacecraft->VelocityEast());
+  sprintf(displayVelNorth,"%7.1f",spacecraft->VelocityNorth());
+  sprintf(displayAccAltitude,"%7.1f",accAltitude);
+  sprintf(displayAccEast,"%7.1f",accEast);
+  sprintf(displayAccNorth,"%7.1f",accNorth);
+  if (dsnOn || fabs(tarLongitude) > 3.0)
+    sprintf(displayPosEast,"%7.2f",tarLongitude);
+  else
+    sprintf(displayPosEast,"%7.0f",tarLongitude * (METERS));
+  if (dsnOn || fabs(tarLatitude) > 3.0)
+    sprintf(displayPosNorth,"%7.2f",tarLatitude);
+  else
+    sprintf(displayPosNorth,"%7.2f",tarLatitude * METERS);
   }
 
 void INS::populatePosRel() {

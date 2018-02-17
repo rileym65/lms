@@ -39,6 +39,7 @@
 #define INS_MODE_ORB_REL 6
 #define MOON  4.9075e12
 #define GROUND 1738300
+#define METERS ((GROUND*2*M_PI) / 360.0)
 #define SEQ_MOVE_LM      1
 #define SEQ_MOVE_CSM     2
 #define SEQ_UNDOCK       3
@@ -73,6 +74,8 @@ LINK Int8         sampleBoxes;
 LINK Int32        seqTime;
 LINK Int8         seqFunction;
 LINK Int32        simSpeed;
+LINK Double       targetLatitude;
+LINK Double       targetLongitude;
 LINK Int8         ticks;
 LINK CSM         *csm;
 LINK LunarModule *lm;

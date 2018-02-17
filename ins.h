@@ -39,10 +39,14 @@ class INS {
     Vector   relVel;
     Double   relLongitude;
     Double   relLatitude;
+    Double   tarLongitude;
+    Double   tarLatitude;
     Vehicle* spacecraft;
     Vehicle* target;
+    Boolean  hasSignal();
     void     noData();
     void     populatePosAbs();
+    void     populatePosTar();
     void     populatePosRel();
     void     populateOrbAbs();
     void     printVelocity(Double v,char* buffer);

@@ -94,6 +94,8 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"plsson ")) plssOn = atoi(nw(pline));
     else if (startsWith(pline,"sampleboxes ")) sampleBoxes = atoi(nw(pline));
     else if (startsWith(pline,"spacesuiton ")) spaceSuitOn = atoi(nw(pline));
+    else if (startsWith(pline,"targetlatitude ")) targetLatitude = atof(nw(pline));
+    else if (startsWith(pline,"targetlongitude ")) targetLongitude = atof(nw(pline));
     else {
       printf("Unknown line found in save file: %s\n",pline);
       ShowCursor();
