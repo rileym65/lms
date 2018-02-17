@@ -67,7 +67,8 @@ void INS::Cycle() {
   momNorth = asin(momNorth) * 180 / M_PI;
   attUr = acos(pos.Norm().Dot(spacecraft->FaceUp())) * 180 / M_PI;
 //  attFr = acos(pos.Norm().Dot(spacecraft->FaceFront())) * 180 / M_PI;
-  attFr = acos(spacecraft->FaceFront().Norm().Dot(orbit) ) * 180 / M_PI;
+//  attFr = acos(spacecraft->FaceFront().Norm().Dot(orbit) ) * 180 / M_PI;
+  attFr = acos(pos.Norm().Dot(spacecraft->FaceFront())) * 180 / M_PI;
   attLs = acos(spacecraft->FaceLeft().Dot(Vector(0,0,-1))) * 180 / M_PI;
 
   if (mode == INS_MODE_POS_ABS) populatePosAbs();

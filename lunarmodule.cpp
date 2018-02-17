@@ -205,11 +205,11 @@ GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot
     rcsFuel -= rcsfuel;
     }
   if (rcsFbMode == 'F' && rcsfuel <= rcsFuel) {
-    thrust = thrust + (faceFront.Scale(rcsThrust));
+    thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
     rcsFuel -= rcsfuel;
     }
   if (rcsFbMode == 'B' && rcsfuel <= rcsFuel) {
-    thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
+    thrust = thrust + (faceFront.Scale(rcsThrust));
     rcsFuel -= rcsfuel;
     }
   if (throttle != 0) {

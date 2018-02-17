@@ -136,21 +136,23 @@ void Console::displayLeftAxis(Vehicle *vehicle) {
   vel = vehicle->Velocity().Norm();
   xVec = Vector(0,0,1);
   yVec = vehicle->Position().Norm();
-  zVec = Vector(yVec.Y(), -yVec.X(), 0).Norm();
+GotoXY(1,27); printf("%f %f %f\n",yVec.X(),yVec.Y(),yVec.Z());
+//  xVec = Vector(yVec.Z(),-yVec.Z(),1-fabs(yVec.Z()));
+  zVec = Vector(yVec.Y(), -yVec.X(), yVec.Z()).Norm();
   GotoXY(leftFaceX, leftFaceY); printf(" ");
   GotoXY(leftLeftX, leftLeftY); printf(" ");
   GotoXY(leftUpX, leftUpY); printf(" ");
   /* ***** Face ***** */
-  leftFaceX = 14 + ((vehicle->FaceFront().Dot(xVec)) * 10 + 0.5);
-  leftFaceY = 10 - ((vehicle->FaceFront().Dot(yVec)) * 5 + 0.5);
+  leftFaceX = 14.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
+  leftFaceY = 9.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
   faceD = vehicle->FaceFront().Dot(zVec);
   /* ***** Left ***** */
-  leftLeftX = 14 + ((vehicle->FaceLeft().Dot(xVec)) * 10 + 0.5);
-  leftLeftY = 10 - ((vehicle->FaceLeft().Dot(yVec)) * 5 + 0.5);
+  leftLeftX = 14.5 + ((vehicle->FaceLeft().Dot(xVec)) * 10.5);
+  leftLeftY = 9.5 - ((vehicle->FaceLeft().Dot(yVec)) * 5.5);
   leftD = vehicle->FaceLeft().Dot(zVec);
   /* ***** Up ***** */
-  leftUpX = 14 + ((vehicle->FaceUp().Dot(xVec)) * 10 + 0.5);
-  leftUpY = 10 - ((vehicle->FaceUp().Dot(yVec)) * 5 + 0.5);
+  leftUpX = 14.5 + ((vehicle->FaceUp().Dot(xVec)) * 10.5);
+  leftUpY = 9.5 - ((vehicle->FaceUp().Dot(yVec)) * 5.5);
   upD = vehicle->FaceUp().Dot(zVec);
   displayFaces('L');
   }
@@ -164,23 +166,24 @@ void Console::displayRightAxis(Vehicle *vehicle) {
   Vector yVec;
   Vector zVec;
   xVec = Vector(0,0,1);
-//  yVec = vehicle->Velocity().Norm();
+  yVec = vehicle->Velocity().Norm();
+//  xVec = Vector(-pos.Z(),pos.Z(),1-fabs(pos.Z()));
   yVec = Vector(pos.Y(),-pos.X(),0);
   zVec = vehicle->Position().Norm();
   GotoXY(rightFaceX, rightFaceY); printf(" ");
   GotoXY(rightLeftX, rightLeftY); printf(" ");
   GotoXY(rightUpX, rightUpY); printf(" ");
   /* ***** Face ***** */
-  rightFaceX = 67 + ((vehicle->FaceFront().Dot(xVec)) * 10 + 0.5);
-  rightFaceY = 10 - ((vehicle->FaceFront().Dot(yVec)) * 5 + 0.5);
+  rightFaceX = 67.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
+  rightFaceY = 9.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
   faceD = -vehicle->FaceFront().Dot(zVec);
   /* ***** Left ***** */
-  rightLeftX = 67 + ((vehicle->FaceLeft().Dot(xVec)) * 10 + 0.5);
-  rightLeftY = 10 - ((vehicle->FaceLeft().Dot(yVec)) * 5 + 0.5);
+  rightLeftX = 67.5 + ((vehicle->FaceLeft().Dot(xVec)) * 10.5);
+  rightLeftY = 9.5 - ((vehicle->FaceLeft().Dot(yVec)) * 5.5);
   leftD = -vehicle->FaceLeft().Dot(zVec);
   /* ***** Up ***** */
-  rightUpX = 67 + ((vehicle->FaceUp().Dot(xVec)) * 10 + 0.5);
-  rightUpY = 10 - ((vehicle->FaceUp().Dot(yVec)) * 5 + 0.5);
+  rightUpX = 67.5 + ((vehicle->FaceUp().Dot(xVec)) * 10.5);
+  rightUpY = 9.5 - ((vehicle->FaceUp().Dot(yVec)) * 5.5);
   upD = -vehicle->FaceUp().Dot(zVec);
   displayFaces('R');
   }
