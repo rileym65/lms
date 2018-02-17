@@ -3,6 +3,7 @@
 #include "terminal.h"
 
 LunarModule::LunarModule() {
+  landed = 0;
   throttle = 0;
   pitchRate = 0;
   rcsFbMode = ' ';
@@ -94,6 +95,10 @@ Int8 LunarModule::DescentJettisoned() {
   return descentJettisoned;
   }
 
+Int8 LunarModule::Landed() {
+  return landed;
+  }
+
 Double LunarModule::Oxygen() {
   return oxygen;
   }
@@ -161,6 +166,7 @@ void LunarModule::Cycle() {
   Double mainThrust;
   Double mainfuel;
   Vector v;
+  if (landed && !descentJettisoned) return;
   if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
     if (rollRate != 0) orientation.MultipliedBy(rollMatrix);
     if (pitchRate != 0) orientation.MultipliedBy(pitchMatrix);
@@ -199,11 +205,11 @@ GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot
     rcsFuel -= rcsfuel;
     }
   if (rcsFbMode == 'F' && rcsfuel <= rcsFuel) {
-    thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
+    thrust = thrust + (faceFront.Scale(rcsThrust));
     rcsFuel -= rcsfuel;
     }
   if (rcsFbMode == 'B' && rcsfuel <= rcsFuel) {
-    thrust = thrust + (faceFront.Scale(rcsThrust));
+    thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
     rcsFuel -= rcsfuel;
     }
   if (throttle != 0) {
@@ -227,6 +233,20 @@ GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot
       }
     }
   Vehicle::Cycle();
+  if (radius <= GROUND && !landed) {
+    RollRate(0);
+    PitchRate(0);
+    YawRate(0);
+    velocity = Vector(0,0,0);
+    landed = -1;
+    throttle = 0;
+    position = position.Norm().Scale(GROUND);
+    rcsFbMode = ' ';
+    rcsLrMode = ' ';
+    rcsUdMode = ' ';
+    altitude = 0;
+    radius = GROUND;
+    }
   }
 
 void LunarModule::Save(FILE* file) {
@@ -237,14 +257,15 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
   fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
   fprintf(file,"  Throttle %d%s",throttle,LE);
-  fprintf(file,"  AscentFuel %f%s",ascentFuel,LE);
-  fprintf(file,"  Battery %f%s",battery,LE);
-  fprintf(file,"  DescentFuel %f%s",descentFuel,LE);
-  fprintf(file,"  Oxygen %f%s",oxygen,LE);
-  fprintf(file,"  PitchRate %f%s",pitchRate,LE);
-  fprintf(file,"  RcsFuel %f%s",rcsFuel,LE);
-  fprintf(file,"  RollRate %f%s",rollRate,LE);
-  fprintf(file,"  YawRate %f%s",yawRate,LE);
+  fprintf(file,"  AscentFuel %.18f%s",ascentFuel,LE);
+  fprintf(file,"  Battery %.18f%s",battery,LE);
+  fprintf(file,"  DescentFuel %.18f%s",descentFuel,LE);
+  fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
+  fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
+  fprintf(file,"  RcsFuel %.18f%s",rcsFuel,LE);
+  fprintf(file,"  RollRate %.18f%s",rollRate,LE);
+  fprintf(file,"  YawRate %.18f%s",yawRate,LE);
+  fprintf(file,"  Landed %d%s",landed,LE);
   fprintf(file,"  }%s",LE);
   }
 
@@ -262,6 +283,7 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
   else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
   else if (startsWith(pline,"yawrate ")) YawRate(atof(nw(pline)));
+  else if (startsWith(pline,"landed ")) landed = atoi(nw(pline));
   else return 0;
   return -1;
   }

@@ -8,6 +8,7 @@ class LunarModule : public Vehicle {
   protected:
     
     Int8   descentJettisoned;
+    Int8   landed;
     char   rcsFbMode;
     char   rcsLrMode;
     char   rcsUdMode;
@@ -41,10 +42,10 @@ class LunarModule : public Vehicle {
     Double AscentFuel(Double d);
     Double Battery();
     Double Battery(Double d);
-
     Double DescentFuel();
     Double DescentFuel(Double d);
     Int8   DescentJettisoned();
+    Int8   Landed();
     Double Oxygen();
     Double Oxygen(Double d);
     Double PitchRate();

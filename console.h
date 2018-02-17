@@ -22,6 +22,7 @@ class Console {
     Int16 lastFr;
     Int8  lastInjury;
     Int8  lastInsMode;
+    Int8  lastLanded;
     Int8  lastLandingRadarOn;
     Int8  lastLmBattery;
     Int8  lastLmOxygen;

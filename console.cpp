@@ -19,6 +19,7 @@ Console::Console() {
   lastEfficiency = 0;
   lastFr = -999;
   lastInjury = -1;
+  lastLanded = 0;
   lastLandingRadarOn = 2;
   lastLmBattery = 0;
   lastLmOxygen = 0;
@@ -352,6 +353,11 @@ void Console::UpdateConsole() {
     GotoXY(58,22);
     printf("%c",(docked == 0) ? ' ' : '^');
     lastDocked = docked;
+    }
+  if (lm->Landed() != lastLanded) {
+    GotoXY(58,23);
+    printf("%c",(lm->Landed() == 0) ? ' ' : '^');
+    lastLanded = lm->Landed();
     }
   if (landingRadarOn != lastLandingRadarOn) {
     GotoXY(53,21);

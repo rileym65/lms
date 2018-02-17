@@ -150,20 +150,20 @@ Int8 Vehicle::SubLoad(char* line) {
   }
 
 void Vehicle::Save(FILE* file) {
-  fprintf(file,"  Altitude %f%s",altitude,LE);
-  fprintf(file,"  Latitude %f%s",latitude,LE);
-  fprintf(file,"  Longitude %f%s",longitude,LE);
-  fprintf(file,"  Radius %f%s",radius,LE);
-  fprintf(file,"  BaseFront %f %f %f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
-  fprintf(file,"  BaseUp %f %f %f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
-  fprintf(file,"  BaseLeft %f %f %f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
-  fprintf(file,"  FaceFront %f %f %f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
-  fprintf(file,"  FaceUp %f %f %f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
-  fprintf(file,"  FaceLeft %f %f %f%s",faceLeft.X(),faceLeft.Y(),faceLeft.Z(),LE);
-  fprintf(file,"  Position %f %f %f%s",position.X(),position.Y(),position.Z(),LE);
-  fprintf(file,"  Velocity %f %f %f%s",velocity.X(),velocity.Y(),velocity.Z(),LE);
-  fprintf(file,"  Thrust %f %f %f%s",thrust.X(),thrust.Y(),thrust.Z(),LE);
-  fprintf(file,"  Orientation %f %f %f %f %f %f %f %f %f%s",
+  fprintf(file,"  Altitude %.18f%s",altitude,LE);
+  fprintf(file,"  Latitude %.18f%s",latitude,LE);
+  fprintf(file,"  Longitude %.18f%s",longitude,LE);
+  fprintf(file,"  Radius %.18f%s",radius,LE);
+  fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
+  fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
+  fprintf(file,"  BaseLeft %.18f %.18f %.18f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
+  fprintf(file,"  FaceFront %.18f %.18f %.18f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
+  fprintf(file,"  FaceUp %.18f %.18f %.18f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
+  fprintf(file,"  FaceLeft %.18f %.18f %.18f%s",faceLeft.X(),faceLeft.Y(),faceLeft.Z(),LE);
+  fprintf(file,"  Position %.18f %.18f %.18f%s",position.X(),position.Y(),position.Z(),LE);
+  fprintf(file,"  Velocity %.18f %.18f %.18f%s",velocity.X(),velocity.Y(),velocity.Z(),LE);
+  fprintf(file,"  Thrust %.18f %.18f %.18f%s",thrust.X(),thrust.Y(),thrust.Z(),LE);
+  fprintf(file,"  Orientation %.18f %.18f %.18f %.18f %.18f %.18f %.18f %.18f %.18f%s",
     orientation.Cell(0,0), orientation.Cell(0,1), orientation.Cell(0,2),
     orientation.Cell(1,0), orientation.Cell(1,1), orientation.Cell(1,2),
     orientation.Cell(2,0), orientation.Cell(2,1), orientation.Cell(2,2),LE);
