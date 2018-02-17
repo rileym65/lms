@@ -90,6 +90,10 @@ Double LunarModule::DescentFuel(Double d) {
   return descentFuel;
   }
 
+Int8 LunarModule::DescentJettisoned() {
+  return descentJettisoned;
+  }
+
 Double LunarModule::Oxygen() {
   return oxygen;
   }
@@ -156,13 +160,18 @@ void LunarModule::Cycle() {
   Double newtons;
   Double mainThrust;
   Double mainfuel;
+  Vector v;
   if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
     if (rollRate != 0) orientation.MultipliedBy(rollMatrix);
     if (pitchRate != 0) orientation.MultipliedBy(pitchMatrix);
     if (yawRate != 0) orientation.MultipliedBy(yawMatrix);
+    orientation.Row(0,orientation.Row(0).Norm());
+    orientation.Row(1,orientation.Row(1).Norm());
+    orientation.Row(2,orientation.Row(2).Norm());
     faceFront = orientation.Transform(baseFront).Norm();
     faceLeft = orientation.Transform(baseLeft).Norm();
-    faceUp = orientation.Transform(baseUp).Norm();
+    faceUp = faceFront.Cross(faceLeft).Norm();
+    faceLeft = faceUp.Cross(faceFront).Norm();
     }
   switch (rcsThrottle) {
     case 1: rcsThrust = 19.7; rcsfuel = 0.05; break;
@@ -170,6 +179,7 @@ void LunarModule::Cycle() {
     case 100: rcsThrust = 1970.0; rcsfuel = 0.5; break;
     default : rcsThrust = 0;
     }
+GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot(faceUp),faceLeft.Dot(faceUp));
   rcsThrust = rcsThrust / Mass();
   thrust = Vector(0,0,0);
   if (rcsUdMode == 'D' && rcsfuel <= rcsFuel) {

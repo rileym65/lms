@@ -4,7 +4,7 @@ DEFS = -Wall
 INCDIR =
 INCS =
 LIBDIR =
-LIBS =
+LIBS = -lm
 HEADERS = header.h console.h vehicle.h csm.h lunarmodule.h ins.h matrix.h
 OBJS = \
 	console.o \

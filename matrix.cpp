@@ -63,6 +63,16 @@ void Matrix::MultipliedBy(Matrix b) {
       }
   }
 
+Vector Matrix::Row(Int8 r) {
+  return Vector(cell[r][0],cell[r][1],cell[r][2]);
+  }
+
+void Matrix::Row(Int8 r,Vector v) {
+  cell[r][0] = v.X();
+  cell[r][1] = v.Y();
+  cell[r][2] = v.Z();
+  }
+
 Vector Matrix::Transform(Vector a) {
   Double x,y,z;
   x=cell[0][0]*a.X() + cell[0][1]*a.Y() + cell[0][2]*a.Z();

@@ -276,6 +276,8 @@ void Console::UpdateConsole() {
   if (i > 99) i = 99;
   if (i != lastThrottle) {
     GotoXY(22,21); printf("%2d",i);
+    GotoXY(17,20);
+    if (!lm->DescentJettisoned() && i > 0) printf("^"); else printf(" ");
     lastThrottle = i;
     }
   i = (int)(lm->Oxygen() / LM_OXYGEN * 100);

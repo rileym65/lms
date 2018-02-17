@@ -44,6 +44,7 @@ class LunarModule : public Vehicle {
 
     Double DescentFuel();
     Double DescentFuel(Double d);
+    Int8   DescentJettisoned();
     Double Oxygen();
     Double Oxygen(Double d);
     Double PitchRate();
