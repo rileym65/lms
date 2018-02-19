@@ -131,6 +131,50 @@ void lmCommands(int key) {
     strcpy(message,"    UNDOCK");
     seqFunction = SEQ_UNDOCK;
     }
+  if (key == 'S') {
+    if (!spaceSuitOn) {
+      seqTime = 1800;
+      strcpy(message,"  SUIT->ON");
+      seqFunction = SEQ_SUITON;
+      }
+    else {
+      if (cabinPressurized && ! plssOn) {
+        seqTime = 1800;
+        strcpy(message," SUIT->OFF");
+        seqFunction = SEQ_SUITOFF;
+        }
+      }
+    }
+  if (key == 'P') {
+    if (!plssOn) {
+      if (spaceSuitOn) {
+        seqTime = 2400;
+        strcpy(message,"  PLSS->ON");
+        seqFunction = SEQ_PLSSON;
+        }
+      }
+    else {
+      if (cabinPressurized) {
+        seqTime = 2400;
+        strcpy(message," PLSS->OFF");
+        seqFunction = SEQ_PLSSOFF;
+        }
+      }
+    }
+  if (key == 'C') {
+    if (!cabinPressurized) {
+      seqTime = 120;
+      strcpy(message," CAB->PRES");
+      seqFunction = SEQ_CABINPRESS;
+      }
+    else {
+      if (spaceSuitOn) {
+        seqTime = 300;
+        strcpy(message," CAB->EVAC");
+        seqFunction = SEQ_CABINEVAC;
+        }
+      }
+    }
   if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
   if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
   if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
@@ -202,6 +246,24 @@ void executeSequencer() {
          lm->Longitude(csm->Longitude());
          lm->Radius(csm->Radius());
          docked = 0;
+         break;
+    case SEQ_SUITON:
+         spaceSuitOn = -1;
+         break;
+    case SEQ_SUITOFF:
+         spaceSuitOn = 0;
+         break;
+    case SEQ_PLSSON:
+         plssOn = -1;
+         break;
+    case SEQ_PLSSOFF:
+         plssOn = 0;
+         break;
+    case SEQ_CABINEVAC:
+         cabinPressurized = 0;
+         break;
+    case SEQ_CABINPRESS:
+         cabinPressurized = -1;
          break;
     }
   }

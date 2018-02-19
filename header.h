@@ -43,6 +43,12 @@
 #define SEQ_MOVE_LM      1
 #define SEQ_MOVE_CSM     2
 #define SEQ_UNDOCK       3
+#define SEQ_SUITON       4
+#define SEQ_SUITOFF      5
+#define SEQ_PLSSON       6
+#define SEQ_PLSSOFF      7
+#define SEQ_CABINEVAC    8
+#define SEQ_CABINPRESS   9
 
 #define LE   "\n"
 
