@@ -243,11 +243,11 @@ void INS::populatePosRel() {
       noData();
       }
     else {
-      sprintf(displayPosAltitude,"%7d",(int)(relPos.Y()));
-      sprintf(displayPosEast,"%7d",(int)(relPos.X()));
+      sprintf(displayPosAltitude,"%7d",(int)(relPos.X()));
+      sprintf(displayPosEast,"%7d",(int)(relPos.Y()));
       sprintf(displayPosNorth,"%7d",(int)(relPos.Z()));
-      printVelocity(relVel.X(), displayVelEast);
-      printVelocity(relVel.Y(), displayVelAltitude);
+      printVelocity(relVel.X(), displayVelAltitude);
+      printVelocity(relVel.Y(), displayVelEast);
       printVelocity(relVel.Z(), displayVelNorth);
 
 //      sprintf(displayVelAltitude,"%7.1f",relVel.Y());
@@ -286,6 +286,14 @@ void INS::printVelocity(Double v,char* buffer) {
   if (fabs(v) < 10) sprintf(buffer,"%7.3f",v);
   else if (fabs(v) < 100) sprintf(buffer,"%7.2f",v);
   else sprintf(buffer,"%7.1f",v);
+  }
+
+Vector INS::RelPos() {
+  return relPos;
+  }
+
+Vector INS::RelVel() {
+  return relVel;
   }
 
 void INS::Reset() {

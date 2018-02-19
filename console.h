@@ -17,6 +17,11 @@ class Console {
     Int8  lastDescentFuel;
     Int8  lastDocked;
     Int8  lastDockingRadarOn;
+    Int8  lastDockingRadarPosX;
+    Int8  lastDockingRadarPosY;
+    Int8  lastDockingRadarAngX;
+    Int8  lastDockingRadarAngY;
+    Int8  lastDockingRadarRolX;
     Int8  lastDsnOn;
     Int8  lastEfficiency;
     Int16 lastFr;
@@ -62,6 +67,7 @@ class Console {
     Int16 rightLeftX, rightLeftY;
     Int16 rightUpX, rightUpY;
     void  displayClock(Int32 x, Int32 y, Int32 clock);
+    void  displayDockingRadar();
     void  displayFaces(char side);
     void  displayIns(Vehicle *vehicle,Vehicle* target);
     void  displayLeftAxis(Vehicle *vehicle);

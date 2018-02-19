@@ -185,7 +185,7 @@ void LunarModule::Cycle() {
     case 100: rcsThrust = 1970.0; rcsfuel = 0.5; break;
     default : rcsThrust = 0;
     }
-GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot(faceUp),faceLeft.Dot(faceUp));
+//GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot(faceUp),faceLeft.Dot(faceUp));
   rcsThrust = rcsThrust / Mass();
   thrust = Vector(0,0,0);
   if (rcsUdMode == 'D' && rcsfuel <= rcsFuel) {

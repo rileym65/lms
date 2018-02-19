@@ -50,6 +50,9 @@
 #define SEQ_CABINEVAC    8
 #define SEQ_CABINPRESS   9
 
+#define INST_DR_X        42
+#define INST_DR_Y        5
+
 #define LE   "\n"
 
 LINK Int8         cabinPressurized;

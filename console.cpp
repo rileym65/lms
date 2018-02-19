@@ -15,6 +15,11 @@ Console::Console() {
   lastClockUt = (999 * 3600);
   lastDocked = 2;
   lastDockingRadarOn = 2;
+  lastDockingRadarPosX = 5;
+  lastDockingRadarPosY = 3;
+  lastDockingRadarAngX = 5;
+  lastDockingRadarAngY = 3;
+  lastDockingRadarRolX = 5;
   lastDsnOn = 2;
   lastEfficiency = 0;
   lastFr = -999;
@@ -84,6 +89,82 @@ void Console::displayClock(Int32 x, Int32 y, Int32 clock) {
   printf("%3d:%2d:%2d",hours,minutes,seconds);
   }
 
+void Console::displayDockingRadar() {
+  Int8 ax,ay;
+  Int8 px,py;
+  Int8 rx;
+  char nsVel;
+  char lVel;
+  char rVel;
+  char fVel;
+  char bVel;
+  Vector relPos;
+  Vector relVel;
+  relPos = ins->RelPos();
+  if (pilotLocation != PILOT_LM || !dockingRadarOn ||
+      dsnOn || landingRadarOn || relPos.Length() > 200) {
+    px = 5; py = 3;
+    ax = 5; ay = 3;
+    rx = 5;
+    nsVel = '|';
+    fVel = '-';
+    bVel = '-';
+    lVel = '|';
+    rVel = '|';
+    }
+  else {
+    relVel = ins->RelVel();
+    py = 3 - relPos.X()+.5;
+    if (py > 5) py = 5;
+    if (py < 1) py = 1;
+    px = 5 + relPos.Y()+.5;
+    if (px < 1) px = 1;
+    if (px > 9) px = 9;
+    ax = 5 + asin(lm->FaceUp().Y()) * 180 / M_PI + 0.5;
+    ay = 3 - asin(lm->FaceUp().X()) * 180 / M_PI + 0.5;
+    if (ax < 1) ax = 1;
+    if (ax > 9) ax = 9;
+    if (ay < 1) ay = 1;
+    if (ay > 5) ay = 5;
+    rx = 5 + asin(lm->FaceLeft().X()) * 180 / M_PI + 0.5;
+    if (rx < 1) rx = 1;
+    if (rx > 9) rx = 9;
+    if (relVel.Z() < -0.4) nsVel = '+';
+    else if (relVel.Z() < 0 && relVel.Z() > -0.2) nsVel = '-';
+    else nsVel = '|';
+    rVel = (relVel.Y() > 0.02) ? '<' : '|';
+    lVel = (relVel.Y() < -0.02) ? '>' : '|';
+    bVel = (relVel.X() > 0.02) ? 'v' : '-';
+    fVel = (relVel.X() < -0.02) ? '^' : '-';
+    }
+  GotoXY(INST_DR_X+lastDockingRadarPosX,INST_DR_Y+lastDockingRadarPosY);
+  printf(" ");
+  GotoXY(INST_DR_X+lastDockingRadarAngX,INST_DR_Y+lastDockingRadarAngY);
+  printf(" ");
+  GotoXY(INST_DR_X+lastDockingRadarRolX,INST_DR_Y+1); printf(" ");
+  GotoXY(INST_DR_X+lastDockingRadarRolX,INST_DR_Y+5); printf(" ");
+  GotoXY(INST_DR_X+rx,INST_DR_Y+1); printf("v");
+  GotoXY(INST_DR_X+rx,INST_DR_Y+5); printf("^");
+  if (ax == px && ay == py) {
+    GotoXY(INST_DR_X+px,INST_DR_Y+py); printf("*");
+    }
+  else {
+    GotoXY(INST_DR_X+px,INST_DR_Y+py); printf("+");
+    GotoXY(INST_DR_X+ax,INST_DR_Y+ay); printf("X");
+    }
+  GotoXY(INST_DR_X,INST_DR_Y+1); printf("%c",nsVel);
+  GotoXY(INST_DR_X+10,INST_DR_Y+1); printf("%c",nsVel);
+  GotoXY(INST_DR_X+9,INST_DR_Y); printf("%c",fVel);
+  GotoXY(INST_DR_X+9,INST_DR_Y+6); printf("%c",bVel);
+  GotoXY(INST_DR_X,INST_DR_Y+5); printf("%c",rVel);
+  GotoXY(INST_DR_X+10,INST_DR_Y+5); printf("%c",lVel);
+  lastDockingRadarPosX = px;
+  lastDockingRadarPosY = py;
+  lastDockingRadarAngX = ax;
+  lastDockingRadarAngY = ay;
+  lastDockingRadarRolX = rx;
+  }
+
 void Console::displayFaces(char side) {
   Boolean flag;
   Int8 i;
@@ -136,7 +217,7 @@ void Console::displayLeftAxis(Vehicle *vehicle) {
   vel = vehicle->Velocity().Norm();
   xVec = Vector(0,0,1);
   yVec = vehicle->Position().Norm();
-GotoXY(1,27); printf("%f %f %f\n",yVec.X(),yVec.Y(),yVec.Z());
+//GotoXY(1,27); printf("%f %f %f\n",yVec.X(),yVec.Y(),yVec.Z());
 //  xVec = Vector(yVec.Z(),-yVec.Z(),1-fabs(yVec.Z()));
   zVec = Vector(yVec.Y(), -yVec.X(), yVec.Z()).Norm();
   GotoXY(leftFaceX, leftFaceY); printf(" ");
@@ -513,6 +594,7 @@ void Console::UpdateConsole() {
 
   if (pilotLocation == PILOT_CSM) displayIns(csm, lm);
   if (pilotLocation == PILOT_LM)  displayIns(lm, csm);
+  displayDockingRadar();
   fflush(stdout);
   }
 

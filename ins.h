@@ -72,6 +72,8 @@ class INS {
     char*    DisplayMomNorth();
     Int8     Mode();
     Int8     Mode(Int8 i);
+    Vector   RelPos();
+    Vector   RelVel();
     void     Reset();
     Vehicle* Spacecraft();
     Vehicle* Spacecraft(Vehicle* v);
