@@ -270,6 +270,7 @@ void executeSequencer() {
 
 int main(int argc, char** argv) {
   int key;
+  char buffer[64];
 //test();
 //exit(1);
   simSpeed = 100000;
@@ -281,12 +282,14 @@ int main(int argc, char** argv) {
     targetLatitude = -9999.99;
     while (targetLatitude <-90 || targetLatitude > 90) {
       printf("Target latitude: ");
-      scanf("%lf",&targetLatitude);
+      fgets(buffer,64,stdin);
+      sscanf(buffer,"%lf",&targetLatitude);
       }
     targetLongitude = -9999.99;
     while (targetLongitude <-180 || targetLongitude > 180) {
       printf("Target longitude: ");
-      scanf("%lf",&targetLongitude);
+      fgets(buffer,64,stdin);
+      sscanf(buffer,"%lf",&targetLongitude);
       }
     }
   OpenTerminal();

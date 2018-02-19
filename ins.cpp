@@ -211,11 +211,11 @@ void INS::populatePosTar() {
   sprintf(displayAccAltitude,"%7.1f",accAltitude);
   sprintf(displayAccEast,"%7.1f",accEast);
   sprintf(displayAccNorth,"%7.1f",accNorth);
-  if (dsnOn || fabs(tarLongitude) > 3.0)
+  if (dsnOn || fabs(tarLongitude) > 3.0 || pilotLocation == PILOT_CSM)
     sprintf(displayPosEast,"%7.2f",tarLongitude);
   else
     sprintf(displayPosEast,"%7.0f",tarLongitude * (METERS));
-  if (dsnOn || fabs(tarLatitude) > 3.0)
+  if (dsnOn || fabs(tarLatitude) > 3.0 || pilotLocation == PILOT_CSM)
     sprintf(displayPosNorth,"%7.2f",tarLatitude);
   else
     sprintf(displayPosNorth,"%7.2f",tarLatitude * METERS);
