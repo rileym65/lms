@@ -83,6 +83,19 @@ Vector t;
   spaceSuitOn = 0;
   }
 
+Boolean alignedForDocking() {
+  Vector v;
+  Double ax,ay,rx;
+  v = ins->RelVel();
+  if (v.Z() > -0.2) return false;
+  if (v.Z() < -0.4) return false;
+  ax = asin(lm->FaceUp().Y()) * 180 / M_PI;
+  ay = asin(lm->FaceUp().X()) * 180 / M_PI;
+  rx = asin(lm->FaceLeft().X()) * 180 / M_PI;
+  if (fabs(ax) <= 0.5 && fabs(ay) <= 0.5 && fabs(rx) <= 0.5) return true;
+  return false;
+  }
+
 void cycle() {
   Vector v,v1;
   csm->Cycle();
@@ -96,6 +109,31 @@ void cycle() {
     }
   else lm->Cycle();
   ins->Cycle();
+  if (!docked) {
+    if (ins->RelPos().Length() < 19) {
+      if (alignedForDocking()) {
+        lm->Velocity(csm->Velocity());
+        docked = -1;
+        }
+      else {
+        v = ins->RelVel();
+        if (v.Length() > 2) {
+          ClrScr();
+          printf("Collision with the CSM destroyed both vehicles!!!\n");
+          ShowCursor();
+          CloseTerminal();
+          exit(0);
+          }
+        else {
+          lm->Position(lm->Position() - v);
+          lm->Velocity(lm->Velocity() - v);
+          v = v.Scale(0.5);
+          csm->Velocity(csm->Velocity() + v);
+          lm->Velocity(lm->Velocity() - v);
+          }
+        }
+      }
+    }
   console->UpdateConsole();
   }
 
@@ -338,6 +376,7 @@ int main(int argc, char** argv) {
       if (key == '@') simSpeed = 10000;
       if (key == '#') simSpeed = 1000;
       if (key == '$') simSpeed = 100;
+      if (key == '%') simSpeed = 10;
       if (seqTime == 0) {
         if (key == '1') { insMode = INS_MODE_POS_ABS; ins->Mode(insMode); }
         if (key == '2') { insMode = INS_MODE_POS_TAR; ins->Mode(insMode); }
