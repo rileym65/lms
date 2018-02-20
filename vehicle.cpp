@@ -299,10 +299,6 @@ void Vehicle::UpdatePanel() {
   }
 
 void Vehicle::ProcessKey(Int32 key) {
-  if (key == 'M') {
-    seqTime = 2400;
-    strcpy(message,"  MOVE->LM");
-    seqFunction = SEQ_MOVE_LM;
-    }
+  if (key == 'M') seq->MoveLm();
   }
 

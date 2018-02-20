@@ -25,7 +25,7 @@ class Vehicle {
     Double velocityAltitude;
   public:
     Vehicle();
-    ~Vehicle();
+    virtual ~Vehicle();
     virtual Double Altitude();
     virtual Double Altitude(Double d);
     virtual Vector FaceFront();

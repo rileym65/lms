@@ -3,8 +3,6 @@
 #include "header.h"
 #include "terminal.h"
 
-Boolean run;
-
 void setup() {
 Vector t;
   pilotLocation = PILOT_CSM;
@@ -43,7 +41,6 @@ Vector t;
   lrvBattery = LRV_BATTERY;
   lrvRock = 0;
   metabolicRate = 30.0;
-  strcpy(message,"----------");
   targetLatitude = 0.0;
   targetLongitude = 0.0;
   plssOn = 0;
@@ -51,7 +48,6 @@ Vector t;
   plssBattery = PLSS_BATTERY;
   plssPacks = 4;
   sampleBoxes = 8;
-  seqTime = 0;
   spaceSuitOn = 0;
   }
 
@@ -86,9 +82,7 @@ void cycle() {
       if (alignedForDocking()) {
         lm->Velocity(csm->Velocity());
         docked = -1;
-        seqTime = 60;
-        strcpy(message,"   DOCKING");
-        seqFunction = SEQ_DOCKING;
+        seq->Dock();
         }
       else {
         v = ins->RelVel();
@@ -110,56 +104,6 @@ void cycle() {
       }
     }
   currentVehicle->UpdatePanel();
-  }
-
-void executeSequencer() {
-  switch (seqFunction) {
-    case SEQ_MOVE_LM:
-         pilotLocation = PILOT_LM;
-         ins->Spacecraft(lm);
-         ins->Target(csm);
-         currentVehicle = lm;
-         currentVehicle->SetupPanel();
-         break;
-    case SEQ_MOVE_CSM:
-         pilotLocation = PILOT_CSM;
-         ins->Spacecraft(csm);
-         ins->Target(lm);
-         currentVehicle = csm;
-         currentVehicle->SetupPanel();
-         run = false;
-         break;
-    case SEQ_UNDOCK:
-         lm->Position(csm->Position() + Vector(0,0,19));
-         lm->Velocity(csm->Velocity() + Vector(0,0,0.1));
-         lm->Altitude(csm->Altitude());
-         lm->Latitude(csm->Latitude());
-         lm->Longitude(csm->Longitude());
-         lm->Radius(csm->Radius());
-         docked = 0;
-         break;
-    case SEQ_SUITON:
-         spaceSuitOn = -1;
-         break;
-    case SEQ_SUITOFF:
-         spaceSuitOn = 0;
-         break;
-    case SEQ_PLSSON:
-         plssOn = -1;
-         plssOxygen = PLSS_OXYGEN;
-         plssBattery = PLSS_BATTERY;
-         plssPacks--;
-         break;
-    case SEQ_PLSSOFF:
-         plssOn = 0;
-         break;
-    case SEQ_CABINEVAC:
-         cabinPressurized = 0;
-         break;
-    case SEQ_CABINPRESS:
-         cabinPressurized = -1;
-         break;
-    }
   }
 
 void setupTargetData() {
@@ -190,6 +134,7 @@ int main(int argc, char** argv) {
   csm = new CSM();
   lm = new LunarModule();
   ins = new INS();
+  seq = new Sequencer();
   setup();
   if (load((char*)"lms.sav") == 0) {
     targetLatitude = -9999.99;
@@ -236,15 +181,7 @@ int main(int argc, char** argv) {
         }
       cycle();
       ticks = 0;
-      if (seqTime > 0) {
-        seqTime--;
-        if (seqTime == 0) {
-          strcpy(message,"----------");
-          simSpeed = 100000;
-          executeSequencer();
-          currentVehicle->UpdatePanel();
-          }
-        }
+      seq->Cycle();
       }
     else ticks++;
     usleep(simSpeed);
@@ -255,7 +192,7 @@ int main(int argc, char** argv) {
       if (key == '#') simSpeed = 1000;
       if (key == '$') simSpeed = 100;
       if (key == '%') simSpeed = 10;
-      if (seqTime == 0) {
+      if (seq->Time() == 0) {
         if (key == '1') { insMode = INS_MODE_POS_ABS; ins->Mode(insMode); }
         if (key == '2') { insMode = INS_MODE_POS_TAR; ins->Mode(insMode); }
         if (key == '3') { insMode = INS_MODE_POS_REL; ins->Mode(insMode); }
@@ -270,6 +207,10 @@ int main(int argc, char** argv) {
   GotoXY(1,25);
   ShowCursor();
   CloseTerminal();
+  delete(csm);
+  delete(lm);
+  delete(console);
+  delete(seq);
   return 0;
   }
 

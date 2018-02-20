@@ -326,60 +326,20 @@ Int8 LunarModule::SubLoad(char* pline) {
 
 void LunarModule::ProcessKey(Int32 key) {
   if (key == 'M') {
-    if (docked) {
-      seqTime = 900;
-      strcpy(message," MOVE->CSM");
-      seqFunction = SEQ_MOVE_CSM;
-      }
+    if (docked) seq->MoveCsm();
     }
-  if (key == 'U' && docked) {
-    seqTime = 60;
-    strcpy(message,"    UNDOCK");
-    seqFunction = SEQ_UNDOCK;
-    }
+  if (key == 'U' && docked) seq->Undock();
   if (key == 'S') {
-    if (!spaceSuitOn) {
-      seqTime = 20 * 60;
-      strcpy(message,"  SUIT->ON");
-      seqFunction = SEQ_SUITON;
-      }
-    else {
-      if (cabinPressurized && ! plssOn) {
-        seqTime = 35 * 60;
-        strcpy(message," SUIT->OFF");
-        seqFunction = SEQ_SUITOFF;
-        }
-      }
+    if (!spaceSuitOn) seq->SpaceSuitOn();
+    else if (cabinPressurized && ! plssOn) seq->SpaceSuitOff();
     }
   if (key == 'P') {
-    if (!plssOn) {
-      if (spaceSuitOn && plssPacks > 0) {
-        seqTime = 35 * 60;
-        strcpy(message,"  PLSS->ON");
-        seqFunction = SEQ_PLSSON;
-        }
-      }
-    else {
-      if (cabinPressurized) {
-        seqTime = 45 * 60;
-        strcpy(message," PLSS->OFF");
-        seqFunction = SEQ_PLSSOFF;
-        }
-      }
+    if (!plssOn && spaceSuitOn && plssPacks > 0) seq->PlssOn();
+    else if (plssOn && cabinPressurized) seq->PlssOff();
     }
   if (key == 'C') {
-    if (!cabinPressurized) {
-      seqTime = 2 * 60;
-      strcpy(message," CAB->PRES");
-      seqFunction = SEQ_CABINPRESS;
-      }
-    else {
-      if (spaceSuitOn) {
-        seqTime = 5 * 60;
-        strcpy(message," CAB->EVAC");
-        seqFunction = SEQ_CABINEVAC;
-        }
-      }
+    if (!cabinPressurized) seq->CabinPressurize();
+    else if (spaceSuitOn) seq->CabinEvacuate();
     }
   if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
   if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;

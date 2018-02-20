@@ -560,19 +560,19 @@ void Console::DisplayStatus(Int8 x, Int8 y) {
   }
 
 void Console::DisplaySeq(Int8 x, Int8 y) {
-  if (strcmp(message,lastMessage) != 0) {
-    GotoXY(x,y); printf("%s",message);
-    strcpy(lastMessage,message);
+  if (strcmp(seq->Message(),lastMessage) != 0) {
+    GotoXY(x,y); printf("%s",seq->Message());
+    strcpy(lastMessage,seq->Message());
     }
-  if (seqTime != lastSeqTime) {
+  if (seq->Time() != lastSeqTime) {
     GotoXY(x+11,y);
-    if (seqTime == 0) {
+    if (seq->Time() == 0) {
       printf("    ");
       }
     else {
-      printf("%4d",seqTime);
+      printf("%4d",seq->Time());
       }
-    lastSeqTime = seqTime;
+    lastSeqTime = seq->Time();
     }
   }
 

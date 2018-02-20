@@ -18,6 +18,7 @@
 #include "csm.h"
 #include "ins.h"
 #include "console.h"
+#include "sequencer.h"
 
 #define PILOT_CSM 'c'
 #define PILOT_LRV 'v'
@@ -40,16 +41,6 @@
 #define MOON  4.9075e12
 #define GROUND 1738300
 #define METERS ((GROUND*2*M_PI) / 360.0)
-#define SEQ_MOVE_LM      1
-#define SEQ_MOVE_CSM     2
-#define SEQ_UNDOCK       3
-#define SEQ_SUITON       4
-#define SEQ_SUITOFF      5
-#define SEQ_PLSSON       6
-#define SEQ_PLSSOFF      7
-#define SEQ_CABINEVAC    8
-#define SEQ_CABINPRESS   9
-#define SEQ_DOCKING     10
 
 
 #define LE   "\n"
@@ -72,15 +63,12 @@ LINK Int8         landingRadarOn;
 LINK Int16        lmRock;
 LINK Double       lrvBattery;
 LINK Int8         lrvRock;
-LINK char         message[32];
 LINK Double       metabolicRate;
 LINK char         pilotLocation;
 LINK Double       plssOxygen;
 LINK Double       plssBattery;
 LINK Int8         plssPacks;
 LINK Int8         sampleBoxes;
-LINK Int32        seqTime;
-LINK Int8         seqFunction;
 LINK Int32        simSpeed;
 LINK Double       targetLatitude;
 LINK Double       targetLongitude;
@@ -95,6 +83,9 @@ LINK Int8         plssOn;
 LINK Int8         spaceSuitOn;
 LINK INS         *ins;
 LINK Vehicle*     currentVehicle;
+LINK Sequencer*   seq;
+LINK Boolean      run;
+
 
 LINK Int8 INST_DR_X;
 LINK Int8 INST_DR_Y;

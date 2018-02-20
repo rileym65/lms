@@ -30,7 +30,7 @@ class LunarModule : public Vehicle {
     Matrix yawMatrix;
   public:
     LunarModule();
-    ~LunarModule();
+    virtual ~LunarModule();
     char   RcsFbMode();
     char   RcsFbMode(char c);
     char   RcsLrMode();
