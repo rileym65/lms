@@ -63,6 +63,7 @@ class LunarModule : public Vehicle {
     virtual Double Mass();
     virtual void   Save(FILE* file);
     virtual Int8   SubLoad(char* line);
+    virtual void   ProcessKey(Int32 key);
   };
 
 #endif

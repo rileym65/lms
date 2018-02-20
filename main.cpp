@@ -112,121 +112,6 @@ void cycle() {
   currentVehicle->UpdatePanel();
   }
 
-void csmCommands(int key) {
-  if (key == 'M') {
-    seqTime = 2400;
-    strcpy(message,"  MOVE->LM");
-    seqFunction = SEQ_MOVE_LM;
-    }
-  }
-
-void lmCommands(int key) {
-  if (key == 'M') {
-    if (docked) {
-      seqTime = 900;
-      strcpy(message," MOVE->CSM");
-      seqFunction = SEQ_MOVE_CSM;
-      }
-    }
-  if (key == 'U' && docked) {
-    seqTime = 60;
-    strcpy(message,"    UNDOCK");
-    seqFunction = SEQ_UNDOCK;
-    }
-  if (key == 'S') {
-    if (!spaceSuitOn) {
-      seqTime = 20 * 60;
-      strcpy(message,"  SUIT->ON");
-      seqFunction = SEQ_SUITON;
-      }
-    else {
-      if (cabinPressurized && ! plssOn) {
-        seqTime = 35 * 60;
-        strcpy(message," SUIT->OFF");
-        seqFunction = SEQ_SUITOFF;
-        }
-      }
-    }
-  if (key == 'P') {
-    if (!plssOn) {
-      if (spaceSuitOn && plssPacks > 0) {
-        seqTime = 35 * 60;
-        strcpy(message,"  PLSS->ON");
-        seqFunction = SEQ_PLSSON;
-        }
-      }
-    else {
-      if (cabinPressurized) {
-        seqTime = 45 * 60;
-        strcpy(message," PLSS->OFF");
-        seqFunction = SEQ_PLSSOFF;
-        }
-      }
-    }
-  if (key == 'C') {
-    if (!cabinPressurized) {
-      seqTime = 2 * 60;
-      strcpy(message," CAB->PRES");
-      seqFunction = SEQ_CABINPRESS;
-      }
-    else {
-      if (spaceSuitOn) {
-        seqTime = 5 * 60;
-        strcpy(message," CAB->EVAC");
-        seqFunction = SEQ_CABINEVAC;
-        }
-      }
-    }
-  if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
-  if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
-  if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
-  if (!docked) {
-    if (key == 'f' && lm->RcsFbMode() == ' ') lm->RcsFbMode('F');
-    if (key == 'f' && lm->RcsFbMode() == 'B') lm->RcsFbMode(' ');
-    if (key == 'b' && lm->RcsFbMode() == ' ') lm->RcsFbMode('B');
-    if (key == 'b' && lm->RcsFbMode() == 'F') lm->RcsFbMode(' ');
-    if (key == 'l' && lm->RcsLrMode() == ' ') lm->RcsLrMode('L');
-    if (key == 'l' && lm->RcsLrMode() == 'R') lm->RcsLrMode(' ');
-    if (key == 'r' && lm->RcsLrMode() == ' ') lm->RcsLrMode('R');
-    if (key == 'r' && lm->RcsLrMode() == 'L') lm->RcsLrMode(' ');
-    if (key == 'd' && lm->RcsUdMode() == ' ') lm->RcsUdMode('D');
-    if (key == 'd' && lm->RcsUdMode() == 'U') lm->RcsUdMode(' ');
-    if (key == 'u' && lm->RcsUdMode() == ' ') lm->RcsUdMode('U');
-    if (key == 'u' && lm->RcsUdMode() == 'D') lm->RcsUdMode(' ');
-    if (key == '=' && lm->RcsThrottle() == 10) lm->RcsThrottle(100);
-    if (key == '=' && lm->RcsThrottle() == 1) lm->RcsThrottle(10);
-    if (key == '-' && lm->RcsThrottle() == 10) lm->RcsThrottle(1);
-    if (key == '-' && lm->RcsThrottle() == 100) lm->RcsThrottle(10);
-    if (key == 'I' && lm->Throttle() == 0) {
-      lm->Throttle(10);
-      clockBu = 0;
-      }
-    if (key == 'i') lm->Throttle(0);
-    if (key == KEY_KP_HOME) lm->RollRate(lm->RollRate()+1);
-    if (key == KEY_HOME) lm->RollRate(lm->RollRate()+1);
-    if (key == KEY_PGUP) lm->RollRate(lm->RollRate()-1);
-    if (key == KEY_UP_ARROW) lm->PitchRate(lm->PitchRate()+1);
-    if (key == KEY_DOWN_ARROW) lm->PitchRate(lm->PitchRate()-1);
-    if (key == KEY_RIGHT_ARROW) lm->YawRate(lm->YawRate()+1);
-    if (key == KEY_LEFT_ARROW) lm->YawRate(lm->YawRate()-1);
-    if (lm->Throttle() > 0) {
-      if (key == KEY_PGDN) lm->Throttle(lm->Throttle()+2);
-      if (key == KEY_END) lm->Throttle(lm->Throttle()-2);
-      if (key == KEY_KP_END) lm->Throttle(lm->Throttle()-2);
-      if (key == KEY_F1) lm->Throttle(10);
-      if (key == KEY_F2) lm->Throttle(20);
-      if (key == KEY_F3) lm->Throttle(30);
-      if (key == KEY_F4) lm->Throttle(40);
-      if (key == KEY_F5) lm->Throttle(50);
-      if (key == KEY_F6) lm->Throttle(60);
-      if (key == KEY_F7) lm->Throttle(70);
-      if (key == KEY_F8) lm->Throttle(80);
-      if (key == KEY_F9) lm->Throttle(90);
-      if (key == KEY_F10) lm->Throttle(100);
-      }
-    }
-  }
-
 void executeSequencer() {
   switch (seqFunction) {
     case SEQ_MOVE_LM:
@@ -335,7 +220,6 @@ int main(int argc, char** argv) {
     currentVehicle = lm;
     }
   currentVehicle->SetupPanel();
-//  drawPanel();
   run = true;
   ticks = 10;
   currentVehicle->UpdatePanel();
@@ -378,8 +262,7 @@ int main(int argc, char** argv) {
         if (key == '4') { insMode = INS_MODE_ORB_ABS; ins->Mode(insMode); }
         if (key == '5') { insMode = INS_MODE_ORB_TAR; ins->Mode(insMode); }
         if (key == 'Q') run = false;
-        if (pilotLocation == PILOT_CSM) csmCommands(key);
-        if (pilotLocation == PILOT_LM)  lmCommands(key);
+        currentVehicle->ProcessKey(key);
         }
       }
     }

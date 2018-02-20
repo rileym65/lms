@@ -324,4 +324,111 @@ Int8 LunarModule::SubLoad(char* pline) {
   return -1;
   }
 
+void LunarModule::ProcessKey(Int32 key) {
+  if (key == 'M') {
+    if (docked) {
+      seqTime = 900;
+      strcpy(message," MOVE->CSM");
+      seqFunction = SEQ_MOVE_CSM;
+      }
+    }
+  if (key == 'U' && docked) {
+    seqTime = 60;
+    strcpy(message,"    UNDOCK");
+    seqFunction = SEQ_UNDOCK;
+    }
+  if (key == 'S') {
+    if (!spaceSuitOn) {
+      seqTime = 20 * 60;
+      strcpy(message,"  SUIT->ON");
+      seqFunction = SEQ_SUITON;
+      }
+    else {
+      if (cabinPressurized && ! plssOn) {
+        seqTime = 35 * 60;
+        strcpy(message," SUIT->OFF");
+        seqFunction = SEQ_SUITOFF;
+        }
+      }
+    }
+  if (key == 'P') {
+    if (!plssOn) {
+      if (spaceSuitOn && plssPacks > 0) {
+        seqTime = 35 * 60;
+        strcpy(message,"  PLSS->ON");
+        seqFunction = SEQ_PLSSON;
+        }
+      }
+    else {
+      if (cabinPressurized) {
+        seqTime = 45 * 60;
+        strcpy(message," PLSS->OFF");
+        seqFunction = SEQ_PLSSOFF;
+        }
+      }
+    }
+  if (key == 'C') {
+    if (!cabinPressurized) {
+      seqTime = 2 * 60;
+      strcpy(message," CAB->PRES");
+      seqFunction = SEQ_CABINPRESS;
+      }
+    else {
+      if (spaceSuitOn) {
+        seqTime = 5 * 60;
+        strcpy(message," CAB->EVAC");
+        seqFunction = SEQ_CABINEVAC;
+        }
+      }
+    }
+  if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
+  if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
+  if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
+  if (!docked) {
+    if (key == 'f' && RcsFbMode() == ' ') RcsFbMode('F');
+    if (key == 'f' && RcsFbMode() == 'B') RcsFbMode(' ');
+    if (key == 'b' && RcsFbMode() == ' ') RcsFbMode('B');
+    if (key == 'b' && RcsFbMode() == 'F') RcsFbMode(' ');
+    if (key == 'l' && RcsLrMode() == ' ') RcsLrMode('L');
+    if (key == 'l' && RcsLrMode() == 'R') RcsLrMode(' ');
+    if (key == 'r' && RcsLrMode() == ' ') RcsLrMode('R');
+    if (key == 'r' && RcsLrMode() == 'L') RcsLrMode(' ');
+    if (key == 'd' && RcsUdMode() == ' ') RcsUdMode('D');
+    if (key == 'd' && RcsUdMode() == 'U') RcsUdMode(' ');
+    if (key == 'u' && RcsUdMode() == ' ') RcsUdMode('U');
+    if (key == 'u' && RcsUdMode() == 'D') RcsUdMode(' ');
+    if (key == '=' && RcsThrottle() == 10) RcsThrottle(100);
+    if (key == '=' && RcsThrottle() == 1) RcsThrottle(10);
+    if (key == '-' && RcsThrottle() == 10) RcsThrottle(1);
+    if (key == '-' && RcsThrottle() == 100) RcsThrottle(10);
+    if (key == 'I' && Throttle() == 0) {
+      Throttle(10);
+      clockBu = 0;
+      }
+    if (key == 'i') Throttle(0);
+    if (key == KEY_KP_HOME) RollRate(RollRate()+1);
+    if (key == KEY_HOME) RollRate(RollRate()+1);
+    if (key == KEY_PGUP) RollRate(RollRate()-1);
+    if (key == KEY_UP_ARROW) PitchRate(PitchRate()+1);
+    if (key == KEY_DOWN_ARROW) PitchRate(PitchRate()-1);
+    if (key == KEY_RIGHT_ARROW) YawRate(YawRate()+1);
+    if (key == KEY_LEFT_ARROW) YawRate(YawRate()-1);
+    if (Throttle() > 0) {
+      if (key == KEY_PGDN) Throttle(Throttle()+2);
+      if (key == KEY_END) Throttle(Throttle()-2);
+      if (key == KEY_KP_END) Throttle(Throttle()-2);
+      if (key == KEY_F1) Throttle(10);
+      if (key == KEY_F2) Throttle(20);
+      if (key == KEY_F3) Throttle(30);
+      if (key == KEY_F4) Throttle(40);
+      if (key == KEY_F5) Throttle(50);
+      if (key == KEY_F6) Throttle(60);
+      if (key == KEY_F7) Throttle(70);
+      if (key == KEY_F8) Throttle(80);
+      if (key == KEY_F9) Throttle(90);
+      if (key == KEY_F10) Throttle(100);
+      }
+    }
+  }
+
 

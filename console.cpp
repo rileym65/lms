@@ -31,6 +31,7 @@ void Console::Reset() {
   lastEfficiency = 0;
   lastFr = -999;
   lastInjury = -1;
+  lastInsMode = -1;
   lastLanded = 0;
   lastLandingRadarOn = 2;
   lastLmBattery = 0;

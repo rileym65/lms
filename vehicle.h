@@ -55,6 +55,7 @@ class Vehicle {
     virtual void   Load(FILE* file);
     virtual void   SetupPanel();
     virtual void   UpdatePanel();
+    virtual void   ProcessKey(Int32 key);
   };
 
 #endif
