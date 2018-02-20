@@ -1,5 +1,7 @@
 #include "header.h"
 #include "ins.h"
+#include "terminal.h"
+#include "math.h"
 
 INS::INS() {
   accAltitude = 0;
@@ -81,6 +83,7 @@ void INS::Cycle() {
   if (mode == INS_MODE_POS_TAR) populatePosTar();
   if (mode == INS_MODE_POS_REL) populatePosRel();
   if (mode == INS_MODE_ORB_ABS) populateOrbAbs();
+  if (mode == INS_MODE_ORB_TAR) populateOrbTar();
   }
 
 Double INS::AttUr() {
@@ -218,7 +221,7 @@ void INS::populatePosTar() {
   if (dsnOn || fabs(tarLatitude) > 3.0 || pilotLocation == PILOT_CSM)
     sprintf(displayPosNorth,"%7.2f",tarLatitude);
   else
-    sprintf(displayPosNorth,"%7.2f",tarLatitude * METERS);
+    sprintf(displayPosNorth,"%7.0f",tarLatitude * METERS);
   }
 
 void INS::populatePosRel() {
@@ -279,6 +282,40 @@ void INS::populateOrbAbs() {
   sprintf(displayPerilune,"%7.1f",(perilune-GROUND)/1000);
   sprintf(displayMomEast,"%7.2f",momEast);
   sprintf(displayMomNorth,"%7.2f",momNorth);
+  clockOr = orbitTime;
+  }
+
+void INS::populateOrbTar() {
+/*
+  Vector L;
+  Double mn;
+  Double me;
+  Double hyp;
+  Vector vel;
+  Vector pos;
+  Double x,y,z;
+  Double c,s;
+  c = -1680.226342 * cos(targetLongitude*M_PI/180);
+  s = -1680.226342 * sin(targetLongitude*M_PI/180);
+  z = sin(targetLatitude*M_PI/180);
+  x = sin(targetLongitude*M_PI/180) * cos(targetLatitude*M_PI/180);
+  y = -cos(targetLongitude*M_PI/180) * cos(targetLatitude*M_PI/180);
+  pos = Vector(x*GROUND,y*GROUND,z*GROUND);
+GotoXY(1,26); printf("POS: %f %f %f\n",pos.X(),pos.Y(),pos.Z());
+  vel = Vector(c,s,0);
+  L = vel.Cross(pos).Norm();
+  hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
+  me = L.X() / hyp;
+  me = acos(me) * 180 / M_PI;
+  if (me <= -180) me += 360;
+  if (me >= 180) me -= 360;
+GotoXY(1,27); printf("Cross: %f %f %f\n",L.X(),L.Y(),L.Z());
+  mn = asin(L.Z()) * 180 / M_PI;
+*/
+  sprintf(displayApolune,"%7.1f",(apolune-GROUND)/1000);
+  sprintf(displayPerilune,"%7.1f",(perilune-GROUND)/1000);
+  sprintf(displayMomEast,"%7.2f",targetMomEast);
+  sprintf(displayMomNorth,"%7.2f",targetMomNorth);
   clockOr = orbitTime;
   }
 

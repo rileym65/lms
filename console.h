@@ -66,16 +66,40 @@ class Console {
     Int16 rightFaceX, rightFaceY;
     Int16 rightLeftX, rightLeftY;
     Int16 rightUpX, rightUpY;
-    void  displayClock(Int32 x, Int32 y, Int32 clock);
-    void  displayDockingRadar();
-    void  displayFaces(char side);
-    void  displayIns(Vehicle *vehicle,Vehicle* target);
-    void  displayLeftAxis(Vehicle *vehicle);
-    void  displayRightAxis(Vehicle * vehicle);
+    void displayClock(Int32 x, Int32 y, Int32 clock);
+    void displayFaces(Int8 x, Int8 y, char side);
   public:
     Console();
     ~Console();
+    void Reset();
     void UpdateConsole();
+    void DisplayAtt(Int8 x,Int8 y);
+    void DisplayClocks(Int8 x,Int8 y);
+    void DisplayCons(Int8 x, Int8 y);
+    void DisplayDockingRadar(Int8 x, Int8 y);
+    void DisplayIns(Int8 x,Int8 y);
+    void DisplayWestAxis(Int8 x, Int8 y, Vehicle *vehicle);
+    void DisplayLrv(Int8 x, Int8 y);
+    void DisplayPlss(Int8 x, Int8 y);
+    void DisplayDownAxis(Int8 x, Int8 y, Vehicle * vehicle);
+    void DisplaySeq(Int8 x,Int8 y);
+    void DisplaySpin(Int8 x,Int8 y);
+    void DisplayStatus(Int8, Int8 y);
+    void DrawAtt(Int8 x,Int8 y);
+    void DrawClocks(Int8 x, Int8 y);
+    void DrawCons(Int8 x,Int8 y);
+    void DrawDockingRadar(Int8 x, Int8 y);
+    void DrawDownAxis(Int8 x, Int8 y);
+    void DrawInd(Int8 x, Int8 y);
+    void DrawIns(Int8 x, Int8 y);
+    void DrawLandingRadar(Int8 x, Int8 y);
+    void DrawLm(Int8 x, Int8 y);
+    void DrawLrv(Int8 x, Int8 y);
+    void DrawPilot(Int8 x, Int8 y);
+    void DrawPlss(Int8 x, Int8 y);
+    void DrawSpin(Int8 x,Int8 y);
+    void DrawStatus(Int8 x,Int8 y);
+    void DrawWestAxis(Int8 x, Int8 y);
   };
 
 #endif

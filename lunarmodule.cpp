@@ -12,6 +12,14 @@ LunarModule::LunarModule() {
   rollRate = 0;
   yawRate = 0;
   descentJettisoned = 0;
+/*
+  roll = 0;
+  pitch = 0;
+  yaw = 0;
+  rollMatrix = Matrix::RotateZ(roll);
+  pitchMatrix = Matrix::RotateY(pitch);
+  yawMatrix = Matrix::RotateX(yaw);
+*/
   }
 
 LunarModule::~LunarModule() {
@@ -166,8 +174,35 @@ void LunarModule::Cycle() {
   Double mainThrust;
   Double mainfuel;
   Vector v;
+  Matrix m;
   if (landed && !descentJettisoned) return;
   if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
+/*
+    m = Matrix::Identity();
+    if (rollRate != 0) {
+      roll += rollRate;
+      if (roll > 180) roll -= 360;
+      if (roll < -180) roll += 360;
+      rollMatrix = Matrix::RotateZ(roll);
+      }
+    m.MultipliedBy(rollMatrix);
+    if (pitchRate != 0) {
+      pitch += pitchRate;
+      if (pitch > 180) pitch -= 360;
+      if (pitch < -180) pitch += 360;
+      pitchMatrix = Matrix::RotateY(-pitch);
+      }
+    m.MultipliedBy(pitchMatrix);
+    if (yawRate != 0) {
+      yaw += yawRate;
+      if (yaw > 180) yaw -= 360;
+      if (yaw < -180) yaw += 360;
+      yawMatrix = Matrix::RotateX(yaw);
+      }
+    m.MultipliedBy(yawMatrix);
+    faceFront = m.Transform(baseFront).Norm();
+    faceLeft = m.Transform(baseLeft).Norm();
+*/
     if (rollRate != 0) orientation.MultipliedBy(rollMatrix);
     if (pitchRate != 0) orientation.MultipliedBy(pitchMatrix);
     if (yawRate != 0) orientation.MultipliedBy(yawMatrix);

@@ -5,34 +5,6 @@
 
 Boolean run;
 
-void drawPanel() {
-  ClrScr();
-  printf("+-------------------------+--------------------------+-------------------------+\n");
-  printf("|    LOOKING   WEST       |   | CSM| LM | LRV| EVA|  |    LOOKING   DOWN       |\n");
-  printf("| +--------up|----------+ +--------------------------+ +------west|----------+ |\n");
-  printf("| |                     |n|    land         dock     | |                     |n|\n");
-  printf("| |                     |o| +---w|----+  +---f|----+ | |                     |o|\n");
-  printf("| |                     |r| |         |  |         | | |                     |r|\n");
-  printf("| |                     |t| |         |n |         |l| |                     |t|\n");
-  printf("| |                     |h|--         ----         --| |                     |h|\n");
-  printf("|--                     --|s|         | r|         | |--                     --|\n");
-  printf("|s|                     | | |         |  |         | |s|                     | |\n");
-  printf("|o|                     | | +----|e---+  +----|b---+ |o|                     | |\n");
-  printf("|u|                     | |   plss|    lrv| --|    lm|u|                     | |\n");
-  printf("|t|                     | | OXY:  | BAT:  | --|--:   |t|                     | |\n");
-  printf("|h|                     | | BAT:  | BOX:  | --|--:   |h|                     | |\n");
-  printf("| +----------|down------+ | PAK:  | ROK:  | --|RK:   | +----------|east------+ |\n");
-  printf("+-------------------------+--------------------------+-------------------------+\n");
-  printf("|    att|  spin| consum|   altitude    east   north|        status|      clocks|\n");
-  printf("|u/r:   |PIT:  | ASC:  |POS:       :       :       | F/B| SS|MB:  |UT:         |\n");
-  printf("|f/r:   |ROL:  | RCS:  |VEL:       :       :       | L/R| PL|EF:  |MI:         |\n");
-  printf("|l/s:   |YAW:  | DES:  |ACC:       :       :       | U/D| CB|IN:  |BU:         |\n");
-  printf("|--------------| THR:  |MOM:       :       :       | RAD| --|--:  |EV:         |\n");
-  printf("| ABO| KIL| PIL| OXY:  |PER:       +---------------+ DOK| DK|--:  |DK:         |\n");
-  printf("| JET| LIF| ---| BAT:  |APO:       |          :    | DSN| TD|--:  |OR:         |\n");
-  printf("+------------------------------------------------------------------------------+\n");
-  }
-
 void setup() {
 Vector t;
   pilotLocation = PILOT_CSM;
@@ -114,6 +86,9 @@ void cycle() {
       if (alignedForDocking()) {
         lm->Velocity(csm->Velocity());
         docked = -1;
+        seqTime = 60;
+        strcpy(message,"   DOCKING");
+        seqFunction = SEQ_DOCKING;
         }
       else {
         v = ins->RelVel();
@@ -135,17 +110,6 @@ void cycle() {
       }
     }
   console->UpdateConsole();
-  }
-
-void test() {
-  Vector v1;
-  Vector v2;
-  v1 = Vector(100,0,100);
-  v1 = v1.Norm();
-printf("%12.4f %12.4f %12.4f\n",v1.X(),v1.Y(),v1.Z());
-  v2 = Vector(0,0,-1);
-  printf("dot: %12.4f\n",v1.Dot(v2));
-  printf("angle: %12.4f\n",acos(v1.Dot(v2))*180/M_PI);
   }
 
 void csmCommands(int key) {
@@ -171,13 +135,13 @@ void lmCommands(int key) {
     }
   if (key == 'S') {
     if (!spaceSuitOn) {
-      seqTime = 1800;
+      seqTime = 20 * 60;
       strcpy(message,"  SUIT->ON");
       seqFunction = SEQ_SUITON;
       }
     else {
       if (cabinPressurized && ! plssOn) {
-        seqTime = 1800;
+        seqTime = 35 * 60;
         strcpy(message," SUIT->OFF");
         seqFunction = SEQ_SUITOFF;
         }
@@ -185,15 +149,15 @@ void lmCommands(int key) {
     }
   if (key == 'P') {
     if (!plssOn) {
-      if (spaceSuitOn) {
-        seqTime = 2400;
+      if (spaceSuitOn && plssPacks > 0) {
+        seqTime = 35 * 60;
         strcpy(message,"  PLSS->ON");
         seqFunction = SEQ_PLSSON;
         }
       }
     else {
       if (cabinPressurized) {
-        seqTime = 2400;
+        seqTime = 45 * 60;
         strcpy(message," PLSS->OFF");
         seqFunction = SEQ_PLSSOFF;
         }
@@ -201,13 +165,13 @@ void lmCommands(int key) {
     }
   if (key == 'C') {
     if (!cabinPressurized) {
-      seqTime = 120;
+      seqTime = 2 * 60;
       strcpy(message," CAB->PRES");
       seqFunction = SEQ_CABINPRESS;
       }
     else {
       if (spaceSuitOn) {
-        seqTime = 300;
+        seqTime = 5 * 60;
         strcpy(message," CAB->EVAC");
         seqFunction = SEQ_CABINEVAC;
         }
@@ -269,11 +233,15 @@ void executeSequencer() {
          pilotLocation = PILOT_LM;
          ins->Spacecraft(lm);
          ins->Target(csm);
+         currentVehicle = lm;
+         currentVehicle->SetupPanel();
          break;
     case SEQ_MOVE_CSM:
          pilotLocation = PILOT_CSM;
          ins->Spacecraft(csm);
          ins->Target(lm);
+         currentVehicle = csm;
+         currentVehicle->SetupPanel();
          run = false;
          break;
     case SEQ_UNDOCK:
@@ -293,6 +261,9 @@ void executeSequencer() {
          break;
     case SEQ_PLSSON:
          plssOn = -1;
+         plssOxygen = PLSS_OXYGEN;
+         plssBattery = PLSS_BATTERY;
+         plssPacks--;
          break;
     case SEQ_PLSSOFF:
          plssOn = 0;
@@ -306,11 +277,30 @@ void executeSequencer() {
     }
   }
 
+void setupTargetData() {
+  Vector L;
+  Double hyp;
+  Double x,y,z;
+  Double c,s;
+  c = -1680.226342 * cos(targetLongitude*M_PI/180);
+  s = -1680.226342 * sin(targetLongitude*M_PI/180);
+  z = sin(targetLatitude*M_PI/180);
+  x = sin(targetLongitude*M_PI/180) * cos(targetLatitude*M_PI/180);
+  y = -cos(targetLongitude*M_PI/180) * cos(targetLatitude*M_PI/180);
+  targetPos = Vector(x*GROUND,y*GROUND,z*GROUND);
+  targetVel = Vector(c,s,0);
+  L = targetVel.Cross(targetPos).Norm();
+  hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
+  targetMomEast = L.X() / hyp;
+  targetMomEast = acos(targetMomEast) * 180 / M_PI;
+  if (targetMomEast <= -180) targetMomEast += 360;
+  if (targetMomEast >= 180) targetMomEast -= 360;
+  targetMomNorth = asin(L.Z()) * 180 / M_PI;
+  }
+
 int main(int argc, char** argv) {
   int key;
   char buffer[64];
-//test();
-//exit(1);
   simSpeed = 100000;
   csm = new CSM();
   lm = new LunarModule();
@@ -330,18 +320,22 @@ int main(int argc, char** argv) {
       sscanf(buffer,"%lf",&targetLongitude);
       }
     }
+  setupTargetData();
   OpenTerminal();
   HideCursor();
+  console = new Console();
   if (pilotLocation == PILOT_CSM) {
     ins->Spacecraft(csm);
     ins->Target(lm);
+    currentVehicle = csm;
     }
   if (pilotLocation == PILOT_LM) {
     ins->Spacecraft(lm);
     ins->Target(csm);
+    currentVehicle = lm;
     }
-  console = new Console();
-  drawPanel();
+  currentVehicle->SetupPanel();
+//  drawPanel();
   run = true;
   ticks = 10;
   console->UpdateConsole();
@@ -382,6 +376,7 @@ int main(int argc, char** argv) {
         if (key == '2') { insMode = INS_MODE_POS_TAR; ins->Mode(insMode); }
         if (key == '3') { insMode = INS_MODE_POS_REL; ins->Mode(insMode); }
         if (key == '4') { insMode = INS_MODE_ORB_ABS; ins->Mode(insMode); }
+        if (key == '5') { insMode = INS_MODE_ORB_TAR; ins->Mode(insMode); }
         if (key == 'Q') run = false;
         if (pilotLocation == PILOT_CSM) csmCommands(key);
         if (pilotLocation == PILOT_LM)  lmCommands(key);

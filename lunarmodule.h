@@ -22,6 +22,9 @@ class LunarModule : public Vehicle {
     Double rcsFuel;
     Double rollRate;
     Double yawRate;
+    Double roll;
+    Double pitch;
+    Double yaw;
     Matrix pitchMatrix;
     Matrix rollMatrix;
     Matrix yawMatrix;

@@ -8,6 +8,7 @@ Available in all modes:
 $      - 1000x time
 Q      - Quit.  Current simulation will be saved in lms.sav
 1      - Select POS^ABS mode for the INS
+2      - Select POS^TAR mode for the INS
 3      - Select POS^REL mode for the INS
 4      - Select ORB^ABS mode for the INS
 
@@ -50,5 +51,9 @@ i      - Shutdown main engine
 <down> - Pitch clockwise around left
 <left> - Yaw counter clockwise around front
 <right>- Yaw clockwise around front
+S      - Put on/take off space suit
+P      - Put on/take off PLSS
+C      - Evacuate/Pressurize cabin
+
 
 
