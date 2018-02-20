@@ -109,7 +109,7 @@ void cycle() {
         }
       }
     }
-  console->UpdateConsole();
+  currentVehicle->UpdatePanel();
   }
 
 void csmCommands(int key) {
@@ -338,7 +338,7 @@ int main(int argc, char** argv) {
 //  drawPanel();
   run = true;
   ticks = 10;
-  console->UpdateConsole();
+  currentVehicle->UpdatePanel();
   while (run) {
     if (ticks >= 10) {
       clockUt++;
@@ -358,7 +358,7 @@ int main(int argc, char** argv) {
           strcpy(message,"----------");
           simSpeed = 100000;
           executeSequencer();
-          console->UpdateConsole();
+          currentVehicle->UpdatePanel();
           }
         }
       }

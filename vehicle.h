@@ -54,6 +54,7 @@ class Vehicle {
     virtual Int8   SubLoad(char* line);
     virtual void   Load(FILE* file);
     virtual void   SetupPanel();
+    virtual void   UpdatePanel();
   };
 
 #endif

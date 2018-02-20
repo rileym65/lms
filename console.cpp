@@ -401,6 +401,13 @@ void Console::DisplayCons(Int8 x, Int8 y) {
     }
   }
 
+void Console::DisplayLm(Int8 x, Int8 y) {
+  if (lmRock != lastLmRock) {
+    GotoXY(x+3,y+3); printf("%3d",lmRock);
+    lastLmRock = lmRock;
+    }
+  }
+
 void Console::DisplayLrv(Int8 x, Int8 y) {
   Int32 i;
   i = (int)(lrvBattery / LRV_BATTERY * 100);
@@ -568,60 +575,28 @@ void Console::DisplaySeq(Int8 x, Int8 y) {
     }
   }
 
-void Console::UpdateConsole() {
+void Console::DisplayPilot(Int8 x, Int8 y) {
   if (pilotLocation != lastPilotLocation) {
-    GotoXY(32,2); printf(" ");
-    GotoXY(37,2); printf(" ");
-    GotoXY(42,2); printf(" ");
-    GotoXY(47,2); printf(" ");
+    GotoXY(x+0,y); printf(" ");
+    GotoXY(x+5,y); printf(" ");
+    GotoXY(x+10,y); printf(" ");
+    GotoXY(x+15,y); printf(" ");
     switch (pilotLocation) {
       case PILOT_CSM:
-           GotoXY(32,2); printf("*");
+           GotoXY(x+0,y); printf("*");
            break;
       case PILOT_LM:
-           GotoXY(37,2); printf("*");
+           GotoXY(x+5,y); printf("*");
            break;
       case PILOT_LRV:
-           GotoXY(42,2); printf("*");
+           GotoXY(x+10,y); printf("*");
            break;
       case PILOT_EVA:
-           GotoXY(47,2); printf("*");
+           GotoXY(x+15,y); printf("*");
            break;
       }
     lastPilotLocation = pilotLocation;
     }
-
-
-  /* ************** */
-  /* ***** LM ***** */
-  /* ************** */
-  if (lmRock != lastLmRock) {
-    GotoXY(51,15); printf("%3d",lmRock);
-    lastLmRock = lmRock;
-    }
-
-
-
-
-  DisplayAtt(INST_ATT_X, INST_ATT_Y);
-  DisplayClocks(INST_CLCK_X, INST_CLCK_Y);
-  DisplayCons(INST_CONS_X, INST_CONS_Y);
-  DisplayLrv(INST_LRV_X, INST_LRV_Y);
-  DisplayPlss(INST_PLSS_X, INST_PLSS_Y);
-  DisplaySeq(INST_SEQ_X, INST_SEQ_Y);
-  DisplaySpin(INST_SPIN_X, INST_SPIN_Y);
-  DisplayStatus(INST_STAT_X, INST_STAT_Y);
-  DisplayIns(INST_INS_X, INST_INS_Y);
-  DisplayDockingRadar(INST_DR_X, INST_DR_Y);
-  if (pilotLocation == PILOT_CSM) {
-    DisplayWestAxis(INST_WEST_X, INST_WEST_Y, csm);
-    DisplayDownAxis(INST_DOWN_X, INST_DOWN_Y, csm);
-    }
-  if (pilotLocation == PILOT_LM) {
-    DisplayWestAxis(INST_WEST_X, INST_WEST_Y, lm);
-    DisplayDownAxis(INST_DOWN_X, INST_DOWN_Y, lm);
-    }
-  fflush(stdout);
   }
 
 void Console::DrawAtt(Int8 x,Int8 y) {

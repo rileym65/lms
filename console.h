@@ -72,14 +72,15 @@ class Console {
     Console();
     ~Console();
     void Reset();
-    void UpdateConsole();
     void DisplayAtt(Int8 x,Int8 y);
     void DisplayClocks(Int8 x,Int8 y);
     void DisplayCons(Int8 x, Int8 y);
     void DisplayDockingRadar(Int8 x, Int8 y);
     void DisplayIns(Int8 x,Int8 y);
     void DisplayWestAxis(Int8 x, Int8 y, Vehicle *vehicle);
+    void DisplayLm(Int8 x, Int8 y);
     void DisplayLrv(Int8 x, Int8 y);
+    void DisplayPilot(Int8 x, Int8 y);
     void DisplayPlss(Int8 x, Int8 y);
     void DisplayDownAxis(Int8 x, Int8 y, Vehicle * vehicle);
     void DisplaySeq(Int8 x,Int8 y);

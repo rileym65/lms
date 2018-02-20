@@ -274,3 +274,27 @@ void Vehicle::SetupPanel() {
   console->DrawWestAxis(INST_WEST_X, INST_WEST_Y);
   }
 
+void Vehicle::UpdatePanel() {
+  console->DisplayAtt(INST_ATT_X, INST_ATT_Y);
+  console->DisplayClocks(INST_CLCK_X, INST_CLCK_Y);
+  console->DisplayCons(INST_CONS_X, INST_CONS_Y);
+  console->DisplayLm(INST_LM_X, INST_LM_Y);
+  console->DisplayLrv(INST_LRV_X, INST_LRV_Y);
+  console->DisplayPilot(INST_PILOT_X, INST_PILOT_Y);
+  console->DisplayPlss(INST_PLSS_X, INST_PLSS_Y);
+  console->DisplaySeq(INST_SEQ_X, INST_SEQ_Y);
+  console->DisplaySpin(INST_SPIN_X, INST_SPIN_Y);
+  console->DisplayStatus(INST_STAT_X, INST_STAT_Y);
+  console->DisplayIns(INST_INS_X, INST_INS_Y);
+  console->DisplayDockingRadar(INST_DR_X, INST_DR_Y);
+  if (pilotLocation == PILOT_CSM) {
+    console->DisplayWestAxis(INST_WEST_X, INST_WEST_Y, csm);
+    console->DisplayDownAxis(INST_DOWN_X, INST_DOWN_Y, csm);
+    }
+  if (pilotLocation == PILOT_LM) {
+    console->DisplayWestAxis(INST_WEST_X, INST_WEST_Y, lm);
+    console->DisplayDownAxis(INST_DOWN_X, INST_DOWN_Y, lm);
+    }
+  fflush(stdout);
+  }
+
