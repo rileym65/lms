@@ -7,9 +7,14 @@ Vehicle::Vehicle() {
   velocityAltitude = 0;
   thrust = Vector(0,0,0);
   orientation = Matrix::Identity();
+  Init();
   }
 
 Vehicle::~Vehicle() {
+  }
+
+void Vehicle::Init() {
+  panel = new Panel("csm.pnl");
   }
 
 Double Vehicle::Altitude() {
@@ -232,6 +237,8 @@ void Vehicle::SetupPanel() {
   INST_LRV_Y = 12;
   INST_SEQ_X = 37;
   INST_SEQ_Y = 23;
+  panel->Display();
+/*
   printf("+-------------------------+--------------------------+-------------------------+\n");
   printf("|                         |   |                   |  |                         |\n");
   printf("|                         +--------------------------+                         |\n");
@@ -272,9 +279,12 @@ void Vehicle::SetupPanel() {
   console->DrawSpin(INST_SPIN_X, INST_SPIN_Y);
   console->DrawStatus(INST_STAT_X, INST_STAT_Y);
   console->DrawWestAxis(INST_WEST_X, INST_WEST_Y);
+*/
   }
 
 void Vehicle::UpdatePanel() {
+  panel->Update();
+/*
   console->DisplayAtt(INST_ATT_X, INST_ATT_Y);
   console->DisplayClocks(INST_CLCK_X, INST_CLCK_Y);
   console->DisplayCons(INST_CONS_X, INST_CONS_Y);
@@ -295,6 +305,7 @@ void Vehicle::UpdatePanel() {
     console->DisplayWestAxis(INST_WEST_X, INST_WEST_Y, lm);
     console->DisplayDownAxis(INST_DOWN_X, INST_DOWN_Y, lm);
     }
+*/
   fflush(stdout);
   }
 

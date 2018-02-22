@@ -153,7 +153,6 @@ int main(int argc, char** argv) {
   setupTargetData();
   OpenTerminal();
   HideCursor();
-  console = new Console();
   if (pilotLocation == PILOT_CSM) {
     ins->Spacecraft(csm);
     ins->Target(lm);
@@ -209,7 +208,6 @@ int main(int argc, char** argv) {
   CloseTerminal();
   delete(csm);
   delete(lm);
-  delete(console);
   delete(seq);
   return 0;
   }

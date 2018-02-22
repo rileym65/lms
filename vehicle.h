@@ -5,27 +5,30 @@
 #include "types.h"
 #include "vector.h"
 #include "matrix.h"
+#include "panel.h"
 
 class Vehicle {
   protected:
-    Double altitude;
-    Vector baseFront;
-    Vector baseLeft;
-    Vector baseUp;
-    Vector faceFront;
-    Vector faceLeft;
-    Vector faceUp;
-    Double latitude;
-    Double longitude;
-    Matrix orientation;
-    Vector position;
-    Double radius;
-    Vector thrust;
-    Vector velocity;
-    Double velocityAltitude;
+    Double  altitude;
+    Vector  baseFront;
+    Vector  baseLeft;
+    Vector  baseUp;
+    Vector  faceFront;
+    Vector  faceLeft;
+    Vector  faceUp;
+    Double  latitude;
+    Double  longitude;
+    Matrix  orientation;
+    Vector  position;
+    Double  radius;
+    Vector  thrust;
+    Vector  velocity;
+    Double  velocityAltitude;
+    Panel  *panel;
   public:
     Vehicle();
     virtual ~Vehicle();
+    virtual void   Init();
     virtual Double Altitude();
     virtual Double Altitude(Double d);
     virtual Vector FaceFront();

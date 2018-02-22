@@ -17,7 +17,6 @@
 #include "lunarmodule.h"
 #include "csm.h"
 #include "ins.h"
-#include "console.h"
 #include "sequencer.h"
 
 #define PILOT_CSM 'c'
@@ -52,7 +51,6 @@ LINK Int32        clockEv;
 LINK Int32        clockOr;
 LINK Int32        clockMi;
 LINK Int32        clockUt;
-LINK Console     *console;
 LINK Int8         docked;
 LINK Int8         dockingRadarOn;
 LINK Int8         dsnOn;
