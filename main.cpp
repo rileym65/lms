@@ -170,12 +170,14 @@ int main(int argc, char** argv) {
   while (run) {
     if (ticks >= 10) {
       clockUt++;
+      while (clockUt >= 86400) clockUt -= 86400;
       if (lm->Throttle() != 0) clockBu++;
       if (!docked) {
         clockMi++;
         lm->Battery(lm->Battery() - 1);
         if (pilotLocation == PILOT_LM) {
           lm->Oxygen(lm->Oxygen() - 1);
+          if (!lm->Landed() && lm->DescentJettisoned() && !docked) clockDk++;
           }
         }
       cycle();

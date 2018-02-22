@@ -123,6 +123,18 @@ void Sequencer::PlssOn() {
   function = SEQ_PLSSON;
   }
 
+void Sequencer::Rest() {
+  time = 120 * 60;
+  strcpy(message,"      Rest");
+  function = SEQ_REST;
+  }
+
+void Sequencer::Sleep() {
+  time = 8 * 60 * 60;
+  strcpy(message,"     Sleep");
+  function = SEQ_SLEEP;
+  }
+
 void Sequencer::SpaceSuitOff() {
   time = 35 * 60;
   strcpy(message," SUIT->OFF");

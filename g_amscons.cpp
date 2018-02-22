@@ -51,15 +51,19 @@ void G_AmsCons::Update() {
   i = (int)(lm->DescentFuel() / FUEL_DES * 100);
   if (i>99) i = 99;
   if (i != lastDescentFuel) {
-    GotoXY(x+5,y+3); printf("%2d",i);
+    GotoXY(x+5,y+3);
+    if (!lm->DescentJettisoned()) printf("%2d",i);
+      else printf("**");
     lastDescentFuel = i;
     }
   i = lm->Throttle();
   if (i > 99) i = 99;
   if (i != lastThrottle) {
-    GotoXY(x+5,y+4); printf("%2d",i);
-    GotoXY(x,y+3);
-    if (!lm->DescentJettisoned() && i > 0) printf("^"); else printf(" ");
+    GotoXY(x+5,y+4);
+    if (!lm->DescentJettisoned()) printf("%2d",i);
+      else printf("**");
+    if (!lm->DescentJettisoned()) GotoXY(x,y+3); else GotoXY(x, y+1);
+    if (i > 0) printf("^"); else printf(" ");
     lastThrottle = i;
     }
   i = (int)(lm->Oxygen() / LM_OXYGEN * 100);

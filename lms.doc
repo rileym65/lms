@@ -54,6 +54,9 @@ i      - Shutdown main engine
 S      - Put on/take off space suit
 P      - Put on/take off PLSS
 C      - Evacuate/Pressurize cabin
+*      - Rest for 2 hours
+)      - Sleep for 8 hours
+
 
 
 

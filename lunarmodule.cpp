@@ -302,6 +302,7 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  RollRate %.18f%s",rollRate,LE);
   fprintf(file,"  YawRate %.18f%s",yawRate,LE);
   fprintf(file,"  Landed %d%s",landed,LE);
+  fprintf(file,"  DescentJettisoned %d%s",descentJettisoned,LE);
   fprintf(file,"  }%s",LE);
   }
 
@@ -320,6 +321,7 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
   else if (startsWith(pline,"yawrate ")) YawRate(atof(nw(pline)));
   else if (startsWith(pline,"landed ")) landed = atoi(nw(pline));
+  else if (startsWith(pline,"descentjettisoned ")) descentJettisoned = atoi(nw(pline));
   else return 0;
   return -1;
   }
@@ -344,6 +346,19 @@ void LunarModule::ProcessKey(Int32 key) {
   if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
   if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
   if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
+  if (landed) {
+    if (key == '*') seq->Rest();
+    if (key == ')') seq->Sleep();
+    if (key == 'L') {
+      landed = 0;
+      descentJettisoned = -1;
+      throttle = 100;
+      clockBu = 0;
+      descentFuel = 0;
+      if (oxygen > 36000) oxygen = 36000;
+      if (battery > 36000) battery = 36000;
+      }
+    }
   if (!docked) {
     if (key == 'f' && RcsFbMode() == ' ') RcsFbMode('F');
     if (key == 'f' && RcsFbMode() == 'B') RcsFbMode(' ');
@@ -373,7 +388,7 @@ void LunarModule::ProcessKey(Int32 key) {
     if (key == KEY_DOWN_ARROW) PitchRate(PitchRate()-1);
     if (key == KEY_RIGHT_ARROW) YawRate(YawRate()+1);
     if (key == KEY_LEFT_ARROW) YawRate(YawRate()-1);
-    if (Throttle() > 0) {
+    if (Throttle() > 0 && !descentJettisoned) {
       if (key == KEY_PGDN) Throttle(Throttle()+2);
       if (key == KEY_END) Throttle(Throttle()-2);
       if (key == KEY_KP_END) Throttle(Throttle()-2);

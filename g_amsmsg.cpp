@@ -23,6 +23,7 @@ void G_AmsMessage::Display() {
   }
 
 void G_AmsMessage::Update() {
+  Int32 i;
   if (strcmp(seq->Message(),lastMessage) != 0) {
     GotoXY(x,y); printf("%s",seq->Message());
     strcpy(lastMessage,seq->Message());
@@ -33,7 +34,9 @@ void G_AmsMessage::Update() {
       printf("    ");
       }
     else {
-      printf("%4d",seq->Time());
+      i = seq->Time();
+      if (i > 9999) i = 9999;
+      printf("%4d",i);
       }
     lastSeqTime = seq->Time();
     }

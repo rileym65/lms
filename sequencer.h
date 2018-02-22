@@ -13,6 +13,8 @@
 #define SEQ_CABINEVAC    8
 #define SEQ_CABINPRESS   9
 #define SEQ_DOCKING     10
+#define SEQ_REST        11
+#define SEQ_SLEEP       12
 
 class Sequencer {
   protected:
@@ -33,6 +35,8 @@ class Sequencer {
     void  MoveLm();
     void  PlssOff();
     void  PlssOn();
+    void  Rest();
+    void  Sleep();
     void  SpaceSuitOff();
     void  SpaceSuitOn();
     void  Undock();
