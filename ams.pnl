@@ -1,0 +1,40 @@
+Box 1,1,80,16
+Box 1,16,80,24
+VLine 27,1,16
+VLine 54,1,16
+HLine 27,3,54
+VLine 31,2,2
+VLine 51,2,2
+VLine 35,12,15
+VLine 43,12,15
+VLine 47,12,15
+Label 45,12,"--"
+Label 45,13,"--"
+Label 45,14,"--"
+Label 45,15,"--"
+VLine 9,17,20
+VLine 16,17,23
+VLine 24,17,23
+VLine 52,17,23
+VLine 67,17,23
+HLine 2,21,15
+HLine 36,22,51
+VLine 36,22,23
+Label 47,23,":"
+Gauge Ams_Attitude 2,17
+Gauge Ams_Clocks 68,17
+Gauge Ams_Consumables 17,17
+Gauge Ams_DockingRadar 41,4
+Gauge Ams_DownAxis 55,2
+Gauge Ams_INS 25,17
+Gauge Ams_LandingRadar 28,4
+Gauge Ams_Lm 48,12
+Gauge Ams_Lrv 37,12
+Gauge Ams_Message 37,23
+Gauge Ams_Pilot 32,2
+Gauge Ams_Plss 29,12
+Gauge Ams_Sequencer 2,22
+Gauge Ams_Spin 10,17
+Gauge Ams_Status 53,17
+Gauge Ams_WestAxis 2,2
+

@@ -87,6 +87,7 @@ Double LunarModule::Battery() {
 
 Double LunarModule::Battery(Double d) {
   battery = d;
+  if (battery < 0) battery = 0;
   return battery;
   }
 
@@ -113,6 +114,7 @@ Double LunarModule::Oxygen() {
 
 Double LunarModule::Oxygen(Double d) {
   oxygen = d;
+  if (oxygen < 0) oxygen = 0;
   return oxygen;
   }
 
