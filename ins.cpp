@@ -203,6 +203,25 @@ void INS::populatePosAbs() {
   }
 
 void INS::populatePosTar() {
+  Int32 i;
+  if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
+      sprintf(displayPosAltitude,"%7d",0);
+      i = tarLongitude * METERS;
+      if (i > 999999) i = 999999;
+      if (i < -999999) i = -999999;
+      sprintf(displayPosEast,"%7d",i);
+      i = tarLatitude * METERS;
+      if (i > 999999) i = 999999;
+      if (i < -999999) i = -999999;
+      sprintf(displayPosNorth,"%7d",i);
+      printVelocity(relVel.X(), displayVelAltitude);
+      printVelocity(relVel.Y(), displayVelEast);
+      printVelocity(relVel.Z(), displayVelNorth);
+      strcpy(displayAccAltitude,"-------");
+      strcpy(displayAccEast,"-------");
+      strcpy(displayAccNorth,"-------");
+      return;
+    }
   if (!hasSignal()) {
     noData();
     return;
@@ -226,6 +245,25 @@ void INS::populatePosTar() {
 
 void INS::populatePosRel() {
   Int32 i;
+  if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
+      sprintf(displayPosAltitude,"%7d",0);
+      i = sqrt(relPos.Y() * relPos.Y() + relPos.X() * relPos.X());
+      i *= sgn(relLongitude);
+      if (i > 999999) i = 999999;
+      if (i < -999999) i = -999999;
+      sprintf(displayPosEast,"%7d",i);
+      i = (int)relPos.Z();
+      if (i > 999999) i = 999999;
+      if (i < -999999) i = -999999;
+      sprintf(displayPosNorth,"%7d",i);
+      printVelocity(relVel.X(), displayVelAltitude);
+      printVelocity(relVel.Y(), displayVelEast);
+      printVelocity(relVel.Z(), displayVelNorth);
+      strcpy(displayAccAltitude,"-------");
+      strcpy(displayAccEast,"-------");
+      strcpy(displayAccNorth,"-------");
+      return;
+    }
   if (docked) {
     sprintf(displayPosAltitude,"%7d",0);
     sprintf(displayPosEast,"%7.2f",0.0);
