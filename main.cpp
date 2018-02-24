@@ -191,12 +191,14 @@ int main(int argc, char** argv) {
         if (pilotLocation == PILOT_LM) {
           lm->Oxygen(lm->Oxygen() - 1);
           if (!lm->Landed() && lm->DescentJettisoned() && !docked) clockDk++;
+          if (lm->Oxygen() <= 0) injury += 0.3;
           }
         }
       if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
         clockEv++;
         plss->Oxygen(plss->Oxygen() - 1);
         plss->Battery(plss->Battery() - 1);
+        if (plss->Oxygen() <= 0) injury += 0.3;
         }
       cycle();
       ticks = 0;

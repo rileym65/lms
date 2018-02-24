@@ -91,7 +91,7 @@ Ams_Lm
 
 Ams_Lrv
   +------+
-  |   lrv|
+  |^  lrv|
   |BAT:99|
   |BOX: 8|
   |ROK: 0|
@@ -109,7 +109,7 @@ Ams_Pilot
 
 Ams_Plss
   +------+
-  |  plss|
+  |^ plss|
   |OXY:99|
   |BAT:99|
   |PAK: 4|

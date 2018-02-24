@@ -15,6 +15,7 @@ void Plss::Init() {
   battery = 36000;
   oxygen = 36000;
   carrying = ' ';
+  heading = 0;
   }
 
 Double Plss::Battery() {

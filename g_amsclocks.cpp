@@ -21,7 +21,7 @@ void G_AmsClocks::displayClock(Int32 x, Int32 y, Int32 clock) {
   minutes = clock / 60;
   seconds = clock - (minutes * 60);
   GotoXY(x, y);
-  printf("%3d:%2d:%2d",hours,minutes,seconds);
+  printf("%3d:%02d:%02d",hours,minutes,seconds);
   }
 
 void G_AmsClocks::Reset() {
