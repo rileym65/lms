@@ -14,6 +14,7 @@ class LunarModule : public Vehicle {
     char   rcsUdMode;
     Int8   rcsThrottle;
     Int8   throttle;
+    Int16  rock;
     Double ascentFuel;
     Double battery;
     Double descentFuel;
@@ -41,6 +42,8 @@ class LunarModule : public Vehicle {
     Int8   RcsThrottle(Int8 i);
     Int8   Throttle();
     Int8   Throttle(Int8 i);
+    Int16  Rock();
+    Int16  Rock(Int16 i);
     Double AscentFuel();
     Double AscentFuel(Double d);
     Double Battery();

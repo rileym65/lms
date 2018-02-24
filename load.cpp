@@ -83,23 +83,16 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"injury ")) sscanf(nw(pline),"%lf",&injury);
     else if (startsWith(pline,"insmode ")) insMode = atoi(nw(pline));
     else if (startsWith(pline,"landingradaron ")) landingRadarOn = atoi(nw(pline));
-    else if (startsWith(pline,"lmrock ")) lmRock = atoi(nw(pline));
     else if (startsWith(pline,"lrvbattery ")) lrvBattery = atof(nw(pline));
-    else if (startsWith(pline,"lrvrock ")) lrvRock = atoi(nw(pline));
     else if (startsWith(pline,"metabolicrate ")) metabolicRate = atof(nw(pline));
     else if (startsWith(pline,"pilotlocation ")) pilotLocation = nw(pline)[0];
-    else if (startsWith(pline,"plssbattery ")) plssBattery = atof(nw(pline));
-    else if (startsWith(pline,"plssoxygen ")) plssOxygen = atof(nw(pline));
     else if (startsWith(pline,"plsspacks ")) plssPacks = atoi(nw(pline));
     else if (startsWith(pline,"plsson ")) plssOn = atoi(nw(pline));
-    else if (startsWith(pline,"sampleboxes ")) sampleBoxes = atoi(nw(pline));
     else if (startsWith(pline,"spacesuiton ")) spaceSuitOn = atoi(nw(pline));
     else if (startsWith(pline,"targetlatitude ")) targetLatitude = atof(nw(pline));
     else if (startsWith(pline,"targetlongitude ")) targetLongitude = atof(nw(pline));
     else {
       printf("Unknown line found in save file: %s\n",pline);
-      ShowCursor();
-      CloseTerminal();
       exit(1);
       }
     }
@@ -114,10 +107,10 @@ Int8 load(char* filename) {
     if (startsWith(pline,"simulation {")) loadSimulation(file);
     else if (startsWith(pline,"csm {")) csm->Load(file);
     else if (startsWith(pline,"lunarmodule {")) lm->Load(file);
+    else if (startsWith(pline,"plss {")) plss->Load(file);
+    else if (startsWith(pline,"lrv {")) lrv->Load(file);
     else {
       printf("Unknown line found in save file: %s\n",pline);
-      ShowCursor();
-      CloseTerminal();
       exit(1);
       }
     }

@@ -9,6 +9,7 @@ class G_AmsPlss : public Gauge {
     Int16 lastOxygen;
     Int16 lastBattery;
     Int16 lastPacks;
+    char  lastCarrying;
   public:
     G_AmsPlss(Int8 x,Int8 y,Boolean f);
     virtual ~G_AmsPlss();

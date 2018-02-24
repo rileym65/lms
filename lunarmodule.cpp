@@ -12,6 +12,7 @@ LunarModule::LunarModule() {
   rollRate = 0;
   yawRate = 0;
   descentJettisoned = 0;
+  rock = 0;
 /*
   roll = 0;
   pitch = 0;
@@ -137,6 +138,15 @@ Double LunarModule::RcsFuel(Double d) {
   return rcsFuel;
   }
 
+Int16 LunarModule::Rock() {
+  return rock;
+  }
+
+Int16 LunarModule::Rock(Int16 i) {
+  rock = i;
+  return rock;
+  }
+
 Double LunarModule::RollRate() {
   return rollRate;
   }
@@ -166,6 +176,7 @@ Double LunarModule::Mass() {
     ret += 2346;
     ret += descentFuel;
     }
+  ret += rock;
   return ret;
   }
 
@@ -331,6 +342,8 @@ Int8 LunarModule::SubLoad(char* pline) {
 void LunarModule::ProcessKey(Int32 key) {
   if (key == 'M') {
     if (docked) seq->MoveCsm();
+    if (landed && spaceSuitOn && plssOn && !cabinPressurized)
+      seq->MoveEva();
     }
   if (key == 'U' && docked) seq->Undock();
   if (key == 'S') {

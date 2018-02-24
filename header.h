@@ -15,7 +15,9 @@
 #include "types.h"
 #include "vector.h"
 #include "lunarmodule.h"
+#include "plss.h"
 #include "csm.h"
+#include "lrv.h"
 #include "ins.h"
 #include "sequencer.h"
 
@@ -28,8 +30,8 @@
 #define FUEL_DES  9720.0
 #define LM_OXYGEN 432000.0
 #define LM_BATTERY 432000.0
-#define PLSS_OXYGEN 72000.0
-#define PLSS_BATTERY 54000.0
+#define PLSS_OXYGEN 36000.0
+#define PLSS_BATTERY 36000.0
 #define LRV_BATTERY  200000.0
 #define INS_MODE_POS_ABS 1
 #define INS_MODE_POS_TAR 2
@@ -58,15 +60,10 @@ LINK Double       efficiency;
 LINK Double       injury;
 LINK Int8         insMode;
 LINK Int8         landingRadarOn;
-LINK Int16        lmRock;
 LINK Double       lrvBattery;
-LINK Int8         lrvRock;
 LINK Double       metabolicRate;
 LINK char         pilotLocation;
-LINK Double       plssOxygen;
-LINK Double       plssBattery;
 LINK Int8         plssPacks;
-LINK Int8         sampleBoxes;
 LINK Int32        simSpeed;
 LINK Double       targetLatitude;
 LINK Double       targetLongitude;
@@ -77,6 +74,8 @@ LINK Double       targetMomNorth;
 LINK Int8         ticks;
 LINK CSM         *csm;
 LINK LunarModule *lm;
+LINK Plss        *plss;
+LINK Lrv         *lrv;
 LINK Int8         plssOn;
 LINK Int8         spaceSuitOn;
 LINK INS         *ins;
@@ -84,41 +83,6 @@ LINK Vehicle*     currentVehicle;
 LINK Sequencer*   seq;
 LINK Boolean      run;
 
-
-LINK Int8 INST_DR_X;
-LINK Int8 INST_DR_Y;
-LINK Int8 INST_ATT_X;
-LINK Int8 INST_ATT_Y;
-LINK Int8 INST_DOCK_X;
-LINK Int8 INST_DOCK_Y;
-LINK Int8 INST_DOWN_X;
-LINK Int8 INST_DOWN_Y;
-LINK Int8 INST_IND_X;
-LINK Int8 INST_IND_Y;
-LINK Int8 INST_LAND_X;
-LINK Int8 INST_LAND_Y;
-LINK Int8 INST_WEST_X;
-LINK Int8 INST_WEST_Y;
-LINK Int8 INST_SPIN_X;
-LINK Int8 INST_SPIN_Y;
-LINK Int8 INST_CONS_X;
-LINK Int8 INST_CONS_Y;
-LINK Int8 INST_STAT_X;
-LINK Int8 INST_STAT_Y;
-LINK Int8 INST_CLCK_X;
-LINK Int8 INST_CLCK_Y;
-LINK Int8 INST_INS_X;
-LINK Int8 INST_INS_Y;
-LINK Int8 INST_PILOT_X;
-LINK Int8 INST_PILOT_Y;
-LINK Int8 INST_PLSS_X;
-LINK Int8 INST_PLSS_Y;
-LINK Int8 INST_LM_X;
-LINK Int8 INST_LM_Y;
-LINK Int8 INST_LRV_X;
-LINK Int8 INST_LRV_Y;
-LINK Int8 INST_SEQ_X;
-LINK Int8 INST_SEQ_Y;
 
 extern Matrix atom(char* buffer);
 extern Vector atov(char* buffer);

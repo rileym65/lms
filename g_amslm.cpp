@@ -26,9 +26,9 @@ void G_AmsLm::Display() {
   }
 
 void G_AmsLm::Update() {
-  if (lmRock != lastRock) {
-    GotoXY(x+3,y+3); printf("%3d",lmRock);
-    lastRock = lmRock;
+  if (lm->Rock() != lastRock) {
+    GotoXY(x+3,y+3); printf("%3d",lm->Rock());
+    lastRock = lm->Rock();
     }
   }
 

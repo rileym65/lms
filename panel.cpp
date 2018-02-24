@@ -128,11 +128,20 @@ void Panel::Display() {
     }
   for (i=0; i<numGauges; i++)
     gauges[i]->Display();
+  fflush(stdout);
   }
 
 void Panel::Update() {
   Int8 i;
   for (i=0; i<numGauges; i++)
     gauges[i]->Update();
+  fflush(stdout);
+  }
+
+void Panel::Reset() {
+  Int8 i;
+  for (i=0; i<numGauges; i++)
+    gauges[i]->Reset();
+  fflush(stdout);
   }
 

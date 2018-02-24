@@ -9,6 +9,7 @@ class G_AmsLrv : public Gauge {
     Int16 lastBattery;
     Int16 lastSampleBoxes;
     Int16 lastRock;
+    Boolean lastSetup;
   public:
     G_AmsLrv(Int8 x,Int8 y,Boolean f);
     virtual ~G_AmsLrv();

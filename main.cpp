@@ -23,6 +23,16 @@ Vector t;
   lm->FaceFront(Vector(1,0,0));
   lm->FaceLeft(Vector(0,-1,0));
   lm->FaceUp(Vector(0,0,-1));
+  plss->Battery(36000);
+  plss->Oxygen(36000);
+  plss->FaceFront(Vector(1,0,0));
+  plss->FaceLeft(Vector(0,-1,0));
+  plss->FaceUp(Vector(0,0,-1));
+  lrv->Battery(LRV_BATTERY);
+  lrv->FaceFront(Vector(1,0,0));
+  lrv->FaceLeft(Vector(0,-1,0));
+  lrv->FaceUp(Vector(0,0,-1));
+  lrv->Boxes(8);
   cabinPressurized = -1;
   clockBu = 0;
   clockDk = 0;
@@ -37,17 +47,12 @@ Vector t;
   injury = 0;
   insMode = INS_MODE_POS_ABS;
   landingRadarOn = 0;
-  lmRock = 0;
   lrvBattery = LRV_BATTERY;
-  lrvRock = 0;
   metabolicRate = 30.0;
   targetLatitude = 0.0;
   targetLongitude = 0.0;
   plssOn = 0;
-  plssOxygen = PLSS_OXYGEN;
-  plssBattery = PLSS_BATTERY;
   plssPacks = 4;
-  sampleBoxes = 8;
   spaceSuitOn = 0;
   }
 
@@ -76,8 +81,9 @@ void cycle() {
     lm->Radius(csm->Radius());
     }
   else lm->Cycle();
+  plss->Cycle();
   ins->Cycle();
-  if (!docked) {
+  if (!docked && pilotLocation == PILOT_LM) {
     if (ins->RelPos().Length() < 19) {
       if (alignedForDocking()) {
         lm->Velocity(csm->Velocity());
@@ -133,6 +139,8 @@ int main(int argc, char** argv) {
   simSpeed = 100000;
   csm = new CSM();
   lm = new LunarModule();
+  plss = new Plss();
+  lrv = new Lrv();
   ins = new INS();
   seq = new Sequencer();
   setup();
@@ -163,6 +171,11 @@ int main(int argc, char** argv) {
     ins->Target(csm);
     currentVehicle = lm;
     }
+  if (pilotLocation == PILOT_EVA) {
+    ins->Spacecraft(plss);
+    ins->Target(lm);
+    currentVehicle = plss;
+    }
   currentVehicle->SetupPanel();
   run = true;
   ticks = 10;
@@ -179,6 +192,11 @@ int main(int argc, char** argv) {
           lm->Oxygen(lm->Oxygen() - 1);
           if (!lm->Landed() && lm->DescentJettisoned() && !docked) clockDk++;
           }
+        }
+      if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
+        clockEv++;
+        plss->Oxygen(plss->Oxygen() - 1);
+        plss->Battery(plss->Battery() - 1);
         }
       cycle();
       ticks = 0;

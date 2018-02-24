@@ -18,6 +18,7 @@ void G_AmsLrv::Reset() {
   lastBattery = -9999;
   lastSampleBoxes = -9999;
   lastRock = -9999;
+  lastSetup = false;
   }
 
 void G_AmsLrv::Display() {
@@ -35,13 +36,18 @@ void G_AmsLrv::Update() {
     GotoXY(x+4,y+1); printf("%2d",i);
     lastBattery = i;
     }
-  if (sampleBoxes != lastSampleBoxes) {
-    GotoXY(x+4,y+2); printf("%2d",sampleBoxes);
-    lastSampleBoxes = sampleBoxes;
+  if (lrv->Boxes() != lastSampleBoxes) {
+    GotoXY(x+4,y+2); printf("%2d",lrv->Boxes());
+    lastSampleBoxes = lrv->Boxes();
     }
-  if (lrvRock != lastRock) {
-    GotoXY(x+4,y+3); printf("%2d",lrvRock);
-    lastRock = lrvRock;
+  if (lrv->Rock() != lastRock) {
+    GotoXY(x+4,y+3); printf("%2d",lrv->Rock());
+    lastRock = lrv->Rock();
+    }
+  if (lrv->IsSetup() != lastSetup) {
+    GotoXY(x,y);
+    if (lrv->IsSetup()) printf("^"); else printf(" ");
+    lastSetup = lrv->IsSetup();
     }
   }
 

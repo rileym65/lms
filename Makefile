@@ -32,12 +32,15 @@ OBJS = \
         g_amsspin.o \
         g_amsstat.o \
 	g_amswest.o \
+	groundvehicle.o \
 	ins.o \
 	load.o \
+	lrv.o \
 	save.o \
 	lunarmodule.o \
 	matrix.o \
 	panel.o \
+	plss.o \
 	sequencer.o \
 	sgn.o \
 	terminal.o \
@@ -58,20 +61,23 @@ clean:
 	-rm $(PROJECT)
 	-rm *.o
 
-csm.o:         $(HEADERS) csm.cpp
-gauge.o:       $(HEADERS) gauge.h gauge.cpp
-ins.o:         $(HEADERS) ins.cpp
-load.o:        $(HEADERS) load.cpp
-main.o:        $(HEADERS) main.cpp
-matrix.o:      $(HEADERS) matrix.cpp
-panel.o:       $(HEADERS) $(PHEADERS)  panel.cpp
-save.o:        $(HEADERS) save.cpp
-sgn.o:         $(HEADERS) sgn.cpp
-sequencer.o:   $(HEADERS) sequencer.cpp
-lunarmodule.o: $(HEADERS) lunarmodule.cpp
-terminal.o:    $(HEADERS) terminal.cpp
-vector.o:      $(HEADERS) vector.cpp
-vehicle.o:     $(HEADERS) vehicle.h panel.h gauge.h vehicle.cpp
+csm.o:           $(HEADERS) csm.cpp
+gauge.o:         $(HEADERS) gauge.h gauge.cpp
+groundvehicle.o: $(HEADERS) vehicle.h groundvehicle.h groundvehicle.cpp
+ins.o:           $(HEADERS) ins.cpp
+load.o:          $(HEADERS) load.cpp
+lrv.o:           $(HEADERS) vehicle.h lrv.h lrv.cpp
+main.o:          $(HEADERS) main.cpp
+matrix.o:        $(HEADERS) matrix.cpp
+panel.o:         $(HEADERS) $(PHEADERS)  panel.cpp
+plss.o:          #(HEADERS) vehicle.h plss.h plss.cpp
+save.o:          $(HEADERS) save.cpp
+sgn.o:           $(HEADERS) sgn.cpp
+sequencer.o:     $(HEADERS) sequencer.cpp
+lunarmodule.o:   $(HEADERS) lunarmodule.cpp
+terminal.o:      $(HEADERS) terminal.cpp
+vector.o:        $(HEADERS) vector.cpp
+vehicle.o:       $(HEADERS) vehicle.h panel.h gauge.h vehicle.cpp
 
 g_amsatt.o:    $(HEADERS) gauge.h g_amsatt.h terminal.h g_amsatt.cpp
 g_amsclocks.o: $(HEADERS) gauge.h g_amsclocks.h terminal.h g_amsclocks.cpp

@@ -18,6 +18,7 @@ void G_AmsPlss::Reset() {
   lastOxygen = -9999;
   lastBattery = -9999;
   lastPacks = -9999;
+  lastCarrying = 0xff;
   }
 
 void G_AmsPlss::Display() {
@@ -29,13 +30,13 @@ void G_AmsPlss::Display() {
 
 void G_AmsPlss::Update() {
   Int32 i;
-  i = (int)(plssOxygen / PLSS_OXYGEN * 100);
+  i = (int)(plss->Oxygen() / PLSS_OXYGEN * 100);
   if (i>99) i = 99;
   if (i != lastOxygen) {
     GotoXY(x+4,y+1); printf("%2d",i);
     lastOxygen = i;
     }
-  i = (int)(plssBattery / PLSS_BATTERY * 100);
+  i = (int)(plss->Battery() / PLSS_BATTERY * 100);
   if (i>99) i = 99;
   if (i != lastBattery) {
     GotoXY(x+4,y+2); printf("%2d",i);
@@ -45,6 +46,15 @@ void G_AmsPlss::Update() {
     GotoXY(x+4,y+3);
     printf("%2d", plssPacks);
     lastPacks = plssPacks;
+    }
+  if (plss->Carrying() != lastCarrying) {
+    GotoXY(x,y);
+    lastCarrying = plss->Carrying();
+    switch (lastCarrying) {
+      case 'R':printf("^"); break;
+      case 'B':printf("v"); break;
+      default :printf(" "); break;
+      }
     }
   }
 

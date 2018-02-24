@@ -15,6 +15,15 @@
 #define SEQ_DOCKING     10
 #define SEQ_REST        11
 #define SEQ_SLEEP       12
+#define SEQ_MOVE_EVA    13
+#define SEQ_END_EVA     14
+#define SEQ_TAKESAMPLE  15
+#define SEQ_DROPSAMPLE  16
+#define SEQ_SETUPLRV    17
+#define SEQ_STORESAMPLE 18
+#define SEQ_BOXPLSS     19
+#define SEQ_BOXLM       20
+#define SEQ_BOXLRV      21
 
 class Sequencer {
   protected:
@@ -26,19 +35,28 @@ class Sequencer {
     ~Sequencer();
     Int32 Time();
     char* Message();
+    void  BoxToLm();
+    void  BoxToLrv();
+    void  BoxToPlss();
     void  Complete();
     void  Cycle();
     void  CabinEvacuate();
     void  CabinPressurize();
     void  Dock();
+    void  DropSample();
+    void  EndEva();
     void  MoveCsm();
+    void  MoveEva();
     void  MoveLm();
     void  PlssOff();
     void  PlssOn();
     void  Rest();
+    void  SetupLrv();
     void  Sleep();
     void  SpaceSuitOff();
     void  SpaceSuitOn();
+    void  StoreSample();
+    void  TakeSample();
     void  Undock();
   };
 

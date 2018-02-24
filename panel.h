@@ -19,6 +19,7 @@ class Panel {
     void VLine(Int8 x1,Int8 y1,Int8 y2);
     void Display();
     void Update();
+    void Reset();
   };
 
 #endif
