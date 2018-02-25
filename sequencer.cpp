@@ -107,6 +107,21 @@ void Sequencer::Complete() {
     case SEQ_BOXLRV:
          plss->Carrying(' ');
          break;
+    case SEQ_MOVELRV:
+         pilotLocation = PILOT_LRV;
+         ins->Spacecraft(lrv);
+         ins->Target(lm);
+         currentVehicle = lrv;
+         currentVehicle->SetupPanel();
+         break;
+    case SEQ_EXITLRV:
+         pilotLocation = PILOT_EVA;
+         ins->Spacecraft(plss);
+         ins->Target(lm);
+         currentVehicle = plss;
+         currentVehicle->SetupPanel();
+         plss->BeginEva(lrv);
+         break;
     }
   }
 
@@ -247,4 +262,16 @@ void Sequencer::Undock() {
   strcpy(message,"    UNDOCK");
   function = SEQ_UNDOCK;
   }
+ 
+void Sequencer::MoveLrv() {
+  time = 3 * 60;
+  strcpy(message," MOVE->LRV");
+  function = SEQ_MOVELRV;
+  }
   
+void Sequencer::ExitLrv() {
+  time = 1.5 * 60;
+  strcpy(message," MOVE->EVA");
+  function = SEQ_EXITLRV;
+  }
+

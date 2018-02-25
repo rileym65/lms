@@ -16,7 +16,7 @@ class Lrv : public GroundVehicle {
     Lrv();
     virtual ~Lrv();
     virtual void Init();
-//    virtual void Cycle();
+    virtual void Cycle();
     virtual Double Battery();
     virtual Double Battery(Double d);
     virtual Boolean IsSetup();

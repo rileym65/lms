@@ -24,6 +24,8 @@
 #define SEQ_BOXPLSS     19
 #define SEQ_BOXLM       20
 #define SEQ_BOXLRV      21
+#define SEQ_MOVELRV     22
+#define SEQ_EXITLRV     23
 
 class Sequencer {
   protected:
@@ -45,9 +47,11 @@ class Sequencer {
     void  Dock();
     void  DropSample();
     void  EndEva();
+    void  ExitLrv();
     void  MoveCsm();
     void  MoveEva();
     void  MoveLm();
+    void  MoveLrv();
     void  PlssOff();
     void  PlssOn();
     void  Rest();

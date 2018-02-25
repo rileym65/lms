@@ -57,13 +57,14 @@ void G_AmsCons::Update() {
     lastDescentFuel = i;
     }
   i = lm->Throttle();
+  i = currentVehicle->Throttle();
   if (i > 99) i = 99;
   if (i != lastThrottle) {
     GotoXY(x+5,y+4);
     if (!lm->DescentJettisoned()) printf("%2d",i);
       else printf("**");
     if (!lm->DescentJettisoned()) GotoXY(x,y+3); else GotoXY(x, y+1);
-    if (i > 0) printf("^"); else printf(" ");
+    if (i > 0 && pilotLocation == PILOT_LM) printf("^"); else printf(" ");
     lastThrottle = i;
     }
   i = (int)(lm->Oxygen() / LM_OXYGEN * 100);

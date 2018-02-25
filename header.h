@@ -42,6 +42,7 @@
 #define MOON  4.9075e12
 #define GROUND 1738300
 #define METERS ((GROUND*2*M_PI) / 360.0)
+#define DR  (3.14159265358979323846 / 180)
 
 
 #define LE   "\n"
@@ -60,7 +61,6 @@ LINK Double       efficiency;
 LINK Double       injury;
 LINK Int8         insMode;
 LINK Int8         landingRadarOn;
-LINK Double       lrvBattery;
 LINK Double       metabolicRate;
 LINK char         pilotLocation;
 LINK Int8         plssPacks;

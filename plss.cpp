@@ -31,13 +31,11 @@ Double Plss::Battery(Double d) {
 void Plss::BeginEva(Vehicle* from) {
   Vector p;
   Place(from->Position());
-GotoXY(1,25); printf("%f %f %f\n",position.X(),position.Y(),position.Z());
   p = faceFront.Norm().Scale(15);
   position = position + p;
   position = position.Norm().Scale(GROUND);
-GotoXY(1,26); printf("%f %f %f\n",position.X(),position.Y(),position.Z());
   carrying = ' ';
-  heading = 0;
+  Heading(0);
   return;
 
   Vector f;
@@ -108,8 +106,10 @@ void Plss::Cycle() {
 //  a = a.Scale(1/alt3);
 //  velocity = velocity + a;
 //  velocity = velocity + thrust;
+  thrust = frontFace.Norm().Scale(maxthrust * ((Double)throttle / 100.0));
   velocity = thrust;
   position = position + velocity;
+GotoXY(1,26); printf("%f %f %f\n",position.X(),position.Y(),position.Z());
   position = position.Norm().Scale(GROUND);
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
@@ -149,6 +149,9 @@ void Plss::ProcessKey(Int32 key) {
   if (key == 'm') {
     if (lmPos < 40) seq->EndEva();
     }
+  if (key == 'M' && lrvPos < 40 && carrying == ' ') {
+    seq->MoveLrv();
+    }
   if (key == 'R') {
     if (carrying == ' ') seq->TakeSample();
     if (carrying == 'B' && lrvPos < 40) seq->BoxToLrv();
@@ -164,5 +167,11 @@ void Plss::ProcessKey(Int32 key) {
       (position - lm->Position()).Length() < 40 &&
       !lrv->IsSetup())
     seq->SetupLrv();
+  if (key == KEY_PGDN) Throttle(Throttle()+10);
+  if (key == KEY_END) Throttle(Throttle()-10);
+  if (key == KEY_KP_END) Throttle(Throttle()-10);
+  if (key == KEY_RIGHT_ARROW) TurnRate(TurnRate()+15);
+  if (key == KEY_LEFT_ARROW) TurnRate(TurnRate()-15);
+
   }
 

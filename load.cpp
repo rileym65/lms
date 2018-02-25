@@ -83,7 +83,6 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"injury ")) sscanf(nw(pline),"%lf",&injury);
     else if (startsWith(pline,"insmode ")) insMode = atoi(nw(pline));
     else if (startsWith(pline,"landingradaron ")) landingRadarOn = atoi(nw(pline));
-    else if (startsWith(pline,"lrvbattery ")) lrvBattery = atof(nw(pline));
     else if (startsWith(pline,"metabolicrate ")) metabolicRate = atof(nw(pline));
     else if (startsWith(pline,"pilotlocation ")) pilotLocation = nw(pline)[0];
     else if (startsWith(pline,"plsspacks ")) plssPacks = atoi(nw(pline));

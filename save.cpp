@@ -19,7 +19,6 @@ void save() {
   fprintf(file,"  Injury %f%s",injury,LE);
   fprintf(file,"  InsMode %d%s",insMode,LE);
   fprintf(file,"  LandingRadarOn %d%s",landingRadarOn,LE);
-  fprintf(file,"  LrvBattery %f%s",lrvBattery,LE);
   fprintf(file,"  MetabolicRate %f%s",metabolicRate,LE);
   fprintf(file,"  PilotLocation %c%s",pilotLocation,LE);
   fprintf(file,"  PlssPacks %d%s",plssPacks,LE);

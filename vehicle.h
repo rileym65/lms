@@ -21,6 +21,7 @@ class Vehicle {
     Matrix  orientation;
     Vector  position;
     Double  radius;
+    Int8    throttle;
     Vector  thrust;
     Vector  velocity;
     Double  velocityAltitude;
@@ -45,6 +46,8 @@ class Vehicle {
     virtual Vector Position(Vector v);
     virtual Double Radius();
     virtual Double Radius(Double d);
+    virtual Int8   Throttle();
+    virtual Int8   Throttle(Int8 i);
     virtual Vector Thrust();
     virtual Vector Thrust(Vector v);
     virtual Vector Velocity();

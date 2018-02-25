@@ -14,6 +14,7 @@ Vehicle::~Vehicle() {
   }
 
 void Vehicle::Init() {
+  throttle = 0;
   panel = new Panel("csm.pnl");
   }
 
@@ -96,6 +97,18 @@ Double Vehicle::Radius(Double d) {
   return radius;
   }
 
+Int8   Vehicle::Throttle() {
+  return throttle;
+  }
+
+Int8   Vehicle::Throttle(Int8 i) {
+  throttle = i;
+  if (throttle > 100) throttle = 100;
+  if (throttle < 0) throttle = 0;
+  return throttle;
+  }
+
+
 Vector Vehicle::Thrust() {
   return thrust;
   }
@@ -159,6 +172,7 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Latitude %.18f%s",latitude,LE);
   fprintf(file,"  Longitude %.18f%s",longitude,LE);
   fprintf(file,"  Radius %.18f%s",radius,LE);
+  fprintf(file,"  Throttle %d%s",throttle,LE);
   fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
   fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
   fprintf(file,"  BaseLeft %.18f %.18f %.18f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
@@ -192,6 +206,7 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"velocity ")) velocity = atov(nw(pline));
     else if (startsWith(pline,"thrust ")) thrust = atov(nw(pline));
     else if (startsWith(pline,"orientation ")) orientation = atom(nw(pline));
+    else if (startsWith(pline,"throttle ")) throttle = atoi(nw(pline));
     else if (SubLoad(pline) == 0) {
       printf("Unknown line found in save file: %s\n",pline);
       exit(1);

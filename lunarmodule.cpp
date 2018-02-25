@@ -62,17 +62,6 @@ Int8   LunarModule::RcsThrottle(Int8 i) {
   return rcsThrottle;
   }
 
-Int8   LunarModule::Throttle() {
-  return throttle;
-  }
-
-Int8   LunarModule::Throttle(Int8 i) {
-  throttle = i;
-  if (throttle > 100) throttle = 100;
-  if (throttle > 0 && throttle < 10) throttle = 10;
-  return throttle;
-  }
-
 Double LunarModule::AscentFuel() {
   return ascentFuel;
   }
@@ -305,7 +294,6 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
   fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
   fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
-  fprintf(file,"  Throttle %d%s",throttle,LE);
   fprintf(file,"  AscentFuel %.18f%s",ascentFuel,LE);
   fprintf(file,"  Battery %.18f%s",battery,LE);
   fprintf(file,"  DescentFuel %.18f%s",descentFuel,LE);
@@ -325,7 +313,6 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"rcslrmode ")) rcsLrMode = atoi(nw(pline));
   else if (startsWith(pline,"rcsudmode ")) rcsUdMode = atoi(nw(pline));
   else if (startsWith(pline,"rcsthrottle ")) rcsThrottle = atoi(nw(pline));
-  else if (startsWith(pline,"throttle ")) throttle = atoi(nw(pline));
   else if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
   else if (startsWith(pline,"battery ")) battery = atof(nw(pline));
   else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));

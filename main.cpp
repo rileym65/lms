@@ -28,11 +28,13 @@ Vector t;
   plss->FaceFront(Vector(1,0,0));
   plss->FaceLeft(Vector(0,-1,0));
   plss->FaceUp(Vector(0,0,-1));
+  plss->MaxSpeed(1.5);
   lrv->Battery(LRV_BATTERY);
   lrv->FaceFront(Vector(1,0,0));
   lrv->FaceLeft(Vector(0,-1,0));
   lrv->FaceUp(Vector(0,0,-1));
   lrv->Boxes(8);
+  lrv->MaxSpeed(6.0);
   cabinPressurized = -1;
   clockBu = 0;
   clockDk = 0;
@@ -47,7 +49,6 @@ Vector t;
   injury = 0;
   insMode = INS_MODE_POS_ABS;
   landingRadarOn = 0;
-  lrvBattery = LRV_BATTERY;
   metabolicRate = 30.0;
   targetLatitude = 0.0;
   targetLongitude = 0.0;
@@ -82,6 +83,7 @@ void cycle() {
     }
   else lm->Cycle();
   plss->Cycle();
+  if (lrv->IsSetup()) lrv->Cycle();
   ins->Cycle();
   if (!docked && pilotLocation == PILOT_LM) {
     if (ins->RelPos().Length() < 19) {
@@ -133,6 +135,27 @@ void setupTargetData() {
   targetMomNorth = asin(L.Z()) * 180 / M_PI;
   }
 
+void test() {
+  Vector v;
+  Double h;
+  Int32  i;
+  Double lat;
+  Double lng;
+  lng = 10;
+  lat = 10;
+  for (i=-180; i<180; i+=10) {
+    h = i;
+    v = Vector(sin(h*DR), 0, cos(h*DR));
+    v = Vector( v.X(),
+                -(v.Y()*cos(lat*DR) + v.Z()*-sin(lat*DR)),
+                v.Y()*sin(lat*DR) + v.Z()*cos(lat*DR));
+    v = Vector( v.X()*cos(lng*DR) + v.Y()*-sin(lng*DR),
+                v.X()*sin(lng*DR) + v.Y()*cos(lng*DR),
+                v.Z());
+    printf("H: %d  V: %f %f %f\n",i,v.X(),v.Y(),v.Z());
+    }
+  }
+
 int main(int argc, char** argv) {
   int key;
   char buffer[64];
@@ -175,6 +198,11 @@ int main(int argc, char** argv) {
     ins->Spacecraft(plss);
     ins->Target(lm);
     currentVehicle = plss;
+    }
+  if (pilotLocation == PILOT_LRV) {
+    ins->Spacecraft(lrv);
+    ins->Target(lm);
+    currentVehicle = lrv;
     }
   currentVehicle->SetupPanel();
   run = true;

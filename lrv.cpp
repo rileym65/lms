@@ -56,13 +56,11 @@ Int8 Lrv::Rock(Int8 i) {
 void Lrv::Setup() {
   Vector p;
   Place(lm->Position());
-GotoXY(1,25); printf("%f %f %f\n",position.X(),position.Y(),position.Z());
   p = faceLeft.Norm().Scale(15);
   position = position + p;
   position = position.Norm().Scale(GROUND);
-GotoXY(1,26); printf("%f %f %f\n",position.X(),position.Y(),position.Z());
   isSetup = true;
-  heading = 0;
+  Heading(-90);
   return;
 
   Vector f;
@@ -104,8 +102,16 @@ printf("Len: %.18f\n",f.Length());
   exit(1);
   }
 
-/*
 void Lrv::Cycle() {
+  if (battery <= 0) throttle = 0;
+  GroundVehicle::Cycle();
+  if (throttle > 0) {
+    battery -= (maxSpeed * ((Double)throttle / 100.0));
+    if (battery < 0) battery = 0;
+    }
+  }
+
+/*
   Vector a;
   Double alt3;
   Double hyp;
@@ -153,5 +159,11 @@ void Lrv::Save(FILE* file) {
   }
 
 void Lrv::ProcessKey(Int32 key) {
+  if (key == KEY_PGDN) Throttle(Throttle()+10);
+  if (key == KEY_END) Throttle(Throttle()-10);
+  if (key == KEY_KP_END) Throttle(Throttle()-10);
+  if (key == KEY_RIGHT_ARROW) TurnRate(TurnRate()+15);
+  if (key == KEY_LEFT_ARROW) TurnRate(TurnRate()-15);
+  if (key == 'M' && throttle == 0) seq->ExitLrv();
   }
 

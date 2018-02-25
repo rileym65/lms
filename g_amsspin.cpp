@@ -45,7 +45,9 @@ void G_AmsSpin::Update() {
     printf("%2d",i);
     lastRollRate = i;
     }
-  i = (int)(lm->YawRate());
+  if (pilotLocation == PILOT_LM) i = (int)(lm->YawRate());
+  if (pilotLocation == PILOT_EVA) i = (int)(plss->TurnRate());
+  if (pilotLocation == PILOT_LRV) i = (int)(lrv->TurnRate());
   if (i > 9) i = 9;
   if (i < -9) i = -9;
   if (i != lastYawRate) {

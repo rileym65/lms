@@ -12,6 +12,8 @@ GroundVehicle::~GroundVehicle() {
 
 void GroundVehicle::Init() {
   heading = 0;
+  maxSpeed = 1;
+  turnRate = 0;
   }
 
 void GroundVehicle::Cycle() {
@@ -23,6 +25,13 @@ void GroundVehicle::Cycle() {
 //  a = a.Scale(1/alt3);
 //  velocity = velocity + a;
 //  velocity = velocity + thrust;
+  if (turnRate != 0) {
+    heading += turnRate;
+    if (heading > 180) heading -= 360;
+    if (heading < -180) heading += 360;
+    Heading(heading);
+    }
+  thrust = faceFront.Norm().Scale(maxSpeed * ((Double)throttle / 100.0));
   velocity = thrust;
   position = position + velocity;
   position = position.Norm().Scale(GROUND);
@@ -42,8 +51,32 @@ Double GroundVehicle::Heading() {
   }
 
 Double GroundVehicle::Heading(Double d) {
+  Vector v;
+  Double s,c;
   heading = d;
+  v = Vector(sin(heading*DR), 0, cos(heading*DR));
+  c = cos(latitude * DR);
+  s = sin(latitude * DR);
+  v = Vector( v.X(),
+              -(v.Y()*c + v.Z()*-s),
+              v.Y()*s + v.Z()*c);
+  c = cos(longitude * DR);
+  s = sin(longitude * DR);
+  v = Vector( v.X()*c + v.Y()*-s,
+              v.X()*s + v.Y()*c,
+              v.Z());
+  faceFront = v.Norm();
+  faceLeft = faceUp.Cross(faceFront).Norm();
   return heading;
+  }
+
+Double GroundVehicle::MaxSpeed() {
+  return maxSpeed;
+  }
+
+Double GroundVehicle::MaxSpeed(Double d) {
+  maxSpeed = d;
+  return maxSpeed;
   }
 
 void GroundVehicle::Place(Vector pos) {
@@ -86,7 +119,8 @@ printf("Len: %.18f\n",f.Length());
   }
 
 Int8 GroundVehicle::SubLoad(char* pline) {
-  if (startsWith(pline,"heading ")) heading = atof(nw(pline));
+  if (startsWith(pline,"heading ")) Heading(atof(nw(pline)));
+  else if (startsWith(pline,"turnrate ")) turnRate = atoi(nw(pline));
   else return 0;
   return -1;
   }
@@ -94,6 +128,17 @@ Int8 GroundVehicle::SubLoad(char* pline) {
 void GroundVehicle::Save(FILE* file) {
   Vehicle::Save(file);
   fprintf(file,"  Heading %.18f%s",heading,LE);
+  fprintf(file,"  TurnRate %d%s",turnRate,LE);
   }
 
+Int8 GroundVehicle::TurnRate() {
+  return turnRate;
+  }
+
+Int8 GroundVehicle::TurnRate(Int8 i) {
+  if (i > 15) i = 15;
+  if (i < -15) i = -15;
+  turnRate = i;
+  return turnRate;
+  }
 
