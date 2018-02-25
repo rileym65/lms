@@ -25,6 +25,7 @@ class LunarModule : public Vehicle {
     Double roll;
     Double pitch;
     Double yaw;
+    Double value;
     Matrix pitchMatrix;
     Matrix rollMatrix;
     Matrix yawMatrix;
@@ -59,6 +60,8 @@ class LunarModule : public Vehicle {
     Double RollRate(Double d);
     Double YawRate();
     Double YawRate(Double d);
+    Double Value();
+    Double Value(Double d);
     virtual void   Cycle();
     virtual Double Mass();
     virtual void   Save(FILE* file);

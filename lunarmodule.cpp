@@ -156,6 +156,15 @@ Double LunarModule::YawRate(Double d) {
   return yawRate;
   }
 
+Double LunarModule::Value() {
+  return value;
+  }
+
+Double LunarModule::Value(Double d) {
+  value = d;
+  return value;
+  }
+
 Double LunarModule::Mass() {
   Double ret;
   ret = 2234;
@@ -305,6 +314,7 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  Landed %d%s",landed,LE);
   fprintf(file,"  DescentJettisoned %d%s",descentJettisoned,LE);
   fprintf(file,"  Rock %d%s",rock,LE);
+  fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  }%s",LE);
   }
 
@@ -324,6 +334,7 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"landed ")) landed = atoi(nw(pline));
   else if (startsWith(pline,"descentjettisoned ")) descentJettisoned = atoi(nw(pline));
   else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
+  else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else return 0;
   return -1;
   }

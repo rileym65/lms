@@ -28,6 +28,8 @@ class Plss : public GroundVehicle {
     virtual Int8   SubLoad(char* line);
     virtual void   Save(FILE* file);
     virtual void   ProcessKey(Int32 key);
+    virtual Double Value();
+    virtual Double Value(Double d);
   };
 
 #endif

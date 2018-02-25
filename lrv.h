@@ -12,6 +12,7 @@ class Lrv : public GroundVehicle {
     Boolean isSetup;
     Int8    boxes;
     Int8    rock;
+    Double  value;
   public:
     Lrv();
     virtual ~Lrv();
@@ -28,6 +29,8 @@ class Lrv : public GroundVehicle {
     virtual Int8   SubLoad(char* line);
     virtual void   Save(FILE* file);
     virtual void   ProcessKey(Int32 key);
+    virtual Double Value();
+    virtual Double Value(Double d);
   };
 
 #endif

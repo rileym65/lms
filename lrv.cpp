@@ -53,6 +53,15 @@ Int8 Lrv::Rock(Int8 i) {
   return rock;
   }
 
+Double Lrv::Value() {
+  return value;
+  }
+
+Double Lrv::Value(Double d) {
+  value = d;
+  return value;
+  }
+
 void Lrv::Setup() {
   Vector p;
   Place(lm->Position());
@@ -137,6 +146,7 @@ void Lrv::Cycle() {
 
 Int8 Lrv::SubLoad(char* pline) {
   if (startsWith(pline,"battery ")) battery = atof(nw(pline));
+  else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
   else if (startsWith(pline,"sampleboxes ")) boxes = atoi(nw(pline));
   else if (startsWith(pline,"issetup true")) isSetup = true;
@@ -150,6 +160,7 @@ void Lrv::Save(FILE* file) {
   GroundVehicle::Save(file);
   fprintf(file,"  Battery %.18f%s",battery,LE);
   fprintf(file,"  Rock %d%s",rock,LE);
+  fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  SampleBoxes %d%s",boxes,LE);
   if (isSetup)
     fprintf(file,"  IsSetup true%s",LE);

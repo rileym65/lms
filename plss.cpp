@@ -96,6 +96,15 @@ Double Plss::Oxygen(Double d) {
   return oxygen;
   }
 
+Double Plss::Value() {
+  return value;
+  }
+
+Double Plss::Value(Double d) {
+  value = d;
+  return value;
+  }
+
 /*
 void Plss::Cycle() {
   Vector a;
@@ -127,6 +136,7 @@ Int8 Plss::SubLoad(char* pline) {
   if (startsWith(pline,"battery ")) battery = atof(nw(pline));
   else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
   else if (startsWith(pline,"carrying ")) carrying = atoi(nw(pline));
+  else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else return GroundVehicle::SubLoad(pline);
   return -1;
   }
@@ -137,6 +147,7 @@ void Plss::Save(FILE* file) {
   fprintf(file,"  Battery %.18f%s",battery,LE);
   fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
   fprintf(file,"  Carrying %d%s",carrying,LE);
+  fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  }%s",LE);
   }
 

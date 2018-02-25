@@ -20,6 +20,7 @@
 #include "g_amsspin.h"
 #include "g_amsstat.h"
 #include "g_amswest.h"
+#include "g_mapmed.h"
 
 Panel::Panel(const char* filename) {
   Int8 x,y;
@@ -31,7 +32,7 @@ Panel::Panel(const char* filename) {
   for (x=0; x<100; x++)
     gauges[x] = NULL;
   numGauges = 0;
-  useDefault();
+  useDefault(filename);
   }
 
 Panel::~Panel() {
@@ -44,7 +45,7 @@ void Panel::addGauge(Gauge* g) {
   else delete(g);
   }
 
-void Panel::useDefault() {
+void Panel::useDefault(const char* filename) {
   Box(1,1,80,16);
   Box(1,16,80,24);
   VLine(27,1,16);
@@ -83,7 +84,9 @@ void Panel::useDefault() {
   addGauge(new G_AmsSeq( 2, 22, false));
   addGauge(new G_AmsSpin(10, 17, false));
   addGauge(new G_AmsStatus(53, 17, false));
-  addGauge(new G_AmsWest( 2,  2, false));
+  if (strcmp(filename,"lrv.pnl") == 0) addGauge(new G_MapMed( 2, 2, false));
+  else if (strcmp(filename,"plss.pnl") == 0) addGauge(new G_MapMed( 2, 2, false));
+  else addGauge(new G_AmsWest( 2,  2, false));
   }
 
 void Panel::Box(Int8 x1,Int8 y1,Int8 x2,Int8 y2) {

@@ -166,6 +166,7 @@ int main(int argc, char** argv) {
   lrv = new Lrv();
   ins = new INS();
   seq = new Sequencer();
+  map = new Map();
   setup();
   if (load((char*)"lms.sav") == 0) {
     targetLatitude = -9999.99;

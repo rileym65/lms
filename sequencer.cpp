@@ -1,6 +1,7 @@
 #include <string.h>
 #include "sequencer.h"
 #include "header.h"
+#include "terminal.h"
 
 Sequencer::Sequencer() {
   time = 0; 
@@ -20,6 +21,8 @@ char* Sequencer::Message() {
   }
 
 void Sequencer::Complete() {
+  Int32 cellX, cellY;
+  char  cell;
   switch (function) {
     case SEQ_END_EVA:
          pilotLocation = PILOT_LM;
@@ -84,6 +87,18 @@ void Sequencer::Complete() {
          break;
     case SEQ_TAKESAMPLE:
          plss->Carrying('R');
+         cellX = map->Cell(plss->Longitude());
+         cellY = map->Cell(plss->Latitude());
+         cell = map->Lurrain(cellX, cellY);
+         switch (cell) {
+           case '.': plss->Value(1.0); break;
+           case 'o': plss->Value(1.2); break;
+           case 'O': plss->Value(1.4); break;
+           case '*': plss->Value(1.6); break;
+           case '^': plss->Value(2.0); break;
+           case ' ': plss->Value(0.5); break;
+           default : plss->Value(0.5); break;
+           }
          break;
     case SEQ_DROPSAMPLE:
          plss->Carrying(' ');
@@ -94,6 +109,7 @@ void Sequencer::Complete() {
     case SEQ_STORESAMPLE:
          plss->Carrying(' ');
          lrv->Rock(lrv->Rock() + 1);
+         lrv->Value(lrv->Value() + plss->Value());
          break;
     case SEQ_BOXPLSS:
          plss->Carrying('B');
@@ -103,6 +119,8 @@ void Sequencer::Complete() {
          lm->Rock(lm->Rock() + lrv->Rock());
          lrv->Rock(0);
          lrv->Boxes(lrv->Boxes() - 1);
+         lm->Value(lm->Value() + lrv->Value());
+         lrv->Value(0);
          break;
     case SEQ_BOXLRV:
          plss->Carrying(' ');

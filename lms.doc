@@ -56,9 +56,25 @@ P      - Put on/take off PLSS
 C      - Evacuate/Pressurize cabin
 *      - Rest for 2 hours
 )      - Sleep for 8 hours
-R      - Collect sample Rock
-B      - Drop rock
-L      - Setup LRV
 
+Available while in EVA:
+-----------------------
+M      - Move into LRV
+m      - Move into LM
+R      - Collect sample Rock, place rock in LRV
+B      - Drop rock, Get box from LRV, put box in LM
+L      - Setup LRV
+<left> - Begin left turn/End right turn
+<right>- Begin right turn/End left turn
+<PgDn> - Throttle up 10%
+<End>  - Throttle down 10%
+
+Available while in LRV:
+-----------------------
+M      - Exit LRV
+<left> - Begin left turn/End right turn
+<right>- Begin right turn/End left turn
+<PgDn> - Throttle up 10%
+<End>  - Throttle down 10%
 
 

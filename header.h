@@ -20,6 +20,7 @@
 #include "lrv.h"
 #include "ins.h"
 #include "sequencer.h"
+#include "map.h"
 
 #define PILOT_CSM 'c'
 #define PILOT_LRV 'v'
@@ -42,6 +43,7 @@
 #define MOON  4.9075e12
 #define GROUND 1738300
 #define METERS ((GROUND*2*M_PI) / 360.0)
+#define CELL (METERS / 10)
 #define DR  (3.14159265358979323846 / 180)
 
 
@@ -54,17 +56,28 @@ LINK Int32        clockEv;
 LINK Int32        clockOr;
 LINK Int32        clockMi;
 LINK Int32        clockUt;
+LINK CSM         *csm;
+LINK Vehicle*     currentVehicle;
 LINK Int8         docked;
 LINK Int8         dockingRadarOn;
 LINK Int8         dsnOn;
 LINK Double       efficiency;
 LINK Double       injury;
+LINK INS         *ins;
 LINK Int8         insMode;
 LINK Int8         landingRadarOn;
+LINK LunarModule *lm;
+LINK Lrv         *lrv;
+LINK Map         *map;
 LINK Double       metabolicRate;
 LINK char         pilotLocation;
+LINK Plss        *plss;
+LINK Int8         plssOn;
 LINK Int8         plssPacks;
+LINK Boolean      run;
+LINK Sequencer*   seq;
 LINK Int32        simSpeed;
+LINK Int8         spaceSuitOn;
 LINK Double       targetLatitude;
 LINK Double       targetLongitude;
 LINK Vector       targetPos;
@@ -72,16 +85,7 @@ LINK Vector       targetVel;
 LINK Double       targetMomEast;
 LINK Double       targetMomNorth;
 LINK Int8         ticks;
-LINK CSM         *csm;
-LINK LunarModule *lm;
-LINK Plss        *plss;
-LINK Lrv         *lrv;
-LINK Int8         plssOn;
-LINK Int8         spaceSuitOn;
-LINK INS         *ins;
-LINK Vehicle*     currentVehicle;
-LINK Sequencer*   seq;
-LINK Boolean      run;
+
 
 
 extern Matrix atom(char* buffer);

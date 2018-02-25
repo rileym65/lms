@@ -6,10 +6,10 @@
 class Panel {
   protected:
     char   screen[24][81];
-    void   useDefault();
     Gauge* gauges[100];
     Int8   numGauges;
     void   addGauge(Gauge* g);
+    void   useDefault(const char* filename);
   public:
     Panel(const char* filename);
     ~Panel();
