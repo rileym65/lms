@@ -52,8 +52,19 @@ OBJS = \
 	vehicle.o \
 	main.o
 
+MOBJS = \
+	lfsr.o \
+	map.o \
+	random.o \
+	mapgen.o
+
+all: $(PROJECT) mapgen
+
 $(PROJECT): $(OBJS)
 	$(CC) $(DEFS) $(LIBDIR) $(OBJS) $(LIBS) -o $(PROJECT)
+
+mapgen: $(MOBJS)
+	$(CC) $(DEFS) $(LIBDIR) $(MOBJS) $(LIBS) -o mapgen
 
 .cpp.o:
 	$(CC) $(DEFS) $(INCDIR) $(INCS) -c $<
@@ -74,6 +85,7 @@ load.o:          $(HEADERS) load.cpp
 lrv.o:           $(HEADERS) vehicle.h lrv.h lrv.cpp
 main.o:          $(HEADERS) main.cpp
 map.o:           $(HEADERS) lfsr.h random.h map.h map.cpp
+mapgen.o:        $(HEADERS) map.h random.h mapgen.cpp
 matrix.o:        $(HEADERS) matrix.cpp
 panel.o:         $(HEADERS) $(PHEADERS)  panel.cpp
 plss.o:          $(HEADERS) vehicle.h plss.h plss.cpp
