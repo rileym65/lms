@@ -13,6 +13,7 @@ LunarModule::LunarModule() {
   yawRate = 0;
   descentJettisoned = 0;
   rock = 0;
+  InitPanel();
 /*
   roll = 0;
   pitch = 0;
@@ -24,6 +25,10 @@ LunarModule::LunarModule() {
   }
 
 LunarModule::~LunarModule() {
+  }
+
+void LunarModule::InitPanel() {
+  panel = new Panel("lm.pnl");
   }
 
 char   LunarModule::RcsFbMode() {

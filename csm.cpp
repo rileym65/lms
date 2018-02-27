@@ -3,6 +3,7 @@
 #include "csm.h"
 
 CSM::CSM() {
+  panel = new Panel("csm.pnl");
   }
 
 CSM::~CSM() {

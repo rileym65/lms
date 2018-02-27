@@ -74,6 +74,7 @@ rmsave:
 
 clean:
 	-rm $(PROJECT)
+	-rm mapgen
 	-rm *.o
 
 csm.o:           $(HEADERS) csm.cpp

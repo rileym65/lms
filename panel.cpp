@@ -32,10 +32,85 @@ Panel::Panel(const char* filename) {
   for (x=0; x<100; x++)
     gauges[x] = NULL;
   numGauges = 0;
-  useDefault(filename);
+  if (loadFile(filename) == 0) useDefault(filename);
   }
 
 Panel::~Panel() {
+  }
+
+Int8 Panel::loadFile(const char* filename) {
+  Int32 x1,y1,x2,y2;
+  FILE *file;
+  char  line[1024];
+  char  str[1024];
+  if ((file = fopen(filename,"r")) == NULL) return 0;
+  while (fgets(line,1024,file) != NULL) {
+    if (strncasecmp(line,"box ",4) == 0) {
+      sscanf(nw(line),"%d,%d,%d,%d",&x1,&y1,&x2,&y2);
+      Box(x1,y1,x2,y2);
+      }
+    else if (strncasecmp(line,"line ",5) == 0) {
+      sscanf(nw(line),"%d,%d,%d,%d",&x1,&y1,&x2,&y2);
+      if (x1 == x2) VLine(x1,y1,y2);
+      else if (y1 == y2) HLine(x1,y1,x2);
+      else {
+        printf("Diagonal lines are not allowed: %s\n",line);
+        exit(1);
+        }
+      }
+    else if (strncasecmp(line,"label ",6) == 0) {
+      sscanf(nw(line),"%d,%d,\"%[^\"]",&x1,&y1,str);
+      Label(x1,y1,str);
+      }
+    else if (strncasecmp(line,"gauge ",6) == 0) {
+      sscanf(nw(line),"%s %d,%d",str,&x1,&y1);
+      if (strcasecmp(str,"ams_attitude") == 0)
+        addGauge(new G_AmsAtt(x1, y1, false));
+      else if (strcasecmp(str,"ams_clocks") == 0)
+        addGauge(new G_AmsClocks(x1, y1, false));
+      else if (strcasecmp(str,"ams_consumables") == 0)
+        addGauge(new G_AmsCons(x1, y1, false));
+      else if (strcasecmp(str,"ams_dockingradar") == 0)
+        addGauge(new G_AmsDock(x1, y1, false));
+      else if (strcasecmp(str,"ams_downaxis") == 0)
+        addGauge(new G_AmsDown(x1, y1, false));
+      else if (strcasecmp(str,"ams_ins") == 0)
+        addGauge(new G_AmsIns(x1, y1, false));
+      else if (strcasecmp(str,"ams_lm") == 0)
+        addGauge(new G_AmsLm(x1, y1, false));
+      else if (strcasecmp(str,"ams_lrv") == 0)
+        addGauge(new G_AmsLrv(x1, y1, false));
+      else if (strcasecmp(str,"ams_message") == 0)
+        addGauge(new G_AmsMessage(x1, y1, false));
+      else if (strcasecmp(str,"ams_pilot") == 0)
+        addGauge(new G_AmsPilot(x1, y1, false));
+      else if (strcasecmp(str,"ams_plss") == 0)
+        addGauge(new G_AmsPlss(x1, y1, false));
+      else if (strcasecmp(str,"ams_sequencer") == 0)
+        addGauge(new G_AmsSeq(x1, y1, false));
+      else if (strcasecmp(str,"ams_spin") == 0)
+        addGauge(new G_AmsSpin(x1, y1, false));
+      else if (strcasecmp(str,"ams_status") == 0)
+        addGauge(new G_AmsStatus(x1, y1, false));
+      else if (strcasecmp(str,"ams_westaxis") == 0)
+        addGauge(new G_AmsWest(x1, y1, false));
+      else if (strcasecmp(str,"ams_landingradar") == 0)
+        addGauge(new G_AmsLand(x1, y1, false));
+      else if (strcasecmp(str,"map_medium") == 0)
+        addGauge(new G_MapMed(x1, y1, false));
+      else {
+        printf("Unknown guage: %s\n",str);
+        exit(1);
+        }
+      }
+    else {
+      printf("Unknown command: %s\n",line);
+      exit(1);
+      }
+    }
+ 
+  fclose(file);
+  return -1;
   }
 
 void Panel::addGauge(Gauge* g) {

@@ -22,6 +22,7 @@
 #include "sequencer.h"
 #include "map.h"
 
+#define TITLE "Lunar Mission Simulator"
 #define PILOT_CSM 'c'
 #define PILOT_LRV 'v'
 #define PILOT_LM  'm'

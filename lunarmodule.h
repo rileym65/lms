@@ -32,6 +32,7 @@ class LunarModule : public Vehicle {
   public:
     LunarModule();
     virtual ~LunarModule();
+    virtual void InitPanel();
     char   RcsFbMode();
     char   RcsFbMode(char c);
     char   RcsLrMode();

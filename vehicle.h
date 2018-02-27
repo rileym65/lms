@@ -30,6 +30,7 @@ class Vehicle {
     Vehicle();
     virtual ~Vehicle();
     virtual void   Init();
+    virtual void   InitPanel();
     virtual Double Altitude();
     virtual Double Altitude(Double d);
     virtual Vector FaceFront();

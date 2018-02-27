@@ -9,6 +9,7 @@ class Panel {
     Gauge* gauges[100];
     Int8   numGauges;
     void   addGauge(Gauge* g);
+    Int8   loadFile(const char* filename);
     void   useDefault(const char* filename);
   public:
     Panel(const char* filename);

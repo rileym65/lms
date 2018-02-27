@@ -7,7 +7,9 @@ Vehicle::Vehicle() {
   velocityAltitude = 0;
   thrust = Vector(0,0,0);
   orientation = Matrix::Identity();
+  panel = NULL;
   Init();
+  InitPanel();
   }
 
 Vehicle::~Vehicle() {
@@ -15,7 +17,10 @@ Vehicle::~Vehicle() {
 
 void Vehicle::Init() {
   throttle = 0;
-  panel = new Panel("csm.pnl");
+  }
+
+void Vehicle::InitPanel() {
+  panel = new Panel("ams.pnl");
   }
 
 Double Vehicle::Altitude() {
@@ -216,12 +221,15 @@ void Vehicle::Load(FILE* file) {
 
 void Vehicle::SetupPanel() {
   ClrScr();
-  panel->Reset();
-  panel->Display();
+  if (panel != NULL) {
+    panel->Reset();
+    panel->Display();
+    }
   }
 
 void Vehicle::UpdatePanel() {
-  panel->Update();
+  if (panel != NULL)
+    panel->Update();
   }
 
 void Vehicle::ProcessKey(Int32 key) {
