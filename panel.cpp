@@ -45,7 +45,9 @@ Int8 Panel::loadFile(const char* filename) {
   char  str[1024];
   if ((file = fopen(filename,"r")) == NULL) return 0;
   while (fgets(line,1024,file) != NULL) {
-    if (strncasecmp(line,"box ",4) == 0) {
+    if (line[0] == '#') {
+      }
+    else if (strncasecmp(line,"box ",4) == 0) {
       sscanf(nw(line),"%d,%d,%d,%d",&x1,&y1,&x2,&y2);
       Box(x1,y1,x2,y2);
       }

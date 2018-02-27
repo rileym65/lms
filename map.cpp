@@ -41,12 +41,18 @@ void Map::drawCrater(Double longitude, Double latitude, Double diameter) {
     iy = (int)(y / 30.0);
     for (i=cx-ix; i<=cx+ix; i++) {
       if (cy+iy >= 0 && cy+iy <= 180 && i >= 0 && i <= 360) {
-        if (i == cx-ix || i == cx+ix) level0[cy+iy][i] = '^';
-          else if (level0[cy+iy][i] == '_') level0[cy+iy][i] = ' ';
+        if (i == cx-ix || i == cx+ix) level0[cy+iy][i] = '*';
+          else if (level0[cy+iy][i] != '^' &&
+                   level0[cy+iy][i] != '.' &&
+                   level0[cy+iy][i] != 'o' &&
+                   level0[cy+iy][i] != 'O') level0[cy+iy][i] = ' ';
         }
       if (cy-iy >= 0 && cy-iy <= 180 && i >= 0 && i <= 360) {
-        if (i == cx-ix || i == cx+ix) level0[cy-iy][i] = '^';
-          else if (level0[cy-iy][i] == '_') level0[cy-iy][i] = ' ';
+        if (i == cx-ix || i == cx+ix) level0[cy-iy][i] = '*';
+          else if (level0[cy-iy][i] != '^' &&
+                   level0[cy-iy][i] != '.' &&
+                   level0[cy-iy][i] != 'o' &&
+                   level0[cy-iy][i] != 'O') level0[cy-iy][i] = ' ';
         }
       }
     x -= 5;
@@ -235,6 +241,9 @@ Int32 Map::Cell(Double degrees) {
   }
 
 Int32 Map::Cell0(Int32 longitude,Int32 latitude) {
+  latitude = -latitude;
+  if (longitude < -180 || longitude > 180) return '#';
+  if (latitude < -90 || latitude > 90) return '#';
   return level0[latitude+90][longitude+180];
   }
 

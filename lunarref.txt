@@ -1798,3 +1798,22 @@ Rimae Theaetetus,         33.0,     6.0,    50
 Rimae Triesnecker,         4.3,     4.6,   215
 Rimae Vasco da Gama,      10.0,    82.0,    60
 Rimae Zupus,             -15.0,   -53.0,   120
+Feature Apollo 11,         0.6833,   23.4333, 1
+Feature Apollo 12,        -3.1965,  -23.3853, 2
+Feature Apollo 14,        -3.6733,  -17.4653, 4
+Feature Apollo 15,        25.6300,    3.2400, 5
+Feature Apollo 16,        -9.0100,   15.5400, 6
+Feature Apollo 17,        20.1800,   30.7400, 7
+Feature Surveyor 1,       -2.4500,  -43.2200, A
+Feature Surveyor 3,       -3.2001,  -23.3817, B
+Feature Surveyor 5,        1.4200,   23.2000, C
+Feature Surveyor 6,        0.5300,   -1.4000, D
+Feature Surveyor 7,      -40.8600,  -11.4700, E
+Feature Luna 9,            7.9500,  -65.3800, F
+Feature Luna 13,          19.0700,  -61.5900, G
+Feature Luna 16,          -0.9900,   56.3600, H
+Feature Luna 17,          38.1100,  -35.1700, I
+Feature Luna 20,           3.6600,   56.5500, J
+Feature Luna 21,          25.9500,   29.7000, K
+Feature Luna 23,          13.1700,   56.8800, L
+Feature Luna 24,          12.3800,   62.0700, M
