@@ -50,7 +50,7 @@ void G_AmsLand::Update() {
   if (mode != lastMode || lat != lastLatitude || lng != lastLongitude) {
     for (ix=-2; ix<=2; ix++)
       for (iy=-4; iy <= 4; iy++) {
-        data[ix+2][iy+4] = map->Cell0(lng+ix,lat+iy);
+        data[ix+2][iy+4] = map->CellH(lng+ix,lat+iy);
         }
     for (i=0; i<5; i++) {
       GotoXY(x+2, y+2+i);

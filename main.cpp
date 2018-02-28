@@ -160,6 +160,9 @@ int main(int argc, char** argv) {
   int key;
   char buffer[64];
   simSpeed = 100000;
+  printf("\n\n\n\n");
+  printf("%s\n",TITLE);
+  printf("\n\n\n\n");
   csm = new CSM();
   lm = new LunarModule();
   plss = new Plss();
