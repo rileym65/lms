@@ -76,6 +76,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockor ")) clockOr = atoi(nw(pline));
     else if (startsWith(pline,"clockmi ")) clockMi = atoi(nw(pline));
     else if (startsWith(pline,"clockut ")) clockUt = atoi(nw(pline));
+    else if (startsWith(pline,"clockte ")) clockTe = atoi(nw(pline));
     else if (startsWith(pline,"docked ")) docked = atoi(nw(pline));
     else if (startsWith(pline,"dockingradaron ")) dockingRadarOn = atoi(nw(pline));
     else if (startsWith(pline,"dsnon ")) dsnOn = atoi(nw(pline));

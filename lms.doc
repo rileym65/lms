@@ -78,3 +78,13 @@ M      - Exit LRV
 <End>  - Throttle down 10%
 
 
+1. 60.0W of landing site, transfer to LM
+2. 155.0E of landing site, undock
+3. 50m from CSM, increase north velocity to .3
+4. Roll front face to point up
+5. 105E of landing site, increase altitude velocity by 1.0
+6. 3E of landing site, cancel relative N/S veloicty
+7. 87W of landing site, plane change to match landing site latitude
+8. 165W of landing site, change perilune to 20km (10% throttle)
+9. 16E of landing site, powered descent
+

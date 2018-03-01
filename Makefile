@@ -12,7 +12,21 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_amsplss.h \
            g_amspilot.h \
            g_amsseq.h \
-           g_amsspin.h g_amsstat.h g_amswest.h g_mapmed.h
+           g_amsspin.h g_amsstat.h g_amswest.h g_clocks.h \
+           g_attitude.h \
+           g_docked.h \
+           g_evaprep.h \
+           g_ins.h \
+           g_landed.h \
+           g_lmfuel.h \
+           g_lmrock.h \
+           g_mapmed.h \
+           g_oxybat.h \
+           g_pilot.h \
+           g_pilotloc.h \
+           g_radars.h \
+           g_rcs.h \
+           g_throttle.h
 OBJS = \
 	csm.o \
 	gauge.o \
@@ -33,6 +47,20 @@ OBJS = \
         g_amsspin.o \
         g_amsstat.o \
 	g_amswest.o \
+	g_attitude.o \
+	g_clocks.o \
+	g_docked.o \
+	g_evaprep.o \
+	g_ins.o \
+	g_landed.o \
+        g_lmfuel.o \
+        g_lmrock.o \
+	g_oxybat.o \
+	g_pilot.o \
+	g_pilotloc.o \
+	g_radars.o \
+	g_rcs.o \
+	g_throttle.o \
 	groundvehicle.o \
 	ins.o \
 	lfsr.o \
@@ -94,7 +122,7 @@ random.o:        $(HEADERS) lfsr.h random.h random.cpp
 save.o:          $(HEADERS) save.cpp
 sgn.o:           $(HEADERS) sgn.cpp
 sequencer.o:     $(HEADERS) sequencer.cpp
-lunarmodule.o:   $(HEADERS) lunarmodule.cpp
+lunarmodule.o:   $(HEADERS) lunarmodule.h lunarmodule.cpp
 terminal.o:      $(HEADERS) terminal.cpp
 vector.o:        $(HEADERS) vector.cpp
 vehicle.o:       $(HEADERS) vehicle.h panel.h gauge.h vehicle.cpp
@@ -116,4 +144,18 @@ g_amsseq.o:    $(HEADERS) gauge.h g_amsseq.h terminal.h g_amsseq.cpp
 g_amsspin.o:   $(HEADERS) gauge.h g_amsspin.h terminal.h g_amsspin.cpp
 g_amsstat.o:   $(HEADERS) gauge.h g_amsstat.h terminal.h g_amsstat.cpp
 g_amswest.o:   $(HEADERS) gauge.h g_amswest.h terminal.h g_amswest.cpp
+g_attitude.o:  $(HEADERS) gauge.h terminal.h g_attitude.h g_attitude.cpp
+g_docked.o:    $(HEADERS) gauge.h terminal.h g_docked.h g_docked.cpp
+g_ins.o:       $(HEADERS) gauge.h terminal.h g_ins.h g_ins.cpp
+g_landed.o:    $(HEADERS) gauge.h terminal.h g_landed.h g_landed.cpp
+g_lmfuel.o:    $(HEADERS) gauge.h terminal.h g_lmfuel.h g_lmfuel.cpp
+g_lmrock.o:    $(HEADERS) gauge.h terminal.h g_lmrock.h g_lmrock.cpp
+g_clocks.o:    $(HEADERS) gauge.h terminal.h g_clocks.h g_clocks.cpp
+g_evaprep.o:   $(HEADERS) gauge.h terminal.h g_evaprep.h g_evaprep.cpp
+g_oxybat.o:    $(HEADERS) gauge.h terminal.h g_oxybat.h g_oxybat.cpp
+g_pilot.o:     $(HEADERS) gauge.h terminal.h g_pilot.h g_pilot.cpp
+g_pilotloc.o:  $(HEADERS) gauge.h terminal.h g_pilotloc.h g_pilotloc.cpp
+g_rcs.o:       $(HEADERS) gauge.h terminal.h g_rcs.h g_rcs.cpp
+g_radars.o:    $(HEADERS) gauge.h terminal.h g_radars.h g_radars.cpp
+g_throttle.o:  $(HEADERS) gauge.h terminal.h g_throttle.h g_throttle.cpp
 

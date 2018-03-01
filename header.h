@@ -57,6 +57,7 @@ LINK Int32        clockEv;
 LINK Int32        clockOr;
 LINK Int32        clockMi;
 LINK Int32        clockUt;
+LINK Int32        clockTe;
 LINK CSM         *csm;
 LINK Vehicle*     currentVehicle;
 LINK Int8         docked;

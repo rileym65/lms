@@ -55,6 +55,7 @@ class INS {
     INS();
     ~INS();
     void     Cycle();
+    Double   Apolune();
     Double   AttUr();
     Double   AttFr();
     Double   AttLs();
@@ -73,6 +74,9 @@ class INS {
     char*    DisplayMomNorth();
     Int8     Mode();
     Int8     Mode(Int8 i);
+    Double   MomEast();
+    Double   MomNorth();
+    Double   Perilune();
     Vector   RelPos();
     Vector   RelVel();
     void     Reset();

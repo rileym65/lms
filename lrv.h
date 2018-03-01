@@ -8,7 +8,6 @@
 
 class Lrv : public GroundVehicle {
   protected:
-    Double battery;
     Boolean isSetup;
     Int8    boxes;
     Int8    rock;
@@ -18,8 +17,6 @@ class Lrv : public GroundVehicle {
     virtual ~Lrv();
     virtual void Init();
     virtual void Cycle();
-    virtual Double Battery();
-    virtual Double Battery(Double d);
     virtual Boolean IsSetup();
     virtual void   Setup();
     virtual Int8   Boxes();

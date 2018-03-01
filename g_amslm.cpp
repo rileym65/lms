@@ -4,8 +4,8 @@
 #include "g_amslm.h"
 #include "terminal.h"
 
-G_AmsLm::G_AmsLm(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsLm::G_AmsLm(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 6;
   height = 4;
   Reset();

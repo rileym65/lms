@@ -20,10 +20,25 @@
 #include "g_amsspin.h"
 #include "g_amsstat.h"
 #include "g_amswest.h"
+#include "g_attitude.h"
+#include "g_clocks.h"
+#include "g_evaprep.h"
+#include "g_docked.h"
+#include "g_ins.h"
+#include "g_landed.h"
+#include "g_lmfuel.h"
+#include "g_lmrock.h"
 #include "g_mapmed.h"
+#include "g_oxybat.h"
+#include "g_pilot.h"
+#include "g_pilotloc.h"
+#include "g_radars.h"
+#include "g_rcs.h"
+#include "g_throttle.h"
 
-Panel::Panel(const char* filename) {
+Panel::Panel(const char* filename,Vehicle* v) {
   Int8 x,y;
+  vehicle = v;
   for (y=0; y<24; y++)
     for (x=0; x<80; x++)
       screen[y][x] = ' ';
@@ -67,39 +82,68 @@ Int8 Panel::loadFile(const char* filename) {
     else if (strncasecmp(line,"gauge ",6) == 0) {
       sscanf(nw(line),"%s %d,%d",str,&x1,&y1);
       if (strcasecmp(str,"ams_attitude") == 0)
-        addGauge(new G_AmsAtt(x1, y1, false));
+        addGauge(new G_AmsAtt(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_clocks") == 0)
-        addGauge(new G_AmsClocks(x1, y1, false));
+        addGauge(new G_AmsClocks(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_consumables") == 0)
-        addGauge(new G_AmsCons(x1, y1, false));
+        addGauge(new G_AmsCons(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_dockingradar") == 0)
-        addGauge(new G_AmsDock(x1, y1, false));
+        addGauge(new G_AmsDock(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_downaxis") == 0)
-        addGauge(new G_AmsDown(x1, y1, false));
+        addGauge(new G_AmsDown(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_ins") == 0)
-        addGauge(new G_AmsIns(x1, y1, false));
+        addGauge(new G_AmsIns(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_lm") == 0)
-        addGauge(new G_AmsLm(x1, y1, false));
+        addGauge(new G_AmsLm(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_lrv") == 0)
-        addGauge(new G_AmsLrv(x1, y1, false));
+        addGauge(new G_AmsLrv(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_message") == 0)
-        addGauge(new G_AmsMessage(x1, y1, false));
+        addGauge(new G_AmsMessage(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_pilot") == 0)
-        addGauge(new G_AmsPilot(x1, y1, false));
+        addGauge(new G_AmsPilot(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_plss") == 0)
-        addGauge(new G_AmsPlss(x1, y1, false));
+        addGauge(new G_AmsPlss(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_sequencer") == 0)
-        addGauge(new G_AmsSeq(x1, y1, false));
+        addGauge(new G_AmsSeq(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_spin") == 0)
-        addGauge(new G_AmsSpin(x1, y1, false));
+        addGauge(new G_AmsSpin(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_status") == 0)
-        addGauge(new G_AmsStatus(x1, y1, false));
+        addGauge(new G_AmsStatus(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_westaxis") == 0)
-        addGauge(new G_AmsWest(x1, y1, false));
+        addGauge(new G_AmsWest(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_landingradar") == 0)
-        addGauge(new G_AmsLand(x1, y1, false));
+        addGauge(new G_AmsLand(x1, y1, false, vehicle));
       else if (strcasecmp(str,"map_medium") == 0)
-        addGauge(new G_MapMed(x1, y1, false));
+        addGauge(new G_MapMed(x1, y1, false, vehicle));
+
+      else if (strcasecmp(str,"attitude") == 0)
+        addGauge(new G_Attitude(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clocks") == 0)
+        addGauge(new G_Clocks(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"docked") == 0)
+        addGauge(new G_Docked(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"evaprep") == 0)
+        addGauge(new G_EvaPrep(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ins") == 0)
+        addGauge(new G_Ins(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"landed") == 0)
+        addGauge(new G_Landed(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"lmfuel") == 0)
+        addGauge(new G_LmFuel(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"lmrock") == 0)
+        addGauge(new G_LmRock(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"oxygenbattery") == 0)
+        addGauge(new G_OxyBat(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"pilot") == 0)
+        addGauge(new G_Pilot(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"pilotlocation") == 0)
+        addGauge(new G_PilotLocation(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"radars") == 0)
+        addGauge(new G_Radars(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"rcs") == 0)
+        addGauge(new G_Rcs(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"throttle") == 0)
+        addGauge(new G_Throttle(x1, y1, false, vehicle));
       else {
         printf("Unknown guage: %s\n",str);
         exit(1);
@@ -146,24 +190,24 @@ void Panel::useDefault(const char* filename) {
   HLine(36,22,51);
   VLine(36,22,23);
   Label(47,23,":");
-  addGauge(new G_AmsAtt(2, 17, false));
-  addGauge(new G_AmsClocks(68, 17, false));
-  addGauge(new G_AmsCons(17, 17, false));
-  addGauge(new G_AmsDock(41,  4, false));
-  addGauge(new G_AmsDown(55,  2, false));
-  addGauge(new G_AmsIns(25, 17, false));
-  addGauge(new G_AmsLand(28,  4, false));
-  addGauge(new G_AmsLm(48, 12, false));
-  addGauge(new G_AmsLrv(37, 12, false));
-  addGauge(new G_AmsMessage(37, 23, false));
-  addGauge(new G_AmsPilot(32,  2, false));
-  addGauge(new G_AmsPlss(29, 12, false));
-  addGauge(new G_AmsSeq( 2, 22, false));
-  addGauge(new G_AmsSpin(10, 17, false));
-  addGauge(new G_AmsStatus(53, 17, false));
-  if (strcmp(filename,"lrv.pnl") == 0) addGauge(new G_MapMed( 2, 2, false));
-  else if (strcmp(filename,"plss.pnl") == 0) addGauge(new G_MapMed( 2, 2, false));
-  else addGauge(new G_AmsWest( 2,  2, false));
+  addGauge(new G_AmsAtt(2, 17, false, vehicle));
+  addGauge(new G_AmsClocks(68, 17, false, vehicle));
+  addGauge(new G_AmsCons(17, 17, false, vehicle));
+  addGauge(new G_AmsDock(41,  4, false, vehicle));
+  addGauge(new G_AmsDown(55,  2, false, vehicle));
+  addGauge(new G_AmsIns(25, 17, false, vehicle));
+  addGauge(new G_AmsLand(28,  4, false, vehicle));
+  addGauge(new G_AmsLm(48, 12, false, vehicle));
+  addGauge(new G_AmsLrv(37, 12, false, vehicle));
+  addGauge(new G_AmsMessage(37, 23, false, vehicle));
+  addGauge(new G_AmsPilot(32,  2, false, vehicle));
+  addGauge(new G_AmsPlss(29, 12, false, vehicle));
+  addGauge(new G_AmsSeq( 2, 22, false, vehicle));
+  addGauge(new G_AmsSpin(10, 17, false, vehicle));
+  addGauge(new G_AmsStatus(53, 17, false, vehicle));
+  if (strcmp(filename,"lrv.pnl") == 0) addGauge(new G_MapMed( 2, 2, false, vehicle));
+  else if (strcmp(filename,"plss.pnl") == 0) addGauge(new G_MapMed( 2, 2, false, vehicle));
+  else addGauge(new G_AmsWest( 2,  2, false, vehicle));
   }
 
 void Panel::Box(Int8 x1,Int8 y1,Int8 x2,Int8 y2) {

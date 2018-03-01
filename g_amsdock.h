@@ -4,6 +4,8 @@
 #include "types.h"
 #include "gauge.h"
 
+class Vehicle;
+
 class G_AmsDock : public Gauge {
   protected:
     Int16 lastDockingRadarPosX;
@@ -12,7 +14,7 @@ class G_AmsDock : public Gauge {
     Int16 lastDockingRadarAngY;
     Int16 lastDockingRadarRolX;
   public:
-    G_AmsDock(Int8 x,Int8 y,Boolean f);
+    G_AmsDock(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_AmsDock();
     virtual void Reset();
     virtual void Display();

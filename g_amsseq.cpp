@@ -4,8 +4,8 @@
 #include "g_amsseq.h"
 #include "terminal.h"
 
-G_AmsSeq::G_AmsSeq(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsSeq::G_AmsSeq(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 14;
   height = 2;
   Reset();

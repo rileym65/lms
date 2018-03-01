@@ -4,8 +4,8 @@
 #include "g_amsclocks.h"
 #include "terminal.h"
 
-G_AmsClocks::G_AmsClocks(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsClocks::G_AmsClocks(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   Reset();
   width = 12;
   height = 7;

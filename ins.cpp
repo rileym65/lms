@@ -70,8 +70,6 @@ void INS::Cycle() {
   momNorth = L.Z() / hyp;
   momNorth = asin(momNorth) * 180 / M_PI;
   attUr = acos(pos.Norm().Dot(spacecraft->FaceUp())) * 180 / M_PI;
-//  attFr = acos(pos.Norm().Dot(spacecraft->FaceFront())) * 180 / M_PI;
-//  attFr = acos(spacecraft->FaceFront().Norm().Dot(orbit) ) * 180 / M_PI;
   attFr = acos(pos.Norm().Dot(spacecraft->FaceFront())) * 180 / M_PI;
   attLs = acos(spacecraft->FaceLeft().Dot(Vector(0,0,-1))) * 180 / M_PI;
   tarLatitude = spacecraft->Latitude() - targetLatitude;
@@ -96,6 +94,10 @@ Double INS::AttFr() {
 
 Double INS::AttLs() {
   return attLs;
+  }
+
+Double INS::Apolune() {
+  return apolune;
   }
 
 char* INS::DisplayAccAltitude() {
@@ -152,6 +154,14 @@ char* INS::DisplayMomNorth() {
 
 Int8 INS::Mode() {
   return mode;
+  }
+
+Double INS::MomEast() {
+  return momEast;
+  }
+
+Double INS::MomNorth() {
+  return momNorth;
   }
 
 Int8 INS::Mode(Int8 i) {
@@ -361,6 +371,10 @@ void INS::printVelocity(Double v,char* buffer) {
   if (fabs(v) < 10) sprintf(buffer,"%7.3f",v);
   else if (fabs(v) < 100) sprintf(buffer,"%7.2f",v);
   else sprintf(buffer,"%7.1f",v);
+  }
+
+Double INS::Perilune() {
+  return perilune;
   }
 
 Vector INS::RelPos() {

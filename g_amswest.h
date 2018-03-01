@@ -4,6 +4,8 @@
 #include "types.h"
 #include "gauge.h"
 
+class Vehicle;
+
 class G_AmsWest : public Gauge {
   protected:
     Int16 leftFaceX, leftFaceY;
@@ -11,7 +13,7 @@ class G_AmsWest : public Gauge {
     Int16 leftUpX, leftUpY;
     Double faceD, leftD, upD;
   public:
-    G_AmsWest(Int8 x,Int8 y,Boolean f);
+    G_AmsWest(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_AmsWest();
     virtual void Reset();
     virtual void Display();

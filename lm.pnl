@@ -1,39 +1,32 @@
-Box 1,1,80,16
-Box 1,16,80,24
+Box 1,1,80,24
+Box 38,14,54,16
+Line 1,16,80,16
 Line 27,1,27,16
 Line 54,1,54,16
 Line 27,3,54,3
-Line 31,2,31,2
-Line 51,2,51,2
-Line 35,12,35,15
-Line 43,12,43,15
-Line 47,12,47,15
-Line 9,17,9,20
-Line 16,17,16,23
-Line 24,17,24,23
-Line 52,17,52,23
-Line 67,17,67,23
-Line 2,21,15,21
-Line 36,22,51,22
-Line 36,22,36,23
-Label 45,12,"--"
-Label 45,13,"--"
-Label 45,14,"--"
-Label 45,15,"--"
-Label 47,23,":"
-Gauge Ams_Attitude 2,17
-Gauge Ams_Clocks 68,17
-Gauge Ams_Consumables 17,17
+Line 22,16,22,24
+Line 52,16,52,24
+Line 60,16,60,22
+Line 1,20,22,20
+Line 52,22,73,22
+Line 73,16,73,24
+Label 49,15,":"
 Gauge Ams_DockingRadar 41,4
 Gauge Ams_DownAxis 55,2
-Gauge Ams_INS 25,17
 Gauge Ams_LandingRadar 28,4
-Gauge Ams_Lm 48,12
-Gauge Ams_Lrv 37,12
-Gauge Ams_Message 37,23
-Gauge Ams_Pilot 32,2
-Gauge Ams_Plss 29,12
-Gauge Ams_Sequencer 2,22
-Gauge Ams_Spin 10,17
-Gauge Ams_Status 53,17
+Gauge Ams_Message 39,15
 Gauge Ams_WestAxis 2,2
+Gauge Clocks 61,17
+Gauge EvaPrep 53,23
+Gauge LmFuel 53,17
+Gauge LmRock 74,23
+Gauge OxygenBattery 53,20
+Gauge Pilot 74,17
+Gauge PilotLocation 75,21
+Gauge Rcs 2,17
+Gauge Attitude 2,21
+Gauge Radars 29,13
+Gauge Throttle 41,13
+Gauge Landed 34,13
+Gauge Docked 34,14
+Gauge Ins 24,17

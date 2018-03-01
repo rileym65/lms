@@ -4,8 +4,8 @@
 #include "g_amsatt.h"
 #include "terminal.h"
 
-G_AmsAtt::G_AmsAtt(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsAtt::G_AmsAtt(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 7;
   height = 4;
   Reset();

@@ -3,16 +3,19 @@
 
 #include "gauge.h"
 
+class Vehicle;
+
 class Panel {
   protected:
     char   screen[24][81];
     Gauge* gauges[100];
     Int8   numGauges;
+    Vehicle* vehicle;
     void   addGauge(Gauge* g);
     Int8   loadFile(const char* filename);
     void   useDefault(const char* filename);
   public:
-    Panel(const char* filename);
+    Panel(const char* filename,Vehicle* v);
     ~Panel();
     void Box(Int8 x1,Int8 y1,Int8 x2,Int8 y2);
     void HLine(Int8 x1,Int8 y1,Int8 x2);

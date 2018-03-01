@@ -4,6 +4,8 @@
 #include "types.h"
 #include "gauge.h"
 
+class Vehicle;
+
 class G_AmsStatus : public Gauge {
   protected:
     Int16 lastSpaceSuitOn;
@@ -21,7 +23,7 @@ class G_AmsStatus : public Gauge {
     char  lastRcsLrMode;
     char  lastRcsUdMode;
   public:
-    G_AmsStatus(Int8 x,Int8 y,Boolean f);
+    G_AmsStatus(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_AmsStatus();
     virtual void Reset();
     virtual void Display();

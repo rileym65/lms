@@ -4,8 +4,8 @@
 #include "g_amspilot.h"
 #include "terminal.h"
 
-G_AmsPilot::G_AmsPilot(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsPilot::G_AmsPilot(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 19;
   height = 1;
   Reset();

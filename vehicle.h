@@ -13,12 +13,16 @@ class Vehicle {
     Vector  baseFront;
     Vector  baseLeft;
     Vector  baseUp;
+    Double  battery;
     Vector  faceFront;
     Vector  faceLeft;
     Vector  faceUp;
     Double  latitude;
     Double  longitude;
+    Double  maxBattery;
+    Double  maxOxygen;
     Matrix  orientation;
+    Double  oxygen;
     Vector  position;
     Double  radius;
     Int8    throttle;
@@ -33,6 +37,8 @@ class Vehicle {
     virtual void   InitPanel();
     virtual Double Altitude();
     virtual Double Altitude(Double d);
+    virtual Double Battery();
+    virtual Double Battery(Double d);
     virtual Vector FaceFront();
     virtual Vector FaceFront(Vector v);
     virtual Vector FaceLeft();
@@ -43,6 +49,12 @@ class Vehicle {
     virtual Double Latitude(Double d);
     virtual Double Longitude();
     virtual Double Longitude(Double d);
+    virtual Double MaxBattery();
+    virtual Double MaxBattery(Double d);
+    virtual Double MaxOxygen();
+    virtual Double MaxOxygen(Double d);
+    virtual Double Oxygen();
+    virtual Double Oxygen(Double d);
     virtual Vector Position();
     virtual Vector Position(Vector v);
     virtual Double Radius();

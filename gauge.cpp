@@ -1,7 +1,8 @@
 #include "types.h"
 #include "gauge.h"
 
-Gauge::Gauge(Int8 x,Int8 y,Boolean f) {
+Gauge::Gauge(Int8 x,Int8 y,Boolean f,Vehicle* v) {
+  this->vehicle = v;
   this->x = x;
   this->y = y;
   width = 0;

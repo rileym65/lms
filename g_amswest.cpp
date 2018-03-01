@@ -4,8 +4,8 @@
 #include "g_amswest.h"
 #include "terminal.h"
 
-G_AmsWest::G_AmsWest(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsWest::G_AmsWest(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 25;
   height = 14;
   Reset();

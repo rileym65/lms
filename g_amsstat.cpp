@@ -4,8 +4,8 @@
 #include "g_amsstat.h"
 #include "terminal.h"
 
-G_AmsStatus::G_AmsStatus(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsStatus::G_AmsStatus(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 14;
   height = 7;
   Reset();
@@ -87,7 +87,7 @@ void G_AmsStatus::Update() {
   if (i != lastMetabolicRate) {
     GotoXY(x+12,y+1);
     printf("%2d",i);
-    lastDsnOn = i;
+    lastMetabolicRate = i;
     }
   i = (int)efficiency;
   if (i != lastEfficiency) {

@@ -10,7 +10,7 @@ class G_AmsAtt : public Gauge {
     Int16 lastFr;
     Int16 lastLs;
   public:
-    G_AmsAtt(Int8 x,Int8 y,Boolean f);
+    G_AmsAtt(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_AmsAtt();
     virtual void Reset();
     virtual void Display();

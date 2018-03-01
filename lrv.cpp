@@ -11,21 +11,11 @@ Lrv::~Lrv() {
   }
 
 void Lrv::Init() {
-  panel = new Panel("lrv.pnl");
+  panel = new Panel("lrv.pnl",this);
   battery = LRV_BATTERY;
   isSetup = false;
   rock = 0;
   boxes = 8;
-  }
-
-Double Lrv::Battery() {
-  return battery;
-  }
-
-Double Lrv::Battery(Double d) {
-  battery = d;
-  if (battery < 0) battery = 0;
-  return battery;
   }
 
 Int8 Lrv::Boxes() {
@@ -145,8 +135,7 @@ void Lrv::Cycle() {
 */
 
 Int8 Lrv::SubLoad(char* pline) {
-  if (startsWith(pline,"battery ")) battery = atof(nw(pline));
-  else if (startsWith(pline,"value ")) value = atof(nw(pline));
+  if (startsWith(pline,"value ")) value = atof(nw(pline));
   else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
   else if (startsWith(pline,"sampleboxes ")) boxes = atoi(nw(pline));
   else if (startsWith(pline,"issetup true")) isSetup = true;
@@ -158,7 +147,6 @@ Int8 Lrv::SubLoad(char* pline) {
 void Lrv::Save(FILE* file) {
   fprintf(file,"Lrv {%s",LE);
   GroundVehicle::Save(file);
-  fprintf(file,"  Battery %.18f%s",battery,LE);
   fprintf(file,"  Rock %d%s",rock,LE);
   fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  SampleBoxes %d%s",boxes,LE);

@@ -4,8 +4,8 @@
 #include "g_amsins.h"
 #include "terminal.h"
 
-G_AmsIns::G_AmsIns(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsIns::G_AmsIns(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 27;
   height = 7;
   Reset();

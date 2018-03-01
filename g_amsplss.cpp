@@ -4,8 +4,8 @@
 #include "g_amsplss.h"
 #include "terminal.h"
 
-G_AmsPlss::G_AmsPlss(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsPlss::G_AmsPlss(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 6;
   height = 4;
   Reset();

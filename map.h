@@ -8,12 +8,17 @@ typedef struct {
   Double longitude;
   Double latitude;
   Double diameter;
+  char   symbol;
+  Int32  cellX;
+  Int32  cellY;
   } FEATURE;
 
 class Map {
   protected:
     FEATURE *craters;
     Int16    numCraters;
+    FEATURE *features;
+    Int16    numFeatures;
     char     levelH[182][362];
     char     levelM[62][62];
     Double   lastLongitude;

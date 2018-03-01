@@ -12,6 +12,7 @@ void save() {
   fprintf(file,"  ClockOR %d%s",clockOr,LE);
   fprintf(file,"  ClockMI %d%s",clockMi,LE);
   fprintf(file,"  ClockUT %d%s",clockUt,LE);
+  fprintf(file,"  ClockTE %d%s",clockTe,LE);
   fprintf(file,"  Docked %d%s",docked,LE);
   fprintf(file,"  DockingRadarOn %d%s",dockingRadarOn,LE);
   fprintf(file,"  DsnOn %d%s",dsnOn,LE);

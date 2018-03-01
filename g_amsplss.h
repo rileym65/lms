@@ -4,6 +4,8 @@
 #include "types.h"
 #include "gauge.h"
 
+class Vehicle;
+
 class G_AmsPlss : public Gauge {
   protected:
     Int16 lastOxygen;
@@ -11,7 +13,7 @@ class G_AmsPlss : public Gauge {
     Int16 lastPacks;
     char  lastCarrying;
   public:
-    G_AmsPlss(Int8 x,Int8 y,Boolean f);
+    G_AmsPlss(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_AmsPlss();
     virtual void Reset();
     virtual void Display();

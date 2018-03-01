@@ -4,8 +4,8 @@
 #include "g_amsdock.h"
 #include "terminal.h"
 
-G_AmsDock::G_AmsDock(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsDock::G_AmsDock(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 13;
   height = 8;
   Reset();

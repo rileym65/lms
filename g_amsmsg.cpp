@@ -4,8 +4,8 @@
 #include "g_amsmsg.h"
 #include "terminal.h"
 
-G_AmsMessage::G_AmsMessage(Int8 x,Int8 y,Boolean f) :
-  Gauge(x, y, f) {
+G_AmsMessage::G_AmsMessage(Int8 x,Int8 y,Boolean f,Vehicle* v) :
+  Gauge(x, y, f, v) {
   width = 15;
   height = 1;
   Reset();

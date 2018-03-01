@@ -4,6 +4,8 @@
 #include "types.h"
 #include "gauge.h"
 
+class Vehicle;
+
 class G_AmsLand : public Gauge {
   protected:
     char lastMode;
@@ -11,7 +13,7 @@ class G_AmsLand : public Gauge {
     Int32 lastLatitude;
     char  data[5][10];
   public:
-    G_AmsLand(Int8 x,Int8 y,Boolean f);
+    G_AmsLand(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_AmsLand();
     virtual void Reset();
     virtual void Display();

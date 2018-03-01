@@ -17,10 +17,14 @@ Vehicle::~Vehicle() {
 
 void Vehicle::Init() {
   throttle = 0;
+  oxygen = 0;
+  battery = 0;
+  maxOxygen = 0;
+  maxBattery = 0;
   }
 
 void Vehicle::InitPanel() {
-  panel = new Panel("ams.pnl");
+  panel = new Panel("ams.pnl",this);
   }
 
 Double Vehicle::Altitude() {
@@ -31,6 +35,16 @@ Double Vehicle::Altitude(Double d) {
   altitude = d;
   radius = altitude + 1738300;
   return altitude;
+  }
+
+Double Vehicle::Battery() {
+  return battery;
+  }
+
+Double Vehicle::Battery(Double d) {
+  battery = d;
+  if (battery < 0) battery = 0;
+  return battery;
   }
 
 Vector Vehicle::FaceFront() {
@@ -79,6 +93,34 @@ Double Vehicle::Longitude() {
 Double Vehicle::Longitude(Double d) {
   longitude = d;
   return longitude;
+  }
+
+Double Vehicle::MaxBattery() {
+  return maxBattery;
+  }
+
+Double Vehicle::MaxBattery(Double d) {
+  maxBattery = d;
+  return maxBattery;
+  }
+
+Double Vehicle::Oxygen() {
+  return oxygen;
+  }
+
+Double Vehicle::Oxygen(Double d) {
+  oxygen = d;
+  if (oxygen < 0) oxygen = 0;
+  return oxygen;
+  }
+
+Double Vehicle::MaxOxygen() {
+  return maxOxygen;
+  }
+
+Double Vehicle::MaxOxygen(Double d) {
+  maxOxygen = d;
+  return maxOxygen;
   }
 
 Vector Vehicle::Position() {
@@ -177,6 +219,8 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Latitude %.18f%s",latitude,LE);
   fprintf(file,"  Longitude %.18f%s",longitude,LE);
   fprintf(file,"  Radius %.18f%s",radius,LE);
+  fprintf(file,"  Battery %.18f%s",battery,LE);
+  fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
   fprintf(file,"  Throttle %d%s",throttle,LE);
   fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
   fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
@@ -212,6 +256,8 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"thrust ")) thrust = atov(nw(pline));
     else if (startsWith(pline,"orientation ")) orientation = atom(nw(pline));
     else if (startsWith(pline,"throttle ")) throttle = atoi(nw(pline));
+    else if (startsWith(pline,"battery ")) battery = atof(nw(pline));
+    else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
     else if (SubLoad(pline) == 0) {
       printf("Unknown line found in save file: %s\n",pline);
       exit(1);

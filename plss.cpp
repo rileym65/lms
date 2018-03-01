@@ -11,21 +11,11 @@ Plss::~Plss() {
   }
 
 void Plss::Init() {
-  panel = new Panel("plss.pnl");
+  panel = new Panel("plss.pnl",this);
   battery = 36000;
   oxygen = 36000;
   carrying = ' ';
   heading = 0;
-  }
-
-Double Plss::Battery() {
-  return battery;
-  }
-
-Double Plss::Battery(Double d) {
-  battery = d;
-  if (battery < 0) battery = 0;
-  return battery;
   }
 
 void Plss::BeginEva(Vehicle* from) {
@@ -86,16 +76,6 @@ char Plss::Carrying(char c) {
   return carrying;
   }
 
-Double Plss::Oxygen() {
-  return oxygen;
-  }
-
-Double Plss::Oxygen(Double d) {
-  oxygen = d;
-  if (oxygen < 0) oxygen = 0;
-  return oxygen;
-  }
-
 Double Plss::Value() {
   return value;
   }
@@ -133,9 +113,7 @@ GotoXY(1,26); printf("%f %f %f\n",position.X(),position.Y(),position.Z());
 */
 
 Int8 Plss::SubLoad(char* pline) {
-  if (startsWith(pline,"battery ")) battery = atof(nw(pline));
-  else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
-  else if (startsWith(pline,"carrying ")) carrying = atoi(nw(pline));
+  if (startsWith(pline,"carrying ")) carrying = atoi(nw(pline));
   else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else return GroundVehicle::SubLoad(pline);
   return -1;
@@ -144,8 +122,6 @@ Int8 Plss::SubLoad(char* pline) {
 void Plss::Save(FILE* file) {
   fprintf(file,"Plss {%s",LE);
   GroundVehicle::Save(file);
-  fprintf(file,"  Battery %.18f%s",battery,LE);
-  fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
   fprintf(file,"  Carrying %d%s",carrying,LE);
   fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  }%s",LE);

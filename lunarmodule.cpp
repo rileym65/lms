@@ -14,6 +14,8 @@ LunarModule::LunarModule() {
   descentJettisoned = 0;
   rock = 0;
   InitPanel();
+  rcsThrottle = 1;
+  rcsRotThrottle = 100;
 /*
   roll = 0;
   pitch = 0;
@@ -28,7 +30,7 @@ LunarModule::~LunarModule() {
   }
 
 void LunarModule::InitPanel() {
-  panel = new Panel("lm.pnl");
+  panel = new Panel("lm.pnl",this);
   }
 
 char   LunarModule::RcsFbMode() {
@@ -67,6 +69,15 @@ Int8   LunarModule::RcsThrottle(Int8 i) {
   return rcsThrottle;
   }
 
+Int8   LunarModule::RcsRotThrottle() {
+  return rcsRotThrottle;
+  }
+
+Int8   LunarModule::RcsRotThrottle(Int8 i) {
+  rcsRotThrottle = i;
+  return rcsRotThrottle;
+  }
+
 Double LunarModule::AscentFuel() {
   return ascentFuel;
   }
@@ -74,16 +85,6 @@ Double LunarModule::AscentFuel() {
 Double LunarModule::AscentFuel(Double d) {
   ascentFuel = d;
   return ascentFuel;
-  }
-
-Double LunarModule::Battery() {
-  return battery;
-  }
-
-Double LunarModule::Battery(Double d) {
-  battery = d;
-  if (battery < 0) battery = 0;
-  return battery;
   }
 
 Double LunarModule::DescentFuel() {
@@ -101,16 +102,6 @@ Int8 LunarModule::DescentJettisoned() {
 
 Int8 LunarModule::Landed() {
   return landed;
-  }
-
-Double LunarModule::Oxygen() {
-  return oxygen;
-  }
-
-Double LunarModule::Oxygen(Double d) {
-  oxygen = d;
-  if (oxygen < 0) oxygen = 0;
-  return oxygen;
   }
 
 Double LunarModule::PitchRate() {
@@ -256,11 +247,11 @@ void LunarModule::Cycle() {
     rcsFuel -= rcsfuel;
     }
   if (rcsFbMode == 'F' && rcsfuel <= rcsFuel) {
-    thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
+    thrust = thrust + (faceFront.Scale(rcsThrust));
     rcsFuel -= rcsfuel;
     }
   if (rcsFbMode == 'B' && rcsfuel <= rcsFuel) {
-    thrust = thrust + (faceFront.Scale(rcsThrust));
+    thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
     rcsFuel -= rcsfuel;
     }
   if (throttle != 0) {
@@ -308,10 +299,9 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
   fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
   fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
+  fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
   fprintf(file,"  AscentFuel %.18f%s",ascentFuel,LE);
-  fprintf(file,"  Battery %.18f%s",battery,LE);
   fprintf(file,"  DescentFuel %.18f%s",descentFuel,LE);
-  fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
   fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
   fprintf(file,"  RcsFuel %.18f%s",rcsFuel,LE);
   fprintf(file,"  RollRate %.18f%s",rollRate,LE);
@@ -328,10 +318,9 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"rcslrmode ")) rcsLrMode = atoi(nw(pline));
   else if (startsWith(pline,"rcsudmode ")) rcsUdMode = atoi(nw(pline));
   else if (startsWith(pline,"rcsthrottle ")) rcsThrottle = atoi(nw(pline));
+  else if (startsWith(pline,"rcsrotthrottle ")) rcsRotThrottle = atoi(nw(pline));
   else if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
-  else if (startsWith(pline,"battery ")) battery = atof(nw(pline));
   else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
-  else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
   else if (startsWith(pline,"pitchrate ")) PitchRate(atof(nw(pline)));
   else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
   else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
@@ -396,18 +385,23 @@ void LunarModule::ProcessKey(Int32 key) {
     if (key == '=' && RcsThrottle() == 1) RcsThrottle(10);
     if (key == '-' && RcsThrottle() == 10) RcsThrottle(1);
     if (key == '-' && RcsThrottle() == 100) RcsThrottle(10);
+
+    if (key == '+' && RcsRotThrottle() == 50) RcsRotThrottle(100);
+    if (key == '+' && RcsRotThrottle() == 10) RcsRotThrottle(50);
+    if (key == '_' && RcsRotThrottle() == 50) RcsRotThrottle(10);
+    if (key == '_' && RcsRotThrottle() == 100) RcsRotThrottle(50);
     if (key == 'I' && Throttle() == 0) {
       Throttle(10);
       clockBu = 0;
       }
     if (key == 'i') Throttle(0);
-    if (key == KEY_KP_HOME) RollRate(RollRate()+1);
-    if (key == KEY_HOME) RollRate(RollRate()+1);
-    if (key == KEY_PGUP) RollRate(RollRate()-1);
-    if (key == KEY_UP_ARROW) PitchRate(PitchRate()+1);
-    if (key == KEY_DOWN_ARROW) PitchRate(PitchRate()-1);
-    if (key == KEY_RIGHT_ARROW) YawRate(YawRate()+1);
-    if (key == KEY_LEFT_ARROW) YawRate(YawRate()-1);
+    if (key == KEY_KP_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
+    if (key == KEY_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
+    if (key == KEY_PGUP) RollRate(RollRate()-(rcsRotThrottle / 100.0));
+    if (key == KEY_UP_ARROW) PitchRate(PitchRate()+(rcsRotThrottle / 100.0));
+    if (key == KEY_DOWN_ARROW) PitchRate(PitchRate()-(rcsRotThrottle / 100.0));
+    if (key == KEY_RIGHT_ARROW) YawRate(YawRate()+(rcsRotThrottle / 100.0));
+    if (key == KEY_LEFT_ARROW) YawRate(YawRate()-(rcsRotThrottle / 100.0));
     if (Throttle() > 0 && !descentJettisoned) {
       if (key == KEY_PGDN) Throttle(Throttle()+2);
       if (key == KEY_END) Throttle(Throttle()-2);
