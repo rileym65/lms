@@ -54,6 +54,8 @@ Double Lrv::Value(Double d) {
 
 void Lrv::Setup() {
   Vector p;
+  latitude = lm->Latitude();
+  longitude = lm->Longitude();
   Place(lm->Position());
   p = faceLeft.Norm().Scale(15);
   position = position + p;

@@ -68,7 +68,7 @@ OBJS = \
 	lrv.o \
 	map.o \
 	save.o \
-	lunarmodule.o \
+	lm.o \
 	matrix.o \
 	panel.o \
 	plss.o \
@@ -122,7 +122,7 @@ random.o:        $(HEADERS) lfsr.h random.h random.cpp
 save.o:          $(HEADERS) save.cpp
 sgn.o:           $(HEADERS) sgn.cpp
 sequencer.o:     $(HEADERS) sequencer.cpp
-lunarmodule.o:   $(HEADERS) lunarmodule.h lunarmodule.cpp
+lm.o:            $(HEADERS) lm.h lm.cpp
 terminal.o:      $(HEADERS) terminal.cpp
 vector.o:        $(HEADERS) vector.cpp
 vehicle.o:       $(HEADERS) vehicle.h panel.h gauge.h vehicle.cpp

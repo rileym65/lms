@@ -14,7 +14,7 @@
 #include <math.h>
 #include "types.h"
 #include "vector.h"
-#include "lunarmodule.h"
+#include "lm.h"
 #include "plss.h"
 #include "csm.h"
 #include "lrv.h"

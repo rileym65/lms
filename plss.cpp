@@ -20,6 +20,8 @@ void Plss::Init() {
 
 void Plss::BeginEva(Vehicle* from) {
   Vector p;
+  latitude = from->Latitude();
+  longitude = from->Longitude();
   Place(from->Position());
   p = faceFront.Norm().Scale(15);
   position = position + p;

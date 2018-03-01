@@ -245,7 +245,6 @@ void Map::readFeatures() {
       sscanf(line,"%[^,], %lf, %lf, %1s",name,&lat,&lng,symbol);
       cellX = Cell(lng);
       cellY = Cell(lat);
-printf("%s, %f %f %s -> %d,%d\n",name,lat,lng,symbol,cellX,cellY);
       numFeatures++;
       if (numFeatures == 1) features = (FEATURE*)malloc(sizeof(FEATURE));
         else features = (FEATURE*)realloc(features,sizeof(FEATURE)*numFeatures);

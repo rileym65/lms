@@ -1,5 +1,5 @@
 #include "header.h"
-#include "lunarmodule.h"
+#include "lm.h"
 #include "terminal.h"
 
 LunarModule::LunarModule() {
@@ -180,6 +180,8 @@ void LunarModule::Cycle() {
   Double newtons;
   Double mainThrust;
   Double mainfuel;
+  Double vVel;
+  Double hVel;
   Vector v;
   Matrix m;
   if (landed && !descentJettisoned) return;
@@ -276,6 +278,20 @@ void LunarModule::Cycle() {
     }
   Vehicle::Cycle();
   if (radius <= GROUND && !landed) {
+    vVel = velocityAltitude;
+    hVel = velocity.Length();
+    hVel = sqrt(hVel*hVel + vVel*vVel);
+    if (vVel > 5 || hVel > 5) {
+      ClrScr();
+      printf("Crash!!!!\n");
+      printf("You hit the lunar surface with a vertial velocity\n");
+      printf("of %.1f m/s and a horizontal velocity of %.1f m/s\n\n",vVel,hVel);
+      printf("This exceeds the tolerance of the spacecraft.  As a\n");
+      printf("result the spacecraft has been destroyed.\n\n");
+      ShowCursor();
+      CloseTerminal();
+      exit(0);
+      }
     RollRate(0);
     PitchRate(0);
     YawRate(0);

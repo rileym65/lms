@@ -112,7 +112,6 @@ void GroundVehicle::Place(Vector pos) {
   printf("  U: %.18f %.18f %.18f\n",u.X(),u.Y(),u.Z());
   printf("  L: %.18f %.18f %.18f\n",l.X(),l.Y(),l.Z());
   printf("Dst: %.18f\n",dist);
-printf("Len: %.18f\n",f.Length());
   ShowCursor();
   CloseTerminal();
   exit(1);
