@@ -56,6 +56,7 @@ Vector t;
   insMode = INS_MODE_POS_ABS;
   landingRadarOn = 0;
   metabolicRate = 30.0;
+  numSamples = 0;
   targetLatitude = 0.0;
   targetLongitude = 0.0;
   plssOn = 0;

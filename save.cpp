@@ -2,6 +2,7 @@
 #include "header.h"
 
 void save() {
+  Int32 i;
   FILE *file;
   file = fopen("lms.sav","w");
   fprintf(file,"Simulation {%s",LE);
@@ -27,6 +28,8 @@ void save() {
   fprintf(file,"  SpaceSuitOn %d%s",spaceSuitOn,LE);
   fprintf(file,"  TargetLatitude %f%s",targetLatitude,LE);
   fprintf(file,"  TargetLongitude %f%s",targetLongitude,LE);
+  for (i=0; i<numSamples; i++)
+    fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
   fprintf(file,"  }%s",LE);
   csm->Save(file);
   lm->Save(file);

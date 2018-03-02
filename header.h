@@ -47,8 +47,12 @@
 #define CELL (METERS / 10)
 #define DR  (3.14159265358979323846 / 180)
 
-
 #define LE   "\n"
+
+typedef struct {
+  Int32 cellX;
+  Int32 cellY;
+  } LOCATION;
 
 LINK Int8         cabinPressurized;
 LINK Int32        clockBu;
@@ -72,11 +76,13 @@ LINK LunarModule *lm;
 LINK Lrv         *lrv;
 LINK Map         *map;
 LINK Double       metabolicRate;
+LINK Int16        numSamples;
 LINK char         pilotLocation;
 LINK Plss        *plss;
 LINK Int8         plssOn;
 LINK Int8         plssPacks;
 LINK Boolean      run;
+LINK LOCATION     samples[240];
 LINK Sequencer*   seq;
 LINK Int32        simSpeed;
 LINK Int8         spaceSuitOn;

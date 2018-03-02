@@ -21,7 +21,9 @@ char* Sequencer::Message() {
   }
 
 void Sequencer::Complete() {
+  Int32 i;
   Int32 cellX, cellY;
+  Boolean dup;
   char  cell;
   switch (function) {
     case SEQ_END_EVA:
@@ -98,6 +100,19 @@ void Sequencer::Complete() {
            case '^': plss->Value(2.0); break;
            case ' ': plss->Value(0.5); break;
            default : plss->Value(0.5); break;
+           }
+         if (cell >= '0' && cell <= '9') plss->Value(25.0);
+         if (cell >= 'A' && cell <= 'B') plss->Value(25.0);
+         dup = false;
+         for (i=0; i<numSamples; i++)
+           if (samples[i].cellX == cellX && samples[i].cellY == cellY) {
+             plss->Value(0.1);
+             dup = true;
+             }
+         if (!dup) {
+           samples[numSamples].cellX = cellX;
+           samples[numSamples].cellY = cellY;
+           if (numSamples < 240) numSamples++;
            }
          break;
     case SEQ_DROPSAMPLE:
