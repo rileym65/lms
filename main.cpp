@@ -227,10 +227,17 @@ int main(int argc, char** argv) {
       if (!docked) {
         clockMi++;
         lm->Battery(lm->Battery() - 1);
-        if (pilotLocation == PILOT_LM) {
+        if (pilotLocation == PILOT_LM && cabinPressurized) {
           lm->Oxygen(lm->Oxygen() - 1);
           if (!lm->Landed() && lm->DescentJettisoned() && !docked) clockDk++;
           if (lm->Oxygen() <= 0) injury += 0.3;
+          if (lm->Battery() <= 0) injury += 0.1;
+          }
+        else if (pilotLocation == PILOT_LM && cabinPressurized == 0) {
+          plss->Oxygen(plss->Oxygen() - 1);
+          plss->Battery(plss->Battery() - 1);
+          if (plss->Oxygen() <= 0) injury += 0.3;
+          if (plss->Battery() <= 0) injury += 0.1;
           }
         }
       if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
@@ -239,6 +246,7 @@ int main(int argc, char** argv) {
         plss->Oxygen(plss->Oxygen() - 1);
         plss->Battery(plss->Battery() - 1);
         if (plss->Oxygen() <= 0) injury += 0.3;
+        if (plss->Battery() <= 0) injury += 0.1;
         }
       cycle();
       ticks = 0;
