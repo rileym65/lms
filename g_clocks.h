@@ -13,7 +13,6 @@ class G_Clocks : public Gauge {
     Int32 lastClockBu;
     Int32 lastClockEv;
     Int32 lastClockDk;
-    void displayClock(Int32 x, Int32 y, Int32 clock);
   public:
     G_Clocks(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_Clocks();

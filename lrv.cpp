@@ -16,6 +16,7 @@ void Lrv::Init() {
   isSetup = false;
   rock = 0;
   boxes = 8;
+  driven = 0;
   }
 
 Int8 Lrv::Boxes() {
@@ -27,6 +28,10 @@ Int8 Lrv::Boxes(Int8 i) {
   if (boxes < 0) boxes = 0;
   if (boxes > 8) boxes = 8;
   return boxes;
+  }
+
+Double Lrv::Driven() {
+  return driven;
   }
 
 Boolean Lrv::IsSetup() {
@@ -106,6 +111,7 @@ printf("Len: %.18f\n",f.Length());
 void Lrv::Cycle() {
   if (battery <= 0) throttle = 0;
   GroundVehicle::Cycle();
+  driven += velocity.Length();
   if (throttle > 0) {
     battery -= (maxSpeed * ((Double)throttle / 100.0));
     if (battery < 0) battery = 0;
@@ -142,6 +148,7 @@ Int8 Lrv::SubLoad(char* pline) {
   else if (startsWith(pline,"sampleboxes ")) boxes = atoi(nw(pline));
   else if (startsWith(pline,"issetup true")) isSetup = true;
   else if (startsWith(pline,"issetup false")) isSetup = false;
+  else if (startsWith(pline,"driven ")) driven = atof(nw(pline));
   else return GroundVehicle::SubLoad(pline);
   return -1;
   }
@@ -156,6 +163,7 @@ void Lrv::Save(FILE* file) {
     fprintf(file,"  IsSetup true%s",LE);
   else 
     fprintf(file,"  IsSetup false%s",LE);
+  fprintf(file,"  Driven %.18f%s",driven,LE);
   fprintf(file,"  }%s",LE);
   }
 
@@ -165,6 +173,16 @@ void Lrv::ProcessKey(Int32 key) {
   if (key == KEY_KP_END) Throttle(Throttle()-10);
   if (key == KEY_RIGHT_ARROW) TurnRate(TurnRate()+15);
   if (key == KEY_LEFT_ARROW) TurnRate(TurnRate()-15);
+  if (key == KEY_F1) Throttle(10);
+  if (key == KEY_F2) Throttle(20);
+  if (key == KEY_F3) Throttle(30);
+  if (key == KEY_F4) Throttle(40);
+  if (key == KEY_F5) Throttle(50);
+  if (key == KEY_F6) Throttle(60);
+  if (key == KEY_F7) Throttle(70);
+  if (key == KEY_F8) Throttle(80);
+  if (key == KEY_F9) Throttle(90);
+  if (key == KEY_F10) Throttle(100);
   if (key == 'M' && throttle == 0) seq->ExitLrv();
   }
 

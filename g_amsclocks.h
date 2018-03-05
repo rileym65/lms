@@ -14,7 +14,6 @@ class G_AmsClocks : public Gauge {
     Int32 lastClockEv;
     Int32 lastClockDk;
     Int32 lastClockOr;
-    void displayClock(Int32 x, Int32 y, Int32 clock);
   public:
     G_AmsClocks(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_AmsClocks();

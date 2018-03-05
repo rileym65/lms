@@ -53,6 +53,7 @@ void G_AmsPlss::Update() {
     switch (lastCarrying) {
       case 'R':printf("^"); break;
       case 'B':printf("v"); break;
+      case 'F':printf("F"); break;
       default :printf(" "); break;
       }
     }

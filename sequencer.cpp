@@ -32,6 +32,7 @@ void Sequencer::Complete() {
          ins->Target(csm);
          currentVehicle = lm;
          currentVehicle->SetupPanel();
+         if (clockEv > longestEVA) longestEVA = clockEv;
          break;
     case SEQ_MOVE_LM:
          pilotLocation = PILOT_LM;
@@ -93,13 +94,15 @@ void Sequencer::Complete() {
          cellY = map->Cell(plss->Latitude());
          cell = map->Lurrain(cellX, cellY);
          switch (cell) {
-           case '.': plss->Value(1.0); break;
-           case 'o': plss->Value(1.2); break;
-           case 'O': plss->Value(1.4); break;
-           case '*': plss->Value(1.6); break;
-           case '^': plss->Value(2.0); break;
-           case ' ': plss->Value(0.5); break;
-           default : plss->Value(0.5); break;
+           case '.': plss->Value(1.0); sampleType = S_SMALL_CRATER; break;
+           case 'o': plss->Value(1.2); sampleType = S_MEDIUM_CRATER; break;
+           case 'O': plss->Value(1.4); sampleType = S_LARGE_CRATER; break;
+           case ',': plss->Value(1.2); sampleType = S_SMALL_ROCK; break;
+           case '+': plss->Value(1.4); sampleType = S_MEDIUM_ROCK; break;
+           case '*': plss->Value(1.6); sampleType = S_LARGE_ROCK; break;
+           case '^': plss->Value(2.0); sampleType = S_RISE; break;
+           case ' ': plss->Value(0.5); sampleType = S_PLAINS; break;
+           default : plss->Value(0.5); sampleType = 0; break;
            }
          if (cell >= '0' && cell <= '9') plss->Value(25.0);
          if (cell >= 'A' && cell <= 'B') plss->Value(25.0);
@@ -125,6 +128,16 @@ void Sequencer::Complete() {
          plss->Carrying(' ');
          lrv->Rock(lrv->Rock() + 1);
          lrv->Value(lrv->Value() + plss->Value());
+         switch (sampleType) {
+           case S_SMALL_ROCK: lrvSampleSmallRock++; break;
+           case S_MEDIUM_ROCK: lrvSampleMediumRock++; break;
+           case S_LARGE_ROCK: lrvSampleLargeRock++; break;
+           case S_SMALL_CRATER: lrvSampleSmallCrater++; break;
+           case S_MEDIUM_CRATER: lrvSampleMediumCrater++; break;
+           case S_LARGE_CRATER: lrvSampleLargeCrater++; break;
+           case S_RISE: lrvSampleRise++; break;
+           case S_PLAINS: lrvSamplePlains++; break;
+           }
          break;
     case SEQ_BOXPLSS:
          plss->Carrying('B');
@@ -136,6 +149,22 @@ void Sequencer::Complete() {
          lrv->Boxes(lrv->Boxes() - 1);
          lm->Value(lm->Value() + lrv->Value());
          lrv->Value(0);
+         sampleSmallRock += lrvSampleSmallRock;
+         sampleMediumRock += lrvSampleMediumRock;
+         sampleLargeRock += lrvSampleLargeRock;
+         sampleSmallCrater += lrvSampleSmallCrater;
+         sampleMediumCrater += lrvSampleMediumCrater;
+         sampleLargeCrater += lrvSampleLargeCrater;
+         sampleRise += lrvSampleRise;
+         samplePlains += lrvSamplePlains;
+         lrvSampleSmallRock = 0;
+         lrvSampleMediumRock = 0;
+         lrvSampleLargeRock = 0;
+         lrvSampleSmallCrater = 0;
+         lrvSampleMediumCrater = 0;
+         lrvSampleLargeCrater = 0;
+         lrvSampleRise = 0;
+         lrvSamplePlains = 0;
          break;
     case SEQ_BOXLRV:
          plss->Carrying(' ');
@@ -154,6 +183,18 @@ void Sequencer::Complete() {
          currentVehicle = plss;
          currentVehicle->SetupPanel();
          plss->BeginEva(lrv);
+         break;
+    case SEQ_GETFLAG:
+         plss->Carrying('F');
+         break;
+    case SEQ_PUTFLAG:
+         plss->Carrying(' ');
+         break;
+    case SEQ_PLANTFLAG:
+         plss->Carrying(' ');
+         flagPlanted = -1;
+         flagLatitude = plss->Latitude();
+         flagLongitude = plss->Longitude();
          break;
     }
   }
@@ -306,5 +347,23 @@ void Sequencer::ExitLrv() {
   time = 1.5 * 60;
   strcpy(message," MOVE->EVA");
   function = SEQ_EXITLRV;
+  }
+
+void Sequencer::GetFlag() {
+  time = 120;
+  strcpy(message,"FLAG->PLSS");
+  function = SEQ_GETFLAG;
+  }
+
+void Sequencer::PutFlag() {
+  time = 120;
+  strcpy(message,"  FLAG->LM");
+  function = SEQ_PUTFLAG;
+  }
+
+void Sequencer::PlantFlag() {
+  time = 10 * 60;
+  strcpy(message," FLAG->GND");
+  function = SEQ_PLANTFLAG;
   }
 

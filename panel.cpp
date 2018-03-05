@@ -22,12 +22,18 @@
 #include "g_amswest.h"
 #include "g_attitude.h"
 #include "g_clocks.h"
+#include "g_clockev.h"
+#include "g_clockmi.h"
+#include "g_clockte.h"
+#include "g_clockut.h"
 #include "g_evaprep.h"
 #include "g_docked.h"
+#include "g_groundins.h"
 #include "g_ins.h"
 #include "g_landed.h"
 #include "g_lmfuel.h"
 #include "g_lmrock.h"
+#include "g_maplarge.h"
 #include "g_mapmed.h"
 #include "g_oxybat.h"
 #include "g_pilot.h"
@@ -113,17 +119,25 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_AmsWest(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_landingradar") == 0)
         addGauge(new G_AmsLand(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"map_medium") == 0)
-        addGauge(new G_MapMed(x1, y1, false, vehicle));
 
       else if (strcasecmp(str,"attitude") == 0)
         addGauge(new G_Attitude(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clocks") == 0)
         addGauge(new G_Clocks(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clockev") == 0)
+        addGauge(new G_ClockEV(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clockmi") == 0)
+        addGauge(new G_ClockMI(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clockte") == 0)
+        addGauge(new G_ClockTE(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clockut") == 0)
+        addGauge(new G_ClockUT(x1, y1, false, vehicle));
       else if (strcasecmp(str,"docked") == 0)
         addGauge(new G_Docked(x1, y1, false, vehicle));
       else if (strcasecmp(str,"evaprep") == 0)
         addGauge(new G_EvaPrep(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"groundins") == 0)
+        addGauge(new G_GroundIns(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ins") == 0)
         addGauge(new G_Ins(x1, y1, false, vehicle));
       else if (strcasecmp(str,"landed") == 0)
@@ -132,6 +146,10 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_LmFuel(x1, y1, false, vehicle));
       else if (strcasecmp(str,"lmrock") == 0)
         addGauge(new G_LmRock(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"maplarge") == 0)
+        addGauge(new G_MapLarge(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"mapmedium") == 0)
+        addGauge(new G_MapMed(x1, y1, false, vehicle));
       else if (strcasecmp(str,"oxygenbattery") == 0)
         addGauge(new G_OxyBat(x1, y1, false, vehicle));
       else if (strcasecmp(str,"pilot") == 0)

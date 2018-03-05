@@ -77,6 +77,14 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockmi ")) clockMi = atoi(nw(pline));
     else if (startsWith(pline,"clockut ")) clockUt = atoi(nw(pline));
     else if (startsWith(pline,"clockte ")) clockTe = atoi(nw(pline));
+    else if (startsWith(pline,"landedmet ")) landedMet = atoi(nw(pline));
+    else if (startsWith(pline,"landedlongitude ")) landedLongitude = atof(nw(pline));
+    else if (startsWith(pline,"landedlatitude ")) landedLatitude = atof(nw(pline));
+    else if (startsWith(pline,"farthestdistance ")) farthest = atof(nw(pline));
+    else if (startsWith(pline,"flagplanted ")) flagPlanted = atoi(nw(pline));
+    else if (startsWith(pline,"flaglongitude ")) flagLongitude = atof(nw(pline));
+    else if (startsWith(pline,"flaglatitude ")) flagLatitude = atof(nw(pline));
+    else if (startsWith(pline,"longesteva ")) longestEVA = atoi(nw(pline));
     else if (startsWith(pline,"docked ")) docked = atoi(nw(pline));
     else if (startsWith(pline,"dockingradaron ")) dockingRadarOn = atoi(nw(pline));
     else if (startsWith(pline,"dsnon ")) dsnOn = atoi(nw(pline));
@@ -91,6 +99,24 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"spacesuiton ")) spaceSuitOn = atoi(nw(pline));
     else if (startsWith(pline,"targetlatitude ")) targetLatitude = atof(nw(pline));
     else if (startsWith(pline,"targetlongitude ")) targetLongitude = atof(nw(pline));
+    else if (startsWith(pline,"sampletype ")) sampleType = atoi(nw(pline));
+    else if (startsWith(pline,"samplesmallrock ")) sampleSmallRock = atoi(nw(pline));
+    else if (startsWith(pline,"samplemediumrock ")) sampleMediumRock = atoi(nw(pline));
+    else if (startsWith(pline,"samplelargerock ")) sampleLargeRock = atoi(nw(pline));
+    else if (startsWith(pline,"samplesmallcrater ")) sampleSmallCrater = atoi(nw(pline));
+    else if (startsWith(pline,"samplemediumcrater ")) sampleMediumCrater = atoi(nw(pline));
+    else if (startsWith(pline,"samplelargecrater ")) sampleLargeCrater = atoi(nw(pline));
+    else if (startsWith(pline,"samplerise ")) sampleRise = atoi(nw(pline));
+    else if (startsWith(pline,"sampleplains ")) samplePlains = atoi(nw(pline));
+
+    else if (startsWith(pline,"lrvsamplesmallrock ")) lrvSampleSmallRock = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsamplemediumrock ")) lrvSampleMediumRock = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsamplelargerock ")) lrvSampleLargeRock = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsamplesmallcrater ")) lrvSampleSmallCrater = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsamplemediumcrater ")) lrvSampleMediumCrater = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsamplelargecrater ")) lrvSampleLargeCrater = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsamplerise ")) lrvSampleRise = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsampleplains ")) lrvSamplePlains = atoi(nw(pline));
     else if (startsWith(pline,"sample ")) {
       pline = nw(pline);
       sscanf(pline,"%d,%d",&samples[numSamples].cellX,&samples[numSamples].cellY);

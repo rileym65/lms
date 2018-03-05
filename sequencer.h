@@ -26,6 +26,9 @@
 #define SEQ_BOXLRV      21
 #define SEQ_MOVELRV     22
 #define SEQ_EXITLRV     23
+#define SEQ_GETFLAG     24
+#define SEQ_PUTFLAG     25
+#define SEQ_PLANTFLAG   26
 
 class Sequencer {
   protected:
@@ -48,12 +51,15 @@ class Sequencer {
     void  DropSample();
     void  EndEva();
     void  ExitLrv();
+    void  GetFlag();
     void  MoveCsm();
     void  MoveEva();
     void  MoveLm();
     void  MoveLrv();
+    void  PlantFlag();
     void  PlssOff();
     void  PlssOn();
+    void  PutFlag();
     void  Rest();
     void  SetupLrv();
     void  Sleep();

@@ -11,11 +11,12 @@ class Plss : public GroundVehicle {
   protected:
     char   carrying;
     Double value;
+    Double walked;
   public:
     Plss();
     virtual ~Plss();
     virtual void Init();
-//    virtual void Cycle();
+    virtual void Cycle();
     virtual void   BeginEva(Vehicle* from);
     virtual char   Carrying();
     virtual char   Carrying(char c);
@@ -24,6 +25,7 @@ class Plss : public GroundVehicle {
     virtual void   ProcessKey(Int32 key);
     virtual Double Value();
     virtual Double Value(Double d);
+    virtual Double Walked();
   };
 
 #endif

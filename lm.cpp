@@ -305,6 +305,9 @@ void LunarModule::Cycle() {
     rcsUdMode = ' ';
     altitude = 0;
     radius = GROUND;
+    landedMet = clockMi;
+    landedLongitude = longitude;
+    landedLatitude = latitude;
     }
   }
 

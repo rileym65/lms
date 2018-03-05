@@ -48,6 +48,7 @@ Vector t;
   clockOr = 0;
   clockUt = (8 * 3600) + (30 * 60);
   clockTe = 0;
+  longestEVA = 0;
   docked = -1;
   dockingRadarOn = 0;
   dsnOn = 0;
@@ -62,6 +63,29 @@ Vector t;
   plssOn = 0;
   plssPacks = 4;
   spaceSuitOn = 0;
+  sampleSmallRock = 0;
+  sampleMediumRock = 0;
+  sampleLargeRock = 0;
+  sampleSmallCrater = 0;
+  sampleMediumCrater = 0;
+  sampleLargeCrater = 0;
+  samplePlains = 0;
+  sampleRise = 0;
+  lrvSampleSmallRock = 0;
+  lrvSampleMediumRock = 0;
+  lrvSampleLargeRock = 0;
+  lrvSampleSmallCrater = 0;
+  lrvSampleMediumCrater = 0;
+  lrvSampleLargeCrater = 0;
+  lrvSamplePlains = 0;
+  lrvSampleRise = 0;
+  landedMet = 0;
+  landedLongitude = 0;
+  landedLatitude = 0;
+  farthest = 0;
+  flagPlanted = 0;
+  flagLongitude = 0;
+  flagLatitude = 0;
   }
 
 Boolean alignedForDocking() {

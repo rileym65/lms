@@ -46,7 +46,14 @@
 #define METERS ((GROUND*2*M_PI) / 360.0)
 #define CELL (METERS / 10)
 #define DR  (3.14159265358979323846 / 180)
-
+#define S_SMALL_ROCK      1
+#define S_MEDIUM_ROCK     2
+#define S_LARGE_ROCK      3
+#define S_SMALL_CRATER    4
+#define S_MEDIUM_CRATER   5
+#define S_LARGE_CRATER    6
+#define S_PLAINS          7
+#define S_RISE            8
 #define LE   "\n"
 
 typedef struct {
@@ -62,6 +69,8 @@ LINK Int32        clockOr;
 LINK Int32        clockMi;
 LINK Int32        clockUt;
 LINK Int32        clockTe;
+LINK Int32        landedMet;
+LINK Int32        longestEVA;
 LINK CSM         *csm;
 LINK Vehicle*     currentVehicle;
 LINK Int8         docked;
@@ -93,7 +102,29 @@ LINK Vector       targetVel;
 LINK Double       targetMomEast;
 LINK Double       targetMomNorth;
 LINK Int8         ticks;
-
+LINK UInt8        sampleType;
+LINK UInt8        sampleSmallRock;
+LINK UInt8        sampleMediumRock;
+LINK UInt8        sampleLargeRock;
+LINK UInt8        sampleSmallCrater;
+LINK UInt8        sampleMediumCrater;
+LINK UInt8        sampleLargeCrater;
+LINK UInt8        samplePlains;
+LINK UInt8        sampleRise;
+LINK UInt8        lrvSampleSmallRock;
+LINK UInt8        lrvSampleMediumRock;
+LINK UInt8        lrvSampleLargeRock;
+LINK UInt8        lrvSampleSmallCrater;
+LINK UInt8        lrvSampleMediumCrater;
+LINK UInt8        lrvSampleLargeCrater;
+LINK UInt8        lrvSamplePlains;
+LINK UInt8        lrvSampleRise;
+LINK Double       landedLongitude;
+LINK Double       landedLatitude;
+LINK Double       farthest;
+LINK Int8         flagPlanted;
+LINK Double       flagLongitude;
+LINK Double       flagLatitude;
 
 
 extern Matrix atom(char* buffer);

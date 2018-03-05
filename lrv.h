@@ -12,6 +12,7 @@ class Lrv : public GroundVehicle {
     Int8    boxes;
     Int8    rock;
     Double  value;
+    Double  driven;
   public:
     Lrv();
     virtual ~Lrv();
@@ -21,6 +22,7 @@ class Lrv : public GroundVehicle {
     virtual void   Setup();
     virtual Int8   Boxes();
     virtual Int8   Boxes(Int8 i);
+    virtual Double Driven();
     virtual Int8   Rock();
     virtual Int8   Rock(Int8 i);
     virtual Int8   SubLoad(char* line);

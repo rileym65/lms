@@ -14,16 +14,6 @@ G_AmsClocks::G_AmsClocks(Int8 x,Int8 y,Boolean f,Vehicle* v) :
 G_AmsClocks::~G_AmsClocks() {
   }
 
-void G_AmsClocks::displayClock(Int32 x, Int32 y, Int32 clock) {
-  Int32 hours, minutes, seconds;
-  hours = clock / 3600;
-  clock -= (hours * 3600);
-  minutes = clock / 60;
-  seconds = clock - (minutes * 60);
-  GotoXY(x, y);
-  printf("%3d:%02d:%02d",hours,minutes,seconds);
-  }
-
 void G_AmsClocks::Reset() {
   lastClockUt = -9999;
   lastClockMi = -9999;
