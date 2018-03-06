@@ -13,6 +13,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_amspilot.h \
            g_amsseq.h \
            g_amsspin.h g_amsstat.h g_amswest.h g_clocks.h \
+           g_axis.h \
            g_attitude.h \
            g_clockev.h \
            g_clockmi.h \
@@ -27,6 +28,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_lmrock.h \
            g_maplarge.h \
            g_mapmed.h \
+           g_multiaxis.h \
            g_oxybat.h \
            g_pilot.h \
            g_pilotloc.h \
@@ -54,6 +56,7 @@ OBJS = \
         g_amsspin.o \
         g_amsstat.o \
 	g_amswest.o \
+	g_axis.o \
 	g_attitude.o \
 	g_clocks.o \
 	g_clockev.o \
@@ -67,6 +70,7 @@ OBJS = \
 	g_landed.o \
         g_lmfuel.o \
         g_lmrock.o \
+	g_multiaxis.o \
 	g_oxybat.o \
 	g_pilot.o \
 	g_pilotloc.o \
@@ -155,6 +159,7 @@ g_amsseq.o:    $(HEADERS) gauge.h g_amsseq.h terminal.h g_amsseq.cpp
 g_amsspin.o:   $(HEADERS) gauge.h g_amsspin.h terminal.h g_amsspin.cpp
 g_amsstat.o:   $(HEADERS) gauge.h g_amsstat.h terminal.h g_amsstat.cpp
 g_amswest.o:   $(HEADERS) gauge.h g_amswest.h terminal.h g_amswest.cpp
+g_axis.o:      $(HEADERS) gauge.h terminal.h g_axis.h g_axis.cpp
 g_attitude.o:  $(HEADERS) gauge.h terminal.h g_attitude.h g_attitude.cpp
 g_clocks.o:    $(HEADERS) gauge.h terminal.h g_clocks.h g_clocks.cpp
 g_clockev.o:   $(HEADERS) gauge.h terminal.h g_clockev.h g_clockev.cpp
@@ -169,6 +174,7 @@ g_lmfuel.o:    $(HEADERS) gauge.h terminal.h g_lmfuel.h g_lmfuel.cpp
 g_lmrock.o:    $(HEADERS) gauge.h terminal.h g_lmrock.h g_lmrock.cpp
 g_maplarge.o:  $(HEADERS) gauge.h terminal.h map.h g_maplarge.h g_maplarge.cpp
 g_mapmed.o:    $(HEADERS) gauge.h terminal.h map.h g_mapmed.h g_mapmed.cpp
+g_multiaxis.o: $(HEADERS) gauge.h terminal.h map.h g_multiaxis.h g_multiaxis.cpp
 g_evaprep.o:   $(HEADERS) gauge.h terminal.h g_evaprep.h g_evaprep.cpp
 g_oxybat.o:    $(HEADERS) gauge.h terminal.h g_oxybat.h g_oxybat.cpp
 g_pilot.o:     $(HEADERS) gauge.h terminal.h g_pilot.h g_pilot.cpp

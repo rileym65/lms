@@ -24,6 +24,7 @@ class Panel {
     void Display();
     void Update();
     void Reset();
+    virtual void   ProcessKey(Int32 key);
   };
 
 #endif

@@ -20,6 +20,7 @@ class Gauge {
     virtual void Reset();
     virtual void Display();
     virtual void Update();
+    virtual void ProcessKey(Int32 key);
   };
     
 #endif

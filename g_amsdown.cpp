@@ -1,11 +1,12 @@
 #include "header.h"
 #include "types.h"
 #include "gauge.h"
+#include "g_axis.h"
 #include "g_amsdown.h"
 #include "terminal.h"
 
 G_AmsDown::G_AmsDown(Int8 x,Int8 y,Boolean f,Vehicle* v) :
-  Gauge(x, y, f, v) {
+  G_Axis(x, y, f, v) {
   width = 25;
   height = 14;
   Reset();
@@ -35,14 +36,6 @@ void G_AmsDown::Display() {
   }
 
 void G_AmsDown::Update() {
-  Boolean flag;
-  Int8 i;
-  Int32  dx[3], dy[3];
-  Double d[3];
-  char   c[3];
-  char   tc;
-  Int32  ti;
-  Double td;
   Vector pos;
   Vector vel;
   Vehicle* vehicle;
@@ -57,42 +50,21 @@ void G_AmsDown::Update() {
 //  xVec = Vector(-pos.Z(),pos.Z(),1-fabs(pos.Z()));
   yVec = Vector(pos.Y(),-pos.X(),0);
   zVec = vehicle->Position().Norm();
-  GotoXY(x+rightFaceX, y+rightFaceY); printf(" ");
-  GotoXY(x+rightLeftX, y+rightLeftY); printf(" ");
-  GotoXY(x+rightUpX, y+rightUpY); printf(" ");
+  GotoXY(x+faceX, y+faceY); printf(" ");
+  GotoXY(x+leftX, y+leftY); printf(" ");
+  GotoXY(x+upX, y+upY); printf(" ");
   /* ***** Face ***** */
-  rightFaceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
-  rightFaceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
+  faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
+  faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
   faceD = -vehicle->FaceFront().Dot(zVec);
   /* ***** Left ***** */
-  rightLeftX = 12.5 + ((vehicle->FaceLeft().Dot(xVec)) * 10.5);
-  rightLeftY = 7.5 - ((vehicle->FaceLeft().Dot(yVec)) * 5.5);
+  leftX = 12.5 + ((vehicle->FaceLeft().Dot(xVec)) * 10.5);
+  leftY = 7.5 - ((vehicle->FaceLeft().Dot(yVec)) * 5.5);
   leftD = -vehicle->FaceLeft().Dot(zVec);
   /* ***** Up ***** */
-  rightUpX = 12.5 + ((vehicle->FaceUp().Dot(xVec)) * 10.5);
-  rightUpY = 7.5 - ((vehicle->FaceUp().Dot(yVec)) * 5.5);
+  upX = 12.5 + ((vehicle->FaceUp().Dot(xVec)) * 10.5);
+  upY = 7.5 - ((vehicle->FaceUp().Dot(yVec)) * 5.5);
   upD = -vehicle->FaceUp().Dot(zVec);
-  dx[0] = rightFaceX; dy[0] = rightFaceY; d[0] = faceD;
-  c[0] = (faceD <= 0) ? 'F' : 'f';
-  dx[1] = rightLeftX; dy[1] = rightLeftY; d[1] = leftD;
-  c[1] = (leftD <= 0) ? 'L' : 'l';
-  dx[2] = rightUpX; dy[2] = rightUpY; d[2] = upD;
-  c[2] = (upD <= 0) ? 'U' : 'u';
-  flag = true;
-  while (flag) {
-    flag = false;
-    for (i=0; i<2; i++)
-      if (d[i] < d[i+1]) {
-        ti = dx[i]; dx[i] = dx[i+1]; dx[i+1] = ti;
-        ti = dy[i]; dy[i] = dy[i+1]; dy[i+1] = ti;
-        tc = c[i]; c[i] = c[i+1]; c[i+1] = tc;
-        td = d[i]; d[i] = d[i+1]; d[i+1] = td;
-        flag = true;
-        }
-    }
-  for (i=0; i<3; i++) {
-    GotoXY(x+dx[i], y+dy[i]);
-    printf("%c",c[i]);
-    }
+  draw(faceX,faceY,faceD,leftX,leftY,leftD,upX,upY,upD);
   }
 

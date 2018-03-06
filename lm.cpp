@@ -385,6 +385,7 @@ void LunarModule::ProcessKey(Int32 key) {
       descentFuel = 0;
       if (oxygen > 36000) oxygen = 36000;
       if (battery > 36000) battery = 36000;
+      liftoffMet = clockMi;
       }
     }
   if (!docked) {
@@ -437,6 +438,7 @@ void LunarModule::ProcessKey(Int32 key) {
       if (key == KEY_F10) Throttle(100);
       }
     }
+  panel->ProcessKey(key);
   }
 
 

@@ -45,7 +45,8 @@ void GroundVehicle::Cycle() {
   latitude = position.Z() / hyp;
   latitude = asin(latitude) * 180 / M_PI;
   hyp = (position - lm->Position()).Length();
-  if (hyp > farthest) farthest = hyp;
+  if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV)
+    if (hyp > farthest) farthest = hyp;
   }
 
 Double GroundVehicle::Heading() {

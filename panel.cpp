@@ -35,6 +35,7 @@
 #include "g_lmrock.h"
 #include "g_maplarge.h"
 #include "g_mapmed.h"
+#include "g_multiaxis.h"
 #include "g_oxybat.h"
 #include "g_pilot.h"
 #include "g_pilotloc.h"
@@ -150,6 +151,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_MapLarge(x1, y1, false, vehicle));
       else if (strcasecmp(str,"mapmedium") == 0)
         addGauge(new G_MapMed(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"multiaxis") == 0)
+        addGauge(new G_MultiAxis(x1, y1, false, vehicle));
       else if (strcasecmp(str,"oxygenbattery") == 0)
         addGauge(new G_OxyBat(x1, y1, false, vehicle));
       else if (strcasecmp(str,"pilot") == 0)
@@ -285,5 +288,11 @@ void Panel::Reset() {
   for (i=0; i<numGauges; i++)
     gauges[i]->Reset();
   fflush(stdout);
+  }
+
+void Panel::ProcessKey(Int32 key) {
+  Int8 i;
+  for (i=0; i<numGauges; i++)
+    gauges[i]->ProcessKey(key);
   }
 

@@ -78,6 +78,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockut ")) clockUt = atoi(nw(pline));
     else if (startsWith(pline,"clockte ")) clockTe = atoi(nw(pline));
     else if (startsWith(pline,"landedmet ")) landedMet = atoi(nw(pline));
+    else if (startsWith(pline,"liftoffmet ")) liftoffMet = atoi(nw(pline));
     else if (startsWith(pline,"landedlongitude ")) landedLongitude = atof(nw(pline));
     else if (startsWith(pline,"landedlatitude ")) landedLatitude = atof(nw(pline));
     else if (startsWith(pline,"farthestdistance ")) farthest = atof(nw(pline));

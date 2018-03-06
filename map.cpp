@@ -97,11 +97,11 @@ void Map::drawMare(Double longitude, Double latitude, Double diameter,char ch) {
   }
 
 void Map::drawRill(Double longitude, Double latitude, Double diameter,char ch) {
-  Double x,y;
-  Double radius;
-  Int32  ix,iy;
+//  Double x,y;
+//  Double radius;
+//  Int32  ix,iy;
   Int32  cx,cy;
-  Int32  i;
+//  Int32  i;
   cx = 180 + (int)longitude;
   cy = 90 - (int)latitude;
   levelH[cy][cx] = ch;

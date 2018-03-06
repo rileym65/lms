@@ -70,6 +70,7 @@ LINK Int32        clockMi;
 LINK Int32        clockUt;
 LINK Int32        clockTe;
 LINK Int32        landedMet;
+LINK Int32        liftoffMet;
 LINK Int32        longestEVA;
 LINK CSM         *csm;
 LINK Vehicle*     currentVehicle;

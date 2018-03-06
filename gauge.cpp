@@ -32,3 +32,6 @@ void Gauge::Display() {
 void Gauge::Update() {
   }
 
+void Gauge::ProcessKey(Int32 key) {
+  }
+

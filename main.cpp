@@ -80,6 +80,7 @@ Vector t;
   lrvSamplePlains = 0;
   lrvSampleRise = 0;
   landedMet = 0;
+  liftoffMet = 0;
   landedLongitude = 0;
   landedLatitude = 0;
   farthest = 0;

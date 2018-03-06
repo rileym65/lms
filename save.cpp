@@ -15,6 +15,7 @@ void save() {
   fprintf(file,"  ClockUT %d%s",clockUt,LE);
   fprintf(file,"  ClockTE %d%s",clockTe,LE);
   fprintf(file,"  LandedMET %d%s",landedMet,LE);
+  fprintf(file,"  LiftoffMET %d%s",liftoffMet,LE);
   fprintf(file,"  LandedLongitude %.18f%s",landedLongitude,LE);
   fprintf(file,"  LandedLatitude %.18f%s",landedLatitude,LE);
   fprintf(file,"  FarthestDistance %.18f%s",farthest,LE);
