@@ -77,10 +77,13 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockmi ")) clockMi = atoi(nw(pline));
     else if (startsWith(pline,"clockut ")) clockUt = atoi(nw(pline));
     else if (startsWith(pline,"clockte ")) clockTe = atoi(nw(pline));
+    else if (startsWith(pline,"evacount ")) evaCount = atoi(nw(pline));
     else if (startsWith(pline,"landedmet ")) landedMet = atoi(nw(pline));
     else if (startsWith(pline,"liftoffmet ")) liftoffMet = atoi(nw(pline));
     else if (startsWith(pline,"landedlongitude ")) landedLongitude = atof(nw(pline));
     else if (startsWith(pline,"landedlatitude ")) landedLatitude = atof(nw(pline));
+    else if (startsWith(pline,"landedhvel ")) landedHVel = atof(nw(pline));
+    else if (startsWith(pline,"landedvvel ")) landedVVel = atof(nw(pline));
     else if (startsWith(pline,"farthestdistance ")) farthest = atof(nw(pline));
     else if (startsWith(pline,"flagplanted ")) flagPlanted = atoi(nw(pline));
     else if (startsWith(pline,"flaglongitude ")) flagLongitude = atof(nw(pline));
@@ -130,6 +133,21 @@ void loadSimulation(FILE* file) {
     }
   }
 
+void LoadEva(FILE* file, char*line) {
+  Int32 i;
+  char* pline;
+  i = atoi(line);
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"start ")) evas[i].start = atoi(nw(pline));
+    else if (startsWith(pline,"end ")) evas[i].end = atoi(nw(pline));
+    else if (startsWith(pline,"walked ")) evas[i].walked = atof(nw(pline));
+    else if (startsWith(pline,"driven ")) evas[i].driven = atof(nw(pline));
+    else if (startsWith(pline,"farthest ")) evas[i].farthest = atof(nw(pline));
+    else if (startsWith(pline,"samples ")) evas[i].samples = atoi(nw(pline));
+    }
+  }
+
 Int8 load(char* filename) {
   FILE* file;
   char* pline;
@@ -141,6 +159,7 @@ Int8 load(char* filename) {
     else if (startsWith(pline,"lunarmodule {")) lm->Load(file);
     else if (startsWith(pline,"plss {")) plss->Load(file);
     else if (startsWith(pline,"lrv {")) lrv->Load(file);
+    else if (startsWith(pline,"eva ")) LoadEva(file,nw(pline));
     else {
       printf("Unknown line found in save file: %s\n",pline);
       exit(1);

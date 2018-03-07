@@ -111,7 +111,7 @@ printf("Len: %.18f\n",f.Length());
 void Lrv::Cycle() {
   if (battery <= 0) throttle = 0;
   GroundVehicle::Cycle();
-  driven += velocity.Length();
+  if (!isnan(velocity.Length())) driven += velocity.Length();
   if (throttle > 0) {
     battery -= (maxSpeed * ((Double)throttle / 100.0));
     if (battery < 0) battery = 0;

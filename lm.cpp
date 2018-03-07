@@ -281,16 +281,11 @@ void LunarModule::Cycle() {
     vVel = velocityAltitude;
     hVel = velocity.Length();
     hVel = sqrt(hVel*hVel + vVel*vVel);
+    landedVVel = vVel;
+    landedHVel = hVel;
     if (vVel > 5 || hVel > 5) {
-      ClrScr();
-      printf("Crash!!!!\n");
-      printf("You hit the lunar surface with a vertial velocity\n");
-      printf("of %.1f m/s and a horizontal velocity of %.1f m/s\n\n",vVel,hVel);
-      printf("This exceeds the tolerance of the spacecraft.  As a\n");
-      printf("result the spacecraft has been destroyed.\n\n");
-      ShowCursor();
-      CloseTerminal();
-      exit(0);
+      run = false;
+      endReason = END_CRASHED;
       }
     RollRate(0);
     PitchRate(0);
@@ -382,7 +377,6 @@ void LunarModule::ProcessKey(Int32 key) {
       descentJettisoned = -1;
       throttle = 100;
       clockBu = 0;
-      descentFuel = 0;
       if (oxygen > 36000) oxygen = 36000;
       if (battery > 36000) battery = 36000;
       liftoffMet = clockMi;

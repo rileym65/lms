@@ -1,33 +1,53 @@
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|----8
+
 Ams_Attitude
-  +-------+
-  |    att|
-  |u/r: 56|
-  |f/r: 34|
-  |l/s:  0|
-  +-------+
+
+  This guage displays more accurate attitude information than     +-------+
+what can be seen from the axis displays. u/r shows the relation-  |    att|
+ship between the Up face and the lunar radial.  An indicator of   |u/r: 56|
+0 would indicate that the Up face is pointing directly away from  |f/r: 34|
+the lunar surface, while 180 would indicate the Up face is point- |l/s:  0|
+ing directly at the lunar surface.  f/r shows the same type of    +-------+
+relationship for the front face in relation to the ground.  l/s gives the
+angle between the left face and the lunar south pole.  An indicator of 0
+would indicate that the left face is pointing directly south, while an
+indicator of 180 would indicate that the left face was pointing north.
 
 Ams_Clocks
-  +------------+
-  |      clocks|
-  |UT: 10:41:36|
-  |MI:  1:30:24|
-  |BU:  0:01:03|
-  |EV:  0:00:00|
-  |DK:  0:00:00|
-  |OR:  1:53:59|
-  +------------+
+                                                             +------------+
+  This gauge displays important mission clocks.  UT shows    |      clocks|
+current universal time.  MI shows the current Mission        |UT: 10:41:36|
+elapsed time.  BU shows either the current burn time of the  |MI:  1:30:24|
+ascent or descent engine if either of these is currently     |BU:  0:01:03|
+operating, otherwise it shows how long the last burn lasted. |EV:  0:00:00|
+The BU clock is reset each time the ascent or descent engine |DK:  0:00:00|
+is ignited.  EV shows the duration of the current EVA if an  |OR:  1:53:59|
+EVA is currently in progress, otherwise it shows how long    +------------+
+the last EVA lasted.  The EV clock will reset at the beginning of each EVA.
+The DK clock shows how long it has been since lifting off from the lunar
+surface.  The OR clocks shows how long 1 orbit takes.  The INS must be set
+to any of the ORB modes for this clock to show an accurate time.
 
 Ams_Consumables
-  +-------+
-  | consum|
-  | ASC:99|
-  | RCS:95|
-  | DES:99|
-  | THR: 0|
-  | OXY:98|
-  | BAT:98|
-  +-------+
 
+  This gauge shows the levels of the various LM consumables.  ASC +-------+
+shows the percentage of remaining ascent fuel.  If the ascent     | consum|
+engine is currently running than a ^ flag will be shown just to   | ASC:99|
+the left of ASC.  RCS shows the remaining percentage of RCS fuel. | RCS:95|
+Just to the left the RCS label three possible flags could be      | DES:99|
+shown.  A '^' flag indicates that the RCS throttle is currently   | THR: 0|
+set to high, a 'v' flag indicates that the RCS throttle is        | OXY:98|
+currently set to low, while a ' ' flag indicates that the RCS     | BAT:98|
+throttle is set to medium.  DES shows the remaining percentage    +-------+
+of descent fuel.  If the descent stage has been jettisoned then this
+inidcator will show '**' for the remaining fuel.  If the descent engine is
+currently running then a '^' flag will be shown to the left of this 
+indicator.  THR shows the current descent engine throttle setting.  If the
+descent stage has been jettisoned then this indicator will show '**'.
+OXY shows the remaining percentage of oxygen and BAT shows the remaining
+percentage of the battery.
+
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|----8
 Ams_DockingRadar
   +-------------+
   |    dock     |

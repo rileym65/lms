@@ -48,6 +48,7 @@ Vector t;
   clockOr = 0;
   clockUt = (8 * 3600) + (30 * 60);
   clockTe = 0;
+  evaCount = 0;
   longestEVA = 0;
   docked = -1;
   dockingRadarOn = 0;
@@ -87,6 +88,19 @@ Vector t;
   flagPlanted = 0;
   flagLongitude = 0;
   flagLatitude = 0;
+  landedHVel = 0;
+  landedVVel = 0;
+  evas[0].start = 0;
+  }
+
+char* ClockToString(char* buffer, Int32 clock) {
+  Int32 hours, minutes, seconds;
+  hours = clock / 3600;
+  clock -= (hours * 3600);
+  minutes = clock / 60;
+  seconds = clock - (minutes * 60);
+  sprintf(buffer,"%3d:%02d:%02d",hours,minutes,seconds);
+  return buffer;
   }
 
 Boolean alignedForDocking() {
@@ -129,9 +143,11 @@ void cycle() {
         if (v.Length() > 2) {
           ClrScr();
           printf("Collision with the CSM destroyed both vehicles!!!\n");
-          ShowCursor();
-          CloseTerminal();
-          exit(0);
+          endReason = END_COLLISION;
+          run = false;
+//          ShowCursor();
+//          CloseTerminal();
+//          exit(0);
           }
         else {
           lm->Position(lm->Position() - v);
@@ -276,6 +292,10 @@ int main(int argc, char** argv) {
       cycle();
       ticks = 0;
       seq->Cycle();
+      if (injury >= 100) {
+        run = false;
+        endReason = END_DEAD;
+        }
       }
     else ticks++;
     usleep(simSpeed);
@@ -292,7 +312,7 @@ int main(int argc, char** argv) {
         if (key == '3') { insMode = INS_MODE_POS_REL; ins->Mode(insMode); }
         if (key == '4') { insMode = INS_MODE_ORB_ABS; ins->Mode(insMode); }
         if (key == '5') { insMode = INS_MODE_ORB_TAR; ins->Mode(insMode); }
-        if (key == 'Q') run = false;
+        if (key == 'Q') { run = false; endReason = END_QUIT; }
         currentVehicle->ProcessKey(key);
         }
       }
@@ -301,6 +321,16 @@ int main(int argc, char** argv) {
   GotoXY(1,25);
   ShowCursor();
   CloseTerminal();
+  if (endReason == END_CRASHED) {
+    ClrScr();
+    printf("Crash!!!!\n");
+    printf("You hit the lunar surface with a vertial velocity\n");
+    printf("of %.1f m/s and a horizontal velocity of %.1f m/s\n\n",
+            landedVVel,landedHVel);
+    printf("This exceeds the tolerance of the spacecraft.  As a\n");
+    printf("result the spacecraft has been destroyed.\n\n");
+    }
+  if (endReason == END_MISSION) MissionReport();
   delete(csm);
   delete(lm);
   delete(seq);

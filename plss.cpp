@@ -94,7 +94,7 @@ Double Plss::Walked() {
 
 void Plss::Cycle() {
   GroundVehicle::Cycle();
-  walked += velocity.Length();
+  if (!isnan(velocity.Length())) walked += velocity.Length();
   }
 
 Int8 Plss::SubLoad(char* pline) {

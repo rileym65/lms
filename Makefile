@@ -86,6 +86,7 @@ OBJS = \
 	save.o \
 	lm.o \
 	matrix.o \
+	missionreport.o \
 	panel.o \
 	plss.o \
 	random.o \
@@ -132,6 +133,7 @@ main.o:          $(HEADERS) main.cpp
 map.o:           $(HEADERS) lfsr.h random.h map.h map.cpp
 mapgen.o:        $(HEADERS) map.h random.h mapgen.cpp
 matrix.o:        $(HEADERS) matrix.cpp
+missionreport.o: $(HEADERS) missionreport.cpp
 panel.o:         $(HEADERS) $(PHEADERS)  panel.cpp
 plss.o:          $(HEADERS) vehicle.h plss.h plss.cpp
 random.o:        $(HEADERS) lfsr.h random.h random.cpp

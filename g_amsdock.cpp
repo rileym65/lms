@@ -42,6 +42,8 @@ void G_AmsDock::Update() {
   char rVel;
   char fVel;
   char bVel;
+  Double dot;
+  Vector v;
   Vector relPos;
   Vector relVel;
   relPos = ins->RelPos();
@@ -58,7 +60,7 @@ void G_AmsDock::Update() {
     }
   else {
     relVel = ins->RelVel();
-    py = 3 - relPos.X()+.5;
+    py = 3 + relPos.X()+.5;
     if (py > 5) py = 5;
     if (py < 1) py = 1;
     px = 5 + relPos.Y()+.5;
@@ -70,7 +72,9 @@ void G_AmsDock::Update() {
     if (ax > 9) ax = 9;
     if (ay < 1) ay = 1;
     if (ay > 5) ay = 5;
-    rx = 5 + asin(lm->FaceLeft().X()) * 180 / M_PI + 0.5;
+    v = Vector(0,-1,0);
+    dot = v.Dot(lm->FaceLeft());
+    rx = 5 + acos(dot) * 180 / M_PI + 0.5;
     if (rx < 1) rx = 1;
     if (rx > 9) rx = 9;
     if (relVel.Z() < -0.4) nsVel = '+';

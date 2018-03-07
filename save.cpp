@@ -14,10 +14,13 @@ void save() {
   fprintf(file,"  ClockMI %d%s",clockMi,LE);
   fprintf(file,"  ClockUT %d%s",clockUt,LE);
   fprintf(file,"  ClockTE %d%s",clockTe,LE);
+  fprintf(file,"  EvaCount %d%s",evaCount,LE);
   fprintf(file,"  LandedMET %d%s",landedMet,LE);
   fprintf(file,"  LiftoffMET %d%s",liftoffMet,LE);
   fprintf(file,"  LandedLongitude %.18f%s",landedLongitude,LE);
   fprintf(file,"  LandedLatitude %.18f%s",landedLatitude,LE);
+  fprintf(file,"  LandedHVel %.18f%s",landedHVel,LE);
+  fprintf(file,"  LandedVVel %.18f%s",landedVVel,LE);
   fprintf(file,"  FarthestDistance %.18f%s",farthest,LE);
   fprintf(file,"  FlagPlanted %d%s",flagPlanted,LE);
   fprintf(file,"  FlagLongitude %.18f%s",flagLongitude,LE);
@@ -57,6 +60,16 @@ void save() {
   for (i=0; i<numSamples; i++)
     fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
   fprintf(file,"  }%s",LE);
+  for (i=0; i<evaCount; i++) {
+    fprintf(file,"EVA %d {%s",i,LE);
+    fprintf(file,"  Start %d%s",evas[i].start,LE);
+    fprintf(file,"  End %d%s",evas[i].end,LE);
+    fprintf(file,"  Walked %.18f%s",evas[i].walked,LE);
+    fprintf(file,"  Driven %.18f%s",evas[i].driven,LE);
+    fprintf(file,"  Farthest %.18f%s",evas[i].farthest,LE);
+    fprintf(file,"  Samples %d%s",evas[i].samples,LE);
+    fprintf(file,"  }%s",LE);
+    }
   csm->Save(file);
   lm->Save(file);
   plss->Save(file);

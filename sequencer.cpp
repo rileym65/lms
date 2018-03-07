@@ -33,6 +33,9 @@ void Sequencer::Complete() {
          currentVehicle = lm;
          currentVehicle->SetupPanel();
          if (clockEv > longestEVA) longestEVA = clockEv;
+         evas[evaCount-1].end = clockMi;
+         evas[evaCount-1].walked = plss->Walked() - evas[evaCount-1].walked;
+         evas[evaCount-1].driven = lrv->Driven() - evas[evaCount-1].driven;
          break;
     case SEQ_MOVE_LM:
          pilotLocation = PILOT_LM;
@@ -47,6 +50,7 @@ void Sequencer::Complete() {
          ins->Target(lm);
          currentVehicle = csm;
          currentVehicle->SetupPanel();
+         endReason = END_MISSION;
          run = false;
          break;
     case SEQ_MOVE_EVA:
@@ -57,6 +61,13 @@ void Sequencer::Complete() {
          currentVehicle->SetupPanel();
          plss->BeginEva(lm);
          clockEv = 0;
+         evaCount++;
+         evas[evaCount-1].start = clockMi;
+         evas[evaCount-1].end = 0;
+         evas[evaCount-1].samples = 0;
+         evas[evaCount-1].farthest = 0;
+         evas[evaCount-1].walked = plss->Walked();
+         evas[evaCount-1].driven = lrv->Driven();
          break;
     case SEQ_UNDOCK:
          lm->Position(csm->Position() + Vector(0,0,19));
@@ -138,6 +149,7 @@ void Sequencer::Complete() {
            case S_RISE: lrvSampleRise++; break;
            case S_PLAINS: lrvSamplePlains++; break;
            }
+         evas[evaCount-1].samples++;
          break;
     case SEQ_BOXPLSS:
          plss->Carrying('B');

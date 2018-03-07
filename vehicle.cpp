@@ -6,6 +6,10 @@
 Vehicle::Vehicle() {
   velocityAltitude = 0;
   thrust = Vector(0,0,0);
+  velocity = Vector(0,0,0);
+  faceFront = Vector(0,1,0);
+  faceLeft = Vector(1,0,0);
+  faceUp = Vector(0,0,1);
   orientation = Matrix::Identity();
   panel = NULL;
   Init();

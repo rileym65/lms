@@ -54,12 +54,27 @@
 #define S_LARGE_CRATER    6
 #define S_PLAINS          7
 #define S_RISE            8
+#define END_QUIT          1
+#define END_MISSION       2
+#define END_COLLISION     3
+#define END_DEAD          4
+#define END_CRASHED       5
+
 #define LE   "\n"
 
 typedef struct {
   Int32 cellX;
   Int32 cellY;
   } LOCATION;
+
+typedef struct {
+  Int32  start;
+  Int32  end;
+  Double walked;
+  Double driven;
+  Double farthest;
+  Int32  samples;
+  } EVA;
 
 LINK Int8         cabinPressurized;
 LINK Int32        clockBu;
@@ -69,6 +84,8 @@ LINK Int32        clockOr;
 LINK Int32        clockMi;
 LINK Int32        clockUt;
 LINK Int32        clockTe;
+LINK EVA          evas[256];
+LINK Int32        evaCount;
 LINK Int32        landedMet;
 LINK Int32        liftoffMet;
 LINK Int32        longestEVA;
@@ -122,15 +139,20 @@ LINK UInt8        lrvSamplePlains;
 LINK UInt8        lrvSampleRise;
 LINK Double       landedLongitude;
 LINK Double       landedLatitude;
+LINK Double       landedVVel;
+LINK Double       landedHVel;
 LINK Double       farthest;
 LINK Int8         flagPlanted;
 LINK Double       flagLongitude;
 LINK Double       flagLatitude;
+LINK Int8         endReason;
 
 
 extern Matrix atom(char* buffer);
 extern Vector atov(char* buffer);
+extern char*  ClockToString(char* buffer, Int32 clock);
 extern Int8   load(char* filename);
+extern void   MissionReport();
 extern char*  nextLine(FILE* file);
 extern char*  nw(char* buffer);
 extern void   save();
