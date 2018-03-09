@@ -7,8 +7,6 @@
 Map::Map() {
   Int32 i;
   Int32 x,y;
-  craters = NULL;
-  numCraters = 0;
   features = NULL;
   numFeatures = 0;
   lastLongitude = -99999;
@@ -167,96 +165,62 @@ void Map::readFeatures() {
   char   symbol[64];
   file = fopen("lunarref.txt","r");
   while (fgets(line,1024,file) != NULL) {
+    sscanf(line,"%[^,], %lf, %lf, %lf, %1s",name,&lat,&lng,&diam,symbol);
+    cellX = Cell(lng);
+    cellY = Cell(lat);
+    ilng = (int)lng;
+    ilat = (int)lat;
+    numFeatures++;
+    if (numFeatures == 1) features = (FEATURE*)malloc(sizeof(FEATURE));
+      else features = (FEATURE*)realloc(features,sizeof(FEATURE)*numFeatures);
+    if (features == NULL) {
+      printf("Could not allocate needed memory. aborting\n");
+      exit(1);
+      }
+    strcpy(features[numFeatures-1].name, name);
+    features[numFeatures-1].longitude = lng;
+    features[numFeatures-1].latitude = lat;
+    features[numFeatures-1].diameter = diam;
+    features[numFeatures-1].symbol = symbol[0];
+    features[numFeatures-1].cellX = cellX;
+    features[numFeatures-1].cellY = cellY;
+
+
     if (strncasecmp(line,"Crater ",7) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      numCraters++;
-      if (numCraters == 1) craters = (FEATURE*)malloc(sizeof(FEATURE));
-        else craters = (FEATURE*)realloc(craters,sizeof(FEATURE)*numCraters);
-      if (craters == NULL) {
-        printf("Could not allocate needed memory. aborting\n");
-        exit(1);
-        }
-      craters[numCraters-1].longitude = lng;
-      craters[numCraters-1].latitude = lat;
-      craters[numCraters-1].diameter = diam;
-      ilng = (int)lng;
-      ilat = (int)lat;
       if (diam < 5) levelH[ilat+90][ilng+180] = '.';
       else if (diam < 15) levelH[ilat+90][ilng+180] = 'o';
       else if (diam < 60) levelH[ilat+90][ilng+180] = 'O';
       else drawCrater(lng,lat,diam);
       }
     if (strncasecmp(line,"Mare ",5) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawMare(lng,lat,diam,' ');
       }
     if (strncasecmp(line,"Rima ",5) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawRill(lng,lat,diam,'/');
       }
     if (strncasecmp(line,"Rimae ",6) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawRill(lng,lat,diam,'#');
       }
     if (strncasecmp(line,"Lacus ",6) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawMare(lng,lat,diam,' ');
       }
     if (strncasecmp(line,"Mons ",5) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawFeature(lng,lat,diam,'^');
       }
     if (strncasecmp(line,"Montes ",7) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawMare(lng,lat,diam,'^');
       }
     if (strncasecmp(line,"Vallis ",7) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawMare(lng,lat,diam,' ');
       }
     if (strncasecmp(line,"Promontorium ",13) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawFeature(lng,lat,diam,'~');
       }
     if (strncasecmp(line,"Palus ",6) == 0 ||
         strncasecmp(line,"Sinus ",6) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %lf",name,&lat,&lng,&diam);
-      ilng = (int)lng;
-      ilat = (int)lat;
       drawMare(lng,lat,diam,' ');
       }
     if (strncasecmp(line,"Feature ",8) == 0) {
-      sscanf(line,"%[^,], %lf, %lf, %1s",name,&lat,&lng,symbol);
-      cellX = Cell(lng);
-      cellY = Cell(lat);
-      numFeatures++;
-      if (numFeatures == 1) features = (FEATURE*)malloc(sizeof(FEATURE));
-        else features = (FEATURE*)realloc(features,sizeof(FEATURE)*numFeatures);
-      if (features == NULL) {
-        printf("Could not allocate needed memory. aborting\n");
-        exit(1);
-        }
-      features[numFeatures-1].longitude = lng;
-      features[numFeatures-1].latitude = lat;
-      features[numFeatures-1].symbol = symbol[0];
-      features[numFeatures-1].cellX = cellX;
-      features[numFeatures-1].cellY = cellY;
       }
     }
   fclose(file);

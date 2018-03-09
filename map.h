@@ -5,6 +5,8 @@
 #include "random.h"
 
 typedef struct {
+  char   name[40];
+  Int8   category;
   Double longitude;
   Double latitude;
   Double diameter;
@@ -15,8 +17,6 @@ typedef struct {
 
 class Map {
   protected:
-    FEATURE *craters;
-    Int16    numCraters;
     FEATURE *features;
     Int16    numFeatures;
     char     levelH[182][362];
