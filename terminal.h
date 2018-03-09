@@ -1,6 +1,8 @@
 #ifndef _TERMINAL_H
 #define _TERMINAL_H
 
+#define LE   "\n"
+
 #define KEY_F1             0x1001
 #define KEY_F2             0x1002
 #define KEY_F3             0x1003

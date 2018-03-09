@@ -72,8 +72,8 @@ void INS::Cycle() {
   attUr = acos(pos.Norm().Dot(spacecraft->FaceUp())) * 180 / M_PI;
   attFr = acos(pos.Norm().Dot(spacecraft->FaceFront())) * 180 / M_PI;
   attLs = acos(spacecraft->FaceLeft().Dot(Vector(0,0,-1))) * 180 / M_PI;
-  tarLatitude = spacecraft->Latitude() - targetLatitude;
-  tarLongitude = spacecraft->Longitude() - targetLongitude;
+  tarLatitude = spacecraft->Latitude() - mission->TargetLatitude();
+  tarLongitude = spacecraft->Longitude() - mission->TargetLongitude();
   if (tarLongitude <= -180) tarLongitude += 360;
   if (tarLongitude >= 180) tarLongitude -= 360;
 

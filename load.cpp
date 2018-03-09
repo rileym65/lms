@@ -3,6 +3,7 @@
 #include "header.h"
 #include "terminal.h"
 
+/*
 char* trim(char* buffer) {
   Int16 p;
   p = strlen(buffer) - 1;
@@ -30,6 +31,7 @@ char* nw(char* buffer) {
   while (buffer[0] > 0 && buffer[0] == ' ') buffer++;
   return buffer;
   }
+*/
 
 Vector atov(char* buffer) {
   Vector ret;
@@ -77,6 +79,9 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockmi ")) clockMi = atoi(nw(pline));
     else if (startsWith(pline,"clockut ")) clockUt = atoi(nw(pline));
     else if (startsWith(pline,"clockte ")) clockTe = atoi(nw(pline));
+    else if (startsWith(pline,"clockud ")) clockUd = atoi(nw(pline));
+    else if (startsWith(pline,"clockdoi ")) clockDOI = atoi(nw(pline));
+    else if (startsWith(pline,"clockpdi ")) clockPDI = atoi(nw(pline));
     else if (startsWith(pline,"evacount ")) evaCount = atoi(nw(pline));
     else if (startsWith(pline,"landedmet ")) landedMet = atoi(nw(pline));
     else if (startsWith(pline,"liftoffmet ")) liftoffMet = atoi(nw(pline));
@@ -101,8 +106,9 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"plsspacks ")) plssPacks = atoi(nw(pline));
     else if (startsWith(pline,"plsson ")) plssOn = atoi(nw(pline));
     else if (startsWith(pline,"spacesuiton ")) spaceSuitOn = atoi(nw(pline));
-    else if (startsWith(pline,"targetlatitude ")) targetLatitude = atof(nw(pline));
-    else if (startsWith(pline,"targetlongitude ")) targetLongitude = atof(nw(pline));
+    else if (startsWith(pline,"numburns ")) numBurns = atoi(nw(pline));
+    else if (startsWith(pline,"ignitiontime ")) ignitionTime = atoi(nw(pline));
+    else if (startsWith(pline,"ignitionaltitude ")) ignitionAltitude = atof(nw(pline));
     else if (startsWith(pline,"sampletype ")) sampleType = atoi(nw(pline));
     else if (startsWith(pline,"samplesmallrock ")) sampleSmallRock = atoi(nw(pline));
     else if (startsWith(pline,"samplemediumrock ")) sampleMediumRock = atoi(nw(pline));
@@ -112,6 +118,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"samplelargecrater ")) sampleLargeCrater = atoi(nw(pline));
     else if (startsWith(pline,"samplerise ")) sampleRise = atoi(nw(pline));
     else if (startsWith(pline,"sampleplains ")) samplePlains = atoi(nw(pline));
+    else if (startsWith(pline,"samplespecial ")) sampleSpecial = atoi(nw(pline));
 
     else if (startsWith(pline,"lrvsamplesmallrock ")) lrvSampleSmallRock = atoi(nw(pline));
     else if (startsWith(pline,"lrvsamplemediumrock ")) lrvSampleMediumRock = atoi(nw(pline));
@@ -121,6 +128,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"lrvsamplelargecrater ")) lrvSampleLargeCrater = atoi(nw(pline));
     else if (startsWith(pline,"lrvsamplerise ")) lrvSampleRise = atoi(nw(pline));
     else if (startsWith(pline,"lrvsampleplains ")) lrvSamplePlains = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsamplespecial ")) lrvSampleSpecial = atoi(nw(pline));
     else if (startsWith(pline,"sample ")) {
       pline = nw(pline);
       sscanf(pline,"%d,%d",&samples[numSamples].cellX,&samples[numSamples].cellY);
@@ -148,6 +156,19 @@ void LoadEva(FILE* file, char*line) {
     }
   }
 
+void LoadBurn(FILE* file, char*line) {
+  Int32 i;
+  char* pline;
+  i = atoi(line);
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"start ")) burn[i].start = atoi(nw(pline));
+    else if (startsWith(pline,"end ")) burn[i].end = atoi(nw(pline));
+    else if (startsWith(pline,"fuelused ")) burn[i].fuelUsed = atof(nw(pline));
+    else if (startsWith(pline,"engine ")) burn[i].engine = nw(pline)[0];
+    }
+  }
+
 Int8 load(char* filename) {
   FILE* file;
   char* pline;
@@ -159,7 +180,9 @@ Int8 load(char* filename) {
     else if (startsWith(pline,"lunarmodule {")) lm->Load(file);
     else if (startsWith(pline,"plss {")) plss->Load(file);
     else if (startsWith(pline,"lrv {")) lrv->Load(file);
+    else if (startsWith(pline,"mission {")) mission->Load(file);
     else if (startsWith(pline,"eva ")) LoadEva(file,nw(pline));
+    else if (startsWith(pline,"burn ")) LoadBurn(file,nw(pline));
     else {
       printf("Unknown line found in save file: %s\n",pline);
       exit(1);

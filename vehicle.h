@@ -29,6 +29,8 @@ class Vehicle {
     Vector  thrust;
     Vector  velocity;
     Double  velocityAltitude;
+    Double  velocityEast;
+    Double  velocityNorth;
     Panel  *panel;
   public:
     Vehicle();

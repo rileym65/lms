@@ -15,11 +15,11 @@ G_AmsDock::~G_AmsDock() {
   }
 
 void G_AmsDock::Reset() {
-  lastDockingRadarPosX = 0;
-  lastDockingRadarPosY = 0;
-  lastDockingRadarAngX = 0;
-  lastDockingRadarAngY = 0;
-  lastDockingRadarRolX = 0;
+  lastDockingRadarPosX = -99;
+  lastDockingRadarPosY = -99;
+  lastDockingRadarAngX = -99;
+  lastDockingRadarAngY = -99;
+  lastDockingRadarRolX = -99;
   }
 
 void G_AmsDock::Display() {
@@ -85,14 +85,16 @@ void G_AmsDock::Update() {
     bVel = (relVel.X() > 0.02) ? 'v' : '-';
     fVel = (relVel.X() < -0.02) ? '^' : '-';
     }
-  GotoXY(x+1+lastDockingRadarPosX,y+1+lastDockingRadarPosY);
-  printf(" ");
-  GotoXY(x+1+lastDockingRadarAngX,y+1+lastDockingRadarAngY);
-  printf(" ");
-  GotoXY(x+lastDockingRadarRolX+1,y+1+1); printf(" ");
-  GotoXY(x+lastDockingRadarRolX+1,y+5+1); printf(" ");
-  GotoXY(x+rx+1,y+1+1); printf("v");
-  GotoXY(x+rx+1,y+5+1); printf("^");
+  if (lastDockingRadarPosX > -99) {
+    GotoXY(x+1+lastDockingRadarPosX,y+1+lastDockingRadarPosY);
+    printf(" ");
+    GotoXY(x+1+lastDockingRadarAngX,y+1+lastDockingRadarAngY);
+    printf(" ");
+    GotoXY(x+lastDockingRadarRolX+1,y+1+1); printf(" ");
+    GotoXY(x+lastDockingRadarRolX+1,y+5+1); printf(" ");
+    GotoXY(x+rx+1,y+1+1); printf("v");
+    GotoXY(x+rx+1,y+5+1); printf("^");
+    }
   if (ax == px && ay == py) {
     GotoXY(x+px+1,y+py+1); printf("*");
     }

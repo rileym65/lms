@@ -15,7 +15,7 @@ Gauge Ams_DockingRadar 41,4
 Gauge MultiAxis 55,2
 Gauge Ams_LandingRadar 28,4
 Gauge Ams_Message 39,15
-Gauge Ams_WestAxis 2,2
+Gauge PrecisionAxis 2,2
 Gauge Clocks 61,17
 Gauge EvaPrep 53,23
 Gauge LmFuel 53,17
@@ -24,9 +24,8 @@ Gauge OxygenBattery 53,20
 Gauge Pilot 74,17
 Gauge PilotLocation 75,21
 Gauge Rcs 2,17
-Gauge Attitude 2,21
-Gauge Radars 29,13
+Gauge Attitude 5,12
+Gauge Radars 31,13
 Gauge Throttle 41,13
-Gauge Landed 34,13
-Gauge Docked 34,14
 Gauge Ins 24,17
+Gauge Lamps 2,21

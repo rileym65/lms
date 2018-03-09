@@ -14,6 +14,9 @@ void save() {
   fprintf(file,"  ClockMI %d%s",clockMi,LE);
   fprintf(file,"  ClockUT %d%s",clockUt,LE);
   fprintf(file,"  ClockTE %d%s",clockTe,LE);
+  fprintf(file,"  ClockUD %d%s",clockUd,LE);
+  fprintf(file,"  ClockDOI %d%s",clockDOI,LE);
+  fprintf(file,"  ClockPDI %d%s",clockPDI,LE);
   fprintf(file,"  EvaCount %d%s",evaCount,LE);
   fprintf(file,"  LandedMET %d%s",landedMet,LE);
   fprintf(file,"  LiftoffMET %d%s",liftoffMet,LE);
@@ -38,8 +41,9 @@ void save() {
   fprintf(file,"  PlssPacks %d%s",plssPacks,LE);
   fprintf(file,"  PlssOn %d%s",plssOn,LE);
   fprintf(file,"  SpaceSuitOn %d%s",spaceSuitOn,LE);
-  fprintf(file,"  TargetLatitude %f%s",targetLatitude,LE);
-  fprintf(file,"  TargetLongitude %f%s",targetLongitude,LE);
+  fprintf(file,"  NumBurns %d%s",numBurns,LE);
+  fprintf(file,"  IgnitionTime %d%s",ignitionTime,LE);
+  fprintf(file,"  IgnitionAltitude %.18f%s",ignitionAltitude,LE);
   fprintf(file,"  SampleType %d%s",sampleType,LE);
   fprintf(file,"  SampleSmallRock %d%s",sampleSmallRock,LE);
   fprintf(file,"  SampleMediumRock %d%s",sampleMediumRock,LE);
@@ -49,6 +53,7 @@ void save() {
   fprintf(file,"  SampleLargeCrater %d%s",sampleLargeCrater,LE);
   fprintf(file,"  SampleRise %d%s",sampleRise,LE);
   fprintf(file,"  SamplePlains %d%s",samplePlains,LE);
+  fprintf(file,"  SampleSpecial %d%s",sampleSpecial,LE);
   fprintf(file,"  LrvSampleSmallRock %d%s",lrvSampleSmallRock,LE);
   fprintf(file,"  LrvSampleMediumRock %d%s",lrvSampleMediumRock,LE);
   fprintf(file,"  LrvSampleLargeRock %d%s",lrvSampleLargeRock,LE);
@@ -57,6 +62,7 @@ void save() {
   fprintf(file,"  LrvSampleLargeCrater %d%s",lrvSampleLargeCrater,LE);
   fprintf(file,"  LrvSampleRise %d%s",lrvSampleRise,LE);
   fprintf(file,"  LrvSamplePlains %d%s",lrvSamplePlains,LE);
+  fprintf(file,"  LrvSampleSpecial %d%s",lrvSampleSpecial,LE);
   for (i=0; i<numSamples; i++)
     fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
   fprintf(file,"  }%s",LE);
@@ -70,6 +76,15 @@ void save() {
     fprintf(file,"  Samples %d%s",evas[i].samples,LE);
     fprintf(file,"  }%s",LE);
     }
+  for (i=0; i<numBurns; i++) {
+    fprintf(file,"Burn %d {%s",i,LE);
+    fprintf(file,"  Start %d%s",burn[i].start,LE);
+    fprintf(file,"  End %d%s",burn[i].end,LE);
+    fprintf(file,"  FuelUsed %.18f%s",burn[i].fuelUsed,LE);
+    fprintf(file,"  Engine %c%s",burn[i].engine,LE);
+    fprintf(file,"  }%s",LE);
+    }
+  mission->Save(file);
   csm->Save(file);
   lm->Save(file);
   plss->Save(file);

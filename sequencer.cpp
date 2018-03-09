@@ -77,6 +77,7 @@ void Sequencer::Complete() {
          lm->Longitude(csm->Longitude());
          lm->Radius(csm->Radius());
          docked = 0;
+         clockUd = clockUt;
          break;
     case SEQ_SUITON:
          spaceSuitOn = -1;
@@ -115,8 +116,12 @@ void Sequencer::Complete() {
            case ' ': plss->Value(0.5); sampleType = S_PLAINS; break;
            default : plss->Value(0.5); sampleType = 0; break;
            }
-         if (cell >= '0' && cell <= '9') plss->Value(25.0);
-         if (cell >= 'A' && cell <= 'B') plss->Value(25.0);
+         if ((cell >= '0' && cell <= '9') ||
+             (cell >= 'A' && cell < 'O') ||
+             (cell > 'O' && cell < 'Z')) {
+           plss->Value(25.0);
+           sampleType = S_SPECIAL;
+           }
          dup = false;
          for (i=0; i<numSamples; i++)
            if (samples[i].cellX == cellX && samples[i].cellY == cellY) {
@@ -148,6 +153,7 @@ void Sequencer::Complete() {
            case S_LARGE_CRATER: lrvSampleLargeCrater++; break;
            case S_RISE: lrvSampleRise++; break;
            case S_PLAINS: lrvSamplePlains++; break;
+           case S_SPECIAL: lrvSampleSpecial++; break;
            }
          evas[evaCount-1].samples++;
          break;
@@ -169,6 +175,7 @@ void Sequencer::Complete() {
          sampleLargeCrater += lrvSampleLargeCrater;
          sampleRise += lrvSampleRise;
          samplePlains += lrvSamplePlains;
+         sampleSpecial += lrvSampleSpecial;
          lrvSampleSmallRock = 0;
          lrvSampleMediumRock = 0;
          lrvSampleLargeRock = 0;
@@ -177,6 +184,7 @@ void Sequencer::Complete() {
          lrvSampleLargeCrater = 0;
          lrvSampleRise = 0;
          lrvSamplePlains = 0;
+         lrvSampleSpecial = 0;
          break;
     case SEQ_BOXLRV:
          plss->Carrying(' ');

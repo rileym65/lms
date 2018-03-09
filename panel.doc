@@ -13,6 +13,7 @@ angle between the left face and the lunar south pole.  An indicator of 0
 would indicate that the left face is pointing directly south, while an
 indicator of 180 would indicate that the left face was pointing north.
 
+
 Ams_Clocks
                                                              +------------+
   This gauge displays important mission clocks.  UT shows    |      clocks|
@@ -27,6 +28,7 @@ the last EVA lasted.  The EV clock will reset at the beginning of each EVA.
 The DK clock shows how long it has been since lifting off from the lunar
 surface.  The OR clocks shows how long 1 orbit takes.  The INS must be set
 to any of the ORB modes for this clock to show an accurate time.
+
 
 Ams_Consumables
 
@@ -47,47 +49,69 @@ descent stage has been jettisoned then this indicator will show '**'.
 OXY shows the remaining percentage of oxygen and BAT shows the remaining
 percentage of the battery.
 
-----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|----8
+
 Ams_DockingRadar
-  +-------------+
-  |    dock     |
-  | +---f|----+ |
-  | |    v    | |
-  | |         |l|
-  |--    *    --|
-  |r|         | |
-  | |    ^    | |
-  | +----|b---+ |
-  +-------------+
+
+  The docking radar will show you your alignment to the     +-------------+
+docking port on the CSM.  This gauge will only show data    |    dock     |
+when the LM is within 200m of the CSM and the docking       | +---f|--^-+ |
+radar is on.  The 'v' and '^' that appear towards the top   | +    v    + |
+and bottom of the gauge indicate your roll alignment.  When | |         |l|
+both of these indicators are centered then the LM is rolled |--    *    --|
+to the correct angle.  The pitch/yaw angles are depicted    |r|         | |
+on the guage with a 'X' symbol.  When the 'X' symbol is     | <    ^    > |
+centered then the LM pitch and yaw are correctly aligned.   | +----|b-v-+ |
+The horizontal and vertial position of the LM to the CSM    +-------------+
+are depicted with a '+' symbol.  When the '+' symbol is centered then the
+LM is correctly positioned to dock.  If the '+' symbol and the 'X' occupy
+the same position on the radar display then a '*' will be shown.  When
+there is a '*' symbol in the center of display then the LM is correctly
+positioned and pitch/yaw aligned with the CSM.  There are also several
+symbols that can appear on the display frame.  Near the top on the left
+and right edges, if a '-' symbol appears then you are either moving away
+from the docking port or you are moving too slowly for a successful 
+docking.  If a '+' symbol appears in this area then your closing speed
+is too fast for a successful docking.  if in this area you see the usual
+'|' symbol for the frame then your closing speed is ideal for docking.
+At other places on the fram you could see '^', 'v', '<' or '>' symbols.
+These symbols indicate that your horizontal or vertical velocity is too
+high for a successful docking.
+
 
 Ams_DownAxis
-  +-------------------------+
-  |    LOOKING   DOWN       |
-  | +------west|----------+ |
-  | |          f          |n|
-  | |                     |o|
-  | |                     |r|
-  | |                     |t|
-  | |                     |h|
-  |--L         U          --|
-  |s|                     | |
-  |o|                     | |
-  |u|                     | |
-  |t|                     | |
-  |h|                     | |
-  | +----------|east------+ |
-  +-------------------------+
 
+  This instrument provides a graphic depiction  +-------------------------+
+of the vehicle as if you were directly above    |    LOOKING   DOWN       |
+it and looking directly through it to the       | +------west|----------+ |
+ground.  The 'U' symbol shows the relative      | |          f          |n|
+angle of the up face, the 'F' symbol shows the  | |                     |o|
+relative angle of the front face and the 'L'    | |                     |r|
+symbol shows the relative angle of the left     | |                     |t|
+face.  If any of these symbols are closer to    | |                     |h|
+the ground in relation to the local horizon     |--L         U          --|
+plane then they will appear as lowercase,       |s|                     | |
+whereas if these faces are closer to the        |o|                     | |
+imaginary observer than the local horizon plane |u|                     | |
+then they will appear in uppercase. The 'west', |t|                     | |
+'east', 'north', and 'south' edges of the       |h|                     | |
+display depict the local lunar directions.      | +----------|east------+ |
+  The example display indicates that the front  +-------------------------+
+face is facing directly westward, the left face is facing directly south
+and the up face is pointing directly away from the lunar surface.
+
+
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|----8
 Ams_Ins
-  +---------------------------+
-  |   altitude    east   north|
-  |POS:  26020:  44.17:  -0.01|
-  |VEL:  -19.0:-1683.5:   -0.1|
-  |ACC:    0.0:   -0.0:    0.0|
-  |MOM:POS^ABS: -64.71:  90.99|
-  |PER:   21.2                |
-  |APO:   98.7                |
-  +---------------------------+
+
+                                              +---------------------------+
+                                              |   altitude    east   north|
+                                              |POS:  26020:  44.17:  -0.01|
+                                              |VEL:  -19.0:-1683.5:   -0.1|
+                                              |ACC:    0.0:   -0.0:    0.0|
+                                              |MOM:POS^ABS: -64.71:  90.99|
+                                              |PER:   21.2                |
+                                              |APO:   98.7                |
+                                              +---------------------------+
 
 Ams_LandingRadar
   +-------------+
@@ -345,4 +369,24 @@ MultiAxis
 |m|          f          | |
 | +==========|inside====+ |
 +-------------------------+
+
+PrecisionAxis
++-----------------------+
+|   LOOKING   PROGRADE  |
+|+---------------------+|
+||    Elev     Norm    ||
+||F:   75.94   -0.01  +||
+||                     ||
+||U:   -0.01  -89.99  -||
+||                     ||
+||L:   14.06   -0.00  -||
+|+---------------------+|
++-----------------------+
+
+Lamps
++--------------------+
+|ASC ALO ATT DCK OXY |
+|DSC DLO     LCT BAT |
+|RCS RLO             |
++--------------------+
 

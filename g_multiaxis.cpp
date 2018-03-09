@@ -167,7 +167,7 @@ void G_MultiAxis::modePrograde() {
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
   xVec = vel.Cross(pos).Norm();
-  yVec = vehicle->Position().Norm();
+  yVec = xVec.Cross(vel);
   zVec = vel;
   GotoXY(x+faceX, y+faceY); printf(" ");
   GotoXY(x+leftX, y+leftY); printf(" ");

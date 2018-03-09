@@ -21,6 +21,7 @@
 #include "ins.h"
 #include "sequencer.h"
 #include "map.h"
+#include "mission.h"
 
 #define TITLE "Lunar Mission Simulator"
 #define PILOT_CSM 'c'
@@ -32,6 +33,8 @@
 #define FUEL_DES  9720.0
 #define LM_OXYGEN 432000.0
 #define LM_BATTERY 432000.0
+#define ASC_OXYGEN 36000.0
+#define ASC_BATTERY 36000.0
 #define PLSS_OXYGEN 36000.0
 #define PLSS_BATTERY 36000.0
 #define LRV_BATTERY  200000.0
@@ -54,6 +57,7 @@
 #define S_LARGE_CRATER    6
 #define S_PLAINS          7
 #define S_RISE            8
+#define S_SPECIAL         9
 #define END_QUIT          1
 #define END_MISSION       2
 #define END_COLLISION     3
@@ -76,6 +80,13 @@ typedef struct {
   Int32  samples;
   } EVA;
 
+typedef struct {
+  Int32  start;
+  Int32  end;
+  Double fuelUsed;
+  char   engine;
+  } BURN;
+
 LINK Int8         cabinPressurized;
 LINK Int32        clockBu;
 LINK Int32        clockDk;
@@ -84,6 +95,9 @@ LINK Int32        clockOr;
 LINK Int32        clockMi;
 LINK Int32        clockUt;
 LINK Int32        clockTe;
+LINK Int32        clockUd;
+LINK Int32        clockDOI;
+LINK Int32        clockPDI;
 LINK EVA          evas[256];
 LINK Int32        evaCount;
 LINK Int32        landedMet;
@@ -103,6 +117,7 @@ LINK LunarModule *lm;
 LINK Lrv         *lrv;
 LINK Map         *map;
 LINK Double       metabolicRate;
+LINK Mission     *mission;
 LINK Int16        numSamples;
 LINK char         pilotLocation;
 LINK Plss        *plss;
@@ -113,8 +128,6 @@ LINK LOCATION     samples[240];
 LINK Sequencer*   seq;
 LINK Int32        simSpeed;
 LINK Int8         spaceSuitOn;
-LINK Double       targetLatitude;
-LINK Double       targetLongitude;
 LINK Vector       targetPos;
 LINK Vector       targetVel;
 LINK Double       targetMomEast;
@@ -129,6 +142,7 @@ LINK UInt8        sampleMediumCrater;
 LINK UInt8        sampleLargeCrater;
 LINK UInt8        samplePlains;
 LINK UInt8        sampleRise;
+LINK UInt8        sampleSpecial;
 LINK UInt8        lrvSampleSmallRock;
 LINK UInt8        lrvSampleMediumRock;
 LINK UInt8        lrvSampleLargeRock;
@@ -137,6 +151,7 @@ LINK UInt8        lrvSampleMediumCrater;
 LINK UInt8        lrvSampleLargeCrater;
 LINK UInt8        lrvSamplePlains;
 LINK UInt8        lrvSampleRise;
+LINK UInt8        lrvSampleSpecial;
 LINK Double       landedLongitude;
 LINK Double       landedLatitude;
 LINK Double       landedVVel;
@@ -146,6 +161,10 @@ LINK Int8         flagPlanted;
 LINK Double       flagLongitude;
 LINK Double       flagLatitude;
 LINK Int8         endReason;
+LINK Int32        ignitionTime;
+LINK Double       ignitionAltitude;
+LINK BURN         burn[1000];
+LINK Int32        numBurns;
 
 
 extern Matrix atom(char* buffer);

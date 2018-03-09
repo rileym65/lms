@@ -278,12 +278,13 @@ void LunarModule::Cycle() {
     }
   Vehicle::Cycle();
   if (radius <= GROUND && !landed) {
-    vVel = velocityAltitude;
-    hVel = velocity.Length();
-    hVel = sqrt(hVel*hVel + vVel*vVel);
+    vVel = fabs(velocityAltitude);
+    hVel = sqrt(lm->VelocityEast() * lm->VelocityEast() +
+                lm->VelocityNorth() * lm->VelocityNorth());
     landedVVel = vVel;
     landedHVel = hVel;
-    if (vVel > 5 || hVel > 5) {
+    if (vVel > 2 || fabs(lm->VelocityEast()) > 0.2 ||
+                    fabs(lm->VelocityNorth()) > 0.2) {
       run = false;
       endReason = END_CRASHED;
       }
@@ -303,6 +304,9 @@ void LunarModule::Cycle() {
     landedMet = clockMi;
     landedLongitude = longitude;
     landedLatitude = latitude;
+    clockPDI = ignitionTime;
+    burn[numBurns-1].end = clockMi;
+    burn[numBurns-1].fuelUsed -= descentFuel;
     }
   }
 
@@ -377,8 +381,8 @@ void LunarModule::ProcessKey(Int32 key) {
       descentJettisoned = -1;
       throttle = 100;
       clockBu = 0;
-      if (oxygen > 36000) oxygen = 36000;
-      if (battery > 36000) battery = 36000;
+      if (oxygen > ASC_OXYGEN) oxygen = ASC_OXYGEN;
+      if (battery > ASC_BATTERY) battery = ASC_BATTERY;
       liftoffMet = clockMi;
       }
     }
@@ -407,8 +411,31 @@ void LunarModule::ProcessKey(Int32 key) {
     if (key == 'I' && Throttle() == 0) {
       Throttle(10);
       clockBu = 0;
+      ignitionAltitude = altitude;
+      ignitionTime = clockMi;
+      numBurns++;
+      burn[numBurns-1].start = clockMi;
+      if (descentJettisoned) {
+        burn[numBurns-1].fuelUsed = ascentFuel;
+        burn[numBurns-1].engine = 'A';
+        }
+      else {
+        burn[numBurns-1].fuelUsed = descentFuel;
+        burn[numBurns-1].engine = 'D';
+        }
       }
-    if (key == 'i') Throttle(0);
+    if (key == 'i' && Throttle() > 0) { 
+      Throttle(0);
+      burn[numBurns-1].end = clockMi;
+      if (descentJettisoned)
+        burn[numBurns-1].fuelUsed -= ascentFuel;
+      else
+        burn[numBurns-1].fuelUsed -= descentFuel;
+      if (!descentJettisoned) {
+        if (ignitionAltitude > 50000 && ins->Perilune()-GROUND < 50000)
+          clockDOI = ignitionTime;
+        }
+      }
     if (key == KEY_KP_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
     if (key == KEY_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
     if (key == KEY_PGUP) RollRate(RollRate()-(rcsRotThrottle / 100.0));

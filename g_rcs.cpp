@@ -80,18 +80,18 @@ void G_Rcs::Update() {
     lastYaw = i;
     }
   if (lm->RcsRotThrottle() != lastRotationThrottle) {
-    GotoXY(x+19,y+0);
+    GotoXY(x+18,y+0);
     lastRotationThrottle = lm->RcsRotThrottle();
-    if (lastRotationThrottle == 10) printf("v");
-    if (lastRotationThrottle == 50) printf(" ");
-    if (lastRotationThrottle == 100) printf("^");
+    if (lastRotationThrottle == 10) printf("vv");
+    if (lastRotationThrottle == 50) printf("--");
+    if (lastRotationThrottle == 100) printf("^^");
     }
   if (lm->RcsThrottle() != lastTranslationThrottle) {
-    GotoXY(x+19,y+1);
+    GotoXY(x+18,y+1);
     lastTranslationThrottle = lm->RcsThrottle();
-    if (lastTranslationThrottle == 1) printf("v");
-    if (lastTranslationThrottle == 10) printf(" ");
-    if (lastTranslationThrottle == 100) printf("^");
+    if (lastTranslationThrottle == 1) printf("vv");
+    if (lastTranslationThrottle == 10) printf("--");
+    if (lastTranslationThrottle == 100) printf("^^");
     }
   i = (int)(lm->RcsFuel() / FUEL_RCS * 100);
   if (i>99) i = 99;

@@ -58,6 +58,10 @@ P      - Put on/take off PLSS
 C      - Evacuate/Pressurize cabin
 *      - Rest for 2 hours
 )      - Sleep for 8 hours
+]      - Increment mode of multi-axis display
+[      - Decrement mode of multi-axis display
+.      - Increment mode of precision axis display
+,      - Decrement mode of precision axis display
 
 Available while in EVA:
 -----------------------

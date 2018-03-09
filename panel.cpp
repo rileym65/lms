@@ -30,6 +30,7 @@
 #include "g_docked.h"
 #include "g_groundins.h"
 #include "g_ins.h"
+#include "g_lamps.h"
 #include "g_landed.h"
 #include "g_lmfuel.h"
 #include "g_lmrock.h"
@@ -39,6 +40,7 @@
 #include "g_oxybat.h"
 #include "g_pilot.h"
 #include "g_pilotloc.h"
+#include "g_precaxis.h"
 #include "g_radars.h"
 #include "g_rcs.h"
 #include "g_throttle.h"
@@ -141,6 +143,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_GroundIns(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ins") == 0)
         addGauge(new G_Ins(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"lamps") == 0)
+        addGauge(new G_Lamps(x1, y1, false, vehicle));
       else if (strcasecmp(str,"landed") == 0)
         addGauge(new G_Landed(x1, y1, false, vehicle));
       else if (strcasecmp(str,"lmfuel") == 0)
@@ -159,6 +163,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Pilot(x1, y1, false, vehicle));
       else if (strcasecmp(str,"pilotlocation") == 0)
         addGauge(new G_PilotLocation(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"precisionaxis") == 0)
+        addGauge(new G_PrecAxis(x1, y1, false, vehicle));
       else if (strcasecmp(str,"radars") == 0)
         addGauge(new G_Radars(x1, y1, false, vehicle));
       else if (strcasecmp(str,"rcs") == 0)

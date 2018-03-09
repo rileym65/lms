@@ -23,6 +23,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_evaprep.h \
            g_groundins.h \
            g_ins.h \
+           g_lamps.h \
            g_landed.h \
            g_lmfuel.h \
            g_lmrock.h \
@@ -32,6 +33,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_oxybat.h \
            g_pilot.h \
            g_pilotloc.h \
+           g_precaxis.h \
            g_radars.h \
            g_rcs.h \
            g_throttle.h
@@ -67,6 +69,7 @@ OBJS = \
 	g_evaprep.o \
 	g_groundins.o \
 	g_ins.o \
+	g_lamps.o \
 	g_landed.o \
         g_lmfuel.o \
         g_lmrock.o \
@@ -74,15 +77,18 @@ OBJS = \
 	g_oxybat.o \
 	g_pilot.o \
 	g_pilotloc.o \
+	g_precaxis.o \
 	g_radars.o \
 	g_rcs.o \
 	g_throttle.o \
 	groundvehicle.o \
+	helpers.o \
 	ins.o \
 	lfsr.o \
 	load.o \
 	lrv.o \
 	map.o \
+	mission.o \
 	save.o \
 	lm.o \
 	matrix.o \
@@ -103,13 +109,22 @@ MOBJS = \
 	random.o \
 	mapgen.o
 
-all: $(PROJECT) mapgen
+PLANNEROBJS = \
+	helpers.o \
+	mission.o \
+	planner.o \
+	terminal.o
+
+all: $(PROJECT) mapgen planner
 
 $(PROJECT): $(OBJS)
 	$(CC) $(DEFS) $(LIBDIR) $(OBJS) $(LIBS) -o $(PROJECT)
 
 mapgen: $(MOBJS)
 	$(CC) $(DEFS) $(LIBDIR) $(MOBJS) $(LIBS) -o mapgen
+
+planner: $(PLANNEROBJS)
+	$(CC) $(DEFS) $(LIBDIR) $(PLANNEROBJS) $(LIBS) -o planner
 
 .cpp.o:
 	$(CC) $(DEFS) $(INCDIR) $(INCS) -c $<
@@ -120,12 +135,14 @@ rmsave:
 clean:
 	-rm $(PROJECT)
 	-rm mapgen
+	-rm planner
 	-rm *.o
 
 csm.o:           $(HEADERS) csm.cpp
 gauge.o:         $(HEADERS) gauge.h gauge.cpp
 groundvehicle.o: $(HEADERS) vehicle.h groundvehicle.h groundvehicle.cpp
 ins.o:           $(HEADERS) ins.cpp
+helpers.o:       $(HEADERS) helpers.cpp
 lfsr.o:          $(HEADERS) lfsr.h lfsr.cpp
 load.o:          $(HEADERS) load.cpp
 lrv.o:           $(HEADERS) vehicle.h lrv.h lrv.cpp
@@ -171,6 +188,7 @@ g_clockut.o:   $(HEADERS) gauge.h terminal.h g_clockut.h g_clockut.cpp
 g_docked.o:    $(HEADERS) gauge.h terminal.h g_docked.h g_docked.cpp
 g_groundins.o: $(HEADERS) gauge.h terminal.h g_groundins.h g_groundins.cpp
 g_ins.o:       $(HEADERS) gauge.h terminal.h g_ins.h g_ins.cpp
+g_lamps.o:     $(HEADERS) gauge.h terminal.h g_lamps.h g_lamps.cpp
 g_landed.o:    $(HEADERS) gauge.h terminal.h g_landed.h g_landed.cpp
 g_lmfuel.o:    $(HEADERS) gauge.h terminal.h g_lmfuel.h g_lmfuel.cpp
 g_lmrock.o:    $(HEADERS) gauge.h terminal.h g_lmrock.h g_lmrock.cpp
@@ -181,7 +199,11 @@ g_evaprep.o:   $(HEADERS) gauge.h terminal.h g_evaprep.h g_evaprep.cpp
 g_oxybat.o:    $(HEADERS) gauge.h terminal.h g_oxybat.h g_oxybat.cpp
 g_pilot.o:     $(HEADERS) gauge.h terminal.h g_pilot.h g_pilot.cpp
 g_pilotloc.o:  $(HEADERS) gauge.h terminal.h g_pilotloc.h g_pilotloc.cpp
+g_precaxis.o:  $(HEADERS) gauge.h terminal.h g_axis.h g_precaxis.h g_precaxis.cpp
 g_rcs.o:       $(HEADERS) gauge.h terminal.h g_rcs.h g_rcs.cpp
 g_radars.o:    $(HEADERS) gauge.h terminal.h g_radars.h g_radars.cpp
 g_throttle.o:  $(HEADERS) gauge.h terminal.h g_throttle.h g_throttle.cpp
+
+mission.o:     $(HEADERS) mission.h mission.cpp
+planner.o:     $(HEADERS) mission.h planner.cpp
 

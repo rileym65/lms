@@ -3,18 +3,29 @@
 #include "header.h"
 
 void MissionReport() {
+  Int32 i;
   char  buffer[128];
+  char  buffer2[128];
+  char  buffer3[128];
   FILE* file;
   file = stdout;
   fprintf(file,"Mission Time Line:%s",LE);
-  fprintf(file,"  Undock MET   : %s%s",ClockToString(buffer,0),LE);
-  fprintf(file,"  Landed MET   : %s%s",ClockToString(buffer,landedMet),LE);
-  fprintf(file,"  Liftoff MET  : %s%s",ClockToString(buffer,liftoffMet),LE);
-  fprintf(file,"  Docking MET  : %s%s",ClockToString(buffer,clockMi),LE);
+  fprintf(file,"  Undock UTC    : %s%s",ClockToString(buffer,clockUd),LE);
+  if (clockDOI != 0)
+    fprintf(file,"  DOI Burn      : %s%s",ClockToString(buffer,clockDOI),LE);
+  if (clockPDI != 0)
+    fprintf(file,"  PDI Burn      : %s%s",ClockToString(buffer,clockPDI),LE);
+  fprintf(file,"  Landed MET    : %s%s",ClockToString(buffer,landedMet),LE);
+  for (i=0; i<evaCount; i++) {
+    fprintf(file,"  EVA #%2d Start : %s%s",i+1,ClockToString(buffer,evas[i].start),LE);
+    fprintf(file,"  EVA #%2d End   : %s%s",i+1,ClockToString(buffer,evas[i].end),LE);
+    }
+  fprintf(file,"  Liftoff MET   : %s%s",ClockToString(buffer,liftoffMet),LE);
+  fprintf(file,"  Docking MET   : %s%s",ClockToString(buffer,clockMi),LE);
   fprintf(file,"%s",LE);
   fprintf(file,"Landing:%s",LE);
-  fprintf(file,"  Target Longitude      : %.2f%s",targetLongitude,LE);
-  fprintf(file,"  Target Latitude       : %.2f%s",targetLatitude,LE);
+  fprintf(file,"  Target Longitude      : %.2f%s",mission->TargetLongitude(),LE);
+  fprintf(file,"  Target Latitude       : %.2f%s",mission->TargetLatitude(),LE);
   fprintf(file,"  Landed Longitude      : %.2f%s",landedLongitude,LE);
   fprintf(file,"  Landed Latitude       : %.2f%s",landedLatitude,LE);
   fprintf(file,"  Vertial Velocity      : %.2f%s",landedVVel,LE);
@@ -29,6 +40,15 @@ void MissionReport() {
   fprintf(file,"  Farthest from LM   : %.2fkm%s",farthest/1000.0,LE);
   fprintf(file,"  Distance Walked    : %.2fkm%s",plss->Walked()/1000.0,LE);
   fprintf(file,"  Distance Driven    : %.2fkm%s",lrv->Driven()/1000.0,LE);
+  fprintf(file,"  EVA details:%s",LE);
+  fprintf(file,"     #     start       end   duration   walked   driven  farthest  samples%s",LE);
+  for (i=0; i<evaCount; i++)
+    fprintf(file,"    %2d %8s %8s  %8s %6.2fkm %6.2fkm  %6.2fkm   %3d%s",
+      i+1,ClockToString(buffer,evas[i].start),
+      ClockToString(buffer2,evas[i].end),
+      ClockToString(buffer3,evas[i].end-evas[i].start),
+      evas[i].walked/1000.0,evas[i].driven/1000.0,evas[i].farthest/1000.0,
+      evas[i].samples,LE);
   fprintf(file,"%s",LE);
   fprintf(file,"Samples:%s",LE);
   fprintf(file,"  Total Samples collected: %d%s",lm->Rock(),LE);

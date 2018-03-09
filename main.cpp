@@ -47,6 +47,7 @@ Vector t;
   clockMi = 0;
   clockOr = 0;
   clockUt = (8 * 3600) + (30 * 60);
+  clockUd = 0;
   clockTe = 0;
   evaCount = 0;
   longestEVA = 0;
@@ -59,8 +60,8 @@ Vector t;
   landingRadarOn = 0;
   metabolicRate = 30.0;
   numSamples = 0;
-  targetLatitude = 0.0;
-  targetLongitude = 0.0;
+  mission->TargetLatitude(0.0);
+  mission->TargetLongitude(0.0);
   plssOn = 0;
   plssPacks = 4;
   spaceSuitOn = 0;
@@ -91,6 +92,9 @@ Vector t;
   landedHVel = 0;
   landedVVel = 0;
   evas[0].start = 0;
+  clockDOI = 0;
+  clockPDI = 0;
+  numBurns = 0;
   }
 
 char* ClockToString(char* buffer, Int32 clock) {
@@ -167,11 +171,13 @@ void setupTargetData() {
   Double hyp;
   Double x,y,z;
   Double c,s;
-  c = -1680.226342 * cos(targetLongitude*M_PI/180);
-  s = -1680.226342 * sin(targetLongitude*M_PI/180);
-  z = sin(targetLatitude*M_PI/180);
-  x = sin(targetLongitude*M_PI/180) * cos(targetLatitude*M_PI/180);
-  y = -cos(targetLongitude*M_PI/180) * cos(targetLatitude*M_PI/180);
+  c = -1680.226342 * cos(mission->TargetLongitude()*M_PI/180);
+  s = -1680.226342 * sin(mission->TargetLongitude()*M_PI/180);
+  z = sin(mission->TargetLatitude()*M_PI/180);
+  x = sin(mission->TargetLongitude()*M_PI/180) *
+      cos(mission->TargetLatitude()*M_PI/180);
+  y = -cos(mission->TargetLongitude()*M_PI/180) *
+       cos(mission->TargetLatitude()*M_PI/180);
   targetPos = Vector(x*GROUND,y*GROUND,z*GROUND);
   targetVel = Vector(c,s,0);
   L = targetVel.Cross(targetPos).Norm();
@@ -207,6 +213,7 @@ void test() {
 int main(int argc, char** argv) {
   int key;
   char buffer[64];
+  Double d;
   simSpeed = 100000;
   printf("\n\n\n\n");
   printf("%s\n",TITLE);
@@ -218,20 +225,23 @@ int main(int argc, char** argv) {
   ins = new INS();
   seq = new Sequencer();
   map = new Map();
+  mission = new Mission();
   setup();
   if (load((char*)"lms.sav") == 0) {
-    targetLatitude = -9999.99;
-    while (targetLatitude <-90 || targetLatitude > 90) {
+    d = -9999.99;
+    while (d <-90 || d > 90) {
       printf("Target latitude: ");
       fgets(buffer,64,stdin);
-      sscanf(buffer,"%lf",&targetLatitude);
+      sscanf(buffer,"%lf",&d);
       }
-    targetLongitude = -9999.99;
-    while (targetLongitude <-180 || targetLongitude > 180) {
+    mission->TargetLatitude(d);
+    d = -9999.99;
+    while (d <-180 || d > 180) {
       printf("Target longitude: ");
       fgets(buffer,64,stdin);
-      sscanf(buffer,"%lf",&targetLongitude);
+      sscanf(buffer,"%lf",&d);
       }
+    mission->TargetLongitude(d);
     }
   setupTargetData();
   OpenTerminal();
@@ -334,6 +344,7 @@ int main(int argc, char** argv) {
   delete(csm);
   delete(lm);
   delete(seq);
+  delete(mission);
   return 0;
   }
 
