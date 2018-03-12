@@ -54,6 +54,7 @@ void save() {
   fprintf(file,"  SampleRise %d%s",sampleRise,LE);
   fprintf(file,"  SamplePlains %d%s",samplePlains,LE);
   fprintf(file,"  SampleSpecial %d%s",sampleSpecial,LE);
+  fprintf(file,"  SampleDepression %d%s",sampleDepression,LE);
   fprintf(file,"  LrvSampleSmallRock %d%s",lrvSampleSmallRock,LE);
   fprintf(file,"  LrvSampleMediumRock %d%s",lrvSampleMediumRock,LE);
   fprintf(file,"  LrvSampleLargeRock %d%s",lrvSampleLargeRock,LE);
@@ -63,6 +64,7 @@ void save() {
   fprintf(file,"  LrvSampleRise %d%s",lrvSampleRise,LE);
   fprintf(file,"  LrvSamplePlains %d%s",lrvSamplePlains,LE);
   fprintf(file,"  LrvSampleSpecial %d%s",lrvSampleSpecial,LE);
+  fprintf(file,"  LrvSampleDepression %d%s",lrvSampleDepression,LE);
   for (i=0; i<numSamples; i++)
     fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
   fprintf(file,"  }%s",LE);

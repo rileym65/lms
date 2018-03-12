@@ -275,6 +275,9 @@ char Map::Lurrain(Int32 cellX, Int32 cellY) {
   if (i >=  6 && i <= 10) return 'o';
   if (i >= 11 && i <= 12) return 'O';
   if (i >= 13 && i <= 15) return '*';
+  if (i >= 16 && i <= 18) return '+';
+  if (i >= 19 && i <= 20) return ',';
+  if (i >= 21 && i <= 21) return 'u';
   return ' ';
   }
 

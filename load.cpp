@@ -119,6 +119,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"samplerise ")) sampleRise = atoi(nw(pline));
     else if (startsWith(pline,"sampleplains ")) samplePlains = atoi(nw(pline));
     else if (startsWith(pline,"samplespecial ")) sampleSpecial = atoi(nw(pline));
+    else if (startsWith(pline,"sampledepression ")) sampleDepression = atoi(nw(pline));
 
     else if (startsWith(pline,"lrvsamplesmallrock ")) lrvSampleSmallRock = atoi(nw(pline));
     else if (startsWith(pline,"lrvsamplemediumrock ")) lrvSampleMediumRock = atoi(nw(pline));
@@ -129,6 +130,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"lrvsamplerise ")) lrvSampleRise = atoi(nw(pline));
     else if (startsWith(pline,"lrvsampleplains ")) lrvSamplePlains = atoi(nw(pline));
     else if (startsWith(pline,"lrvsamplespecial ")) lrvSampleSpecial = atoi(nw(pline));
+    else if (startsWith(pline,"lrvsampledepression ")) lrvSampleDepression = atoi(nw(pline));
     else if (startsWith(pline,"sample ")) {
       pline = nw(pline);
       sscanf(pline,"%d,%d",&samples[numSamples].cellX,&samples[numSamples].cellY);

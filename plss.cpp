@@ -120,28 +120,28 @@ void Plss::ProcessKey(Int32 key) {
   lmPos = (position-lm->Position()).Length();
   if (lrv->IsSetup()) lrvPos = (position-lrv->Position()).Length();
     else lrvPos = 99999;
-  if (key == 'm') {
+  if (key == 'm' && throttle == 0) {
     if (lmPos < 40) seq->EndEva();
     }
-  if (key == 'M' && lrvPos < 40 && carrying == ' ') {
+  if (key == 'M' && lrvPos < 40 && carrying == ' ' && throttle == 0) {
     seq->MoveLrv();
     }
-  if (key == 'R') {
+  if (key == 'R' && throttle == 0) {
     if (carrying == ' ') seq->TakeSample();
     if (carrying == 'B' && lrvPos < 40) seq->BoxToLrv();
     if (carrying == 'R' && lrvPos < 40 && lrv->Rock() < 30 && lrv->Boxes() > 0)
        seq->StoreSample();
     }
-  if (key == 'B') {
+  if (key == 'B' && throttle == 0) {
     if (carrying == ' ' && lrvPos < 40 && lrv->Boxes() > 0) seq->BoxToPlss();
     if (carrying == 'B' && lmPos < 40 && lrv->Boxes() > 0) seq->BoxToLm();
     if (carrying == 'R') seq->DropSample();
     }
-  if (key == 'L' &&
+  if (key == 'L' && throttle == 0 &&
       (position - lm->Position()).Length() < 40 &&
       !lrv->IsSetup())
     seq->SetupLrv();
-  if (key == 'F') {
+  if (key == 'F' && throttle == 0) {
     if (carrying == ' ' && lmPos <= 40 && flagPlanted == 0) seq->GetFlag();
     if (carrying == 'F' && lmPos >= 50) seq->PlantFlag();
     }

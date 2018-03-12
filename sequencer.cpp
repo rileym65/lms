@@ -113,6 +113,7 @@ void Sequencer::Complete() {
            case '+': plss->Value(1.4); sampleType = S_MEDIUM_ROCK; break;
            case '*': plss->Value(1.6); sampleType = S_LARGE_ROCK; break;
            case '^': plss->Value(2.0); sampleType = S_RISE; break;
+           case 'u': plss->Value(2.0); sampleType = S_DEPRESSION; break;
            case ' ': plss->Value(0.5); sampleType = S_PLAINS; break;
            default : plss->Value(0.5); sampleType = 0; break;
            }
@@ -154,6 +155,7 @@ void Sequencer::Complete() {
            case S_RISE: lrvSampleRise++; break;
            case S_PLAINS: lrvSamplePlains++; break;
            case S_SPECIAL: lrvSampleSpecial++; break;
+           case S_DEPRESSION: lrvSampleDepression++; break;
            }
          evas[evaCount-1].samples++;
          break;
@@ -176,6 +178,7 @@ void Sequencer::Complete() {
          sampleRise += lrvSampleRise;
          samplePlains += lrvSamplePlains;
          sampleSpecial += lrvSampleSpecial;
+         sampleDepression += lrvSampleDepression;
          lrvSampleSmallRock = 0;
          lrvSampleMediumRock = 0;
          lrvSampleLargeRock = 0;
@@ -185,6 +188,7 @@ void Sequencer::Complete() {
          lrvSampleRise = 0;
          lrvSamplePlains = 0;
          lrvSampleSpecial = 0;
+         lrvSampleDepression = 0;
          break;
     case SEQ_BOXLRV:
          plss->Carrying(' ');
