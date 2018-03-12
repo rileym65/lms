@@ -66,7 +66,8 @@ void fillMapH() {
 void fillMapM() {
   Int32 x,y;
   Double dx,dy;
-  Int32 i,j;
+  Int32 i;
+  UInt32 j;
   Double l;
   char n[8];
   for (i=-3; i<=3; i++) {
@@ -100,8 +101,8 @@ void fillMapM() {
 void fillMapL() {
   Int32 x,y;
   Int32 cellX,cellY;
-  Double dx,dy;
-  Int32 i,j;
+  Int32 i;
+  UInt32 j;
   Double l;
   char n[8];
   for (i=-3; i<=3; i++) {
@@ -134,7 +135,7 @@ void fillMapL() {
 
 int main(int argc, char** argv) {
   FILE *file;
-  Int32 x,y;
+  Int32 y;
   char line[1024];
   char mode;
   map = new Map();

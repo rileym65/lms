@@ -27,7 +27,8 @@ class Map {
     void drawFeature(Double longitude, Double latitude, Double diameter, char ch);
     void drawMare(Double longitude, Double latitude, Double diameter, char ch);
     void drawRill(Double longitude, Double latitude, Double diameter, char ch);
-    void readFeatures();
+    void loadFeatures(char* filename);
+    void generateLevelHMap();
     void seed(UInt32 s);
     Int32 random(UInt32 range);
     void generateLevelMMap(Double longitude,Double latitude);

@@ -17,7 +17,9 @@ Map::Map() {
   for (y=0; y<61; y++)
     for (x=0; x<61; x++)
        levelM[y][x] = '_';
-  readFeatures();
+  loadFeatures("lunarref.txt");
+  loadFeatures("userref.txt");
+  generateLevelHMap();
   seed(1);
   for (y=-90; y<=90; y++)
     for (x=-180; x<=180; x++)
@@ -151,25 +153,22 @@ void Map::drawFeature(Double longitude, Double latitude, Double diameter,char ch
     }
   }
 
-void Map::readFeatures() {
+void Map::loadFeatures(char* filename) {
   FILE* file;
   char  line[1024];
   char  name[100];
   Double lng;
   Double lat;
   Double diam;
-  Int32  ilng;
-  Int32  ilat;
   Int32  cellX;
   Int32  cellY;
   char   symbol[64];
-  file = fopen("lunarref.txt","r");
+  file = fopen(filename,"r");
+  if (file == NULL) return;
   while (fgets(line,1024,file) != NULL) {
     sscanf(line,"%[^,], %lf, %lf, %lf, %1s",name,&lat,&lng,&diam,symbol);
     cellX = Cell(lng);
     cellY = Cell(lat);
-    ilng = (int)lng;
-    ilat = (int)lat;
     numFeatures++;
     if (numFeatures == 1) features = (FEATURE*)malloc(sizeof(FEATURE));
       else features = (FEATURE*)realloc(features,sizeof(FEATURE)*numFeatures);
@@ -184,46 +183,63 @@ void Map::readFeatures() {
     features[numFeatures-1].symbol = symbol[0];
     features[numFeatures-1].cellX = cellX;
     features[numFeatures-1].cellY = cellY;
+    }
+  fclose(file);
+  }
 
-
-    if (strncasecmp(line,"Crater ",7) == 0) {
-      if (diam < 5) levelH[ilat+90][ilng+180] = '.';
+void Map::generateLevelHMap() {
+  Int32  i;
+  Double lng;
+  Double lat;
+  Double diam;
+  Int32  ilng;
+  Int32  ilat;
+  Int32  cellX;
+  Int32  cellY;
+  char   symbol[64];
+  for (i=0; i<numFeatures; i++) {
+    lng = features[i].longitude;
+    lat = features[i].latitude;
+    diam = features[i].diameter;
+    ilng = (int)features[i].longitude;
+    ilat = (int)features[i].latitude;
+    if (strncasecmp(features[i].name,"Crater ",7) == 0) {
+      if (diam< 5) levelH[ilat+90][ilng+180] = '.';
       else if (diam < 15) levelH[ilat+90][ilng+180] = 'o';
       else if (diam < 60) levelH[ilat+90][ilng+180] = 'O';
       else drawCrater(lng,lat,diam);
       }
-    if (strncasecmp(line,"Mare ",5) == 0) {
+    if (strncasecmp(features[i].name,"Mare ",5) == 0) {
       drawMare(lng,lat,diam,' ');
       }
-    if (strncasecmp(line,"Rima ",5) == 0) {
+    if (strncasecmp(features[i].name,"Rima ",5) == 0) {
       drawRill(lng,lat,diam,'/');
       }
-    if (strncasecmp(line,"Rimae ",6) == 0) {
+    if (strncasecmp(features[i].name,"Rimae ",6) == 0) {
       drawRill(lng,lat,diam,'#');
       }
-    if (strncasecmp(line,"Lacus ",6) == 0) {
+    if (strncasecmp(features[i].name,"Lacus ",6) == 0) {
       drawMare(lng,lat,diam,' ');
       }
-    if (strncasecmp(line,"Mons ",5) == 0) {
+    if (strncasecmp(features[i].name,"Mons ",5) == 0) {
       drawFeature(lng,lat,diam,'^');
       }
-    if (strncasecmp(line,"Montes ",7) == 0) {
+    if (strncasecmp(features[i].name,"Montes ",7) == 0) {
       drawMare(lng,lat,diam,'^');
       }
-    if (strncasecmp(line,"Vallis ",7) == 0) {
+    if (strncasecmp(features[i].name,"Vallis ",7) == 0) {
       drawMare(lng,lat,diam,' ');
       }
-    if (strncasecmp(line,"Promontorium ",13) == 0) {
+    if (strncasecmp(features[i].name,"Promontorium ",13) == 0) {
       drawFeature(lng,lat,diam,'~');
       }
-    if (strncasecmp(line,"Palus ",6) == 0 ||
-        strncasecmp(line,"Sinus ",6) == 0) {
+    if (strncasecmp(features[i].name,"Palus ",6) == 0 ||
+        strncasecmp(features[i].name,"Sinus ",6) == 0) {
       drawMare(lng,lat,diam,' ');
       }
-    if (strncasecmp(line,"Feature ",8) == 0) {
+    if (strncasecmp(features[i].name,"Feature ",8) == 0) {
       }
     }
-  fclose(file);
   }
 
 void Map::generateLevelMMap(Double longitude,Double latitude) {
