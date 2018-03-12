@@ -1,5 +1,7 @@
 #define MAIN
 
+#include <stdio.h>
+#include <string.h>
 #include "header.h"
 #include "terminal.h"
 
@@ -214,6 +216,7 @@ int main(int argc, char** argv) {
   int key;
   char buffer[64];
   Double d;
+  FILE* file;
   simSpeed = 100000;
   printf("\n\n\n\n");
   printf("%s\n",TITLE);
@@ -339,8 +342,24 @@ int main(int argc, char** argv) {
             landedVVel,landedHVel);
     printf("This exceeds the tolerance of the spacecraft.  As a\n");
     printf("result the spacecraft has been destroyed.\n\n");
+    file = fopen("userref.txt","a+");
+    fprintf(file,"Feature Wreckage,       %10.4f, %10.4f, 0, &%s",
+      lm->Latitude(), lm->Longitude(),LE);
+    fclose(file);
     }
-  if (endReason == END_MISSION) MissionReport();
+  if (endReason == END_MISSION) {
+    MissionReport();
+    file = fopen("userref.txt","a+");
+    fprintf(file,"Feature Descent Module, %10.4f, %10.4f, 0, =%s",
+      landedLatitude, landedLongitude,LE);
+    if (lrv->IsSetup()) 
+      fprintf(file,"Feature Rover,          %10.4f, %10.4f, 0, %%%s",
+        lrv->Latitude(), lrv->Longitude(),LE);
+    if (flagPlanted) 
+      fprintf(file,"Feature Flag,           %10.4f, %10.4f, 0, f%s",
+        flagLatitude, flagLongitude,LE);
+    fclose(file);
+    }
   delete(csm);
   delete(lm);
   delete(seq);

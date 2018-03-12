@@ -384,6 +384,16 @@ void LunarModule::ProcessKey(Int32 key) {
       if (oxygen > ASC_OXYGEN) oxygen = ASC_OXYGEN;
       if (battery > ASC_BATTERY) battery = ASC_BATTERY;
       liftoffMet = clockMi;
+      numBurns++;
+      burn[numBurns-1].start = clockMi;
+      if (descentJettisoned) {
+        burn[numBurns-1].fuelUsed = ascentFuel;
+        burn[numBurns-1].engine = 'A';
+        }
+      else {
+        burn[numBurns-1].fuelUsed = descentFuel;
+        burn[numBurns-1].engine = 'D';
+        }
       }
     }
   if (!docked) {

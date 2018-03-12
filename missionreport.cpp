@@ -36,12 +36,13 @@ void MissionReport() {
   fprintf(file,"  Number of EVAs     : %d%s",evaCount,LE);
   fprintf(file,"  Longest EVA        : %s%s",ClockToString(buffer,longestEVA),LE);
   fprintf(file,"  Total EVA Time     : %s%s",ClockToString(buffer,clockTe),LE);
-  fprintf(file,"  Averaga EVA time   : %s%s",ClockToString(buffer,clockTe/evaCount),LE);
+  fprintf(file,"  Average EVA time   : %s%s",ClockToString(buffer,clockTe/evaCount),LE);
   fprintf(file,"  Farthest from LM   : %.2fkm%s",farthest/1000.0,LE);
   fprintf(file,"  Distance Walked    : %.2fkm%s",plss->Walked()/1000.0,LE);
   fprintf(file,"  Distance Driven    : %.2fkm%s",lrv->Driven()/1000.0,LE);
   fprintf(file,"  EVA details:%s",LE);
   fprintf(file,"     #     start       end   duration   walked   driven  farthest  samples%s",LE);
+  fprintf(file,"    ----------------------------------------------------------------------%s",LE);
   for (i=0; i<evaCount; i++)
     fprintf(file,"    %2d %8s %8s  %8s %6.2fkm %6.2fkm  %6.2fkm   %3d%s",
       i+1,ClockToString(buffer,evas[i].start),
@@ -51,7 +52,7 @@ void MissionReport() {
       evas[i].samples,LE);
   fprintf(file,"%s",LE);
   fprintf(file,"Samples:%s",LE);
-  fprintf(file,"  Total Samples collected: %d%s",lm->Rock(),LE);
+  fprintf(file,"  Total Samples Collected: %d%s",lm->Rock(),LE);
   fprintf(file,"  Samples collected from:%s",LE);
   fprintf(file,"    Small Rock          : %d%s",sampleSmallRock,LE);
   fprintf(file,"    Medium Rock         : %d%s",sampleMediumRock,LE);
@@ -61,5 +62,22 @@ void MissionReport() {
   fprintf(file,"    Large Crater        : %d%s",sampleLargeCrater,LE);
   fprintf(file,"    Plains              : %d%s",samplePlains,LE);
   fprintf(file,"    Rises               : %d%s",sampleRise,LE);
+  fprintf(file,"    Depressions         : %d%s",sampleDepression,LE);
+  fprintf(file,"    Special             : %d%s",sampleSpecial,LE);
+  fprintf(file,"%s",LE);
+  fprintf(file,"Main Engine Burns:%s",LE);
+  fprintf(file,"    Start       End    Duration    Fuel   Engine%s",LE);
+  fprintf(file,"     MET        MET                 kg          %s",LE);
+  fprintf(file,"  -----------------------------------------------%s",LE);
+  for (i=0; i<numBurns; i++) {
+    fprintf(file,"  %8s %8s %8s %8.2f  ",
+      ClockToString(buffer,burn[i].start),
+      ClockToString(buffer2,burn[i].end),
+      ClockToString(buffer3,burn[i].end-burn[i].start),
+      burn[i].fuelUsed);
+    if (burn[i].engine == 'D') printf("Descent%s",LE);
+      else printf("Ascent%s",LE);
+    }
+  
   }
 
