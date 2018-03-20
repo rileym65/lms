@@ -34,6 +34,43 @@ Map::Map() {
 Map::~Map() {
   }
 
+void Map::loadFeatures(const char* filename) {
+  FILE* file;
+  char  line[1024];
+  char  name[100];
+  Double lng;
+  Double lat;
+  Double diam;
+  Int32  cellX;
+  Int32  cellY;
+  char   symbol[64];
+  file = fopen(filename,"r");
+  if (file == NULL) return;
+  while (fgets(line,1024,file) != NULL) {
+    sscanf(line,"%[^,], %lf, %lf, %lf, %1s",name,&lat,&lng,&diam,symbol);
+    cellX = Cell(lng);
+    cellY = Cell(lat);
+    numFeatures++;
+    if (numFeatures == 1) features = (FEATURE*)malloc(sizeof(FEATURE));
+      else features = (FEATURE*)realloc(features,sizeof(FEATURE)*numFeatures);
+    if (features == NULL) {
+      printf("Could not allocate needed memory. aborting\n");
+      exit(1);
+      }
+    strcpy(features[numFeatures-1].name, name);
+    features[numFeatures-1].longitude = lng;
+    features[numFeatures-1].latitude = lat;
+    features[numFeatures-1].diameter = diam;
+    features[numFeatures-1].symbol = symbol[0];
+    features[numFeatures-1].cellX = cellX;
+    features[numFeatures-1].cellY = cellY;
+    }
+  fclose(file);
+  }
+
+/* ****************************************************** */
+/* ***** Routines for generating high altitude maps ***** */
+/* ****************************************************** */
 void Map::drawCrater(Double longitude, Double latitude, Double diameter) {
   Double x,y;
   Double radius;
@@ -153,40 +190,6 @@ void Map::drawFeature(Double longitude, Double latitude, Double diameter,char ch
     }
   }
 
-void Map::loadFeatures(char* filename) {
-  FILE* file;
-  char  line[1024];
-  char  name[100];
-  Double lng;
-  Double lat;
-  Double diam;
-  Int32  cellX;
-  Int32  cellY;
-  char   symbol[64];
-  file = fopen(filename,"r");
-  if (file == NULL) return;
-  while (fgets(line,1024,file) != NULL) {
-    sscanf(line,"%[^,], %lf, %lf, %lf, %1s",name,&lat,&lng,&diam,symbol);
-    cellX = Cell(lng);
-    cellY = Cell(lat);
-    numFeatures++;
-    if (numFeatures == 1) features = (FEATURE*)malloc(sizeof(FEATURE));
-      else features = (FEATURE*)realloc(features,sizeof(FEATURE)*numFeatures);
-    if (features == NULL) {
-      printf("Could not allocate needed memory. aborting\n");
-      exit(1);
-      }
-    strcpy(features[numFeatures-1].name, name);
-    features[numFeatures-1].longitude = lng;
-    features[numFeatures-1].latitude = lat;
-    features[numFeatures-1].diameter = diam;
-    features[numFeatures-1].symbol = symbol[0];
-    features[numFeatures-1].cellX = cellX;
-    features[numFeatures-1].cellY = cellY;
-    }
-  fclose(file);
-  }
-
 void Map::generateLevelHMap() {
   Int32  i;
   Double lng;
@@ -242,12 +245,94 @@ void Map::generateLevelHMap() {
     }
   }
 
+/* ******************************************************** */
+/* ***** Routines for generating medium altitude maps ***** */
+
+/* ******************************************************** */
+void Map::drawCraterMedium(Double longitude, Double latitude, Double diameter) {
+  Double x,y;
+  Double radius;
+  Int32  ix,iy;
+  Int32  cx,cy;
+  Int32  i;
+  cx = 180 + (int)longitude;
+  cy = 90 - (int)latitude;
+  radius = diameter / 2;
+  x = radius;
+  radius *= radius;
+  while (x >= 0) {
+    y = sqrt(radius - x*x);
+    ix = (int)(x / 30.0);
+    iy = (int)(y / 30.0);
+    for (i=cx-ix; i<=cx+ix; i++) {
+      if (cy+iy >= 0 && cy+iy <= 180 && i >= 0 && i <= 360) {
+        if (i == cx-ix || i == cx+ix) levelH[cy+iy][i] = '(';
+          else if (levelH[cy+iy][i] != '^' &&
+                   levelH[cy+iy][i] != '.' &&
+                   levelH[cy+iy][i] != 'o' &&
+                   levelH[cy+iy][i] != 'O') levelH[cy+iy][i] = ' ';
+        }
+      if (cy-iy >= 0 && cy-iy <= 180 && i >= 0 && i <= 360) {
+        if (i == cx-ix || i == cx+ix) levelH[cy-iy][i] = '(';
+          else if (levelH[cy-iy][i] != '^' &&
+                   levelH[cy-iy][i] != '.' &&
+                   levelH[cy-iy][i] != 'o' &&
+                   levelH[cy-iy][i] != 'O') levelH[cy-iy][i] = ' ';
+        }
+      }
+    x -= 5;
+    }
+  }
+
 void Map::generateLevelMMap(Double longitude,Double latitude) {
+  Int32  i;
+  Double lng;
+  Double lat;
+  Double diam;
+  Double dist;
+  Int32  ilng;
+  Int32  ilat;
+  Int32  cellX;
+  Int32  cellY;
   Int32 x,y;
   for (y=0; y<=61; y++)
     for (x=0; x<=61; x++)
        levelM[y][x] = '_';
 
+  char   symbol[64];
+  for (i=0; i<numFeatures; i++) {
+    lng = features[i].longitude;
+    lat = features[i].latitude;
+    diam = (features[i].diameter * 1000.0) / METERS;
+    dist = sqrt(sqr(longitude-lng) + sqr(latitude-lat));
+printf("%f - %f =  %f\n",dist,diam,dist - diam);
+    ilng = (int)features[i].longitude;
+    ilat = (int)features[i].latitude;
+    if (strncasecmp(features[i].name,"Crater ",7) == 0) {
+      drawCraterMedium(lng,lat,diam);
+      }
+    if (strncasecmp(features[i].name,"Mare ",5) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Rima ",5) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Rimae ",6) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Lacus ",6) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Mons ",5) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Montes ",7) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Vallis ",7) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Promontorium ",13) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Palus ",6) == 0 ||
+        strncasecmp(features[i].name,"Sinus ",6) == 0) {
+      }
+    if (strncasecmp(features[i].name,"Feature ",8) == 0) {
+      }
+    }
 
   lastLongitude = longitude;
   lastLatitude = latitude;

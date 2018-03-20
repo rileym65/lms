@@ -25,7 +25,7 @@ void G_AmsMessage::Display() {
 void G_AmsMessage::Update() {
   Int32 i;
   if (strcmp(seq->Message(),lastMessage) != 0) {
-    GotoXY(x,y); printf("%s",seq->Message());
+    GotoXY(x,y); printf("%s:",seq->Message());
     strcpy(lastMessage,seq->Message());
     }
   if (seq->Time() != lastSeqTime) {

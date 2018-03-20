@@ -180,6 +180,10 @@ extern char*  nw(char* buffer);
 extern void   save();
 extern Double sgn(Double d);
 extern Int8   startsWith(char* buffer, const char* check);
+extern Double sqr(Double d);
+extern Double distance(Double lng1, Double lat1, Double lng2, Double lat2);
+
+
 
 
 #endif

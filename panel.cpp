@@ -37,6 +37,7 @@
 #include "g_maplarge.h"
 #include "g_mapmed.h"
 #include "g_multiaxis.h"
+#include "g_orbitlarge.h"
 #include "g_oxybat.h"
 #include "g_pilot.h"
 #include "g_pilotloc.h"
@@ -157,6 +158,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_MapMed(x1, y1, false, vehicle));
       else if (strcasecmp(str,"multiaxis") == 0)
         addGauge(new G_MultiAxis(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"orbitlarge") == 0)
+        addGauge(new G_OrbitLarge(x1, y1, false, vehicle));
       else if (strcasecmp(str,"oxygenbattery") == 0)
         addGauge(new G_OxyBat(x1, y1, false, vehicle));
       else if (strcasecmp(str,"pilot") == 0)

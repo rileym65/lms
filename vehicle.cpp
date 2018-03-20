@@ -223,21 +223,21 @@ Double Vehicle::VelocityEast() {
   west = Vector(position.Y(), -position.X(), position.Z()).Norm();
   west = Vector(position.Y(), -position.X(), 0.0).Norm();
   vel = -(v.Dot(west.Norm()) * velocity.Length());
-GotoXY(1,25); printf("West: %f %f %f\n",west.X(),west.Y(),west.Z());
-GotoXY(1,26); printf("Vel :%f %f %f\n",v.X(),v.Y(),v.Z());
-GotoXY(1,27); printf("Vel east:%.18f\n",vel);
+// GotoXY(1,25); printf("West: %f %f %f\n",west.X(),west.Y(),west.Z());
+// GotoXY(1,26); printf("Vel :%f %f %f\n",v.X(),v.Y(),v.Z());
+// GotoXY(1,27); printf("Vel east:%.18f\n",vel);
 
   north = Vector(0,0,1);
   vel = (v.Dot(north.Norm()) * velocity.Length());
-GotoXY(1,28); printf("North: %f %f %f\n",north.X(),north.Y(),north.Z());
-GotoXY(1,29); printf("Vel North: %.18f\n",vel);
+// GotoXY(1,28); printf("North: %f %f %f\n",north.X(),north.Y(),north.Z());
+// GotoXY(1,29); printf("Vel North: %.18f\n",vel);
 
   alt = v.Cross(position.Norm()).Norm();
   alt = alt.Cross(v).Norm();
   vel = (v.Dot(alt) * velocity.Length());
-GotoXY(1,30); printf("Alt: %f %f %f\n",alt.X(),alt.Y(),alt.Z());
-GotoXY(1,31); printf("Vel :%f %f %f\n",v.X(),v.Y(),v.Z());
-GotoXY(1,32); printf("Vel Alt: %.18f\n",vel);
+// GotoXY(1,30); printf("Alt: %f %f %f\n",alt.X(),alt.Y(),alt.Z());
+// GotoXY(1,31); printf("Vel :%f %f %f\n",v.X(),v.Y(),v.Z());
+// GotoXY(1,32); printf("Vel Alt: %.18f\n",vel);
 
   return velocityEast;
 

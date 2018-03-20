@@ -27,10 +27,11 @@ class Map {
     void drawFeature(Double longitude, Double latitude, Double diameter, char ch);
     void drawMare(Double longitude, Double latitude, Double diameter, char ch);
     void drawRill(Double longitude, Double latitude, Double diameter, char ch);
-    void loadFeatures(char* filename);
+    void loadFeatures(const char* filename);
     void generateLevelHMap();
     void seed(UInt32 s);
     Int32 random(UInt32 range);
+    void drawCraterMedium(Double longitude, Double latitude, Double diameter);
     void generateLevelMMap(Double longitude,Double latitude);
   public:
     Map();

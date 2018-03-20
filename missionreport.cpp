@@ -28,6 +28,9 @@ void MissionReport() {
   fprintf(file,"  Target Latitude       : %.2f%s",mission->TargetLatitude(),LE);
   fprintf(file,"  Landed Longitude      : %.2f%s",landedLongitude,LE);
   fprintf(file,"  Landed Latitude       : %.2f%s",landedLatitude,LE);
+  fprintf(file,"  Distance From Target  : %.2f%s",
+    distance(landedLongitude,landedLatitude,mission->TargetLongitude(),
+             mission->TargetLatitude()),LE);
   fprintf(file,"  Vertial Velocity      : %.2f%s",landedVVel,LE);
   fprintf(file,"  Horizontal Velocity   : %.2f%s",landedHVel,LE);
   fprintf(file,"  Descent Fuel Remaining: %.2f%s",lm->DescentFuel(),LE);

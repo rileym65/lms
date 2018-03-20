@@ -30,6 +30,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_maplarge.h \
            g_mapmed.h \
            g_multiaxis.h \
+           g_orbitlarge.h \
            g_oxybat.h \
            g_pilot.h \
            g_pilotloc.h \
@@ -74,6 +75,7 @@ OBJS = \
         g_lmfuel.o \
         g_lmrock.o \
 	g_multiaxis.o \
+	g_orbitlarge.o \
 	g_oxybat.o \
 	g_pilot.o \
 	g_pilotloc.o \
@@ -104,6 +106,7 @@ OBJS = \
 	main.o
 
 MOBJS = \
+	helpers.o \
 	lfsr.o \
 	map.o \
 	random.o \
@@ -162,47 +165,48 @@ terminal.o:      $(HEADERS) terminal.cpp
 vector.o:        $(HEADERS) vector.cpp
 vehicle.o:       $(HEADERS) vehicle.h panel.h gauge.h vehicle.cpp
 
-g_amsatt.o:    $(HEADERS) gauge.h g_amsatt.h terminal.h g_amsatt.cpp
-g_amsclocks.o: $(HEADERS) gauge.h g_amsclocks.h terminal.h g_amsclocks.cpp
-g_amscons.o:   $(HEADERS) gauge.h g_amscons.h terminal.h g_amscons.cpp
-g_amsdock.o:   $(HEADERS) gauge.h g_amsdock.h terminal.h g_amsdock.cpp
-g_amsdown.o:   $(HEADERS) gauge.h g_amsdown.h terminal.h g_amsdown.cpp
-g_amsins.o:    $(HEADERS) gauge.h g_amsins.h terminal.h g_amsins.cpp
-g_amsland.o:   $(HEADERS) gauge.h g_amsland.h terminal.h g_amsland.cpp
-g_amslm.o:     $(HEADERS) gauge.h g_amslm.h terminal.h g_amslm.cpp
-g_amslrv.o:    $(HEADERS) gauge.h g_amslrv.h terminal.h g_amslrv.cpp
-g_amsmsg.o:    $(HEADERS) gauge.h g_amsmsg.h terminal.h g_amsmsg.cpp
-g_amspilot.o:  $(HEADERS) gauge.h g_amspilot.h terminal.h g_amspilot.cpp
-g_amsplss.o:   $(HEADERS) gauge.h g_amsplss.h terminal.h g_amsplss.cpp
-g_amsseq.o:    $(HEADERS) gauge.h g_amsseq.h terminal.h g_amsseq.cpp
-g_amsspin.o:   $(HEADERS) gauge.h g_amsspin.h terminal.h g_amsspin.cpp
-g_amsstat.o:   $(HEADERS) gauge.h g_amsstat.h terminal.h g_amsstat.cpp
-g_amswest.o:   $(HEADERS) gauge.h g_amswest.h terminal.h g_amswest.cpp
-g_axis.o:      $(HEADERS) gauge.h terminal.h g_axis.h g_axis.cpp
-g_attitude.o:  $(HEADERS) gauge.h terminal.h g_attitude.h g_attitude.cpp
-g_clocks.o:    $(HEADERS) gauge.h terminal.h g_clocks.h g_clocks.cpp
-g_clockev.o:   $(HEADERS) gauge.h terminal.h g_clockev.h g_clockev.cpp
-g_clockmi.o:   $(HEADERS) gauge.h terminal.h g_clockmi.h g_clockmi.cpp
-g_clockte.o:   $(HEADERS) gauge.h terminal.h g_clockte.h g_clockte.cpp
-g_clockut.o:   $(HEADERS) gauge.h terminal.h g_clockut.h g_clockut.cpp
-g_docked.o:    $(HEADERS) gauge.h terminal.h g_docked.h g_docked.cpp
-g_groundins.o: $(HEADERS) gauge.h terminal.h g_groundins.h g_groundins.cpp
-g_ins.o:       $(HEADERS) gauge.h terminal.h g_ins.h g_ins.cpp
-g_lamps.o:     $(HEADERS) gauge.h terminal.h g_lamps.h g_lamps.cpp
-g_landed.o:    $(HEADERS) gauge.h terminal.h g_landed.h g_landed.cpp
-g_lmfuel.o:    $(HEADERS) gauge.h terminal.h g_lmfuel.h g_lmfuel.cpp
-g_lmrock.o:    $(HEADERS) gauge.h terminal.h g_lmrock.h g_lmrock.cpp
-g_maplarge.o:  $(HEADERS) gauge.h terminal.h map.h g_maplarge.h g_maplarge.cpp
-g_mapmed.o:    $(HEADERS) gauge.h terminal.h map.h g_mapmed.h g_mapmed.cpp
-g_multiaxis.o: $(HEADERS) gauge.h terminal.h map.h g_multiaxis.h g_multiaxis.cpp
-g_evaprep.o:   $(HEADERS) gauge.h terminal.h g_evaprep.h g_evaprep.cpp
-g_oxybat.o:    $(HEADERS) gauge.h terminal.h g_oxybat.h g_oxybat.cpp
-g_pilot.o:     $(HEADERS) gauge.h terminal.h g_pilot.h g_pilot.cpp
-g_pilotloc.o:  $(HEADERS) gauge.h terminal.h g_pilotloc.h g_pilotloc.cpp
-g_precaxis.o:  $(HEADERS) gauge.h terminal.h g_axis.h g_precaxis.h g_precaxis.cpp
-g_rcs.o:       $(HEADERS) gauge.h terminal.h g_rcs.h g_rcs.cpp
-g_radars.o:    $(HEADERS) gauge.h terminal.h g_radars.h g_radars.cpp
-g_throttle.o:  $(HEADERS) gauge.h terminal.h g_throttle.h g_throttle.cpp
+g_amsatt.o:     $(HEADERS) gauge.h g_amsatt.h terminal.h g_amsatt.cpp
+g_amsclocks.o:  $(HEADERS) gauge.h g_amsclocks.h terminal.h g_amsclocks.cpp
+g_amscons.o:    $(HEADERS) gauge.h g_amscons.h terminal.h g_amscons.cpp
+g_amsdock.o:    $(HEADERS) gauge.h g_amsdock.h terminal.h g_amsdock.cpp
+g_amsdown.o:    $(HEADERS) gauge.h g_amsdown.h terminal.h g_amsdown.cpp
+g_amsins.o:     $(HEADERS) gauge.h g_amsins.h terminal.h g_amsins.cpp
+g_amsland.o:    $(HEADERS) gauge.h g_amsland.h terminal.h g_amsland.cpp
+g_amslm.o:      $(HEADERS) gauge.h g_amslm.h terminal.h g_amslm.cpp
+g_amslrv.o:     $(HEADERS) gauge.h g_amslrv.h terminal.h g_amslrv.cpp
+g_amsmsg.o:     $(HEADERS) gauge.h g_amsmsg.h terminal.h g_amsmsg.cpp
+g_amspilot.o:   $(HEADERS) gauge.h g_amspilot.h terminal.h g_amspilot.cpp
+g_amsplss.o:    $(HEADERS) gauge.h g_amsplss.h terminal.h g_amsplss.cpp
+g_amsseq.o:     $(HEADERS) gauge.h g_amsseq.h terminal.h g_amsseq.cpp
+g_amsspin.o:    $(HEADERS) gauge.h g_amsspin.h terminal.h g_amsspin.cpp
+g_amsstat.o:    $(HEADERS) gauge.h g_amsstat.h terminal.h g_amsstat.cpp
+g_amswest.o:    $(HEADERS) gauge.h g_amswest.h terminal.h g_amswest.cpp
+g_axis.o:       $(HEADERS) gauge.h terminal.h g_axis.h g_axis.cpp
+g_attitude.o:   $(HEADERS) gauge.h terminal.h g_attitude.h g_attitude.cpp
+g_clocks.o:     $(HEADERS) gauge.h terminal.h g_clocks.h g_clocks.cpp
+g_clockev.o:    $(HEADERS) gauge.h terminal.h g_clockev.h g_clockev.cpp
+g_clockmi.o:    $(HEADERS) gauge.h terminal.h g_clockmi.h g_clockmi.cpp
+g_clockte.o:    $(HEADERS) gauge.h terminal.h g_clockte.h g_clockte.cpp
+g_clockut.o:    $(HEADERS) gauge.h terminal.h g_clockut.h g_clockut.cpp
+g_docked.o:     $(HEADERS) gauge.h terminal.h g_docked.h g_docked.cpp
+g_groundins.o:  $(HEADERS) gauge.h terminal.h g_groundins.h g_groundins.cpp
+g_ins.o:        $(HEADERS) gauge.h terminal.h g_ins.h g_ins.cpp
+g_lamps.o:      $(HEADERS) gauge.h terminal.h g_lamps.h g_lamps.cpp
+g_landed.o:     $(HEADERS) gauge.h terminal.h g_landed.h g_landed.cpp
+g_lmfuel.o:     $(HEADERS) gauge.h terminal.h g_lmfuel.h g_lmfuel.cpp
+g_lmrock.o:     $(HEADERS) gauge.h terminal.h g_lmrock.h g_lmrock.cpp
+g_maplarge.o:   $(HEADERS) gauge.h terminal.h map.h g_maplarge.h g_maplarge.cpp
+g_mapmed.o:     $(HEADERS) gauge.h terminal.h map.h g_mapmed.h g_mapmed.cpp
+g_multiaxis.o:  $(HEADERS) gauge.h terminal.h map.h g_multiaxis.h g_multiaxis.cpp
+g_evaprep.o:    $(HEADERS) gauge.h terminal.h g_evaprep.h g_evaprep.cpp
+g_orbitlarge.o: $(HEADERS) gauge.h terminal.h g_orbitlarge.h g_orbitlarge.cpp
+g_oxybat.o:     $(HEADERS) gauge.h terminal.h g_oxybat.h g_oxybat.cpp
+g_pilot.o:      $(HEADERS) gauge.h terminal.h g_pilot.h g_pilot.cpp
+g_pilotloc.o:   $(HEADERS) gauge.h terminal.h g_pilotloc.h g_pilotloc.cpp
+g_precaxis.o:   $(HEADERS) gauge.h terminal.h g_axis.h g_precaxis.h g_precaxis.cpp
+g_rcs.o:        $(HEADERS) gauge.h terminal.h g_rcs.h g_rcs.cpp
+g_radars.o:     $(HEADERS) gauge.h terminal.h g_radars.h g_radars.cpp
+g_throttle.o:   $(HEADERS) gauge.h terminal.h g_throttle.h g_throttle.cpp
 
 mission.o:     $(HEADERS) mission.h mission.cpp
 planner.o:     $(HEADERS) mission.h planner.cpp

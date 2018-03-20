@@ -1,20 +1,10 @@
-Box 1,1,80,16
-Box 1,16,80,24
-Line 27,1,27,16
-Line 54,1,54,16
-Line 27,3,54,3
-Line 31,2,31,2
-Line 51,2,51,2
-Line 27,17,27,23
-Line 55,17,55,23
-Line 67,17,67,23
-Line 39,22,54,22
-Line 39,22,39,23
-Label 50,23,":"
-Gauge Ams_Clocks 68,17
-Gauge Ams_DownAxis 55,2
-Gauge Ams_INS 28,17
-Gauge Ams_LandingRadar 35,6
-Gauge Ams_Message 40,23
-Gauge Ams_Pilot 32,2
-Gauge Ams_WestAxis 2,2
+Box 1,1,80,24
+Line 47,1,47,24
+Box 56,4,71,6
+Box 49,9,77,17
+Box 56,20,72,22
+Label 63,2,"CSM"
+Gauge Ams_Message 57,21
+Gauge Ins 50,10
+Gauge ClockUT 58,5
+Gauge OrbitLarge 2,2

@@ -1,3 +1,21 @@
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|----8
+
+Files:
+------
+  ams.pnl      - Generic panel based on AMS.
+  csm.pnl      - Panel definition for the CSM.
+  lrv.pnl      - Panel definition of the LRV.
+  lm.pnl       - Panel definition for the LM.
+  plss.pnl     - Panel definition for EVA.
+  lms.doc      - Simulator documentation.  This file.
+  panel.doc    - Documentation for the instrument panels.
+  lms          - Lunar Mission Simulator executable.
+  mapgen       - Program for generating maps.
+  planner      - Program for making mission profiles.
+  template.txt - Template for helping with panel designs.
+  lunarref.txt - Lunar feature reference.
+  userref.txt  - File containing objects left on the moon.
+
 Keys:
 
 Available in all modes:
