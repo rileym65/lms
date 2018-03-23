@@ -25,12 +25,26 @@ void Vehicle::Init() {
   throttle = 0;
   oxygen = 0;
   battery = 0;
+  eoxygen = 0;
+  ebattery = 0;
   maxOxygen = 0;
   maxBattery = 0;
   }
 
 void Vehicle::InitPanel() {
   panel = new Panel("ams.pnl",this);
+  }
+
+Double Vehicle::AccelAltitude() {
+  return accelAltitude;
+  }
+
+Double Vehicle::AccelEast() {
+  return accelEast;
+  }
+
+Double Vehicle::AccelNorth() {
+  return accelNorth;
   }
 
 Double Vehicle::Altitude() {
@@ -51,6 +65,26 @@ Double Vehicle::Battery(Double d) {
   battery = d;
   if (battery < 0) battery = 0;
   return battery;
+  }
+
+Double Vehicle::EBattery() {
+  return ebattery;
+  }
+
+Double Vehicle::EBattery(Double d) {
+  ebattery = d;
+  if (ebattery < 0) ebattery = 0;
+  return ebattery;
+  }
+
+Double Vehicle::EOxygen() {
+  return eoxygen;
+  }
+
+Double Vehicle::EOxygen(Double d) {
+  eoxygen = d;
+  if (eoxygen < 0) eoxygen = 0;
+  return eoxygen;
   }
 
 Vector Vehicle::FaceFront() {
@@ -144,7 +178,7 @@ Double Vehicle::Radius() {
   }
 
 Double Vehicle::Radius(Double d) {
-  velocityAltitude = d - radius;;
+//  velocityAltitude = d - radius;;
   radius = d;
   altitude = radius - 1738300;
   return radius;
@@ -171,6 +205,26 @@ Vector Vehicle::Thrust(Vector t) {
   return thrust;
   }
 
+Boolean Vehicle::UseBattery(Double units) {
+  battery -= units;
+  if (battery >= 0) return true;
+  ebattery += battery;
+  battery = 0;
+  if (ebattery >= 0) return true;
+  ebattery = 0;
+  return false;
+  }
+
+Boolean Vehicle::UseOxygen(Double units) {
+  oxygen -= units;
+  if (oxygen >= 0) return true;
+  eoxygen += oxygen;
+  oxygen = 0;
+  if (eoxygen >= 0) return true;
+  eoxygen = 0;
+  return false;
+  }
+
 Vector Vehicle::Velocity() {
   return velocity;
   }
@@ -184,12 +238,15 @@ void Vehicle::Cycle() {
   Vector a;
   Double alt3;
   Double hyp;
+  Double v1,v2;
+  Double vel;
   Vector vnorm;
   alt3 = radius * radius * radius;
   a = position.Scale(-4.9075e12);
   a = a.Scale(1/alt3);
   velocity = velocity + a;
   velocity = velocity + thrust;
+  v1 = velocity.Dot(position.Norm());
   position = position + velocity;
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
@@ -200,12 +257,18 @@ void Vehicle::Cycle() {
   hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
   latitude = position.Z() / hyp;
   latitude = asin(latitude) * 180 / M_PI;
-
   vnorm = velocity.Norm();
+  v2 = velocity.Dot(position.Norm());
   a = Vector(position.Y(), -position.X(), 0.0).Norm();
-  velocityEast = -(vnorm.Dot(a.Norm()) * velocity.Length());
-  a = Vector(0,0,1);
-  velocityNorth = (vnorm.Dot(a.Norm()) * velocity.Length());
+  vel= -(velocity.Dot(a));
+  accelEast = vel - velocityEast;
+  velocityEast = vel;
+  vel= velocity.Dot(Vector(0,0,1));
+  accelNorth = vel - velocityNorth;
+  velocityNorth = vel;
+  vel = v1 + ((v2 - v1) / 2);
+  accelAltitude = vel - velocityAltitude;
+  velocityAltitude = vel;
   }
 
 Double Vehicle::VelocityAltitude() {
@@ -213,6 +276,8 @@ Double Vehicle::VelocityAltitude() {
   }
 
 Double Vehicle::VelocityEast() {
+  return velocityEast;
+/*
   Double vel;
   Vector west;
   Vector north;
@@ -220,35 +285,45 @@ Double Vehicle::VelocityEast() {
   Vector v;
 
   v = velocity.Norm();
-  west = Vector(position.Y(), -position.X(), position.Z()).Norm();
   west = Vector(position.Y(), -position.X(), 0.0).Norm();
-  vel = -(v.Dot(west.Norm()) * velocity.Length());
-// GotoXY(1,25); printf("West: %f %f %f\n",west.X(),west.Y(),west.Z());
-// GotoXY(1,26); printf("Vel :%f %f %f\n",v.X(),v.Y(),v.Z());
-// GotoXY(1,27); printf("Vel east:%.18f\n",vel);
-
   north = Vector(0,0,1);
-  vel = (v.Dot(north.Norm()) * velocity.Length());
-// GotoXY(1,28); printf("North: %f %f %f\n",north.X(),north.Y(),north.Z());
-// GotoXY(1,29); printf("Vel North: %.18f\n",vel);
+  alt = position.Norm();
+  vel = -(v.Dot(west.Norm()) * velocity.Length());
+vel = velocity.Dot(west.Norm());
+if (this == lm) {
+GotoXY(1,25); printf("Vel      :%f %f %f\n",v.X(),v.Y(),v.Z());
+GotoXY(1,26); printf("West     : %f %f %f\n",west.X(),west.Y(),west.Z());
+GotoXY(1,27); printf("North    : %f %f %f\n",north.X(),north.Y(),north.Z());
+GotoXY(1,28); printf("Alt      : %f %f %f\n",alt.X(),alt.Y(),alt.Z());
+GotoXY(1,29); printf("Vel east :%.18f\n",vel);
+}
 
-  alt = v.Cross(position.Norm()).Norm();
-  alt = alt.Cross(v).Norm();
+  vel = (v.Dot(north.Norm()) * velocity.Length());
+vel = velocity.Dot(north.Norm());
+if (this == lm) {
+GotoXY(1,30); printf("Vel North: %.18f\n",vel);
+}
+
+  vel = v.Dot(alt);
+GotoXY(1,31); printf("Alt Dot  : %.18f\n",vel);
+
   vel = (v.Dot(alt) * velocity.Length());
-// GotoXY(1,30); printf("Alt: %f %f %f\n",alt.X(),alt.Y(),alt.Z());
-// GotoXY(1,31); printf("Vel :%f %f %f\n",v.X(),v.Y(),v.Z());
-// GotoXY(1,32); printf("Vel Alt: %.18f\n",vel);
+if (this == lm) {
+GotoXY(1,32); printf("Vel Alt  : %.18f\n",vel);
+vel = velocity.Dot(position.Norm());
+GotoXY(1,33); printf("Vel Alt  : %.18f\n",vel);
+}
 
   return velocityEast;
 
   vel = sqrt(velocity.X() * velocity.X() + velocity.Y() * velocity.Y());
   if (sgn(velocity.X()) == sgn(position.Y())) vel = -vel;
   return vel;
+*/
   }
 
 Double Vehicle::VelocityNorth() {
   return velocityNorth;
-  return velocity.Z();
   }
 
 Int8 Vehicle::SubLoad(char* line) {
@@ -261,7 +336,9 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Longitude %.18f%s",longitude,LE);
   fprintf(file,"  Radius %.18f%s",radius,LE);
   fprintf(file,"  Battery %.18f%s",battery,LE);
+  fprintf(file,"  EBattery %.18f%s",ebattery,LE);
   fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
+  fprintf(file,"  EOxygen %.18f%s",eoxygen,LE);
   fprintf(file,"  Throttle %d%s",throttle,LE);
   fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
   fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
@@ -298,7 +375,9 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"orientation ")) orientation = atom(nw(pline));
     else if (startsWith(pline,"throttle ")) throttle = atoi(nw(pline));
     else if (startsWith(pline,"battery ")) battery = atof(nw(pline));
+    else if (startsWith(pline,"ebattery ")) ebattery = atof(nw(pline));
     else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
+    else if (startsWith(pline,"eoxygen ")) eoxygen = atof(nw(pline));
     else if (SubLoad(pline) == 0) {
       printf("Unknown line found in save file: %s\n",pline);
       exit(1);

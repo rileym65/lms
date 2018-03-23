@@ -34,6 +34,8 @@ void save() {
   fprintf(file,"  DsnOn %d%s",dsnOn,LE);
   fprintf(file,"  Efficiency %f%s",efficiency,LE);
   fprintf(file,"  Injury %f%s",injury,LE);
+  fprintf(file,"  SoftInjury %f%s",softInjury,LE);
+  fprintf(file,"  HardInjury %f%s",hardInjury,LE);
   fprintf(file,"  InsMode %d%s",insMode,LE);
   fprintf(file,"  LandingRadarOn %d%s",landingRadarOn,LE);
   fprintf(file,"  MetabolicRate %f%s",metabolicRate,LE);

@@ -41,6 +41,7 @@
 #include "g_oxybat.h"
 #include "g_pilot.h"
 #include "g_pilotloc.h"
+#include "g_plss.h"
 #include "g_precaxis.h"
 #include "g_radars.h"
 #include "g_rcs.h"
@@ -166,6 +167,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Pilot(x1, y1, false, vehicle));
       else if (strcasecmp(str,"pilotlocation") == 0)
         addGauge(new G_PilotLocation(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"plss") == 0)
+        addGauge(new G_Plss(x1, y1, false, vehicle));
       else if (strcasecmp(str,"precisionaxis") == 0)
         addGauge(new G_PrecAxis(x1, y1, false, vehicle));
       else if (strcasecmp(str,"radars") == 0)

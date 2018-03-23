@@ -28,17 +28,17 @@ void G_EvaPrep::Display() {
 void G_EvaPrep::Update() {
   if (spaceSuitOn != lastSpaceSuitOn) {
     GotoXY(x+8,y+0);
-    if (spaceSuitOn) printf("^"); else printf("v");
+    if (spaceSuitOn) printf("@"); else printf(" ");
     lastSpaceSuitOn = spaceSuitOn;
     }
   if (plssOn != lastPlssOn) {
     GotoXY(x+12,y+0);
-    if (plssOn) printf("^"); else printf("v");
+    if (plssOn) printf("@"); else printf(" ");
     lastPlssOn = plssOn;
     }
   if (cabinPressurized != lastCabinPressurized) {
     GotoXY(x+16,y+0);
-    if (cabinPressurized) printf("^"); else printf("v");
+    if (cabinPressurized) printf("@"); else printf(" ");
     lastCabinPressurized = cabinPressurized;
     }
   if (plssPacks != lastPacks) {

@@ -283,8 +283,8 @@ void LunarModule::Cycle() {
                 lm->VelocityNorth() * lm->VelocityNorth());
     landedVVel = vVel;
     landedHVel = hVel;
-    if (vVel > 2 || fabs(lm->VelocityEast()) > 0.2 ||
-                    fabs(lm->VelocityNorth()) > 0.2) {
+    if (vVel >= 3 || fabs(lm->VelocityEast()) >= 0.3 ||
+                    fabs(lm->VelocityNorth()) >= 0.3) {
       run = false;
       endReason = END_CRASHED;
       }
@@ -307,6 +307,12 @@ void LunarModule::Cycle() {
     clockPDI = ignitionTime;
     burn[numBurns-1].end = clockMi;
     burn[numBurns-1].fuelUsed -= descentFuel;
+    accelNorth = 0;
+    accelEast = 0;
+    accelAltitude = 0;
+    velocityAltitude = 0;
+    velocityNorth = 0;
+    velocityEast = 0;
     }
   }
 
@@ -383,6 +389,8 @@ void LunarModule::ProcessKey(Int32 key) {
       clockBu = 0;
       if (oxygen > ASC_OXYGEN) oxygen = ASC_OXYGEN;
       if (battery > ASC_BATTERY) battery = ASC_BATTERY;
+      if (eoxygen > ASC_EOXYGEN) eoxygen = ASC_EOXYGEN;
+      if (ebattery > ASC_EBATTERY) ebattery = ASC_EBATTERY;
       liftoffMet = clockMi;
       numBurns++;
       burn[numBurns-1].start = clockMi;

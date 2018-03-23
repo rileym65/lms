@@ -17,6 +17,8 @@ Vector t;
   lm->DescentFuel(FUEL_DES);
   lm->Battery(432000.0);
   lm->Oxygen(432000.0);
+  lm->EBattery(216000.0);
+  lm->EOxygen(432000.0);
   lm->RcsFbMode(' ');
   lm->RcsLrMode(' ');
   lm->RcsUdMode(' ');
@@ -56,7 +58,7 @@ Vector t;
   docked = -1;
   dockingRadarOn = 0;
   dsnOn = 0;
-  efficiency = 75;
+  efficiency = 99;
   injury = 0;
   insMode = INS_MODE_POS_ABS;
   landingRadarOn = 0;
@@ -165,6 +167,19 @@ void cycle() {
         }
       }
     }
+  if (metabolicRate > 99) metabolicRate = 99;
+  softInjury += 0.000347222;
+  if (softInjury > 100) softInjury = 100;
+  injury = softInjury + hardInjury;
+  if (metabolicRate > 30.0) metabolicRate -= 0.1;
+  if (metabolicRate < 30.0) metabolicRate = 30.0;
+  efficiency = 99.0;
+  if (metabolicRate < 40) efficiency -= (metabolicRate - 30) / 3;
+  else if (metabolicRate < 50) efficiency -= (metabolicRate - 30) / 2;
+  else if (metabolicRate < 60) efficiency -= (metabolicRate - 30);
+  else efficiency -= ((metabolicRate - 30) * 1.5);
+  efficiency -= (injury / 2.0);
+  if (efficiency < 20) efficiency = 20;
   currentVehicle->UpdatePanel();
   }
 
@@ -272,6 +287,7 @@ int main(int argc, char** argv) {
   currentVehicle->SetupPanel();
   run = true;
   ticks = 10;
+  keyDelay = 0;
   currentVehicle->UpdatePanel();
   while (run) {
     if (ticks >= 10) {
@@ -280,27 +296,27 @@ int main(int argc, char** argv) {
       if (lm->Throttle() != 0) clockBu++;
       if (!docked) {
         clockMi++;
-        lm->Battery(lm->Battery() - 1);
+        lm->UseBattery(1);
         if (pilotLocation == PILOT_LM && cabinPressurized) {
-          lm->Oxygen(lm->Oxygen() - 1);
+          lm->UseOxygen(1);
           if (!lm->Landed() && lm->DescentJettisoned() && !docked) clockDk++;
-          if (lm->Oxygen() <= 0) injury += 0.3;
-          if (lm->Battery() <= 0) injury += 0.1;
+          if (lm->Oxygen() + lm->EOxygen() <= 0) injury += 0.3;
+          if (lm->Battery() + lm->EBattery() <= 0) injury += 0.1;
           }
         else if (pilotLocation == PILOT_LM && cabinPressurized == 0) {
-          plss->Oxygen(plss->Oxygen() - 1);
-          plss->Battery(plss->Battery() - 1);
-          if (plss->Oxygen() <= 0) injury += 0.3;
-          if (plss->Battery() <= 0) injury += 0.1;
+          plss->UseOxygen(1);
+          plss->UseBattery(1);
+          if (plss->Oxygen() + plss->EOxygen() <= 0) injury += 0.3;
+          if (plss->Battery() + plss->EBattery() <= 0) injury += 0.1;
           }
         }
       if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
         clockEv++;
         clockTe++;
-        plss->Oxygen(plss->Oxygen() - 1);
-        plss->Battery(plss->Battery() - 1);
-        if (plss->Oxygen() <= 0) injury += 0.3;
-        if (plss->Battery() <= 0) injury += 0.1;
+        plss->UseOxygen(1);
+        plss->UseBattery(1);
+        if (plss->Oxygen() + plss->EOxygen() <= 0) injury += 0.3;
+        if (plss->Battery() + plss->EBattery() <= 0) injury += 0.1;
         }
       cycle();
       ticks = 0;
@@ -311,8 +327,12 @@ int main(int argc, char** argv) {
         }
       }
     else ticks++;
+    if (keyDelay > 0) keyDelay--;
     usleep(simSpeed);
-    if (KeyPressed()) {
+    if (KeyPressed() && keyDelay == 0) {
+      keyDelay = (99 - efficiency) / 2;
+      metabolicRate += 0.3;
+      if (metabolicRate > 90) metabolicRate = 90;
       key = Inkey();
       if (key == '!') simSpeed = 100000;
       if (key == '@') simSpeed = 10000;

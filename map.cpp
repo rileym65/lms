@@ -88,14 +88,14 @@ void Map::drawCrater(Double longitude, Double latitude, Double diameter) {
     iy = (int)(y / 30.0);
     for (i=cx-ix; i<=cx+ix; i++) {
       if (cy+iy >= 0 && cy+iy <= 180 && i >= 0 && i <= 360) {
-        if (i == cx-ix || i == cx+ix) levelH[cy+iy][i] = '(';
+        if (i == cx-ix || i == cx+ix) levelH[cy+iy][i] = '^';
           else if (levelH[cy+iy][i] != '^' &&
                    levelH[cy+iy][i] != '.' &&
                    levelH[cy+iy][i] != 'o' &&
                    levelH[cy+iy][i] != 'O') levelH[cy+iy][i] = ' ';
         }
       if (cy-iy >= 0 && cy-iy <= 180 && i >= 0 && i <= 360) {
-        if (i == cx-ix || i == cx+ix) levelH[cy-iy][i] = '(';
+        if (i == cx-ix || i == cx+ix) levelH[cy-iy][i] = '^';
           else if (levelH[cy-iy][i] != '^' &&
                    levelH[cy-iy][i] != '.' &&
                    levelH[cy-iy][i] != 'o' &&
@@ -305,7 +305,6 @@ void Map::generateLevelMMap(Double longitude,Double latitude) {
     lat = features[i].latitude;
     diam = (features[i].diameter * 1000.0) / METERS;
     dist = sqrt(sqr(longitude-lng) + sqr(latitude-lat));
-printf("%f - %f =  %f\n",dist,diam,dist - diam);
     ilng = (int)features[i].longitude;
     ilat = (int)features[i].latitude;
     if (strncasecmp(features[i].name,"Crater ",7) == 0) {
@@ -365,20 +364,60 @@ Int32 Map::CellH(Int32 longitude,Int32 latitude) {
 
 char Map::Lurrain(Int32 cellX, Int32 cellY) {
   Int32 i;
+  char ltype;
   for (i=0; i<numFeatures; i++)
     if (features[i].cellX == cellX && features[i].cellY == cellY)
       return features[i].symbol;
   i = (cellX & 0xffff) | (cellY << 16);
-  srand(i);
-  i = rand() & 0x7f;
-  if (i >=  0 && i <=  0) return '^';
-  if (i >=  1 && i <=  5) return '.';
-  if (i >=  6 && i <= 10) return 'o';
-  if (i >= 11 && i <= 12) return 'O';
-  if (i >= 13 && i <= 15) return '*';
-  if (i >= 16 && i <= 18) return '+';
-  if (i >= 19 && i <= 20) return ',';
-  if (i >= 21 && i <= 21) return 'u';
+  seed(i);
+  i = random(1000);
+  ltype = ' ';
+  switch (ltype) {
+    case '~':
+         if ((i -= 4) < 0) return '.';
+         if ((i -= 4) < 0) return 'o';
+         if ((i -= 3) < 0) return 'O';
+         if ((i -= 15) < 0) return ',';
+         if ((i -= 10) < 0) return '+';
+         if ((i -= 6) < 0) return '*';
+         if ((i -= 10) < 0) return 'u';
+         if ((i -= 10) < 0) return '^';
+         return ' ';
+         break;
+    case '^':
+         if ((i -= 4) < 0) return '.';
+         if ((i -= 4) < 0) return 'o';
+         if ((i -= 3) < 0) return 'O';
+         if ((i -= 40) < 0) return ',';
+         if ((i -= 20) < 0) return '+';
+         if ((i -= 10) < 0) return '*';
+         if ((i -= 30) < 0) return 'u';
+         if ((i -= 30) < 0) return '^';
+         return ' ';
+         break;
+    case 'u':
+         if ((i -= 4) < 0) return '.';
+         if ((i -= 4) < 0) return 'o';
+         if ((i -= 3) < 0) return 'O';
+         if ((i -= 15) < 0) return ',';
+         if ((i -= 10) < 0) return '+';
+         if ((i -= 6) < 0) return '*';
+         if ((i -= 10) < 0) return 'u';
+         if ((i -= 10) < 0) return '^';
+         return ' ';
+         break;
+    default:
+         if ((i -= 4) < 0) return '.';
+         if ((i -= 4) < 0) return 'o';
+         if ((i -= 3) < 0) return 'O';
+         if ((i -= 10) < 0) return ',';
+         if ((i -= 6) < 0) return '+';
+         if ((i -= 3) < 0) return '*';
+         if ((i -= 1) < 0) return 'u';
+         if ((i -= 1) < 0) return '^';
+         return ' ';
+         break;
+    }
   return ' ';
   }
 

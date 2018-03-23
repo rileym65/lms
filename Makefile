@@ -34,6 +34,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_oxybat.h \
            g_pilot.h \
            g_pilotloc.h \
+           g_plss.h \
            g_precaxis.h \
            g_radars.h \
            g_rcs.h \
@@ -79,6 +80,7 @@ OBJS = \
 	g_oxybat.o \
 	g_pilot.o \
 	g_pilotloc.o \
+	g_plss.o \
 	g_precaxis.o \
 	g_radars.o \
 	g_rcs.o \
@@ -203,6 +205,7 @@ g_orbitlarge.o: $(HEADERS) gauge.h terminal.h g_orbitlarge.h g_orbitlarge.cpp
 g_oxybat.o:     $(HEADERS) gauge.h terminal.h g_oxybat.h g_oxybat.cpp
 g_pilot.o:      $(HEADERS) gauge.h terminal.h g_pilot.h g_pilot.cpp
 g_pilotloc.o:   $(HEADERS) gauge.h terminal.h g_pilotloc.h g_pilotloc.cpp
+g_plss.o:       $(HEADERS) gauge.h terminal.h g_plss.h g_plss.cpp
 g_precaxis.o:   $(HEADERS) gauge.h terminal.h g_axis.h g_precaxis.h g_precaxis.cpp
 g_rcs.o:        $(HEADERS) gauge.h terminal.h g_rcs.h g_rcs.cpp
 g_radars.o:     $(HEADERS) gauge.h terminal.h g_radars.h g_radars.cpp

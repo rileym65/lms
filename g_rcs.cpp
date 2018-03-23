@@ -38,22 +38,22 @@ void G_Rcs::Update() {
     lastRcsFbMode = lm->RcsFbMode();
     GotoXY(x+0,y+0); printf(" ");
     GotoXY(x+4,y+0); printf(" ");
-    if (lastRcsFbMode == 'F') { GotoXY(x+0,y+0); printf("^"); }
-    if (lastRcsFbMode == 'B') { GotoXY(x+4,y+0); printf("^"); }
+    if (lastRcsFbMode == 'F') { GotoXY(x+0,y+0); printf("<"); }
+    if (lastRcsFbMode == 'B') { GotoXY(x+4,y+0); printf(">"); }
     }
   if (lm->RcsLrMode() != lastRcsLrMode) {
     lastRcsLrMode = lm->RcsLrMode();
     GotoXY(x+0,y+1); printf(" ");
     GotoXY(x+4,y+1); printf(" ");
-    if (lastRcsLrMode == 'L') { GotoXY(x+0,y+1); printf("^"); }
-    if (lastRcsLrMode == 'R') { GotoXY(x+4,y+1); printf("^"); }
+    if (lastRcsLrMode == 'L') { GotoXY(x+0,y+1); printf("<"); }
+    if (lastRcsLrMode == 'R') { GotoXY(x+4,y+1); printf(">"); }
     }
   if (lm->RcsUdMode() != lastRcsUdMode) {
     lastRcsUdMode = lm->RcsUdMode();
     GotoXY(x+0,y+2); printf(" ");
     GotoXY(x+4,y+2); printf(" ");
-    if (lastRcsUdMode == 'U') { GotoXY(x+0,y+2); printf("^"); }
-    if (lastRcsUdMode == 'D') { GotoXY(x+4,y+2); printf("^"); }
+    if (lastRcsUdMode == 'U') { GotoXY(x+0,y+2); printf("<"); }
+    if (lastRcsUdMode == 'D') { GotoXY(x+4,y+2); printf(">"); }
     }
   i = (int)(lm->PitchRate() * 10);
   if (i != lastPitch) {

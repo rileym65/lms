@@ -9,11 +9,16 @@
 
 class Vehicle {
   protected:
+    Double  accelAltitude;
+    Double  accelEast;
+    Double  accelNorth;
     Double  altitude;
     Vector  baseFront;
     Vector  baseLeft;
     Vector  baseUp;
     Double  battery;
+    Double  ebattery;
+    Double  eoxygen;
     Vector  faceFront;
     Vector  faceLeft;
     Vector  faceUp;
@@ -37,10 +42,17 @@ class Vehicle {
     virtual ~Vehicle();
     virtual void   Init();
     virtual void   InitPanel();
+    virtual Double AccelAltitude();
+    virtual Double AccelEast();
+    virtual Double AccelNorth();
     virtual Double Altitude();
     virtual Double Altitude(Double d);
     virtual Double Battery();
     virtual Double Battery(Double d);
+    virtual Double EBattery();
+    virtual Double EBattery(Double d);
+    virtual Double EOxygen();
+    virtual Double EOxygen(Double d);
     virtual Vector FaceFront();
     virtual Vector FaceFront(Vector v);
     virtual Vector FaceLeft();
@@ -76,6 +88,8 @@ class Vehicle {
     virtual void   Load(FILE* file);
     virtual void   SetupPanel();
     virtual void   UpdatePanel();
+    virtual Boolean UseOxygen(Double units);
+    virtual Boolean UseBattery(Double units);
     virtual void   ProcessKey(Int32 key);
   };
 

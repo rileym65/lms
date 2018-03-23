@@ -223,9 +223,68 @@ void Sequencer::Complete() {
     }
   }
 
+void Sequencer::InProgress() {
+  switch (function) {
+    case SEQ_MOVE_LM:
+         metabolicRate += 0.112;
+         break;
+    case SEQ_SLEEP:
+         softInjury -= (0.000347222 * 4);
+         if (softInjury < 0) softInjury = 0;
+         break;
+    case SEQ_REST:
+         softInjury -= (0.000347222 * 1);
+         if (softInjury < 0) softInjury = 0;
+         break;
+    case SEQ_SUITON:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_SUITOFF:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_PLSSON:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_PLSSOFF:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_MOVE_EVA:
+         metabolicRate += 0.125;
+         break;
+    case SEQ_SETUPLRV:
+         metabolicRate += 0.104;
+         break;
+    case SEQ_MOVELRV:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_EXITLRV:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_TAKESAMPLE:
+         metabolicRate += 0.125;
+         break;
+    case SEQ_STORESAMPLE:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_BOXPLSS:
+         metabolicRate += 0.112;
+         break;
+    case SEQ_BOXLRV:
+         metabolicRate += 0.112;
+         break;
+    case SEQ_BOXLM:
+         metabolicRate += 0.125;
+         break;
+    case SEQ_END_EVA:
+         metabolicRate += 0.125;
+         break;
+    }
+  }
+
 void Sequencer::Cycle() {
   if (time > 0) {
     time--;
+    InProgress();
     if (time == 0) {
       strcpy(message,"----------");
       simSpeed = 100000;
@@ -344,7 +403,9 @@ void Sequencer::SpaceSuitOn() {
   }
 
 void Sequencer::StoreSample() {
-  time = 2 * 60;
+  Double dist;
+  dist = (plss->Position() - lrv->Position()).Length();
+  time = (1 * 60) + (2 * dist);
   strcpy(message," ROCK->LRV");
   function = SEQ_STORESAMPLE;
   }
@@ -362,7 +423,9 @@ void Sequencer::Undock() {
   }
  
 void Sequencer::MoveLrv() {
-  time = 3 * 60;
+  Double dist;
+  dist = (plss->Position() - lrv->Position()).Length();
+  time = 1.5 * 60 + dist;
   strcpy(message," MOVE->LRV");
   function = SEQ_MOVELRV;
   }

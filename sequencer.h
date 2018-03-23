@@ -35,6 +35,8 @@ class Sequencer {
     Int32        time;
     Int8         function;
     char         message[32];
+    void  InProgress();
+    void  Complete();
   public:
     Sequencer();
     ~Sequencer();
@@ -43,7 +45,6 @@ class Sequencer {
     void  BoxToLm();
     void  BoxToLrv();
     void  BoxToPlss();
-    void  Complete();
     void  Cycle();
     void  CabinEvacuate();
     void  CabinPressurize();

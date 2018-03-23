@@ -33,10 +33,16 @@
 #define FUEL_DES  9720.0
 #define LM_OXYGEN 432000.0
 #define LM_BATTERY 432000.0
+#define LM_EOXYGEN 432000.0
+#define LM_EBATTERY 216000.0
 #define ASC_OXYGEN 36000.0
 #define ASC_BATTERY 36000.0
+#define ASC_EOXYGEN 36000.0
+#define ASC_EBATTERY 18000.0
 #define PLSS_OXYGEN 36000.0
 #define PLSS_BATTERY 36000.0
+#define PLSS_EOXYGEN 18000.0
+#define PLSS_EBATTERY 9000.0
 #define LRV_BATTERY  200000.0
 #define INS_MODE_POS_ABS 1
 #define INS_MODE_POS_TAR 2
@@ -111,6 +117,8 @@ LINK Int8         dockingRadarOn;
 LINK Int8         dsnOn;
 LINK Double       efficiency;
 LINK Double       injury;
+LINK Double       softInjury;
+LINK Double       hardInjury;
 LINK INS         *ins;
 LINK Int8         insMode;
 LINK Int8         landingRadarOn;
@@ -134,6 +142,7 @@ LINK Vector       targetVel;
 LINK Double       targetMomEast;
 LINK Double       targetMomNorth;
 LINK Int8         ticks;
+LINK Int8         keyDelay;
 LINK UInt8        sampleType;
 LINK UInt8        sampleSmallRock;
 LINK UInt8        sampleMediumRock;

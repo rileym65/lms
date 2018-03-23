@@ -385,9 +385,9 @@ PrecisionAxis
 
 Lamps
 +--------------------+
-|ASC ALO ATT DCK OXY |
-|DSC DLO     LCT BAT |
-|RCS RLO             |
+|ASC ALO ATT OXY BAT |
+|DSC DLO DCK EMG EMG |
+|RCS RLO LCT ELO ELO |
 +--------------------+
 
 OrbitLarge
@@ -412,4 +412,14 @@ h|~~~~u~u^~u^u~^~~~^^^o^   O O# ^^^^^^O^^^^|
  |~^uu~~~u~O^~^uOu~~             O   ^^^^^ | 
  |~u(((~~~uu^~u~u~u  .#   O(          ~    | 
  +--------------------|east----------------+ 
+
+Plss
++------+
+|  plss|
+|OXY:99|
+|BAT:99|
+|EOX:99|
+|EBT:99|
+|CAR: R|
++------+
 

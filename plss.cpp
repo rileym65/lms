@@ -93,8 +93,12 @@ Double Plss::Walked() {
   }
 
 void Plss::Cycle() {
+  if (throttle > 30 && metabolicRate > 60) Throttle(30);
   GroundVehicle::Cycle();
   if (!isnan(velocity.Length())) walked += velocity.Length();
+  if (throttle > 0) {
+    metabolicRate += throttle * 0.0032;
+    }
   }
 
 Int8 Plss::SubLoad(char* pline) {
@@ -123,13 +127,13 @@ void Plss::ProcessKey(Int32 key) {
   if (key == 'm' && throttle == 0) {
     if (lmPos < 40) seq->EndEva();
     }
-  if (key == 'M' && lrvPos < 40 && carrying == ' ' && throttle == 0) {
+  if (key == 'M' && lrvPos < 100 && carrying == ' ' && throttle == 0) {
     seq->MoveLrv();
     }
   if (key == 'R' && throttle == 0) {
     if (carrying == ' ') seq->TakeSample();
-    if (carrying == 'B' && lrvPos < 40) seq->BoxToLrv();
-    if (carrying == 'R' && lrvPos < 40 && lrv->Rock() < 30 && lrv->Boxes() > 0)
+    if (carrying == 'B' && lrvPos < 100) seq->BoxToLrv();
+    if (carrying == 'R' && lrvPos < 100 && lrv->Rock() < 30 && lrv->Boxes() > 0)
        seq->StoreSample();
     }
   if (key == 'B' && throttle == 0) {

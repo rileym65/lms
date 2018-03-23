@@ -29,17 +29,17 @@ void G_Radars::Display() {
 void G_Radars::Update() {
   if (landingRadarOn != lastLandingRadarOn) {
     GotoXY(x+0, y+0);
-    if (landingRadarOn) printf("^"); else printf(" ");
+    if (landingRadarOn) printf("@"); else printf(" ");
     lastLandingRadarOn = landingRadarOn;
     }
   if (dockingRadarOn != lastDockingRadarOn) {
     GotoXY(x+0, y+1);
-    if (dockingRadarOn) printf("^"); else printf(" ");
+    if (dockingRadarOn) printf("@"); else printf(" ");
     lastDockingRadarOn = dockingRadarOn;
     }
   if (dsnOn != lastDsnOn) {
     GotoXY(x+0, y+2);
-    if (dsnOn) printf("^"); else printf(" ");
+    if (dsnOn) printf("@"); else printf(" ");
     lastDsnOn = dsnOn;
     }
   }

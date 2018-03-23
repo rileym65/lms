@@ -43,11 +43,14 @@ void INS::Cycle() {
   pos = spacecraft->Position();
   vel = spacecraft->Velocity();
   orbit = Vector(pos.Y(),-pos.X(),0).Norm();
-  accAltitude = spacecraft->VelocityAltitude() - lastVelAltitude;
-  lastVelAltitude = spacecraft->VelocityAltitude();
-  accEast = spacecraft->VelocityEast() - lastVelEast;
-  lastVelEast = spacecraft->VelocityEast();
-  accNorth = spacecraft->VelocityNorth() - lastVelNorth;
+//  accAltitude = spacecraft->VelocityAltitude() - lastVelAltitude;
+  accAltitude = spacecraft->AccelAltitude();
+//  lastVelAltitude = spacecraft->VelocityAltitude();
+//  accEast = spacecraft->VelocityEast() - lastVelEast;
+  accEast = spacecraft->AccelEast();
+//  lastVelEast = spacecraft->VelocityEast();
+//  accNorth = spacecraft->VelocityNorth() - lastVelNorth;
+  accNorth = spacecraft->AccelNorth();
   lastVelNorth = spacecraft->VelocityNorth();
   relPos = spacecraft->Position() - target->Position();
   relVel = spacecraft->Velocity() - target->Velocity();
@@ -180,7 +183,7 @@ Boolean INS::hasSignal() {
       (spacecraft->Position() - target->Position()).Length() > 30000)
     return false;
   if (pilotLocation == PILOT_LM && landingRadarOn &&
-    (spacecraft->Altitude() > 18000 || attUr > 45)) return false;
+    (spacecraft->Altitude() > 18000 || attUr > 60)) return false;
   return true;
   }
 
@@ -204,7 +207,7 @@ void INS::populatePosAbs() {
   sprintf(displayPosAltitude,"%7d",(int)spacecraft->Altitude());
   sprintf(displayPosEast,"%7.2f",spacecraft->Longitude());
   sprintf(displayPosNorth,"%7.2f",spacecraft->Latitude());
-  sprintf(displayVelAltitude,"%7.1f",lastVelAltitude);
+  sprintf(displayVelAltitude,"%7.1f",spacecraft->VelocityAltitude());
   sprintf(displayVelEast,"%7.1f",spacecraft->VelocityEast());
   sprintf(displayVelNorth,"%7.1f",spacecraft->VelocityNorth());
   sprintf(displayAccAltitude,"%7.1f",accAltitude);
@@ -237,7 +240,7 @@ void INS::populatePosTar() {
     return;
     }
   sprintf(displayPosAltitude,"%7d",(int)spacecraft->Altitude());
-  sprintf(displayVelAltitude,"%7.1f",lastVelAltitude);
+  sprintf(displayVelAltitude,"%7.1f",spacecraft->VelocityAltitude());
   sprintf(displayVelEast,"%7.1f",spacecraft->VelocityEast());
   sprintf(displayVelNorth,"%7.1f",spacecraft->VelocityNorth());
   sprintf(displayAccAltitude,"%7.1f",accAltitude);
