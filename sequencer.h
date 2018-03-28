@@ -29,6 +29,9 @@
 #define SEQ_GETFLAG     24
 #define SEQ_PUTFLAG     25
 #define SEQ_PLANTFLAG   26
+#define SEQ_GETLASER    27
+#define SEQ_PUTLASER    28
+#define SEQ_SETUPLASER  29
 
 class Sequencer {
   protected:
@@ -53,6 +56,7 @@ class Sequencer {
     void  EndEva();
     void  ExitLrv();
     void  GetFlag();
+    void  GetLaser();
     void  MoveCsm();
     void  MoveEva();
     void  MoveLm();
@@ -61,7 +65,9 @@ class Sequencer {
     void  PlssOff();
     void  PlssOn();
     void  PutFlag();
+    void  PutLaser();
     void  Rest();
+    void  SetupLaser();
     void  SetupLrv();
     void  Sleep();
     void  SpaceSuitOff();

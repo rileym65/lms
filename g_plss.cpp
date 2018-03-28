@@ -61,9 +61,10 @@ void G_Plss::Update() {
     GotoXY(x+5,y+5);
     lastCarrying = plss->Carrying();
     switch (lastCarrying) {
-      case 'R':printf("R"); break;
+      case 'R':printf("S"); break;
       case 'B':printf("B"); break;
       case 'F':printf("F"); break;
+      case 'L':printf("L"); break;
       default :printf("-"); break;
       }
     }

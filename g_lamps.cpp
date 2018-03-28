@@ -83,6 +83,18 @@ void G_Lamps::Update() {
     GotoXY(x+16,y+0);
     if (lm->Battery() < (ASC_BATTERY * 0.10))
       printf("BAT"); else printf("   ");
+    GotoXY(x+12,y+1);
+    if (lm->Oxygen() <= 0.0)
+      printf("EMG"); else printf("   ");
+    GotoXY(x+16,y+1);
+    if (lm->Battery() <= 0.0)
+      printf("EMG"); else printf("   ");
+    GotoXY(x+12,y+2);
+    if (lm->EOxygen() < (ASC_EOXYGEN * 0.10))
+      printf("ELO"); else printf("   ");
+    GotoXY(x+16,y+2);
+    if (lm->EBattery() < (ASC_EBATTERY * 0.10))
+      printf("ELO"); else printf("   ");
     }
 
 

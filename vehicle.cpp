@@ -36,14 +36,20 @@ void Vehicle::InitPanel() {
   }
 
 Double Vehicle::AccelAltitude() {
+  if (accelAltitude > 999) return 999;
+  if (accelAltitude < -999) return -999;
   return accelAltitude;
   }
 
 Double Vehicle::AccelEast() {
+  if (accelEast > 999) return 999;
+  if (accelEast < -999) return -999;
   return accelEast;
   }
 
 Double Vehicle::AccelNorth() {
+  if (accelNorth > 999) return 999;
+  if (accelNorth < -999) return -999;
   return accelNorth;
   }
 
@@ -269,6 +275,15 @@ void Vehicle::Cycle() {
   vel = v1 + ((v2 - v1) / 2);
   accelAltitude = vel - velocityAltitude;
   velocityAltitude = vel;
+  if (isnan(accelNorth)) accelNorth = 0;
+  if (isnan(accelEast)) accelEast = 0;
+  if (isnan(accelAltitude)) accelAltitude = 0;
+  if (accelNorth > 999) accelNorth = 999;
+  if (accelEast > 999) accelEast = 999;
+  if (accelAltitude > 999) accelAltitude = 999;
+  if (accelNorth < -999) accelNorth = -999;
+  if (accelEast < -999) accelEast = -999;
+  if (accelAltitude < -999) accelAltitude = -999;
   }
 
 Double Vehicle::VelocityAltitude() {

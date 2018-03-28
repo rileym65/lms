@@ -97,7 +97,7 @@ void Plss::Cycle() {
   GroundVehicle::Cycle();
   if (!isnan(velocity.Length())) walked += velocity.Length();
   if (throttle > 0) {
-    metabolicRate += throttle * 0.0032;
+    metabolicRate += throttle * 0.0030;
     }
   }
 
@@ -124,32 +124,38 @@ void Plss::ProcessKey(Int32 key) {
   lmPos = (position-lm->Position()).Length();
   if (lrv->IsSetup()) lrvPos = (position-lrv->Position()).Length();
     else lrvPos = 99999;
-  if (key == 'm' && throttle == 0) {
-    if (lmPos < 40) seq->EndEva();
+  if (throttle == 0) {
+    if (key == 'E' && throttle == 0) {
+      if (lmPos < 40) seq->EndEva();
+      }
+    if (key == 'M' && lrvPos < 100 && carrying == ' ') {
+      seq->MoveLrv();
+      }
+    if (key == 'C' && carrying == ' ') seq->TakeSample();
+    if (key == 'S' && carrying == 'R' && lrvPos < 100 && lrv->Rock() < 30 &&
+        lrv->Boxes() > 0) seq->StoreSample();
+    if (key == 'S' && carrying == 'B' && lmPos < 100 && lrv->Boxes() > 0)
+      seq->BoxToLm();
+    if (key == 'D' && carrying == 'R') seq->DropSample();
+    if (key == 'R' && carrying == 'B' && lrvPos < 100) seq->BoxToLrv();
+    if (key == 'B' && carrying == ' ' && lrvPos < 40 && lrv->Boxes() > 0)
+      seq->BoxToPlss();
+    if (key == 'V' && (position - lm->Position()).Length() < 40 &&
+        !lrv->IsSetup())
+      seq->SetupLrv();
+    if (key == 'F') {
+      if (carrying == ' ' && lmPos <= 40 && flagPlanted == 0) seq->GetFlag();
+      if (carrying == 'F' && lmPos >= 50) seq->PlantFlag();
+      }
+    if (key == 'f' && carrying == 'F' && lmPos <= 40) seq->PutFlag();
+    if (key == 'L') {
+      if (carrying == ' ' && lmPos <= 40 && laserSetup == 0) seq->GetLaser();
+      if (carrying == 'L' && lmPos >= 50) seq->SetupLaser();
+      }
+    if (key == 'l' && carrying == 'L' && lmPos <= 40) seq->PutLaser();
     }
-  if (key == 'M' && lrvPos < 100 && carrying == ' ' && throttle == 0) {
-    seq->MoveLrv();
-    }
-  if (key == 'R' && throttle == 0) {
-    if (carrying == ' ') seq->TakeSample();
-    if (carrying == 'B' && lrvPos < 100) seq->BoxToLrv();
-    if (carrying == 'R' && lrvPos < 100 && lrv->Rock() < 30 && lrv->Boxes() > 0)
-       seq->StoreSample();
-    }
-  if (key == 'B' && throttle == 0) {
-    if (carrying == ' ' && lrvPos < 40 && lrv->Boxes() > 0) seq->BoxToPlss();
-    if (carrying == 'B' && lmPos < 40 && lrv->Boxes() > 0) seq->BoxToLm();
-    if (carrying == 'R') seq->DropSample();
-    }
-  if (key == 'L' && throttle == 0 &&
-      (position - lm->Position()).Length() < 40 &&
-      !lrv->IsSetup())
-    seq->SetupLrv();
-  if (key == 'F' && throttle == 0) {
-    if (carrying == ' ' && lmPos <= 40 && flagPlanted == 0) seq->GetFlag();
-    if (carrying == 'F' && lmPos >= 50) seq->PlantFlag();
-    }
-  if (key == 'f' && carrying == 'F' && lmPos <= 40) seq->PutFlag();
+  if (key == KEY_INSERT) Throttle(0);
+  if (key == '0') Throttle(0);
   if (key == KEY_PGDN) Throttle(Throttle()+10);
   if (key == KEY_END) Throttle(Throttle()-10);
   if (key == KEY_F1) Throttle(10);

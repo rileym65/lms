@@ -59,18 +59,28 @@ void G_MapLarge::Update() {
         data[j][i] = map->Lurrain(cellX+j-9,cellY+i-20);
     lastCellX = cellX;
     lastCellY = cellY;
-    cellX = map->Cell(lrv->Longitude()) - lastCellX;
-    cellY = map->Cell(lrv->Latitude()) - lastCellY;
-    if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)
-      data[cellX+9][cellY+20] = 'l';
+    if (lrv->IsSetup()) {
+      cellX = map->Cell(lrv->Longitude()) - lastCellX;
+      cellY = map->Cell(lrv->Latitude()) - lastCellY;
+      if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)
+        data[cellX+9][cellY+20] = 'l';
+      }
+    if (flagPlanted) {
+      cellX = map->Cell(flagLongitude) - lastCellX;
+      cellY = map->Cell(flagLatitude) - lastCellY;
+      if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)
+        data[cellX+9][cellY+20] = 'f';
+      }
+    if (laserSetup) {
+      cellX = map->Cell(laserLongitude) - lastCellX;
+      cellY = map->Cell(laserLatitude) - lastCellY;
+      if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)
+        data[cellX+9][cellY+20] = '_';
+      }
     cellX = map->Cell(lm->Longitude()) - lastCellX;
     cellY = map->Cell(lm->Latitude()) - lastCellY;
     if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)
       data[cellX+9][cellY+20] = 'm';
-    cellX = map->Cell(flagLongitude) - lastCellX;
-    cellY = map->Cell(flagLatitude) - lastCellY;
-    if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)
-      data[cellX+9][cellY+20] = 'f';
     data[9][20] = '@';
 
     for (i=0; i<19; i++) {

@@ -93,6 +93,9 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"flagplanted ")) flagPlanted = atoi(nw(pline));
     else if (startsWith(pline,"flaglongitude ")) flagLongitude = atof(nw(pline));
     else if (startsWith(pline,"flaglatitude ")) flagLatitude = atof(nw(pline));
+    else if (startsWith(pline,"lasersetup ")) laserSetup = atoi(nw(pline));
+    else if (startsWith(pline,"laserlongitude ")) laserLongitude = atof(nw(pline));
+    else if (startsWith(pline,"laserlatitude ")) laserLatitude = atof(nw(pline));
     else if (startsWith(pline,"longesteva ")) longestEVA = atoi(nw(pline));
     else if (startsWith(pline,"docked ")) docked = atoi(nw(pline));
     else if (startsWith(pline,"dockingradaron ")) dockingRadarOn = atoi(nw(pline));

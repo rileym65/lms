@@ -115,6 +115,10 @@ void Sequencer::Complete() {
            case '^': plss->Value(2.0); sampleType = S_RISE; break;
            case 'u': plss->Value(2.0); sampleType = S_DEPRESSION; break;
            case ' ': plss->Value(0.5); sampleType = S_PLAINS; break;
+           case '=': plss->Value(25.0); sampleType = S_SPECIAL; break;
+           case '%': plss->Value(25.0); sampleType = S_SPECIAL; break;
+           case 'f': plss->Value(25.0); sampleType = S_SPECIAL; break;
+           case '&': plss->Value(25.0); sampleType = S_SPECIAL; break;
            default : plss->Value(0.5); sampleType = 0; break;
            }
          if ((cell >= '0' && cell <= '9') ||
@@ -220,6 +224,18 @@ void Sequencer::Complete() {
          flagLatitude = plss->Latitude();
          flagLongitude = plss->Longitude();
          break;
+    case SEQ_GETLASER:
+         plss->Carrying('L');
+         break;
+    case SEQ_PUTLASER:
+         plss->Carrying(' ');
+         break;
+    case SEQ_SETUPLASER:
+         plss->Carrying(' ');
+         laserSetup = -1;
+         laserLatitude = plss->Latitude();
+         laserLongitude = plss->Longitude();
+         break;
     }
   }
 
@@ -278,6 +294,24 @@ void Sequencer::InProgress() {
     case SEQ_END_EVA:
          metabolicRate += 0.125;
          break;
+    case SEQ_GETFLAG:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_PUTFLAG:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_PLANTFLAG:
+         metabolicRate += 0.125;
+         break;
+    case SEQ_GETLASER:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_PUTLASER:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_SETUPLASER:
+         metabolicRate += 0.125;
+         break;
     }
   }
 
@@ -332,7 +366,7 @@ void Sequencer::Dock() {
 
 void Sequencer::DropSample() {
   time = 5;
-  strcpy(message," ROCK->GND");
+  strcpy(message," SAMP->GND");
   function = SEQ_DROPSAMPLE;
   }
 
@@ -406,13 +440,13 @@ void Sequencer::StoreSample() {
   Double dist;
   dist = (plss->Position() - lrv->Position()).Length();
   time = (1 * 60) + (2 * dist);
-  strcpy(message," ROCK->LRV");
+  strcpy(message," SAMP->LRV");
   function = SEQ_STORESAMPLE;
   }
 
 void Sequencer::TakeSample() {
   time = 1.25 * 60;
-  strcpy(message,"ROCK->PLSS");
+  strcpy(message,"SAMP->PLSS");
   function = SEQ_TAKESAMPLE;
   }
  
@@ -452,5 +486,25 @@ void Sequencer::PlantFlag() {
   time = 10 * 60;
   strcpy(message," FLAG->GND");
   function = SEQ_PLANTFLAG;
+  }
+
+
+
+void Sequencer::GetLaser() {
+  time = 120;
+  strcpy(message,"LSRF->PLSS");
+  function = SEQ_GETLASER;
+  }
+
+void Sequencer::PutLaser() {
+  time = 120;
+  strcpy(message,"  LSRF->LM");
+  function = SEQ_PUTLASER;
+  }
+
+void Sequencer::SetupLaser() {
+  time = 10 * 60;
+  strcpy(message," LSRF->GND");
+  function = SEQ_SETUPLASER;
   }
 

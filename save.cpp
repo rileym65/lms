@@ -28,6 +28,9 @@ void save() {
   fprintf(file,"  FlagPlanted %d%s",flagPlanted,LE);
   fprintf(file,"  FlagLongitude %.18f%s",flagLongitude,LE);
   fprintf(file,"  FlagLatitude %.18f%s",flagLatitude,LE);
+  fprintf(file,"  LaserSetup %d%s",laserSetup,LE);
+  fprintf(file,"  LaserLongitude %.18f%s",laserLongitude,LE);
+  fprintf(file,"  LaserLatitude %.18f%s",laserLatitude,LE);
   fprintf(file,"  LongestEVA %d%s",longestEVA,LE);
   fprintf(file,"  Docked %d%s",docked,LE);
   fprintf(file,"  DockingRadarOn %d%s",dockingRadarOn,LE);

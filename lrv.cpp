@@ -173,6 +173,8 @@ void Lrv::ProcessKey(Int32 key) {
   if (key == KEY_KP_END) Throttle(Throttle()-10);
   if (key == KEY_RIGHT_ARROW) TurnRate(TurnRate()+15);
   if (key == KEY_LEFT_ARROW) TurnRate(TurnRate()-15);
+  if (key == KEY_INSERT) Throttle(0);
+  if (key == '0') Throttle(0);
   if (key == KEY_F1) Throttle(10);
   if (key == KEY_F2) Throttle(20);
   if (key == KEY_F3) Throttle(30);

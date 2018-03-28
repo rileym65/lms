@@ -99,6 +99,9 @@ Vector t;
   clockDOI = 0;
   clockPDI = 0;
   numBurns = 0;
+  laserSetup = 0;
+  laserLongitude = 0;
+  laserLatitude = 0;
   }
 
 char* ClockToString(char* buffer, Int32 clock) {
@@ -378,6 +381,9 @@ int main(int argc, char** argv) {
     if (flagPlanted) 
       fprintf(file,"Feature Flag,           %10.4f, %10.4f, 0, f%s",
         flagLatitude, flagLongitude,LE);
+    if (laserSetup) 
+      fprintf(file,"Feature Laser Refl.,    %10.4f, %10.4f, 0, f%s",
+        laserLatitude, laserLongitude,LE);
     fclose(file);
     }
   delete(csm);
