@@ -9,6 +9,9 @@ Files:
   plss.pnl     - Panel definition for EVA.
   lms.doc      - Simulator documentation.  This file.
   panel.doc    - Documentation for the instrument panels.
+  records.dat  - This file holds the current mission records.
+  records.txt  - This file shows the current mission records in a more
+                 human friendly form.
   lms          - Lunar Mission Simulator executable.
   mapgen       - Program for generating maps.
   planner      - Program for making mission profiles.
@@ -29,6 +32,23 @@ Q      - Quit.  Current simulation will be saved in lms.sav
 2      - Select POS^TAR mode for the INS
 3      - Select POS^REL mode for the INS
 4      - Select ORB^ABS mode for the INS
+
+Throttle commands, available in LM, EVA, or LRV:
+------------------------------------------------
+<PGDN>   - Increase throttle 2%
+<END>    - Decrease throttle 2%
+<F1>     - Set throttle to 10%
+<F2>     - Set throttle to 20%
+<F3>     - Set throttle to 30%
+<F4>     - Set throttle to 40%
+<F5>     - Set throttle to 50%
+<F6>     - Set throttle to 60%
+<F7>     - Set throttle to 70%
+<F8>     - Set throttle to 80%
+<F9>     - Set throttle to 90%
+<F10>    - Set throttle to 100%
+0        - Set throttle to 0%
+<INSERT> - Set throttle to 0%
 
 Available while in CSM:
 -----------------------
@@ -53,18 +73,6 @@ u      - Increase rcs up thrust (Down->off->Up)
 d      - Increase rcs down thrust (Up->off->Down)
 I      - Ignite main engine
 i      - Shutdown main engine
-<PGDN> - Increase main engine throttle 2%
-<END>  - Decrease main engine throttle 2%
-<F1>   - Set main engine throttle to 10%
-<F2>   - Set main engine throttle to 20%
-<F3>   - Set main engine throttle to 30%
-<F4>   - Set main engine throttle to 40%
-<F5>   - Set main engine throttle to 50%
-<F6>   - Set main engine throttle to 60%
-<F7>   - Set main engine throttle to 70%
-<F8>   - Set main engine throttle to 80%
-<F9>   - Set main engine throttle to 90%
-<F10>  - Set main engine throttle to 100%
 <HOME> - Roll counter clockwise around up
 <PgUp> - Roll clockwise around up
 <up>   - Pitch counter clockwise around left
@@ -99,8 +107,6 @@ D        - Drop sample
 E        - End EVA
 R        - Return sample box to rover
 B        - Get sample Box from rover
-0        - Stop moving
-<INSERT> - Stop moving
 L        - Get laser reflector from LM, setup laser reflector
 l        - Put laser reflector back into LM
 

@@ -113,52 +113,78 @@ Ams_Ins
                                               |APO:   98.7                |
                                               +---------------------------+
 
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|----8
 Ams_LandingRadar
-  +-------------+
-  |    land     |
-  | +---w|----+ |
-  | |         | |
-  | |         |n|
-  |--         --|
-  |s|         | |
-  | |         | |
-  | +----|e---+ |
-  +-------------+
+
+  The landing radar displays information pertinant to       +-------------+
+landing.  A graphics depiction of the lunar topography      |    land     |
+below the lander will show in the display.  Near the top    | +---w|----+ |
+left and right edge if there are '+' indicators this        | |         | |
+indicates that the downward velocity of the LM is too high  | |         |n|
+for landing.  If on the top right edge of the display there |--         --|
+is a '^' flag showing, this indicates that the LM is moving |s|         | |
+too quickly to the west for a safe landing.  On the bottom  | |         | |
+right edge if there is a 'v' flag showing, this indicates   | +----|e---+ |
+that the LM is moving too quickly eastwards for a safe      +-------------+
+landing.  On the right edge near the bottom if there is a '>' flag, this
+indicates that the LM is moving too quickly nortwards to land safely and
+on the left edge near the bottom if there is a '<' flag then the LM is
+moving too quickly southwards for a safe landing.  The various velocity
+warning flags will only show if the landing radar is on, the altitude of
+the LM is below 18,000 meters and the LM is upright enough for the 
+landing radar to be receiving a signal.
+
 
 Ams_Lm
-  +------+
-  |    lm|
-  |--:   |
-  |--:   |
-  |RK:  0|
-  +------+
+
+  This instrument displays information about the LM.  The only     +------+
+data it displays is the amount of rock currently loaded onto the   |    lm|
+LM.  The RK display indicates how many kilograms of samples have   |--:   |
+been loaded.                                                       |--:   |
+                                                                   |RK:  0|
+                                                                   +------+
 
 Ams_Lrv
-  +------+
-  |^  lrv|
-  |BAT:99|
-  |BOX: 8|
-  |ROK: 0|
-  +------+
+
+  This group of displays shows information about the rover.  BAT   +------+
+shows what percentage of battery life remains.  BOX shows how many |^  lrv|
+sample boxes are left and ROK indicates how many kilograms of      |BAT:99|
+samples are currently carried on the rover.  The rover carries     |BOX: 8|
+one sample box at a time and each sample box can hold up to 30     |ROK: 0|
+kilograms of samples.  A '^' flag will appear in the upper left    +------+
+corner of this gauge to indicate that the rover has been unpacked and setup
+ready for use.  If this '^' flag is absent then the rover is still packed
+away in the descent module.
+
 
 Ams_Message
-  +---------------+
-  |----------:    |
-  +---------------+
+
+  This is the message display area for the onboard        +---------------+
+sequencer.  When the sequencer is active performing a     |----------:    |
+task the task and how many seconds left will be displayed +---------------+
+on this instrument.
+
 
 Ams_Pilot
-  +-------------------+
-  | CSM|*LM | LRV| EVA|
-  +-------------------+
+
+  This shows where the pilot is current located.  An  +-------------------+
+'*' symbol will be displayed next to the location     | CSM|*LM | LRV| EVA|
+where the pilot is located.  The possible locations   +-------------------+
+are CSM=Command Service Module, LM=Lunar Module, LRV=Lunar Rover and 
+EVA=Outside any vehicle.
+
 
 Ams_Plss
-  +------+
-  |^ plss|
-  |OXY:99|
-  |BAT:99|
-  |PAK: 4|
-  +------+
 
+  This area displays information related to the PLSS, Portable     +------+
+Life Support System.  OXY indicates what % of oxygen remains.      |^ plss|
+BAT shows what % of battery power remains and PAK indicates how    |OXY:99|
+many PLSS recharge packs are left.  If there are no packs left     |BAT:99|
+then you will no longer be able to equip the PLSS.                 |PAK: 4|
+                                                                   +------+
+
+
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|----8
 Ams_Sequencer
   +--------------+
   | ABO| KIL| PIL|

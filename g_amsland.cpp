@@ -60,5 +60,31 @@ void G_AmsLand::Update() {
     lastLatitude = lat;
     lastLongitude = lng;
     }
+  if (landingRadarOn && alt < 18000 && ins->AttUr() <= 60) {
+    if (lm->VelocityAltitude() <= -3) {
+      GotoXY(x+1,y+2); printf("+");
+      GotoXY(x+11,y+2); printf("+");
+      }
+    else {
+      GotoXY(x+1,y+2); printf("|");
+      GotoXY(x+11,y+2); printf("|");
+      }
+    GotoXY(x+10,y+1);
+    if (lm->VelocityEast() < -0.2) printf("^"); else printf("-");
+    GotoXY(x+10,y+7);
+    if (lm->VelocityEast() > 0.2) printf("v"); else printf("-");
+    GotoXY(x+11,y+6);
+    if (lm->VelocityNorth() > 0.2) printf(">"); else printf("|");
+    GotoXY(x+1,y+6);
+    if (lm->VelocityNorth() < -0.2) printf("<"); else printf("|");
+    }
+  else {
+    GotoXY(x+1,y+2); printf("|");
+    GotoXY(x+11,y+2); printf("|");
+    GotoXY(x+10,y+1); printf("-");
+    GotoXY(x+10,y+7); printf("-");
+    GotoXY(x+11,y+6); printf("|");
+    GotoXY(x+1,y+6); printf("|");
+    }
   }
 
