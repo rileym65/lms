@@ -27,6 +27,7 @@ void Records::load() {
     LongestTotalEva = 0;
     LongestTotalDrive = 0.0;
     LongestTotalWalk = 0.0;
+    LowestLatitude = 0.0;
     RcsFuel = 0;
     ShortestDocking = 999999999;
     ShortestLanding = 999999999;
@@ -47,6 +48,7 @@ void Records::load() {
       if (startsWith(pline,"LongestTotalEva")) LongestTotalEva = atoi(nw(pline));
       if (startsWith(pline,"LongestTotalDrive")) LongestTotalDrive = atof(nw(pline));
       if (startsWith(pline,"LongestTotalWalk")) LongestTotalWalk = atof(nw(pline));
+      if (startsWith(pline,"LowestLatitude")) LowestLatitude = atof(nw(pline));
       if (startsWith(pline,"RcsFuel")) RcsFuel = atof(nw(pline));
       if (startsWith(pline,"ShortestDocking")) ShortestDocking = atoi(nw(pline));
       if (startsWith(pline,"ShortestLanding")) ShortestLanding = atoi(nw(pline));
@@ -73,6 +75,7 @@ void Records::Save() {
   fprintf(file,"LongestTotalEva %d%s",LongestTotalEva,LE);
   fprintf(file,"LongestTotalDrive %.18f%s",LongestTotalDrive,LE);
   fprintf(file,"LongestTotalWalk %.18f%s",LongestTotalWalk,LE);
+  fprintf(file,"LowestLatitude %.18f%s",LowestLatitude,LE);
   fprintf(file,"RcsFuel %.18f%s",RcsFuel,LE);
   fprintf(file,"ShortestDocking %d%s",ShortestDocking,LE);
   fprintf(file,"ShortestLanding %d%s",ShortestLanding,LE);
@@ -90,6 +93,7 @@ void Records::Save() {
   else 
     fprintf(file,"  Closest to Target       : %9.2fm%s",ClosestToTarget,LE);
   fprintf(file,"  Highest Latitude Landing: %9.2f%s",HighestLatitude,LE);
+  fprintf(file,"  Lowest Latitude Landing : %9.2f%s",LowestLatitude,LE);
   fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",LongestSingleWalk/1000.0,LE);
   fprintf(file,"  Longest Tot. EVA Walked : %9.2fkm%s",LongestTotalWalk/1000.0,LE);
   fprintf(file,"  Longest Ind. EVA Drivin : %9.2fkm%s",LongestSingleDrive/1000.0,LE);

@@ -141,6 +141,10 @@ void MissionReport() {
     records->HighestLatitude = landedLatitude;
     fprintf(file,"  Highest Latitude Landing: %9.2f%s",landedLatitude,LE);
     }
+  if (landedLatitude < records->LowestLatitude) {
+    records->LowestLatitude = landedLatitude;
+    fprintf(file,"  Lowest Latitude Landing : %9.2f%s",landedLatitude,LE);
+    }
   if (singleWalk > records->LongestSingleWalk) {
     records->LongestSingleWalk = singleWalk;
     fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",singleWalk/1000.0,LE);

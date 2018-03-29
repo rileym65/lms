@@ -23,6 +23,7 @@ class Records {
     Double LongestTotalDrive;
     Double LongestTotalWalk;
     Int32  LongestTotalEva;
+    Double LowestLatitude;
     Double RcsFuel;
     Int32  ShortestDocking;
     Int32  ShortestLanding;
