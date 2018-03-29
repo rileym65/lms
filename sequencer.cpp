@@ -239,6 +239,16 @@ void Sequencer::Complete() {
     case SEQ_KILL:
          mode_kil = 0;
          break;
+    case SEQ_ABORT:
+         mode_kil = 0;
+         mode_abo = 0;
+         mode_jet = 0;
+         break;
+    case SEQ_LIFTOFF:
+         mode_kil = 0;
+         mode_lif = 0;
+         mode_jet = 0;
+         break;
     }
   }
 
@@ -520,5 +530,25 @@ void Sequencer::Kill() {
   lm->RollRate(0);
   lm->PitchRate(0);
   lm->YawRate(0);
+  }
+
+void Sequencer::Abort() {
+  time = -5;
+  strcpy(message,"  ABORT   ");
+  lm->Abort();
+  function = SEQ_ABORT;
+  mode_kil = 0xff;
+  mode_abo = 0xff;
+  mode_jet = 0xff;
+  }
+
+void Sequencer::Liftoff() {
+  time = -5;
+  strcpy(message," LIFTOFF  ");
+  lm->Abort();
+  function = SEQ_ABORT;
+  mode_kil = 0xff;
+  mode_lif = 0xff;
+  mode_jet = 0xff;
   }
 

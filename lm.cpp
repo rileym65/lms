@@ -357,6 +357,29 @@ Int8 LunarModule::SubLoad(char* pline) {
   return -1;
   }
 
+void LunarModule::Abort() {
+  landed = 0;
+  descentJettisoned = -1;
+  mode_arm = 0;
+  throttle = 100;
+  clockBu = 0;
+  if (oxygen > ASC_OXYGEN) oxygen = ASC_OXYGEN;
+  if (battery > ASC_BATTERY) battery = ASC_BATTERY;
+  if (eoxygen > ASC_EOXYGEN) eoxygen = ASC_EOXYGEN;
+  if (ebattery > ASC_EBATTERY) ebattery = ASC_EBATTERY;
+  liftoffMet = clockMi;
+  numBurns++;
+  burn[numBurns-1].start = clockMi;
+  if (descentJettisoned) {
+    burn[numBurns-1].fuelUsed = ascentFuel;
+    burn[numBurns-1].engine = 'A';
+    }
+  else {
+    burn[numBurns-1].fuelUsed = descentFuel;
+    burn[numBurns-1].engine = 'D';
+    }
+  }
+
 void LunarModule::ProcessKey(Int32 key) {
   if (key == 'M') {
     if (docked) seq->MoveCsm();
@@ -379,29 +402,14 @@ void LunarModule::ProcessKey(Int32 key) {
   if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
   if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
   if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
+  if (key == 27 && !landed && mode_arm != 0 && !descentJettisoned) {
+    seq->Abort();
+    }
   if (landed) {
     if (key == '*') seq->Rest();
     if (key == ')') seq->Sleep();
     if (key == 'L') {
-      landed = 0;
-      descentJettisoned = -1;
-      throttle = 100;
-      clockBu = 0;
-      if (oxygen > ASC_OXYGEN) oxygen = ASC_OXYGEN;
-      if (battery > ASC_BATTERY) battery = ASC_BATTERY;
-      if (eoxygen > ASC_EOXYGEN) eoxygen = ASC_EOXYGEN;
-      if (ebattery > ASC_EBATTERY) ebattery = ASC_EBATTERY;
-      liftoffMet = clockMi;
-      numBurns++;
-      burn[numBurns-1].start = clockMi;
-      if (descentJettisoned) {
-        burn[numBurns-1].fuelUsed = ascentFuel;
-        burn[numBurns-1].engine = 'A';
-        }
-      else {
-        burn[numBurns-1].fuelUsed = descentFuel;
-        burn[numBurns-1].engine = 'D';
-        }
+      seq->Liftoff();
       }
     }
   if (!docked) {
@@ -455,6 +463,10 @@ void LunarModule::ProcessKey(Int32 key) {
         }
       }
     if (key == 'K') seq->Kill();
+    if (key == 9) {
+      if (mode_arm != 0) mode_arm = 0;
+      else if (!descentJettisoned) mode_arm = 0xff;
+      }
     if (key == KEY_KP_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
     if (key == KEY_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
     if (key == KEY_PGUP) RollRate(RollRate()-(rcsRotThrottle / 100.0));

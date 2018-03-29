@@ -33,6 +33,8 @@
 #define SEQ_PUTLASER    28
 #define SEQ_SETUPLASER  29
 #define SEQ_KILL        30
+#define SEQ_ABORT       31
+#define SEQ_LIFTOFF     32
 
 class Sequencer {
   protected:
@@ -46,6 +48,7 @@ class Sequencer {
     ~Sequencer();
     Int32 Time();
     char* Message();
+    void  Abort();
     void  BoxToLm();
     void  BoxToLrv();
     void  BoxToPlss();
@@ -59,6 +62,7 @@ class Sequencer {
     void  GetFlag();
     void  GetLaser();
     void  Kill();
+    void  Liftoff();
     void  MoveCsm();
     void  MoveEva();
     void  MoveLm();
