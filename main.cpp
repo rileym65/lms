@@ -382,7 +382,7 @@ int main(int argc, char** argv) {
       fprintf(file,"Feature Flag,           %10.4f, %10.4f, 0, f%s",
         flagLatitude, flagLongitude,LE);
     if (laserSetup) 
-      fprintf(file,"Feature Laser Refl.,    %10.4f, %10.4f, 0, f%s",
+      fprintf(file,"Feature Laser Refl.,    %10.4f, %10.4f, 0, _%s",
         laserLatitude, laserLongitude,LE);
     fclose(file);
     }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "header.h"
+#include "records.h"
 
 void MissionReport() {
   Int32 i;
@@ -8,6 +9,11 @@ void MissionReport() {
   char  buffer2[128];
   char  buffer3[128];
   FILE* file;
+  Records* records;
+  Double singleWalk;
+  Double singleDrive;
+  Double dist;
+  records = new Records();
   file = stdout;
   fprintf(file,"Mission Time Line:%s",LE);
   fprintf(file,"  Undock UTC    : %s%s",ClockToString(buffer,clockUd),LE);
@@ -28,10 +34,12 @@ void MissionReport() {
   fprintf(file,"  Target Latitude       : %.2f%s",mission->TargetLatitude(),LE);
   fprintf(file,"  Landed Longitude      : %.2f%s",landedLongitude,LE);
   fprintf(file,"  Landed Latitude       : %.2f%s",landedLatitude,LE);
+  dist = distance(landedLongitude,landedLatitude,mission->TargetLongitude(),
+             mission->TargetLatitude());
   fprintf(file,"  Distance From Target  : %.2f%s",
     distance(landedLongitude,landedLatitude,mission->TargetLongitude(),
              mission->TargetLatitude()),LE);
-  fprintf(file,"  Vertial Velocity      : %.2f%s",landedVVel,LE);
+  fprintf(file,"  Vertical Velocity     : %.2f%s",landedVVel,LE);
   fprintf(file,"  Horizontal Velocity   : %.2f%s",landedHVel,LE);
   fprintf(file,"  Descent Fuel Remaining: %.2f%s",lm->DescentFuel(),LE);
   fprintf(file,"%s",LE);
@@ -46,13 +54,18 @@ void MissionReport() {
   fprintf(file,"  EVA details:%s",LE);
   fprintf(file,"     #     start       end   duration   walked   driven  farthest  samples%s",LE);
   fprintf(file,"    ----------------------------------------------------------------------%s",LE);
-  for (i=0; i<evaCount; i++)
+  singleWalk = 0;
+  singleDrive = 0;
+  for (i=0; i<evaCount; i++) {
     fprintf(file,"    %2d %8s %8s  %8s %6.2fkm %6.2fkm  %6.2fkm   %3d%s",
       i+1,ClockToString(buffer,evas[i].start),
       ClockToString(buffer2,evas[i].end),
       ClockToString(buffer3,evas[i].end-evas[i].start),
       evas[i].walked/1000.0,evas[i].driven/1000.0,evas[i].farthest/1000.0,
       evas[i].samples,LE);
+    if (evas[i].walked > singleWalk) singleWalk = evas[i].walked;
+    if (evas[i].driven > singleDrive) singleDrive = evas[i].driven;
+    }
   fprintf(file,"%s",LE);
   fprintf(file,"Samples:%s",LE);
   fprintf(file,"  Total Samples Collected: %d%s",lm->Rock(),LE);
@@ -81,6 +94,80 @@ void MissionReport() {
     if (burn[i].engine == 'D') printf("Descent%s",LE);
       else printf("Ascent%s",LE);
     }
-  
+  fprintf(file,"%s",LE);
+  fprintf(file,"Records Broken:%s",LE);
+  if (clockMi > records->LongestMission) {
+    records->LongestMission = clockMi;
+    fprintf(file,"  Longest Mission         : %s%s",ClockToString(buffer,clockMi),LE);
+    }
+  if (longestEVA > records->LongestEva) {
+    records->LongestEva = longestEVA;
+    fprintf(file,"  Longest EVA             : %s%s",ClockToString(buffer,longestEVA),LE);
+    }
+  if (clockTe/evaCount > records->LongestAverageEva) {
+    records->LongestAverageEva = clockTe/evaCount;
+    fprintf(file,"  Longest Average EVA     : %s%s",ClockToString(buffer,clockTe/evaCount),LE);
+    }
+  if (clockTe > records->LongestTotalEva) {
+    records->LongestTotalEva = clockTe;
+    fprintf(file,"  Longest Total EVA       : %s%s",ClockToString(buffer,clockTe),LE);
+    }
+  if (landedMet < records->ShortestLanding) {
+    records->ShortestLanding = landedMet;
+    fprintf(file,"  Shortest Time to Land   : %s%s",ClockToString(buffer,landedMet),LE);
+    }
+  if (clockDk < records->ShortestDocking) {
+    records->ShortestDocking = clockDk;
+    fprintf(file,"  Shortest Time to Dock   : %s%s",ClockToString(buffer,clockDk),LE);
+    }
+  if (dist < records->ClosestToTarget) {
+    records->ClosestToTarget = dist;
+    if (dist >= 10000)
+      fprintf(file,"  Closest to Target       : %9.2fkm%s",dist/1000.0,LE);
+    else 
+      fprintf(file,"  Closest to Target       : %9.2fm%s",dist,LE);
+    }
+  if (landedLatitude > records->HighestLatitude) {
+    records->HighestLatitude = landedLatitude;
+    fprintf(file,"  Highest Latitude Landing: %9.2f%s",landedLatitude,LE);
+    }
+  if (singleWalk > records->LongestSingleWalk) {
+    records->LongestSingleWalk = singleWalk;
+    fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",singleWalk/1000.0,LE);
+    }
+  if (plss->Walked() > records->LongestTotalWalk) {
+    records->LongestTotalWalk = plss->Walked();
+    fprintf(file,"  Longest Tot. EVA Walked : %9.2fkm%s",plss->Walked()/1000.0,LE);
+    }
+  if (singleDrive > records->LongestSingleDrive) {
+    records->LongestSingleDrive = singleDrive;
+    fprintf(file,"  Longest Ind. EVA Drivin : %9.2fkm%s",singleDrive/1000.0,LE);
+    }
+  if (lrv->Driven() > records->LongestTotalDrive) {
+    records->LongestTotalDrive = lrv->Driven();
+    fprintf(file,"  Longest Tot. EVA Driven : %9.2fkm%s",lrv->Driven()/1000.0,LE);
+    }
+  if (farthest > records->FarthestFromLM) {
+    records->FarthestFromLM = farthest;
+    fprintf(file,"  Farthest From LM        : %9.2fkm%s",farthest/1000.0,LE);
+    }
+  if (lm->Value() > records->GreatestSampleValue) {
+    records->GreatestSampleValue = lm->Value();
+    fprintf(file,"  Greatest Sample Value   : %9.2f%s",lm->Value(),LE);
+    }
+  if (lm->DescentFuel() > records->DescentFuel) {
+    records->DescentFuel = lm->DescentFuel();
+    fprintf(file,"  Descent Fuel Remaining  : %9.2fkg%s",lm->DescentFuel(),LE);
+    }
+  if (lm->AscentFuel() > records->AscentFuel) {
+    records->AscentFuel = lm->AscentFuel();
+    fprintf(file,"  Ascent Fuel Remaining   : %9.2fkg%s",lm->AscentFuel(),LE);
+    }
+  if (lm->RcsFuel() > records->RcsFuel) {
+    records->RcsFuel = lm->RcsFuel();
+    fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",lm->RcsFuel(),LE);
+    }
+  if (file != stdout) fclose(file);
+  records->Save();
   }
 

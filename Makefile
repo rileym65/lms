@@ -93,6 +93,7 @@ OBJS = \
 	lrv.o \
 	map.o \
 	mission.o \
+	records.o \
 	save.o \
 	lm.o \
 	matrix.o \
@@ -159,6 +160,7 @@ missionreport.o: $(HEADERS) missionreport.cpp
 panel.o:         $(HEADERS) $(PHEADERS)  panel.cpp
 plss.o:          $(HEADERS) vehicle.h plss.h plss.cpp
 random.o:        $(HEADERS) lfsr.h random.h random.cpp
+records.o:       $(HEADERS) records.h records.cpp
 save.o:          $(HEADERS) save.cpp
 sgn.o:           $(HEADERS) sgn.cpp
 sequencer.o:     $(HEADERS) sequencer.cpp
