@@ -8,13 +8,23 @@ void MissionReport() {
   char  buffer[128];
   char  buffer2[128];
   char  buffer3[128];
+  char  filename[128];
   FILE* file;
   Records* records;
   Double singleWalk;
   Double singleDrive;
   Double dist;
   records = new Records();
-  file = stdout;
+  i = 0;
+  sprintf(filename,"report_%04d.txt",i);
+  file = fopen(filename,"r");
+  while (file != NULL) {
+    fclose(file);
+    i++;
+    sprintf(filename,"report_%04d.txt",i);
+    file = fopen(filename,"r");
+    }
+  file = fopen(filename,"w");
   fprintf(file,"Mission Time Line:%s",LE);
   fprintf(file,"  Undock UTC    : %s%s",ClockToString(buffer,clockUd),LE);
   if (clockDOI != 0)
@@ -91,8 +101,8 @@ void MissionReport() {
       ClockToString(buffer2,burn[i].end),
       ClockToString(buffer3,burn[i].end-burn[i].start),
       burn[i].fuelUsed);
-    if (burn[i].engine == 'D') printf("Descent%s",LE);
-      else printf("Ascent%s",LE);
+    if (burn[i].engine == 'D') fprintf(file,"Descent%s",LE);
+      else fprintf(file,"Ascent%s",LE);
     }
   fprintf(file,"%s",LE);
   fprintf(file,"Records Broken:%s",LE);
@@ -169,5 +179,7 @@ void MissionReport() {
     }
   if (file != stdout) fclose(file);
   records->Save();
+  printf("\n");
+  printf("Mission report written to %s%s",filename,LE);
   }
 

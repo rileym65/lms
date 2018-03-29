@@ -56,6 +56,7 @@ void Records::load() {
   }
 
 void Records::Save() {
+  char  buffer[128];
   FILE* file;
   file = fopen("records.dat","w");
   fprintf(file,"AscentFuel %.18f%s",AscentFuel,LE);
@@ -75,5 +76,28 @@ void Records::Save() {
   fprintf(file,"RcsFuel %.18f%s",RcsFuel,LE);
   fprintf(file,"ShortestDocking %d%s",ShortestDocking,LE);
   fprintf(file,"ShortestLanding %d%s",ShortestLanding,LE);
+  fclose(file);
+
+  file = fopen("records.txt","w");
+  fprintf(file,"  Longest Mission         : %s%s",ClockToString(buffer,LongestMission),LE);
+  fprintf(file,"  Longest EVA             : %s%s",ClockToString(buffer,LongestEva),LE);
+  fprintf(file,"  Longest Average EVA     : %s%s",ClockToString(buffer,LongestAverageEva),LE);
+  fprintf(file,"  Longest Total EVA       : %s%s",ClockToString(buffer,LongestTotalEva),LE);
+  fprintf(file,"  Shortest Time to Land   : %s%s",ClockToString(buffer,ShortestLanding),LE);
+  fprintf(file,"  Shortest Time to Dock   : %s%s",ClockToString(buffer,ShortestDocking),LE);
+  if (ClosestToTarget >= 10000)
+    fprintf(file,"  Closest to Target       : %9.2fkm%s",ClosestToTarget/1000.0,LE);
+  else 
+    fprintf(file,"  Closest to Target       : %9.2fm%s",ClosestToTarget,LE);
+  fprintf(file,"  Highest Latitude Landing: %9.2f%s",HighestLatitude,LE);
+  fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",LongestSingleWalk/1000.0,LE);
+  fprintf(file,"  Longest Tot. EVA Walked : %9.2fkm%s",LongestTotalWalk/1000.0,LE);
+  fprintf(file,"  Longest Ind. EVA Drivin : %9.2fkm%s",LongestSingleDrive/1000.0,LE);
+  fprintf(file,"  Longest Tot. EVA Driven : %9.2fkm%s",LongestTotalDrive/1000.0,LE);
+  fprintf(file,"  Farthest From LM        : %9.2fkm%s",FarthestFromLM/1000.0,LE);
+  fprintf(file,"  Greatest Sample Value   : %9.2f%s",GreatestSampleValue,LE);
+  fprintf(file,"  Descent Fuel Remaining  : %9.2fkg%s",DescentFuel,LE);
+  fprintf(file,"  Ascent Fuel Remaining   : %9.2fkg%s",AscentFuel,LE);
+  fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",RcsFuel,LE);
   fclose(file);
   }
