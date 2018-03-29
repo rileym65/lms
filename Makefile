@@ -38,6 +38,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_precaxis.h \
            g_radars.h \
            g_rcs.h \
+           g_seq.h \
            g_throttle.h
 OBJS = \
 	csm.o \
@@ -84,6 +85,7 @@ OBJS = \
 	g_precaxis.o \
 	g_radars.o \
 	g_rcs.o \
+	g_seq.o \
 	g_throttle.o \
 	groundvehicle.o \
 	helpers.o \
@@ -211,6 +213,7 @@ g_plss.o:       $(HEADERS) gauge.h terminal.h g_plss.h g_plss.cpp
 g_precaxis.o:   $(HEADERS) gauge.h terminal.h g_axis.h g_precaxis.h g_precaxis.cpp
 g_rcs.o:        $(HEADERS) gauge.h terminal.h g_rcs.h g_rcs.cpp
 g_radars.o:     $(HEADERS) gauge.h terminal.h g_radars.h g_radars.cpp
+g_seq.o:        $(HEADERS) gauge.h terminal.h g_seq.h g_seq.cpp
 g_throttle.o:   $(HEADERS) gauge.h terminal.h g_throttle.h g_throttle.cpp
 
 mission.o:     $(HEADERS) mission.h mission.cpp

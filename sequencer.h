@@ -32,6 +32,7 @@
 #define SEQ_GETLASER    27
 #define SEQ_PUTLASER    28
 #define SEQ_SETUPLASER  29
+#define SEQ_KILL        30
 
 class Sequencer {
   protected:
@@ -57,6 +58,7 @@ class Sequencer {
     void  ExitLrv();
     void  GetFlag();
     void  GetLaser();
+    void  Kill();
     void  MoveCsm();
     void  MoveEva();
     void  MoveLm();

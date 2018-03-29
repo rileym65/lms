@@ -30,7 +30,7 @@ void G_AmsMessage::Update() {
     }
   if (seq->Time() != lastSeqTime) {
     GotoXY(x+11,y);
-    if (seq->Time() == 0) {
+    if (seq->Time() <= 0) {
       printf("    ");
       }
     else {

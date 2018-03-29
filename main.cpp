@@ -102,6 +102,11 @@ Vector t;
   laserSetup = 0;
   laserLongitude = 0;
   laserLatitude = 0;
+  mode_abo = 0;
+  mode_arm = 0;
+  mode_jet = 0;
+  mode_kil = 0;
+  mode_lif = 0;
   }
 
 char* ClockToString(char* buffer, Int32 clock) {

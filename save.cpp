@@ -17,6 +17,11 @@ void save() {
   fprintf(file,"  ClockUD %d%s",clockUd,LE);
   fprintf(file,"  ClockDOI %d%s",clockDOI,LE);
   fprintf(file,"  ClockPDI %d%s",clockPDI,LE);
+  fprintf(file,"  ModeAbo %d%s",mode_abo,LE);
+  fprintf(file,"  ModeArm %d%s",mode_arm,LE);
+  fprintf(file,"  ModeJet %d%s",mode_jet,LE);
+  fprintf(file,"  ModeKil %d%s",mode_kil,LE);
+  fprintf(file,"  ModeLif %d%s",mode_lif,LE);
   fprintf(file,"  EvaCount %d%s",evaCount,LE);
   fprintf(file,"  LandedMET %d%s",landedMet,LE);
   fprintf(file,"  LiftoffMET %d%s",liftoffMet,LE);

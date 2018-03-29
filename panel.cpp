@@ -45,6 +45,7 @@
 #include "g_precaxis.h"
 #include "g_radars.h"
 #include "g_rcs.h"
+#include "g_seq.h"
 #include "g_throttle.h"
 
 Panel::Panel(const char* filename,Vehicle* v) {
@@ -175,6 +176,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Radars(x1, y1, false, vehicle));
       else if (strcasecmp(str,"rcs") == 0)
         addGauge(new G_Rcs(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"seq") == 0)
+        addGauge(new G_Seq(x1, y1, false, vehicle));
       else if (strcasecmp(str,"throttle") == 0)
         addGauge(new G_Throttle(x1, y1, false, vehicle));
       else {

@@ -454,6 +454,7 @@ void LunarModule::ProcessKey(Int32 key) {
           clockDOI = ignitionTime;
         }
       }
+    if (key == 'K') seq->Kill();
     if (key == KEY_KP_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
     if (key == KEY_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
     if (key == KEY_PGUP) RollRate(RollRate()-(rcsRotThrottle / 100.0));

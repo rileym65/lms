@@ -236,6 +236,9 @@ void Sequencer::Complete() {
          laserLatitude = plss->Latitude();
          laserLongitude = plss->Longitude();
          break;
+    case SEQ_KILL:
+         mode_kil = 0;
+         break;
     }
   }
 
@@ -316,8 +319,9 @@ void Sequencer::InProgress() {
   }
 
 void Sequencer::Cycle() {
-  if (time > 0) {
-    time--;
+  if (time != 0) {
+    if (time > 0) time--;
+    else if (time < 0) time++;
     InProgress();
     if (time == 0) {
       strcpy(message,"----------");
@@ -506,5 +510,15 @@ void Sequencer::SetupLaser() {
   time = 10 * 60;
   strcpy(message," LSRF->GND");
   function = SEQ_SETUPLASER;
+  }
+
+void Sequencer::Kill() {
+  time = -5;
+  strcpy(message,"  SEQ:KILL");
+  function = SEQ_KILL;
+  mode_kil = 0xff;
+  lm->RollRate(0);
+  lm->PitchRate(0);
+  lm->YawRate(0);
   }
 
