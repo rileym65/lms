@@ -408,7 +408,7 @@ void LunarModule::ProcessKey(Int32 key) {
   if (landed) {
     if (key == '*') seq->Rest();
     if (key == ')') seq->Sleep();
-    if (key == 'L') {
+    if (key == 'L' && mode_arm != 0) {
       seq->Liftoff();
       }
     }
