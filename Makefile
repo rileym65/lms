@@ -142,12 +142,17 @@ rmsave:
 
 doc:
 	makedoc lms.d
+	makedoc panel.d
 
 clean:
 	-rm $(PROJECT)
 	-rm mapgen
 	-rm planner
 	-rm *.o
+	-rm lms.doc
+	-rm lms.html
+	-rm panel.doc
+	-rm panel.html
 
 csm.o:           $(HEADERS) csm.cpp
 gauge.o:         $(HEADERS) gauge.h gauge.cpp
