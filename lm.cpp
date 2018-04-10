@@ -184,7 +184,7 @@ void LunarModule::Cycle() {
   Double hVel;
   Vector v;
   Matrix m;
-  if (landed && !descentJettisoned) return;
+  if (landed && throttle == 0) return;
   if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
 /*
     m = Matrix::Identity();
@@ -277,7 +277,8 @@ void LunarModule::Cycle() {
       }
     }
   Vehicle::Cycle();
-  if (radius <= GROUND && !landed) {
+//  if (radius <= GROUND && !landed) {
+  if (radius <= GROUND) {
     vVel = fabs(velocityAltitude);
     hVel = sqrt(lm->VelocityEast() * lm->VelocityEast() +
                 lm->VelocityNorth() * lm->VelocityNorth());
@@ -399,9 +400,21 @@ void LunarModule::ProcessKey(Int32 key) {
     if (!cabinPressurized) seq->CabinPressurize();
     else if (spaceSuitOn) seq->CabinEvacuate();
     }
-  if (key == '?') dsnOn = (dsnOn) ? 0 : -1;
-  if (key == '>') dockingRadarOn = (dockingRadarOn) ? 0 : -1;
-  if (key == '<') landingRadarOn = (landingRadarOn) ? 0 : -1;
+  if (key == '?') {
+    dsnOn = -1;
+    dockingRadarOn = 0;
+    landingRadarOn = 0;
+    }
+  if (key == '>') {
+    dsnOn = 0;
+    dockingRadarOn = -1;
+    landingRadarOn = 0;
+    }
+  if (key == '<') {
+    dsnOn = 0;
+    dockingRadarOn = 0;
+    landingRadarOn = -1;
+    }
   if (key == 27 && !landed && mode_arm != 0 && !descentJettisoned) {
     seq->Abort();
     }
@@ -434,7 +447,7 @@ void LunarModule::ProcessKey(Int32 key) {
     if (key == '+' && RcsRotThrottle() == 10) RcsRotThrottle(50);
     if (key == '_' && RcsRotThrottle() == 50) RcsRotThrottle(10);
     if (key == '_' && RcsRotThrottle() == 100) RcsRotThrottle(50);
-    if (key == 'I' && Throttle() == 0) {
+    if (key == 'I' && Throttle() == 0 && !landed) {
       Throttle(10);
       clockBu = 0;
       ignitionAltitude = altitude;

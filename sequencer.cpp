@@ -89,6 +89,8 @@ void Sequencer::Complete() {
          plssOn = -1;
          plss->Oxygen(PLSS_OXYGEN);
          plss->Battery(PLSS_BATTERY);
+         plss->EOxygen(PLSS_EOXYGEN);
+         plss->EBattery(PLSS_EBATTERY);
          plssPacks--;
          break;
     case SEQ_PLSSOFF:
@@ -269,13 +271,13 @@ void Sequencer::InProgress() {
          metabolicRate += 0.108;
          break;
     case SEQ_SUITOFF:
-         metabolicRate += 0.108;
+         metabolicRate += 0.106;
          break;
     case SEQ_PLSSON:
          metabolicRate += 0.108;
          break;
     case SEQ_PLSSOFF:
-         metabolicRate += 0.108;
+         metabolicRate += 0.106;
          break;
     case SEQ_MOVE_EVA:
          metabolicRate += 0.125;
@@ -546,7 +548,7 @@ void Sequencer::Liftoff() {
   time = -5;
   strcpy(message," LIFTOFF  ");
   lm->Abort();
-  function = SEQ_ABORT;
+  function = SEQ_LIFTOFF;
   mode_kil = 0xff;
   mode_lif = 0xff;
   mode_jet = 0xff;
