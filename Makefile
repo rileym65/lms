@@ -140,6 +140,9 @@ planner: $(PLANNEROBJS)
 rmsave:
 	-rm *.sav
 
+doc:
+	makedoc lms.d
+
 clean:
 	-rm $(PROJECT)
 	-rm mapgen
