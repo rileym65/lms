@@ -22,6 +22,7 @@ KEYDEF keys[] = {
   { "[3~",         KEY_DELETE                    },
   { "OH",          KEY_HOME                      },
   { "[H",          KEY_KP_HOME                   },
+  { "[F",          KEY_KP_END                    },
   { "OF",          KEY_END                       },
   { "[5~",         KEY_PGUP                      },
   { "[6~",         KEY_PGDN                      },
