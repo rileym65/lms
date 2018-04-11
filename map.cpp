@@ -54,7 +54,7 @@ void Map::loadFeatures(const char* filename) {
     if (numFeatures == 1) features = (FEATURE*)malloc(sizeof(FEATURE));
       else features = (FEATURE*)realloc(features,sizeof(FEATURE)*numFeatures);
     if (features == NULL) {
-      printf("Could not allocate needed memory. aborting\n");
+      WriteLn("Could not allocate needed memory. aborting");
       exit(1);
       }
     strcpy(features[numFeatures-1].name, name);

@@ -23,33 +23,33 @@ void G_Seq::Reset() {
   }
 
 void G_Seq::Display() {
-  GotoXY(x,y+0); printf("ARM  ABO  JET  KIL  LIF");
+  GotoXY(x,y+0); Write("ARM  ABO  JET  KIL  LIF");
   }
 
 void G_Seq::Update() {
   if (mode_arm != lastArm) {
     GotoXY(x+0,y+0);
-    if (mode_arm) printf("ARM"); else printf("   ");
+    if (mode_arm) Write("ARM"); else Write("   ");
     lastArm = mode_arm;
     }
   if (mode_abo != lastAbo) {
     GotoXY(x+5,y+0);
-    if (mode_abo) printf("ABO"); else printf("   ");
+    if (mode_abo) Write("ABO"); else Write("   ");
     lastAbo = mode_abo;
     }
   if (mode_jet != lastJet) {
     GotoXY(x+10,y+0);
-    if (mode_jet) printf("JET"); else printf("   ");
+    if (mode_jet) Write("JET"); else Write("   ");
     lastJet = mode_jet;
     }
   if (mode_kil != lastKil) {
     GotoXY(x+15,y+0);
-    if (mode_kil) printf("KIL"); else printf("   ");
+    if (mode_kil) Write("KIL"); else Write("   ");
     lastKil = mode_kil;
     }
   if (mode_lif != lastLif) {
     GotoXY(x+20,y+0);
-    if (mode_lif) printf("LIF"); else printf("   ");
+    if (mode_lif) Write("LIF"); else Write("   ");
     lastLif = mode_lif;
     }
   }

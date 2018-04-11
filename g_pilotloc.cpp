@@ -19,17 +19,17 @@ void G_PilotLocation::Reset() {
   }
 
 void G_PilotLocation::Display() {
-  GotoXY(x,y+0); printf("   ");
+  GotoXY(x,y+0); Write("   ");
   }
 
 void G_PilotLocation::Update() {
   if (pilotLocation != lastLocation) {
     GotoXY(x,y);
     switch (pilotLocation) {
-      case PILOT_CSM: printf("CSM"); break;
-      case PILOT_LRV: printf("LRV"); break;
-      case PILOT_EVA: printf("EVA"); break;
-      case PILOT_LM: printf("LM "); break;
+      case PILOT_CSM: Write("CSM"); break;
+      case PILOT_LRV: Write("LRV"); break;
+      case PILOT_EVA: Write("EVA"); break;
+      case PILOT_LM: Write("LM "); break;
       }
     lastLocation = pilotLocation;
     }

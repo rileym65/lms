@@ -19,13 +19,13 @@ void G_Landed::Reset() {
   }
 
 void G_Landed::Display() {
-  GotoXY(x,y+0); printf(" TD");
+  GotoXY(x,y+0); Write(" TD");
   }
 
 void G_Landed::Update() {
   if (lm->Landed() != lastLanded) {
     GotoXY(x+0,y+0);
-    if (lm->Landed()) printf("^"); else printf(" ");
+    if (lm->Landed()) Write("^"); else Write(" ");
     lastLanded = lm->Landed();
     }
   }

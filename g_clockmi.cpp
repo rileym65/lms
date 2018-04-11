@@ -19,7 +19,7 @@ void G_ClockMI::Reset() {
   }
 
 void G_ClockMI::Display() {
-  GotoXY(x,y+0); printf("MI:   :  :  ");
+  GotoXY(x,y+0); Write("MI:   :  :  ");
   }
 
 void G_ClockMI::Update() {

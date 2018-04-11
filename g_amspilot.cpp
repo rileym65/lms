@@ -19,27 +19,27 @@ void G_AmsPilot::Reset() {
   }
 
 void G_AmsPilot::Display() {
-  GotoXY(x,y+0); printf(" CSM| LM | LRV| EVA");
+  GotoXY(x,y+0); Write(" CSM| LM | LRV| EVA");
   }
 
 void G_AmsPilot::Update() {
   if (pilotLocation != lastPilotLocation) {
-    GotoXY(x+0,y); printf(" ");
-    GotoXY(x+5,y); printf(" ");
-    GotoXY(x+10,y); printf(" ");
-    GotoXY(x+15,y); printf(" ");
+    GotoXY(x+0,y); Write(" ");
+    GotoXY(x+5,y); Write(" ");
+    GotoXY(x+10,y); Write(" ");
+    GotoXY(x+15,y); Write(" ");
     switch (pilotLocation) {
       case PILOT_CSM:
-           GotoXY(x+0,y); printf("*");
+           GotoXY(x+0,y); Write("*");
            break;
       case PILOT_LM:
-           GotoXY(x+5,y); printf("*");
+           GotoXY(x+5,y); Write("*");
            break;
       case PILOT_LRV:
-           GotoXY(x+10,y); printf("*");
+           GotoXY(x+10,y); Write("*");
            break;
       case PILOT_EVA:
-           GotoXY(x+15,y); printf("*");
+           GotoXY(x+15,y); Write("*");
            break;
       }
     lastPilotLocation = pilotLocation;

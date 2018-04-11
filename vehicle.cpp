@@ -394,7 +394,8 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
     else if (startsWith(pline,"eoxygen ")) eoxygen = atof(nw(pline));
     else if (SubLoad(pline) == 0) {
-      printf("Unknown line found in save file: %s\n",pline);
+      Write("Unknown line found in save file: ");
+      WriteLn(pline);
       exit(1);
       }
     }

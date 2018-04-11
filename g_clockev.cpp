@@ -19,7 +19,7 @@ void G_ClockEV::Reset() {
   }
 
 void G_ClockEV::Display() {
-  GotoXY(x,y+0); printf("EV:   :  :  ");
+  GotoXY(x,y+0); Write("EV:   :  :  ");
   }
 
 void G_ClockEV::Update() {

@@ -24,19 +24,20 @@ void G_AmsMessage::Display() {
 
 void G_AmsMessage::Update() {
   Int32 i;
+  char buffer[32];
   if (strcmp(seq->Message(),lastMessage) != 0) {
-    GotoXY(x,y); printf("%s:",seq->Message());
+    GotoXY(x,y); sprintf(buffer,"%s:",seq->Message()); Write(buffer);
     strcpy(lastMessage,seq->Message());
     }
   if (seq->Time() != lastSeqTime) {
     GotoXY(x+11,y);
     if (seq->Time() <= 0) {
-      printf("    ");
+      Write("    ");
       }
     else {
       i = seq->Time();
       if (i > 9999) i = 9999;
-      printf("%4d",i);
+      sprintf(buffer,"%4d",i); Write(buffer);
       }
     lastSeqTime = seq->Time();
     }

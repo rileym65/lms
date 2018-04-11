@@ -21,29 +21,33 @@ void G_Pilot::Reset() {
   }
 
 void G_Pilot::Display() {
-  GotoXY(x,y+0); printf("MB:   ");
-  GotoXY(x,y+1); printf("EF:   ");
-  GotoXY(x,y+2); printf("IN:   ");
+  GotoXY(x,y+0); Write("MB:   ");
+  GotoXY(x,y+1); Write("EF:   ");
+  GotoXY(x,y+2); Write("IN:   ");
   }
 
 void G_Pilot::Update() {
   Int32 i;
+  char buffer[32];
   i = (int)metabolicRate;
   if (i != lastMetabolicRate) {
     GotoXY(x+4,y+0);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastMetabolicRate = i;
     }
   i = (int)efficiency;
   if (i != lastEfficiency) {
     GotoXY(x+4,y+1);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastEfficiency = i;
     }
   i = (int)injury;
   if (i != lastInjury) {
     GotoXY(x+4,y+2);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastInjury = i;
     }
   }

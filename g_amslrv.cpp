@@ -22,31 +22,32 @@ void G_AmsLrv::Reset() {
   }
 
 void G_AmsLrv::Display() {
-  GotoXY(x,y+0); printf("   lrv");
-  GotoXY(x,y+1); printf("BAT:  ");
-  GotoXY(x,y+2); printf("BOX:  ");
-  GotoXY(x,y+3); printf("ROK:  ");
+  GotoXY(x,y+0); Write("   lrv");
+  GotoXY(x,y+1); Write("BAT:  ");
+  GotoXY(x,y+2); Write("BOX:  ");
+  GotoXY(x,y+3); Write("ROK:  ");
   }
 
 void G_AmsLrv::Update() {
   Int32 i;
+  char buffer[32];
   i = (int)(lrv->Battery() / LRV_BATTERY * 100);
   if (i>99) i = 99;
   if (i != lastBattery) {
-    GotoXY(x+4,y+1); printf("%2d",i);
+    GotoXY(x+4,y+1); sprintf(buffer,"%2d",i); Write(buffer);
     lastBattery = i;
     }
   if (lrv->Boxes() != lastSampleBoxes) {
-    GotoXY(x+4,y+2); printf("%2d",lrv->Boxes());
+    GotoXY(x+4,y+2); sprintf(buffer,"%2d",lrv->Boxes()); Write(buffer);
     lastSampleBoxes = lrv->Boxes();
     }
   if (lrv->Rock() != lastRock) {
-    GotoXY(x+4,y+3); printf("%2d",lrv->Rock());
+    GotoXY(x+4,y+3); sprintf(buffer,"%2d",lrv->Rock()); Write(buffer);
     lastRock = lrv->Rock();
     }
   if (lrv->IsSetup() != lastSetup) {
     GotoXY(x,y);
-    if (lrv->IsSetup()) printf("^"); else printf(" ");
+    if (lrv->IsSetup()) Write("^"); else Write(" ");
     lastSetup = lrv->IsSetup();
     }
   }

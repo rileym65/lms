@@ -14,13 +14,15 @@ Gauge::~Gauge() {
   }
 
 void Gauge::displayClock(Int32 cx, Int32 cy, Int32 clock) {
+  char buffer[32];
   Int32 hours, minutes, seconds;
   hours = clock / 3600;
   clock -= (hours * 3600);
   minutes = clock / 60;
   seconds = clock - (minutes * 60);
   GotoXY(cx, cy);
-  printf("%3d:%02d:%02d",hours,minutes,seconds);
+  sprintf(buffer,"%3d:%02d:%02d",hours,minutes,seconds);
+  Write(buffer);
   }
 
 void Gauge::Reset() {

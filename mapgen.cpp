@@ -6,6 +6,7 @@
 #include <math.h>
 #include "types.h"
 #include "map.h"
+#include "terminal.h"
 
 #define GROUND 1738300
 #define METERS (1.0/30.0)
@@ -142,21 +143,23 @@ int main(int argc, char** argv) {
   longitude = -99990;
   latitude = -99990;
   mode = ' ';
-  printf("\n\n\n");
-  printf("Lunar Mission Simulator\n\n");
-  printf("Map generator\n\n");
+  WriteLn(""); WriteLn(""); WriteLn("");
+  WriteLn("Lunar Mission Simulator");
+  WriteLn("");
+  WriteLn("Map generator");
+  WriteLn("");
   while (latitude <-90 || latitude > 90) {
-    printf("Enter center latitude: ");
+    Write("Enter center latitude: ");
     fgets(line,1000,stdin);
     latitude = atof(line);
     }
   while (longitude <-180 || longitude > 180) {
-    printf("Enter center longitude: ");
+    Write("Enter center longitude: ");
     fgets(line,1000,stdin);
     longitude = atof(line);
     }
   while (mode != 'H' && mode != 'M' && mode != 'L') {
-    printf("<H>igh altitude, <M>edium altitude, or <L>ow altitude ?");
+    Write("<H>igh altitude, <M>edium altitude, or <L>ow altitude ?");
     fgets(line,1000,stdin);
     mode = line[0];
     if (mode == 'h') mode = 'H';
@@ -169,7 +172,8 @@ int main(int argc, char** argv) {
   if (mode == 'L') fillMapL();
 
   if ((file = fopen("map.doc","w")) == NULL) {
-    printf("Could not open output file.  Aborting\n\n");
+    WriteLn("Could not open output file.  Aborting");
+    WriteLn("");
     exit(1);
     }
   for (y=0;y<67;y++)

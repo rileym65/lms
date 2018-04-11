@@ -27,68 +27,68 @@ void G_MultiAxis::Reset() {
 
 void G_MultiAxis::Display() {
   if (mode == MODE_DOWN) {
-    GotoXY(x,y+ 0); printf("    LOOKING   DOWN       ");
-    GotoXY(x,y+ 1); printf(" +======west|==========+ ");
-    GotoXY(x,y+ 2); printf(" |                     |n");
-    GotoXY(x,y+ 3); printf(" |                     |o");
-    GotoXY(x,y+ 4); printf(" |                     |r");
-    GotoXY(x,y+ 5); printf(" |                     |t");
-    GotoXY(x,y+ 6); printf(" |                     |h");
-    GotoXY(x,y+ 7); printf("--                     --");
-    GotoXY(x,y+ 8); printf("s|                     | ");
-    GotoXY(x,y+ 9); printf("o|                     | ");
-    GotoXY(x,y+10); printf("u|                     | ");
-    GotoXY(x,y+11); printf("t|                     | ");
-    GotoXY(x,y+12); printf("h|                     | ");
-    GotoXY(x,y+13); printf(" +==========|east======+ ");
+    GotoXY(x,y+ 0); Write("    LOOKING   DOWN       ");
+    GotoXY(x,y+ 1); Write(" +======west|==========+ ");
+    GotoXY(x,y+ 2); Write(" |                     |n");
+    GotoXY(x,y+ 3); Write(" |                     |o");
+    GotoXY(x,y+ 4); Write(" |                     |r");
+    GotoXY(x,y+ 5); Write(" |                     |t");
+    GotoXY(x,y+ 6); Write(" |                     |h");
+    GotoXY(x,y+ 7); Write("--                     --");
+    GotoXY(x,y+ 8); Write("s|                     | ");
+    GotoXY(x,y+ 9); Write("o|                     | ");
+    GotoXY(x,y+10); Write("u|                     | ");
+    GotoXY(x,y+11); Write("t|                     | ");
+    GotoXY(x,y+12); Write("h|                     | ");
+    GotoXY(x,y+13); Write(" +==========|east======+ ");
     }
   if (mode == MODE_WEST) {
-    GotoXY(x,y+ 0); printf("    LOOKING   WEST       ");
-    GotoXY(x,y+ 1); printf(" +========up|==========+ ");
-    GotoXY(x,y+ 2); printf(" |                     |n");
-    GotoXY(x,y+ 3); printf(" |                     |o");
-    GotoXY(x,y+ 4); printf(" |                     |r");
-    GotoXY(x,y+ 5); printf(" |                     |t");
-    GotoXY(x,y+ 6); printf(" |                     |h");
-    GotoXY(x,y+ 7); printf("--                     --");
-    GotoXY(x,y+ 8); printf("s|                     | ");
-    GotoXY(x,y+ 9); printf("o|                     | ");
-    GotoXY(x,y+10); printf("u|                     | ");
-    GotoXY(x,y+11); printf("t|                     | ");
-    GotoXY(x,y+12); printf("h|                     | ");
-    GotoXY(x,y+13); printf(" +==========|down======+ ");
+    GotoXY(x,y+ 0); Write("    LOOKING   WEST       ");
+    GotoXY(x,y+ 1); Write(" +========up|==========+ ");
+    GotoXY(x,y+ 2); Write(" |                     |n");
+    GotoXY(x,y+ 3); Write(" |                     |o");
+    GotoXY(x,y+ 4); Write(" |                     |r");
+    GotoXY(x,y+ 5); Write(" |                     |t");
+    GotoXY(x,y+ 6); Write(" |                     |h");
+    GotoXY(x,y+ 7); Write("--                     --");
+    GotoXY(x,y+ 8); Write("s|                     | ");
+    GotoXY(x,y+ 9); Write("o|                     | ");
+    GotoXY(x,y+10); Write("u|                     | ");
+    GotoXY(x,y+11); Write("t|                     | ");
+    GotoXY(x,y+12); Write("h|                     | ");
+    GotoXY(x,y+13); Write(" +==========|down======+ ");
     }
   if (mode == MODE_ABS) {
-    GotoXY(x,y+ 0); printf("    LOOKING   -X         ");
-    GotoXY(x,y+ 1); printf(" +========-Y|==========+ ");
-    GotoXY(x,y+ 2); printf(" |                     | ");
-    GotoXY(x,y+ 3); printf(" |                     | ");
-    GotoXY(x,y+ 4); printf(" |                     | ");
-    GotoXY(x,y+ 5); printf(" |                     |+");
-    GotoXY(x,y+ 6); printf(" |                     |Z");
-    GotoXY(x,y+ 7); printf("--                     --");
-    GotoXY(x,y+ 8); printf("-|                     | ");
-    GotoXY(x,y+ 9); printf("Z|                     | ");
-    GotoXY(x,y+10); printf(" |                     | ");
-    GotoXY(x,y+11); printf(" |                     | ");
-    GotoXY(x,y+12); printf(" |                     | ");
-    GotoXY(x,y+13); printf(" +==========|+Y========+ ");
+    GotoXY(x,y+ 0); Write("    LOOKING   -X         ");
+    GotoXY(x,y+ 1); Write(" +========-Y|==========+ ");
+    GotoXY(x,y+ 2); Write(" |                     | ");
+    GotoXY(x,y+ 3); Write(" |                     | ");
+    GotoXY(x,y+ 4); Write(" |                     | ");
+    GotoXY(x,y+ 5); Write(" |                     |+");
+    GotoXY(x,y+ 6); Write(" |                     |Z");
+    GotoXY(x,y+ 7); Write("--                     --");
+    GotoXY(x,y+ 8); Write("-|                     | ");
+    GotoXY(x,y+ 9); Write("Z|                     | ");
+    GotoXY(x,y+10); Write(" |                     | ");
+    GotoXY(x,y+11); Write(" |                     | ");
+    GotoXY(x,y+12); Write(" |                     | ");
+    GotoXY(x,y+13); Write(" +==========|+Y========+ ");
     }
   if (mode == MODE_PRO) {
-    GotoXY(x,y+ 0); printf("    LOOKING   PROGRADE   ");
-    GotoXY(x,y+ 1); printf(" +===outside|==========+ ");
-    GotoXY(x,y+ 2); printf(" |                     | ");
-    GotoXY(x,y+ 3); printf(" |                     |n");
-    GotoXY(x,y+ 4); printf(" |                     |o");
-    GotoXY(x,y+ 5); printf(" |                     |r");
-    GotoXY(x,y+ 6); printf(" |                     |m");
-    GotoXY(x,y+ 7); printf("--                     --");
-    GotoXY(x,y+ 8); printf("a|                     | ");
-    GotoXY(x,y+ 9); printf("n|                     | ");
-    GotoXY(x,y+10); printf("o|                     | ");
-    GotoXY(x,y+11); printf("r|                     | ");
-    GotoXY(x,y+12); printf("m|                     | ");
-    GotoXY(x,y+13); printf(" +==========|inside====+ ");
+    GotoXY(x,y+ 0); Write("    LOOKING   PROGRADE   ");
+    GotoXY(x,y+ 1); Write(" +===outside|==========+ ");
+    GotoXY(x,y+ 2); Write(" |                     | ");
+    GotoXY(x,y+ 3); Write(" |                     |n");
+    GotoXY(x,y+ 4); Write(" |                     |o");
+    GotoXY(x,y+ 5); Write(" |                     |r");
+    GotoXY(x,y+ 6); Write(" |                     |m");
+    GotoXY(x,y+ 7); Write("--                     --");
+    GotoXY(x,y+ 8); Write("a|                     | ");
+    GotoXY(x,y+ 9); Write("n|                     | ");
+    GotoXY(x,y+10); Write("o|                     | ");
+    GotoXY(x,y+11); Write("r|                     | ");
+    GotoXY(x,y+12); Write("m|                     | ");
+    GotoXY(x,y+13); Write(" +==========|inside====+ ");
     }
   }
 
@@ -105,9 +105,9 @@ void G_MultiAxis::modeAbs() {
   xVec = Vector(0,0,1);
   yVec = Vector(0,-1,0);
   zVec = Vector(1,0,0);
-  GotoXY(x+faceX, y+faceY); printf(" ");
-  GotoXY(x+leftX, y+leftY); printf(" ");
-  GotoXY(x+upX, y+upY); printf(" ");
+  GotoXY(x+faceX, y+faceY); Write(" ");
+  GotoXY(x+leftX, y+leftY); Write(" ");
+  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
@@ -138,9 +138,9 @@ void G_MultiAxis::modeDown() {
 //  xVec = Vector(-pos.Z(),pos.Z(),1-fabs(pos.Z()));
   yVec = Vector(pos.Y(),-pos.X(),0);
   zVec = vehicle->Position().Norm();
-  GotoXY(x+faceX, y+faceY); printf(" ");
-  GotoXY(x+leftX, y+leftY); printf(" ");
-  GotoXY(x+upX, y+upY); printf(" ");
+  GotoXY(x+faceX, y+faceY); Write(" ");
+  GotoXY(x+leftX, y+leftY); Write(" ");
+  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
@@ -169,9 +169,9 @@ void G_MultiAxis::modePrograde() {
   xVec = vel.Cross(pos).Norm();
   yVec = xVec.Cross(vel);
   zVec = vel;
-  GotoXY(x+faceX, y+faceY); printf(" ");
-  GotoXY(x+leftX, y+leftY); printf(" ");
-  GotoXY(x+upX, y+upY); printf(" ");
+  GotoXY(x+faceX, y+faceY); Write(" ");
+  GotoXY(x+leftX, y+leftY); Write(" ");
+  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
@@ -198,9 +198,9 @@ void G_MultiAxis::modeWest() {
   xVec = Vector(0,0,1);
   yVec = vehicle->Position().Norm();
   zVec = Vector(yVec.Y(), -yVec.X(), yVec.Z()).Norm();
-  GotoXY(x+faceX, y+faceY); printf(" ");
-  GotoXY(x+leftX, y+leftY); printf(" ");
-  GotoXY(x+upX, y+upY); printf(" ");
+  GotoXY(x+faceX, y+faceY); Write(" ");
+  GotoXY(x+leftX, y+leftY); Write(" ");
+  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);

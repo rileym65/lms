@@ -23,11 +23,11 @@ void G_Clocks::Reset() {
   }
 
 void G_Clocks::Display() {
-  GotoXY(x,y+0); printf("UT:   :  :  ");
-  GotoXY(x,y+1); printf("MI:   :  :  ");
-  GotoXY(x,y+2); printf("BU:   :  :  ");
-  GotoXY(x,y+3); printf("EV:   :  :  ");
-  GotoXY(x,y+4); printf("DK:   :  :  ");
+  GotoXY(x,y+0); Write("UT:   :  :  ");
+  GotoXY(x,y+1); Write("MI:   :  :  ");
+  GotoXY(x,y+2); Write("BU:   :  :  ");
+  GotoXY(x,y+3); Write("EV:   :  :  ");
+  GotoXY(x,y+4); Write("DK:   :  :  ");
   }
 
 void G_Clocks::Update() {

@@ -21,6 +21,7 @@ KEYDEF keys[] = {
   { "[2~",         KEY_INSERT                    },
   { "[3~",         KEY_DELETE                    },
   { "OH",          KEY_HOME                      },
+  { "[H",          KEY_KP_HOME                   },
   { "OF",          KEY_END                       },
   { "[5~",         KEY_PGUP                      },
   { "[6~",         KEY_PGDN                      },
@@ -170,6 +171,14 @@ int Inkey() {
       }
     }
   return c;
+  }
+
+void Write(const char* message) {
+  printf("%s",message);
+  }
+
+void WriteLn(const char* message) {
+  printf("%s%s",message,LE);
   }
 
 int OpenTerminal() {

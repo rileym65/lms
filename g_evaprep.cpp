@@ -22,28 +22,30 @@ void G_EvaPrep::Reset() {
   }
 
 void G_EvaPrep::Display() {
-  GotoXY(x,y+0); printf("PAK:     SS  PL  CB ");
+  GotoXY(x,y+0); Write("PAK:     SS  PL  CB ");
   }
 
 void G_EvaPrep::Update() {
+  char buffer[5];
   if (spaceSuitOn != lastSpaceSuitOn) {
     GotoXY(x+8,y+0);
-    if (spaceSuitOn) printf("@"); else printf(" ");
+    if (spaceSuitOn) Write("@"); else Write(" ");
     lastSpaceSuitOn = spaceSuitOn;
     }
   if (plssOn != lastPlssOn) {
     GotoXY(x+12,y+0);
-    if (plssOn) printf("@"); else printf(" ");
+    if (plssOn) Write("@"); else Write(" ");
     lastPlssOn = plssOn;
     }
   if (cabinPressurized != lastCabinPressurized) {
     GotoXY(x+16,y+0);
-    if (cabinPressurized) printf("@"); else printf(" ");
+    if (cabinPressurized) Write("@"); else Write(" ");
     lastCabinPressurized = cabinPressurized;
     }
   if (plssPacks != lastPacks) {
     GotoXY(x+4,y+0);
-    printf("%2d",plssPacks);
+    sprintf(buffer,"%2d",plssPacks);
+    Write(buffer);
     lastPacks = plssPacks;
     }
   }

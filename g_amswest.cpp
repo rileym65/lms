@@ -18,20 +18,20 @@ void G_AmsWest::Reset() {
   }
 
 void G_AmsWest::Display() {
-  GotoXY(x,y+ 0); printf("    LOOKING   WEST       ");
-  GotoXY(x,y+ 1); printf(" +--------up|----------+ ");
-  GotoXY(x,y+ 2); printf(" |                     |n");
-  GotoXY(x,y+ 3); printf(" |                     |o");
-  GotoXY(x,y+ 4); printf(" |                     |r");
-  GotoXY(x,y+ 5); printf(" |                     |t");
-  GotoXY(x,y+ 6); printf(" |                     |h");
-  GotoXY(x,y+ 7); printf("--                     --");
-  GotoXY(x,y+ 8); printf("s|                     | ");
-  GotoXY(x,y+ 9); printf("o|                     | ");
-  GotoXY(x,y+10); printf("u|                     | ");
-  GotoXY(x,y+11); printf("t|                     | ");
-  GotoXY(x,y+12); printf("h|                     | ");
-  GotoXY(x,y+13); printf(" +----------|down------+ ");
+  GotoXY(x,y+ 0); Write("    LOOKING   WEST       ");
+  GotoXY(x,y+ 1); Write(" +--------up|----------+ ");
+  GotoXY(x,y+ 2); Write(" |                     |n");
+  GotoXY(x,y+ 3); Write(" |                     |o");
+  GotoXY(x,y+ 4); Write(" |                     |r");
+  GotoXY(x,y+ 5); Write(" |                     |t");
+  GotoXY(x,y+ 6); Write(" |                     |h");
+  GotoXY(x,y+ 7); Write("--                     --");
+  GotoXY(x,y+ 8); Write("s|                     | ");
+  GotoXY(x,y+ 9); Write("o|                     | ");
+  GotoXY(x,y+10); Write("u|                     | ");
+  GotoXY(x,y+11); Write("t|                     | ");
+  GotoXY(x,y+12); Write("h|                     | ");
+  GotoXY(x,y+13); Write(" +----------|down------+ ");
   }
 
 void G_AmsWest::Update() {
@@ -49,16 +49,15 @@ void G_AmsWest::Update() {
   Vector yVec;
   Vector zVec;
   Vehicle* vehicle;
+  char buffer[32];
   vehicle = currentVehicle;
   vel = vehicle->Velocity().Norm();
   xVec = Vector(0,0,1);
   yVec = vehicle->Position().Norm();
-//GotoXY(1,27); printf("%f %f %f\n",yVec.X(),yVec.Y(),yVec.Z());
-//  xVec = Vector(yVec.Z(),-yVec.Z(),1-fabs(yVec.Z()));
   zVec = Vector(yVec.Y(), -yVec.X(), yVec.Z()).Norm();
-  GotoXY(x+leftFaceX, y+leftFaceY); printf(" ");
-  GotoXY(x+leftLeftX, y+leftLeftY); printf(" ");
-  GotoXY(x+leftUpX, y+leftUpY); printf(" ");
+  GotoXY(x+leftFaceX, y+leftFaceY); Write(" ");
+  GotoXY(x+leftLeftX, y+leftLeftY); Write(" ");
+  GotoXY(x+leftUpX, y+leftUpY); Write(" ");
   /* ***** Face ***** */
   leftFaceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   leftFaceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
@@ -91,7 +90,8 @@ void G_AmsWest::Update() {
     }
   for (i=0; i<3; i++) {
     GotoXY(x+dx[i], y+dy[i]);
-    printf("%c",c[i]);
+    sprintf(buffer,"%c",c[i]);
+    Write(buffer);
     }
 
   }

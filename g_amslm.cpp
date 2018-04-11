@@ -19,15 +19,16 @@ void G_AmsLm::Reset() {
   }
 
 void G_AmsLm::Display() {
-  GotoXY(x,y+0); printf("    lm");
-  GotoXY(x,y+1); printf("--:   ");
-  GotoXY(x,y+2); printf("--:   ");
-  GotoXY(x,y+3); printf("RK:   ");
+  GotoXY(x,y+0); Write("    lm");
+  GotoXY(x,y+1); Write("--:   ");
+  GotoXY(x,y+2); Write("--:   ");
+  GotoXY(x,y+3); Write("RK:   ");
   }
 
 void G_AmsLm::Update() {
+  char buffer[32];
   if (lm->Rock() != lastRock) {
-    GotoXY(x+3,y+3); printf("%3d",lm->Rock());
+    GotoXY(x+3,y+3); sprintf(buffer,"%3d",lm->Rock()); Write(buffer);
     lastRock = lm->Rock();
     }
   }

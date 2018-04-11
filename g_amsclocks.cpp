@@ -24,13 +24,13 @@ void G_AmsClocks::Reset() {
   }
 
 void G_AmsClocks::Display() {
-  GotoXY(x,y+0); printf("      clocks");
-  GotoXY(x,y+1); printf("UT:   :  :  ");
-  GotoXY(x,y+2); printf("MI:   :  :  ");
-  GotoXY(x,y+3); printf("BU:   :  :  ");
-  GotoXY(x,y+4); printf("EV:   :  :  ");
-  GotoXY(x,y+5); printf("DK:   :  :  ");
-  GotoXY(x,y+6); printf("OR:   :  :  ");
+  GotoXY(x,y+0); Write("      clocks");
+  GotoXY(x,y+1); Write("UT:   :  :  ");
+  GotoXY(x,y+2); Write("MI:   :  :  ");
+  GotoXY(x,y+3); Write("BU:   :  :  ");
+  GotoXY(x,y+4); Write("EV:   :  :  ");
+  GotoXY(x,y+5); Write("DK:   :  :  ");
+  GotoXY(x,y+6); Write("OR:   :  :  ");
   }
 
 void G_AmsClocks::Update() {

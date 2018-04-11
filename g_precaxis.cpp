@@ -27,48 +27,48 @@ void G_PrecAxis::Reset() {
 
 void G_PrecAxis::Display() {
   if (mode == MODE_DOWN) {
-    GotoXY(x,y+ 0); printf("    LOOKING   DOWN       ");
-    GotoXY(x,y+ 1); printf(" +---------------------+ ");
-    GotoXY(x,y+ 2); printf(" |     E/W     N/S     | ");
-    GotoXY(x,y+ 3); printf(" |F:                   | ");
-    GotoXY(x,y+ 4); printf(" |                     | ");
-    GotoXY(x,y+ 5); printf(" |U:                   | ");
-    GotoXY(x,y+ 6); printf(" |                     | ");
-    GotoXY(x,y+ 7); printf(" |L:                   | ");
-    GotoXY(x,y+ 8); printf(" +---------------------+ ");
+    GotoXY(x,y+ 0); Write("    LOOKING   DOWN       ");
+    GotoXY(x,y+ 1); Write(" +---------------------+ ");
+    GotoXY(x,y+ 2); Write(" |     E/W     N/S     | ");
+    GotoXY(x,y+ 3); Write(" |F:                   | ");
+    GotoXY(x,y+ 4); Write(" |                     | ");
+    GotoXY(x,y+ 5); Write(" |U:                   | ");
+    GotoXY(x,y+ 6); Write(" |                     | ");
+    GotoXY(x,y+ 7); Write(" |L:                   | ");
+    GotoXY(x,y+ 8); Write(" +---------------------+ ");
     }
   if (mode == MODE_WEST) {
-    GotoXY(x,y+ 0); printf("    LOOKING   WEST       ");
-    GotoXY(x,y+ 1); printf(" +---------------------+ ");
-    GotoXY(x,y+ 2); printf(" |     U/D     N/S     | ");
-    GotoXY(x,y+ 3); printf(" |F:                   | ");
-    GotoXY(x,y+ 4); printf(" |                     | ");
-    GotoXY(x,y+ 5); printf(" |U:                   | ");
-    GotoXY(x,y+ 6); printf(" |                     | ");
-    GotoXY(x,y+ 7); printf(" |L:                   | ");
-    GotoXY(x,y+ 8); printf(" +---------------------+ ");
+    GotoXY(x,y+ 0); Write("    LOOKING   WEST       ");
+    GotoXY(x,y+ 1); Write(" +---------------------+ ");
+    GotoXY(x,y+ 2); Write(" |     U/D     N/S     | ");
+    GotoXY(x,y+ 3); Write(" |F:                   | ");
+    GotoXY(x,y+ 4); Write(" |                     | ");
+    GotoXY(x,y+ 5); Write(" |U:                   | ");
+    GotoXY(x,y+ 6); Write(" |                     | ");
+    GotoXY(x,y+ 7); Write(" |L:                   | ");
+    GotoXY(x,y+ 8); Write(" +---------------------+ ");
     }
   if (mode == MODE_ABS) {
-    GotoXY(x,y+ 0); printf("    LOOKING   -X         ");
-    GotoXY(x,y+ 1); printf(" +---------------------+ ");
-    GotoXY(x,y+ 2); printf(" |      Y       Z      | ");
-    GotoXY(x,y+ 3); printf(" |F:                   | ");
-    GotoXY(x,y+ 4); printf(" |                     | ");
-    GotoXY(x,y+ 5); printf(" |U:                   | ");
-    GotoXY(x,y+ 6); printf(" |                     | ");
-    GotoXY(x,y+ 7); printf(" |L:                   | ");
-    GotoXY(x,y+ 8); printf(" +---------------------+ ");
+    GotoXY(x,y+ 0); Write("    LOOKING   -X         ");
+    GotoXY(x,y+ 1); Write(" +---------------------+ ");
+    GotoXY(x,y+ 2); Write(" |      Y       Z      | ");
+    GotoXY(x,y+ 3); Write(" |F:                   | ");
+    GotoXY(x,y+ 4); Write(" |                     | ");
+    GotoXY(x,y+ 5); Write(" |U:                   | ");
+    GotoXY(x,y+ 6); Write(" |                     | ");
+    GotoXY(x,y+ 7); Write(" |L:                   | ");
+    GotoXY(x,y+ 8); Write(" +---------------------+ ");
     }
   if (mode == MODE_PRO) {
-    GotoXY(x,y+ 0); printf("    LOOKING   PROGRADE   ");
-    GotoXY(x,y+ 1); printf(" +---------------------+ ");
-    GotoXY(x,y+ 2); printf(" |    Elev     Norm    | ");
-    GotoXY(x,y+ 3); printf(" |F:                   | ");
-    GotoXY(x,y+ 4); printf(" |                     | ");
-    GotoXY(x,y+ 5); printf(" |U:                   | ");
-    GotoXY(x,y+ 6); printf(" |                     | ");
-    GotoXY(x,y+ 7); printf(" |L:                   | ");
-    GotoXY(x,y+ 8); printf(" +---------------------+ ");
+    GotoXY(x,y+ 0); Write("    LOOKING   PROGRADE   ");
+    GotoXY(x,y+ 1); Write(" +---------------------+ ");
+    GotoXY(x,y+ 2); Write(" |    Elev     Norm    | ");
+    GotoXY(x,y+ 3); Write(" |F:                   | ");
+    GotoXY(x,y+ 4); Write(" |                     | ");
+    GotoXY(x,y+ 5); Write(" |U:                   | ");
+    GotoXY(x,y+ 6); Write(" |                     | ");
+    GotoXY(x,y+ 7); Write(" |L:                   | ");
+    GotoXY(x,y+ 8); Write(" +---------------------+ ");
     }
   }
 
@@ -77,6 +77,7 @@ void G_PrecAxis::modeAbs() {
   Vector pos;
   Vector vel;
   Vehicle* vehicle;
+  char buffer[40];
   vehicle = currentVehicle;
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
@@ -90,25 +91,26 @@ void G_PrecAxis::modeAbs() {
   dx = asin(vehicle->FaceFront().Dot(xVec)) * 180 / M_PI;
   dy = -asin(vehicle->FaceFront().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceFront().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+3); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+3); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   /* ***** Left ***** */
   dx = asin(vehicle->FaceLeft().Dot(xVec)) * 180 / M_PI;
   dy = -asin(vehicle->FaceLeft().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceLeft().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+7); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+7); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   /* ***** Up ***** */
   dx = asin(vehicle->FaceUp().Dot(xVec)) * 180 / M_PI;
   dy = -asin(vehicle->FaceUp().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceUp().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+5); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+5); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   }
 
 void G_PrecAxis::modeDown() {
   Vector pos;
   Vector vel;
+  char buffer[40];
   Vehicle* vehicle;
   vehicle = currentVehicle;
   Double dx,dy,dz;
@@ -126,20 +128,20 @@ void G_PrecAxis::modeDown() {
   dx = asin(vehicle->FaceFront().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceFront().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceFront().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+3); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+3); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   /* ***** Left ***** */
   dx = asin(vehicle->FaceLeft().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceLeft().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceLeft().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+7); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+7); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   /* ***** Up ***** */
   dx = asin(vehicle->FaceUp().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceUp().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceUp().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+5); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+5); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   }
 
 void G_PrecAxis::modePrograde() {
@@ -148,6 +150,7 @@ void G_PrecAxis::modePrograde() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
+  char buffer[40];
   Double dx,dy,dz;
   Vehicle* vehicle;
   vehicle = currentVehicle;
@@ -160,20 +163,20 @@ void G_PrecAxis::modePrograde() {
   dx = asin(vehicle->FaceFront().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceFront().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceFront().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+3); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+3); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   /* ***** Left ***** */
   dx = asin(vehicle->FaceLeft().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceLeft().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceLeft().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+7); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+7); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   /* ***** Up ***** */
   dx = asin(vehicle->FaceUp().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceUp().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceUp().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+5); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz >= 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+5); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz >= 0) Write("+"); else Write("-");
   }
 
 void G_PrecAxis::modeWest() {
@@ -181,6 +184,7 @@ void G_PrecAxis::modeWest() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
+  char buffer[40];
   Double dx,dy,dz;
   Vehicle* vehicle;
   vehicle = currentVehicle;
@@ -192,20 +196,20 @@ void G_PrecAxis::modeWest() {
   dx = asin(vehicle->FaceFront().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceFront().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceFront().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+3); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz < 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+3); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz < 0) Write("+"); else Write("-");
   /* ***** Left ***** */
   dx = asin(vehicle->FaceLeft().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceLeft().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceLeft().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+7); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz < 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+7); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz < 0) Write("+"); else Write("-");
   /* ***** Up ***** */
   dx = asin(vehicle->FaceUp().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceUp().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceUp().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+5,y+5); printf("%7.2f %7.2f  ",dy,dx);
-  if (dz < 0) printf("+"); else printf("-");
+  GotoXY(x+5,y+5); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
+  if (dz < 0) Write("+"); else Write("-");
   }
 
 void G_PrecAxis::Update() {

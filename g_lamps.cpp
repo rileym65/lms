@@ -18,83 +18,83 @@ void G_Lamps::Reset() {
   }
 
 void G_Lamps::Display() {
-  GotoXY(x,y+0); printf("ASC ALO ATT OXY BAT ");
-  GotoXY(x,y+1); printf("DSC DLO DCK EMG EMG ");
-  GotoXY(x,y+2); printf("RCS RLO LCT ELO ELO ");
+  GotoXY(x,y+0); Write("ASC ALO ATT OXY BAT ");
+  GotoXY(x,y+1); Write("DSC DLO DCK EMG EMG ");
+  GotoXY(x,y+2); Write("RCS RLO LCT ELO ELO ");
   }
 
 void G_Lamps::Update() {
   GotoXY(x+0,y+0);
   if (lm->DescentJettisoned() && lm->Throttle() > 0)
-    printf("ASC"); else printf("   ");
+    Write("ASC"); else Write("   ");
   GotoXY(x+0,y+1);
   if (!lm->DescentJettisoned() && lm->Throttle() > 0)
-    printf("DSC"); else printf("   ");
+    Write("DSC"); else Write("   ");
   GotoXY(x+0,y+2);
   if (lm->RcsFbMode() != ' ' || lm->RcsLrMode() != ' ' ||
       lm->RcsUdMode() != ' ')
-    printf("RCS"); else printf("   ");
+    Write("RCS"); else Write("   ");
 
   GotoXY(x+4,y+0);
   if (lm->AscentFuel() < (FUEL_ASC * 0.10))
-    printf("ALO"); else printf("   ");
+    Write("ALO"); else Write("   ");
 
   GotoXY(x+4,y+1);
   if (!lm->DescentJettisoned() && lm->DescentFuel() < (FUEL_DES * 0.10))
-    printf("DLO"); else printf("   ");
+    Write("DLO"); else Write("   ");
 
   GotoXY(x+4,y+2);
   if (lm->RcsFuel() < (FUEL_RCS * 0.10))
-    printf("RLO"); else printf("   ");
+    Write("RLO"); else Write("   ");
 
   GotoXY(x+8,y+0);
   if (lm->PitchRate() != 0 || lm->RollRate() != 0 || lm->YawRate() != 0)
-    printf("ATT"); else printf("   ");
+    Write("ATT"); else Write("   ");
 
   GotoXY(x+8,y+1);
-  if (docked) printf("DCK"); else printf("   ");
+  if (docked) Write("DCK"); else Write("   ");
   GotoXY(x+8,y+2);
-  if (lm->Landed()) printf("LCT"); else printf("   ");
+  if (lm->Landed()) Write("LCT"); else Write("   ");
 
   if (!lm->DescentJettisoned()) {
     GotoXY(x+12,y+0);
     if (lm->Oxygen() < (LM_OXYGEN * 0.10))
-      printf("OXY"); else printf("   ");
+      Write("OXY"); else Write("   ");
     GotoXY(x+16,y+0);
     if (lm->Battery() < (LM_BATTERY * 0.10))
-      printf("BAT"); else printf("   ");
+      Write("BAT"); else Write("   ");
     GotoXY(x+12,y+1);
     if (lm->Oxygen() <= 0.0)
-      printf("EMG"); else printf("   ");
+      Write("EMG"); else Write("   ");
     GotoXY(x+16,y+1);
     if (lm->Battery() <= 0.0)
-      printf("EMG"); else printf("   ");
+      Write("EMG"); else Write("   ");
     GotoXY(x+12,y+2);
     if (lm->EOxygen() < (LM_EOXYGEN * 0.10))
-      printf("ELO"); else printf("   ");
+      Write("ELO"); else Write("   ");
     GotoXY(x+16,y+2);
     if (lm->EBattery() < (LM_EBATTERY * 0.10))
-      printf("ELO"); else printf("   ");
+      Write("ELO"); else Write("   ");
     }
   else {
     GotoXY(x+12,y+0);
     if (lm->Oxygen() < (ASC_OXYGEN * 0.10))
-      printf("OXY"); else printf("   ");
+      Write("OXY"); else Write("   ");
     GotoXY(x+16,y+0);
     if (lm->Battery() < (ASC_BATTERY * 0.10))
-      printf("BAT"); else printf("   ");
+      Write("BAT"); else Write("   ");
     GotoXY(x+12,y+1);
     if (lm->Oxygen() <= 0.0)
-      printf("EMG"); else printf("   ");
+      Write("EMG"); else Write("   ");
     GotoXY(x+16,y+1);
     if (lm->Battery() <= 0.0)
-      printf("EMG"); else printf("   ");
+      Write("EMG"); else Write("   ");
     GotoXY(x+12,y+2);
     if (lm->EOxygen() < (ASC_EOXYGEN * 0.10))
-      printf("ELO"); else printf("   ");
+      Write("ELO"); else Write("   ");
     GotoXY(x+16,y+2);
     if (lm->EBattery() < (ASC_EBATTERY * 0.10))
-      printf("ELO"); else printf("   ");
+      Write("ELO"); else Write("   ");
     }
 
 

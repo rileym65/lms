@@ -32,95 +32,99 @@ void G_AmsStatus::Reset() {
   }
 
 void G_AmsStatus::Display() {
-  GotoXY(x,y+0); printf("        status");
-  GotoXY(x,y+1); printf(" F/B| SS|MB:  ");
-  GotoXY(x,y+2); printf(" L/R| PL|EF:  ");
-  GotoXY(x,y+3); printf(" U/D| CB|IN:  ");
-  GotoXY(x,y+4); printf(" RAD| --|--:  ");
-  GotoXY(x,y+5); printf(" DOK| DK|--:  ");
-  GotoXY(x,y+6); printf(" DSN| TD|--:  ");
+  GotoXY(x,y+0); Write("        status");
+  GotoXY(x,y+1); Write(" F/B| SS|MB:  ");
+  GotoXY(x,y+2); Write(" L/R| PL|EF:  ");
+  GotoXY(x,y+3); Write(" U/D| CB|IN:  ");
+  GotoXY(x,y+4); Write(" RAD| --|--:  ");
+  GotoXY(x,y+5); Write(" DOK| DK|--:  ");
+  GotoXY(x,y+6); Write(" DSN| TD|--:  ");
   }
 
 void G_AmsStatus::Update() {
   Int32 i;
+  char buffer[32];
   if (spaceSuitOn != lastSpaceSuitOn) {
     GotoXY(x+5,y+1);
-    printf("%c",(spaceSuitOn == 0) ? 'v' : '^');
+    if (spaceSuitOn == 0) Write("v"); else Write("^");
     lastSpaceSuitOn = spaceSuitOn;
     }
   if (plssOn != lastPlssOn) {
     GotoXY(x+5,y+2);
-    printf("%c",(plssOn == 0) ? 'v' : '^');
+    if (plssOn == 0) Write("v"); else Write("^");
     lastPlssOn = plssOn;
     }
   if (cabinPressurized != lastCabinPressurized) {
     GotoXY(x+5,y+3);
-    printf("%c",(cabinPressurized == 0) ? 'v' : '^');
+    if (cabinPressurized == 0) Write("v"); else Write("^");
     lastCabinPressurized = cabinPressurized;
     }
   if (docked != lastDocked) {
     GotoXY(x+5,y+5);
-    printf("%c",(docked == 0) ? ' ' : '^');
+    if (docked == 0) Write(" "); else Write("^");
     lastDocked = docked;
     }
   if (lm->Landed() != lastLanded) {
     GotoXY(x+5,y+6);
-    printf("%c",(lm->Landed() == 0) ? ' ' : '^');
+    if (lm->Landed() == 0) Write(" "); else Write("^");
     lastLanded = lm->Landed();
     }
   if (landingRadarOn != lastLandingRadarOn) {
     GotoXY(x,y+4);
-    printf("%c",(landingRadarOn == 0) ? ' ' : '^');
+    if (landingRadarOn == 0) Write(" "); else Write("^");
     lastLandingRadarOn = landingRadarOn;
     }
   if (dockingRadarOn != lastDockingRadarOn) {
     GotoXY(x,y+5);
-    printf("%c",(dockingRadarOn == 0) ? ' ' : '^');
+    if (dockingRadarOn == 0) Write(" "); else Write("^");
     lastDockingRadarOn = dockingRadarOn;
     }
   if (dsnOn != lastDsnOn) {
     GotoXY(x,y+6);
-    printf("%c",(dsnOn == 0) ? ' ' : '^');
+    if (dsnOn == 0) Write(" "); else Write("^");
     lastDsnOn = dsnOn;
     }
   i = (int)metabolicRate;
   if (i != lastMetabolicRate) {
     GotoXY(x+12,y+1);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastMetabolicRate = i;
     }
   i = (int)efficiency;
   if (i != lastEfficiency) {
     GotoXY(x+12,y+2);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastEfficiency = i;
     }
   i = (int)injury;
   if (i != lastInjury) {
     GotoXY(x+12,y+3);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastInjury = i;
     }
   if (lm->RcsFbMode() != lastRcsFbMode) {
     GotoXY(x,y+1);
     lastRcsFbMode = lm->RcsFbMode();
-    if (lastRcsFbMode == ' ') printf(" ");
-    if (lastRcsFbMode == 'F') printf("^");
-    if (lastRcsFbMode == 'B') printf("v");
+    if (lastRcsFbMode == ' ') Write(" ");
+    if (lastRcsFbMode == 'F') Write("^");
+    if (lastRcsFbMode == 'B') Write("v");
     }
   if (lm->RcsLrMode() != lastRcsLrMode) {
     GotoXY(x,y+2);
     lastRcsLrMode = lm->RcsLrMode();
-    if (lastRcsLrMode == ' ') printf(" ");
-    if (lastRcsLrMode == 'L') printf("^");
-    if (lastRcsLrMode == 'R') printf("v");
+    if (lastRcsLrMode == ' ') Write(" ");
+    if (lastRcsLrMode == 'L') Write("^");
+    if (lastRcsLrMode == 'R') Write("v");
     }
   if (lm->RcsUdMode() != lastRcsUdMode) {
     GotoXY(x,y+3);
     lastRcsUdMode = lm->RcsUdMode();
-    if (lastRcsUdMode == ' ') printf(" ");
-    if (lastRcsUdMode == 'U') printf("^");
-    if (lastRcsUdMode == 'D') printf("v");
+    if (lastRcsUdMode == ' ') Write(" ");
+    if (lastRcsUdMode == 'U') Write("^");
+    if (lastRcsUdMode == 'D') Write("v");
     }
   }
 

@@ -19,41 +19,42 @@ void G_AmsIns::Reset() {
   }
 
 void G_AmsIns::Display() {
-  GotoXY(x,y+0); printf("   altitude    east   north");
-  GotoXY(x,y+1); printf("POS:       :       :       ");
-  GotoXY(x,y+2); printf("VEL:       :       :       ");
-  GotoXY(x,y+3); printf("ACC:       :       :       ");
-  GotoXY(x,y+4); printf("MOM:       :       :       ");
-  GotoXY(x,y+5); printf("PER:       ");
-  GotoXY(x,y+6); printf("APO:       ");
+  GotoXY(x,y+0); Write("   altitude    east   north");
+  GotoXY(x,y+1); Write("POS:       :       :       ");
+  GotoXY(x,y+2); Write("VEL:       :       :       ");
+  GotoXY(x,y+3); Write("ACC:       :       :       ");
+  GotoXY(x,y+4); Write("MOM:       :       :       ");
+  GotoXY(x,y+5); Write("PER:       ");
+  GotoXY(x,y+6); Write("APO:       ");
   }
 
 void G_AmsIns::Update() {
+  char buffer[64];
   if (ins->Mode() < 4) {
-    GotoXY(x+4,y+1); printf("%7s",ins->DisplayPosAltitude());
-    GotoXY(x+12,y+1); printf("%7s",ins->DisplayPosEast());
-    GotoXY(x+20,y+1); printf("%7s",ins->DisplayPosNorth());
-    GotoXY(x+4,y+2); printf("%7s",ins->DisplayVelAltitude());
-    GotoXY(x+12,y+2); printf("%7s",ins->DisplayVelEast());
-    GotoXY(x+20,y+2); printf("%7s",ins->DisplayVelNorth());
-    GotoXY(x+4,y+3); printf("%7s",ins->DisplayAccAltitude());
-    GotoXY(x+12,y+3); printf("%7s",ins->DisplayAccEast());
-    GotoXY(x+20,y+3); printf("%7s",ins->DisplayAccNorth());
+    GotoXY(x+4,y+1); sprintf(buffer,"%7s",ins->DisplayPosAltitude()); Write(buffer);
+    GotoXY(x+12,y+1); sprintf(buffer,"%7s",ins->DisplayPosEast()); Write(buffer);
+    GotoXY(x+20,y+1); sprintf(buffer,"%7s",ins->DisplayPosNorth()); Write(buffer);
+    GotoXY(x+4,y+2); sprintf(buffer,"%7s",ins->DisplayVelAltitude()); Write(buffer);
+    GotoXY(x+12,y+2); sprintf(buffer,"%7s",ins->DisplayVelEast()); Write(buffer);
+    GotoXY(x+20,y+2); sprintf(buffer,"%7s",ins->DisplayVelNorth()); Write(buffer);
+    GotoXY(x+4,y+3); sprintf(buffer,"%7s",ins->DisplayAccAltitude()); Write(buffer);
+    GotoXY(x+12,y+3); sprintf(buffer,"%7s",ins->DisplayAccEast()); Write(buffer);
+    GotoXY(x+20,y+3); sprintf(buffer,"%7s",ins->DisplayAccNorth()); Write(buffer);
     }
   else {
-    GotoXY(x+12,y+4); printf("%7s",ins->DisplayMomEast());
-    GotoXY(x+20,y+4); printf("%7s",ins->DisplayMomNorth());
-    GotoXY(x+4,y+5); printf("%7s",ins->DisplayPerilune());
-    GotoXY(x+4,y+6); printf("%7s",ins->DisplayApolune());
+    GotoXY(x+12,y+4); sprintf(buffer,"%7s",ins->DisplayMomEast()); Write(buffer);
+    GotoXY(x+20,y+4); sprintf(buffer,"%7s",ins->DisplayMomNorth()); Write(buffer);
+    GotoXY(x+4,y+5); sprintf(buffer,"%7s",ins->DisplayPerilune()); Write(buffer);
+    GotoXY(x+4,y+6); sprintf(buffer,"%7s",ins->DisplayApolune()); Write(buffer);
     }
   if (insMode != lastInsMode) {
     GotoXY(x+4, y+4);
     switch (insMode) {
-      case INS_MODE_POS_ABS: printf("POS^ABS"); break;
-      case INS_MODE_POS_TAR: printf("POS^TAR"); break;
-      case INS_MODE_POS_REL: printf("POS^REL"); break;
-      case INS_MODE_ORB_ABS: printf("ORBvABS"); break;
-      case INS_MODE_ORB_TAR: printf("ORBvTAR"); break;
+      case INS_MODE_POS_ABS: Write("POS^ABS"); break;
+      case INS_MODE_POS_TAR: Write("POS^TAR"); break;
+      case INS_MODE_POS_REL: Write("POS^REL"); break;
+      case INS_MODE_ORB_ABS: Write("ORBvABS"); break;
+      case INS_MODE_ORB_TAR: Write("ORBvTAR"); break;
       }
     lastInsMode = insMode;
     }

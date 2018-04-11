@@ -19,7 +19,7 @@ void G_ClockUT::Reset() {
   }
 
 void G_ClockUT::Display() {
-  GotoXY(x,y+0); printf("UT:   :  :  ");
+  GotoXY(x,y+0); Write("UT:   :  :  ");
   }
 
 void G_ClockUT::Update() {

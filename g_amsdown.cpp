@@ -19,20 +19,20 @@ void G_AmsDown::Reset() {
   }
 
 void G_AmsDown::Display() {
-  GotoXY(x,y+ 0); printf("    LOOKING   DOWN       ");
-  GotoXY(x,y+ 1); printf(" +------west|----------+ ");
-  GotoXY(x,y+ 2); printf(" |                     |n");
-  GotoXY(x,y+ 3); printf(" |                     |o");
-  GotoXY(x,y+ 4); printf(" |                     |r");
-  GotoXY(x,y+ 5); printf(" |                     |t");
-  GotoXY(x,y+ 6); printf(" |                     |h");
-  GotoXY(x,y+ 7); printf("--                     --");
-  GotoXY(x,y+ 8); printf("s|                     | ");
-  GotoXY(x,y+ 9); printf("o|                     | ");
-  GotoXY(x,y+10); printf("u|                     | ");
-  GotoXY(x,y+11); printf("t|                     | ");
-  GotoXY(x,y+12); printf("h|                     | ");
-  GotoXY(x,y+13); printf(" +----------|east------+ ");
+  GotoXY(x,y+ 0); Write("    LOOKING   DOWN       ");
+  GotoXY(x,y+ 1); Write(" +------west|----------+ ");
+  GotoXY(x,y+ 2); Write(" |                     |n");
+  GotoXY(x,y+ 3); Write(" |                     |o");
+  GotoXY(x,y+ 4); Write(" |                     |r");
+  GotoXY(x,y+ 5); Write(" |                     |t");
+  GotoXY(x,y+ 6); Write(" |                     |h");
+  GotoXY(x,y+ 7); Write("--                     --");
+  GotoXY(x,y+ 8); Write("s|                     | ");
+  GotoXY(x,y+ 9); Write("o|                     | ");
+  GotoXY(x,y+10); Write("u|                     | ");
+  GotoXY(x,y+11); Write("t|                     | ");
+  GotoXY(x,y+12); Write("h|                     | ");
+  GotoXY(x,y+13); Write(" +----------|east------+ ");
   }
 
 void G_AmsDown::Update() {
@@ -50,9 +50,9 @@ void G_AmsDown::Update() {
 //  xVec = Vector(-pos.Z(),pos.Z(),1-fabs(pos.Z()));
   yVec = Vector(pos.Y(),-pos.X(),0);
   zVec = vehicle->Position().Norm();
-  GotoXY(x+faceX, y+faceY); printf(" ");
-  GotoXY(x+leftX, y+leftY); printf(" ");
-  GotoXY(x+upX, y+upY); printf(" ");
+  GotoXY(x+faceX, y+faceY); Write(" ");
+  GotoXY(x+leftX, y+leftY); Write(" ");
+  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);

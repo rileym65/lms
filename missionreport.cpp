@@ -183,7 +183,8 @@ void MissionReport() {
     }
   if (file != stdout) fclose(file);
   records->Save();
-  printf("\n");
-  printf("Mission report written to %s%s",filename,LE);
+  WriteLn("");
+  Write("Mission report written to ");
+  WriteLn(filename);
   }
 

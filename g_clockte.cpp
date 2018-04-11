@@ -19,7 +19,7 @@ void G_ClockTE::Reset() {
   }
 
 void G_ClockTE::Display() {
-  GotoXY(x,y+0); printf("TE:   :  :  ");
+  GotoXY(x,y+0); Write("TE:   :  :  ");
   }
 
 void G_ClockTE::Update() {

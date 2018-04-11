@@ -21,27 +21,28 @@ void G_AmsAtt::Reset() {
   }
 
 void G_AmsAtt::Display() {
-  GotoXY(x,y+0); printf("    att");
-  GotoXY(x,y+1); printf("u/r:   ");
-  GotoXY(x,y+2); printf("f/r:   ");
-  GotoXY(x,y+3); printf("l/s:   ");
+  GotoXY(x,y+0); Write("    att");
+  GotoXY(x,y+1); Write("u/r:   ");
+  GotoXY(x,y+2); Write("f/r:   ");
+  GotoXY(x,y+3); Write("l/s:   ");
   }
 
 void G_AmsAtt::Update() {
   Int32 i;
+  char buffer[32];
   i = (int)(ins->AttUr()+.4);
   if (lastUr != i) {
-    GotoXY(x+4, y+1); printf("%3d",i);
+    GotoXY(x+4, y+1); sprintf(buffer,"%3d",i); Write(buffer);
     lastUr = i;
     }
   i = (int)(ins->AttFr()+.4);
   if (lastFr != i) {
-    GotoXY(x+4, y+2); printf("%3d",i);
+    GotoXY(x+4, y+2); sprintf(buffer,"%3d",i); Write(buffer);
     lastFr = i;
     }
   i = (int)(ins->AttLs()+.4);
   if (lastLs != i) {
-    GotoXY(x+4, y+3); printf("%3d",i);
+    GotoXY(x+4, y+3); sprintf(buffer,"%3d",i); Write(buffer);
     lastLs = i;
     }
   }

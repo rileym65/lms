@@ -19,13 +19,13 @@ void G_Docked::Reset() {
   }
 
 void G_Docked::Display() {
-  GotoXY(x,y+0); printf(" DK");
+  GotoXY(x,y+0); Write(" DK");
   }
 
 void G_Docked::Update() {
   if (docked != lastDocked) {
     GotoXY(x+0,y+0);
-    if (docked) printf("^"); else printf(" ");
+    if (docked) Write("^"); else Write(" ");
     lastDocked = docked;
     }
   }

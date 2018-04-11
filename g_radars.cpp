@@ -21,25 +21,25 @@ void G_Radars::Reset() {
   }
 
 void G_Radars::Display() {
-  GotoXY(x,y+0); printf(" LAN");
-  GotoXY(x,y+1); printf(" DOK");
-  GotoXY(x,y+2); printf(" DSN");
+  GotoXY(x,y+0); Write(" LAN");
+  GotoXY(x,y+1); Write(" DOK");
+  GotoXY(x,y+2); Write(" DSN");
   }
 
 void G_Radars::Update() {
   if (landingRadarOn != lastLandingRadarOn) {
     GotoXY(x+0, y+0);
-    if (landingRadarOn) printf("@"); else printf(" ");
+    if (landingRadarOn) Write("@"); else Write(" ");
     lastLandingRadarOn = landingRadarOn;
     }
   if (dockingRadarOn != lastDockingRadarOn) {
     GotoXY(x+0, y+1);
-    if (dockingRadarOn) printf("@"); else printf(" ");
+    if (dockingRadarOn) Write("@"); else Write(" ");
     lastDockingRadarOn = dockingRadarOn;
     }
   if (dsnOn != lastDsnOn) {
     GotoXY(x+0, y+2);
-    if (dsnOn) printf("@"); else printf(" ");
+    if (dsnOn) Write("@"); else Write(" ");
     lastDsnOn = dsnOn;
     }
   }

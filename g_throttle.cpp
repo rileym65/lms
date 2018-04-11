@@ -19,12 +19,13 @@ void G_Throttle::Reset() {
   }
 
 void G_Throttle::Display() {
-  GotoXY(x,y+0); printf("THR:   ");
+  GotoXY(x,y+0); Write("THR:   ");
   }
 
 void G_Throttle::Update() {
+  char buffer[5];
   if (vehicle->Throttle() != lastThrottle) {
-    GotoXY(x+5,y); printf("%2d",vehicle->Throttle());
+    GotoXY(x+5,y); sprintf(buffer,"%2d",vehicle->Throttle()); Write(buffer);
     lastThrottle = lm->Throttle();
     }
   }

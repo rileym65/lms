@@ -23,17 +23,18 @@ void G_AmsDock::Reset() {
   }
 
 void G_AmsDock::Display() {
-  GotoXY(x,y+0); printf("    dock     ");
-  GotoXY(x,y+1); printf(" +---f|----+ ");
-  GotoXY(x,y+2); printf(" |         | ");
-  GotoXY(x,y+3); printf(" |         |l");
-  GotoXY(x,y+4); printf("--         --");
-  GotoXY(x,y+5); printf("r|         | ");
-  GotoXY(x,y+6); printf(" |         | ");
-  GotoXY(x,y+7); printf(" +----|b---+ ");
+  GotoXY(x,y+0); Write("    dock     ");
+  GotoXY(x,y+1); Write(" +---f|----+ ");
+  GotoXY(x,y+2); Write(" |         | ");
+  GotoXY(x,y+3); Write(" |         |l");
+  GotoXY(x,y+4); Write("--         --");
+  GotoXY(x,y+5); Write("r|         | ");
+  GotoXY(x,y+6); Write(" |         | ");
+  GotoXY(x,y+7); Write(" +----|b---+ ");
   }
 
 void G_AmsDock::Update() {
+  char buffer[32];
   Int8 ax,ay;
   Int8 px,py;
   Int8 rx;
@@ -87,27 +88,27 @@ void G_AmsDock::Update() {
     }
   if (lastDockingRadarPosX > -99) {
     GotoXY(x+1+lastDockingRadarPosX,y+1+lastDockingRadarPosY);
-    printf(" ");
+    Write(" ");
     GotoXY(x+1+lastDockingRadarAngX,y+1+lastDockingRadarAngY);
-    printf(" ");
-    GotoXY(x+lastDockingRadarRolX+1,y+1+1); printf(" ");
-    GotoXY(x+lastDockingRadarRolX+1,y+5+1); printf(" ");
-    GotoXY(x+rx+1,y+1+1); printf("v");
-    GotoXY(x+rx+1,y+5+1); printf("^");
+    Write(" ");
+    GotoXY(x+lastDockingRadarRolX+1,y+1+1); Write(" ");
+    GotoXY(x+lastDockingRadarRolX+1,y+5+1); Write(" ");
+    GotoXY(x+rx+1,y+1+1); Write("v");
+    GotoXY(x+rx+1,y+5+1); Write("^");
     }
   if (ax == px && ay == py) {
-    GotoXY(x+px+1,y+py+1); printf("*");
+    GotoXY(x+px+1,y+py+1); Write("*");
     }
   else {
-    GotoXY(x+px+1,y+py+1); printf("+");
-    GotoXY(x+ax+1,y+ay+1); printf("X");
+    GotoXY(x+px+1,y+py+1); Write("+");
+    GotoXY(x+ax+1,y+ay+1); Write("X");
     }
-  GotoXY(x+1,y+1+1); printf("%c",nsVel);
-  GotoXY(x+1+10,y+1+1); printf("%c",nsVel);
-  GotoXY(x+1+9,y+1); printf("%c",fVel);
-  GotoXY(x+1+9,y+1+6); printf("%c",bVel);
-  GotoXY(x+1,y+1+5); printf("%c",rVel);
-  GotoXY(x+1+10,y+1+5); printf("%c",lVel);
+  GotoXY(x+1,y+1+1); sprintf(buffer,"%c",nsVel); Write(buffer);
+  GotoXY(x+1+10,y+1+1); sprintf(buffer,"%c",nsVel); Write(buffer);
+  GotoXY(x+1+9,y+1); sprintf(buffer,"%c",fVel); Write(buffer);
+  GotoXY(x+1+9,y+1+6); sprintf(buffer,"%c",bVel); Write(buffer);
+  GotoXY(x+1,y+1+5); sprintf(buffer,"%c",rVel); Write(buffer);
+  GotoXY(x+1+10,y+1+5); sprintf(buffer,"%c",lVel); Write(buffer);
   lastDockingRadarPosX = px;
   lastDockingRadarPosY = py;
   lastDockingRadarAngX = ax;

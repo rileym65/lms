@@ -19,12 +19,13 @@ void G_LmRock::Reset() {
   }
 
 void G_LmRock::Display() {
-  GotoXY(x,y+0); printf("RK:   ");
+  GotoXY(x,y+0); Write("RK:   ");
   }
 
 void G_LmRock::Update() {
+  char buffer[32];
   if (lm->Rock() != lastRock) {
-    GotoXY(x+3,y); printf("%3d",lm->Rock());
+    GotoXY(x+3,y); sprintf(buffer,"%3d",lm->Rock()); Write(buffer);
     lastRock = lm->Rock();
     }
   }

@@ -23,49 +23,50 @@ void G_Plss::Reset() {
   }
 
 void G_Plss::Display() {
-  GotoXY(x,y+0); printf("  plss");
-  GotoXY(x,y+1); printf("OXY:  ");
-  GotoXY(x,y+2); printf("BAT:  ");
-  GotoXY(x,y+3); printf("EOX:  ");
-  GotoXY(x,y+4); printf("EBT:  ");
-  GotoXY(x,y+5); printf("CRY:  ");
+  GotoXY(x,y+0); Write("  plss");
+  GotoXY(x,y+1); Write("OXY:  ");
+  GotoXY(x,y+2); Write("BAT:  ");
+  GotoXY(x,y+3); Write("EOX:  ");
+  GotoXY(x,y+4); Write("EBT:  ");
+  GotoXY(x,y+5); Write("CRY:  ");
   }
 
 void G_Plss::Update() {
   Int32 i;
+  char buffer[32];
   i = (int)(plss->Oxygen() / PLSS_OXYGEN * 100);
   if (i>99) i = 99;
   if (i != lastOxygen) {
-    GotoXY(x+4,y+1); printf("%2d",i);
+    GotoXY(x+4,y+1); sprintf(buffer,"%2d",i); Write(buffer);
     lastOxygen = i;
     }
   i = (int)(plss->Battery() / PLSS_BATTERY * 100);
   if (i>99) i = 99;
   if (i != lastBattery) {
-    GotoXY(x+4,y+2); printf("%2d",i);
+    GotoXY(x+4,y+2); sprintf(buffer,"%2d",i); Write(buffer);
     lastBattery = i;
     }
   i = (int)(plss->EOxygen() / PLSS_EOXYGEN * 100);
   if (i>99) i = 99;
   if (i != lastEOxygen) {
-    GotoXY(x+4,y+3); printf("%2d",i);
+    GotoXY(x+4,y+3); sprintf(buffer,"%2d",i); Write(buffer);
     lastEOxygen = i;
     }
   i = (int)(plss->EBattery() / PLSS_EBATTERY * 100);
   if (i>99) i = 99;
   if (i != lastEBattery) {
-    GotoXY(x+4,y+4); printf("%2d",i);
+    GotoXY(x+4,y+4); sprintf(buffer,"%2d",i); Write(buffer);
     lastEBattery = i;
     }
   if (plss->Carrying() != lastCarrying) {
     GotoXY(x+5,y+5);
     lastCarrying = plss->Carrying();
     switch (lastCarrying) {
-      case 'R':printf("S"); break;
-      case 'B':printf("B"); break;
-      case 'F':printf("F"); break;
-      case 'L':printf("L"); break;
-      default :printf("-"); break;
+      case 'R':Write("S"); break;
+      case 'B':Write("B"); break;
+      case 'F':Write("F"); break;
+      case 'L':Write("L"); break;
+      default :Write("-"); break;
       }
     }
   }

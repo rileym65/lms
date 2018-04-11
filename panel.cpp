@@ -83,7 +83,8 @@ Int8 Panel::loadFile(const char* filename) {
       if (x1 == x2) VLine(x1,y1,y2);
       else if (y1 == y2) HLine(x1,y1,x2);
       else {
-        printf("Diagonal lines are not allowed: %s\n",line);
+        Write("Diagonal lines are not allowed: ");
+        WriteLn(line);
         exit(1);
         }
       }
@@ -181,12 +182,14 @@ Int8 Panel::loadFile(const char* filename) {
       else if (strcasecmp(str,"throttle") == 0)
         addGauge(new G_Throttle(x1, y1, false, vehicle));
       else {
-        printf("Unknown guage: %s\n",str);
+        Write("Unknown guage: ");
+        WriteLn(str);
         exit(1);
         }
       }
     else {
-      printf("Unknown command: %s\n",line);
+      Write("Unknown command: ");
+      WriteLn(line);
       exit(1);
       }
     }
@@ -284,7 +287,7 @@ void Panel::Display() {
   ClrScr();
   for (i=0; i<24; i++) {
     GotoXY(1,i+1);
-    printf("%s",screen[i]);
+    Write(screen[i]);
     }
   for (i=0; i<numGauges; i++)
     gauges[i]->Display();

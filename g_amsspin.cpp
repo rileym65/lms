@@ -21,20 +21,22 @@ void G_AmsSpin::Reset() {
   }
 
 void G_AmsSpin::Display() {
-  GotoXY(x,y+0); printf("  spin");
-  GotoXY(x,y+1); printf("PIT:  ");
-  GotoXY(x,y+2); printf("ROL:  ");
-  GotoXY(x,y+3); printf("YAW:  ");
+  GotoXY(x,y+0); Write("  spin");
+  GotoXY(x,y+1); Write("PIT:  ");
+  GotoXY(x,y+2); Write("ROL:  ");
+  GotoXY(x,y+3); Write("YAW:  ");
   }
 
 void G_AmsSpin::Update() {
   int i;
+  char buffer[32];
   i = (int)(lm->PitchRate());
   if (i > 9) i = 9;
   if (i < -9) i = -9;
   if (i != lastPitchRate) {
     GotoXY(x+4, y+1);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastPitchRate = i;
     }
   i = (int)(lm->RollRate());
@@ -42,7 +44,8 @@ void G_AmsSpin::Update() {
   if (i < -9) i = -9;
   if (i != lastRollRate) {
     GotoXY(x+4, y+2);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastRollRate = i;
     }
   if (pilotLocation == PILOT_LM) i = (int)(lm->YawRate());
@@ -52,7 +55,8 @@ void G_AmsSpin::Update() {
   if (i < -9) i = -9;
   if (i != lastYawRate) {
     GotoXY(x+4, y+3);
-    printf("%2d",i);
+    sprintf(buffer,"%2d",i);
+    Write(buffer);
     lastYawRate = i;
     }
   }

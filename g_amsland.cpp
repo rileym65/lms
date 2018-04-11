@@ -24,14 +24,14 @@ void G_AmsLand::Reset() {
   }
 
 void G_AmsLand::Display() {
-  GotoXY(x,y+0); printf("    land     ");
-  GotoXY(x,y+1); printf(" +---w|----+ ");
-  GotoXY(x,y+2); printf(" |         | ");
-  GotoXY(x,y+3); printf(" |         |n");
-  GotoXY(x,y+4); printf("--         --");
-  GotoXY(x,y+5); printf("s|         | ");
-  GotoXY(x,y+6); printf(" |         | ");
-  GotoXY(x,y+7); printf(" +----|e---+ ");
+  GotoXY(x,y+0); Write("    land     ");
+  GotoXY(x,y+1); Write(" +---w|----+ ");
+  GotoXY(x,y+2); Write(" |         | ");
+  GotoXY(x,y+3); Write(" |         |n");
+  GotoXY(x,y+4); Write("--         --");
+  GotoXY(x,y+5); Write("s|         | ");
+  GotoXY(x,y+6); Write(" |         | ");
+  GotoXY(x,y+7); Write(" +----|e---+ ");
   }
 
 void G_AmsLand::Update() {
@@ -41,6 +41,7 @@ void G_AmsLand::Update() {
   Int32  lng;
   Int32  lat;
   char   mode;
+  char   buffer[32];
   lat = (int)currentVehicle->Latitude();
   lng = (int)currentVehicle->Longitude();
   alt = currentVehicle->Altitude();
@@ -54,7 +55,8 @@ void G_AmsLand::Update() {
         }
     for (i=0; i<5; i++) {
       GotoXY(x+2, y+2+i);
-      printf("%s",data[i]);
+      sprintf(buffer,"%s",data[i]);
+      Write(buffer);
       }
     lastMode = mode;
     lastLatitude = lat;
@@ -62,29 +64,29 @@ void G_AmsLand::Update() {
     }
   if (landingRadarOn && alt < 18000 && ins->AttUr() <= 60) {
     if (lm->VelocityAltitude() <= -3) {
-      GotoXY(x+1,y+2); printf("+");
-      GotoXY(x+11,y+2); printf("+");
+      GotoXY(x+1,y+2); Write("+");
+      GotoXY(x+11,y+2); Write("+");
       }
     else {
-      GotoXY(x+1,y+2); printf("|");
-      GotoXY(x+11,y+2); printf("|");
+      GotoXY(x+1,y+2); Write("|");
+      GotoXY(x+11,y+2); Write("|");
       }
     GotoXY(x+10,y+1);
-    if (lm->VelocityEast() < -0.2) printf("^"); else printf("-");
+    if (lm->VelocityEast() < -0.2) Write("^"); else Write("-");
     GotoXY(x+10,y+7);
-    if (lm->VelocityEast() > 0.2) printf("v"); else printf("-");
+    if (lm->VelocityEast() > 0.2) Write("v"); else Write("-");
     GotoXY(x+11,y+6);
-    if (lm->VelocityNorth() > 0.2) printf(">"); else printf("|");
+    if (lm->VelocityNorth() > 0.2) Write(">"); else Write("|");
     GotoXY(x+1,y+6);
-    if (lm->VelocityNorth() < -0.2) printf("<"); else printf("|");
+    if (lm->VelocityNorth() < -0.2) Write("<"); else Write("|");
     }
   else {
-    GotoXY(x+1,y+2); printf("|");
-    GotoXY(x+11,y+2); printf("|");
-    GotoXY(x+10,y+1); printf("-");
-    GotoXY(x+10,y+7); printf("-");
-    GotoXY(x+11,y+6); printf("|");
-    GotoXY(x+1,y+6); printf("|");
+    GotoXY(x+1,y+2); Write("|");
+    GotoXY(x+11,y+2); Write("|");
+    GotoXY(x+10,y+1); Write("-");
+    GotoXY(x+10,y+7); Write("-");
+    GotoXY(x+11,y+6); Write("|");
+    GotoXY(x+1,y+6); Write("|");
     }
   }
 

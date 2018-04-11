@@ -158,7 +158,7 @@ void cycle() {
         v = ins->RelVel();
         if (v.Length() > 2) {
           ClrScr();
-          printf("Collision with the CSM destroyed both vehicles!!!\n");
+          WriteLn("Collision with the CSM destroyed both vehicles!!!");
           endReason = END_COLLISION;
           run = false;
 //          ShowCursor();
@@ -220,6 +220,7 @@ void test() {
   Int32  i;
   Double lat;
   Double lng;
+  char buffer[80];
   lng = 10;
   lat = 10;
   for (i=-180; i<180; i+=10) {
@@ -231,7 +232,8 @@ void test() {
     v = Vector( v.X()*cos(lng*DR) + v.Y()*-sin(lng*DR),
                 v.X()*sin(lng*DR) + v.Y()*cos(lng*DR),
                 v.Z());
-    printf("H: %d  V: %f %f %f\n",i,v.X(),v.Y(),v.Z());
+    printf(buffer,"H: %d  V: %f %f %f\n",i,v.X(),v.Y(),v.Z());
+    Write(buffer);
     }
   }
 
@@ -241,9 +243,9 @@ int main(int argc, char** argv) {
   Double d;
   FILE* file;
   simSpeed = 100000;
-  printf("\n\n\n\n");
-  printf("%s\n",TITLE);
-  printf("\n\n\n\n");
+  WriteLn(""); WriteLn(""); WriteLn(""); WriteLn("");
+  WriteLn(TITLE);
+  WriteLn(""); WriteLn(""); WriteLn(""); WriteLn("");
   csm = new CSM();
   lm = new LunarModule();
   plss = new Plss();
@@ -256,14 +258,14 @@ int main(int argc, char** argv) {
   if (load((char*)"lms.sav") == 0) {
     d = -9999.99;
     while (d <-90 || d > 90) {
-      printf("Target latitude: ");
+      Write("Target latitude: ");
       fgets(buffer,64,stdin);
       sscanf(buffer,"%lf",&d);
       }
     mission->TargetLatitude(d);
     d = -9999.99;
     while (d <-180 || d > 180) {
-      printf("Target longitude: ");
+      Write("Target longitude: ");
       fgets(buffer,64,stdin);
       sscanf(buffer,"%lf",&d);
       }
@@ -364,12 +366,15 @@ int main(int argc, char** argv) {
   CloseTerminal();
   if (endReason == END_CRASHED) {
     ClrScr();
-    printf("Crash!!!!\n");
-    printf("You hit the lunar surface with a vertial velocity\n");
-    printf("of %.1f m/s and a horizontal velocity of %.1f m/s\n\n",
+    WriteLn("Crash!!!!");
+    WriteLn("You hit the lunar surface with a vertial velocity");
+    sprintf(buffer,"of %.1f m/s and a horizontal velocity of %.1f m/s",
             landedVVel,landedHVel);
-    printf("This exceeds the tolerance of the spacecraft.  As a\n");
-    printf("result the spacecraft has been destroyed.\n\n");
+    WriteLn(buffer);
+    WriteLn("");
+    WriteLn("This exceeds the tolerance of the spacecraft.  As a");
+    WriteLn("result the spacecraft has been destroyed.");
+    WriteLn("");
     file = fopen("userref.txt","a+");
     fprintf(file,"Feature Wreckage,       %10.4f, %10.4f, 0, &%s",
       lm->Latitude(), lm->Longitude(),LE);

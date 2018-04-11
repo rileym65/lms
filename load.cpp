@@ -147,7 +147,8 @@ void loadSimulation(FILE* file) {
       numSamples++;
       }
     else {
-      printf("Unknown line found in save file: %s\n",pline);
+      Write("Unknown line found in save file: ");
+      WriteLn(pline);
       exit(1);
       }
     }
@@ -196,7 +197,8 @@ Int8 load(char* filename) {
     else if (startsWith(pline,"eva ")) LoadEva(file,nw(pline));
     else if (startsWith(pline,"burn ")) LoadBurn(file,nw(pline));
     else {
-      printf("Unknown line found in save file: %s\n",pline);
+      Write("Unknown line found in save file: ");
+      WriteLn(pline);
       exit(1);
       }
     }

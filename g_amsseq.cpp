@@ -18,8 +18,8 @@ void G_AmsSeq::Reset() {
   }
 
 void G_AmsSeq::Display() {
-  GotoXY(x,y+0); printf(" ABO| KIL| PIL");
-  GotoXY(x,y+1); printf(" JET| LIF| ---");
+  GotoXY(x,y+0); Write(" ABO| KIL| PIL");
+  GotoXY(x,y+1); Write(" JET| LIF| ---");
   }
 
 void G_AmsSeq::Update() {

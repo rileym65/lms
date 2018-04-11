@@ -24,33 +24,34 @@ void G_MapLarge::Reset() {
   }
 
 void G_MapLarge::Display() {
-  GotoXY(x,y+ 0); printf("                                             ");
-  GotoXY(x,y+ 1); printf(" +----------------west|--------------------+ ");
-  GotoXY(x,y+ 2); printf(" |                                         | ");
-  GotoXY(x,y+ 3); printf(" |                                         | ");
-  GotoXY(x,y+ 4); printf(" |                                         | ");
-  GotoXY(x,y+ 5); printf(" |                                         | ");
-  GotoXY(x,y+ 6); printf(" |                                         |n");
-  GotoXY(x,y+ 7); printf(" |                                         |o");
-  GotoXY(x,y+ 8); printf(" |                                         |r");
-  GotoXY(x,y+ 9); printf(" |                                         |t");
-  GotoXY(x,y+10); printf(" |                                         |h");
-  GotoXY(x,y+11); printf("--                                         --");
-  GotoXY(x,y+12); printf("s|                                         | ");
-  GotoXY(x,y+13); printf("o|                                         | ");
-  GotoXY(x,y+14); printf("u|                                         | ");
-  GotoXY(x,y+15); printf("t|                                         | ");
-  GotoXY(x,y+16); printf("h|                                         | ");
-  GotoXY(x,y+17); printf(" |                                         | ");
-  GotoXY(x,y+18); printf(" |                                         | ");
-  GotoXY(x,y+19); printf(" |                                         | ");
-  GotoXY(x,y+20); printf(" |                                         | ");
-  GotoXY(x,y+21); printf(" +--------------------|east----------------+ ");
+  GotoXY(x,y+ 0); Write("                                             ");
+  GotoXY(x,y+ 1); Write(" +----------------west|--------------------+ ");
+  GotoXY(x,y+ 2); Write(" |                                         | ");
+  GotoXY(x,y+ 3); Write(" |                                         | ");
+  GotoXY(x,y+ 4); Write(" |                                         | ");
+  GotoXY(x,y+ 5); Write(" |                                         | ");
+  GotoXY(x,y+ 6); Write(" |                                         |n");
+  GotoXY(x,y+ 7); Write(" |                                         |o");
+  GotoXY(x,y+ 8); Write(" |                                         |r");
+  GotoXY(x,y+ 9); Write(" |                                         |t");
+  GotoXY(x,y+10); Write(" |                                         |h");
+  GotoXY(x,y+11); Write("--                                         --");
+  GotoXY(x,y+12); Write("s|                                         | ");
+  GotoXY(x,y+13); Write("o|                                         | ");
+  GotoXY(x,y+14); Write("u|                                         | ");
+  GotoXY(x,y+15); Write("t|                                         | ");
+  GotoXY(x,y+16); Write("h|                                         | ");
+  GotoXY(x,y+17); Write(" |                                         | ");
+  GotoXY(x,y+18); Write(" |                                         | ");
+  GotoXY(x,y+19); Write(" |                                         | ");
+  GotoXY(x,y+20); Write(" |                                         | ");
+  GotoXY(x,y+21); Write(" +--------------------|east----------------+ ");
   }
 
 void G_MapLarge::Update() {
   Int32 i,j;
   Int32 cellX, cellY;
+  char buffer[80];
   cellX = map->Cell(currentVehicle->Longitude());
   cellY = map->Cell(currentVehicle->Latitude());
   if (cellX != lastCellX || cellY != lastCellY) {
@@ -84,7 +85,7 @@ void G_MapLarge::Update() {
     data[9][20] = '@';
 
     for (i=0; i<19; i++) {
-      GotoXY(x+2,y+i+2); printf("%s",data[i]);
+      GotoXY(x+2,y+i+2); sprintf(buffer,"%s",data[i]); Write(buffer);
       }
     }
   }

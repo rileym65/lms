@@ -115,6 +115,7 @@ MOBJS = \
 	lfsr.o \
 	map.o \
 	random.o \
+	terminal.o \
 	mapgen.o
 
 PLANNEROBJS = \

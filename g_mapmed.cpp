@@ -24,25 +24,26 @@ void G_MapMed::Reset() {
   }
 
 void G_MapMed::Display() {
-  GotoXY(x,y+ 0); printf("                         ");
-  GotoXY(x,y+ 1); printf(" +------west|----------+ ");
-  GotoXY(x,y+ 2); printf(" |                     |n");
-  GotoXY(x,y+ 3); printf(" |                     |o");
-  GotoXY(x,y+ 4); printf(" |                     |r");
-  GotoXY(x,y+ 5); printf(" |                     |t");
-  GotoXY(x,y+ 6); printf(" |                     |h");
-  GotoXY(x,y+ 7); printf("--                     --");
-  GotoXY(x,y+ 8); printf("s|                     | ");
-  GotoXY(x,y+ 9); printf("o|                     | ");
-  GotoXY(x,y+10); printf("u|                     | ");
-  GotoXY(x,y+11); printf("t|                     | ");
-  GotoXY(x,y+12); printf("h|                     | ");
-  GotoXY(x,y+13); printf(" +----------|east------+ ");
+  GotoXY(x,y+ 0); Write("                         ");
+  GotoXY(x,y+ 1); Write(" +------west|----------+ ");
+  GotoXY(x,y+ 2); Write(" |                     |n");
+  GotoXY(x,y+ 3); Write(" |                     |o");
+  GotoXY(x,y+ 4); Write(" |                     |r");
+  GotoXY(x,y+ 5); Write(" |                     |t");
+  GotoXY(x,y+ 6); Write(" |                     |h");
+  GotoXY(x,y+ 7); Write("--                     --");
+  GotoXY(x,y+ 8); Write("s|                     | ");
+  GotoXY(x,y+ 9); Write("o|                     | ");
+  GotoXY(x,y+10); Write("u|                     | ");
+  GotoXY(x,y+11); Write("t|                     | ");
+  GotoXY(x,y+12); Write("h|                     | ");
+  GotoXY(x,y+13); Write(" +----------|east------+ ");
   }
 
 void G_MapMed::Update() {
   Int32 i,j;
   Int32 cellX, cellY;
+  char buffer[64];
   cellX = map->Cell(currentVehicle->Longitude());
   cellY = map->Cell(currentVehicle->Latitude());
   if (cellX != lastCellX || cellY != lastCellY) {
@@ -75,7 +76,7 @@ void G_MapMed::Update() {
       data[cellX+5][cellY+10] = 'm';
     data[5][10] = '@';
     for (i=0; i<11; i++) {
-      GotoXY(x+2,y+i+2); printf("%s",data[i]);
+      GotoXY(x+2,y+i+2); sprintf(buffer,"%s",data[i]); Write(buffer);
       }
     }
   }

@@ -26,6 +26,7 @@ void G_Axis::Update() {
 void G_Axis::draw(Int32 fx,Int32 fy,Double fd,
                   Int32 lx,Int32 ly,Double ld,
                   Int32 ux,Int32 uy,Double ud) {
+  char buffer[32];
   Boolean flag;
   Int8 i;
   Int32  dx[3], dy[3];
@@ -54,7 +55,8 @@ void G_Axis::draw(Int32 fx,Int32 fy,Double fd,
     }
   for (i=0; i<3; i++) {
     GotoXY(x+dx[i], y+dy[i]);
-    printf("%c",c[i]);
+    sprintf(buffer,"%c",c[i]);
+    Write(buffer);
     }
 
 
