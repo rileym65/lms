@@ -16,56 +16,6 @@
 
 char compOutput[128];
 
-typedef struct {
-  char symbol[16];
-  Int32 value;
-  } INST;
-
-INST symtab[] = {
-  { "PROG", 0x01000000 },
-  { "MOV",  0x02000000 },
-  { "WAIT", 0x03000000 },
-  { "JMP",  0x04000000 },
-  { "END",  0x05000000 },
-  { "SUB",  0x06000000 },
-  { "CALP", 0x07000000 },
-  { "RET",  0x08000000 },
-  { "END",  0x09000000 },
-
-  { "R1",   0x00000101 },
-  { "R2",   0x00000102 },
-  { "R3",   0x00000103 },
-  { "R4",   0x00000104 },
-  { "R5",   0x00000105 },
-  { "R6",   0x00000106 },
-  { "R7",   0x00000107 },
-  { "R8",   0x00000108 },
-  { "R9",   0x00000109 },
-  { "R10",  0x0000010a },
-  { "R11",  0x0000010b },
-  { "R12",  0x0000010c },
-  { "R13",  0x0000010d },
-  { "R14",  0x0000010e },
-  { "R15",  0x0000010f },
-  { "ALT",  0x00000201 },
-  { "AVEL", 0x00000202 },
-  { "AACC", 0x00000203 },
-  { "EAST", 0x00000204 },
-  { "EVEL", 0x00000205 },
-  { "EACC", 0x00000206 },
-  { "NRTH", 0x00000207 },
-  { "NVEL", 0x00000208 },
-  { "NACC", 0x00000209 },
-  { "PERL", 0x0000020A },
-  { "APOL", 0x0000020B },
-  { "GRND", 0x0000020C },
-  { "ANOD", 0x0000020D },
-  { "INCL", 0x0000020E },
-  { "TALT", 0x0000020F },
-  { "TLNG", 0x00000210 },
-  { "TLAT", 0x00000211 },
-  };
-
 UInt32 defaultprog[] = {
   0x01000001,                     /* 0000  PROG P00V00N01 */
   0x02201101,                     /* 0000  MOV  ALT,R1 */
@@ -114,7 +64,7 @@ Boolean Computer::loadCoreFile() {
   Boolean valid;
   FILE *file;
   char line[1024];
-  file = fopen("core.dat","r");
+  file = fopen("core.bin","r");
   if (file == NULL) return false;
   addr = 0;
   while (fgets(line, 1023, file) != NULL) {

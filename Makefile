@@ -127,7 +127,11 @@ PLANNEROBJS = \
 	planner.o \
 	terminal.o
 
-all: $(PROJECT) mapgen planner
+GCASMOBJS = \
+	terminal.o \
+	gcasm.o
+
+all: $(PROJECT) mapgen planner gcasm
 
 $(PROJECT): $(OBJS)
 	$(CC) $(DEFS) $(LIBDIR) $(OBJS) $(LIBS) -o $(PROJECT)
@@ -137,6 +141,9 @@ mapgen: $(MOBJS)
 
 planner: $(PLANNEROBJS)
 	$(CC) $(DEFS) $(LIBDIR) $(PLANNEROBJS) $(LIBS) -o planner
+
+gcasm: $(GCASMOBJS)
+	$(CC) $(DEFS) $(LIBDIR) $(GCASMOBJS) $(LIBS) -o gcasm
 
 .cpp.o:
 	$(CC) $(DEFS) $(INCDIR) $(INCS) -c $<

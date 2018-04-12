@@ -7,12 +7,12 @@ loop000001: mov    ALT,R1
             jmp    loop000001
 
             prog   P00V00N02
-loop000002: mov    ALT,R1
+loop000002: mov    ALT,R1               ; Move altitude to register 1
             mov    TLNG,R2
             mov    TLAT,R3
             calp   P10V00N00
-            wait
-            jmp    loop000002
+            wait                        ; Wait for next cycle
+            jmp    loop000002           ; Loop back to beginning
 
             prog   P10V00N00
             mov    AVEL,R4
