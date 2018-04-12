@@ -77,9 +77,12 @@ class INS {
     Double   MomEast();
     Double   MomNorth();
     Double   Perilune();
+    Double   RelAltitude();
     Vector   RelPos();
     Vector   RelVel();
     void     Reset();
+    Double   TargetLongitude();
+    Double   TargetLatitude();
     Vehicle* Spacecraft();
     Vehicle* Spacecraft(Vehicle* v);
     Vehicle* Target();

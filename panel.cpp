@@ -26,6 +26,7 @@
 #include "g_clockmi.h"
 #include "g_clockte.h"
 #include "g_clockut.h"
+#include "g_computer.h"
 #include "g_evaprep.h"
 #include "g_docked.h"
 #include "g_groundins.h"
@@ -139,6 +140,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_ClockTE(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockut") == 0)
         addGauge(new G_ClockUT(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"computer") == 0)
+        addGauge(new G_Computer(x1, y1, false, vehicle));
       else if (strcasecmp(str,"docked") == 0)
         addGauge(new G_Docked(x1, y1, false, vehicle));
       else if (strcasecmp(str,"evaprep") == 0)

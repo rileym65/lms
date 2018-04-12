@@ -127,6 +127,10 @@ char* INS::DisplayPosNorth() {
   return displayPosNorth;
   }
 
+Double INS::RelAltitude() {
+  return relAltitude;
+  }
+
 char* INS::DisplayVelAltitude() {
   return displayVelAltitude;
   }
@@ -170,6 +174,14 @@ Double INS::MomNorth() {
 Int8 INS::Mode(Int8 i) {
   if (i >= 1 && i <= 6) mode = i;
   return mode;
+  }
+
+Double INS::TargetLongitude() {
+  return tarLongitude;
+  }
+
+Double INS::TargetLatitude() {
+  return tarLatitude;
   }
 
 Boolean INS::hasSignal() {

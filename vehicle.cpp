@@ -14,6 +14,7 @@ Vehicle::Vehicle() {
   faceUp = Vector(0,0,1);
   orientation = Matrix::Identity();
   panel = NULL;
+  comp= NULL;
   Init();
   InitPanel();
   }
@@ -71,6 +72,15 @@ Double Vehicle::Battery(Double d) {
   battery = d;
   if (battery < 0) battery = 0;
   return battery;
+  }
+
+Computer* Vehicle::Comp() {
+  return comp;
+  }
+
+Computer* Vehicle::Comp(Computer* c) {
+  comp= c;
+  return comp;
   }
 
 Double Vehicle::EBattery() {

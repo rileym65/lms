@@ -1,6 +1,7 @@
 #include "header.h"
 #include "lm.h"
 #include "terminal.h"
+#include "computer.h"
 
 LunarModule::LunarModule() {
   landed = 0;
@@ -277,6 +278,7 @@ void LunarModule::Cycle() {
       }
     }
   Vehicle::Cycle();
+  if (comp != NULL) comp->Cycle();
 //  if (radius <= GROUND && !landed) {
   if (radius <= GROUND) {
     vVel = fabs(velocityAltitude);
@@ -504,6 +506,7 @@ void LunarModule::ProcessKey(Int32 key) {
       }
     }
   panel->ProcessKey(key);
+  if (comp != NULL) comp->ProcessKey(key);
   }
 
 

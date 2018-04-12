@@ -7,6 +7,8 @@
 #include "matrix.h"
 #include "panel.h"
 
+class Computer;
+
 class Vehicle {
   protected:
     Double  accelAltitude;
@@ -37,6 +39,7 @@ class Vehicle {
     Double  velocityEast;
     Double  velocityNorth;
     Panel  *panel;
+    Computer* comp; 
   public:
     Vehicle();
     virtual ~Vehicle();
@@ -49,6 +52,8 @@ class Vehicle {
     virtual Double Altitude(Double d);
     virtual Double Battery();
     virtual Double Battery(Double d);
+    virtual Computer* Comp();
+    virtual Computer* Comp(Computer* c);
     virtual Double EBattery();
     virtual Double EBattery(Double d);
     virtual Double EOxygen();

@@ -268,11 +268,11 @@
 	|PAK: 4|
 	+------+
 [ee]
-  This area displays information related to the PLSS, Portable
-Life Support System.  OXY indicates what % of oxygen remains.
-BAT shows what % of battery power remains and PAK indicates how
-many PLSS recharge packs are left.  If there are no packs left
-then you will no longer be able to equip the PLSS.
+	This area displays information related to the PLSS, Portable
+	Life Support System.  OXY indicates what % of oxygen remains.
+	BAT shows what % of battery power remains and PAK indicates how
+	many PLSS recharge packs are left.  If there are no packs left
+	then you will no longer be able to equip the PLSS.
 [e-]
 [=]
 [h2]	Ams_Sequencer
@@ -282,6 +282,15 @@ then you will no longer be able to equip the PLSS.
 	| JET| LIF| ---|
 	+--------------+
 [ee]
+	This gauge shows when certain sequencer functions are active.
+	A '^' mark will be displayed next to any sequencer function that
+	is currently active.  ABO indicates that the Abort sequencer has
+	been engaged.  JET indicates that the descent stage jettison
+	sequencer has been started.  KIL indicates that the sequencer kill
+	all rotation has been activated.  LIF indicates that the lunar
+	liftoff sequencer has been activated.  PIL does not function in
+	this simulator, but in AMS it indicated when the sequencer auto
+	pilot had been engaged.
 [e-]
 [=]
 [h2]	Ams_Spin
@@ -293,6 +302,10 @@ then you will no longer be able to equip the PLSS.
 	|YAW: 0|
 	+------+
 [ee]
+	This gauge shows current rotational rates around the three 
+	vehicle axis.  PIT shows spin around the Pitch axis.  ROL
+	shows the rotation rate around the Roll axis and YAW shows
+	the rotation rate around the Yaw axis.
 [e-]
 [=]
 [h2]	Ams_Status
@@ -307,6 +320,63 @@ then you will no longer be able to equip the PLSS.
 	|^DSN| TD|--:  |
 	+--------------+
 [ee]
+	This group of gauges shows various status information about
+	the vehicle and pilot.  F/B shows the status of the Forward and
+	Backward RCS thrusters.  If an '^' appears before this indicator
+	then the Forwrard thruster is currently on.  If a 'v' flag appears
+	before this indicator then the Backwards thruster is currently on.
+[=]
+	L/R shows the status of the Left and Right RCS thrusters.  A flag
+	will appear before this guage, similar to the F/B guage, indicating
+	if either thruster is active.
+[=]
+	U/D shows the status of the Up and Down RCS thrusters.  A flag
+	will appear before this guage, similar to the F/B guage to indicate
+	if either thruster is on.
+[=]
+	RAD indicates the status of the landing radar.  A '^' flag will show
+	before this guage if the landing radar is on and a signal is being 
+	received.  A 'v' flag will appear if the landing radar is on but no
+	signal is being received.
+[=]
+	DOK shows the status of the docking radar.  A '^' flag will show
+	before this guage if the docking radar is on and it is receiving
+	information from the CSM.  A 'v' flag will be displayed if the
+	docking radar is on but no signal is being received.
+[=]
+	DSN shows the status of the DSN transponder.  A '^' flag will
+	appear before this guage if the DSN transponder is on.
+[=]
+	SS indicates if the pilot is currently wearing the spacesuit.  A
+	'^' flag will be displayed if the spacesuit is currently being 
+	worn and a 'v' flag will be displayed if the pilot is not wearing
+	the spacesuit.
+[=]
+	PL indicates if the pilot currently has the PLSS equipped.  A '^'
+	flag will be shown if the pilot has the PLSS equipped and a 'v'
+	flag will be shown if the PLSS is not currently equipped.
+[=]
+	CB shows the status of the cabin pressurization.  If a '^' flag
+	is displayed then then the cabin is currently pressuriezed.  If 
+	a 'v' flag is shown then the cabin is depressurized.
+[=]
+	DK indicates whether or not the LM is docked with the CSM.  A
+	'^' flag will be displayed if the LM is currently docked.
+[=]
+	TD shows whether or not the LM is in contact with the lunar 
+	surface.  A '^' will be shown if the LM is currently sitting on
+	the lunar surface.
+[=]
+	MB shows the current metabolic rate of the pilot.
+[=]
+	EF shows the current efficiency rating of the pilot.
+[=]
+	IN shows the current injury state of the pilot.  Note that this
+	shows both soft and hard injuries in a combined value.  Hard
+	injuries are those injuries sustained from a hard landing or
+	while moving too fast over rough lurrain.  Soft injury is a value
+	that tracks how long the pilot has been awake, which has a negative
+	effect on efficiency.
 [e-]
 [=]
 [h2]	Ams_WestAxis
@@ -328,6 +398,30 @@ then you will no longer be able to equip the PLSS.
 	| +----------|down------+ |
 	+-------------------------+
 [ee]
+	This instrument provides a graphics depiction of the orientation
+	of the vehicle as if the observer was directly east of the vehicle
+	and looking directly west through the vehicle.  'U' indicates the
+	relative angle of the Up face, 'L' indicates the relative angle
+	of the Left face and 'F' indicates the Front face.
+[=]
+	The vertical depiction of the guage shows the face in relation to
+	the local ground.  Towards the bottom of the guage is pointing 
+	towards teh ground, while the top of the guage is pointing 
+	directly away from the ground.
+[=]
+	The horizontal depiction of the guage shows the face in relation
+	to the local north/south directions.  Towards the left side of 
+	the guage indicates the face is facing south while towards the
+	right side of the guage the face is towards the north.
+[=]
+	If any of the face indicators are displayed in lowercase, this
+	indicates that the face is further from the imaginary viewer than
+	the center line of the vehicle.  In other words the face is
+	facing away from the viewer towards the west.
+[=]
+	In the example display.  The Up face is facing directly away
+	from the lunar surface, the Left face is facing the south and the
+	Front face is facing directly west.
 [e-]
 [=]
 [h2]	MapMedium
@@ -658,3 +752,19 @@ then you will no longer be able to equip the PLSS.
 [ee]
 [e-]
 [=]
+
+[h2]	Computer
+[er]
+	+-----------------------------+
+	|   P 00      V 00      N 00  |
+	| -0000000  -0000000  -0000000|
+	| -0000000  -0000000  -0000000|
+	| -0000000  -0000000  -0000000|
+	| -0000000  -0000000  -0000000|
+	| -0000000  -0000000  -0000000|
+	|     RUN  IDL  INP  ERR      |
+	+-----------------------------+
+[ee]
+[e-]
+[=]
+

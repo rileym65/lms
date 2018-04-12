@@ -19,6 +19,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_clockmi.h \
            g_clockte.h \
            g_clockut.h \
+           g_computer.h \
            g_docked.h \
            g_evaprep.h \
            g_groundins.h \
@@ -68,6 +69,7 @@ OBJS = \
 	g_clockmi.o \
 	g_clockte.o \
 	g_clockut.o \
+	g_computer.o \
 	g_docked.o \
 	g_evaprep.o \
 	g_groundins.o \
@@ -87,6 +89,7 @@ OBJS = \
 	g_rcs.o \
 	g_seq.o \
 	g_throttle.o \
+	computer.o \
 	groundvehicle.o \
 	helpers.o \
 	ins.o \
@@ -155,6 +158,7 @@ clean:
 	-rm panel.doc
 	-rm panel.html
 
+computer.o:      $(HEADERS) vehicle.h computer.h computer.cpp
 csm.o:           $(HEADERS) csm.cpp
 gauge.o:         $(HEADERS) gauge.h gauge.cpp
 groundvehicle.o: $(HEADERS) vehicle.h groundvehicle.h groundvehicle.cpp
@@ -203,6 +207,7 @@ g_clockev.o:    $(HEADERS) gauge.h terminal.h g_clockev.h g_clockev.cpp
 g_clockmi.o:    $(HEADERS) gauge.h terminal.h g_clockmi.h g_clockmi.cpp
 g_clockte.o:    $(HEADERS) gauge.h terminal.h g_clockte.h g_clockte.cpp
 g_clockut.o:    $(HEADERS) gauge.h terminal.h g_clockut.h g_clockut.cpp
+g_computer.o:   $(HEADERS) gauge.h terminal.h g_computer.h g_computer.cpp
 g_docked.o:     $(HEADERS) gauge.h terminal.h g_docked.h g_docked.cpp
 g_groundins.o:  $(HEADERS) gauge.h terminal.h g_groundins.h g_groundins.cpp
 g_ins.o:        $(HEADERS) gauge.h terminal.h g_ins.h g_ins.cpp

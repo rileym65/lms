@@ -4,6 +4,7 @@
 #include <string.h>
 #include "header.h"
 #include "terminal.h"
+#include "computer.h"
 
 void setup() {
 Vector t;
@@ -248,6 +249,7 @@ int main(int argc, char** argv) {
   WriteLn(""); WriteLn(""); WriteLn(""); WriteLn("");
   csm = new CSM();
   lm = new LunarModule();
+  lm->Comp(new Computer(lm));
   plss = new Plss();
   lrv = new Lrv();
   ins = new INS();

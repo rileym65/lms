@@ -27,6 +27,6 @@ Gauge Rcs 2,17
 Gauge Attitude 5,12
 Gauge Radars 31,13
 Gauge Throttle 41,13
-Gauge Ins 24,17
+Gauge Computer 23,17
 Gauge Lamps 2,21
 gauge Seq 29,2
