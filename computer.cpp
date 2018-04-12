@@ -196,6 +196,12 @@ Double Computer::read(UInt16 addr) {
       case 0x0f: return ins->RelAltitude();
       case 0x10: return ins->TargetLongitude();
       case 0x11: return ins->TargetLatitude();
+      case 0x12: return ins->RelLongitude();
+      case 0x13: return ins->RelLatitude();
+      case 0x14: return ins->RelAltitude();
+      case 0x15: return ins->RelVel().X();
+      case 0x16: return ins->RelVel().Y();
+      case 0x17: return ins->RelVel().Z();
       }
     }
   return 0;

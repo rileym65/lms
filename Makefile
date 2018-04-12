@@ -155,6 +155,9 @@ doc:
 	makedoc lms.d
 	makedoc panel.d
 
+core:	gcasm core.asm
+	./gcasm core.asm
+
 clean:
 	-rm $(PROJECT)
 	-rm mapgen

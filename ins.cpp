@@ -176,6 +176,14 @@ Int8 INS::Mode(Int8 i) {
   return mode;
   }
 
+Double INS::RelLongitude() {
+  return relLongitude;
+  }
+
+Double INS::RelLatitude() {
+  return relLatitude;
+  }
+
 Double INS::TargetLongitude() {
   return tarLongitude;
   }

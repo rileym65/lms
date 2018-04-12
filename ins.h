@@ -81,6 +81,8 @@ class INS {
     Vector   RelPos();
     Vector   RelVel();
     void     Reset();
+    Double   RelLongitude();
+    Double   RelLatitude();
     Double   TargetLongitude();
     Double   TargetLatitude();
     Vehicle* Spacecraft();
