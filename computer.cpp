@@ -211,6 +211,7 @@ Double Computer::read(UInt16 addr) {
       case 0x1c: return 1000;
       case 0x1d: return clockMi;
       case 0x1e: return clockBu;
+      case 0x1f: return vehicle->Mass();
       }
     }
   if ((addr & 0xf00) == 0x600) {

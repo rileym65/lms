@@ -154,6 +154,7 @@ rmsave:
 doc:
 	makedoc lms.d
 	makedoc panel.d
+	makedoc computer.d
 
 core:	gcasm core.asm
 	./gcasm core.asm

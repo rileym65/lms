@@ -162,6 +162,10 @@ Double Vehicle::MaxBattery(Double d) {
   return maxBattery;
   }
 
+Double Vehicle::Mass() {
+  return 0;
+  }
+
 Double Vehicle::Oxygen() {
   return oxygen;
   }

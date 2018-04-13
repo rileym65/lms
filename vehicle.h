@@ -80,6 +80,7 @@ class Vehicle {
     virtual Double MaxBattery(Double d);
     virtual Double MaxOxygen();
     virtual Double MaxOxygen(Double d);
+    virtual Double Mass();
     virtual Double Oxygen();
     virtual Double Oxygen(Double d);
     virtual Vector Position();
