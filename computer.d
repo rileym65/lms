@@ -36,39 +36,42 @@
 [h2]	Special Registers (Read only)
 [I4]
 [TB]
-        | LOC   | Returns                                       |
-	| AACC  | Altitude acceleration in m/s                  |
-        | ALT   | Altitude in meters                            |
-	| ANOD  | Longitude of ascending node                   |
-	| APOL  | Apolune in meters                             |
-	| AVEL  | Altitude velocity in m/s                      |
-	| C1    | Contant value of 1                            |
-	| C10   | Contant value of 10                           |
-	| C100  | Contant value of 100                          |
-	| C1000 | Contant value of 1000                         |
-	| CKKBU | Current value of engine burn clock in seconds |
-	| CLKMI | Current value of mission clock in seconds     |
-	| EACC  | Longitudinal acceleration in m/s              |
-	| EAST  | Longitude in degrees                          |
-	| EVEL  | Longitudinal velocity in m/s                  |
-	| GRND  | Ground radius in meters, 1738300              |
-	| INCL  | Inclination of orbit                          |
-	| MASS  | Current mass of the vehicle in kilograms      |
-	| NACC  | Latitudinal acceleration in m/s               |
-	| NRTH  | Latitude in degrees                           |
-	| NVEL  | Latitudinal velocity in m/s                   |
-	| PERL  | Perilune in meters                            |
-	| PI    | Constant value of pi, 3.14159...              |
-	| RALT  | Altitude difference to CSM in meters          |
-	| RAVEL | Relative altitude velocity to CSM in m/s      |
-	| REVEL | Relative longitudinal velocity to CSM in m/s  |
-	| RLAT  | Latitudinal distance to CSM in degrees        |
-	| RLNG  | Longitudinal distance to CSM in degrees       |
-	| RNVEL | Relative latitudinal velocity to CSM in m/s   |
-	| TALT  | Altitude different to target in meters        |
-	| TLAT  | Latitudinal distance to target in degrees     |
-	| TLNG  | Longitudinal distance to target in degrees    |
-	| ZERO  | Constant value of 0                           |
+        | LOC   | Returns                                          |
+	| AACC  | Altitude acceleration in m/s                     |
+        | ALT   | Altitude in meters                               |
+	| ANOD  | Longitude of ascending node                      |
+	| APOL  | Apolune in meters                                |
+	| AVEL  | Altitude velocity in m/s                         |
+	| C1    | Contant value of 1                               |
+	| C10   | Contant value of 10                              |
+	| C100  | Contant value of 100                             |
+	| C1000 | Contant value of 1000                            |
+	| CKKBU | Current value of engine burn clock in seconds    |
+	| CLKMI | Current value of mission clock in seconds        |
+	| EACC  | Longitudinal acceleration in m/s                 |
+	| EAST  | Longitude in degrees                             |
+	| EVEL  | Longitudinal velocity in m/s                     |
+	| GRND  | Ground radius in meters, 1738300                 |
+	| INCL  | Inclination of orbit                             |
+	| MASS  | Current mass of the vehicle in kilograms         |
+	| METR  | Constant, number of meters per degree at equater |
+	| NACC  | Latitudinal acceleration in m/s                  |
+	| NOUN  | Current value of Noun                            |
+	| NRTH  | Latitude in degrees                              |
+	| NVEL  | Latitudinal velocity in m/s                      |
+	| PERL  | Perilune in meters                               |
+	| PI    | Constant value of pi, 3.14159...                 |
+	| RALT  | Altitude difference to CSM in meters             |
+	| RAVEL | Relative altitude velocity to CSM in m/s         |
+	| REVEL | Relative longitudinal velocity to CSM in m/s     |
+	| RLAT  | Latitudinal distance to CSM in degrees           |
+	| RLNG  | Longitudinal distance to CSM in degrees          |
+	| RNVEL | Relative latitudinal velocity to CSM in m/s      |
+	| TALT  | Altitude different to target in meters           |
+	| TLAT  | Latitudinal distance to target in degrees        |
+	| TLNG  | Longitudinal distance to target in degrees       |
+	| VERB  | Current value of verb                            |
+	| ZERO  | Constant value of 0                              |
 [TE]
 [I-4]
 [=]

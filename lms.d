@@ -249,6 +249,10 @@
 	|[      |-|Decrement mode of multi-axis display|
 	|.      |-|Increment mode of precision axis display|
 	|,      |-|Decrement mode of precision axis display|
+	|p      |-|Request entry of Prog parameter on guidance computer |
+	|v      |-|Request entry of Verb parameter on guidance computer |
+	|n      |-|Request entry of Noun parameter on guidance computer |
+	|g      |-|Start program execution on guidance computer         |
 [TE]
 [I-4]
 [=]

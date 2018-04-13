@@ -111,10 +111,10 @@ void Computer::addOpcode(UInt16 addr,UInt32 opcode) {
   rom[addr] = opcode;
   }
 
-
 char* Computer::Reg(Int8 n) {
   if (n > 0 && n < 16) {
-    if (fabs(regs[n]) > 9999999) sprintf(compOutput,"%8.0f",regs[n]);
+    if (fabs(regs[n]) > 9999999) sprintf(compOutput,"99999999");
+    else if (fabs(regs[n]) > 99999) sprintf(compOutput,"%8.0f",regs[n]);
     else if (fabs(regs[n]) > 9999) sprintf(compOutput,"%8.1f",regs[n]);
     else if (fabs(regs[n]) > 999) sprintf(compOutput,"%8.2f",regs[n]);
     else if (fabs(regs[n]) > 99) sprintf(compOutput,"%8.3f",regs[n]);
@@ -212,6 +212,9 @@ Double Computer::read(UInt16 addr) {
       case 0x1d: return clockMi;
       case 0x1e: return clockBu;
       case 0x1f: return vehicle->Mass();
+      case 0x20: return 30339.05838741743;
+      case 0x21: return verb;
+      case 0x22: return noun;
       }
     }
   if ((addr & 0xf00) == 0x600) {
