@@ -25,8 +25,8 @@ loop000003: mov    RALT,R1
             jmp    loop000003
 
             prog   P01V00N00
-            neg    c1,r20
-            mov    r20,YWRAT
+            mov    RCSRTH,R10
+            mov    c100,RCSRTH
             end
 
             prog   P10V00N00

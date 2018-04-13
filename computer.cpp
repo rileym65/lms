@@ -215,10 +215,12 @@ Double Computer::read(UInt16 addr) {
     }
   if ((addr & 0xf00) == 0x600) {
     switch (addr & 0xff) {
-      case 0x00: vehicle->Throttle();
-      case 0x01: vehicle->RollRate();
-      case 0x02: vehicle->PitchRate();
-      case 0x03: vehicle->YawRate();
+      case 0x00: return vehicle->Throttle();
+      case 0x01: return vehicle->RollRate();
+      case 0x02: return vehicle->PitchRate();
+      case 0x03: return vehicle->YawRate();
+      case 0x04: return vehicle->RcsThrottle();
+      case 0x05: return vehicle->RcsRotThrottle();
       }
     }
   return 0;
@@ -232,6 +234,8 @@ void Computer::write(UInt16 addr,Double value) {
       case 0x01: vehicle->RollRate(value); break;
       case 0x02: vehicle->PitchRate(value); break;
       case 0x03: vehicle->YawRate(value); break;
+      case 0x04: vehicle->RcsThrottle(value); break;
+      case 0x05: vehicle->RcsRotThrottle(value); break;
       }
     }
   }
