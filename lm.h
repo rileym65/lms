@@ -17,17 +17,11 @@ class LunarModule : public Vehicle {
     Int16  rock;
     Double ascentFuel;
     Double descentFuel;
-    Double pitchRate;
     Double rcsFuel;
-    Double rollRate;
-    Double yawRate;
     Double roll;
     Double pitch;
     Double yaw;
     Double value;
-    Matrix pitchMatrix;
-    Matrix rollMatrix;
-    Matrix yawMatrix;
   public:
     LunarModule();
     virtual ~LunarModule();
@@ -50,14 +44,8 @@ class LunarModule : public Vehicle {
     Double DescentFuel(Double d);
     Int8   DescentJettisoned();
     Int8   Landed();
-    Double PitchRate();
-    Double PitchRate(Double d);
     Double RcsFuel();
     Double RcsFuel(Double d);
-    Double RollRate();
-    Double RollRate(Double d);
-    Double YawRate();
-    Double YawRate(Double d);
     Double Value();
     Double Value(Double d);
     virtual void   Cycle();

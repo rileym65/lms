@@ -162,6 +162,7 @@ clean:
 	-rm $(PROJECT)
 	-rm mapgen
 	-rm planner
+	-rm gcasm
 	-rm *.o
 	-rm lms.doc
 	-rm lms.html

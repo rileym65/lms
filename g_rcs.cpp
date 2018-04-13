@@ -56,7 +56,7 @@ void G_Rcs::Update() {
     if (lastRcsUdMode == 'U') { GotoXY(x+0,y+2); Write("<"); }
     if (lastRcsUdMode == 'D') { GotoXY(x+4,y+2); Write(">"); }
     }
-  i = (int)(lm->PitchRate() * 10);
+  i = (int)(vehicle->PitchRate() * 10);
   if (i != lastPitch) {
     GotoXY(x+9,y+0);
     if (i >= 100) Write(">10 ");
@@ -64,7 +64,7 @@ void G_Rcs::Update() {
     else sprintf(buffer,"%4.1f",i/10.0); Write(buffer);
     lastPitch = i;
     }
-  i = (int)(lm->RollRate() * 10);
+  i = (int)(vehicle->RollRate() * 10);
   if (i != lastRoll) {
     GotoXY(x+9,y+1);
     if (i >= 100) Write(">10 ");
@@ -72,7 +72,7 @@ void G_Rcs::Update() {
     else sprintf(buffer,"%4.1f",i/10.0); Write(buffer);
     lastRoll = i;
     }
-  i = (int)(lm->YawRate() * 10);
+  i = (int)(vehicle->YawRate() * 10);
   if (i != lastYaw) {
     GotoXY(x+9,y+2);
     if (i >= 100) Write(">10 ");

@@ -40,6 +40,12 @@ class Vehicle {
     Double  velocityNorth;
     Panel  *panel;
     Computer* comp; 
+    Double  rollRate;
+    Double  pitchRate;
+    Double  yawRate;
+    Matrix pitchMatrix;
+    Matrix rollMatrix;
+    Matrix yawMatrix;
   public:
     Vehicle();
     virtual ~Vehicle();
@@ -96,6 +102,12 @@ class Vehicle {
     virtual Boolean UseOxygen(Double units);
     virtual Boolean UseBattery(Double units);
     virtual void   ProcessKey(Int32 key);
+    virtual Double PitchRate();
+    virtual Double PitchRate(Double d);
+    virtual Double RollRate();
+    virtual Double RollRate(Double d);
+    virtual Double YawRate();
+    virtual Double YawRate(Double d);
   };
 
 #endif

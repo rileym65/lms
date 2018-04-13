@@ -13,6 +13,7 @@
 #define ERR_NO_PRGM      1001
 #define ERR_STK_OVER     1002
 #define ERR_STK_UNDER    1003
+#define ERR_DIV0         1004
 
 char compOutput[128];
 
@@ -179,6 +180,7 @@ Double Computer::read(UInt16 addr) {
   if ((addr & 0xf00) == 0x100) return regs[addr & 0xff];
   if ((addr & 0xf00) == 0x200) {
     switch (addr & 0xff) {
+      case 0x00: return 0;
       case 0x01: return vehicle->Altitude();
       case 0x02: return vehicle->VelocityAltitude();
       case 0x03: return vehicle->AccelAltitude();
@@ -202,6 +204,21 @@ Double Computer::read(UInt16 addr) {
       case 0x15: return ins->RelVel().X();
       case 0x16: return ins->RelVel().Y();
       case 0x17: return ins->RelVel().Z();
+      case 0x18: return M_PI;
+      case 0x19: return 1;
+      case 0x1a: return 10;
+      case 0x1b: return 100;
+      case 0x1c: return 1000;
+      case 0x1d: return clockMi;
+      case 0x1e: return clockBu;
+      }
+    }
+  if ((addr & 0xf00) == 0x600) {
+    switch (addr & 0xff) {
+      case 0x00: vehicle->Throttle();
+      case 0x01: vehicle->RollRate();
+      case 0x02: vehicle->PitchRate();
+      case 0x03: vehicle->YawRate();
       }
     }
   return 0;
@@ -209,12 +226,21 @@ Double Computer::read(UInt16 addr) {
 
 void Computer::write(UInt16 addr,Double value) {
   if ((addr & 0xf00) == 0x100) regs[addr & 0xff] = value;
+  if ((addr & 0xf00) == 0x600) {
+    switch (addr & 0xff) {
+      case 0x00: vehicle->Throttle(value); break;
+      case 0x01: vehicle->RollRate(value); break;
+      case 0x02: vehicle->PitchRate(value); break;
+      case 0x03: vehicle->YawRate(value); break;
+      }
+    }
   }
 
 Boolean Computer::exec(UInt32 cmd) {
   UInt16 arg1;
   UInt16 arg2;
   Double d1;
+  Double a1,a2;
   Int32 i1;
   arg1 = (cmd >> 12) & 0xfff;
   arg2 = cmd & 0xfff;
@@ -269,6 +295,118 @@ Boolean Computer::exec(UInt32 cmd) {
     case 0x09000000:                                       /* END */
          running = false;
          return false;
+    case 0x0a000000:                                       /* ADD */
+         d1 = read(arg1) + read(arg2);
+         write(arg1, d1);
+         return true;
+    case 0x0b000000:                                       /* MUL */
+         d1 = read(arg1) * read(arg2);
+         write(arg1, d1);
+         return true;
+    case 0x0c000000:                                       /* DIV */
+         a1 = read(arg1);
+         a2 = read(arg2);
+         if (a2 == 0) {
+           err = true;
+           running = false;
+           regs[13] = ERR_DIV0;
+           return false;
+           }
+         else {
+           d1 = a1 / a2;
+           write(arg1, d1);
+           return true;
+           }
+    case 0x0d000000:                                       /* LDI */
+         a1 = rom[pc++];
+         write(arg1, a1);
+         return true;
+    case 0x0e000000:                                       /* NEG */
+         a1 = read(arg1);
+         a1 = -a1;
+         write(arg2, a1);
+         return true;
+    case 0x0f000000:                                       /* JEQ */
+         a1 = read(arg1);
+         a2 = read(arg2);
+         i1 = rom[pc++];
+         if (a1 == a2) pc = i1;
+         return true;
+    case 0x10000000:                                       /* JNE */
+         a1 = read(arg1);
+         a2 = read(arg2);
+         i1 = rom[pc++];
+         if (a1 != a2) pc = i1;
+         return true;
+    case 0x11000000:                                       /* JG  */
+         a1 = read(arg1);
+         a2 = read(arg2);
+         i1 = rom[pc++];
+         if (a1 > a2) pc = i1;
+         return true;
+    case 0x12000000:                                       /* JGE */
+         a1 = read(arg1);
+         a2 = read(arg2);
+         i1 = rom[pc++];
+         if (a1 >= a2) pc = i1;
+         return true;
+    case 0x13000000:                                       /* JL  */
+         a1 = read(arg1);
+         a2 = read(arg2);
+         i1 = rom[pc++];
+         if (a1 < a2) pc = i1;
+         return true;
+    case 0x14000000:                                       /* JLE */
+         a1 = read(arg1);
+         a2 = read(arg2);
+         i1 = rom[pc++];
+         if (a1 <= a2) pc = i1;
+         return true;
+    case 0x15000000:                                       /* COS */
+         a1 = read(arg1) * DR;
+         a1 = cos(a1);
+         write(arg2,a1);
+         return true;
+    case 0x16000000:                                       /* SIN */
+         a1 = read(arg1) * DR;
+         a1 = sin(a1);
+         write(arg2,a1);
+         return true;
+    case 0x17000000:                                       /* SQR */
+         a1 = read(arg1);
+         a1 = a1 * a1;
+         write(arg2,a1);
+         return true;
+    case 0x18000000:                                       /* SQRT */
+         a1 = read(arg1);
+         a1 = sqrt(a1);
+         write(arg2,a1);
+         return true;
+    case 0x19000000:                                       /* INV */
+         a1 = read(arg1);
+         a1 = 1 / a1;
+         write(arg2,a1);
+         return true;
+    case 0x1a000000:                                       /* ACOS */
+         a1 = read(arg1);
+         a1 = acos(a1) / DR;
+         write(arg2,a1);
+         return true;
+    case 0x1b000000:                                       /* ASIN */
+         a1 = read(arg1);
+         a1 = asin(a1) / DR;
+         write(arg2,a1);
+         return true;
+    case 0x1c000000:                                       /* TAN */
+         a1 = read(arg1) * DR;
+         a1 = tan(a1);
+         write(arg2,a1);
+         return true;
+    case 0x1d000000:                                       /* ATAN */
+         a1 = read(arg1);
+         a1 = atan(a1) / DR;
+         write(arg2,a1);
+         return true;
     default:
          running = false;
          err = true;

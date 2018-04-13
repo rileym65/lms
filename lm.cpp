@@ -105,16 +105,6 @@ Int8 LunarModule::Landed() {
   return landed;
   }
 
-Double LunarModule::PitchRate() {
-  return pitchRate;
-  }
-
-Double LunarModule::PitchRate(Double d) {
-  pitchRate = d;
-  pitchMatrix = Matrix::RotateY(-pitchRate);
-  return pitchRate;
-  }
-
 Double LunarModule::RcsFuel() {
   return rcsFuel;
   }
@@ -131,26 +121,6 @@ Int16 LunarModule::Rock() {
 Int16 LunarModule::Rock(Int16 i) {
   rock = i;
   return rock;
-  }
-
-Double LunarModule::RollRate() {
-  return rollRate;
-  }
-
-Double LunarModule::RollRate(Double d) {
-  rollRate = d;
-  rollMatrix = Matrix::RotateZ(-rollRate);
-  return rollRate;
-  }
-
-Double LunarModule::YawRate() {
-  return yawRate;
-  }
-
-Double LunarModule::YawRate(Double d) {
-  yawRate = d;
-  yawMatrix = Matrix::RotateX(yawRate);
-  return yawRate;
   }
 
 Double LunarModule::Value() {
@@ -329,10 +299,7 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
   fprintf(file,"  AscentFuel %.18f%s",ascentFuel,LE);
   fprintf(file,"  DescentFuel %.18f%s",descentFuel,LE);
-  fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
   fprintf(file,"  RcsFuel %.18f%s",rcsFuel,LE);
-  fprintf(file,"  RollRate %.18f%s",rollRate,LE);
-  fprintf(file,"  YawRate %.18f%s",yawRate,LE);
   fprintf(file,"  Landed %d%s",landed,LE);
   fprintf(file,"  DescentJettisoned %d%s",descentJettisoned,LE);
   fprintf(file,"  Rock %d%s",rock,LE);
@@ -348,10 +315,7 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"rcsrotthrottle ")) rcsRotThrottle = atoi(nw(pline));
   else if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
   else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
-  else if (startsWith(pline,"pitchrate ")) PitchRate(atof(nw(pline)));
   else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
-  else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
-  else if (startsWith(pline,"yawrate ")) YawRate(atof(nw(pline)));
   else if (startsWith(pline,"landed ")) landed = atoi(nw(pline));
   else if (startsWith(pline,"descentjettisoned ")) descentJettisoned = atoi(nw(pline));
   else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));

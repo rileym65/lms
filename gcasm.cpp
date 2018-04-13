@@ -7,6 +7,8 @@
 #define ARGS0 0
 #define ARGS1 1
 #define ARGS2 2
+#define IMM2  3
+#define JMP2  4
 
 typedef struct {
   char symbol[16];
@@ -29,10 +31,31 @@ INST inst[] = {
   { "CALP", 0x07000000, ARGS1 },
   { "RET",  0x08000000, ARGS0 },
   { "END",  0x09000000, ARGS0 },
+  { "ADD",  0x0a000000, ARGS2 },
+  { "MUL",  0x0b000000, ARGS2 },
+  { "DIV",  0x0c000000, ARGS2 },
+  { "LDI",  0x0d000000, IMM2  },
+  { "NEG",  0x0e000000, ARGS2 },
+  { "JEQ",  0x0f000000, JMP2  },
+  { "JNE",  0x10000000, JMP2  },
+  { "JG",   0x11000000, JMP2  },
+  { "JGE",  0x12000000, JMP2  },
+  { "JL",   0x13000000, JMP2  },
+  { "JLE",  0x14000000, JMP2  },
+  { "COS",  0x15000000, ARGS2 },
+  { "SIN",  0x16000000, ARGS2 },
+  { "SQR",  0x17000000, ARGS2 },
+  { "SQRT", 0x18000000, ARGS2 },
+  { "INV",  0x19000000, ARGS2 },
+  { "ACOS", 0x1a000000, ARGS2 },
+  { "ASIN", 0x1b000000, ARGS2 },
+  { "TAN",  0x1c000000, ARGS2 },
+  { "ATAN", 0x1d000000, ARGS2 },
   { "",     0x7fffffff, 0     },
   };
 
 SYMBOL symtab[] = {
+  { "ZERO",  0x00000200 },
   { "ALT",   0x00000201 },
   { "AVEL",  0x00000202 },
   { "AACC",  0x00000203 },
@@ -56,6 +79,18 @@ SYMBOL symtab[] = {
   { "RAVEL", 0x00000215 },
   { "REVEL", 0x00000216 },
   { "RNVEL", 0x00000217 },
+  { "PI",    0x00000218 },
+  { "C1",    0x00000219 },
+  { "C10",   0x0000021a },
+  { "C100",  0x0000021b },
+  { "C1000", 0x0000021c },
+  { "CLKMI", 0x0000021d },
+  { "CLKBU", 0x0000021e },
+
+  { "THRTL", 0x00000600 },
+  { "RLRAT", 0x00000601 },
+  { "PTRAT", 0x00000602 },
+  { "YWRAT", 0x00000603 },
   { "",      0x7fffffff },
   };
 
@@ -65,6 +100,7 @@ char    label[1024];
 char    command[1024];
 char    arg1[1024];
 char    arg2[1024];
+char    arg3[1024];
 Int8    fields;
 UInt32  program[128000];
 UInt32  address;
@@ -124,6 +160,7 @@ void Parse(char* line) {
   strncpy(arg1,start,line-start);
   arg1[line-start] = 0;
   fields |= 4;
+
   while (*line == ' ' || *line == '\t') line++;
   if (*line == ';') return;
   if (*line == 0) return;
@@ -142,6 +179,25 @@ void Parse(char* line) {
   strncpy(arg2,start,line-start);
   arg2[line-start] = 0;
   fields |= 8;
+
+  while (*line == ' ' || *line == '\t') line++;
+  if (*line == ';') return;
+  if (*line == 0) return;
+  if (*line != ',') {
+    Write("Invalid character found on line: ");
+    WriteLn(orig);
+    return;
+    }
+  line++;
+  while (*line == ' ' || *line == '\t') line++;
+  if (*line == ';') return;
+  start = line;
+  while (*line != 0 && *line != ' ' && *line != '\t' && *line != ';' && 
+         *line != ',') line++;
+  if (start == line) return;
+  strncpy(arg3,start,line-start);
+  arg3[line-start] = 0;
+  fields |= 16;
   }
 
 Int32 FindInstruction(char* cmd) {
@@ -189,6 +245,10 @@ Int32 GetProgVerbNoun(char* arg) {
   v = ((arg[4] - '0') * 10) + (arg[5] - '0');
   n = ((arg[7] - '0') * 10) + (arg[8] - '0');
   return (p << 16) | (v << 8) | n;
+  }
+
+Int32 GetImmValue(Int8 pass,char* arg) {
+  return atoi(arg);
   }
 
 Int32 GetArgValue(Int8 pass,char* arg) {
@@ -277,6 +337,27 @@ Boolean Pass(Int8 pass,char* filename) {
              opcode |= (a2 & 0xfff);
              program[address++] = opcode;
              break;
+        case IMM2:
+             a1 = GetArgValue(pass,arg1);
+             if (a1 < 0) {
+               Write("Invalid label: ");
+               WriteLn(arg1);
+               return false;
+               }
+             a2 = GetImmValue(pass,arg2);
+             opcode |= ((a1 & 0xfff) << 12);
+             program[address++] = opcode;
+             program[address++] = a2;
+             break;
+        case JMP2:
+             a1 = GetArgValue(pass,arg1);
+             a2 = GetArgValue(pass,arg2);
+             opcode |= ((a1 & 0xfff) << 12);
+             opcode |= (a2 & 0xfff);
+             program[address++] = opcode;
+             a1 = GetArgValue(pass,arg3);
+             program[address++] = a1;
+             break;
         }
 
       }
@@ -310,7 +391,7 @@ int main(int argc, char** argv) {
     }
   file = fopen("core.bin","w");
   for (i=0; (UInt32)i<address; i++)
-    fprintf(file,"%x\n",program[i]);
+    fprintf(file,"%08x\n",program[i]);
   fclose(file);
 
   if (labels != NULL) free(labels);

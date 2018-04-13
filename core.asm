@@ -22,8 +22,12 @@ loop000003: mov    RALT,R1
             mov    REVEL,R5
             mov    RNVEL,R6
             calp   P10V00N01
-            wait
             jmp    loop000003
+
+            prog   P01V00N00
+            neg    c1,r20
+            mov    r20,YWRAT
+            end
 
             prog   P10V00N00
             mov    AVEL,R4
@@ -36,10 +40,13 @@ loop000003: mov    RALT,R1
             mov    AACC,R7
             mov    EACC,R8
             mov    NACC,R9
+            ldi    R20,1000
             mov    PERL,R13
             sub    R13,GRND
+            div    R13,R20
             mov    APOL,R14
             sub    R14,GRND
+            div    R14,R20
             mov    ANOD,R11
             mov    INCL,R12
             ret

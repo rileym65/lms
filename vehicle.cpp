@@ -193,6 +193,36 @@ Double Vehicle::Radius() {
   return radius;
   }
 
+Double Vehicle::PitchRate() {
+  return pitchRate;
+  }
+
+Double Vehicle::PitchRate(Double d) {
+  pitchRate = d;
+  pitchMatrix = Matrix::RotateY(-pitchRate);
+  return pitchRate;
+  }
+
+Double Vehicle::RollRate() {
+  return rollRate;
+  }
+
+Double Vehicle::RollRate(Double d) {
+  rollRate = d;
+  rollMatrix = Matrix::RotateZ(-rollRate);
+  return rollRate;
+  }
+
+Double Vehicle::YawRate() {
+  return yawRate;
+  }
+
+Double Vehicle::YawRate(Double d) {
+  yawRate = d;
+  yawMatrix = Matrix::RotateX(yawRate);
+  return yawRate;
+  }
+
 Double Vehicle::Radius(Double d) {
 //  velocityAltitude = d - radius;;
   radius = d;
@@ -365,6 +395,9 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
   fprintf(file,"  EOxygen %.18f%s",eoxygen,LE);
   fprintf(file,"  Throttle %d%s",throttle,LE);
+  fprintf(file,"  RollRate %.18f%s",rollRate,LE);
+  fprintf(file,"  YawRate %.18f%s",yawRate,LE);
+  fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
   fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
   fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
   fprintf(file,"  BaseLeft %.18f %.18f %.18f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
@@ -403,6 +436,10 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"ebattery ")) ebattery = atof(nw(pline));
     else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
     else if (startsWith(pline,"eoxygen ")) eoxygen = atof(nw(pline));
+    else if (startsWith(pline,"pitchrate ")) PitchRate(atof(nw(pline)));
+    else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
+    else if (startsWith(pline,"yawrate ")) YawRate(atof(nw(pline)));
+
     else if (SubLoad(pline) == 0) {
       Write("Unknown line found in save file: ");
       WriteLn(pline);

@@ -442,6 +442,10 @@
 	| +----------|east------+ |
 	+-------------------------+
 [ee]
+	This shows the current lunar surface.  The pilot is always in the
+	middle of the display and represented by an '@' symbol.  Each cell
+	of the map represents 10m x 10m of the lunar surface.  the various
+	symbols on the map represent features on the lunar suface.
 [e-]
 [=]
 [h2]	Rcs
@@ -765,6 +769,20 @@
 	|     RUN  IDL  INP  ERR      |
 	+-----------------------------+
 [ee]
+	This guage shows the UI of the guidance computer.  The 'P', 'V',
+	and 'N' fields show what the current Program, Verb and Noun are.
+	There are 15 register displays shown below the PVN line.  These
+	register displays show information from the currently running
+	program and their contents will vary by program.  Refer to the
+	guidance computer manual for more information about what is 
+	displayed.  the 'RUN' flag will be shown if the computer is
+	currently running a program.  'IDL' will be shown if the computer
+	is not running a program and is in the idle state.  The 'INP'
+	flag will be shown anytime the computer is expecting input from
+	the user.  'ERR' is displayd if the computer encounters any
+	errors during a program run.  Usually an error code will be
+	displayed in register 13 (lowest left register), refer to the
+	guidance computer manual for the meanings of error codes.
 [e-]
 [=]
 

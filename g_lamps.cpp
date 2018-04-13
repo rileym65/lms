@@ -48,7 +48,7 @@ void G_Lamps::Update() {
     Write("RLO"); else Write("   ");
 
   GotoXY(x+8,y+0);
-  if (lm->PitchRate() != 0 || lm->RollRate() != 0 || lm->YawRate() != 0)
+  if (vehicle->PitchRate() != 0 || vehicle->RollRate() != 0 || vehicle->YawRate() != 0)
     Write("ATT"); else Write("   ");
 
   GotoXY(x+8,y+1);

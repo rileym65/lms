@@ -30,7 +30,7 @@ void G_AmsSpin::Display() {
 void G_AmsSpin::Update() {
   int i;
   char buffer[32];
-  i = (int)(lm->PitchRate());
+  i = (int)(vehicle->PitchRate());
   if (i > 9) i = 9;
   if (i < -9) i = -9;
   if (i != lastPitchRate) {
@@ -39,7 +39,7 @@ void G_AmsSpin::Update() {
     Write(buffer);
     lastPitchRate = i;
     }
-  i = (int)(lm->RollRate());
+  i = (int)(vehicle->RollRate());
   if (i > 9) i = 9;
   if (i < -9) i = -9;
   if (i != lastRollRate) {
@@ -48,7 +48,7 @@ void G_AmsSpin::Update() {
     Write(buffer);
     lastRollRate = i;
     }
-  if (pilotLocation == PILOT_LM) i = (int)(lm->YawRate());
+  if (pilotLocation == PILOT_LM) i = (int)(vehicle->YawRate());
   if (pilotLocation == PILOT_EVA) i = (int)(plss->TurnRate());
   if (pilotLocation == PILOT_LRV) i = (int)(lrv->TurnRate());
   if (i > 9) i = 9;
