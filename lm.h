@@ -12,8 +12,6 @@ class LunarModule : public Vehicle {
     char   rcsFbMode;
     char   rcsLrMode;
     char   rcsUdMode;
-    Int8   rcsThrottle;
-    Int8   rcsRotThrottle;
     Int16  rock;
     Double ascentFuel;
     Double descentFuel;
@@ -32,10 +30,6 @@ class LunarModule : public Vehicle {
     char   RcsLrMode(char c);
     char   RcsUdMode();
     char   RcsUdMode(char c);
-    Int8   RcsThrottle();
-    Int8   RcsThrottle(Int8 i);
-    Int8   RcsRotThrottle();
-    Int8   RcsRotThrottle(Int8 i);
     Int16  Rock();
     Int16  Rock(Int16 i);
     Double AscentFuel();

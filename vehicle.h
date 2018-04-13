@@ -46,6 +46,8 @@ class Vehicle {
     Matrix pitchMatrix;
     Matrix rollMatrix;
     Matrix yawMatrix;
+    Int8   rcsThrottle;
+    Int8   rcsRotThrottle;
   public:
     Vehicle();
     virtual ~Vehicle();
@@ -108,6 +110,11 @@ class Vehicle {
     virtual Double RollRate(Double d);
     virtual Double YawRate();
     virtual Double YawRate(Double d);
+    virtual Int8   RcsThrottle();
+    virtual Int8   RcsThrottle(Int8 i);
+    virtual Int8   RcsRotThrottle();
+    virtual Int8   RcsRotThrottle(Int8 i);
+
   };
 
 #endif

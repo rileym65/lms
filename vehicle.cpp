@@ -15,6 +15,8 @@ Vehicle::Vehicle() {
   orientation = Matrix::Identity();
   panel = NULL;
   comp= NULL;
+  rcsThrottle = 1;
+  rcsRotThrottle = 100;
   Init();
   InitPanel();
   }
@@ -201,6 +203,24 @@ Double Vehicle::PitchRate(Double d) {
   pitchRate = d;
   pitchMatrix = Matrix::RotateY(-pitchRate);
   return pitchRate;
+  }
+
+Int8   Vehicle::RcsThrottle() {
+  return rcsThrottle;
+  }
+
+Int8   Vehicle::RcsThrottle(Int8 i) {
+  rcsThrottle = i;
+  return rcsThrottle;
+  }
+
+Int8   Vehicle::RcsRotThrottle() {
+  return rcsRotThrottle;
+  }
+
+Int8   Vehicle::RcsRotThrottle(Int8 i) {
+  rcsRotThrottle = i;
+  return rcsRotThrottle;
   }
 
 Double Vehicle::RollRate() {
@@ -398,6 +418,8 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  RollRate %.18f%s",rollRate,LE);
   fprintf(file,"  YawRate %.18f%s",yawRate,LE);
   fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
+  fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
+  fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
   fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
   fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
   fprintf(file,"  BaseLeft %.18f %.18f %.18f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
@@ -439,6 +461,9 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"pitchrate ")) PitchRate(atof(nw(pline)));
     else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
     else if (startsWith(pline,"yawrate ")) YawRate(atof(nw(pline)));
+    else if (startsWith(pline,"rcsthrottle ")) rcsThrottle = atoi(nw(pline));
+    else if (startsWith(pline,"rcsrotthrottle ")) rcsRotThrottle = atoi(nw(pline));
+
 
     else if (SubLoad(pline) == 0) {
       Write("Unknown line found in save file: ");

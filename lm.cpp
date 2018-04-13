@@ -15,8 +15,6 @@ LunarModule::LunarModule() {
   descentJettisoned = 0;
   rock = 0;
   InitPanel();
-  rcsThrottle = 1;
-  rcsRotThrottle = 100;
 /*
   roll = 0;
   pitch = 0;
@@ -59,24 +57,6 @@ char   LunarModule::RcsUdMode() {
 char   LunarModule::RcsUdMode(char c) {
   rcsUdMode = c;
   return rcsUdMode;
-  }
-
-Int8   LunarModule::RcsThrottle() {
-  return rcsThrottle;
-  }
-
-Int8   LunarModule::RcsThrottle(Int8 i) {
-  rcsThrottle = i;
-  return rcsThrottle;
-  }
-
-Int8   LunarModule::RcsRotThrottle() {
-  return rcsRotThrottle;
-  }
-
-Int8   LunarModule::RcsRotThrottle(Int8 i) {
-  rcsRotThrottle = i;
-  return rcsRotThrottle;
   }
 
 Double LunarModule::AscentFuel() {
@@ -295,8 +275,6 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
   fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
   fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
-  fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
-  fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
   fprintf(file,"  AscentFuel %.18f%s",ascentFuel,LE);
   fprintf(file,"  DescentFuel %.18f%s",descentFuel,LE);
   fprintf(file,"  RcsFuel %.18f%s",rcsFuel,LE);
@@ -311,8 +289,6 @@ Int8 LunarModule::SubLoad(char* pline) {
   if (startsWith(pline,"rcsfbmode ")) rcsFbMode = atoi(nw(pline));
   else if (startsWith(pline,"rcslrmode ")) rcsLrMode = atoi(nw(pline));
   else if (startsWith(pline,"rcsudmode ")) rcsUdMode = atoi(nw(pline));
-  else if (startsWith(pline,"rcsthrottle ")) rcsThrottle = atoi(nw(pline));
-  else if (startsWith(pline,"rcsrotthrottle ")) rcsRotThrottle = atoi(nw(pline));
   else if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
   else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
   else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
