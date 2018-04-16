@@ -215,6 +215,9 @@ Double Computer::read(UInt16 addr) {
       case 0x20: return 30339.05838741743;
       case 0x21: return verb;
       case 0x22: return noun;
+      case 0x23: return lm->DescentFuel();
+      case 0x24: return lm->AscentFuel();
+      case 0x25: return lm->RcsFuel();
       }
     }
   if ((addr & 0xf00) == 0x600) {
