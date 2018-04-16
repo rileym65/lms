@@ -135,6 +135,7 @@ void LunarModule::Cycle() {
   Double hVel;
   Vector v;
   Matrix m;
+  if (comp != NULL) comp->Cycle();
   if (landed && throttle == 0) return;
   if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
 /*
@@ -228,7 +229,6 @@ void LunarModule::Cycle() {
       }
     }
   Vehicle::Cycle();
-  if (comp != NULL) comp->Cycle();
 //  if (radius <= GROUND && !landed) {
   if (radius <= GROUND) {
     vVel = fabs(velocityAltitude);

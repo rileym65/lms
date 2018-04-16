@@ -114,7 +114,7 @@ void MissionReport() {
     records->LongestEva = longestEVA;
     fprintf(file,"  Longest EVA             : %s%s",ClockToString(buffer,longestEVA),LE);
     }
-  if (clockTe/evaCount > records->LongestAverageEva) {
+  if (evaCount > 2 && clockTe/evaCount > records->LongestAverageEva) {
     records->LongestAverageEva = clockTe/evaCount;
     fprintf(file,"  Longest Average EVA     : %s%s",ClockToString(buffer,clockTe/evaCount),LE);
     }
