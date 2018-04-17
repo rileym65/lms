@@ -45,9 +45,9 @@ void G_Computer::Display() {
   GotoXY(x,y+1); Write(" -0000000  -0000000  -0000000");
   GotoXY(x,y+2); Write(" -0000000  -0000000  -0000000");
   GotoXY(x,y+3); Write(" -0000000  -0000000  -0000000");
-  GotoXY(x,y+4); Write(" -0000000  -0000000  -0000000");
+  GotoXY(x,y+4); Write("     RUN  IDL  INP  ERR      ");
   GotoXY(x,y+5); Write(" -0000000  -0000000  -0000000");
-  GotoXY(x,y+6); Write("     RUN  IDL  INP  ERR      ");
+  GotoXY(x,y+6); Write(" -0000000  -0000000  -0000000");
   }
 
 void G_Computer::Update() {
@@ -74,18 +74,18 @@ void G_Computer::Update() {
     strcpy(lastNoun,c->Noun());
     }
   if (c->Running() != lastRunning) {
-    GotoXY(x+5,y+6);
+    GotoXY(x+5,y+4);
     if (c->Running()) Write("RUN     ");
       else Write("     IDL");
     lastRunning = c->Running();
     }
   if (c->Input() != lastInput) {
-    GotoXY(x+15,y+6);
+    GotoXY(x+15,y+4);
     if (c->Input()) Write("INP"); else Write("   ");
     lastInput = c->Input();
     }
   if (c->Err() != lastErr) {
-    GotoXY(x+20,y+6);
+    GotoXY(x+20,y+4);
     if (c->Err()) Write("ERR"); else Write("   ");
     lastErr = c->Err();
     }
@@ -144,37 +144,37 @@ void G_Computer::Update() {
     strcpy(lastReg9,c->Reg(9));
     }
   if (strcmp(c->Reg(10),lastReg10) != 0) {
-    GotoXY(x+1, y+4); 
+    GotoXY(x+1, y+5); 
     sprintf(buffer,"%s",c->Reg(10));
     Write(buffer);
     strcpy(lastReg10,c->Reg(10));
     }
   if (strcmp(c->Reg(11),lastReg11) != 0) {
-    GotoXY(x+11, y+4); 
+    GotoXY(x+11, y+5); 
     sprintf(buffer,"%s",c->Reg(11));
     Write(buffer);
     strcpy(lastReg11,c->Reg(11));
     }
   if (strcmp(c->Reg(12),lastReg12) != 0) {
-    GotoXY(x+21, y+4); 
+    GotoXY(x+21, y+5); 
     sprintf(buffer,"%s",c->Reg(12));
     Write(buffer);
     strcpy(lastReg12,c->Reg(12));
     }
   if (strcmp(c->Reg(13),lastReg13) != 0) {
-    GotoXY(x+1, y+5); 
+    GotoXY(x+1, y+6); 
     sprintf(buffer,"%s",c->Reg(13));
     Write(buffer);
     strcpy(lastReg13,c->Reg(13));
     }
   if (strcmp(c->Reg(14),lastReg14) != 0) {
-    GotoXY(x+11, y+5); 
+    GotoXY(x+11, y+6); 
     sprintf(buffer,"%s",c->Reg(14));
     Write(buffer);
     strcpy(lastReg14,c->Reg(14));
     }
   if (strcmp(c->Reg(15),lastReg15) != 0) {
-    GotoXY(x+21, y+5); 
+    GotoXY(x+21, y+6); 
     sprintf(buffer,"%s",c->Reg(15));
     Write(buffer);
     strcpy(lastReg15,c->Reg(15));
