@@ -137,6 +137,9 @@ void LunarModule::Cycle() {
   Matrix m;
   if (comp != NULL) comp->Cycle();
   if (landed && throttle == 0) return;
+  if (rollRate >= -0.0001 && rollRate < 0.0001) rollRate = 0;
+  if (pitchRate >= -0.0001 && pitchRate < 0.0001) pitchRate = 0;
+  if (yawRate >= -0.0001 && yawRate < 0.0001) yawRate = 0;
   if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
 /*
     m = Matrix::Identity();
