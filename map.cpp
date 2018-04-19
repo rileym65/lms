@@ -197,9 +197,9 @@ void Map::generateLevelHMap() {
   Double diam;
   Int32  ilng;
   Int32  ilat;
-  Int32  cellX;
-  Int32  cellY;
-  char   symbol[64];
+//  Int32  cellX;
+//  Int32  cellY;
+//  char   symbol[64];
   for (i=0; i<numFeatures; i++) {
     lng = features[i].longitude;
     lat = features[i].latitude;
@@ -292,14 +292,14 @@ void Map::generateLevelMMap(Double longitude,Double latitude) {
   Double dist;
   Int32  ilng;
   Int32  ilat;
-  Int32  cellX;
-  Int32  cellY;
+//  Int32  cellX;
+//  Int32  cellY;
   Int32 x,y;
   for (y=0; y<=61; y++)
     for (x=0; x<=61; x++)
        levelM[y][x] = '_';
 
-  char   symbol[64];
+//  char   symbol[64];
   for (i=0; i<numFeatures; i++) {
     lng = features[i].longitude;
     lat = features[i].latitude;

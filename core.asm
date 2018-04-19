@@ -39,7 +39,7 @@ loop000002: calp   P10V00N02           ; Display POS^TAR data
             prog   P00V00N03
 loop000003: calp   P10V00N03           ; Display POS^REL data
             calp   P11V00N03           ; display perilune/apolune
-            calp   P11V00N02           ; display orbital information
+            calp   P11V00N05           ; display orbital information
             wait
             jmp    loop000003
 
@@ -269,5 +269,17 @@ looptest:   norm   pos,r20
             prog   P11V00N04
             mov    TANOD,R11
             mov    TINCL,R12
+            ret
+
+
+; *************************************************************************
+; ***** Prog: 11   Verb: 00   Noun: 05                                *****
+; ***** Type: Subroutine                                              *****
+; ***** Display relative inclination and longitude of ascending node  *****
+; ***** to CSM Into regs 11,12                                        *****
+; *************************************************************************
+            prog   P11V00N05
+            mov    RANOD,R11
+            mov    RINCL,R12
             ret
 

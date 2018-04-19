@@ -218,6 +218,16 @@ void setupTargetData() {
   hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
   targetMomNorth = L.Z() / hyp;
   targetMomNorth = asin(targetMomNorth) * 180 / M_PI;
+
+  L = csm->Velocity().Norm().Cross(csm->Position().Norm());
+  hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
+  csmMomEast = L.Y() / hyp;
+  csmMomEast = asin(csmMomEast) * 180 / M_PI;
+  if (L.X() < 0 && L.Y() < 0) csmMomEast = -180 - csmMomEast;
+  if (L.X() < 0 && L.Y() >= 0) csmMomEast = 180 - csmMomEast;
+  hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
+  csmMomNorth = L.Z() / hyp;
+  csmMomNorth = asin(csmMomNorth) * 180 / M_PI;
   }
 
 void test() {

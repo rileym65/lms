@@ -146,6 +146,8 @@ LINK Vector       targetPos;
 LINK Vector       targetVel;
 LINK Double       targetMomEast;
 LINK Double       targetMomNorth;
+LINK Double       csmMomEast;
+LINK Double       csmMomNorth;
 LINK Int8         ticks;
 LINK Int8         keyDelay;
 LINK UInt8        sampleType;

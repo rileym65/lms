@@ -155,6 +155,8 @@
 	|csm.pnl     |Panel definition for the CSM.|
 	|lrv.pnl     |Panel definition of the LRV.|
 	|lm.pnl      |Panel definition for the LM.|
+	|lm.comp     |LM panel definition using guidance computer.|
+	|lm.ins      |LM panel definition using INS.|
 	|plss.pnl    |Panel definition for EVA.|
 	|lms.doc     |Simulator documentation.  This file.|
 	|panel.doc   |Documentation for the instrument panels.|

@@ -31,6 +31,8 @@ class INS {
     Double   momNorth;
     Double   tMomEast;
     Double   tMomNorth;
+    Double   rMomEast;
+    Double   rMomNorth;
     Double   orbitTime;
     Double   perilune;
     Double   relAccAltitude;
@@ -52,6 +54,7 @@ class INS {
     void     populatePosRel();
     void     populateOrbAbs();
     void     populateOrbTar();
+    void     populateOrbRel();
     void     printVelocity(Double v,char* buffer);
   public:
     INS();
@@ -89,6 +92,8 @@ class INS {
     Double   TargetLatitude();
     Double   TargetMomEast();
     Double   TargetMomNorth();
+    Double   RelMomEast();
+    Double   RelMomNorth();
     Vehicle* Spacecraft();
     Vehicle* Spacecraft(Vehicle* v);
     Vehicle* Target();

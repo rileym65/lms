@@ -85,11 +85,19 @@ void INS::Cycle() {
   while (tMomNorth > 180) tMomNorth -= 360;
   while (tMomEast < -180) tMomEast += 360;
   while (tMomEast > 180) tMomEast -= 360;
+
+  rMomNorth = momNorth - csmMomNorth;
+  rMomEast = momEast - csmMomEast;
+  while (rMomNorth < -180) rMomNorth += 360;
+  while (rMomNorth > 180) rMomNorth -= 360;
+  while (rMomEast < -180) rMomEast += 360;
+  while (rMomEast > 180) rMomEast -= 360;
   if (mode == INS_MODE_POS_ABS) populatePosAbs();
   if (mode == INS_MODE_POS_TAR) populatePosTar();
   if (mode == INS_MODE_POS_REL) populatePosRel();
   if (mode == INS_MODE_ORB_ABS) populateOrbAbs();
   if (mode == INS_MODE_ORB_TAR) populateOrbTar();
+  if (mode == INS_MODE_ORB_REL) populateOrbRel();
   }
 
 Double INS::AttUr() {
@@ -369,6 +377,14 @@ void INS::populateOrbTar() {
   clockOr = orbitTime;
   }
 
+void INS::populateOrbRel() {
+  sprintf(displayApolune,"%7.1f",(apolune-GROUND)/1000);
+  sprintf(displayPerilune,"%7.1f",(perilune-GROUND)/1000);
+  sprintf(displayMomEast,"%7.2f",rMomEast);
+  sprintf(displayMomNorth,"%7.2f",rMomNorth);
+  clockOr = orbitTime;
+  }
+
 void INS::printVelocity(Double v,char* buffer) {
   if (fabs(v) < 10) sprintf(buffer,"%7.3f",v);
   else if (fabs(v) < 100) sprintf(buffer,"%7.2f",v);
@@ -406,6 +422,14 @@ Vehicle* INS::Target() {
 Vehicle* INS::Target(Vehicle* v) {
   target = v;
   return target;
+  }
+
+Double INS::RelMomEast() {
+  return rMomEast;
+  }
+
+Double INS::RelMomNorth() {
+  return rMomNorth;
   }
 
 Double INS::TargetMomEast() {

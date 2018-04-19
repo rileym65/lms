@@ -220,6 +220,8 @@ Double Computer::read(UInt16 addr) {
       case 0x25: return lm->RcsFuel();
       case 0x26: return ins->TargetMomEast();
       case 0x27: return ins->TargetMomNorth();
+      case 0x28: return ins->RelMomEast();
+      case 0x29: return ins->RelMomNorth();
       }
     }
   if ((addr & 0xf00) == 0x600) {
