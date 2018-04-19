@@ -20,8 +20,11 @@ class Computer {
     UInt32  *rom;
     UInt32  romLength;
     Double  regs[256];
+    Vector  vres;
     Double  read(UInt16 addr);
     void    write(UInt16 addr,Double value);
+    Vector  readVector(UInt16 addr);
+    void    writeVector(UInt16 addr,Vector v);
     Boolean exec(UInt32 cmd);
     Int32   pc;
     void    addOpcode(UInt16 addr,UInt32 opcode);

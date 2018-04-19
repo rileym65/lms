@@ -247,12 +247,45 @@ void Computer::write(UInt16 addr,Double value) {
     }
   }
 
+Vector Computer::readVector(UInt16 addr) {
+  if ((addr & 0xf00) == 0x300) {
+    switch (addr & 0xff) {
+      case 0x00: return vehicle->Velocity();
+      case 0x01: return vehicle->Position();
+      case 0x02: return vehicle->FaceUp();
+      case 0x03: return vehicle->FaceUp().Neg();
+      case 0x04: return vehicle->FaceFront();
+      case 0x05: return vehicle->FaceFront().Neg();
+      case 0x06: return vehicle->FaceLeft();
+      case 0x07: return vehicle->FaceLeft().Neg();
+      case 0x08: return vres;
+      case 0x09: return ins->RelVel();
+      case 0x0a: return ins->RelPos();
+      }
+    }
+  if ((addr & 0xf00) == 0x100) {
+    addr = addr & 0xff;
+    return Vector(regs[addr], regs[addr+1], regs[addr+2]);
+    }
+  return Vector(0,0,0);
+  }
+
+void Computer::writeVector(UInt16 addr, Vector v) {
+  if ((addr & 0xf00) == 0x100) {
+    addr = addr & 0xff;
+    regs[addr] = v.X();
+    regs[addr+1] = v.Y();
+    regs[addr+2] = v.Z();
+    }
+  }
+
 Boolean Computer::exec(UInt32 cmd) {
   UInt16 arg1;
   UInt16 arg2;
   Double d1;
   Double a1,a2;
   Int32 i1;
+  Vector v1,v2,v3;
   arg1 = (cmd >> 12) & 0xfff;
   arg2 = cmd & 0xfff;
   switch (cmd & 0xff000000) {
@@ -417,6 +450,50 @@ Boolean Computer::exec(UInt32 cmd) {
          a1 = read(arg1);
          a1 = atan(a1) / DR;
          write(arg2,a1);
+         return true;
+    case 0x1e000000:                                       /* DOT */
+         v1 = readVector(arg1);
+         v2 = readVector(arg2);
+         regs[0] = v1.Dot(v2);
+         return true;
+    case 0x1f000000:                                       /* NORM */
+         v1 = readVector(arg1);
+         writeVector(arg2,v1.Norm());
+         return true;
+    case 0x20000000:                                       /* CRS */
+         v1 = readVector(arg1);
+         v2 = readVector(arg2);
+         vres = v1.Cross(v2);
+         return true;
+    case 0x21000000:                                       /* VMOV */
+         v1 = readVector(arg1);
+         writeVector(arg2,v1);
+         return true;
+    case 0x22000000:                                       /* VADD */
+         v1 = readVector(arg1);
+         v2 = readVector(arg2);
+         v1 = v1 + v2;
+         writeVector(arg1,v1);
+         return true;
+    case 0x23000000:                                       /* VSUB */
+         v1 = readVector(arg1);
+         v2 = readVector(arg2);
+         v1 = v1 - v2;
+         writeVector(arg1,v1);
+         return true;
+    case 0x24000000:                                       /* VLEN */
+         v1 = readVector(arg1);
+         a1 = v1.Length();
+         write(arg2, a1);
+         return true;
+    case 0x25000000:                                       /* VNEG */
+         v1 = readVector(arg1);
+         writeVector(arg2, v1.Neg());
+         return true;
+    case 0x26000000:                                       /* VSCL */
+         v1 = readVector(arg1);
+         a1 = read(arg2);
+         vres = v1.Scale(a1);
          return true;
     default:
          running = false;

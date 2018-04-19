@@ -8,7 +8,9 @@
 	| ATAN   | rs,rd    | Place arctan of rs into rd (degrees)     |
 	| CALP   | pvn      | Call another program as subroutine       |
 	| COS    | rs,rd    | Place cos of rs in degrees into rd       |
+	| CRS    | v1,v2    | Vector cross product, Result in VRES     |
 	| DIV    | r1,r2    | Divide r1 by r2                          |
+	| DOT    | v1,v2    | Dot product of two vectors, result in R0 |
 	| END    |          | End program execution                    |
 	| INV    | rs,rd    | Place 1/rs into rd                       |
 	| JEQ    | r1,r2,ad | Jump to ad if r1 equals r2               |
@@ -22,6 +24,7 @@
 	| MOV    | r1,r2    | Move value from r1 to r2                 |
 	| MUL    | r1,r2    | Multiply r1 by r2                        |
 	| NEG    | rs,rd    | Negate rs and place into rd              |
+	| NORM   | vs,vd    | Normalize a vector                       |
 	| PROG   | pvn      | Set program identity at current location |
 	| RET    |          | Return to caller                         |
 	| SIN    | rs,rd    | Place sin of rs in degrees into rd       |
@@ -29,6 +32,12 @@
 	| SQRT   | rs,rd    | Place square root of rs into rd          |
 	| SUB    | r1,r2    | Subtract r2 from r1                      |
 	| TAN    | rs,rd    | Place tan of rs in degrees into rd       |
+	| VADD   | v1,v2    | Add vector v2 to v1                      |
+	| VLEN   | vs,rd    | Write length of vector vs to Rd          |
+	| VMOV   | vs,vd    | Move a vector                            |
+	| VNEG   | vs,vd    | Negate a vector                          |
+	| VSCL   | v1,r1    | Scale vector v1 by r1, result in VRES    |
+	| VSUB   | v1,v2    | Subtract vector v2 from v1               |
 	| WAIT   |          | Wait until next cycle                    |
 [TE]
 [I-4]
@@ -71,6 +80,7 @@
 	| TLAT  | Latitudinal distance to target in degrees        |
 	| TLNG  | Longitudinal distance to target in degrees       |
 	| VERB  | Current value of verb                            |
+	| VRES  | Holds vector results                             |
 	| ZERO  | Constant value of 0                              |
 [TE]
 [I-4]
