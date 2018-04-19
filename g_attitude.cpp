@@ -49,7 +49,7 @@ void G_Attitude::Update() {
     GotoXY(x+4,y+1); sprintf(buffer,"%5.1f",d); Write(buffer);
     lastFr = i;
     }
-  v1 = vehicle->FaceFront().Norm();
+  v1 = vehicle->FaceLeft().Norm();
   v2 = Vector(0,0,-1);
   d = acos(v1.Dot(v2)) * 180 / M_PI;
   i = d * 10.0;

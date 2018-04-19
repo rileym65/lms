@@ -293,6 +293,100 @@
 [TE]
 [I-4]
 [=]
+[H2]	Typical Mission Profile
+[H1]	Undocking and separation maneuvers
+	1. Set the guidance computer to P00 V00 N02, or POS^TAR on the INS
+	display.  When the CSM is 60 degrees west of the landing site,
+	transfer to the Lunar Module.
+[=]
+	2. After transfer and check out of the LM, wait until the GC or
+	INS indicates that you are 155 degrees east of the landing site and
+	then undock.
+[=]
+	3. Set the RCS Translation throttle to low.  Set the GC to P00 V00 N03,
+	or the INS to POS^REL.  Be sure the Docking Radar is selected so that
+	you are receiving a high resolution signal from the CSM.
+[=]
+	4. When the LM is 50 meters north of the CSM, activate the Down RCS
+	thruster and leave it on until your North separation velocity is 0.3.
+	When your separation velocity is 0.3, turn off the RCS thruster.
+[=]
+	5. Set the GC to P00 V00 N02, or the INS to POS^TAR and set the RCS
+	translation throttle to medium.  At 105 degrees east of the landing
+	site you want to activate your Forward RCS thruster and increase
+	your altitude velocity by 1.0.  In preparation for this maneuver, at
+	about 115 degrees east of the landing site roll the LM so that the
+	F axis is pointing up, Once it is pointing up, periodically check
+	the axis indicator and keep the F axis pointed up until this 
+	maneuver is completed.
+[=]
+[H1]	Plane change maneuvers
+	The next phase of the mission is to place the LM into an orbit
+	that passes over the landing site.  The CSM was in an orbit over
+	the equator of the moon.  Open completion of the separation 
+	maneuvers the LM will still be in a a near equitoral oribt.  Two
+	plane change maneuvers will be needed in order to change the orbit
+	of the LM.
+[=]
+	6. Be sure the GC is set to P00 V00 N02, or the INS is set to
+	POS^TAR.  When the LM is 3 degrees east of the landing site use
+	the Up or Down RCS thruster to cancel your relative north/south
+	velocity.  If the velocity is showing negative then you will need
+	to use the Down thruster to cancel it.  If the north velocity is
+	positive then you will need to use the Up thruster to cancel it.
+[=]
+	At the completion of this maneuver the LM will still be in a near
+	equitoral orbit, but the ascending node of the orbit will now be
+	near the ascending node of the orbital plane the landing site is on.
+[=]
+	7. The last maneuver aligned the phase of our orbit with the orbital
+	plane of the landing site, now we need to match the inclination of
+	the landing site.  Set the GC to P00 V00 N02, or the INS to POS^TAR.
+	At about 77 degrees west of the landing site you need to align the Up
+	face of the LM to point towards the hemisphere that does not contain
+	the landing site.  For example, if the landing site is at +3 degrees
+	then the Up face needs to point south.  If the landing site is at -3
+	degrees then the Up face needs to point north.
+[=]
+	8. Roll the LM so that the F face is facing upwards.  If the landing
+	site is in the northern hemisphere then the Left face should be
+	facing west, which is the orbit prograde, if the landing site is in
+	the southern hemisphere then the Left face will be towards the east,
+	which is the orbit retrograde.  During this next maneuver is is
+	important that you keep the L face facing either prograde, for northern
+	landing sites, or retrograde, for southern landing sites.  If you
+	are using the advanced instrument panel, then set the precision axis
+	display to the prograde mode.  You will want to keep both of the numbers
+	associtated with the L line as close to zero as possible throughout
+	the plane change maneuver.
+[=]
+	9. At 87 degrees west of the landing site Ignite the Descent engine
+	to start the plane change maneuver.  If you only have a degree or two
+	to change, you can use a lower throttle setting, the higher the 
+	latitude you are trying to reach, the higher engine throttle you will
+	need.  You want to complete the maneuver about the time you are on
+	the same longitude as the landing site.  If you are using the GC, you
+	should already be in the P00 V00 N02 mode, Register 12 contains the 
+	relative angle in degrees, when this value reaches zero, cut the
+	engine.  If you are using the INS then you will need to set the INS
+	to ORB^TAR mode for the north MOM value to update, again you want
+	this value to be zero.
+[=]
+	During this maneuver you need to yaw the LM to keep the L face facing
+	along the orbital path.  This is easiest to accomplish when using the
+	advanced panel, as described in step 8.  If you are using the AMS
+	panel then this becomes a little bit tricker, for every degree that
+	the North MOM value goes down you need to yaw the LM so that the L/S
+	changes by the same amount.  For example, if you need to change 2 degrees
+	at the start of the manuever the L/S will be 90, the distance to go
+	shown in MOM North will be 2.  When the MOM North is at 1, then the 
+	L/S whould be showing 91.  When the MOM North is showing 0, then the
+	L/S should be showing 92.  Note this example is if the landing site
+	is in the northern hemisphere, if it is in the southern then you need
+	to yaw the other way, so instead of 91 you should be at 89 and
+	instead of 92 you should be at 88.
+[=][
+
 [H2]	Key points during landing
 [I4]
 [TB]
