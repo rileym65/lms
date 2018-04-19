@@ -1,4 +1,3 @@
-  ORBvTAR
   ORBvREL
   Damage from hard landing
   Orient faces properly upon landing
