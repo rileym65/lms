@@ -137,6 +137,7 @@ void cycle() {
   Vector v,v1;
   csm->Cycle();
   if (docked) {
+    lm->Cycle();
     lm->Position(csm->Position() + Vector(0,0,19));
     lm->Velocity(csm->Velocity());
     lm->Altitude(csm->Altitude());
@@ -204,15 +205,19 @@ void setupTargetData() {
       cos(mission->TargetLatitude()*M_PI/180);
   y = -cos(mission->TargetLongitude()*M_PI/180) *
        cos(mission->TargetLatitude()*M_PI/180);
-  targetPos = Vector(x*GROUND,y*GROUND,z*GROUND);
-  targetVel = Vector(c,s,0);
+  targetPos = Vector(x*GROUND,y*GROUND,z*GROUND).Norm();
+  targetVel = Vector(c,s,0).Norm();
   L = targetVel.Cross(targetPos).Norm();
   hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
-  targetMomEast = L.X() / hyp;
-  targetMomEast = acos(targetMomEast) * 180 / M_PI;
-  if (targetMomEast <= -180) targetMomEast += 360;
-  if (targetMomEast >= 180) targetMomEast -= 360;
-  targetMomNorth = asin(L.Z()) * 180 / M_PI;
+  targetMomEast = L.Y() / hyp;
+  targetMomEast = asin(targetMomEast) * 180 / M_PI;
+  if (L.X() < 0 && L.Y() < 0) targetMomEast = -180 - targetMomEast;
+  if (L.X() < 0 && L.Y() >= 0) targetMomEast = 180 - targetMomEast;
+  while (targetMomEast < -180) targetMomEast += 360;
+  while (targetMomEast > 180) targetMomEast -= 360;
+  hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
+  targetMomNorth = L.Z() / hyp;
+  targetMomNorth = asin(targetMomNorth) * 180 / M_PI;
   }
 
 void test() {

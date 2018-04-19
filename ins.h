@@ -29,6 +29,8 @@ class INS {
     Int8     mode;
     Double   momEast;
     Double   momNorth;
+    Double   tMomEast;
+    Double   tMomNorth;
     Double   orbitTime;
     Double   perilune;
     Double   relAccAltitude;
@@ -85,6 +87,8 @@ class INS {
     Double   RelLatitude();
     Double   TargetLongitude();
     Double   TargetLatitude();
+    Double   TargetMomEast();
+    Double   TargetMomNorth();
     Vehicle* Spacecraft();
     Vehicle* Spacecraft(Vehicle* v);
     Vehicle* Target();

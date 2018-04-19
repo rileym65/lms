@@ -218,6 +218,8 @@ Double Computer::read(UInt16 addr) {
       case 0x23: return lm->DescentFuel();
       case 0x24: return lm->AscentFuel();
       case 0x25: return lm->RcsFuel();
+      case 0x26: return ins->TargetMomEast();
+      case 0x27: return ins->TargetMomNorth();
       }
     }
   if ((addr & 0xf00) == 0x600) {

@@ -77,6 +77,8 @@
 	| RLNG  | Longitudinal distance to CSM in degrees          |
 	| RNVEL | Relative latitudinal velocity to CSM in m/s      |
 	| TALT  | Altitude different to target in meters           |
+	| TANOD | Relative target Longitude of ascending node      |
+	| TINCL | Relative target Inclination                      |
 	| TLAT  | Latitudinal distance to target in degrees        |
 	| TLNG  | Longitudinal distance to target in degrees       |
 	| VERB  | Current value of verb                            |
