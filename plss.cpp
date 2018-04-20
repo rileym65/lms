@@ -97,7 +97,7 @@ void Plss::Cycle() {
   GroundVehicle::Cycle();
   if (!isnan(velocity.Length())) walked += velocity.Length();
   if (throttle > 0) {
-    metabolicRate += throttle * 0.0030;
+    metabolicRate += throttle * 0.0023;
     }
   }
 
