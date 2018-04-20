@@ -323,7 +323,8 @@ int main(int argc, char** argv) {
       if (lm->Throttle() != 0) clockBu++;
       if (!docked) {
         clockMi++;
-        lm->UseBattery(1);
+        if (pilotLocation == PILOT_LM) lm->UseBattery(1);
+          else lm->UseBattery(0.3);
         if (pilotLocation == PILOT_LM && cabinPressurized) {
           lm->UseOxygen(1);
           if (!lm->Landed() && lm->DescentJettisoned() && !docked) clockDk++;
