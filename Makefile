@@ -155,6 +155,7 @@ doc:
 	makedoc lms.d
 	makedoc panel.d
 	makedoc computer.d
+	makedoc training.d
 
 core:	gcasm core.asm
 	./gcasm core.asm
