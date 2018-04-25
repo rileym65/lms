@@ -293,12 +293,11 @@ void INS::populatePosRel() {
   Int32 i;
   if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
       sprintf(displayPosAltitude,"%7d",0);
-      i = sqrt(relPos.Y() * relPos.Y() + relPos.X() * relPos.X());
-      i *= sgn(relLongitude);
+      i = relLongitude * METERS;
       if (i > 999999) i = 999999;
       if (i < -999999) i = -999999;
       sprintf(displayPosEast,"%7d",i);
-      i = (int)relPos.Z();
+      i = relLatitude * METERS;
       if (i > 999999) i = 999999;
       if (i < -999999) i = -999999;
       sprintf(displayPosNorth,"%7d",i);
