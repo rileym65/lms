@@ -17,6 +17,9 @@ Vehicle::Vehicle() {
   comp= NULL;
   rcsThrottle = 1;
   rcsRotThrottle = 100;
+  roll = 0;
+  pitch = 0;
+  yaw = 0;
   Init();
   InitPanel();
   }
@@ -252,6 +255,18 @@ Double Vehicle::Radius(Double d) {
   radius = d;
   altitude = radius - 1738300;
   return radius;
+  }
+
+Double Vehicle::Roll() {
+  return roll;
+  }
+
+Double Vehicle::Pitch() {
+  return pitch;
+  }
+
+Double Vehicle::Yaw() {
+  return yaw;
   }
 
 Int8   Vehicle::Throttle() {

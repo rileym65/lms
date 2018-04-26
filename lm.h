@@ -16,9 +16,6 @@ class LunarModule : public Vehicle {
     Double ascentFuel;
     Double descentFuel;
     Double rcsFuel;
-    Double roll;
-    Double pitch;
-    Double yaw;
     Double value;
   public:
     LunarModule();

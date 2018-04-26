@@ -222,6 +222,9 @@ Double Computer::read(UInt16 addr) {
       case 0x27: return ins->TargetMomNorth();
       case 0x28: return ins->RelMomEast();
       case 0x29: return ins->RelMomNorth();
+      case 0x2a: return vehicle->Roll();
+      case 0x2b: return vehicle->Pitch();
+      case 0x2c: return vehicle->Yaw();
       }
     }
   if ((addr & 0xf00) == 0x600) {

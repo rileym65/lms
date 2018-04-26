@@ -38,6 +38,9 @@ class Vehicle {
     Double  velocityAltitude;
     Double  velocityEast;
     Double  velocityNorth;
+    Double roll;
+    Double pitch;
+    Double yaw;
     Panel  *panel;
     Computer* comp; 
     Double  rollRate;
@@ -105,10 +108,13 @@ class Vehicle {
     virtual Boolean UseOxygen(Double units);
     virtual Boolean UseBattery(Double units);
     virtual void   ProcessKey(Int32 key);
+    virtual Double Pitch();
     virtual Double PitchRate();
     virtual Double PitchRate(Double d);
+    virtual Double Roll();
     virtual Double RollRate();
     virtual Double RollRate(Double d);
+    virtual Double Yaw();
     virtual Double YawRate();
     virtual Double YawRate(Double d);
     virtual Int8   RcsThrottle();
