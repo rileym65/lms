@@ -51,6 +51,9 @@ class Vehicle {
     Matrix yawMatrix;
     Int8   rcsThrottle;
     Int8   rcsRotThrottle;
+    char   rcsFbMode;
+    char   rcsLrMode;
+    char   rcsUdMode;
   public:
     Vehicle();
     virtual ~Vehicle();
@@ -121,6 +124,13 @@ class Vehicle {
     virtual Int8   RcsThrottle(Int8 i);
     virtual Int8   RcsRotThrottle();
     virtual Int8   RcsRotThrottle(Int8 i);
+    virtual char   RcsFbMode();
+    virtual char   RcsFbMode(char c);
+    virtual char   RcsLrMode();
+    virtual char   RcsLrMode(char c);
+    virtual char   RcsUdMode();
+    virtual char   RcsUdMode(char c);
+
 
   };
 

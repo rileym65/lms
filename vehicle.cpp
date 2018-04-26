@@ -20,6 +20,9 @@ Vehicle::Vehicle() {
   roll = 0;
   pitch = 0;
   yaw = 0;
+  rcsFbMode = ' ';
+  rcsLrMode = ' ';
+  rcsUdMode = ' ';
   Init();
   InitPanel();
   }
@@ -217,6 +220,9 @@ Int8   Vehicle::RcsThrottle() {
   }
 
 Int8   Vehicle::RcsThrottle(Int8 i) {
+  if (i < 10) i = 1;
+  else if (i < 25) i = 10;
+  else i = 100;
   rcsThrottle = i;
   return rcsThrottle;
   }
@@ -317,6 +323,33 @@ Vector Vehicle::Velocity() {
 Vector Vehicle::Velocity(Vector v) {
   velocity = v;
   return velocity;
+  }
+
+char   Vehicle::RcsFbMode() {
+  return rcsFbMode;
+  }
+
+char   Vehicle::RcsFbMode(char c) {
+  rcsFbMode = c;
+  return rcsFbMode;
+  }
+
+char   Vehicle::RcsLrMode() {
+  return rcsLrMode;
+  }
+
+char   Vehicle::RcsLrMode(char c) {
+  rcsLrMode = c;
+  return rcsLrMode;
+  }
+
+char   Vehicle::RcsUdMode() {
+  return rcsUdMode;
+  }
+
+char   Vehicle::RcsUdMode(char c) {
+  rcsUdMode = c;
+  return rcsUdMode;
   }
 
 void Vehicle::Cycle() {
@@ -442,6 +475,9 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Pitch %.18f%s",pitch,LE);
   fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
   fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
+  fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
+  fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
+  fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
   fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
   fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
   fprintf(file,"  BaseLeft %.18f %.18f %.18f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
@@ -488,8 +524,9 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"yaw ")) yaw = atof(nw(pline));
     else if (startsWith(pline,"rcsthrottle ")) rcsThrottle = atoi(nw(pline));
     else if (startsWith(pline,"rcsrotthrottle ")) rcsRotThrottle = atoi(nw(pline));
-
-
+    else if (startsWith(pline,"rcsfbmode ")) rcsFbMode = atoi(nw(pline));
+    else if (startsWith(pline,"rcslrmode ")) rcsLrMode = atoi(nw(pline));
+    else if (startsWith(pline,"rcsudmode ")) rcsUdMode = atoi(nw(pline));
     else if (SubLoad(pline) == 0) {
       Write("Unknown line found in save file: ");
       WriteLn(pline);

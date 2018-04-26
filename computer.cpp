@@ -250,6 +250,12 @@ void Computer::write(UInt16 addr,Double value) {
       case 0x03: vehicle->YawRate(value); break;
       case 0x04: vehicle->RcsThrottle(value); break;
       case 0x05: vehicle->RcsRotThrottle(value); break;
+      case 0x06: vehicle->RcsFbMode((value == 0) ? ' ' : 'F');
+      case 0x07: vehicle->RcsFbMode((value == 0) ? ' ' : 'B');
+      case 0x08: vehicle->RcsUdMode((value == 0) ? ' ' : 'U');
+      case 0x09: vehicle->RcsUdMode((value == 0) ? ' ' : 'D');
+      case 0x0a: vehicle->RcsLrMode((value == 0) ? ' ' : 'L');
+      case 0x0b: vehicle->RcsLrMode((value == 0) ? ' ' : 'R');
       }
     }
   }

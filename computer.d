@@ -70,12 +70,14 @@
 	| NVEL  | Latitudinal velocity in m/s                      |
 	| PERL  | Perilune in meters                               |
 	| PI    | Constant value of pi, 3.14159...                 |
+	| PITCH | Current pitch angle                              |
 	| RALT  | Altitude difference to CSM in meters             |
 	| RAVEL | Relative altitude velocity to CSM in m/s         |
 	| REVEL | Relative longitudinal velocity to CSM in m/s     |
 	| RLAT  | Latitudinal distance to CSM in degrees           |
 	| RLNG  | Longitudinal distance to CSM in degrees          |
 	| RNVEL | Relative latitudinal velocity to CSM in m/s      |
+	| ROLL  | Current roll angle                               |
 	| TALT  | Altitude different to target in meters           |
 	| TANOD | Relative target Longitude of ascending node      |
 	| TINCL | Relative target Inclination                      |
@@ -83,6 +85,7 @@
 	| TLNG  | Longitudinal distance to target in degrees       |
 	| VERB  | Current value of verb                            |
 	| VRES  | Holds vector results                             |
+	| YAW   | Current yaw angle                                |
 	| ZERO  | Constant value of 0                              |
 [TE]
 [I-4]
@@ -97,4 +100,10 @@
 	| RLRAT  | Roll rate                                     |
 	| THRTL  | Main engine throttle                          |
 	| YWRAT  | Yaw rate                                      |
+	| RCSF   | Rcs Face thruster on/off                      |
+	| RCSB   | Rcs Back thruster on/off                      |
+	| RCSU   | Rcs Up thruster on/off                        |
+	| RCSD   | Rcs Down thruster on/off                      |
+	| RCSL   | Rcs Left thruster on/off                      |
+	| RCSR   | Rcs Right thruster on/off                     |
 [TE]

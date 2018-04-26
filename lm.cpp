@@ -7,9 +7,6 @@ LunarModule::LunarModule() {
   landed = 0;
   throttle = 0;
   pitchRate = 0;
-  rcsFbMode = ' ';
-  rcsLrMode = ' ';
-  rcsUdMode = ' ';
   rollRate = 0;
   yawRate = 0;
   descentJettisoned = 0;
@@ -30,33 +27,6 @@ LunarModule::~LunarModule() {
 
 void LunarModule::InitPanel() {
   panel = new Panel("lm.pnl",this);
-  }
-
-char   LunarModule::RcsFbMode() {
-  return rcsFbMode;
-  }
-
-char   LunarModule::RcsFbMode(char c) {
-  rcsFbMode = c;
-  return rcsFbMode;
-  }
-
-char   LunarModule::RcsLrMode() {
-  return rcsLrMode;
-  }
-
-char   LunarModule::RcsLrMode(char c) {
-  rcsLrMode = c;
-  return rcsLrMode;
-  }
-
-char   LunarModule::RcsUdMode() {
-  return rcsUdMode;
-  }
-
-char   LunarModule::RcsUdMode(char c) {
-  rcsUdMode = c;
-  return rcsUdMode;
   }
 
 Double LunarModule::AscentFuel() {
@@ -289,10 +259,7 @@ void LunarModule::Save(FILE* file) {
   }
 
 Int8 LunarModule::SubLoad(char* pline) {
-  if (startsWith(pline,"rcsfbmode ")) rcsFbMode = atoi(nw(pline));
-  else if (startsWith(pline,"rcslrmode ")) rcsLrMode = atoi(nw(pline));
-  else if (startsWith(pline,"rcsudmode ")) rcsUdMode = atoi(nw(pline));
-  else if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
+  if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
   else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
   else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
   else if (startsWith(pline,"landed ")) landed = atoi(nw(pline));

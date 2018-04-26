@@ -9,9 +9,6 @@ class LunarModule : public Vehicle {
     
     Int8   descentJettisoned;
     Int8   landed;
-    char   rcsFbMode;
-    char   rcsLrMode;
-    char   rcsUdMode;
     Int16  rock;
     Double ascentFuel;
     Double descentFuel;
@@ -21,12 +18,6 @@ class LunarModule : public Vehicle {
     LunarModule();
     virtual ~LunarModule();
     virtual void InitPanel();
-    char   RcsFbMode();
-    char   RcsFbMode(char c);
-    char   RcsLrMode();
-    char   RcsLrMode(char c);
-    char   RcsUdMode();
-    char   RcsUdMode(char c);
     Int16  Rock();
     Int16  Rock(Int16 i);
     Double AscentFuel();
