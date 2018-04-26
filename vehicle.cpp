@@ -437,6 +437,9 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  RollRate %.18f%s",rollRate,LE);
   fprintf(file,"  YawRate %.18f%s",yawRate,LE);
   fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
+  fprintf(file,"  Roll %.18f%s",roll,LE);
+  fprintf(file,"  Yaw %.18f%s",yaw,LE);
+  fprintf(file,"  Pitch %.18f%s",pitch,LE);
   fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
   fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
   fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
@@ -480,6 +483,9 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"pitchrate ")) PitchRate(atof(nw(pline)));
     else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
     else if (startsWith(pline,"yawrate ")) YawRate(atof(nw(pline)));
+    else if (startsWith(pline,"pitch ")) pitch = atof(nw(pline));
+    else if (startsWith(pline,"roll ")) roll = atof(nw(pline));
+    else if (startsWith(pline,"yaw ")) yaw = atof(nw(pline));
     else if (startsWith(pline,"rcsthrottle ")) rcsThrottle = atoi(nw(pline));
     else if (startsWith(pline,"rcsrotthrottle ")) rcsRotThrottle = atoi(nw(pline));
 
