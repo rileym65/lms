@@ -472,9 +472,14 @@
 [er]
 	+-------+
 	|ASC: 99|
-	|DES: 99|
+	|DSC: 99|
 	+-------+
 [ee]
+	This instrument displays the amount of fuel and is only
+	valid for the LM.  ASC shows the percentage of ascent fuel
+	remaining while DSC shows the remaining percentage of 
+	descent fuel.  If the descent stage has been jettisoned then
+	the DSC value will appear as "**".
 [e-]
 [=]
 

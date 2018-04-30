@@ -107,3 +107,38 @@
 	| RCSL   | Rcs Left thruster on/off                      |
 	| RCSR   | Rcs Right thruster on/off                     |
 [TE]
+[I-4]
+[=]
+[h2]	Core Programs
+[I4]
+[TB]
+	| P  | V  | N  | Program                                |
+	| 00 | 00 | 01 | Display POS^ABS and ORB^ABS data       |
+	| 00 | 00 | 02 | Display POS^TAR and ORB^TAR data       |
+	| 00 | 00 | 03 | Display POS^REL and ORB^REL data       |
+	| 00 | 00 | 12 | Display POS^TAR data in meters         |
+	| 00 | 00 | 13 | Display POS^REL data in meters         |
+	| 00 | 01 | 01 | Display POS^ABS and ascent fuel usage  |
+	| 00 | 01 | 02 | Display POS^TAR and descent fuel usage |
+[TE]
+[I-4]
+[=]
+[h2]	Core Subroutines
+[I4]
+[TB]
+	| P  | V  | N  | Program                                 |
+	| 10 | 00 | 01 | Displays POS^ABS data in R1-R9          |
+	| 10 | 00 | 02 | Displays POS^TAR data in R1-R9          |
+	| 10 | 00 | 03 | Displays POS^REL data in R1-R9          |
+	| 10 | 00 | 12 | POS^TAR data in meters in R1-R9         |
+	| 10 | 00 | 13 | POS^REL data in meters in R1-R9         |
+	| 11 | 00 | 00 | Absolute velocitys in R4-R6             |
+	| 11 | 00 | 01 | Absolute accelerations in R7-R9         |
+	| 11 | 00 | 02 | Orbital inclination and A.N. in R11,R12 |
+	| 11 | 00 | 03 | Perilune and Apolune in R13,R14         |
+	| 11 | 00 | 04 | Target incl and A.N. in R11,R12         |
+	| 11 | 00 | 05 | Relative incl and a.n. in R11,R12       |
+[TE]
+[I-4]
+[=]
+

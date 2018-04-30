@@ -21,7 +21,7 @@ void G_LmFuel::Reset() {
 
 void G_LmFuel::Display() {
   GotoXY(x,y+0); Write("ASC:   ");
-  GotoXY(x,y+1); Write("DES:   ");
+  GotoXY(x,y+1); Write("DSC:   ");
   }
 
 void G_LmFuel::Update() {
