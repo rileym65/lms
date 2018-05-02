@@ -90,6 +90,23 @@
 [TE]
 [I-4]
 [=]
+[h2]	Special Vector Registers (Read only)
+[I4]
+[tb]
+	| BACK  | Orientation of Back face                        |
+	| DOWN  | Orientation of Down face                        |
+	| FRONT | Orientation of Front face                       |
+	| LEFT  | Orientation of Left face                        |
+	| POS   | Current absolute position                       |
+	| RIGHT | Orientation of Right face                       |
+	| RPOS  | Relative position to CSM                        |
+	| RVEL  | Relative velocity to CSM                        |
+	| UP    | Orientation of Up face                          |
+	| VEL   | Current velocity                                |
+	| VRES  | Result of last vector function                  |
+[te]
+[i-4]
+[=]
 [h2]	Special Registers (Read/Write)
 [I4]
 [TB]

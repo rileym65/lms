@@ -193,11 +193,10 @@ looptest:   norm   pos,r20
 ; ***** North and east are represented in meters instead of degrees   *****
 ; *************************************************************************
             prog   P10V00N13
-            mov    ralt,r1
-            mov    rlng,r2
-            mul    r2,metr
-            mov    rlat,r3
-            mul    r3,metr
+            vmov   rpos,r20
+            mov    r20,r1
+            mov    r21,r2
+            mov    r22,r3
             mov    ravel,r4
             mov    revel,r5
             mov    rnvel,r6
