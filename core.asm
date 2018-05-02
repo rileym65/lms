@@ -282,3 +282,23 @@ looptest:   norm   pos,r20
             mov    RINCL,R12
             ret
 
+
+            prog   P60V00N00
+p60lp1:     calp   P10V00N13            ; Show POS^REL data in meters
+            vlen   rpos,r20             ; get distance from CSM
+            ldi    r21,50               ; need to compare to 50 meters
+            jge    r20,r21,p60l1        ; jump if so
+            wait                        ; wait for next cycle
+            jmp    p60lp1               ; loop back
+p60l1:      mov    c1,rcsth             ; set rcs translation throttle to low
+            mov    c1,rcsd              ; activate down rcs thruster
+p60lp2:     calp   P10V00N13            ; Show POS^REL data in meters
+            vlen   rvel,r20             ; get length of velocity vector
+            ldi    r21,3                ; need 0.3
+            div    r21,c10              ; r21 now has 0.3
+            jge    r20,r21,p60l2        ; jump if velocity greater than 0.3
+            wait                        ; wait for next cycle
+            jmp    p60lp2               ; and loop back
+p60l2:      mov    zero,rcsd            ; turn off rcs down thruster
+            end                         ; end of program
+
