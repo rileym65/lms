@@ -25,9 +25,9 @@ LunarModule::LunarModule() {
 LunarModule::~LunarModule() {
   }
 
-void LunarModule::InitPanel() {
-  panel = new Panel("lm.pnl",this);
-  }
+/* **************************** */
+/* ***** Accessor methods ***** */
+/* **************************** */
 
 Double LunarModule::AscentFuel() {
   return ascentFuel;
@@ -82,17 +82,32 @@ Double LunarModule::Value(Double d) {
   return value;
   }
 
-Double LunarModule::Mass() {
-  Double ret;
-  ret = 2234;
-  ret += ascentFuel;
-  ret += rcsFuel;
-  if (!descentJettisoned) {
-    ret += 2346;
-    ret += descentFuel;
+
+/* ************************* */
+/* ***** Other methods ***** */
+/* ************************* */
+
+void LunarModule::Abort() {
+  landed = 0;
+  descentJettisoned = -1;
+  mode_arm = 0;
+  throttle = 100;
+  clockBu = 0;
+  if (oxygen > ASC_OXYGEN) oxygen = ASC_OXYGEN;
+  if (battery > ASC_BATTERY) battery = ASC_BATTERY;
+  if (eoxygen > ASC_EOXYGEN) eoxygen = ASC_EOXYGEN;
+  if (ebattery > ASC_EBATTERY) ebattery = ASC_EBATTERY;
+  liftoffMet = clockMi;
+  numBurns++;
+  burn[numBurns-1].start = clockMi;
+  if (descentJettisoned) {
+    burn[numBurns-1].fuelUsed = ascentFuel;
+    burn[numBurns-1].engine = 'A';
     }
-  ret += rock;
-  return ret;
+  else {
+    burn[numBurns-1].fuelUsed = descentFuel;
+    burn[numBurns-1].engine = 'D';
+    }
   }
 
 void LunarModule::Cycle() {
@@ -140,16 +155,16 @@ void LunarModule::Cycle() {
     if (rollRate != 0) orientation.MultipliedBy(rollMatrix);
     if (pitchRate != 0) orientation.MultipliedBy(pitchMatrix);
     if (yawRate != 0) orientation.MultipliedBy(yawMatrix);
-    orientation.Row(0,orientation.Row(0).Norm());
-    orientation.Row(1,orientation.Row(1).Norm());
-    orientation.Row(2,orientation.Row(2).Norm());
+//    orientation.Row(0,orientation.Row(0).Norm());
+//    orientation.Row(1,orientation.Row(1).Norm());
+//    orientation.Row(2,orientation.Row(2).Norm());
     faceFront = orientation.Transform(baseFront).Norm();
     faceLeft = orientation.Transform(baseLeft).Norm();
     faceUp = faceFront.Cross(faceLeft).Norm();
     faceLeft = faceUp.Cross(faceFront).Norm();
     }
   switch (rcsThrottle) {
-    case 1: rcsThrust = 19.7; rcsfuel = 0.05; break;
+    case 1: rcsThrust = 19.7; rcsfuel = 0.005; break;
     case 10: rcsThrust = 197.0; rcsfuel = 0.05; break;
     case 100: rcsThrust = 1970.0; rcsfuel = 0.5; break;
     default : rcsThrust = 0;
@@ -242,55 +257,21 @@ void LunarModule::Cycle() {
     }
   }
 
-void LunarModule::Save(FILE* file) {
-  fprintf(file,"LunarModule {%s",LE);
-  Vehicle::Save(file);
-  fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
-  fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
-  fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
-  fprintf(file,"  AscentFuel %.18f%s",ascentFuel,LE);
-  fprintf(file,"  DescentFuel %.18f%s",descentFuel,LE);
-  fprintf(file,"  RcsFuel %.18f%s",rcsFuel,LE);
-  fprintf(file,"  Landed %d%s",landed,LE);
-  fprintf(file,"  DescentJettisoned %d%s",descentJettisoned,LE);
-  fprintf(file,"  Rock %d%s",rock,LE);
-  fprintf(file,"  Value %.18f%s",value,LE);
-  fprintf(file,"  }%s",LE);
+void LunarModule::InitPanel() {
+  panel = new Panel("lm.pnl",this);
   }
 
-Int8 LunarModule::SubLoad(char* pline) {
-  if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
-  else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
-  else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
-  else if (startsWith(pline,"landed ")) landed = atoi(nw(pline));
-  else if (startsWith(pline,"descentjettisoned ")) descentJettisoned = atoi(nw(pline));
-  else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
-  else if (startsWith(pline,"value ")) value = atof(nw(pline));
-  else return 0;
-  return -1;
-  }
-
-void LunarModule::Abort() {
-  landed = 0;
-  descentJettisoned = -1;
-  mode_arm = 0;
-  throttle = 100;
-  clockBu = 0;
-  if (oxygen > ASC_OXYGEN) oxygen = ASC_OXYGEN;
-  if (battery > ASC_BATTERY) battery = ASC_BATTERY;
-  if (eoxygen > ASC_EOXYGEN) eoxygen = ASC_EOXYGEN;
-  if (ebattery > ASC_EBATTERY) ebattery = ASC_EBATTERY;
-  liftoffMet = clockMi;
-  numBurns++;
-  burn[numBurns-1].start = clockMi;
-  if (descentJettisoned) {
-    burn[numBurns-1].fuelUsed = ascentFuel;
-    burn[numBurns-1].engine = 'A';
+Double LunarModule::Mass() {
+  Double ret;
+  ret = 2234;
+  ret += ascentFuel;
+  ret += rcsFuel;
+  if (!descentJettisoned) {
+    ret += 2346;
+    ret += descentFuel;
     }
-  else {
-    burn[numBurns-1].fuelUsed = descentFuel;
-    burn[numBurns-1].engine = 'D';
-    }
+  ret += rock;
+  return ret;
   }
 
 void LunarModule::ProcessKey(Int32 key) {
@@ -419,4 +400,31 @@ void LunarModule::ProcessKey(Int32 key) {
   if (comp != NULL) comp->ProcessKey(key);
   }
 
+void LunarModule::Save(FILE* file) {
+  fprintf(file,"LunarModule {%s",LE);
+  Vehicle::Save(file);
+  fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
+  fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
+  fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
+  fprintf(file,"  AscentFuel %.18f%s",ascentFuel,LE);
+  fprintf(file,"  DescentFuel %.18f%s",descentFuel,LE);
+  fprintf(file,"  RcsFuel %.18f%s",rcsFuel,LE);
+  fprintf(file,"  Landed %d%s",landed,LE);
+  fprintf(file,"  DescentJettisoned %d%s",descentJettisoned,LE);
+  fprintf(file,"  Rock %d%s",rock,LE);
+  fprintf(file,"  Value %.18f%s",value,LE);
+  fprintf(file,"  }%s",LE);
+  }
+
+Int8 LunarModule::SubLoad(char* pline) {
+  if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
+  else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
+  else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
+  else if (startsWith(pline,"landed ")) landed = atoi(nw(pline));
+  else if (startsWith(pline,"descentjettisoned ")) descentJettisoned = atoi(nw(pline));
+  else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
+  else if (startsWith(pline,"value ")) value = atof(nw(pline));
+  else return 0;
+  return -1;
+  }
 

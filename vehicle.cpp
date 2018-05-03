@@ -328,11 +328,6 @@ Double Vehicle::YawRate(Double d) {
   return yawRate;
   }
 
-
-
-
-
-
 /* ************************* */
 /* ***** Other methods ***** */
 /* ************************* */
