@@ -30,19 +30,9 @@ Vehicle::Vehicle() {
 Vehicle::~Vehicle() {
   }
 
-void Vehicle::Init() {
-  throttle = 0;
-  oxygen = 0;
-  battery = 0;
-  eoxygen = 0;
-  ebattery = 0;
-  maxOxygen = 0;
-  maxBattery = 0;
-  }
-
-void Vehicle::InitPanel() {
-  panel = new Panel("ams.pnl",this);
-  }
+/* ****************************** */
+/* ***** Accessor functions ***** */
+/* ****************************** */
 
 Double Vehicle::AccelAltitude() {
   if (accelAltitude > 999) return 999;
@@ -168,8 +158,13 @@ Double Vehicle::MaxBattery(Double d) {
   return maxBattery;
   }
 
-Double Vehicle::Mass() {
-  return 0;
+Double Vehicle::MaxOxygen() {
+  return maxOxygen;
+  }
+
+Double Vehicle::MaxOxygen(Double d) {
+  maxOxygen = d;
+  return maxOxygen;
   }
 
 Double Vehicle::Oxygen() {
@@ -182,13 +177,18 @@ Double Vehicle::Oxygen(Double d) {
   return oxygen;
   }
 
-Double Vehicle::MaxOxygen() {
-  return maxOxygen;
+Double Vehicle::Pitch() {
+  return pitch;
   }
 
-Double Vehicle::MaxOxygen(Double d) {
-  maxOxygen = d;
-  return maxOxygen;
+Double Vehicle::PitchRate() {
+  return pitchRate;
+  }
+
+Double Vehicle::PitchRate(Double d) {
+  pitchRate = d;
+  pitchMatrix = Matrix::RotateY(-pitchRate);
+  return pitchRate;
   }
 
 Vector Vehicle::Position() {
@@ -205,124 +205,10 @@ Double Vehicle::Radius() {
   return radius;
   }
 
-Double Vehicle::PitchRate() {
-  return pitchRate;
-  }
-
-Double Vehicle::PitchRate(Double d) {
-  pitchRate = d;
-  pitchMatrix = Matrix::RotateY(-pitchRate);
-  return pitchRate;
-  }
-
-Int8   Vehicle::RcsThrottle() {
-  return rcsThrottle;
-  }
-
-Int8   Vehicle::RcsThrottle(Int8 i) {
-  if (i < 10) i = 1;
-  else if (i < 25) i = 10;
-  else i = 100;
-  rcsThrottle = i;
-  return rcsThrottle;
-  }
-
-Int8   Vehicle::RcsRotThrottle() {
-  return rcsRotThrottle;
-  }
-
-Int8   Vehicle::RcsRotThrottle(Int8 i) {
-  rcsRotThrottle = i;
-  return rcsRotThrottle;
-  }
-
-Double Vehicle::RollRate() {
-  return rollRate;
-  }
-
-Double Vehicle::RollRate(Double d) {
-  rollRate = d;
-  rollMatrix = Matrix::RotateZ(-rollRate);
-  return rollRate;
-  }
-
-Double Vehicle::YawRate() {
-  return yawRate;
-  }
-
-Double Vehicle::YawRate(Double d) {
-  yawRate = d;
-  yawMatrix = Matrix::RotateX(yawRate);
-  return yawRate;
-  }
-
 Double Vehicle::Radius(Double d) {
-//  velocityAltitude = d - radius;;
   radius = d;
   altitude = radius - 1738300;
   return radius;
-  }
-
-Double Vehicle::Roll() {
-  return roll;
-  }
-
-Double Vehicle::Pitch() {
-  return pitch;
-  }
-
-Double Vehicle::Yaw() {
-  return yaw;
-  }
-
-Int8   Vehicle::Throttle() {
-  return throttle;
-  }
-
-Int8   Vehicle::Throttle(Int8 i) {
-  throttle = i;
-  if (throttle > 100) throttle = 100;
-  if (throttle < 0) throttle = 0;
-  return throttle;
-  }
-
-
-Vector Vehicle::Thrust() {
-  return thrust;
-  }
-
-Vector Vehicle::Thrust(Vector t) {
-  thrust = t;
-  return thrust;
-  }
-
-Boolean Vehicle::UseBattery(Double units) {
-  battery -= units;
-  if (battery >= 0) return true;
-  ebattery += battery;
-  battery = 0;
-  if (ebattery >= 0) return true;
-  ebattery = 0;
-  return false;
-  }
-
-Boolean Vehicle::UseOxygen(Double units) {
-  oxygen -= units;
-  if (oxygen >= 0) return true;
-  eoxygen += oxygen;
-  oxygen = 0;
-  if (eoxygen >= 0) return true;
-  eoxygen = 0;
-  return false;
-  }
-
-Vector Vehicle::Velocity() {
-  return velocity;
-  }
-
-Vector Vehicle::Velocity(Vector v) {
-  velocity = v;
-  return velocity;
   }
 
 char   Vehicle::RcsFbMode() {
@@ -343,6 +229,27 @@ char   Vehicle::RcsLrMode(char c) {
   return rcsLrMode;
   }
 
+Int8   Vehicle::RcsRotThrottle() {
+  return rcsRotThrottle;
+  }
+
+Int8   Vehicle::RcsRotThrottle(Int8 i) {
+  rcsRotThrottle = i;
+  return rcsRotThrottle;
+  }
+
+Int8   Vehicle::RcsThrottle() {
+  return rcsThrottle;
+  }
+
+Int8   Vehicle::RcsThrottle(Int8 i) {
+  if (i < 10) i = 1;
+  else if (i < 25) i = 10;
+  else i = 100;
+  rcsThrottle = i;
+  return rcsThrottle;
+  }
+
 char   Vehicle::RcsUdMode() {
   return rcsUdMode;
   }
@@ -352,6 +259,84 @@ char   Vehicle::RcsUdMode(char c) {
   return rcsUdMode;
   }
 
+Double Vehicle::Roll() {
+  return roll;
+  }
+
+Double Vehicle::RollRate() {
+  return rollRate;
+  }
+
+Double Vehicle::RollRate(Double d) {
+  rollRate = d;
+  rollMatrix = Matrix::RotateZ(-rollRate);
+  return rollRate;
+  }
+
+Int8   Vehicle::Throttle() {
+  return throttle;
+  }
+
+Int8   Vehicle::Throttle(Int8 i) {
+  throttle = i;
+  if (throttle > 100) throttle = 100;
+  if (throttle < 0) throttle = 0;
+  return throttle;
+  }
+
+Vector Vehicle::Thrust() {
+  return thrust;
+  }
+
+Vector Vehicle::Thrust(Vector t) {
+  thrust = t;
+  return thrust;
+  }
+
+Vector Vehicle::Velocity() {
+  return velocity;
+  }
+
+Vector Vehicle::Velocity(Vector v) {
+  velocity = v;
+  return velocity;
+  }
+
+Double Vehicle::VelocityAltitude() {
+  return velocityAltitude;
+  }
+
+Double Vehicle::VelocityEast() {
+  return velocityEast;
+  }
+
+Double Vehicle::VelocityNorth() {
+  return velocityNorth;
+  }
+
+Double Vehicle::Yaw() {
+  return yaw;
+  }
+
+Double Vehicle::YawRate() {
+  return yawRate;
+  }
+
+Double Vehicle::YawRate(Double d) {
+  yawRate = d;
+  yawMatrix = Matrix::RotateX(yawRate);
+  return yawRate;
+  }
+
+
+
+
+
+
+/* ************************* */
+/* ***** Other methods ***** */
+/* ************************* */
+
 void Vehicle::Cycle() {
   Vector a;
   Double alt3;
@@ -359,6 +344,21 @@ void Vehicle::Cycle() {
   Double v1,v2;
   Double vel;
   Vector vnorm;
+  if (rollRate != 0) {
+    roll += rollRate;
+    if (roll > 180) roll -= 360;
+    if (roll < -180) roll += 360;
+    }
+  if (pitchRate != 0) {
+    pitch += pitchRate;
+    if (pitch > 180) pitch -= 360;
+    if (pitch < -180) pitch += 360;
+    }
+  if (yawRate != 0) {
+    yaw += yawRate;
+    if (yaw > 180) yaw -= 360;
+    if (yaw < -180) yaw += 360;
+    }
   alt3 = radius * radius * radius;
   a = position.Scale(-4.9075e12);
   a = a.Scale(1/alt3);
@@ -398,99 +398,18 @@ void Vehicle::Cycle() {
   if (accelAltitude < -999) accelAltitude = -999;
   }
 
-Double Vehicle::VelocityAltitude() {
-  return velocityAltitude;
+void Vehicle::Init() {
+  throttle = 0;
+  oxygen = 0;
+  battery = 0;
+  eoxygen = 0;
+  ebattery = 0;
+  maxOxygen = 0;
+  maxBattery = 0;
   }
 
-Double Vehicle::VelocityEast() {
-  return velocityEast;
-/*
-  Double vel;
-  Vector west;
-  Vector north;
-  Vector alt;
-  Vector v;
-
-  v = velocity.Norm();
-  west = Vector(position.Y(), -position.X(), 0.0).Norm();
-  north = Vector(0,0,1);
-  alt = position.Norm();
-  vel = -(v.Dot(west.Norm()) * velocity.Length());
-vel = velocity.Dot(west.Norm());
-if (this == lm) {
-GotoXY(1,25); printf("Vel      :%f %f %f\n",v.X(),v.Y(),v.Z());
-GotoXY(1,26); printf("West     : %f %f %f\n",west.X(),west.Y(),west.Z());
-GotoXY(1,27); printf("North    : %f %f %f\n",north.X(),north.Y(),north.Z());
-GotoXY(1,28); printf("Alt      : %f %f %f\n",alt.X(),alt.Y(),alt.Z());
-GotoXY(1,29); printf("Vel east :%.18f\n",vel);
-}
-
-  vel = (v.Dot(north.Norm()) * velocity.Length());
-vel = velocity.Dot(north.Norm());
-if (this == lm) {
-GotoXY(1,30); printf("Vel North: %.18f\n",vel);
-}
-
-  vel = v.Dot(alt);
-GotoXY(1,31); printf("Alt Dot  : %.18f\n",vel);
-
-  vel = (v.Dot(alt) * velocity.Length());
-if (this == lm) {
-GotoXY(1,32); printf("Vel Alt  : %.18f\n",vel);
-vel = velocity.Dot(position.Norm());
-GotoXY(1,33); printf("Vel Alt  : %.18f\n",vel);
-}
-
-  return velocityEast;
-
-  vel = sqrt(velocity.X() * velocity.X() + velocity.Y() * velocity.Y());
-  if (sgn(velocity.X()) == sgn(position.Y())) vel = -vel;
-  return vel;
-*/
-  }
-
-Double Vehicle::VelocityNorth() {
-  return velocityNorth;
-  }
-
-Int8 Vehicle::SubLoad(char* line) {
-  return 0;
-  }
-
-void Vehicle::Save(FILE* file) {
-  fprintf(file,"  Altitude %.18f%s",altitude,LE);
-  fprintf(file,"  Latitude %.18f%s",latitude,LE);
-  fprintf(file,"  Longitude %.18f%s",longitude,LE);
-  fprintf(file,"  Radius %.18f%s",radius,LE);
-  fprintf(file,"  Battery %.18f%s",battery,LE);
-  fprintf(file,"  EBattery %.18f%s",ebattery,LE);
-  fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
-  fprintf(file,"  EOxygen %.18f%s",eoxygen,LE);
-  fprintf(file,"  Throttle %d%s",throttle,LE);
-  fprintf(file,"  RollRate %.18f%s",rollRate,LE);
-  fprintf(file,"  YawRate %.18f%s",yawRate,LE);
-  fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
-  fprintf(file,"  Roll %.18f%s",roll,LE);
-  fprintf(file,"  Yaw %.18f%s",yaw,LE);
-  fprintf(file,"  Pitch %.18f%s",pitch,LE);
-  fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
-  fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
-  fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
-  fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
-  fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
-  fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
-  fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
-  fprintf(file,"  BaseLeft %.18f %.18f %.18f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
-  fprintf(file,"  FaceFront %.18f %.18f %.18f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
-  fprintf(file,"  FaceUp %.18f %.18f %.18f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
-  fprintf(file,"  FaceLeft %.18f %.18f %.18f%s",faceLeft.X(),faceLeft.Y(),faceLeft.Z(),LE);
-  fprintf(file,"  Position %.18f %.18f %.18f%s",position.X(),position.Y(),position.Z(),LE);
-  fprintf(file,"  Velocity %.18f %.18f %.18f%s",velocity.X(),velocity.Y(),velocity.Z(),LE);
-  fprintf(file,"  Thrust %.18f %.18f %.18f%s",thrust.X(),thrust.Y(),thrust.Z(),LE);
-  fprintf(file,"  Orientation %.18f %.18f %.18f %.18f %.18f %.18f %.18f %.18f %.18f%s",
-    orientation.Cell(0,0), orientation.Cell(0,1), orientation.Cell(0,2),
-    orientation.Cell(1,0), orientation.Cell(1,1), orientation.Cell(1,2),
-    orientation.Cell(2,0), orientation.Cell(2,1), orientation.Cell(2,2),LE);
+void Vehicle::InitPanel() {
+  panel = new Panel("ams.pnl",this);
   }
 
 void Vehicle::Load(FILE* file) {
@@ -535,6 +454,50 @@ void Vehicle::Load(FILE* file) {
     }
   }
 
+Double Vehicle::Mass() {
+  return 0;
+  }
+
+void Vehicle::ProcessKey(Int32 key) {
+  if (key == 'M') seq->MoveLm();
+  }
+
+void Vehicle::Save(FILE* file) {
+  fprintf(file,"  Altitude %.18f%s",altitude,LE);
+  fprintf(file,"  Latitude %.18f%s",latitude,LE);
+  fprintf(file,"  Longitude %.18f%s",longitude,LE);
+  fprintf(file,"  Radius %.18f%s",radius,LE);
+  fprintf(file,"  Battery %.18f%s",battery,LE);
+  fprintf(file,"  EBattery %.18f%s",ebattery,LE);
+  fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
+  fprintf(file,"  EOxygen %.18f%s",eoxygen,LE);
+  fprintf(file,"  Throttle %d%s",throttle,LE);
+  fprintf(file,"  RollRate %.18f%s",rollRate,LE);
+  fprintf(file,"  YawRate %.18f%s",yawRate,LE);
+  fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
+  fprintf(file,"  Roll %.18f%s",roll,LE);
+  fprintf(file,"  Yaw %.18f%s",yaw,LE);
+  fprintf(file,"  Pitch %.18f%s",pitch,LE);
+  fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
+  fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
+  fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
+  fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
+  fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
+  fprintf(file,"  BaseFront %.18f %.18f %.18f%s",baseFront.X(),baseFront.Y(),baseFront.Z(),LE);
+  fprintf(file,"  BaseUp %.18f %.18f %.18f%s",baseUp.X(),baseUp.Y(),baseUp.Z(),LE);
+  fprintf(file,"  BaseLeft %.18f %.18f %.18f%s",baseLeft.X(),baseLeft.Y(),baseLeft.Z(),LE);
+  fprintf(file,"  FaceFront %.18f %.18f %.18f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
+  fprintf(file,"  FaceUp %.18f %.18f %.18f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
+  fprintf(file,"  FaceLeft %.18f %.18f %.18f%s",faceLeft.X(),faceLeft.Y(),faceLeft.Z(),LE);
+  fprintf(file,"  Position %.18f %.18f %.18f%s",position.X(),position.Y(),position.Z(),LE);
+  fprintf(file,"  Velocity %.18f %.18f %.18f%s",velocity.X(),velocity.Y(),velocity.Z(),LE);
+  fprintf(file,"  Thrust %.18f %.18f %.18f%s",thrust.X(),thrust.Y(),thrust.Z(),LE);
+  fprintf(file,"  Orientation %.18f %.18f %.18f %.18f %.18f %.18f %.18f %.18f %.18f%s",
+    orientation.Cell(0,0), orientation.Cell(0,1), orientation.Cell(0,2),
+    orientation.Cell(1,0), orientation.Cell(1,1), orientation.Cell(1,2),
+    orientation.Cell(2,0), orientation.Cell(2,1), orientation.Cell(2,2),LE);
+  }
+
 void Vehicle::SetupPanel() {
   ClrScr();
   if (panel != NULL) {
@@ -543,12 +506,32 @@ void Vehicle::SetupPanel() {
     }
   }
 
+Int8 Vehicle::SubLoad(char* line) {
+  return 0;
+  }
+
 void Vehicle::UpdatePanel() {
   if (panel != NULL)
     panel->Update();
   }
 
-void Vehicle::ProcessKey(Int32 key) {
-  if (key == 'M') seq->MoveLm();
+Boolean Vehicle::UseBattery(Double units) {
+  battery -= units;
+  if (battery >= 0) return true;
+  ebattery += battery;
+  battery = 0;
+  if (ebattery >= 0) return true;
+  ebattery = 0;
+  return false;
+  }
+
+Boolean Vehicle::UseOxygen(Double units) {
+  oxygen -= units;
+  if (oxygen >= 0) return true;
+  eoxygen += oxygen;
+  oxygen = 0;
+  if (eoxygen >= 0) return true;
+  eoxygen = 0;
+  return false;
   }
 
