@@ -101,7 +101,7 @@
 	does run well using DosBox.  Playing AMS again reminded me of my
 	biggest complaint about the game, the metabolic rate/efficiency
 	system it used.  Essentially as your heart rate went up your
-	efficiency went do and the way the simulator handed less effiency
+	efficiency went down and the way the simulator handed less effiency
 	was to ignore keystrokes.  So for instance if your efficiency was
 	at 60, only 60% of the keys you press would be recognized by the
 	simulator.  Given the nature of RNGs, it could ignore key after
@@ -116,7 +116,7 @@
 	address listed in the program was returned since the person no
 	longer lived at that address, no surprise from a program released
 	30 years ago.  Internet searches allowed me to find the game 
-	easily enough but not is author.
+	easily enough but not its author.
 [=]
 	With the inability to find the author and the desire to play
 	AMS again, I decided to write a modern version of the game.  One
@@ -228,12 +228,13 @@
 	|-      |-|Decrease rcs trnaslation thrust (100->10->1)|
 	|+      |-|Increase rcs rotation thrust (10->50->100)|
 	|_      |-|Decrease rcs rotation thrust (100->50->10)|
-	|f      |-|Increase rcs face thrust (Back->off->Face);|
-	|b      |-|Increase rcs back thrust (Face->off->Back);|
-	|l      |-|Increase rcs left thrust (Right->off->Left)|
-	|r      |-|Increase rcs right thrust (left->off->right)|
-	|u      |-|Increase rcs up thrust (Down->off->Up)|
-	|d      |-|Increase rcs down thrust (Up->off->Down)|
+	|f      |-|Toggle face RCS thruster|
+	|b      |-|Toggle back RCS thruster|
+	|l      |-|Toggle left RCS thruster|
+	|r      |-|Toggle right RCS thruster|
+	|u      |-|Toggle up RCS thruster|
+	|d      |-|Toggle down RCS thruster|
+	|<SPACE>|-|Turn off all RCS translation thrusters|
 	|I      |-|Ignite main engine|
 	|i      |-|Shutdown main engine|
 	|<HOME> |-|Roll counter clockwise around up|
@@ -385,7 +386,7 @@
 	is in the northern hemisphere, if it is in the southern then you need
 	to yaw the other way, so instead of 91 you should be at 89 and
 	instead of 92 you should be at 88.
-[=][
+[=]
 
 [H2]	Key points during landing
 [I4]

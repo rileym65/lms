@@ -319,6 +319,24 @@ void LunarModule::ProcessKey(Int32 key) {
       }
     }
   if (!docked) {
+    if (key == 'f' && RcsFbMode() != 'F') RcsFbMode('F');
+    else if (key == 'f' && RcsFbMode() == 'F') RcsFbMode(' ');
+    if (key == 'b' && RcsFbMode() != 'B') RcsFbMode('B');
+    else if (key == 'b' && RcsFbMode() == 'B') RcsFbMode(' ');
+    if (key == 'l' && RcsLrMode() != 'L') RcsLrMode('L');
+    else if (key == 'l' && RcsLrMode() == 'L') RcsLrMode(' ');
+    if (key == 'r' && RcsLrMode() != 'R') RcsLrMode('R');
+    else if (key == 'r' && RcsLrMode() == 'R') RcsLrMode(' ');
+    if (key == 'u' && RcsUdMode() != 'U') RcsUdMode('U');
+    else if (key == 'u' && RcsUdMode() == 'U') RcsUdMode(' ');
+    if (key == 'd' && RcsUdMode() != 'D') RcsUdMode('D');
+    else if (key == 'd' && RcsUdMode() == 'D') RcsUdMode(' ');
+    if (key == ' ') {
+      RcsFbMode(' ');
+      RcsLrMode(' ');
+      RcsUdMode(' ');
+      }
+/*
     if (key == 'f' && RcsFbMode() == ' ') RcsFbMode('F');
     if (key == 'f' && RcsFbMode() == 'B') RcsFbMode(' ');
     if (key == 'b' && RcsFbMode() == ' ') RcsFbMode('B');
@@ -331,6 +349,7 @@ void LunarModule::ProcessKey(Int32 key) {
     if (key == 'd' && RcsUdMode() == 'U') RcsUdMode(' ');
     if (key == 'u' && RcsUdMode() == ' ') RcsUdMode('U');
     if (key == 'u' && RcsUdMode() == 'D') RcsUdMode(' ');
+*/
     if (key == '=' && RcsThrottle() == 10) RcsThrottle(100);
     if (key == '=' && RcsThrottle() == 1) RcsThrottle(10);
     if (key == '-' && RcsThrottle() == 10) RcsThrottle(1);
