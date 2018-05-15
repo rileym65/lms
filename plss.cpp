@@ -132,10 +132,13 @@ void Plss::ProcessKey(Int32 key) {
       seq->MoveLrv();
       }
     if (key == 'C' && carrying == ' ') seq->TakeSample();
-    if (key == 'S' && carrying == 'R' && lrvPos < 100 && lrv->Rock() < 30 &&
-        lrv->Boxes() > 0) seq->StoreSample();
-    if (key == 'S' && carrying == 'B' && lmPos < 100 && lrv->Boxes() > 0)
-      seq->BoxToLm();
+    if (key == 'S') {
+      if (carrying == 'R' && lrvPos < 100) {
+        if (lrv->Rock() < 30 && lrv->Boxes() > 0) seq->StoreSample();
+        }
+      if (carrying == 'B' && lmPos < 100 && lrv->Boxes() > 0)
+        seq->BoxToLm();
+      }
     if (key == 'D' && carrying == 'R') seq->DropSample();
     if (key == 'R' && carrying == 'B' && lrvPos < 100) seq->BoxToLrv();
     if (key == 'B' && carrying == ' ' && lrvPos < 40 && lrv->Boxes() > 0)
