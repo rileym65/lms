@@ -169,6 +169,9 @@ clean:
 	-rm lms.doc
 	-rm lms.html
 	-rm panel.doc
+	-rm lms.doc
+	-rm computer.doc
+	-rm training.doc
 	-rm panel.html
 
 computer.o:      $(HEADERS) vehicle.h computer.h computer.cpp
