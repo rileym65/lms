@@ -121,6 +121,7 @@ void Sequencer::Complete() {
            case '%': plss->Value(25.0); sampleType = S_SPECIAL; break;
            case 'f': plss->Value(25.0); sampleType = S_SPECIAL; break;
            case '&': plss->Value(25.0); sampleType = S_SPECIAL; break;
+           case '/': plss->Value(25.0); sampleType = S_SPECIAL; break;
            default : plss->Value(0.5); sampleType = 0; break;
            }
          if ((cell >= '0' && cell <= '9') ||
