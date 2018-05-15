@@ -167,7 +167,7 @@ clean:
 	-rm gcasm
 	-rm *.o
 	-rm lms.doc
-	-rm lms.html
+	-rm *.html
 	-rm panel.doc
 	-rm lms.doc
 	-rm computer.doc

@@ -45,6 +45,79 @@ Computer::~Computer() {
   romLength = 0;
   }
 
+UInt32 Computer::Check() {
+  UInt32 i;
+  UInt32 ret;
+  ret = 0xffffffff;
+  for (i=0; i<romLength; i++)
+    ret ^= rom[i];
+  ret = (ret & 0xffffff) ^ ((ret >> 8) & 0xffffff);
+  return ret;
+  }
+
+void Computer::Load(FILE* file) {
+  int i;
+  char* pline;
+  Boolean run;
+  UInt32 check;
+  check = 0;
+  run = false;
+  for (i=0; i<256; i++) regs[i] = 0;
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) {
+      if (check != Check()) {
+        run = false;
+        }
+      running = run;
+      return;
+      }
+    else if (startsWith(pline,"program ")) prog = atoi(nw(pline));
+    else if (startsWith(pline,"verb ")) verb = atoi(nw(pline));
+    else if (startsWith(pline,"noun ")) noun = atoi(nw(pline));
+    else if (startsWith(pline,"sp ")) sp = atoi(nw(pline));
+    else if (startsWith(pline,"pc ")) pc = atoi(nw(pline));
+    else if (startsWith(pline,"check ")) check = atoi(nw(pline));
+    else if (startsWith(pline,"running true")) run = true;
+    else if (startsWith(pline,"running false")) run = false;
+    else if (startsWith(pline,"register ")) {
+      pline = nw(pline);
+      i = atoi(pline);
+      pline = nw(pline);
+      regs[i] = atof(pline);
+      }
+    else if (startsWith(pline,"stack ")) {
+      pline = nw(pline);
+      i = atoi(pline);
+      pline = nw(pline);
+      stack[i] = atoi(pline);
+      }
+    else {
+      Write("Unknown line found in save file: ");
+      WriteLn(pline);
+      exit(1);
+      }
+    }
+  }
+
+void Computer::Save(FILE* file) {
+  int i;
+  fprintf(file,"Computer {%s",LE);
+  fprintf(file,"  Program %d%s",prog,LE);
+  fprintf(file,"  Verb %d%s",verb,LE);
+  fprintf(file,"  Noun %d%s",noun,LE);
+  fprintf(file,"  SP %d%s",sp,LE);
+  fprintf(file,"  PC %d%s",pc,LE);
+  if (running) fprintf(file,"  Running True%s",LE);
+    else fprintf(file,"  Running False%s",LE);
+  for (i=0; i<sp; i++)
+    fprintf(file,"  Stack %d %d%s",i,stack[i],LE);
+  for (i=0; i<256; i++)
+    if (regs[i] != 0.0)
+      fprintf(file,"  Register %d %.18f%s",i,regs[i],LE);
+  fprintf(file,"  Check %u%s",Check(),LE);
+  fprintf(file,"  }%s",LE);
+  }
+
 void Computer::Reset() {
   Int16 i;
   prog = 0;

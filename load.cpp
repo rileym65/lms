@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "header.h"
+#include "computer.h"
 #include "terminal.h"
 
 /*
@@ -196,6 +197,14 @@ Int8 load(char* filename) {
     else if (startsWith(pline,"mission {")) mission->Load(file);
     else if (startsWith(pline,"eva ")) LoadEva(file,nw(pline));
     else if (startsWith(pline,"burn ")) LoadBurn(file,nw(pline));
+    else if (startsWith(pline,"computer ")) {
+      if (lm->Comp() == NULL) {
+        WriteLn("Save file contains computer settings but LM does not");
+        WriteLn("have a computer defined.  Aborting");
+        exit(1);
+        }
+      lm->Comp()->Load(file);
+      }
     else {
       Write("Unknown line found in save file: ");
       WriteLn(pline);

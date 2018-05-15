@@ -31,6 +31,7 @@ class G_Computer : public Gauge {
     Boolean lastRunning;
     Boolean lastInput;
     Boolean lastErr;
+    Boolean startup;
   public:
     G_Computer(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_Computer();

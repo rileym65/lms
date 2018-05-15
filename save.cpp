@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "header.h"
+#include "computer.h"
 
 void save() {
   Int32 i;
@@ -101,6 +102,7 @@ void save() {
   lm->Save(file);
   plss->Save(file);
   lrv->Save(file);
+  if (lm->Comp() != NULL) lm->Comp()->Save(file);
   fclose(file);
   }
 

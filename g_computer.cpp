@@ -38,6 +38,7 @@ void G_Computer::Reset() {
   lastInput = true;
   lastErr = true;
   lastInputMode = 0;
+  startup = true;
   }
 
 void G_Computer::Display() {
@@ -73,6 +74,7 @@ void G_Computer::Update() {
     Write(buffer);
     strcpy(lastNoun,c->Noun());
     }
+  if (startup) lastRunning = !c->Running();
   if (c->Running() != lastRunning) {
     GotoXY(x+5,y+4);
     if (c->Running()) Write("RUN     ");
@@ -179,6 +181,7 @@ void G_Computer::Update() {
     Write(buffer);
     strcpy(lastReg15,c->Reg(15));
     }
+  startup = false;
   }
 
 

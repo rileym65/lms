@@ -44,6 +44,9 @@ class Computer {
     virtual void Cycle();
     virtual void Reset();
     virtual void ProcessKey(Int32 key);
+    virtual UInt32 Check();
+    virtual void Save(FILE* file);
+    virtual void Load(FILE* file);
   };
 
 #endif
