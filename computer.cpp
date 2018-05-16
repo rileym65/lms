@@ -254,13 +254,13 @@ Double Computer::read(UInt16 addr) {
   if ((addr & 0xf00) == 0x200) {
     switch (addr & 0xff) {
       case 0x00: return 0;
-      case 0x01: return vehicle->Altitude();
+      case 0x01: return ins->Altitude();
       case 0x02: return vehicle->VelocityAltitude();
       case 0x03: return vehicle->AccelAltitude();
-      case 0x04: return vehicle->Longitude();
+      case 0x04: return ins->Longitude();
       case 0x05: return vehicle->VelocityEast();
       case 0x06: return vehicle->AccelEast();
-      case 0x07: return vehicle->Latitude();
+      case 0x07: return ins->Latitude();
       case 0x08: return vehicle->VelocityNorth();
       case 0x09: return vehicle->AccelNorth();
       case 0x0a: return ins->Perilune();

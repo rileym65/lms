@@ -36,12 +36,16 @@ void INS::Cycle() {
   Double e;
   Double E;
   Double s;
+  Int32  sig;
   Double hyp;
   Vector pos;
   Vector vel;
   Vector orbit;
   pos = spacecraft->Position();
   vel = spacecraft->Velocity();
+  altitude = spacecraft->Altitude();
+  latitude = spacecraft->Latitude();
+  longitude = spacecraft->Longitude();
   orbit = Vector(pos.Y(),-pos.X(),0).Norm();
 //  accAltitude = spacecraft->VelocityAltitude() - lastVelAltitude;
   accAltitude = spacecraft->AccelAltitude();
@@ -92,12 +96,35 @@ void INS::Cycle() {
   while (rMomNorth > 180) rMomNorth -= 360;
   while (rMomEast < -180) rMomEast += 360;
   while (rMomEast > 180) rMomEast -= 360;
+
+  sig = hasSignal();
+  if (sig == 0) {
+    latitude = 0;
+    longitude = 0;
+    tarLatitude = 0;
+    tarLongitude = 0;
+    relLatitude = 0;
+    relLongitude = 0;
+    altitude = 0;
+    }
+  if (sig < 0) {
+    latitude = ((int)(latitude * 100)) / 100.0;
+    longitude = ((int)(longitude * 100)) / 100.0;
+    tarLatitude = ((int)(tarLatitude * 100)) / 100.0;
+    tarLongitude = ((int)(tarLongitude * 100)) / 100.0;
+    relLatitude = ((int)(relLatitude * 100)) / 100.0;
+    relLongitude = ((int)(relLongitude * 100)) / 100.0;
+    }
   if (mode == INS_MODE_POS_ABS) populatePosAbs();
   if (mode == INS_MODE_POS_TAR) populatePosTar();
   if (mode == INS_MODE_POS_REL) populatePosRel();
   if (mode == INS_MODE_ORB_ABS) populateOrbAbs();
   if (mode == INS_MODE_ORB_TAR) populateOrbTar();
   if (mode == INS_MODE_ORB_REL) populateOrbRel();
+  }
+
+Double INS::Altitude() {
+  return altitude;
   }
 
 Double INS::AttUr() {
@@ -172,6 +199,14 @@ char* INS::DisplayMomNorth() {
   return displayMomNorth;
   }
 
+Double INS::Latitude() {
+  return latitude;
+  }
+
+Double INS::Longitude() {
+  return longitude;
+  }
+
 Int8 INS::Mode() {
   return mode;
   }
@@ -205,19 +240,23 @@ Double INS::TargetLatitude() {
   return tarLatitude;
   }
 
-Boolean INS::hasSignal() {
+Int32 INS::hasSignal() {
   if (pilotLocation == PILOT_LM && !dsnOn && !dockingRadarOn &&
-      !landingRadarOn) return false;
+      !landingRadarOn) return 0;
   if (pilotLocation == PILOT_LM && dsnOn && (dockingRadarOn ||
-      landingRadarOn)) return false;
+      landingRadarOn)) return 0;
   if (pilotLocation == PILOT_LM && dockingRadarOn && landingRadarOn)
-    return false;
+    return 0;
   if (pilotLocation == PILOT_LM && dockingRadarOn &&
       (spacecraft->Position() - target->Position()).Length() > 30000)
-    return false;
+    return 0;
   if (pilotLocation == PILOT_LM && landingRadarOn &&
-    (spacecraft->Altitude() > 18000 || attUr > 60)) return false;
-  return true;
+    (spacecraft->Altitude() > 18000 || attUr > 60)) return 0;
+  if (pilotLocation == PILOT_LM && dockingRadarOn &&
+    (spacecraft->Position() - target->Position()).Length() <= 30000) return 1;
+  if (pilotLocation == PILOT_LM && landingRadarOn &&
+    (spacecraft->Altitude() <= 18000 && attUr <= 60)) return 1;
+  return -1;
   }
 
 void INS::noData() {

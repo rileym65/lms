@@ -6,6 +6,7 @@ class INS {
     Double accAltitude;
     Double accEast;
     Double accNorth;
+    Double altitude;
     Double apolune;
     Double attUr;
     Double attFr;
@@ -23,9 +24,11 @@ class INS {
     char   displayPerilune[16];
     char   displayMomEast[16];
     char   displayMomNorth[16];
-    Double lastVelAltitude;
-    Double lastVelEast;
-    Double lastVelNorth;
+    Double   latitude;
+    Double   lastVelAltitude;
+    Double   lastVelEast;
+    Double   lastVelNorth;
+    Double   longitude;
     Int8     mode;
     Double   momEast;
     Double   momNorth;
@@ -47,7 +50,7 @@ class INS {
     Double   tarLatitude;
     Vehicle* spacecraft;
     Vehicle* target;
-    Boolean  hasSignal();
+    Int32    hasSignal();
     void     noData();
     void     populatePosAbs();
     void     populatePosTar();
@@ -60,6 +63,7 @@ class INS {
     INS();
     ~INS();
     void     Cycle();
+    Double   Altitude();
     Double   Apolune();
     Double   AttUr();
     Double   AttFr();
@@ -79,6 +83,8 @@ class INS {
     char*    DisplayMomNorth();
     Int8     Mode();
     Int8     Mode(Int8 i);
+    Double   Latitude();
+    Double   Longitude();
     Double   MomEast();
     Double   MomNorth();
     Double   Perilune();
