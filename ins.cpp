@@ -107,7 +107,7 @@ void INS::Cycle() {
     relLongitude = 0;
     altitude = 0;
     }
-  if (sig < 0) {
+  if (sig < 0 && pilotLocation != PILOT_LRV && pilotLocation != PILOT_EVA) {
     latitude = ((int)(latitude * 100)) / 100.0;
     longitude = ((int)(longitude * 100)) / 100.0;
     tarLatitude = ((int)(tarLatitude * 100)) / 100.0;
