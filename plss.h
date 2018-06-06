@@ -26,6 +26,7 @@ class Plss : public GroundVehicle {
     virtual Double Value();
     virtual Double Value(Double d);
     virtual Double Walked();
+    virtual Double Walked(Double d);
   };
 
 #endif

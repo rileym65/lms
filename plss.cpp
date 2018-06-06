@@ -92,6 +92,11 @@ Double Plss::Walked() {
   return walked;
   }
 
+Double Plss::Walked(Double d) {
+  walked = d;
+  return walked;
+  }
+
 void Plss::Cycle() {
   if (throttle > 30 && metabolicRate > 60) Throttle(30);
   GroundVehicle::Cycle();

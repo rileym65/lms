@@ -388,9 +388,12 @@ void Sequencer::DropSample() {
   }
 
 void Sequencer::EndEva() {
+  Double dist;
   time = 8 * 60;
   strcpy(message,"  MOVE->LM");
   function = SEQ_END_EVA;
+  dist = (plss->Position() - lm->Position()).Length();
+  plss->Walked(plss->Walked() + dist);
   }
 
 void Sequencer::MoveCsm() {
@@ -456,6 +459,7 @@ void Sequencer::SpaceSuitOn() {
 void Sequencer::StoreSample() {
   Double dist;
   dist = (plss->Position() - lrv->Position()).Length();
+  plss->Walked(plss->Walked() + dist + dist);
   time = (1 * 60) + (2 * dist);
   strcpy(message," SAMP->LRV");
   function = SEQ_STORESAMPLE;
@@ -476,6 +480,7 @@ void Sequencer::Undock() {
 void Sequencer::MoveLrv() {
   Double dist;
   dist = (plss->Position() - lrv->Position()).Length();
+  plss->Walked(plss->Walked() + dist);
   time = 1.5 * 60 + dist;
   strcpy(message," MOVE->LRV");
   function = SEQ_MOVELRV;

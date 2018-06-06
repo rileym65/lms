@@ -18,7 +18,7 @@
 [=]
 	The next level up from ROCKET was another early Creative Computing
 	game called LEM.  Like ROCKET, LEM was turned based, but where the
-	added complexity came in was that now the game was in two dimentions.
+	added complexity came in was that now the game was in two dimensions.
 	Now you not only had to control your descent speed but you also had
 	to control your horizontal velocity and land as close as possible to
 	the landing site.  Unlike ROCKET, LEM was not as easily mastered, 
