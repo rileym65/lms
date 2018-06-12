@@ -181,6 +181,39 @@ void MissionReport() {
     records->RcsFuel = lm->RcsFuel();
     fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",lm->RcsFuel(),LE);
     }
+  fprintf(file,"%s%s",LE,LE);
+  fprintf(file,"Landing Score:%s",LE);
+  fprintf(file,"  Landing Time:         %d%s",ScoreLandedTime, LE);
+  fprintf(file,"  Fuel Remaining:       %d%s",ScoreDescentFuel, LE);
+  fprintf(file,"  Distance from target: %d%s",ScoreLandedDistance, LE);
+  fprintf(file,"  Vertical Velocity:    %d%s",ScoreLandedVVel, LE);
+  fprintf(file,"  Horizontal Velocity:  %d%s",ScoreLandedHVel, LE);
+  if (ScoreLatitudeBonus > 0)
+    fprintf(file,"  Latitude Bonus:       %d%s",ScoreLatitudeBonus, LE);
+  fprintf(file,"                                --------%s",LE);
+  fprintf(file,"    Landing Total:              %d%s",ScoreLanding,LE);
+  fprintf(file,"%s",LE);
+  fprintf(file,"Surface Operations Score:%s",LE);
+  fprintf(file,"  EVAs completed:       %d%s",ScoreEvaCompleted,LE);
+  fprintf(file,"  Time Spent on EVA:    %d%s",ScoreEvaTime,LE);
+  fprintf(file,"  Samples Collected:    %d%s",ScoreEvaSamples,LE);
+  fprintf(file,"  Sample Value:         %d%s",ScoreEvaValue,LE);
+  fprintf(file,"  Distance from LM:     %d%s",ScoreEvaFarthest,LE);
+  fprintf(file,"  Distance Driven:      %d%s",ScoreEvaDriven,LE);
+  fprintf(file,"                                --------%s",LE);
+  fprintf(file,"    Surface Operations Total:   %d%s",ScoreEvaTotal,LE);
+  fprintf(file,"%s",LE);
+  fprintf(file,"Rendevous/Docking Score:%s",LE);
+  fprintf(file,"  Docking Time:         %d%s",ScoreDockTime,LE);
+  fprintf(file,"  Asc Fuel Remaining:   %d%s",ScoreDockAscentFuel,LE);
+  fprintf(file,"  RCS Fuel Remaining:   %d%s",ScoreDockRcsFuel,LE);
+  fprintf(file,"                                --------%s",LE);
+  fprintf(file,"    Rendevous/Docking Total:    %d%s",ScoreDockTotal,LE);
+  fprintf(file,"%s",LE);
+  fprintf(file,"                                --------%s",LE);
+  fprintf(file,"    Total Score:                %d%s",ScoreTotal,LE);
+  fprintf(file,"%s%s",LE,LE);
+
   if (file != stdout) fclose(file);
   records->Save();
   WriteLn("");

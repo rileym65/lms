@@ -107,6 +107,7 @@ OBJS = \
 	plss.o \
 	random.o \
 	sequencer.o \
+	score.o \
 	sgn.o \
 	terminal.o \
 	vector.o \

@@ -399,6 +399,7 @@ int main(int argc, char** argv) {
     fclose(file);
     }
   if (endReason == END_MISSION) {
+    Score();
     MissionReport();
     file = fopen("userref.txt","a+");
     fprintf(file,"Feature Descent Module, %10.4f, %10.4f, 0, =%s",
