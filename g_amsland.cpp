@@ -41,6 +41,7 @@ void G_AmsLand::Update() {
   Int32  lng;
   Int32  lat;
   char   mode;
+  Int32  cellX,cellY;
   char   buffer[32];
   lat = (int)currentVehicle->Latitude();
   lng = (int)currentVehicle->Longitude();
@@ -49,9 +50,19 @@ void G_AmsLand::Update() {
   else if (alt < 20000) mode = 'M';
   else mode = 'H';
   if (mode != lastMode || lat != lastLatitude || lng != lastLongitude) {
-    for (ix=-2; ix<=2; ix++)
-      for (iy=-4; iy <= 4; iy++) {
-        data[ix+2][iy+4] = map->CellH(lng+ix,lat+iy);
+    if (landingRadarOn && alt < 18000 && ins->AttUr() <= 60) {
+      cellX = map->Cell(currentVehicle->Longitude());
+      cellY = map->Cell(currentVehicle->Latitude());
+       for (ix=-2; ix<=2; ix++)
+         for (iy=-4; iy <= 4; iy++) {
+           data[ix+2][iy+4] = map->Lurrain(cellX+ix,cellY+iy);
+           }
+      }
+     else {
+       for (ix=-2; ix<=2; ix++)
+         for (iy=-4; iy <= 4; iy++) {
+           data[ix+2][iy+4] = map->CellH(lng+ix,lat+iy);
+           }
         }
     for (i=0; i<5; i++) {
       GotoXY(x+2, y+2+i);
@@ -72,13 +83,13 @@ void G_AmsLand::Update() {
       GotoXY(x+11,y+2); Write("|");
       }
     GotoXY(x+10,y+1);
-    if (lm->VelocityEast() < -0.2) Write("^"); else Write("-");
+    if (lm->VelocityEast() < -1.22) Write("^"); else Write("-");
     GotoXY(x+10,y+7);
-    if (lm->VelocityEast() > 0.2) Write("v"); else Write("-");
+    if (lm->VelocityEast() > 1.22) Write("v"); else Write("-");
     GotoXY(x+11,y+6);
-    if (lm->VelocityNorth() > 0.2) Write(">"); else Write("|");
+    if (lm->VelocityNorth() > 1.22) Write(">"); else Write("|");
     GotoXY(x+1,y+6);
-    if (lm->VelocityNorth() < -0.2) Write("<"); else Write("|");
+    if (lm->VelocityNorth() < -1.22) Write("<"); else Write("|");
     }
   else {
     GotoXY(x+1,y+2); Write("|");

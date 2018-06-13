@@ -8,3 +8,5 @@
     instead of current transformation matrix method
   Replace system random function with more predictable one across platforms
   Landing radar should show low altitude maps when near the ground
+  Fix looking down of axis displays to show relative to local ground instead of
+    equator
