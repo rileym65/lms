@@ -304,7 +304,7 @@
 	INS indicates that you are 155 degrees east of the landing site and
 	then undock.
 [=]
-	3. Set the RCS Translation throttle to low.  Set the GC to P00 V00 N03,
+	3. Set the RCS Translation throttle to low.  Set the GC to P00 V00 N13,
 	or the INS to POS^REL.  Be sure the Docking Radar is selected so that
 	you are receiving a high resolution signal from the CSM.
 [=]
@@ -323,8 +323,8 @@
 [=]
 [H1]	Plane change maneuvers
 	The next phase of the mission is to place the LM into an orbit
-	that passes over the landing site.  The CSM was in an orbit over
-	the equator of the moon.  Open completion of the separation 
+	that passes over the landing site.  The CSM is in an orbit over
+	the equator of the moon.  Upon completion of the separation 
 	maneuvers the LM will still be in a a near equitoral oribt.  Two
 	plane change maneuvers will be needed in order to change the orbit
 	of the LM.
@@ -382,10 +382,7 @@
 	at the start of the manuever the L/S will be 90, the distance to go
 	shown in MOM North will be 2.  When the MOM North is at 1, then the 
 	L/S whould be showing 91.  When the MOM North is showing 0, then the
-	L/S should be showing 92.  Note this example is if the landing site
-	is in the northern hemisphere, if it is in the southern then you need
-	to yaw the other way, so instead of 91 you should be at 89 and
-	instead of 92 you should be at 88.
+	L/S should be showing 92.
 [=]
 
 [H2]	Key points during landing

@@ -224,8 +224,7 @@ void LunarModule::Cycle() {
                 lm->VelocityNorth() * lm->VelocityNorth());
     landedVVel = vVel;
     landedHVel = hVel;
-    if (vVel >= 3 || fabs(lm->VelocityEast()) >= 0.3 ||
-                    fabs(lm->VelocityNorth()) >= 0.3) {
+    if (vVel >= 3.05 || hVel > 1.22) {
       run = false;
       endReason = END_CRASHED;
       }

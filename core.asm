@@ -256,6 +256,7 @@ looptest:   norm   pos,r20
             mov    APOL,R14
             sub    R14,GRND
             div    R14,R20
+            mov    CLKOR,R15
             ret
 
 

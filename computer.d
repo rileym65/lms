@@ -57,6 +57,7 @@
 	| C1000 | Contant value of 1000                            |
 	| CKKBU | Current value of engine burn clock in seconds    |
 	| CLKMI | Current value of mission clock in seconds        |
+	| CLKOR | Orbit time in seconds                            |
 	| EACC  | Longitudinal acceleration in m/s                 |
 	| EAST  | Longitude in degrees                             |
 	| EVEL  | Longitudinal velocity in m/s                     |

@@ -11,9 +11,9 @@ void Score() {
   ScoreLandedDistance = 1000 - (distance(landedLongitude,landedLatitude,
     mission->TargetLongitude(), mission->TargetLatitude()) / 10);
   if (ScoreLandedDistance < 0) ScoreLandedDistance = 0;
-  ScoreLandedVVel = 1000 + ((2 - landedVVel) * 1000);
+  ScoreLandedVVel = 1000 - (landedVVel * 327.8689);
   if (ScoreLandedVVel < 0) ScoreLandedVVel = 0;
-  ScoreLandedHVel = 1000 + ((.2 - landedHVel) * 10000);
+  ScoreLandedHVel = 1000 - (landedHVel * 819.6721);
   if (ScoreLandedHVel < 0) ScoreLandedHVel = 0;
   if (fabs(landedLatitude) >= 1) {
     ScoreLatitudeBonus = (200.0 * (fabs(landedLatitude) - 1.0));

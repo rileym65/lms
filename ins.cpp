@@ -68,6 +68,7 @@ void INS::Cycle() {
   apolune = s * (1 + e);
   perilune = s * (1 - e);
   orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/MOON);
+  clockOr = orbitTime;
   hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
   momEast = L.Y() / hyp;
   momEast = asin(momEast) * 180 / M_PI;
