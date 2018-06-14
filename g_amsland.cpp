@@ -40,22 +40,25 @@ void G_AmsLand::Update() {
   Double alt;
   Int32  lng;
   Int32  lat;
+  Double dlng;
+  Double dlat;
   char   mode;
-//  Int32  cellX,cellY;
   char   buffer[32];
   lat = (int)currentVehicle->Latitude();
   lng = (int)currentVehicle->Longitude();
+  dlng = currentVehicle->Longitude();
+  dlat = currentVehicle->Latitude();
   alt = currentVehicle->Altitude();
-  if (alt < 12000) mode = 'L';
-  else if (alt < 20000) mode = 'M';
-  else mode = 'H';
+
+  mode = 'L';
+  if (alt > 12000) mode = 'H';
+  if (!landingRadarOn) mode = 'H';
+  if (ins->AttUr() > 60) mode = 'H';
   if (mode != lastMode || lat != lastLatitude || lng != lastLongitude) {
-    if (landingRadarOn && alt < 18000 && ins->AttUr() <= 60) {
-//      cellX = map->Cell(currentVehicle->Longitude());
-//      cellY = map->Cell(currentVehicle->Latitude());
+    if (mode == 'L') {
        for (ix=-2; ix<=2; ix++)
          for (iy=-4; iy <= 4; iy++) {
-           data[ix+2][iy+4] = map->Lurrain(lng+ix*MAPCELL,lat+iy*MAPCELL);
+           data[ix+2][iy+4] = map->Lurrain(dlng+ix*MAPCELL,dlat+iy*MAPCELL);
            }
       }
      else {
@@ -73,7 +76,7 @@ void G_AmsLand::Update() {
     lastLatitude = lat;
     lastLongitude = lng;
     }
-  if (landingRadarOn && alt < 18000 && ins->AttUr() <= 60) {
+  if (mode == 'L') {
     if (lm->VelocityAltitude() <= -3) {
       GotoXY(x+1,y+2); Write("+");
       GotoXY(x+11,y+2); Write("+");
