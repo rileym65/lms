@@ -27,6 +27,13 @@ Random::~Random() {
 
 void Random::Seed(UInt32 s) {
   rng.Seed(s);
+  rng.Shift(0x1f);
+  }
+
+void Random::Seed(UInt32 s, UInt32 t) {
+  rng.Seed(s);
+  rng.Taps(t);
+  rng.Shift(0x3f);
   }
 
 UInt32 Random::bitsize(UInt32 n) {

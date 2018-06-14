@@ -53,6 +53,7 @@
 #define MOON  4.9075e12
 #define GROUND 1738300
 #define METERS ((GROUND*2*M_PI) / 360.0)
+#define MAPCELL           (10.0 / METERS)
 #define CELL (METERS / 10)
 #define DR  (3.14159265358979323846 / 180)
 #define S_SMALL_ROCK      1

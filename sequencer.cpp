@@ -106,7 +106,7 @@ void Sequencer::Complete() {
          plss->Carrying('R');
          cellX = map->Cell(plss->Longitude());
          cellY = map->Cell(plss->Latitude());
-         cell = map->Lurrain(cellX, cellY);
+         cell = map->Lurrain(plss->Longitude(), plss->Latitude());
          switch (cell) {
            case '.': plss->Value(1.0); sampleType = S_SMALL_CRATER; break;
            case 'o': plss->Value(1.2); sampleType = S_MEDIUM_CRATER; break;

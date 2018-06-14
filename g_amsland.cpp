@@ -41,7 +41,7 @@ void G_AmsLand::Update() {
   Int32  lng;
   Int32  lat;
   char   mode;
-  Int32  cellX,cellY;
+//  Int32  cellX,cellY;
   char   buffer[32];
   lat = (int)currentVehicle->Latitude();
   lng = (int)currentVehicle->Longitude();
@@ -51,11 +51,11 @@ void G_AmsLand::Update() {
   else mode = 'H';
   if (mode != lastMode || lat != lastLatitude || lng != lastLongitude) {
     if (landingRadarOn && alt < 18000 && ins->AttUr() <= 60) {
-      cellX = map->Cell(currentVehicle->Longitude());
-      cellY = map->Cell(currentVehicle->Latitude());
+//      cellX = map->Cell(currentVehicle->Longitude());
+//      cellY = map->Cell(currentVehicle->Latitude());
        for (ix=-2; ix<=2; ix++)
          for (iy=-4; iy <= 4; iy++) {
-           data[ix+2][iy+4] = map->Lurrain(cellX+ix,cellY+iy);
+           data[ix+2][iy+4] = map->Lurrain(lng+ix*MAPCELL,lat+iy*MAPCELL);
            }
       }
      else {

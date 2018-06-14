@@ -10,6 +10,9 @@
 
 #define GROUND 1738300
 #define METERS (1.0/30.0)
+#define METERSD ((GROUND*2*M_PI) / 360.0)
+#define MAPCELL           (10.0 / METERSD)
+
 
 Map *map;
 char data[81][81];
@@ -101,7 +104,7 @@ void fillMapM() {
 
 void fillMapL() {
   Int32 x,y;
-  Int32 cellX,cellY;
+//  Int32 cellX,cellY;
   Int32 i;
   UInt32 j;
   Double l;
@@ -126,11 +129,12 @@ void fillMapL() {
       }
     }
   x = map->CellM(longitude,latitude);
-  cellX = map->Cell(longitude);
-  cellY = map->Cell(latitude);
+//  cellX = map->Cell(longitude);
+//  cellY = map->Cell(latitude);
   for (x=-30; x<31; x++)
     for (y=-30; y<31; y++) {
-      data[x+33][y+39] = map->Lurrain(cellX+x, cellY+y);
+      data[x+33][y+39] = map->Lurrain(longitude+x*MAPCELL,latitude+y*MAPCELL);
+//      data[x+33][y+39] = map->Lurrain(cellX+x, cellY+y);
       }
   }
 

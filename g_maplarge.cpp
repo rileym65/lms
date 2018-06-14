@@ -51,13 +51,17 @@ void G_MapLarge::Display() {
 void G_MapLarge::Update() {
   Int32 i,j;
   Int32 cellX, cellY;
+  Double lat,lng;
   char buffer[80];
+  lng = currentVehicle->Longitude();
+  lat = currentVehicle->Latitude();
   cellX = map->Cell(currentVehicle->Longitude());
   cellY = map->Cell(currentVehicle->Latitude());
   if (cellX != lastCellX || cellY != lastCellY) {
     for (j=0; j<19; j++)
       for (i=0; i<41; i++)
-        data[j][i] = map->Lurrain(cellX+j-9,cellY+i-20);
+        data[j][i] = map->Lurrain(lng+(j-9)*MAPCELL,lat+(i-20)*MAPCELL);
+//        data[j][i] = map->Lurrain(cellX+j-9,cellY+i-20);
     lastCellX = cellX;
     lastCellY = cellY;
     if (lrv->IsSetup()) {

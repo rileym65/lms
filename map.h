@@ -23,23 +23,23 @@ class Map {
     char     levelM[62][62];
     Double   lastLongitude;
     Double   lastLatitude;
+    Random   rng;
     void drawCrater(Double longitude, Double latitude, Double diameter);
     void drawFeature(Double longitude, Double latitude, Double diameter, char ch);
     void drawMare(Double longitude, Double latitude, Double diameter, char ch);
     void drawRill(Double longitude, Double latitude, Double diameter, char ch);
     void loadFeatures(const char* filename);
     void generateLevelHMap();
-    void seed(UInt32 s);
-    Int32 random(UInt32 range);
     void drawCraterMedium(Double longitude, Double latitude, Double diameter);
     void generateLevelMMap(Double longitude,Double latitude);
   public:
     Map();
     ~Map();
   Int32 Cell(Double degrees);
+  Double Degrees(Int32 cell);
   Int32 CellH(Int32 longitude, Int32 latitude);
   Int32 CellM(Double longitude, Double latitude);
-  char  Lurrain(Int32 cellX, Int32 cellY);
+  char  Lurrain(Double longitude, Double Latitude);
   };
 
 #endif

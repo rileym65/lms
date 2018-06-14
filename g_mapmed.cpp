@@ -43,13 +43,17 @@ void G_MapMed::Display() {
 void G_MapMed::Update() {
   Int32 i,j;
   Int32 cellX, cellY;
+  Double lat,lng;
   char buffer[64];
+  lng = currentVehicle->Longitude();
+  lat = currentVehicle->Latitude();
   cellX = map->Cell(currentVehicle->Longitude());
   cellY = map->Cell(currentVehicle->Latitude());
   if (cellX != lastCellX || cellY != lastCellY) {
     for (j=0; j<11; j++)
       for (i=0; i<21; i++)
-        data[j][i] = map->Lurrain(cellX+j-5,cellY+i-10);
+        data[j][i] = map->Lurrain(lng+(j-5)*MAPCELL,lat+(i-10)*MAPCELL);
+//        data[j][i] = map->Lurrain(cellX+j-5,cellY+i-10);
     lastCellX = cellX;
     lastCellY = cellY;
     if (lrv->IsSetup()) {

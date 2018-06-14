@@ -3,7 +3,6 @@
 #include "header.h"
 #include "map.h"
 
-
 Map::Map() {
   Int32 i;
   Int32 x,y;
@@ -20,11 +19,11 @@ Map::Map() {
   loadFeatures("lunarref.txt");
   loadFeatures("userref.txt");
   generateLevelHMap();
-  seed(1);
+  rng.Seed(1);
   for (y=-90; y<=90; y++)
     for (x=-180; x<=180; x++)
       if (levelH[y+90][x+180] == '_') {
-        i = random(100);
+        i = rng.Next(100);
         if (i<50) levelH[y+90][x+180] = '~';
         else if (i<75) levelH[y+90][x+180] = '^';
         else levelH[y+90][x+180] = 'u';
@@ -295,9 +294,24 @@ void Map::generateLevelMMap(Double longitude,Double latitude) {
 //  Int32  cellX;
 //  Int32  cellY;
   Int32 x,y;
-  for (y=0; y<=61; y++)
-    for (x=0; x<=61; x++)
-       levelM[y][x] = '_';
+
+  for (y=0; y<=31; y++)
+    for (x=0; x<=31; x++)
+      levelM[y][x] = CellH((int)longitude+0.5,(int)latitude+0.5);
+  for (y=0; y<=31; y++)
+    for (x=32; x<=61; x++)
+      levelM[y][x] = CellH((int)longitude-0.5,(int)latitude+0.5);
+  for (y=32; y<=61; y++)
+    for (x=0; x<=31; x++)
+      levelM[y][x] = CellH((int)longitude+0.5,(int)latitude-0.5);
+  for (y=32; y<=61; y++)
+    for (x=32; x<=61; x++)
+      levelM[y][x] = CellH((int)longitude-0.5,(int)latitude-0.5);
+
+
+//  for (y=0; y<=61; y++)
+//    for (x=0; x<=61; x++)
+//       levelM[y][x] = '_';
 
 //  char   symbol[64];
   for (i=0; i<numFeatures; i++) {
@@ -337,23 +351,20 @@ void Map::generateLevelMMap(Double longitude,Double latitude) {
   lastLatitude = latitude;
   }
 
-void Map::seed(UInt32 s) {
-  srand(s);
-  }
-
-Int32 Map::random(UInt32 range) {
-  Double d;
-  d = rand();
-  d /= RAND_MAX;
-  return (int)(d * range);
-  }
-
 Int32 Map::Cell(Double degrees) {
   Int32 ret;
   ret = (int)(degrees * CELL);
   if (degrees >= 0) ret++;
   return ret;
   }
+
+Double Map::Degrees(Int32 cell) {
+  Double ret;
+  if (cell >= 1) cell--;
+  ret = cell / CELL;
+  return ret;
+  }
+
 
 Int32 Map::CellH(Int32 longitude,Int32 latitude) {
   latitude = -latitude;
@@ -362,48 +373,51 @@ Int32 Map::CellH(Int32 longitude,Int32 latitude) {
   return levelH[latitude+90][longitude+180];
   }
 
-char Map::Lurrain(Int32 cellX, Int32 cellY) {
+char Map::Lurrain(Double longitude, Double latitude) {
   Int32 i;
+  Int32 cellX, cellY;
+  cellX = Cell(longitude);
+  cellY = Cell(latitude);
   char ltype;
   for (i=0; i<numFeatures; i++)
     if (features[i].cellX == cellX && features[i].cellY == cellY)
       return features[i].symbol;
-  i = (cellX & 0xffff) | (cellY << 16);
-  seed(i);
-  i = random(1000);
-  ltype = ' ';
+  i = (cellX & 0x7fffffff) ^ (cellY << 15);
+  rng.Seed(i);
+  i = rng.Next(1000);
+  ltype = CellM(longitude, latitude);
   switch (ltype) {
     case '~':
-         if ((i -= 4) < 0) return '.';
-         if ((i -= 4) < 0) return 'o';
-         if ((i -= 3) < 0) return 'O';
-         if ((i -= 15) < 0) return ',';
-         if ((i -= 10) < 0) return '+';
-         if ((i -= 6) < 0) return '*';
-         if ((i -= 10) < 0) return 'u';
-         if ((i -= 10) < 0) return '^';
+         if ((i -= 6) < 0) return '.';
+         if ((i -= 6) < 0) return 'o';
+         if ((i -= 5) < 0) return 'O';
+         if ((i -= 20) < 0) return ',';
+         if ((i -= 15) < 0) return '+';
+         if ((i -= 9) < 0) return '*';
+         if ((i -= 15) < 0) return 'u';
+         if ((i -= 15) < 0) return '^';
          return ' ';
          break;
     case '^':
-         if ((i -= 4) < 0) return '.';
-         if ((i -= 4) < 0) return 'o';
-         if ((i -= 3) < 0) return 'O';
-         if ((i -= 40) < 0) return ',';
-         if ((i -= 20) < 0) return '+';
-         if ((i -= 10) < 0) return '*';
+         if ((i -= 8) < 0) return '.';
+         if ((i -= 8) < 0) return 'o';
+         if ((i -= 6) < 0) return 'O';
+         if ((i -= 80) < 0) return ',';
+         if ((i -= 40) < 0) return '+';
+         if ((i -= 20) < 0) return '*';
          if ((i -= 30) < 0) return 'u';
-         if ((i -= 30) < 0) return '^';
+         if ((i -= 60) < 0) return '^';
          return ' ';
          break;
     case 'u':
-         if ((i -= 4) < 0) return '.';
-         if ((i -= 4) < 0) return 'o';
-         if ((i -= 3) < 0) return 'O';
-         if ((i -= 15) < 0) return ',';
-         if ((i -= 10) < 0) return '+';
-         if ((i -= 6) < 0) return '*';
-         if ((i -= 10) < 0) return 'u';
-         if ((i -= 10) < 0) return '^';
+         if ((i -= 8) < 0) return '.';
+         if ((i -= 8) < 0) return 'o';
+         if ((i -= 6) < 0) return 'O';
+         if ((i -= 30) < 0) return ',';
+         if ((i -= 20) < 0) return '+';
+         if ((i -= 12) < 0) return '*';
+         if ((i -= 20) < 0) return 'u';
+         if ((i -= 20) < 0) return '^';
          return ' ';
          break;
     default:
@@ -426,7 +440,7 @@ Int32 Map::CellM(Double longitude, Double latitude) {
 //  latitude = -latitude;
   if (longitude < lastLongitude-1 || longitude > lastLongitude+1 ||
       latitude < lastLatitude-1 || latitude > lastLatitude+1) {
-printf("generate %f,%f > %f,%f\n",longitude,latitude,lastLongitude,lastLatitude);
+//printf("generate %f,%f > %f,%f\n",longitude,latitude,lastLongitude,lastLatitude);
     generateLevelMMap(longitude,latitude);
     }
   cellX = ((longitude-lastLongitude) / (1.0/30.0));
