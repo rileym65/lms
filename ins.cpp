@@ -84,6 +84,8 @@ void INS::Cycle() {
   tarLongitude = spacecraft->Longitude() - mission->TargetLongitude();
   while (tarLongitude < -180) tarLongitude += 360;
   while (tarLongitude > 180) tarLongitude -= 360;
+  while (relLongitude < -180) relLongitude += 360;
+  while (relLongitude > 180) relLongitude -= 360;
   tMomNorth = momNorth - targetMomNorth;
   tMomEast = momEast - targetMomEast;
   while (tMomNorth < -180) tMomNorth += 360;
