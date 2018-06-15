@@ -17,6 +17,7 @@ G_LmFuel::~G_LmFuel() {
 void G_LmFuel::Reset() {
   lastAscentFuel = -9999;
   lastDescentFuel = -9999;
+  lastDescentJettisoned = 5;
   }
 
 void G_LmFuel::Display() {
@@ -35,13 +36,14 @@ void G_LmFuel::Update() {
     }
   i = (int)(lm->DescentFuel() / FUEL_DES * 100);
   if (i>99) i = 99;
-  if (i != lastDescentFuel) {
+  if (i != lastDescentFuel || lastDescentJettisoned != lm->DescentJettisoned()) {
     GotoXY(x+5,y+1);
     if (!lm->DescentJettisoned()) {
       sprintf(buffer,"%2d",i); Write(buffer);
       }
       else Write("**");
     lastDescentFuel = i;
+    lastDescentJettisoned = lm->DescentJettisoned();
     }
   }
 

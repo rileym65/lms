@@ -124,8 +124,11 @@ Boolean alignedForDocking() {
   Vector v;
   Double ax,ay,rx;
   v = ins->RelVel();
-  if (v.Z() > -0.2) return false;
-  if (v.Z() < -0.4) return false;
+  dockingVel = v.Z();
+  dockingLVel = sqrt(v.X()*v.X() + v.Y()*v.Y());
+  if (dockingVel > -0.2) return false;
+  if (dockingVel < -0.4) return false;
+  if (dockingLVel >0.0283) return false;
   ax = asin(lm->FaceUp().Y()) * 180 / M_PI;
   ay = asin(lm->FaceUp().X()) * 180 / M_PI;
   rx = asin(lm->FaceLeft().X()) * 180 / M_PI;
@@ -254,8 +257,9 @@ void test() {
   }
 
 int main(int argc, char** argv) {
+  int i;
   int key;
-  char buffer[64];
+  char buffer[128];
   Double d;
   FILE* file;
   simSpeed = 100000;
@@ -287,6 +291,11 @@ int main(int argc, char** argv) {
       sscanf(buffer,"%lf",&d);
       }
     mission->TargetLongitude(d);
+    Write("Mission Title: ");
+    fgets(buffer,128,stdin);
+    for (i=0; i<strlen(buffer); i++)
+      if (buffer[i] >0 && buffer[i] < 32) buffer[i] = 0;
+    mission->Name(buffer);
     }
   setupTargetData();
   OpenTerminal();

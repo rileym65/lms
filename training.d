@@ -113,7 +113,7 @@
 	Now just left of the middle of the screen you will see the radar indicators.  This
 	instruments shows which of the three radar systems is feeding information to the INS.
 	Currently no radars are on, so press the '>' key in order to turn on the docking radar.
-	After turning on the docking radar a '@' symbol will appear before the DOK indicoator,
+	After turning on the docking radar a '@' symbol will appear before the DOK indicator,
 	showing that the docking radar is the currently active radar.
 [e-]
 [=]
@@ -212,7 +212,7 @@
 	a number similar to 0.001, this is the amount of acceleration.
 [=]
 	Leave the Down thruster on until you see the number in REG 6 exceed 0.3.  When
-	REG 6 shows 0.3 or higher, press the <u> key to turn off the down RCS thruster.
+	REG 6 shows 0.3 or higher, press the <d> key to turn off the down RCS thruster.
 	When you turn off the thruster you should see the '>' symbol disappear from the
 	U/D indicator in the RCS control panel, the RCS flag will disappear from the
 	annunciator panel and the number in REG 9 should return to 0.0000.
@@ -229,7 +229,7 @@
 	that the RCS up thruster is on.  The annunciator panel should show the RCS flag
 	indicating that an RCS thruster is on, and REG 9 should show a number similar to
 	-0.0115, indicating that we are now accelerating in the southerly direction.
-	Wait until REG 6 shows a number around -0.3 and then hit the <d> key to turn off
+	Wait until REG 6 shows a number around -0.3 and then hit the <u> key to turn off
 	the RCS up thruster.
 [=]
 	You should now see the number in REG 3 getting smaller.  If you have not accidentaly

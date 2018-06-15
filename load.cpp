@@ -83,6 +83,8 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockud ")) clockUd = atoi(nw(pline));
     else if (startsWith(pline,"clockdoi ")) clockDOI = atoi(nw(pline));
     else if (startsWith(pline,"clockpdi ")) clockPDI = atoi(nw(pline));
+    else if (startsWith(pline,"dockingvel ")) dockingVel = atof(nw(pline));
+    else if (startsWith(pline,"dockinglvel ")) dockingLVel = atof(nw(pline));
     else if (startsWith(pline,"modeabo ")) mode_abo = atoi(nw(pline));
     else if (startsWith(pline,"modearm ")) mode_arm = atoi(nw(pline));
     else if (startsWith(pline,"modejet ")) mode_jet = atoi(nw(pline));

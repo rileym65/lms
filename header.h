@@ -106,6 +106,8 @@ LINK Int32        clockTe;
 LINK Int32        clockUd;
 LINK Int32        clockDOI;
 LINK Int32        clockPDI;
+LINK Double       dockingVel;
+LINK Double       dockingLVel;
 LINK EVA          evas[256];
 LINK Int32        evaCount;
 LINK Int32        landedMet;
@@ -208,6 +210,8 @@ LINK Int32        ScoreDockTime;
 LINK Int32        ScoreDockAscentFuel;
 LINK Int32        ScoreDockRcsFuel;
 LINK Int32        ScoreDockTotal;
+LINK Int32        ScoreDockLVel;
+LINK Int32        ScoreDockVel;
 LINK Int32        ScoreTotal;
 
 extern Matrix atom(char* buffer);

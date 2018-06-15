@@ -38,6 +38,10 @@ void Score() {
   if (ScoreDockTime < 0) ScoreDockTime = 0;
   ScoreDockAscentFuel = lm->AscentFuel();
   ScoreDockRcsFuel = lm->RcsFuel();
+  ScoreDockLVel = 1000 - (dockingLVel * 30339.0584);
+  if (ScoreDockLVel < 0) ScoreDockLVel = 0;
+  ScoreDockVel = 1000 - (fabs(fabs(dockingVel) - 0.3) * 10000.0);
+  if (ScoreDockVel < 0) ScoreDockVel = 0;
 
   ScoreDockTotal = ScoreDockTime + ScoreDockAscentFuel + ScoreDockRcsFuel;
 
@@ -66,6 +70,8 @@ void Score() {
   printf("%s",LE);
   printf("Rendevous/Docking Score:%s",LE);
   printf("  Docking Time:         %d%s",ScoreDockTime,LE);
+  printf("  Docking Velocity:     %d%s",ScoreDockVel,LE);
+  printf("  Lateral Velocity:     %d%s",ScoreDockLVel,LE);
   printf("  Asc Fuel Remaining:   %d%s",ScoreDockAscentFuel,LE);
   printf("  RCS Fuel Remaining:   %d%s",ScoreDockRcsFuel,LE);
   printf("                                --------%s",LE);

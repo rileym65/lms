@@ -25,6 +25,7 @@ void MissionReport() {
     file = fopen(filename,"r");
     }
   file = fopen(filename,"w");
+  fprintf(file,"Mission: %s%s%s",mission->Name(),LE,LE);
   fprintf(file,"Mission Time Line:%s",LE);
   fprintf(file,"  Undock UTC    : %s%s",ClockToString(buffer,clockUd),LE);
   if (clockDOI != 0)
@@ -205,6 +206,8 @@ void MissionReport() {
   fprintf(file,"%s",LE);
   fprintf(file,"Rendevous/Docking Score:%s",LE);
   fprintf(file,"  Docking Time:         %d%s",ScoreDockTime,LE);
+  fprintf(file,"  Docking Velocity:     %d%s",ScoreDockVel,LE);
+  fprintf(file,"  Lateral Velocity:     %d%s",ScoreDockLVel,LE);
   fprintf(file,"  Asc Fuel Remaining:   %d%s",ScoreDockAscentFuel,LE);
   fprintf(file,"  RCS Fuel Remaining:   %d%s",ScoreDockRcsFuel,LE);
   fprintf(file,"                                --------%s",LE);

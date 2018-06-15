@@ -18,6 +18,8 @@ void save() {
   fprintf(file,"  ClockUD %d%s",clockUd,LE);
   fprintf(file,"  ClockDOI %d%s",clockDOI,LE);
   fprintf(file,"  ClockPDI %d%s",clockPDI,LE);
+  fprintf(file,"  DockingVel %.18f%s",dockingVel,LE);
+  fprintf(file,"  DockingLVel %.18f%s",dockingLVel,LE);
   fprintf(file,"  ModeAbo %d%s",mode_abo,LE);
   fprintf(file,"  ModeArm %d%s",mode_arm,LE);
   fprintf(file,"  ModeJet %d%s",mode_jet,LE);
