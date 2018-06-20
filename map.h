@@ -18,7 +18,7 @@ typedef struct {
 class Map {
   protected:
     FEATURE *features;
-    Int16    numFeatures;
+    Int32    numFeatures;
     char     levelH[182][362];
     char     levelM[62][62];
     Double   lastLongitude;
@@ -37,6 +37,8 @@ class Map {
     ~Map();
   Int32 Cell(Double degrees);
   Double Degrees(Int32 cell);
+  FEATURE* Features();
+  Int32    NumFeatures();
   Int32 CellH(Int32 longitude, Int32 latitude);
   Int32 CellM(Double longitude, Double latitude);
   char  Lurrain(Double longitude, Double Latitude);

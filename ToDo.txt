@@ -8,3 +8,4 @@
     instead of current transformation matrix method
   Fix looking down of axis displays to show relative to local ground instead of
     equator
+  Rotation thrusters need to consume RCS fuel

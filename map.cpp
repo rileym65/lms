@@ -67,6 +67,14 @@ void Map::loadFeatures(const char* filename) {
   fclose(file);
   }
 
+FEATURE* Map::Features() {
+  return features;
+  }
+
+Int32 Map::NumFeatures() {
+  return numFeatures;
+  }
+
 /* ****************************************************** */
 /* ***** Routines for generating high altitude maps ***** */
 /* ****************************************************** */
