@@ -124,8 +124,11 @@ MOBJS = \
 
 PLANNEROBJS = \
 	helpers.o \
+	lfsr.o \
+	map.o \
 	mission.o \
 	planner.o \
+	random.o \
 	terminal.o
 
 GCASMOBJS = \

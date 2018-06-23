@@ -61,6 +61,7 @@ void Mission::Load(FILE* file) {
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"}")) return;
     else if (startsWith(pline,"name ")) Name(nw(pline));
+    else if (startsWith(pline,"region ")) Region(nw(pline));
     else if (startsWith(pline,"targetlatitude ")) targetLatitude = atof(nw(pline));
     else if (startsWith(pline,"targetlongitude ")) targetLongitude = atof(nw(pline));
     }
@@ -70,6 +71,8 @@ void Mission::Save(FILE* file) {
   fprintf(file,"Mission {%s",LE);
   if (name != NULL) fprintf(file,"  Name %s%s",name,LE);
     else fprintf(file,"  Name None%s",LE);
+  if (region != NULL) fprintf(file,"  Region %s%s",region,LE);
+    else fprintf(file,"  Region None%s",LE);
   fprintf(file,"  TargetLatitude %f%s",targetLatitude,LE);
   fprintf(file,"  TargetLongitude %f%s",targetLongitude,LE);
   fprintf(file,"  }%s",LE);

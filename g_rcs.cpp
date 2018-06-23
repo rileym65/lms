@@ -61,7 +61,10 @@ void G_Rcs::Update() {
     GotoXY(x+9,y+0);
     if (i >= 100) Write(">10 ");
     else if (i <= -100) Write("<-10");
-    else sprintf(buffer,"%4.1f",i/10.0); Write(buffer);
+    else {
+      sprintf(buffer,"%4.1f",i/10.0);
+      Write(buffer);
+      }
     lastPitch = i;
     }
   i = (int)(vehicle->RollRate() * 10);
@@ -69,7 +72,10 @@ void G_Rcs::Update() {
     GotoXY(x+9,y+1);
     if (i >= 100) Write(">10 ");
     else if (i <= -100) Write("<-10");
-    else sprintf(buffer,"%4.1f",i/10.0); Write(buffer);
+    else {
+      sprintf(buffer,"%4.1f",i/10.0);
+      Write(buffer);
+      }
     lastRoll = i;
     }
   i = (int)(vehicle->YawRate() * 10);
@@ -77,7 +83,10 @@ void G_Rcs::Update() {
     GotoXY(x+9,y+2);
     if (i >= 100) Write(">10 ");
     else if (i <= -100) Write("<-10");
-    else sprintf(buffer,"%4.1f",i/10.0); Write(buffer);
+    else {
+      sprintf(buffer,"%4.1f",i/10.0);
+      Write(buffer);
+      }
     lastYaw = i;
     }
   if (lm->RcsRotThrottle() != lastRotationThrottle) {

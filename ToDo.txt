@@ -1,6 +1,5 @@
   Damage from hard landing
   Orient faces properly upon landing
-  MapGen tool
   Lunar topography
   Mission Planner
   Oxygen use from increased metabolic rate
