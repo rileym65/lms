@@ -35,6 +35,9 @@
 #define SEQ_KILL        30
 #define SEQ_ABORT       31
 #define SEQ_LIFTOFF     32
+#define SEQ_GETALSEP    33
+#define SEQ_PUTALSEP    34
+
 
 class Sequencer {
   protected:
@@ -59,6 +62,7 @@ class Sequencer {
     void  DropSample();
     void  EndEva();
     void  ExitLrv();
+    void  GetAlsep();
     void  GetFlag();
     void  GetLaser();
     void  Kill();
@@ -70,6 +74,7 @@ class Sequencer {
     void  PlantFlag();
     void  PlssOff();
     void  PlssOn();
+    void  PutAlsep();
     void  PutFlag();
     void  PutLaser();
     void  Rest();

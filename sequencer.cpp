@@ -122,6 +122,8 @@ void Sequencer::Complete() {
            case 'f': plss->Value(25.0); sampleType = S_SPECIAL; break;
            case '&': plss->Value(25.0); sampleType = S_SPECIAL; break;
            case '/': plss->Value(25.0); sampleType = S_SPECIAL; break;
+           case '"': plss->Value(25.0); sampleType = S_SPECIAL; break;
+           case '_': plss->Value(25.0); sampleType = S_SPECIAL; break;
            default : plss->Value(0.5); sampleType = 0; break;
            }
          if ((cell >= '0' && cell <= '9') ||
@@ -227,6 +229,15 @@ void Sequencer::Complete() {
          flagLatitude = plss->Latitude();
          flagLongitude = plss->Longitude();
          break;
+    case SEQ_GETALSEP:
+         plss->Carrying('A');
+         break;
+    case SEQ_PUTALSEP:
+         plss->Carrying(' ');
+         alsepSetup = -1;
+         alsepLatitude = plss->Latitude();
+         alsepLongitude = plss->Longitude();
+         break;
     case SEQ_GETLASER:
          plss->Carrying('L');
          break;
@@ -327,6 +338,12 @@ void Sequencer::InProgress() {
          break;
     case SEQ_SETUPLASER:
          metabolicRate += 0.125;
+         break;
+    case SEQ_GETALSEP:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_PUTALSEP:
+         metabolicRate += 0.104;
          break;
     }
   }
@@ -528,6 +545,18 @@ void Sequencer::SetupLaser() {
   time = 10 * 60;
   strcpy(message," LSRF->GND");
   function = SEQ_SETUPLASER;
+  }
+
+void Sequencer::GetAlsep() {
+  time = 40 * 60;
+  strcpy(message,"LSEP->PLSS");
+  function = SEQ_GETALSEP;
+  }
+
+void Sequencer::PutAlsep() {
+  time = 120 * 60;
+  strcpy(message,"ALSEP->GND");
+  function = SEQ_PUTALSEP;
   }
 
 void Sequencer::Kill() {

@@ -197,6 +197,10 @@ void MissionReport() {
   fprintf(file,"Surface Operations Score:%s",LE);
   fprintf(file,"  EVAs completed:       %d%s",ScoreEvaCompleted,LE);
   fprintf(file,"  Time Spent on EVA:    %d%s",ScoreEvaTime,LE);
+  fprintf(file,"  LRV Setup:            %d%s",ScoreEvaLrvSetup,LE);
+  fprintf(file,"  Laser Refl. Setup:    %d%s",ScoreEvaLaserSetup,LE);
+  fprintf(file,"  Flag Planted:         %d%s",ScoreEvaFlagSetup,LE);
+  fprintf(file,"  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
   fprintf(file,"  Samples Collected:    %d%s",ScoreEvaSamples,LE);
   fprintf(file,"  Sample Value:         %d%s",ScoreEvaValue,LE);
   fprintf(file,"  Distance from LM:     %d%s",ScoreEvaFarthest,LE);

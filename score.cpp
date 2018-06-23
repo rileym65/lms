@@ -30,9 +30,15 @@ void Score() {
   ScoreEvaValue = lm->Value() * 3;
   ScoreEvaFarthest = farthest / 100;
   ScoreEvaDriven = lrv->Driven() / 200.0;
+  ScoreEvaFlagSetup = (flagPlanted) ? 250 : 0;
+  ScoreEvaLrvSetup = (lrv->IsSetup()) ? 250 : 0;
+  ScoreEvaLaserSetup = (laserSetup) ? 250 : 0;
+  ScoreEvaAlsepSetup = (alsepSetup) ? 250 : 0;
   
   ScoreEvaTotal = ScoreEvaCompleted + ScoreEvaSamples + ScoreEvaTime +
                   ScoreEvaValue + ScoreEvaFarthest + ScoreEvaDriven;
+  ScoreEvaTotal += ScoreEvaFlagSetup + ScoreEvaLrvSetup +
+                   ScoreEvaLaserSetup + ScoreEvaAlsepSetup;
 
   ScoreDockTime = 1000 - (clockDk - 5400);
   if (ScoreDockTime < 0) ScoreDockTime = 0;
@@ -61,6 +67,10 @@ void Score() {
   printf("Surface Operations Score:%s",LE);
   printf("  EVAs completed:       %d%s",ScoreEvaCompleted,LE);
   printf("  Time Spent on EVA:    %d%s",ScoreEvaTime,LE);
+  printf("  LRV Setup:            %d%s",ScoreEvaLrvSetup,LE);
+  printf("  Laser Refl. Setup:    %d%s",ScoreEvaLaserSetup,LE);
+  printf("  Flag Planted:         %d%s",ScoreEvaFlagSetup,LE);
+  printf("  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
   printf("  Samples Collected:    %d%s",ScoreEvaSamples,LE);
   printf("  Sample Value:         %d%s",ScoreEvaValue,LE);
   printf("  Distance from LM:     %d%s",ScoreEvaFarthest,LE);

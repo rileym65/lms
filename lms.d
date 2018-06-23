@@ -280,6 +280,7 @@
 	|B       |-|Get sample Box from rover|
 	|L       |-|Get laser reflector from LM, setup laser reflector|
 	|l       |-|Put laser reflector back into LM|
+	|A       |-|Get ALSEP from LM, setup ALSEP
 [TE]
 [I-4]
 [=]

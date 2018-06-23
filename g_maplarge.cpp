@@ -82,6 +82,12 @@ void G_MapLarge::Update() {
       if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)
         data[cellX+9][cellY+20] = '_';
       }
+    if (alsepSetup) {
+      cellX = map->Cell(alsepLongitude) - lastCellX;
+      cellY = map->Cell(alsepLatitude) - lastCellY;
+      if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)
+        data[cellX+9][cellY+20] = '"';
+      }
     cellX = map->Cell(lm->Longitude()) - lastCellX;
     cellY = map->Cell(lm->Latitude()) - lastCellY;
     if (cellX >= - 9 && cellX <= 9 && cellY >= -20 && cellY <= 20)

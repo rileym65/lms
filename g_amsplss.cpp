@@ -55,6 +55,8 @@ void G_AmsPlss::Update() {
       case 'R':Write("^"); break;
       case 'B':Write("v"); break;
       case 'F':Write("F"); break;
+      case 'L':Write("L"); break;
+      case 'A':Write("A"); break;
       default :Write(" "); break;
       }
     }

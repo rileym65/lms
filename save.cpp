@@ -39,6 +39,9 @@ void save() {
   fprintf(file,"  LaserSetup %d%s",laserSetup,LE);
   fprintf(file,"  LaserLongitude %.18f%s",laserLongitude,LE);
   fprintf(file,"  LaserLatitude %.18f%s",laserLatitude,LE);
+  fprintf(file,"  AlsepSetup %d%s",alsepSetup,LE);
+  fprintf(file,"  AlsepLongitude %.18f%s",alsepLongitude,LE);
+  fprintf(file,"  AlsepLatitude %.18f%s",alsepLatitude,LE);
   fprintf(file,"  LongestEVA %d%s",longestEVA,LE);
   fprintf(file,"  Docked %d%s",docked,LE);
   fprintf(file,"  DockingRadarOn %d%s",dockingRadarOn,LE);

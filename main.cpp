@@ -94,6 +94,9 @@ Vector t;
   flagPlanted = 0;
   flagLongitude = 0;
   flagLatitude = 0;
+  alsepSetup = 0;
+  alsepLongitude = 0;
+  alsepLatitude = 0;
   landedHVel = 0;
   landedVVel = 0;
   evas[0].start = 0;
@@ -422,6 +425,9 @@ int main(int argc, char** argv) {
     if (laserSetup) 
       fprintf(file,"Feature Laser Refl.,    %10.4f, %10.4f, 0, _%s",
         laserLatitude, laserLongitude,LE);
+    if (alsepSetup) 
+      fprintf(file,"Feature ALSEP,    %10.4f, %10.4f, 0, \"%s",
+        alsepLatitude, alsepLongitude,LE);
     fclose(file);
     }
   delete(csm);

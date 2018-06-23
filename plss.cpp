@@ -161,6 +161,10 @@ void Plss::ProcessKey(Int32 key) {
       if (carrying == 'L' && lmPos >= 50) seq->SetupLaser();
       }
     if (key == 'l' && carrying == 'L' && lmPos <= 40) seq->PutLaser();
+    if (key == 'A') {
+      if (carrying == ' ' && lmPos <= 40 && alsepSetup == 0) seq->GetAlsep();
+      if (carrying == 'A' && lmPos >= 150) seq->PutAlsep();
+      }
     }
   if (key == KEY_INSERT) Throttle(0);
   if (key == '0') Throttle(0);

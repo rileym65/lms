@@ -66,6 +66,7 @@ void G_Plss::Update() {
       case 'B':Write("B"); break;
       case 'F':Write("F"); break;
       case 'L':Write("L"); break;
+      case 'A':Write("A"); break;
       default :Write("-"); break;
       }
     }
