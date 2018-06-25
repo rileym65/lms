@@ -10,9 +10,17 @@ typedef struct {
   Double longitude;
   Double latitude;
   Double diameter;
+  Double minLongitude;
+  Double maxLongitude;
+  Double minLatitude;
+  Double maxLatitude;
   char   symbol;
   Int32  cellX;
   Int32  cellY;
+  Int32  minCellX,minCellY;
+  Int32  maxCellX,maxCellY;
+  Double cellRadius;
+  Double radius;
   } FEATURE;
 
 class Map {

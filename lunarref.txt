@@ -1,3 +1,75 @@
+Feature Apollo 11,                0.6741,   23.4731, 0, 1
+Feature LRRR-11,                  0.6734,   23.4730, 0, _
+Feature Flag-11,                  0.6740,   23.4730, 0, f
+Feature Apollo 12,               -3.0128,  -23.4219, 0, 2
+Feature ALSEP-12,                -3.0098,  -23.4249, 0, "
+Feature Flag-12,                 -3.0130,  -23.4190, 0, f
+Feature Apollo 12 Ascent Debris, -3.9400,  -21.2000, 0, &
+Feature Apollo 13 S-IVB Debris,  -2.7500,  -27.8699, 0, &
+Feature Apollo 14,               -3.6458,  -17.4719, 0, 4
+Feature LRRR-14,                 -3.6441,  -17.4786, 0, _
+Feature ALSEP-14,                -3.6441,  -17.4776, 0, "
+Feature Flag-14,                 -3.6450,  -17.4710, 0, f
+Feature Apollo 14 S-IVB Debris,  -8.0900,  -26.0200, 0, &
+Feature Apollo 14 Ascent Debris, -3.3200,  -19.6700, 0, &
+Feature Apollo 15,               26.1323,    3.6333, 0, 5
+Feature LRRR-15,                 26.1334,    3.6299, 0, _
+Feature ALSEP-15,                26.1340,    3.6299, 0, "
+Feature Flag-15,                 26.1320,    3.6340, 0, f
+Feature Apollo 15 S-IVB Debris,  -1.1510,  -11.8100, 0, &
+Feature Apollo 15 Rover,         26.0800,    3.6600, 0, %
+Feature Apollo 15 Ascent Debris, 26.3600,    0.2500, 0, &
+Feature Apollo 16,               -8.9734,   15.4986, 0, 6
+Feature ALSEP-16,                -8.9759,   15.4986, 0, "
+Feature Flag-16,                 -8.9730,   15.4980, 0, f
+Feature Apollo 16 S-IVB Debris,   1.3000,  -23.8000, 0, &
+Feature Apollo 16 Rover,         -8.9700,   15.5100, 0, %
+Feature Apollo 17,               20.1911,   30.7723, 0, 7
+Feature ALSEP-17,                20.1923,   30.7655, 0, "
+Feature Flag-17,                 20.1880,   30.7740, 0, f
+Feature Apollo 17 S-IVB Debris,  -4.2100,  -12.3100, 0, &
+Feature Apollo 17 Rover,         20.1700,   30.7700, 0, %
+Feature Apollo 17 Ascent Debris, 19.9600,   30.5000, 0, &
+Feature Ranger 4 Debris,        -15.5000, -130.7000, 0, &
+Feature Ranger 6 Debris,          9.3580,   21.4800, 0, &
+Feature Ranger 7 Debris,        -10.6300,  -20.6000, 0, &
+Feature Ranger 8 Debris,          2.6380,   24.7870, 0, &
+Feature Ranger 9 Debris,        -12.8280,   -2.3870, 0, &
+Feature Lunar Orbiter 1 Debris,   6.7000,  162.0000, 0, &
+Feature Lunar Orbiter 2 Debris,   3.0000,  119.0000, 0, &
+Feature Lunar Orbiter 3 Debris,  14.3000,  -97.7000, 0, &
+Feature Lunar Orbiter 5 Debris,  -3.0000,  -83.0000, 0, &
+Feature Surveyor 1,              -2.4740,  -43.3390, 0, A
+Feature Surveyor 2 Debris,       -5.5000,  -12.0000, 0, &
+Feature Surveyor 3,              -3.0150,  -23.4180, 0, B
+Feature Surveyor 4 Debris,        0.4000,   -1.3300, 0, &
+Feature Surveyor 5,               1.4610,   23.1950, 0, C
+Feature Surveyor 6,               0.4900,   -1.4000, 0, D
+Feature Surveyor 7,             -40.8600,  -11.4700, 0, E
+Feature Luna 2 Debris,           29.1000,    0.0000, 0, &
+Feature Luna 5 Debris,            8.0000,  -23.0000, 0, &
+Feature Luna 7 Debris,            9.8000,  -47.8000, 0, &
+Feature Luna 8 Debris,            9.1000,  -63.3000, 0, &
+Feature Luna 9,                   7.0800,  -64.3700, 0, F
+Feature Luna 13,                 18.8700,  -62.0500, 0, G
+Feature Luna 16,                 -0.6800,   56.3000, 0, H
+Feature Luna 17,                 38.2800,  -35.0000, 0, I
+Feature Luna 18 Debris,           3.5700,   56.5000, 0, &
+Feature Luna 20,                  3.5700,   56.5000, 0, J
+Feature Luna 21,                 25.8500,   30.4500, 0, K
+Feature Luna 23,                 12.6669,   62.1511, 0, L
+Feature Luna 24,                 12.7145,   62.2129, 0, M
+Feature Hiten Debris,            -34.3000,   55.6000, 0, &
+Feature Lunar Prospector Debris, -87.7000,   42.3500, 0, &
+Feature SMART-1 Debris,          -34.2620,  -46.1930, 0, &
+Feature Chandrayaan-1 Debris,    -89.0000,  -30.0000, 0, &
+Feature SELENE (Okina) Debris,    28.2130, -159.0330, 0, &
+Feature Chang'e 1 Debris,         -1.5000,   52.3600, 0, &
+Feature SELENE (Kaguya) Debris,  -65.0000,   80.5000, 0, &
+Feature LCROSS Shepherding Spacecraft Debris, -84.7290,  -49.3600, 0, &
+Feature LCROSS Centaur Debris,   -84.6750,  -48.7250, 0, &
+Feature GRAIL Debris,             75.6200,  -26.6300, 0, &
+Feature Chang'e 3,                44.1200,  -19.5100, 0, N
 Montes Agricola,          29.06,  -54.07,  141, ^
 Montes Alpes,             48.36,   -0.58,  281, ^
 Montes Apenninus,         19.87,   -0.03,  401, ^
@@ -1585,63 +1657,63 @@ Crater Zsigmondy,         59.52, -105.03,    66.88, o
 Crater Zucchius,         -61.38,  -50.65,    63.18, o
 Crater Zupus,            -17.18,  -52.37,    35.29, o
 Crater Zwicky,           -16.17,  167.64,   126.06, o
-Mare Mare Anguis,         22.6,    67.7,    150, o
-Mare Australe,           -38.9,    93.0,    603, o
-Mare Cognitum,           -10.0,   -23.1,    376, o
-Mare Crisium,             17.0,    59.1,    555, o
-Mare Fecunditatis,        -7.8,    51.3,    909, o
-Mare Frigoris,            56.0,     1.4,   1596, o
-Mare Humboldtianum,       56.8,    81.5,    273, o
-Mare Humorum,            -24.4,   -38.6,    389, o
-Mare Imbrium,             32.8,   -15.6,   1123, o
-Mare Ingenii,            -33.7,   163.5,    318, o
-Mare Insularum,            7.5,   -30.9,    513, o
-Mare Marginis,            13.3,    86.1,    420, o
-Mare Moscoviense,         27.3,   147.9,    277, o
-Mare Nectaris,           -15.2,    35.5,    333, o
-Mare Nubium,             -21.3,   -16.6,    715, o
-Mare Orientale,          -19.4,   -92.8,    327, o
-Mare Serenitatis,         28.0,    17.5,    707, o
-Mare Smythii,              1.3,    87.5,    373, o
-Mare Spumans,              1.1,    65.1,    139, o
-Mare Tranquillitatis,      8.5,    31.4,    873, o
-Mare Undarum,              6.8,    68.4,    243, o
-Mare Vaporum,             13.3,     3.6,    245, o
-Mare Procellarum,         18.4,   -57.4,   2568, o
-Lacus Aestatis,          -15.0,   -69.0,     90, o
-Lacus Autumni,            -9.9,   -83.9,    183, o
-Lacus Bonitatis,          23.2,    43.7,     92, o
-Lacus Doloris,            17.1,     9.0,    110, o
-Lacus Excellentiae,      -35.4,   -44.0,    184, o
-Lacus Felicitatis,        19.0,     5.0,     90, o
-Lacus Gaudii,             16.2,    12.6,    113, o
-Lacus Hiemalis,           15.0,    14.0,     50, o
-Lacus Lenitatis,          14.0,    12.0,     80, o
-Lacus Luxuriae,           19.0,   176.0,     50, o
-Lacus Mortis,             45.0,    27.2,    151, o
-Lacus Oblivionis,        -21.0,  -168.0,     50, o
-Lacus Odii,               19.0,     7.0,     70, o
-Lacus Perseverantiae,      8.0,    62.0,     70, o
-Lacus Solitudinis,       -27.8,   104.3,    139, o
-Lacus Somniorum,          38.0,    29.2,    384, o
-Lacus Spei,               43.0,    65.0,     80, o
-Lacus Temporis,           45.9,    58.4,    117, o
-Lacus Timoris,           -38.8,   -27.3,    117, o
-Lacus Veris,             -16.5,   -86.1,    396, o
-Palus Epidemiarum,       -32.0,   -28.2,    286, o
-Palus Putredinis,         26.5,     0.4,    161, o
-Palus Somni,              14.1,    45.0,    143, o
-Sinus Aestuum,            10.9,    -8.8,    290, o
-Sinus Amoris,             18.1,    39.1,    130, o
-Sinus Asperitatis,        -3.8,    27.4,    206, o
-Sinus Concordiae,         10.8,    43.2,    142, o
-Sinus Fidei,              18.0,     2.0,     70, o
-Sinus Honoris,            11.7,    18.1,    109, o
-Sinus Iridum,             44.1,   -31.5,    236, o
-Sinus Lunicus,            31.8,    -1.4,    126, o
-Sinus Medii,               2.4,     1.7,    335, o
-Sinus Roris,              54.0,   -56.6,    202, o
-Sinus Successus,           0.9,    59.0,    132, o
+Mare Mare Anguis,         22.6,    67.7,    150, O
+Mare Australe,           -38.9,    93.0,    603, O
+Mare Cognitum,           -10.0,   -23.1,    376, O
+Mare Crisium,             17.0,    59.1,    555, O
+Mare Fecunditatis,        -7.8,    51.3,    909, O
+Mare Frigoris,            56.0,     1.4,   1596, O
+Mare Humboldtianum,       56.8,    81.5,    273, O
+Mare Humorum,            -24.4,   -38.6,    389, O
+Mare Imbrium,             32.8,   -15.6,   1123, O
+Mare Ingenii,            -33.7,   163.5,    318, O
+Mare Insularum,            7.5,   -30.9,    513, O
+Mare Marginis,            13.3,    86.1,    420, O
+Mare Moscoviense,         27.3,   147.9,    277, O
+Mare Nectaris,           -15.2,    35.5,    333, O
+Mare Nubium,             -21.3,   -16.6,    715, O
+Mare Orientale,          -19.4,   -92.8,    327, O
+Mare Serenitatis,         28.0,    17.5,    707, O
+Mare Smythii,              1.3,    87.5,    373, O
+Mare Spumans,              1.1,    65.1,    139, O
+Mare Tranquillitatis,      8.5,    31.4,    873, O
+Mare Undarum,              6.8,    68.4,    243, O
+Mare Vaporum,             13.3,     3.6,    245, O
+Mare Procellarum,         18.4,   -57.4,   2568, O
+Lacus Aestatis,          -15.0,   -69.0,     90, O
+Lacus Autumni,            -9.9,   -83.9,    183, O
+Lacus Bonitatis,          23.2,    43.7,     92, O
+Lacus Doloris,            17.1,     9.0,    110, O
+Lacus Excellentiae,      -35.4,   -44.0,    184, O
+Lacus Felicitatis,        19.0,     5.0,     90, O
+Lacus Gaudii,             16.2,    12.6,    113, O
+Lacus Hiemalis,           15.0,    14.0,     50, O
+Lacus Lenitatis,          14.0,    12.0,     80, O
+Lacus Luxuriae,           19.0,   176.0,     50, O
+Lacus Mortis,             45.0,    27.2,    151, O
+Lacus Oblivionis,        -21.0,  -168.0,     50, O
+Lacus Odii,               19.0,     7.0,     70, O
+Lacus Perseverantiae,      8.0,    62.0,     70, O
+Lacus Solitudinis,       -27.8,   104.3,    139, O
+Lacus Somniorum,          38.0,    29.2,    384, O
+Lacus Spei,               43.0,    65.0,     80, O
+Lacus Temporis,           45.9,    58.4,    117, O
+Lacus Timoris,           -38.8,   -27.3,    117, O
+Lacus Veris,             -16.5,   -86.1,    396, O
+Palus Epidemiarum,       -32.0,   -28.2,    286, O
+Palus Putredinis,         26.5,     0.4,    161, O
+Palus Somni,              14.1,    45.0,    143, O
+Sinus Aestuum,            10.9,    -8.8,    290, O
+Sinus Amoris,             18.1,    39.1,    130, O
+Sinus Asperitatis,        -3.8,    27.4,    206, O
+Sinus Concordiae,         10.8,    43.2,    142, O
+Sinus Fidei,              18.0,     2.0,     70, O
+Sinus Honoris,            11.7,    18.1,    109, O
+Sinus Iridum,             44.1,   -31.5,    236, O
+Sinus Lunicus,            31.8,    -1.4,    126, O
+Sinus Medii,               2.4,     1.7,    335, O
+Sinus Roris,              54.0,   -56.6,    202, O
+Sinus Successus,           0.9,    59.0,    132, O
 Mons Agnes,               18.66,    5.34, 0.65, ^
 Mons Ampère,              19.32,   -3.71,   30, ^
 Mons André,                5.18,  120.56,   10, ^
@@ -1684,15 +1756,15 @@ Vallis Rheita,           -42.5,    51.5,   445, u
 Vallis Schrödinger,      -67.0,   105.0,   310, u
 Vallis Schröteri,         26.2,   -50.8,   168, u
 Vallis Snellius,         -31.1,    56.0,   592, u
-Promontorium Agarum,      14.0,    66.0,    70, o
-Promontorium Agassiz,     42.0,     1.8,    20, o
-Promontorium Archerusia,  16.7,    22.0,    10, o
-Promontorium Deville,     43.2,     1.0,    20, o
-Promontorium Fresnel,     29.0,     4.7,    20, o
-Promontorium Heraclides,  40.3,   -33.2,    50, o
-Promontorium Kelvin,     -27.0,   -33.0,    50, o
-Promontorium Laplace,     46.0,   -25.8,    50, o
-Promontorium Taenarium,  -19.0,    -8.0,    70, o
+Promontorium Agarum,      14.0,    66.0,    70, O
+Promontorium Agassiz,     42.0,     1.8,    20, O
+Promontorium Archerusia,  16.7,    22.0,    10, O
+Promontorium Deville,     43.2,     1.0,    20, O
+Promontorium Fresnel,     29.0,     4.7,    20, O
+Promontorium Heraclides,  40.3,   -33.2,    50, O
+Promontorium Kelvin,     -27.0,   -33.0,    50, O
+Promontorium Laplace,     46.0,   -25.8,    50, O
+Promontorium Taenarium,  -19.0,    -8.0,    70, O
 Rima Agatharchides,      -20.0,   -28.0,    50, /
 Rima Agricola,            29.0,   -53.0,   110, /
 Rima Archytas,           -53.0,     3.0,    90, /
@@ -1798,75 +1870,3 @@ Rimae Theaetetus,         33.0,     6.0,    50, /
 Rimae Triesnecker,         4.3,     4.6,   215, /
 Rimae Vasco da Gama,      10.0,    82.0,    60, /
 Rimae Zupus,             -15.0,   -53.0,   120, /
-Feature Apollo 11,                0.6741,   23.4731, 0, 1
-Feature LRRR-11,                  0.6734,   23.4730, 0, _
-Feature Flag-11,                  0.6740,   23.4730, 0, f
-Feature Apollo 12,               -3.0128,  -23.4219, 0, 2
-Feature ALSEP-12,                -3.0098,  -23.4249, 0, "
-Feature Flag-12,                 -3.0130,  -23.4190, 0, f
-Feature Apollo 12 Ascent Debris, -3.9400,  -21.2000, 0, &
-Feature Apollo 13 S-IVB Debris,  -2.7500,  -27.8699, 0, &
-Feature Apollo 14,               -3.6458,  -17.4719, 0, 4
-Feature LRRR-14,                 -3.6441,  -17.4786, 0, _
-Feature ALSEP-14,                -3.6441,  -17.4776, 0, "
-Feature Flag-14,                 -3.6450,  -17.4710, 0, f
-Feature Apollo 14 S-IVB Debris,  -8.0900,  -26.0200, 0, &
-Feature Apollo 14 Ascent Debris, -3.3200,  -19.6700, 0, &
-Feature Apollo 15,               26.1323,    3.6333, 0, 5
-Feature LRRR-15,                 26.1334,    3.6299, 0, _
-Feature ALSEP-15,                26.1340,    3.6299, 0, "
-Feature Flag-15,                 26.1320,    3.6340, 0, f
-Feature Apollo 15 S-IVB Debris,  -1.1510,  -11.8100, 0, &
-Feature Apollo 15 Rover,         26.0800,    3.6600, 0, %
-Feature Apollo 15 Ascent Debris, 26.3600,    0.2500, 0, &
-Feature Apollo 16,               -8.9734,   15.4986, 0, 6
-Feature ALSEP-16,                -8.9759,   15.4986, 0, "
-Feature Flag-16,                 -8.9730,   15.4980, 0, f
-Feature Apollo 16 S-IVB Debris,   1.3000,  -23.8000, 0, &
-Feature Apollo 16 Rover,         -8.9700,   15.5100, 0, %
-Feature Apollo 17,               20.1911,   30.7723, 0, 7
-Feature ALSEP-17,                20.1923,   30.7655, 0, "
-Feature Flag-17,                 20.1880,   30.7740, 0, f
-Feature Apollo 17 S-IVB Debris,  -4.2100,  -12.3100, 0, &
-Feature Apollo 17 Rover,         20.1700,   30.7700, 0, %
-Feature Apollo 17 Ascent Debris, 19.9600,   30.5000, 0, &
-Feature Ranger 4 Debris,        -15.5000, -130.7000, 0, &
-Feature Ranger 6 Debris,          9.3580,   21.4800, 0, &
-Feature Ranger 7 Debris,        -10.6300,  -20.6000, 0, &
-Feature Ranger 8 Debris,          2.6380,   24.7870, 0, &
-Feature Ranger 9 Debris,        -12.8280,   -2.3870, 0, &
-Feature Lunar Orbiter 1 Debris,   6.7000,  162.0000, 0, &
-Feature Lunar Orbiter 2 Debris,   3.0000,  119.0000, 0, &
-Feature Lunar Orbiter 3 Debris,  14.3000,  -97.7000, 0, &
-Feature Lunar Orbiter 5 Debris,  -3.0000,  -83.0000, 0, &
-Feature Surveyor 1,              -2.4740,  -43.3390, 0, A
-Feature Surveyor 2 Debris,       -5.5000,  -12.0000, 0, &
-Feature Surveyor 3,              -3.0150,  -23.4180, 0, B
-Feature Surveyor 4 Debris,        0.4000,   -1.3300, 0, &
-Feature Surveyor 5,               1.4610,   23.1950, 0, C
-Feature Surveyor 6,               0.4900,   -1.4000, 0, D
-Feature Surveyor 7,             -40.8600,  -11.4700, 0, E
-Feature Luna 2 Debris,           29.1000,    0.0000, 0, &
-Feature Luna 5 Debris,            8.0000,  -23.0000, 0, &
-Feature Luna 7 Debris,            9.8000,  -47.8000, 0, &
-Feature Luna 8 Debris,            9.1000,  -63.3000, 0, &
-Feature Luna 9,                   7.0800,  -64.3700, 0, F
-Feature Luna 13,                 18.8700,  -62.0500, 0, G
-Feature Luna 16,                 -0.6800,   56.3000, 0, H
-Feature Luna 17,                 38.2800,  -35.0000, 0, I
-Feature Luna 18 Debris,           3.5700,   56.5000, 0, &
-Feature Luna 20,                  3.5700,   56.5000, 0, J
-Feature Luna 21,                 25.8500,   30.4500, 0, K
-Feature Luna 23,                 12.6669,   62.1511, 0, L
-Feature Luna 24,                 12.7145,   62.2129, 0, M
-Feature Hiten Debris,            -34.3000,   55.6000, 0, &
-Feature Lunar Prospector Debris, -87.7000,   42.3500, 0, &
-Feature SMART-1 Debris,          -34.2620,  -46.1930, 0, &
-Feature Chandrayaan-1 Debris,    -89.0000,  -30.0000, 0, &
-Feature SELENE (Okina) Debris,    28.2130, -159.0330, 0, &
-Feature Chang'e 1 Debris,         -1.5000,   52.3600, 0, &
-Feature SELENE (Kaguya) Debris,  -65.0000,   80.5000, 0, &
-Feature LCROSS Shepherding Spacecraft Debris, -84.7290,  -49.3600, 0, &
-Feature LCROSS Centaur Debris,   -84.6750,  -48.7250, 0, &
-Feature GRAIL Debris,             75.6200,  -26.6300, 0, &
-Feature Chang'e 3,                44.1200,  -19.5100, 0, N

@@ -40,6 +40,7 @@ void Map::loadFeatures(const char* filename) {
   Double lng;
   Double lat;
   Double diam;
+  Double rad;
   Int32  cellX;
   Int32  cellY;
   char   symbol[64];
@@ -56,6 +57,7 @@ void Map::loadFeatures(const char* filename) {
       WriteLn("Could not allocate needed memory. aborting");
       exit(1);
       }
+    rad = (diam * 1000) / 2;
     strcpy(features[numFeatures-1].name, name);
     features[numFeatures-1].longitude = lng;
     features[numFeatures-1].latitude = lat;
@@ -63,6 +65,17 @@ void Map::loadFeatures(const char* filename) {
     features[numFeatures-1].symbol = symbol[0];
     features[numFeatures-1].cellX = cellX;
     features[numFeatures-1].cellY = cellY;
+    features[numFeatures-1].minLongitude = lng - (rad / METERS) - 0.5;
+    features[numFeatures-1].maxLongitude = lng + (rad / METERS) + 0.5;
+    features[numFeatures-1].minLatitude = lat - (rad / METERS) - 0.5;
+    features[numFeatures-1].maxLatitude = lat + (rad / METERS) + 0.5;
+    features[numFeatures-1].minCellX = Cell(features[numFeatures-1].minLongitude);
+    features[numFeatures-1].maxCellX = Cell(features[numFeatures-1].maxLongitude);
+    features[numFeatures-1].minCellY = Cell(features[numFeatures-1].minLatitude);
+    features[numFeatures-1].maxCellY = Cell(features[numFeatures-1].maxLatitude);
+    features[numFeatures-1].cellRadius = 
+      (features[numFeatures-1].maxCellX - cellX) * (features[numFeatures-1].maxCellX - cellX);
+    features[numFeatures-1].radius = sqrt(rad * rad);
     }
   fclose(file);
   }
@@ -384,12 +397,27 @@ Int32 Map::CellH(Int32 longitude,Int32 latitude) {
 char Map::Lurrain(Double longitude, Double latitude) {
   Int32 i;
   Int32 cellX, cellY;
+  Double dist;
+  Double dx,dy;
   cellX = Cell(longitude);
   cellY = Cell(latitude);
   char ltype;
-  for (i=0; i<numFeatures; i++)
+  for (i=0; i<numFeatures; i++) {
     if (features[i].cellX == cellX && features[i].cellY == cellY)
       return features[i].symbol;
+    if (features[i].symbol == 'o' &&
+        longitude >= features[i].minLongitude && longitude <= features[i].maxLongitude &&
+        latitude >= features[i].minLatitude && latitude <= features[i].maxLatitude) {
+
+      dx = (longitude - features[i].longitude) * METERS;
+      dy = (latitude - features[i].latitude) * METERS;
+      dist = sqrt(dx*dx + dy*dy);
+      if (dist >= features[i].radius-25 && dist <= features[i].radius+25)
+        return '^';
+
+
+      }
+    }
   i = (cellX & 0x7fffffff) ^ (cellY << 15);
   rng.Seed(i);
   i = rng.Next(1000);
