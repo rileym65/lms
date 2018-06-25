@@ -41,6 +41,7 @@ void Map::loadFeatures(const char* filename) {
   Double lat;
   Double diam;
   Double rad;
+  Double width;
   Int32  cellX;
   Int32  cellY;
   char   symbol[64];
@@ -75,7 +76,11 @@ void Map::loadFeatures(const char* filename) {
     features[numFeatures-1].maxCellY = Cell(features[numFeatures-1].maxLatitude);
     features[numFeatures-1].cellRadius = 
       (features[numFeatures-1].maxCellX - cellX) * (features[numFeatures-1].maxCellX - cellX);
-    features[numFeatures-1].radius = sqrt(rad * rad);
+    features[numFeatures-1].radius = rad;
+    width = 25;
+    if (rad < 200) width = 7;
+    features[numFeatures-1].rad1 = (rad-width) * (rad-width);
+    features[numFeatures-1].rad2 = (rad+width) * (rad+width);
     }
   fclose(file);
   }
@@ -408,14 +413,11 @@ char Map::Lurrain(Double longitude, Double latitude) {
     if (features[i].symbol == 'o' &&
         longitude >= features[i].minLongitude && longitude <= features[i].maxLongitude &&
         latitude >= features[i].minLatitude && latitude <= features[i].maxLatitude) {
-
       dx = (longitude - features[i].longitude) * METERS;
       dy = (latitude - features[i].latitude) * METERS;
-      dist = sqrt(dx*dx + dy*dy);
-      if (dist >= features[i].radius-25 && dist <= features[i].radius+25)
+      dist = dx*dx + dy*dy;
+      if (dist >= features[i].rad1 && dist <= features[i].rad2)
         return '^';
-
-
       }
     }
   i = (cellX & 0x7fffffff) ^ (cellY << 15);

@@ -21,6 +21,8 @@ typedef struct {
   Int32  maxCellX,maxCellY;
   Double cellRadius;
   Double radius;
+  Double rad1;
+  Double rad2;
   } FEATURE;
 
 class Map {
