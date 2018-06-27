@@ -13,6 +13,7 @@ class LunarModule : public Vehicle {
     Double rcsFuel;
     Int16  rock;
     Double value;
+    Double rcsRotationFuelUsage();
   public:
     LunarModule();
     virtual ~LunarModule();

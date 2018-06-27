@@ -273,7 +273,17 @@ Double LunarModule::Mass() {
   return ret;
   }
 
+Double LunarModule::rcsRotationFuelUsage() {
+  switch (rcsRotThrottle) {
+    case 10: return 0.01;
+    case 50: return 0.05;
+    case 100: return 0.10;
+    }
+  return 0.01;
+  }
+
 void LunarModule::ProcessKey(Int32 key) {
+  Double rf;
   if (key == 'M') {
     if (docked) seq->MoveCsm();
     if (landed && spaceSuitOn && plssOn && !cabinPressurized)
@@ -391,13 +401,55 @@ void LunarModule::ProcessKey(Int32 key) {
       if (mode_arm != 0) mode_arm = 0;
       else if (!descentJettisoned) mode_arm = 0xff;
       }
-    if (key == KEY_KP_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
-    if (key == KEY_HOME) RollRate(RollRate()+(rcsRotThrottle / 100.0));
-    if (key == KEY_PGUP) RollRate(RollRate()-(rcsRotThrottle / 100.0));
-    if (key == KEY_UP_ARROW) PitchRate(PitchRate()+(rcsRotThrottle / 100.0));
-    if (key == KEY_DOWN_ARROW) PitchRate(PitchRate()-(rcsRotThrottle / 100.0));
-    if (key == KEY_RIGHT_ARROW) YawRate(YawRate()+(rcsRotThrottle / 100.0));
-    if (key == KEY_LEFT_ARROW) YawRate(YawRate()-(rcsRotThrottle / 100.0));
+    if (key == KEY_KP_HOME) {
+      rf = rcsRotationFuelUsage();
+      if (rcsFuel >= rf) {
+        RollRate(RollRate()+(rcsRotThrottle / 100.0));
+        rcsFuel -= rf;
+        }
+      }
+    if (key == KEY_HOME) {
+      rf = rcsRotationFuelUsage();
+      if (rcsFuel >= rf) {
+        RollRate(RollRate()+(rcsRotThrottle / 100.0));
+        rcsFuel -= rf;
+        }
+      }
+    if (key == KEY_PGUP) {
+      rf = rcsRotationFuelUsage();
+      if (rcsFuel >= rf) {
+        RollRate(RollRate()-(rcsRotThrottle / 100.0));
+        rcsFuel -= rf;
+        }
+      }
+    if (key == KEY_UP_ARROW) {
+      rf = rcsRotationFuelUsage();
+      if (rcsFuel >= rf) {
+        PitchRate(PitchRate()+(rcsRotThrottle / 100.0));
+        rcsFuel -= rf;
+        }
+      }
+    if (key == KEY_DOWN_ARROW) {
+      rf = rcsRotationFuelUsage();
+      if (rcsFuel >= rf) {
+        PitchRate(PitchRate()-(rcsRotThrottle / 100.0));
+        rcsFuel -= rf;
+        }
+      }
+    if (key == KEY_RIGHT_ARROW) {
+      rf = rcsRotationFuelUsage();
+      if (rcsFuel >= rf) {
+        YawRate(YawRate()+(rcsRotThrottle / 100.0));
+        rcsFuel -= rf;
+        }
+      }
+    if (key == KEY_LEFT_ARROW) {
+      rf = rcsRotationFuelUsage();
+      if (rcsFuel >= rf) {
+        YawRate(YawRate()-(rcsRotThrottle / 100.0));
+        rcsFuel -= rf;
+        }
+      }
     if (Throttle() > 0 && !descentJettisoned) {
       if (key == KEY_PGDN) Throttle(Throttle()+2);
       if (key == KEY_END) Throttle(Throttle()-2);

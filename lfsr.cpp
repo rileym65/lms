@@ -34,7 +34,6 @@ void Lfsr::Shift(int count) {
     bits = (bits & 0x0003) ^ ((bits >>  2) & 0x0003);
     bits = (bits & 0x0001) ^ ((bits >>  1) & 0x0001);
     bits ^= 1;
-    if (seed == 0) bits = 1;
     seed >>= 1;
     seed &= 0x7fffffff;
     if (bits != 0) seed |= 0x80000000;

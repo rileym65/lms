@@ -426,7 +426,7 @@ int main(int argc, char** argv) {
       fprintf(file,"Feature Laser Refl.,    %10.4f, %10.4f, 0, _%s",
         laserLatitude, laserLongitude,LE);
     if (alsepSetup) 
-      fprintf(file,"Feature ALSEP,    %10.4f, %10.4f, 0, \"%s",
+      fprintf(file,"Feature ALSEP,          %10.4f, %10.4f, 0, \"%s",
         alsepLatitude, alsepLongitude,LE);
     fclose(file);
     }
