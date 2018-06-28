@@ -432,6 +432,7 @@ int main(int argc, char** argv) {
     fprintf(file,"Feature Wreckage,       %10.4f, %10.4f, 0, &%s",
       lm->Latitude(), lm->Longitude(),LE);
     fclose(file);
+    unlink("lms.sav");
     }
   if (endReason == END_MISSION) {
     Score();
@@ -452,6 +453,7 @@ int main(int argc, char** argv) {
       fprintf(file,"Feature ALSEP,          %10.4f, %10.4f, 0, \"%s",
         alsepLatitude, alsepLongitude,LE);
     fclose(file);
+    unlink("lms.sav");
     }
   delete(csm);
   delete(lm);
