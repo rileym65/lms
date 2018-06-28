@@ -21,6 +21,8 @@ class Gauge {
     virtual void Display();
     virtual void Update();
     virtual void ProcessKey(Int32 key);
+    virtual void Load(FILE* file,char* firstLine);
+    virtual void Save(FILE* file);
   };
     
 #endif

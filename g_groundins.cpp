@@ -61,7 +61,7 @@ void G_GroundIns::Update() {
     targetLng = mission->Secondary3Longitude();
     targetLat = mission->Secondary3Latitude();
     }
-  else if (mode == 3) {
+  else if (mode == 8) {
     targetLng = lrv->Longitude();
     targetLat = lrv->Latitude();
     }
@@ -106,5 +106,26 @@ void G_GroundIns::ProcessKey(Int32 key) {
   if (key == '6') mode = 6;
   if (key == '7') mode = 7;
   if (key == '8') mode = 8;
+  }
+
+void G_GroundIns::Load(FILE* file,char* firstLine) {
+  char* pline;
+  if (!startsWith(firstLine,"groundins ")) return;
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"mode ")) mode = atoi(nw(pline));
+    else {
+      Write("Unknown line found in save file: ");
+      WriteLn(pline);
+      exit(1);
+      }
+    }
+
+  }
+
+void G_GroundIns::Save(FILE* file) {
+  fprintf(file,"    GroundIns {%s",LE);
+  fprintf(file,"      Mode %d%s",mode,LE);
+  fprintf(file,"      }%s",LE);
   }
 

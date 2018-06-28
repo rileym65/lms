@@ -25,6 +25,8 @@ class Panel {
     void Update();
     void Reset();
     virtual void   ProcessKey(Int32 key);
+    virtual void      Save(FILE* file);
+    virtual void      Load(FILE* file);
   };
 
 #endif

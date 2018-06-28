@@ -37,3 +37,8 @@ void Gauge::Update() {
 void Gauge::ProcessKey(Int32 key) {
   }
 
+void Gauge::Load(FILE* file,char* firstLine) {
+  }
+
+void Gauge::Save(FILE* file) {
+  }

@@ -441,6 +441,7 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"rcsfbmode ")) rcsFbMode = atoi(nw(pline));
     else if (startsWith(pline,"rcslrmode ")) rcsLrMode = atoi(nw(pline));
     else if (startsWith(pline,"rcsudmode ")) rcsUdMode = atoi(nw(pline));
+    else if (startsWith(pline,"panel {")) panel->Load(file);
     else if (SubLoad(pline) == 0) {
       Write("Unknown line found in save file: ");
       WriteLn(pline);
@@ -491,6 +492,7 @@ void Vehicle::Save(FILE* file) {
     orientation.Cell(0,0), orientation.Cell(0,1), orientation.Cell(0,2),
     orientation.Cell(1,0), orientation.Cell(1,1), orientation.Cell(1,2),
     orientation.Cell(2,0), orientation.Cell(2,1), orientation.Cell(2,2),LE);
+  if (panel != NULL) panel->Save(file);
   }
 
 void Vehicle::SetupPanel() {

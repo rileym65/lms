@@ -60,8 +60,7 @@ void G_MapLarge::Update() {
   if (cellX != lastCellX || cellY != lastCellY) {
     for (j=0; j<19; j++)
       for (i=0; i<41; i++)
-        data[j][i] = map->Lurrain(lng+(j-9)*MAPCELL,lat+(i-20)*MAPCELL);
-//        data[j][i] = map->Lurrain(cellX+j-9,cellY+i-20);
+        data[j][i] = map->Lurrain(lng+((Double)j-9.0)*MAPCELL,lat+((Double)i-20.0)*MAPCELL);
     lastCellX = cellX;
     lastCellY = cellY;
     if (lrv->IsSetup()) {

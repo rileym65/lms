@@ -317,3 +317,21 @@ void Panel::ProcessKey(Int32 key) {
     gauges[i]->ProcessKey(key);
   }
 
+void Panel::Save(FILE* file) {
+  Int32 i;
+  fprintf(file,"  Panel {%s",LE);
+  for (i=0; i<numGauges; i++)
+    gauges[i]->Save(file);
+  fprintf(file,"    }%s",LE);
+  }
+
+void Panel::Load(FILE* file) {
+  Int32 i;
+  char* pline;
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    for (i=0; i<numGauges; i++)
+      gauges[i]->Load(file, pline);
+    }
+  }
+
