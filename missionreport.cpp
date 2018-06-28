@@ -25,7 +25,9 @@ void MissionReport() {
     file = fopen(filename,"r");
     }
   file = fopen(filename,"w");
-  fprintf(file,"Mission: %s%s%s",mission->Name(),LE,LE);
+  fprintf(file,"Mission    : %s%s",mission->Name(),LE);
+  fprintf(file,"Description: %s%s",mission->Description(),LE);
+  fprintf(file,"Region     : %s%s%s",mission->Region(),LE,LE);
   fprintf(file,"Mission Time Line:%s",LE);
   fprintf(file,"  Undock UTC    : %s%s",ClockToString(buffer,clockUd),LE);
   if (clockDOI != 0)

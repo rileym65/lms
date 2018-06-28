@@ -6,6 +6,7 @@
 
 Mission::Mission() {
   name = NULL;
+  description = NULL;
   region = NULL;
   targetLongitude = -99999;
   targetLatitude = -99999;
@@ -14,6 +15,17 @@ Mission::Mission() {
 Mission::~Mission() {
   if (name != NULL) free(name);
   if (region != NULL) free(region);
+  }
+
+char* Mission::Description() {
+  return description;
+  }
+
+char* Mission::Description(char* s) {
+  if (description != NULL) free(description);
+  description = (char*)malloc(strlen(s) + 1);
+  strcpy(description, s);
+  return description;
   }
 
 char* Mission::Name() {
@@ -62,6 +74,7 @@ void Mission::Load(FILE* file) {
     if (startsWith(pline,"}")) return;
     else if (startsWith(pline,"name ")) Name(nw(pline));
     else if (startsWith(pline,"region ")) Region(nw(pline));
+    else if (startsWith(pline,"description ")) Description(nw(pline));
     else if (startsWith(pline,"targetlatitude ")) targetLatitude = atof(nw(pline));
     else if (startsWith(pline,"targetlongitude ")) targetLongitude = atof(nw(pline));
     }
@@ -71,6 +84,8 @@ void Mission::Save(FILE* file) {
   fprintf(file,"Mission {%s",LE);
   if (name != NULL) fprintf(file,"  Name %s%s",name,LE);
     else fprintf(file,"  Name None%s",LE);
+  if (description != NULL) fprintf(file,"  Description %s%s",description,LE);
+    else fprintf(file,"  Description None%s",LE);
   if (region != NULL) fprintf(file,"  Region %s%s",region,LE);
     else fprintf(file,"  Region None%s",LE);
   fprintf(file,"  TargetLatitude %f%s",targetLatitude,LE);

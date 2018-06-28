@@ -42,6 +42,7 @@ extern int  OpenTerminal();
 extern void ShowCursor();
 extern void Write(const char* message);
 extern void WriteLn(const char* message);
+extern void WriteCh(char chr);
 
 #endif
 

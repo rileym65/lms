@@ -182,6 +182,10 @@ void WriteLn(const char* message) {
   printf("%s%s",message,LE);
   }
 
+void WriteCh(char chr) {
+  printf("%c",chr);
+  }
+
 int OpenTerminal() {
   struct termios terminal;
   esc_mode = 0;

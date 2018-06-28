@@ -6,12 +6,15 @@
 class Mission {
   protected:
     char   *name;
+    char   *description;
     char   *region;
     Double  targetLongitude;
     Double  targetLatitude;
   public:
     Mission();
     ~Mission();
+    char*  Description();
+    char*  Description(char* s);
     char*  Name();
     char*  Name(char* s);
     char*  Region();

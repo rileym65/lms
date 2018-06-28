@@ -262,9 +262,12 @@ void test() {
 int main(int argc, char** argv) {
   int i;
   int key;
+  int missionPos;
+  Boolean newGame;;
   char buffer[128];
   Double d;
   FILE* file;
+  newGame = false;
   simSpeed = 100000;
   WriteLn(""); WriteLn(""); WriteLn(""); WriteLn("");
   WriteLn(TITLE);
@@ -278,8 +281,28 @@ int main(int argc, char** argv) {
   seq = new Sequencer();
   map = new Map();
   mission = new Mission();
+  missionPos = -1;
+  for (i=1; i<argc; i++) {
+    if (strcmp(argv[i],"-n") == 0) newGame = true;
+    else if (argv[i][0] != '-') missionPos = i;
+    }
   setup();
-  if (load((char*)"lms.sav") == 0) {
+  if (missionPos > 0) {
+    strcpy(buffer,argv[missionPos]);
+    strcat(buffer,".msn");
+    file = fopen(buffer,"r");
+    if (file == NULL) {
+      printf("\n\n");
+      printf("Mission profile \"%s\" could not be found\n\n",buffer);
+      exit(1);
+      }
+    mission->Load(file);
+    fclose(file);
+    }
+  else if (!newGame) {
+    if (load((char*)"lms.sav") == 0) newGame = true;
+    }
+  if (newGame) {
     d = -9999.99;
     while (d <-90 || d > 90) {
       Write("Target latitude: ");
@@ -296,7 +319,7 @@ int main(int argc, char** argv) {
     mission->TargetLongitude(d);
     Write("Mission Title: ");
     fgets(buffer,128,stdin);
-    for (i=0; i<strlen(buffer); i++)
+    for (i=0; (UInt32)i<strlen(buffer); i++)
       if (buffer[i] >0 && buffer[i] < 32) buffer[i] = 0;
     mission->Name(buffer);
     }
