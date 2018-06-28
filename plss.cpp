@@ -183,6 +183,6 @@ void Plss::ProcessKey(Int32 key) {
   if (key == KEY_KP_END) Throttle(Throttle()-10);
   if (key == KEY_RIGHT_ARROW) TurnRate(TurnRate()+15);
   if (key == KEY_LEFT_ARROW) TurnRate(TurnRate()-15);
-
+  panel->ProcessKey(key);
   }
 

@@ -186,5 +186,6 @@ void Lrv::ProcessKey(Int32 key) {
   if (key == KEY_F9) Throttle(90);
   if (key == KEY_F10) Throttle(100);
   if (key == 'M' && throttle == 0) seq->ExitLrv();
+  panel->ProcessKey(key);
   }
 
