@@ -169,6 +169,7 @@
 	|template.txt|Template for helping with panel designs.|
 	|lunarref.txt|Lunar feature reference.|
 	|userref.txt |File containing objects left on the moon.|
+	|*.msn       |Mission profiles  |
 [TE]
 [I-4]
 [=]

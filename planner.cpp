@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <math.h>
 #include "terminal.h"
 #include "types.h"
 #include "mission.h"
 #include "map.h"
 
-#define CELL 0.000329608
+#define GROUND 1738300
+#define METERS ((GROUND*2*M_PI) / 360.0)
+#define CELL   (1.0/(METERS/10.0))
 
 Mission* mission;
 
@@ -59,8 +62,6 @@ void LoadCategories() {
         flag = true;
         }
     }
-for (i=0; i<numCategories; i++)
-printf("%s\n",categories[i]);
   }
 
 void Flush() {
@@ -282,8 +283,36 @@ void Menu() {
   GotoXY(5,6); Write("4. Landing Site   :");
   if (mission->TargetLatitude() < -180) WriteLn("Not Defined");
     else {
-      sprintf(buffer,"Latitude: %7.2f, Longitude: %7.2f",
+      sprintf(buffer,"Latitude: %9.4f, Longitude: %9.4f",
          mission->TargetLatitude(), mission->TargetLongitude());
+      WriteLn(buffer);
+      }
+  GotoXY(5,7); Write("5. Primary Site   :");
+  if (mission->PrimaryLatitude() < -180) WriteLn("Not Defined");
+    else {
+      sprintf(buffer,"Latitude: %9.4f, Longitude: %9.4f",
+         mission->PrimaryLatitude(), mission->PrimaryLongitude());
+      WriteLn(buffer);
+      }
+  GotoXY(5,8); Write("6. Secondary Site :");
+  if (mission->Secondary1Latitude() < -180) WriteLn("Not Defined");
+    else {
+      sprintf(buffer,"Latitude: %9.4f, Longitude: %9.4f",
+         mission->Secondary1Latitude(), mission->Secondary1Longitude());
+      WriteLn(buffer);
+      }
+  GotoXY(5,9); Write("7. Secondary Site :");
+  if (mission->Secondary2Latitude() < -180) WriteLn("Not Defined");
+    else {
+      sprintf(buffer,"Latitude: %9.4f, Longitude: %9.4f",
+         mission->Secondary2Latitude(), mission->Secondary2Longitude());
+      WriteLn(buffer);
+      }
+  GotoXY(5,10); Write("8. Secondary Site :");
+  if (mission->Secondary3Latitude() < -180) WriteLn("Not Defined");
+    else {
+      sprintf(buffer,"Latitude: %9.4f, Longitude: %9.4f",
+         mission->Secondary3Latitude(), mission->Secondary3Longitude());
       WriteLn(buffer);
       }
 
@@ -333,24 +362,34 @@ void HideMapCursor(Int32 x, Int32 y) {
   Flush();
   }
 
+void ShowMapData(Double latitude, Double longitude) {
+  char buffer[128];
+  sprintf(buffer,"%9.4f",latitude);
+  GotoXY(66,4); Write(buffer);
+  sprintf(buffer,"%9.4f",longitude);
+  GotoXY(66,7); Write(buffer);
+  sprintf(buffer,"%9.2fm",(latitude - mission->TargetLatitude())*METERS);
+  GotoXY(66,10); Write(buffer);
+  sprintf(buffer,"%9.2fm",(longitude - mission->TargetLongitude())*METERS);
+  GotoXY(66,13); Write(buffer);
+  }
+
 Boolean SelectFromMap(Double* latitude, Double* longitude) {
   int key;
   int cursorX;
   int cursorY;
   Double centerLat;
   Double centerLng;
-  char buffer[128];
   centerLat = *latitude;
   centerLng = *longitude;
   LoadMap(*latitude,*longitude,0);
   ClearScreen();
   Box(3,2,61,21);
   GotoXY(66,3); Write("Latitude:");
-  sprintf(buffer,"%9.4f",*latitude);
-  GotoXY(66,4); Write(buffer);
   GotoXY(66,6); Write("Longitude:");
-  sprintf(buffer,"%9.4f",*longitude);
-  GotoXY(66,7); Write(buffer);
+  GotoXY(66,9); Write("Dist North:");
+  GotoXY(66,12); Write("Dist East:");
+  ShowMapData(*latitude,*longitude);
   GotoXY(2,10); Write("S");
   GotoXY(2,11); Write("O");
   GotoXY(2,12); Write("U");
@@ -376,10 +415,7 @@ Boolean SelectFromMap(Double* latitude, Double* longitude) {
       HideMapCursor(cursorX,cursorY);
       cursorY--;
       *longitude -= CELL;
-      sprintf(buffer,"%9.4f",*latitude);
-      GotoXY(66,4); Write(buffer);
-      sprintf(buffer,"%9.4f",*longitude);
-      GotoXY(66,7); Write(buffer);
+      ShowMapData(*latitude,*longitude);
       if (cursorY == -8) {
         cursorY++;
         centerLng -= CELL;
@@ -392,10 +428,7 @@ Boolean SelectFromMap(Double* latitude, Double* longitude) {
       HideMapCursor(cursorX,cursorY);
       cursorY++;
       *longitude += CELL;
-      sprintf(buffer,"%9.4f",*latitude);
-      GotoXY(66,4); Write(buffer);
-      sprintf(buffer,"%9.4f",*longitude);
-      GotoXY(66,7); Write(buffer);
+      ShowMapData(*latitude,*longitude);
       if (cursorY == 8) {
         cursorY--;
         centerLng += CELL;
@@ -408,10 +441,7 @@ Boolean SelectFromMap(Double* latitude, Double* longitude) {
       HideMapCursor(cursorX,cursorY);
       cursorX++;
       *latitude += CELL;
-      sprintf(buffer,"%9.4f",*latitude);
-      GotoXY(66,4); Write(buffer);
-      sprintf(buffer,"%9.4f",*longitude);
-      GotoXY(66,7); Write(buffer);
+      ShowMapData(*latitude,*longitude);
       if (cursorX == 28) {
         cursorX--;
         centerLat += CELL;
@@ -424,10 +454,7 @@ Boolean SelectFromMap(Double* latitude, Double* longitude) {
       HideMapCursor(cursorX,cursorY);
       cursorX--;
       *latitude -= CELL;
-      sprintf(buffer,"%9.4f",*latitude);
-      GotoXY(66,4); Write(buffer);
-      sprintf(buffer,"%9.4f",*longitude);
-      GotoXY(66,7); Write(buffer);
+      ShowMapData(*latitude,*longitude);
       if (cursorX == -28) {
         cursorX++;
         centerLat -= CELL;
@@ -436,7 +463,6 @@ Boolean SelectFromMap(Double* latitude, Double* longitude) {
         }
       ShowMapCursor(cursorX,cursorY);
       }
-GotoXY(1,27); printf("X:%3d, Y:%3d",cursorX,cursorY); fflush(stdout);
     }
   ShowCursor(); Flush();
   if (key == 13) return true;
@@ -474,12 +500,56 @@ void MissionEditor() {
       GetRegion();
       Menu();
       }
-    if (key == '4' && mission->TargetLongitude() >-180) {
+    if (key == '4' && mission->TargetLongitude() >=-180) {
       longitude = mission->TargetLongitude();
       latitude = mission->TargetLatitude();
       if (SelectFromMap(&latitude, &longitude)) {
         mission->TargetLongitude(longitude);
         mission->TargetLatitude(latitude);
+        }
+      Menu();
+      }
+    if (key == '5' && mission->TargetLongitude() >=-180) {
+      longitude = (mission->PrimaryLongitude() >= -180) ?
+         mission->PrimaryLongitude() : mission->TargetLongitude();
+      latitude = (mission->PrimaryLatitude() >= -180) ?
+         mission->PrimaryLatitude() : mission->TargetLatitude();
+      if (SelectFromMap(&latitude, &longitude)) {
+        mission->PrimaryLongitude(longitude);
+        mission->PrimaryLatitude(latitude);
+        }
+      Menu();
+      }
+    if (key == '6' && mission->TargetLongitude() >=-180) {
+      longitude = (mission->Secondary1Longitude() >= -180) ?
+         mission->Secondary1Longitude() : mission->TargetLongitude();
+      latitude = (mission->Secondary1Latitude() >= -180) ?
+         mission->Secondary1Latitude() : mission->TargetLatitude();
+      if (SelectFromMap(&latitude, &longitude)) {
+        mission->Secondary1Longitude(longitude);
+        mission->Secondary1Latitude(latitude);
+        }
+      Menu();
+      }
+    if (key == '7' && mission->TargetLongitude() >=-180) {
+      longitude = (mission->Secondary2Longitude() >= -180) ?
+         mission->Secondary2Longitude() : mission->TargetLongitude();
+      latitude = (mission->Secondary2Latitude() >= -180) ?
+         mission->Secondary2Latitude() : mission->TargetLatitude();
+      if (SelectFromMap(&latitude, &longitude)) {
+        mission->Secondary2Longitude(longitude);
+        mission->Secondary2Latitude(latitude);
+        }
+      Menu();
+      }
+    if (key == '8' && mission->TargetLongitude() >=-180) {
+      longitude = (mission->Secondary3Longitude() >= -180) ?
+         mission->Secondary3Longitude() : mission->TargetLongitude();
+      latitude = (mission->Secondary3Latitude() >= -180) ?
+         mission->Secondary3Latitude() : mission->TargetLatitude();
+      if (SelectFromMap(&latitude, &longitude)) {
+        mission->Secondary3Longitude(longitude);
+        mission->Secondary3Latitude(latitude);
         }
       Menu();
       }
