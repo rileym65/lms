@@ -61,6 +61,10 @@ void G_GroundIns::Update() {
     targetLng = mission->Secondary3Longitude();
     targetLat = mission->Secondary3Latitude();
     }
+  else if (mode == 3) {
+    targetLng = lrv->Longitude();
+    targetLat = lrv->Latitude();
+    }
   else {
     GotoXY(x+5,y+0); sprintf(buffer,"%7s",ins->DisplayPosEast()); Write(buffer);
     GotoXY(x+5,y+1); sprintf(buffer,"%7s",ins->DisplayPosNorth()); Write(buffer);
@@ -82,11 +86,12 @@ void G_GroundIns::Update() {
     switch (mode) {
       case 1: Write("ABS "); break;
       case 2: Write("TAR "); break;
-      case 3: Write("REL "); break;
+      case 3: Write("LM  "); break;
       case 4: Write("PRI "); break;
       case 5: Write("SEC1"); break;
       case 6: Write("SEC2"); break;
       case 7: Write("SEC3"); break;
+      case 8: Write("LRV "); break;
       }
     lastGroundInsMode = mode;
     }
@@ -100,5 +105,6 @@ void G_GroundIns::ProcessKey(Int32 key) {
   if (key == '5') mode = 5;
   if (key == '6') mode = 6;
   if (key == '7') mode = 7;
+  if (key == '8') mode = 8;
   }
 
