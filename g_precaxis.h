@@ -21,6 +21,8 @@ class G_PrecAxis : public G_Axis {
     virtual void Display();
     virtual void Update();
     virtual void ProcessKey(Int32 key);
+    virtual void Load(FILE* file,char* firstLine);
+    virtual void Save(FILE* file);
   };
 
 #endif

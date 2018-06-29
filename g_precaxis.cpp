@@ -230,3 +230,23 @@ void G_PrecAxis::ProcessKey(Int32 key) {
   Update();
   }
 
+void G_PrecAxis::Load(FILE* file,char* firstLine) {
+  char* pline;
+  if (!startsWith(firstLine,"precaxis ")) return;
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"mode ")) mode = atoi(nw(pline));
+    else {
+      Write("Unknown line found in save file: ");
+      WriteLn(pline);
+      exit(1);
+      }
+    }
+  }
+
+void G_PrecAxis::Save(FILE* file) {
+  fprintf(file,"    PrecAxis {%s",LE);
+  fprintf(file,"      Mode %d%s",mode,LE);
+  fprintf(file,"      }%s",LE);
+  }
+

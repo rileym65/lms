@@ -234,3 +234,23 @@ void G_MultiAxis::ProcessKey(Int32 key) {
   Update();
   }
 
+void G_MultiAxis::Load(FILE* file,char* firstLine) {
+  char* pline;
+  if (!startsWith(firstLine,"multiaxis ")) return;
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"mode ")) mode = atoi(nw(pline));
+    else {
+      Write("Unknown line found in save file: ");
+      WriteLn(pline);
+      exit(1);
+      }
+    }
+  }
+
+void G_MultiAxis::Save(FILE* file) {
+  fprintf(file,"    MultiAxis {%s",LE);
+  fprintf(file,"      Mode %d%s",mode,LE);
+  fprintf(file,"      }%s",LE);
+  }
+
