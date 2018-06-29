@@ -45,11 +45,10 @@ void G_AmsDown::Update() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  xVec = Vector(0,0,1);
   yVec = vehicle->Velocity().Norm();
-//  xVec = Vector(-pos.Z(),pos.Z(),1-fabs(pos.Z()));
   yVec = Vector(pos.Y(),-pos.X(),0);
   zVec = vehicle->Position().Norm();
+  xVec = yVec.Cross(zVec).Norm();
   GotoXY(x+faceX, y+faceY); Write(" ");
   GotoXY(x+leftX, y+leftY); Write(" ");
   GotoXY(x+upX, y+upY); Write(" ");

@@ -119,11 +119,10 @@ void G_PrecAxis::modeDown() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  xVec = Vector(0,0,1);
   yVec = vehicle->Velocity().Norm();
-//  xVec = Vector(-pos.Z(),pos.Z(),1-fabs(pos.Z()));
   yVec = Vector(pos.Y(),-pos.X(),0);
   zVec = vehicle->Position().Norm();
+  xVec= yVec.Cross(zVec).Norm();
   /* ***** Face ***** */
   dx = asin(vehicle->FaceFront().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceFront().Dot(yVec)) * 180 / M_PI;
