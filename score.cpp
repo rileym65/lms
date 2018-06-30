@@ -5,6 +5,7 @@
 
 void Score() {
   int i;
+  Int32 cellX,cellY;
   ScoreLandedTime = 1000 - (landedMet - 10800);
   if (ScoreLandedTime < 0) ScoreLandedTime = 0;
   ScoreDescentFuel = lm->DescentFuel();
@@ -34,11 +35,45 @@ void Score() {
   ScoreEvaLrvSetup = (lrv->IsSetup()) ? 250 : 0;
   ScoreEvaLaserSetup = (laserSetup) ? 250 : 0;
   ScoreEvaAlsepSetup = (alsepSetup) ? 250 : 0;
+  primarySamples = 0;
+  secondary1Samples = 0;
+  secondary2Samples = 0;
+  secondary3Samples = 0;
+  for (i=0; i<numSamples; i++) {
+    cellX = map->Cell(mission->PrimaryLongitude());
+    cellY = map->Cell(mission->PrimaryLatitude());
+    if (abs(samples[i].cellX - cellX) <= 10 &&
+        abs(samples[i].cellY - cellY) <= 10) primarySamples++;
+    else {
+      cellX = map->Cell(mission->Secondary1Longitude());
+      cellY = map->Cell(mission->Secondary1Latitude());
+      if (abs(samples[i].cellX - cellX) <= 10 &&
+          abs(samples[i].cellY - cellY) <= 10) secondary1Samples++;
+      else {
+        cellX = map->Cell(mission->Secondary2Longitude());
+        cellY = map->Cell(mission->Secondary2Latitude());
+        if (abs(samples[i].cellX - cellX) <= 10 &&
+            abs(samples[i].cellY - cellY) <= 10) secondary2Samples++;
+        else {
+          cellX = map->Cell(mission->Secondary3Longitude());
+          cellY = map->Cell(mission->Secondary3Latitude());
+          if (abs(samples[i].cellX - cellX) <= 10 &&
+              abs(samples[i].cellY - cellY) <= 10) secondary3Samples++;
+          }
+        }
+      }
+    }
+  ScoreEvaPrimarySamples = 1000.0 * ((Double)primarySamples / 30.0);
+  ScoreEvaSecondary1Samples = 1000.0 * ((Double)secondary1Samples / 30.0);
+  ScoreEvaSecondary2Samples = 1000.0 * ((Double)secondary2Samples / 30.0);
+  ScoreEvaSecondary3Samples = 1000.0 * ((Double)secondary3Samples / 30.0);
   
   ScoreEvaTotal = ScoreEvaCompleted + ScoreEvaSamples + ScoreEvaTime +
                   ScoreEvaValue + ScoreEvaFarthest + ScoreEvaDriven;
   ScoreEvaTotal += ScoreEvaFlagSetup + ScoreEvaLrvSetup +
                    ScoreEvaLaserSetup + ScoreEvaAlsepSetup;
+  ScoreEvaTotal += ScoreEvaPrimarySamples + ScoreEvaSecondary1Samples +
+                   ScoreEvaSecondary2Samples + ScoreEvaSecondary3Samples;
 
   ScoreDockTime = 1000 - (clockDk - 5400);
   if (ScoreDockTime < 0) ScoreDockTime = 0;
@@ -72,6 +107,10 @@ void Score() {
   printf("  Flag Planted:         %d%s",ScoreEvaFlagSetup,LE);
   printf("  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
   printf("  Samples Collected:    %d%s",ScoreEvaSamples,LE);
+  printf("  Primary Samples:      %d%s",ScoreEvaPrimarySamples,LE);
+  printf("  Sec. Site 1 Samples:  %d%s",ScoreEvaSecondary1Samples,LE);
+  printf("  Sec. Site 2 Samples:  %d%s",ScoreEvaSecondary2Samples,LE);
+  printf("  Sec. Site 3 Samples:  %d%s",ScoreEvaSecondary3Samples,LE);
   printf("  Sample Value:         %d%s",ScoreEvaValue,LE);
   printf("  Distance from LM:     %d%s",ScoreEvaFarthest,LE);
   printf("  Distance Driven:      %d%s",ScoreEvaDriven,LE);
