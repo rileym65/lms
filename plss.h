@@ -12,6 +12,8 @@ class Plss : public GroundVehicle {
     char   carrying;
     Double value;
     Double walked;
+    Int8    damageReportStep;
+    Double  oxygenLeakage;
   public:
     Plss();
     virtual ~Plss();

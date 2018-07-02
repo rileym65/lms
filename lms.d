@@ -263,36 +263,36 @@
 [H1]	Available while in EVA:
 [I4]
 [TB]
-	|M       |-|Move into LRV|
-	|m       |-|Move into LM|
-	|B       |-|Drop rock, Get box from LRV, put box in LM|
-	|V       |-|Setup LRV|
-	|F       |-|Get flag from LM, plant flag|
-	|f       |-|Put flag back into LM|
-	|<left>  |-|Begin left turn/End right turn|
-	|<right> |-|Begin right turn/End left turn|
-	|<PgDn>  |-|Throttle up 10%|
-	|<End>   |-|Throttle down 10%|
-	|C       |-|Collect sample|
-	|S       |-|Store sample in lrv box or Box into LM|
-	|D       |-|Drop sample|
-	|E       |-|End EVA|
-	|R       |-|Return sample box to rover|
-	|B       |-|Get sample Box from rover|
+	|M       |-|Move into LRV                                     |
+	|B       |-|Drop rock, Get box from LRV, put box in LM        |
+	|V       |-|Setup LRV                                         |
+	|F       |-|Get flag from LM, plant flag                      |
+	|f       |-|Put flag back into LM                             |
+	|<left>  |-|Begin left turn/End right turn                    |
+	|<right> |-|Begin right turn/End left turn                    |
+	|<PgDn>  |-|Throttle up 10%                                   |
+	|<End>   |-|Throttle down 10%                                 |
+	|C       |-|Collect/Drop sample                               |
+	|S       |-|Store sample in lrv box or Box into LM            |
+	|D       |-|Show damage report                                |
+	|E       |-|End EVA                                           |
+	|R       |-|Return sample box to rover                        |
+	|B       |-|Get sample Box from rover                         |
 	|L       |-|Get laser reflector from LM, setup laser reflector|
-	|l       |-|Put laser reflector back into LM|
-	|A       |-|Get ALSEP from LM, setup ALSEP
+	|l       |-|Put laser reflector back into LM                  |
+	|A       |-|Get ALSEP from LM, setup ALSEP                    |
 [TE]
 [I-4]
 [=]
 [H1]	Available while in LRV:
 [I4]
 [TB]
-	|M      |-|Exit LRV|
+	|M      |-|Exit LRV                      |
+	|D      |-|Show damage report            |
 	|<left> |-|Begin left turn/End right turn|
 	|<right>|-|Begin right turn/End left turn|
-	|<PgDn> |-|Throttle up 10%|
-	|<End>  |-|Throttle down 10%|
+	|<PgDn> |-|Throttle up 10%               |
+	|<End>  |-|Throttle down 10%             |
 [TE]
 [I-4]
 [=]

@@ -11,6 +11,7 @@ Lrv::~Lrv() {
   }
 
 void Lrv::Init() {
+  GroundVehicle::Init();
   panel = new Panel("lrv.pnl",this);
   battery = LRV_BATTERY;
   isSetup = false;

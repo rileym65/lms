@@ -11,12 +11,15 @@ Plss::~Plss() {
   }
 
 void Plss::Init() {
+  GroundVehicle::Init();
   panel = new Panel("plss.pnl",this);
   battery = 36000;
   oxygen = 36000;
   carrying = ' ';
   heading = 0;
   walked = 0;
+  damageReportStep = 0;
+  oxygenLeakage = 0;
   }
 
 void Plss::BeginEva(Vehicle* from) {
@@ -104,6 +107,18 @@ void Plss::Cycle() {
   if (throttle > 0) {
     metabolicRate += throttle * 0.0023;
     }
+  if (damageReportStep != 0) {
+    if (damageReportStep == 1) {
+      if (seq->Time() > 0) return;
+      seq->Message("   BATTERY:",batteryLeakage*100,5);
+      damageReportStep = 2;
+      }
+    if (damageReportStep == 2) {
+      if (seq->Time() > 1) return;
+      seq->Message("    OXYGEN:",oxygenLeakage*100,5);
+      damageReportStep = 0;
+      }
+    }
   }
 
 Int8 Plss::SubLoad(char* pline) {
@@ -136,7 +151,10 @@ void Plss::ProcessKey(Int32 key) {
     if (key == 'M' && lrvPos < 100 && carrying == ' ') {
       seq->MoveLrv();
       }
-    if (key == 'C' && carrying == ' ') seq->TakeSample();
+    if (key == 'C') {
+      if (carrying == ' ') seq->TakeSample();
+      if (carrying == 'R') seq->DropSample();
+      }
     if (key == 'S') {
       if (carrying == 'R' && lrvPos < 100) {
         if (lrv->Rock() < 30 && lrv->Boxes() > 0) seq->StoreSample();
@@ -144,7 +162,6 @@ void Plss::ProcessKey(Int32 key) {
       if (carrying == 'B' && lmPos < 100 && lrv->Boxes() > 0)
         seq->BoxToLm();
       }
-    if (key == 'D' && carrying == 'R') seq->DropSample();
     if (key == 'R' && carrying == 'B' && lrvPos < 100) seq->BoxToLrv();
     if (key == 'B' && carrying == ' ' && lrvPos < 40 && lrv->Boxes() > 0)
       seq->BoxToPlss();
@@ -183,6 +200,7 @@ void Plss::ProcessKey(Int32 key) {
   if (key == KEY_KP_END) Throttle(Throttle()-10);
   if (key == KEY_RIGHT_ARROW) TurnRate(TurnRate()+15);
   if (key == KEY_LEFT_ARROW) TurnRate(TurnRate()-15);
+  if (key == 'D') damageReportStep = 1;
   panel->ProcessKey(key);
   }
 
