@@ -37,6 +37,7 @@
 #define SEQ_LIFTOFF     32
 #define SEQ_GETALSEP    33
 #define SEQ_PUTALSEP    34
+#define SEQ_MESSAGE     35
 
 
 class Sequencer {
@@ -44,6 +45,7 @@ class Sequencer {
     Int32        time;
     Int8         function;
     char         message[32];
+    Int32        value;
     void  InProgress();
     void  Complete();
   public:
@@ -51,6 +53,7 @@ class Sequencer {
     ~Sequencer();
     Int32 Time();
     char* Message();
+    void  Message(const char* msg, Int32 v, Int32 t);
     void  Abort();
     void  BoxToLm();
     void  BoxToLrv();
@@ -86,6 +89,7 @@ class Sequencer {
     void  StoreSample();
     void  TakeSample();
     void  Undock();
+    Int32 Value();
   };
 
 #endif

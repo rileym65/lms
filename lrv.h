@@ -13,6 +13,7 @@ class Lrv : public GroundVehicle {
     Int8    rock;
     Double  value;
     Double  driven;
+    Int8    damageReportStep;
   public:
     Lrv();
     virtual ~Lrv();

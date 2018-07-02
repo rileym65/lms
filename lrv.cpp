@@ -17,6 +17,7 @@ void Lrv::Init() {
   rock = 0;
   boxes = 8;
   driven = 0;
+  damageReportStep = 0;
   }
 
 Int8 Lrv::Boxes() {
@@ -117,6 +118,18 @@ void Lrv::Cycle() {
                  (maxSpeed * batteryLeakage) );
     if (battery < 0) battery = 0;
     }
+  if (damageReportStep != 0) {
+    if (damageReportStep == 1) {
+      if (seq->Time() > 0) return;
+      seq->Message("   BATTERY:",batteryLeakage*100,5);
+      damageReportStep = 2;
+      }
+    if (damageReportStep == 2) {
+      if (seq->Time() > 1) return;
+      seq->Message("     MOTOR:",(1.0 - motorEfficiency)*100,5);
+      damageReportStep = 0;
+      }
+    }
   }
 
 /*
@@ -187,6 +200,7 @@ void Lrv::ProcessKey(Int32 key) {
   if (key == KEY_F9) Throttle(90);
   if (key == KEY_F10) Throttle(100);
   if (key == 'M' && throttle == 0) seq->ExitLrv();
+  if (key == 'D') damageReportStep = 1;
   panel->ProcessKey(key);
   }
 

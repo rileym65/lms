@@ -6,6 +6,7 @@
 Sequencer::Sequencer() {
   time = 0; 
   function = 0;
+  value = -1;
   strcpy(message,"----------");
   }
 
@@ -16,10 +17,20 @@ Int32 Sequencer::Time() {
   return time;
   }
 
+Int32 Sequencer::Value() {
+  return value;
+  }
+
 char* Sequencer::Message() {
   return message;
   }
 
+void Sequencer::Message(const char* msg, Int32 v, Int32 t) {
+  strcpy(message, msg);
+  value = v;
+  time = t;
+  function = SEQ_MESSAGE;
+  }
 void Sequencer::Complete() {
   Int32 i;
   Int32 cellX, cellY;
@@ -262,6 +273,9 @@ void Sequencer::Complete() {
          mode_kil = 0;
          mode_lif = 0;
          mode_jet = 0;
+         break;
+    case SEQ_MESSAGE:
+         value = -1;
          break;
     }
   }

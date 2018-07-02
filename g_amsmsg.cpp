@@ -31,11 +31,18 @@ void G_AmsMessage::Update() {
     }
   if (seq->Time() != lastSeqTime) {
     GotoXY(x+11,y);
-    if (seq->Time() <= 0) {
-      Write("    ");
+    if (seq->Value() < 0) {
+      if (seq->Time() <= 0) {
+        Write("    ");
+        }
+      else {
+        i = seq->Time();
+        if (i > 9999) i = 9999;
+        sprintf(buffer,"%4d",i); Write(buffer);
+        }
       }
     else {
-      i = seq->Time();
+      i = seq->Value();
       if (i > 9999) i = 9999;
       sprintf(buffer,"%4d",i); Write(buffer);
       }
