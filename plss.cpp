@@ -153,6 +153,8 @@ void Plss::ProcessKey(Int32 key) {
       }
     if (key == 'C') {
       if (carrying == ' ') seq->TakeSample();
+      }
+    if (key == 'D') {
       if (carrying == 'R') seq->DropSample();
       }
     if (key == 'S') {
@@ -200,7 +202,7 @@ void Plss::ProcessKey(Int32 key) {
   if (key == KEY_KP_END) Throttle(Throttle()-10);
   if (key == KEY_RIGHT_ARROW) TurnRate(TurnRate()+15);
   if (key == KEY_LEFT_ARROW) TurnRate(TurnRate()-15);
-  if (key == 'D') damageReportStep = 1;
+  if (key == 'Z') damageReportStep = 1;
   panel->ProcessKey(key);
   }
 

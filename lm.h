@@ -14,6 +14,16 @@ class LunarModule : public Vehicle {
     Int16  rock;
     Double value;
     Double rcsRotationFuelUsage();
+    Double ascentBatteryLeakage;
+    Double ascentOxygenLeakage;
+    Double ascentFuelLeakage;
+    Double rcsFuelLeakage;
+    Double ascentEngineEfficiency;
+    Double descentBatteryLeakage;
+    Double descentOxygenLeakage;
+    Double descentFuelLeakage;
+    Double descentEngineEfficiency;
+    Int8   damageReportStep;
   public:
     LunarModule();
     virtual ~LunarModule();

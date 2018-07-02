@@ -11,6 +11,16 @@ LunarModule::LunarModule() {
   yawRate = 0;
   descentJettisoned = 0;
   rock = 0;
+  ascentBatteryLeakage = 0;
+  ascentOxygenLeakage = 0;
+  ascentFuelLeakage = 0;
+  ascentEngineEfficiency = 1.0;
+  rcsFuelLeakage = 0;
+  descentBatteryLeakage = 0;
+  descentOxygenLeakage = 0;
+  descentFuelLeakage = 0;
+  descentEngineEfficiency = 1.0;
+  damageReportStep = 0;
   InitPanel();
 /*
   roll = 0;
@@ -121,6 +131,63 @@ void LunarModule::Cycle() {
   Vector v;
   Matrix m;
   if (comp != NULL) comp->Cycle();
+  if (damageReportStep != 0) {
+    if (damageReportStep == 1) {
+      if (seq->Time() <= 0) {
+        seq->Message("ASC BAT LK:",ascentBatteryLeakage*100,5);
+        damageReportStep = 2;
+        }
+      }
+    if (damageReportStep == 2) {
+      if (seq->Time() <=  1) {
+        seq->Message("ASC OXY LK:",ascentOxygenLeakage*100,5);
+        damageReportStep = 3;
+        }
+      }
+    if (damageReportStep == 3) {
+      if (seq->Time() <=  1) {
+        seq->Message("ASC FUL LK:",ascentFuelLeakage*100,5);
+        damageReportStep = 4;
+        }
+      }
+    if (damageReportStep == 4) {
+      if (seq->Time() <=  1) {
+        seq->Message("ASC ENGINE:",(1.0 - ascentEngineEfficiency)*100,5);
+        damageReportStep = 5;
+        }
+      }
+    if (damageReportStep == 5) {
+      if (seq->Time() <=  1) {
+        seq->Message("RCS FUL LK:",rcsFuelLeakage*100,5);
+        if (descentJettisoned) damageReportStep = 0;
+          else damageReportStep = 11;
+        }
+      }
+    if (damageReportStep == 11) {
+      if (seq->Time() <= 1) {
+        seq->Message("DSC BAT LK:",descentBatteryLeakage*100,5);
+        damageReportStep = 12;
+        }
+      }
+    if (damageReportStep == 12) {
+      if (seq->Time() <=  1) {
+        seq->Message("DSC OXY LK:",descentOxygenLeakage*100,5);
+        damageReportStep = 13;
+        }
+      }
+    if (damageReportStep == 13) {
+      if (seq->Time() <=  1) {
+        seq->Message("DSC FUL LK:",descentFuelLeakage*100,5);
+        damageReportStep = 14;
+        }
+      }
+    if (damageReportStep == 14) {
+      if (seq->Time() <=  1) {
+        seq->Message("DSC ENGINE:",(1.0 - descentEngineEfficiency)*100,5);
+        damageReportStep = 0;
+        }
+      }
+    }
   if (landed && throttle == 0) return;
   if (rollRate >= -0.0001 && rollRate < 0.0001) rollRate = 0;
   if (pitchRate >= -0.0001 && pitchRate < 0.0001) pitchRate = 0;
@@ -466,6 +533,7 @@ void LunarModule::ProcessKey(Int32 key) {
       if (key == KEY_F10) Throttle(100);
       }
     }
+  if (key == 'Z') damageReportStep = 1;
   panel->ProcessKey(key);
   if (comp != NULL) comp->ProcessKey(key);
   }

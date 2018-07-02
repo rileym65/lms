@@ -220,43 +220,40 @@
 [H1]	Available while in LM:
 [I4]
 [TB]
-	|M      |-|Move to CSM if docked.  This will end the simulation|
-	|U      |-|Undock if docked|
-	|<      |-|Turn on/off the landing radar|
-	|>      |-|Turn on/off the docking radar|
-	|?      |-|Turn on/off the dsn transponder|
-	|=      |-|Increase rcs translation thrust (1->10->100)|
-	|-      |-|Decrease rcs trnaslation thrust (100->10->1)|
-	|+      |-|Increase rcs rotation thrust (10->50->100)|
-	|_      |-|Decrease rcs rotation thrust (100->50->10)|
-	|f      |-|Toggle face RCS thruster|
-	|b      |-|Toggle back RCS thruster|
-	|l      |-|Toggle left RCS thruster|
-	|r      |-|Toggle right RCS thruster|
-	|u      |-|Toggle up RCS thruster|
-	|d      |-|Toggle down RCS thruster|
-	|<SPACE>|-|Turn off all RCS translation thrusters|
-	|I      |-|Ignite main engine|
-	|i      |-|Shutdown main engine|
-	|<HOME> |-|Roll counter clockwise around up|
-	|<PgUp> |-|Roll clockwise around up|
-	|<up>   |-|Pitch counter clockwise around left|
-	|<down> |-|Pitch clockwise around left|
-	|<left> |-|Yaw counter clockwise around front|
-	|<right>|-|Yaw clockwise around front|
-	|S      |-|Put on/take off space suit|
-	|P      |-|Put on/take off PLSS|
-	|C      |-|Evacuate/Pressurize cabin|
-	|*      |-|Rest for 2 hours|
-	|)      |-|Sleep for 8 hours|
-	|]      |-|Increment mode of multi-axis display|
-	|[      |-|Decrement mode of multi-axis display|
-	|.      |-|Increment mode of precision axis display|
-	|,      |-|Decrement mode of precision axis display|
+	|M      |-|Move to CSM if docked.  This will end the simulation |
+	|U      |-|Undock if docked                                     |
+	|<      |-|Turn on/off the landing radar                        |
+	|>      |-|Turn on/off the docking radar                        |
+	|?      |-|Turn on/off the dsn transponder                      |
+	|=      |-|Increase rcs translation thrust (1->10->100)         |
+	|-      |-|Decrease rcs trnaslation thrust (100->10->1)         |
+	|+      |-|Increase rcs rotation thrust (10->50->100)           |
+	|_      |-|Decrease rcs rotation thrust (100->50->10)           |
+	|f      |-|Toggle face RCS thruster                             |
+	|b      |-|Toggle back RCS thruster                             |
+	|l      |-|Toggle left RCS thruster                             |
+	|r      |-|Toggle right RCS thruster                            |
+	|u      |-|Toggle up RCS thruster                               |
+	|d      |-|Toggle down RCS thruster                             |
+	|<SPACE>|-|Turn off all RCS translation thrusters               |
+	|I      |-|Ignite main engine                                   |
+	|i      |-|Shutdown main engine                                 |
+	|<HOME> |-|Roll counter clockwise around up                     |
+	|<PgUp> |-|Roll clockwise around up                             |
+	|<up>   |-|Pitch counter clockwise around left                  |
+	|<down> |-|Pitch clockwise around left                          |
+	|<left> |-|Yaw counter clockwise around front                   |
+	|<right>|-|Yaw clockwise around front                           |
+	|S      |-|Put on/take off space suit                           |
+	|P      |-|Put on/take off PLSS                                 |
+	|C      |-|Evacuate/Pressurize cabin                            |
+	|*      |-|Rest for 2 hours                                     |
+	|)      |-|Sleep for 8 hours                                    |
 	|p      |-|Request entry of Prog parameter on guidance computer |
 	|v      |-|Request entry of Verb parameter on guidance computer |
 	|n      |-|Request entry of Noun parameter on guidance computer |
 	|g      |-|Start program execution on guidance computer         |
+	|Z      |-|Show damage report                                   |
 [TE]
 [I-4]
 [=]
@@ -274,7 +271,7 @@
 	|<End>   |-|Throttle down 10%                                 |
 	|C       |-|Collect/Drop sample                               |
 	|S       |-|Store sample in lrv box or Box into LM            |
-	|D       |-|Show damage report                                |
+	|Z       |-|Show damage report                                |
 	|E       |-|End EVA                                           |
 	|R       |-|Return sample box to rover                        |
 	|B       |-|Get sample Box from rover                         |
@@ -288,7 +285,7 @@
 [I4]
 [TB]
 	|M      |-|Exit LRV                      |
-	|D      |-|Show damage report            |
+	|Z      |-|Show damage report            |
 	|<left> |-|Begin left turn/End right turn|
 	|<right>|-|Begin right turn/End left turn|
 	|<PgDn> |-|Throttle up 10%               |
@@ -296,6 +293,35 @@
 [TE]
 [I-4]
 [=]
+[h2]	Instrument specific keys:
+[h1]	Ground INS
+[i4]
+[tb]
+        |4       |-|Set target to primary site                        |
+        |5       |-|Set target to secondary site 1                    |
+        |6       |-|Set target to secondary site 2                    |
+        |7       |-|Set target to secondary site 3                    |
+        |8       |-|Set target to LRV                                 |
+[te]
+[i-4]
+[=]
+[h1]	Precision Axis Display
+[i4]
+[tb]
+	|,       |-|Shift to prior mode                               |
+	|.       |-|Shift to next mode                                |
+[te]
+[i-4]
+[=]
+[h1]	Multi Axis Display
+[i4]
+[tb]
+	|[       |-|Shift to prior mode                               |
+	|]       |-|Shift to next mode                                |
+[te]
+[i-4]
+[=]
+
 [H2]	Typical Mission Profile
 [H1]	Undocking and separation maneuvers
 	1. Set the guidance computer to P00 V00 N02, or POS^TAR on the INS
@@ -375,16 +401,27 @@
 	to ORB^TAR mode for the north MOM value to update, again you want
 	this value to be zero.
 [=]
-	During this maneuver you need to yaw the LM to keep the L face facing
-	along the orbital path.  This is easiest to accomplish when using the
-	advanced panel, as described in step 8.  If you are using the AMS
-	panel then this becomes a little bit tricker, for every degree that
-	the North MOM value goes down you need to yaw the LM so that the L/S
-	changes by the same amount.  For example, if you need to change 2 degrees
-	at the start of the manuever the L/S will be 90, the distance to go
-	shown in MOM North will be 2.  When the MOM North is at 1, then the 
-	L/S whould be showing 91.  When the MOM North is showing 0, then the
-	L/S should be showing 92.
+	10. After the plane change maneuver is complete, check your perilune
+	and apolune values, you may have some clean up of your orbit to
+	perform.  If both apolune and perlilune are within a couple of 
+	kilomters of 100 then you should be good to go.
+[=]
+	If your perilune number is below about 95 then you should raise your
+	perilune.  To do this you will need to increase your velocity by
+	buring whichever thruster is currently pointer prograde.  If your
+	landing site is in the north, then your left face should be facing
+	prograde, use your left RCS thruster (medium or high throttle as needed)
+	to raise your perilune above 95.  If your landing site is in the south
+	then your right face should be facing prograde and you will need to
+	use your Right RCS thruster to raise your perilune.
+[=]
+	If your apolune number is above about 105 then you should lower your
+	apolune.  To lower your apolune you will need to thrust retrograde.
+	If your landing site was in the north, then your right face should
+	be facing retrograde and you can use your Right RCS thruster to
+	lower your apolune.  If your landing site is in the south, then 
+	your left face is facing retrograde and you will need to use your
+	Left RCS thruster to lower your apolune.
 [=]
 
 [H2]	Key points during landing
