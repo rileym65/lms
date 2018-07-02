@@ -11,6 +11,8 @@ class G_AmsLand : public Gauge {
     char lastMode;
     Int32 lastLongitude;
     Int32 lastLatitude;
+    Int32 lastCellX;
+    Int32 lastCellY;
     char  data[5][10];
   public:
     G_AmsLand(Int8 x,Int8 y,Boolean f,Vehicle* v);

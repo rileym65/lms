@@ -19,6 +19,8 @@ void G_AmsLand::Reset() {
   lastMode = ' ';
   lastLongitude = -9999;
   lastLatitude = -9999;
+  lastCellX = -9999999;
+  lastCellY = -9999999;
   for (i=0; i<5; i++)
     strcpy(data[i],".........");
   }
@@ -40,6 +42,7 @@ void G_AmsLand::Update() {
   Double alt;
   Int32  lng;
   Int32  lat;
+  Int32  cellX,cellY;
   Double dlng;
   Double dlat;
   char   mode;
@@ -54,29 +57,47 @@ void G_AmsLand::Update() {
   if (alt > 12000) mode = 'H';
   if (!landingRadarOn) mode = 'H';
   if (ins->AttUr() > 60) mode = 'H';
-  if (mode != lastMode || lat != lastLatitude || lng != lastLongitude) {
-    if (mode == 'L') {
-       for (ix=-2; ix<=2; ix++)
-         for (iy=-4; iy <= 4; iy++) {
-           data[ix+2][iy+4] = map->Lurrain(dlng+ix*MAPCELL,dlat+iy*MAPCELL);
-           }
-      }
-     else {
-       for (ix=-2; ix<=2; ix++)
+
+  if (mode == 'H') {
+    if (mode != lastMode || lat != lastLatitude || lng != lastLongitude) {
+      for (ix=-2; ix<=2; ix++)
          for (iy=-4; iy <= 4; iy++) {
            data[ix+2][iy+4] = map->CellH(lng+ix,lat+iy);
            }
+      for (i=0; i<5; i++) {
+        GotoXY(x+2, y+2+i);
+        sprintf(buffer,"%s",data[i]);
+        Write(buffer);
         }
-    for (i=0; i<5; i++) {
-      GotoXY(x+2, y+2+i);
-      sprintf(buffer,"%s",data[i]);
-      Write(buffer);
+      lastMode = mode;
+      lastLatitude = lat;
+      lastLongitude = lng;
       }
-    lastMode = mode;
-    lastLatitude = lat;
-    lastLongitude = lng;
+    GotoXY(x+1,y+2); Write("|");
+    GotoXY(x+11,y+2); Write("|");
+    GotoXY(x+10,y+1); Write("-");
+    GotoXY(x+10,y+7); Write("-");
+    GotoXY(x+11,y+6); Write("|");
+    GotoXY(x+1,y+6); Write("|");
     }
+
   if (mode == 'L') {
+    cellX = map->Cell(dlng);
+    cellY = map->Cell(dlat);
+    if (mode != lastMode || cellX != lastCellX || cellY != lastCellY) {
+      for (ix=-2; ix<=2; ix++)
+        for (iy=-4; iy <= 4; iy++) {
+          data[ix+2][iy+4] = map->Lurrain(dlng+ix*MAPCELL,dlat+iy*MAPCELL);
+          }
+      for (i=0; i<5; i++) {
+        GotoXY(x+2, y+2+i);
+        sprintf(buffer,"%s",data[i]);
+        Write(buffer);
+        }
+      lastMode = mode;
+      lastCellX = cellX;
+      lastCellY = cellY;
+      }
     if (lm->VelocityAltitude() <= -3) {
       GotoXY(x+1,y+2); Write("+");
       GotoXY(x+11,y+2); Write("+");
@@ -93,14 +114,6 @@ void G_AmsLand::Update() {
     if (lm->VelocityNorth() > 1.22) Write(">"); else Write("|");
     GotoXY(x+1,y+6);
     if (lm->VelocityNorth() < -1.22) Write("<"); else Write("|");
-    }
-  else {
-    GotoXY(x+1,y+2); Write("|");
-    GotoXY(x+11,y+2); Write("|");
-    GotoXY(x+10,y+1); Write("-");
-    GotoXY(x+10,y+7); Write("-");
-    GotoXY(x+11,y+6); Write("|");
-    GotoXY(x+1,y+6); Write("|");
     }
   }
 
