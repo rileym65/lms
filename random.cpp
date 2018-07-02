@@ -51,7 +51,9 @@ UInt32 Random::bitsize(UInt32 n) {
 UInt32 Random::Next(UInt32 range) {
   UInt32 ret;
   UInt32 seed;
-  seed = rng.Next(bitsize(range));
+/* No random numbers in are greater than 1000, so restrict to 10 bits */
+  seed = rng.Next(10);
+//  seed = rng.Next(bitsize(range));
   ret = seed % range;
   return ret;
   }

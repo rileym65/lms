@@ -14,6 +14,8 @@ void GroundVehicle::Init() {
   heading = 0;
   maxSpeed = 1;
   turnRate = 0;
+  motorEfficiency = 1.0;
+  batteryLeakage = 0.0;
   }
 
 void GroundVehicle::Cycle() {
@@ -31,7 +33,7 @@ void GroundVehicle::Cycle() {
     if (heading < -180) heading += 360;
     Heading(heading);
     }
-  thrust = faceFront.Norm().Scale(maxSpeed * ((Double)throttle / 100.0));
+  thrust = faceFront.Norm().Scale(motorEfficiency * maxSpeed * ((Double)throttle / 100.0));
   velocity = thrust;
   position = position + velocity;
   position = position.Norm().Scale(GROUND);
@@ -128,6 +130,8 @@ void GroundVehicle::Place(Vector pos) {
 Int8 GroundVehicle::SubLoad(char* pline) {
   if (startsWith(pline,"heading ")) Heading(atof(nw(pline)));
   else if (startsWith(pline,"turnrate ")) turnRate = atoi(nw(pline));
+  else if (startsWith(pline,"batteryleakage ")) batteryLeakage = atof(nw(pline));
+  else if (startsWith(pline,"motorefficiency ")) motorEfficiency = atof(nw(pline));
   else return 0;
   return -1;
   }
@@ -136,6 +140,8 @@ void GroundVehicle::Save(FILE* file) {
   Vehicle::Save(file);
   fprintf(file,"  Heading %.18f%s",heading,LE);
   fprintf(file,"  TurnRate %d%s",turnRate,LE);
+  fprintf(file,"  MotorEfficiency %.18f%s",motorEfficiency,LE);
+  fprintf(file,"  BatteryLeakage %.18f%s",batteryLeakage,LE);
   }
 
 Int8 GroundVehicle::TurnRate() {

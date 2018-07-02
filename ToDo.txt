@@ -1,8 +1,19 @@
-  Damage from hard landing
-  Orient faces properly upon landing
-  Lunar topography
-  Oxygen use from increased metabolic rate
-  Change 3d model for spacecraft orientation to use roll,pitch,yaw angles
+Features:
+---------
+  - Damage from hard landing
+  - Orient faces properly upon landing
+  - Lunar topography
+  - Oxygen use from increased metabolic rate
+  - Change 3d model for spacecraft orientation to use roll,pitch,yaw angles
     instead of current transformation matrix method
-  Fix bug where after moving on the surface for awhile bad data starts 
+  - Damage to rover for driving too fast over rough ground
+  - Damage to pilot for moving too fast over rough ground
+
+Bugs:
+-----
+
+
+Done, but needs further testing:
+--------------------------------
+  - Fix bug where after moving on the surface for awhile bad data starts 
     appearing on the map displays.

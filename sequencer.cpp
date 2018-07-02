@@ -548,7 +548,7 @@ void Sequencer::SetupLaser() {
   }
 
 void Sequencer::GetAlsep() {
-  time = 40 * 60;
+  time = 30 * 60;
   strcpy(message,"LSEP->PLSS");
   function = SEQ_GETALSEP;
   }

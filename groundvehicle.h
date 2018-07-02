@@ -10,6 +10,8 @@ class GroundVehicle : public Vehicle {
     Double heading;
     Double maxSpeed;
     Int8   turnRate;
+    Double  motorEfficiency;
+    Double  batteryLeakage;
   public:
     GroundVehicle();
     virtual ~GroundVehicle();

@@ -113,7 +113,8 @@ void Lrv::Cycle() {
   GroundVehicle::Cycle();
   if (!isnan(velocity.Length())) driven += velocity.Length();
   if (throttle > 0) {
-    battery -= (maxSpeed * ((Double)throttle / 100.0));
+    battery -= ( (maxSpeed * ((Double)throttle / 100.0)) +
+                 (maxSpeed * batteryLeakage) );
     if (battery < 0) battery = 0;
     }
   }
