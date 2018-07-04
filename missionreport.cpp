@@ -98,6 +98,15 @@ void MissionReport() {
   fprintf(file,"    Secondary site 2 : %d%s",secondary2Samples,LE);
   fprintf(file,"    Secondary site 3 : %d%s",secondary3Samples,LE);
   fprintf(file,"%s",LE);
+  fprintf(file,"Rendevous/Docking:%s",LE);
+  fprintf(file,"  Time to dock         : %s%s",ClockToString(buffer,clockDk),LE);
+  fprintf(file,"  Docking velocity     : %.2fm/s%s",dockingVel,LE);
+  fprintf(file,"  Lateral velocity     : %.2fm/s%s",dockingLVel,LE);
+  fprintf(file,"  Docking X alignemnent: %.2fm%s",dockingXAlign,LE);
+  fprintf(file,"  Docking Y alignemnent: %.2fm%s",dockingYAlign,LE);
+  fprintf(file,"  Ascent Fuel Remaining: %.2f%s",lm->AscentFuel(),LE);
+  fprintf(file,"  RCS Fuel Remaining   : %.2f%s",lm->RcsFuel(),LE);
+  fprintf(file,"%s",LE);
   fprintf(file,"Main Engine Burns:%s",LE);
   fprintf(file,"    Start       End    Duration    Fuel   Engine%s",LE);
   fprintf(file,"     MET        MET                 kg          %s",LE);

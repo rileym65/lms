@@ -8,6 +8,7 @@ Features:
     instead of current transformation matrix method
   - Damage to rover for driving too fast over rough ground
   - Damage to pilot for moving too fast over rough ground
+  - Add redevous/docking info to mission report
 
 Bugs:
 -----

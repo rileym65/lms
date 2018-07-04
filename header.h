@@ -108,6 +108,8 @@ LINK Int32        clockDOI;
 LINK Int32        clockPDI;
 LINK Double       dockingVel;
 LINK Double       dockingLVel;
+LINK Double       dockingXAlign;
+LINK Double       dockingYAlign;
 LINK EVA          evas[256];
 LINK Int32        evaCount;
 LINK Int32        landedMet;

@@ -129,6 +129,8 @@ Boolean alignedForDocking() {
   v = ins->RelVel();
   dockingVel = v.Z();
   dockingLVel = sqrt(v.X()*v.X() + v.Y()*v.Y());
+  dockingXAlign = ins->RelPos().X();
+  dockingYAlign = ins->RelPos().Y();
   if (dockingVel > -0.2) return false;
   if (dockingVel < -0.4) return false;
   if (dockingLVel >0.0283) return false;
