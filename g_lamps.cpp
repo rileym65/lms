@@ -58,10 +58,10 @@ void G_Lamps::Update() {
 
   if (!lm->DescentJettisoned()) {
     GotoXY(x+12,y+0);
-    if (lm->Oxygen() < (LM_OXYGEN * 0.10))
+    if (lm->Oxygen() < ((LM_ASC_OXYGEN + LM_DSC_OXYGEN) * 0.10))
       Write("OXY"); else Write("   ");
     GotoXY(x+16,y+0);
-    if (lm->Battery() < (LM_BATTERY * 0.10))
+    if (lm->Battery() < ((LM_ASC_BATTERY + LM_DSC_BATTERY) * 0.10))
       Write("BAT"); else Write("   ");
     GotoXY(x+12,y+1);
     if (lm->Oxygen() <= 0.0)
@@ -70,18 +70,18 @@ void G_Lamps::Update() {
     if (lm->Battery() <= 0.0)
       Write("EMG"); else Write("   ");
     GotoXY(x+12,y+2);
-    if (lm->EOxygen() < (LM_EOXYGEN * 0.10))
+    if (lm->EOxygen() < ((LM_ASC_EOXYGEN + LM_DSC_EOXYGEN) * 0.10))
       Write("ELO"); else Write("   ");
     GotoXY(x+16,y+2);
-    if (lm->EBattery() < (LM_EBATTERY * 0.10))
+    if (lm->EBattery() < ((LM_ASC_EBATTERY + LM_DSC_EBATTERY) * 0.10))
       Write("ELO"); else Write("   ");
     }
   else {
     GotoXY(x+12,y+0);
-    if (lm->Oxygen() < (ASC_OXYGEN * 0.10))
+    if (lm->Oxygen() < (LM_ASC_OXYGEN * 0.10))
       Write("OXY"); else Write("   ");
     GotoXY(x+16,y+0);
-    if (lm->Battery() < (ASC_BATTERY * 0.10))
+    if (lm->Battery() < (LM_ASC_BATTERY * 0.10))
       Write("BAT"); else Write("   ");
     GotoXY(x+12,y+1);
     if (lm->Oxygen() <= 0.0)
@@ -90,10 +90,10 @@ void G_Lamps::Update() {
     if (lm->Battery() <= 0.0)
       Write("EMG"); else Write("   ");
     GotoXY(x+12,y+2);
-    if (lm->EOxygen() < (ASC_EOXYGEN * 0.10))
+    if (lm->EOxygen() < (LM_ASC_EOXYGEN * 0.10))
       Write("ELO"); else Write("   ");
     GotoXY(x+16,y+2);
-    if (lm->EBattery() < (ASC_EBATTERY * 0.10))
+    if (lm->EBattery() < (LM_ASC_EBATTERY * 0.10))
       Write("ELO"); else Write("   ");
     }
 

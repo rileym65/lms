@@ -81,6 +81,9 @@ Computer* Vehicle::Comp(Computer* c) {
   return comp;
   }
 
+void Vehicle::Damage(Double dmg) {
+  }
+
 Double Vehicle::EBattery() {
   return ebattery;
   }
@@ -523,6 +526,11 @@ Boolean Vehicle::UseBattery(Double units) {
   }
 
 Boolean Vehicle::UseOxygen(Double units) {
+  if (metabolicRate < 60) units += (.2 * ((metabolicRate - 30) / 30.0));
+  if (metabolicRate >= 60) {
+    units += .2;
+    units += ((metabolicRate - 60) / 10.0);
+    }
   oxygen -= units;
   if (oxygen >= 0) return true;
   eoxygen += oxygen;

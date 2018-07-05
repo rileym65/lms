@@ -22,6 +22,7 @@ class Plss : public GroundVehicle {
     virtual void   BeginEva(Vehicle* from);
     virtual char   Carrying();
     virtual char   Carrying(char c);
+    virtual void   Damage(Double dmg);
     virtual Int8   SubLoad(char* line);
     virtual void   Save(FILE* file);
     virtual void   ProcessKey(Int32 key);

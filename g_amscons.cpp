@@ -74,13 +74,13 @@ void G_AmsCons::Update() {
     if (i > 0 && pilotLocation == PILOT_LM) Write("^"); else Write(" ");
     lastThrottle = i;
     }
-  i = (int)(lm->Oxygen() / LM_OXYGEN * 100);
+  i = (int)(lm->Oxygen() / (LM_ASC_OXYGEN + LM_DSC_OXYGEN) * 100);
   if (i>99) i = 99;
   if (i != lastOxygen) {
     GotoXY(x+5,y+5); sprintf(buffer,"%2d",i); Write(buffer);
     lastOxygen = i;
     }
-  i = (int)(lm->Battery() / LM_BATTERY * 100);
+  i = (int)(lm->Battery() / (LM_ASC_BATTERY + LM_DSC_BATTERY) * 100);
   if (i>99) i = 99;
   if (i != lastBattery) {
     GotoXY(x+5,y+6); sprintf(buffer,"%2d",i); Write(buffer);

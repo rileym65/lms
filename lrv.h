@@ -23,6 +23,7 @@ class Lrv : public GroundVehicle {
     virtual void   Setup();
     virtual Int8   Boxes();
     virtual Int8   Boxes(Int8 i);
+    virtual void   Damage(Double dmg);
     virtual Double Driven();
     virtual Int8   Rock();
     virtual Int8   Rock(Int8 i);

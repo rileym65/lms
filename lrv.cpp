@@ -32,6 +32,12 @@ Int8 Lrv::Boxes(Int8 i) {
   return boxes;
   }
 
+void Lrv::Damage(Double dmg) {
+  if (rng.Next(100) < dmg) batteryLeakage += ((Double)rng.Next(dmg) / 100.0);
+  if (rng.Next(100) < dmg) motorEfficiency -= ((Double)rng.Next(dmg) / 100.0);
+  if (motorEfficiency < 0.0) motorEfficiency = 0.0;
+  }
+
 Double Lrv::Driven() {
   return driven;
   }
@@ -111,6 +117,8 @@ printf("Len: %.18f\n",f.Length());
   }
 
 void Lrv::Cycle() {
+  battery -= batteryLeakage;
+  if (battery < 0) battery = 0;
   if (battery <= 0) throttle = 0;
   GroundVehicle::Cycle();
   if (!isnan(velocity.Length())) driven += velocity.Length();

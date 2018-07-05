@@ -67,6 +67,7 @@ class Vehicle {
     virtual Double    Battery(Double d);
     virtual Computer *Comp();
     virtual Computer *Comp(Computer* c);
+    virtual void      Damage(Double dmg);
     virtual Double    EBattery();
     virtual Double    EBattery(Double d);
     virtual Double    EOxygen();

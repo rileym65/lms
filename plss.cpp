@@ -82,6 +82,11 @@ char Plss::Carrying(char c) {
   return carrying;
   }
 
+void Plss::Damage(Double dmg) {
+  if (rng.Next(100) < dmg) batteryLeakage += ((Double)rng.Next(dmg) / 100.0);
+  if (rng.Next(100) < dmg) oxygenLeakage += ((Double)rng.Next(dmg) / 100.0);
+  }
+
 Double Plss::Value() {
   return value;
   }
@@ -101,6 +106,10 @@ Double Plss::Walked(Double d) {
   }
 
 void Plss::Cycle() {
+  oxygen -= oxygenLeakage;
+  battery -= batteryLeakage;
+  if (oxygen < 0) oxygen = 0;
+  if (battery < 0) battery = 0;
   if (throttle > 30 && metabolicRate > 60) Throttle(30);
   GroundVehicle::Cycle();
   if (!isnan(velocity.Length())) walked += velocity.Length();
@@ -125,6 +134,7 @@ Int8 Plss::SubLoad(char* pline) {
   if (startsWith(pline,"carrying ")) carrying = atoi(nw(pline));
   else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else if (startsWith(pline,"walked ")) walked = atof(nw(pline));
+  else if (startsWith(pline,"oxygenleakage ")) oxygenLeakage = atof(nw(pline));
   else return GroundVehicle::SubLoad(pline);
   return -1;
   }
@@ -135,6 +145,7 @@ void Plss::Save(FILE* file) {
   fprintf(file,"  Carrying %d%s",carrying,LE);
   fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  Walked %.18f%s",walked,LE);
+  fprintf(file,"  OxygenLeakage %.18f%s",oxygenLeakage,LE);
   fprintf(file,"  }%s",LE);
   }
 
