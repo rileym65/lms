@@ -95,6 +95,13 @@ Double LunarModule::Battery() {
   return ret;
   }
 
+Double LunarModule::EBattery() {
+  Double ret;
+  ret = ascentEBattery;
+  if (!descentJettisoned) ret += descentEBattery;
+  return ret;
+  }
+
 Double LunarModule::DescentFuel() {
   return descentFuel;
   }
@@ -116,6 +123,13 @@ Double LunarModule::Oxygen() {
   Double ret;
   ret = ascentOxygen;
   if (!descentJettisoned) ret += descentOxygen;
+  return ret;
+  }
+
+Double LunarModule::EOxygen() {
+  Double ret;
+  ret = ascentEOxygen;
+  if (!descentJettisoned) ret += descentEOxygen;
   return ret;
   }
 
@@ -274,11 +288,11 @@ void LunarModule::Cycle() {
   Matrix m;
   ascentOxygen -= ascentOxygenLeakage;
   ascentBattery -= ascentBatteryLeakage;
-  ascentFuel -= ascentFuelLeakage;
+  ascentFuel -= (ascentFuelLeakage / 10.0);
   descentOxygen -= descentOxygenLeakage;
   descentBattery -= descentBatteryLeakage;
-  descentFuel -= descentFuelLeakage;
-  rcsFuel -= rcsFuelLeakage;
+  descentFuel -= (descentFuelLeakage / 10.0);
+  rcsFuel -= (rcsFuelLeakage / 100.0);
   if (ascentOxygen < 0.0) ascentOxygen = 0.0;
   if (ascentBattery < 0.0) ascentBattery = 0.0;
   if (ascentFuel < 0.0) ascentFuel = 0.0;

@@ -52,6 +52,8 @@ class LunarModule : public Vehicle {
     virtual Double DescentFuel();
     virtual Double DescentFuel(Double d);
     virtual Int8   DescentJettisoned();
+    virtual Double EBattery();
+    virtual Double EOxygen();
     virtual void   InitPanel();
     virtual Int8   Landed();
     virtual Double Mass();
