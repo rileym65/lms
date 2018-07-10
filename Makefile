@@ -160,6 +160,7 @@ doc:
 	makedoc panel.d
 	makedoc computer.d
 	makedoc training.d
+	makedoc landing.d
 
 core:	gcasm core.asm
 	./gcasm core.asm

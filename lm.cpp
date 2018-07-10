@@ -21,6 +21,17 @@ LunarModule::LunarModule() {
   descentFuelLeakage = 0;
   descentEngineEfficiency = 1.0;
   damageReportStep = 0;
+  ascentDryWeight = 2234.0;
+  descentDryWeight = 2346.0;
+  ascentIsp = 344.0;
+  descentIsp = 334.0;
+  rcsIsp = 401.0;
+  ascentNewtons = 16890.0;
+  descentNewtons = 49215.0;
+  rcsNewtons = 1970.0;
+  ascentFuelRate = ascentNewtons / (9.81 * ascentIsp);
+  descentFuelRate = descentNewtons / (9.81 * descentIsp);
+  rcsFuelRate = rcsNewtons / (9.81 * rcsIsp);
   InitPanel();
 /*
   roll = 0;
@@ -48,9 +59,17 @@ Double LunarModule::AscentFuel(Double d) {
   return ascentFuel;
   }
 
+Double LunarModule::AscentOxygen() {
+  return ascentOxygen;
+  }
+
 Double LunarModule::AscentOxygen(Double d) {
   ascentOxygen = d;
   return ascentOxygen;
+  }
+
+Double LunarModule::AscentBattery() {
+  return ascentBattery;
   }
 
 Double LunarModule::AscentBattery(Double d) {
@@ -58,9 +77,34 @@ Double LunarModule::AscentBattery(Double d) {
   return ascentBattery;
   }
 
+Double LunarModule::AscentDryWeight(Double d) {
+  ascentDryWeight = d;
+  return ascentDryWeight;
+  }
+
+Double LunarModule::AscentIsp(Double d) {
+  ascentIsp = d;
+  ascentFuelRate = ascentNewtons / (9.81 * ascentIsp);
+  return ascentIsp;
+  }
+
+Double LunarModule::AscentNewtons(Double d) {
+  ascentNewtons = d;
+  ascentFuelRate = ascentNewtons / (9.81 * ascentIsp);
+  return ascentNewtons;
+  }
+
+Double LunarModule::DescentOxygen() {
+  return descentOxygen;
+  }
+
 Double LunarModule::DescentOxygen(Double d) {
   descentOxygen = d;
   return descentOxygen;
+  }
+
+Double LunarModule::DescentBattery() {
+  return descentBattery;
   }
 
 Double LunarModule::DescentBattery(Double d) {
@@ -68,9 +112,17 @@ Double LunarModule::DescentBattery(Double d) {
   return descentBattery;
   }
 
+Double LunarModule::AscentEOxygen() {
+  return ascentEOxygen;
+  }
+
 Double LunarModule::AscentEOxygen(Double d) {
   ascentEOxygen = d;
   return ascentEOxygen;
+  }
+
+Double LunarModule::AscentEBattery() {
+  return ascentEBattery;
   }
 
 Double LunarModule::AscentEBattery(Double d) {
@@ -78,14 +130,51 @@ Double LunarModule::AscentEBattery(Double d) {
   return ascentEBattery;
   }
 
+Double LunarModule::DescentEOxygen() {
+  return descentEOxygen;
+  }
+
 Double LunarModule::DescentEOxygen(Double d) {
   descentEOxygen = d;
   return descentEOxygen;
   }
 
+Double LunarModule::DescentEBattery() {
+  return descentEBattery;
+  }
+
 Double LunarModule::DescentEBattery(Double d) {
   descentEBattery = d;
   return descentEBattery;
+  }
+
+Double LunarModule::DescentDryWeight(Double d) {
+  descentDryWeight = d;
+  return descentDryWeight;
+  }
+
+Double LunarModule::DescentIsp(Double d) {
+  descentIsp = d;
+  descentFuelRate = descentNewtons / (9.81 * descentIsp);
+  return descentIsp;
+  }
+
+Double LunarModule::DescentNewtons(Double d) {
+  descentNewtons = d;
+  descentFuelRate = descentNewtons / (9.81 * descentIsp);
+  return descentNewtons;
+  }
+
+Double LunarModule::RcsIsp(Double d) {
+  rcsIsp = d;
+  rcsFuelRate = rcsNewtons / (9.81 * rcsIsp);
+  return rcsIsp;
+  }
+
+Double LunarModule::RcsNewtons(Double d) {
+  rcsNewtons = d;
+  rcsFuelRate = rcsNewtons / (9.81 * rcsIsp);
+  return rcsNewtons;
   }
 
 Double LunarModule::Battery() {
@@ -117,6 +206,105 @@ Int8 LunarModule::DescentJettisoned() {
 
 Int8 LunarModule::Landed() {
   return landed;
+  }
+
+Double LunarModule::MaxAscentFuel() {
+  return maxAscentFuel;
+  }
+
+Double LunarModule::MaxAscentFuel(Double d) {
+  maxAscentFuel = d;
+  return maxAscentFuel;
+  }
+
+Double LunarModule::MaxAscentBattery() {
+  return maxAscentBattery;
+  }
+
+Double LunarModule::MaxAscentBattery(Double d) {
+  maxAscentBattery = d;
+  return maxAscentBattery;
+  }
+
+Double LunarModule::MaxAscentEBattery() {
+  return maxAscentEBattery;
+  }
+
+Double LunarModule::MaxAscentEBattery(Double d) {
+  maxAscentEBattery = d;
+  return maxAscentEBattery;
+  }
+
+Double LunarModule::MaxAscentOxygen() {
+  return maxAscentOxygen;
+  }
+
+Double LunarModule::MaxAscentOxygen(Double d) {
+  maxAscentOxygen = d;
+  return maxAscentOxygen;
+  }
+
+Double LunarModule::MaxAscentEOxygen() {
+  return maxAscentEOxygen;
+  }
+
+Double LunarModule::MaxAscentEOxygen(Double d) {
+  maxAscentEOxygen = d;
+  return maxAscentEOxygen;
+  }
+
+Double LunarModule::MaxDescentFuel() {
+  return maxDescentFuel;
+  }
+
+Double LunarModule::MaxDescentFuel(Double d) {
+  maxDescentFuel = d;
+  return maxDescentFuel;
+  }
+
+Double LunarModule::MaxRcsFuel() {
+  return maxRcsFuel;
+  }
+
+Double LunarModule::MaxRcsFuel(Double d) {
+  maxRcsFuel = d;
+  return maxRcsFuel;
+  }
+
+Double LunarModule::MaxDescentBattery() {
+  return maxDescentBattery;
+  }
+
+Double LunarModule::MaxDescentBattery(Double d) {
+  maxDescentBattery = d;
+  return maxDescentBattery;
+  }
+
+Double LunarModule::MaxDescentEBattery() {
+  return maxDescentEBattery;
+  }
+
+Double LunarModule::MaxDescentEBattery(Double d) {
+  maxDescentEBattery = d;
+  return maxDescentEBattery;
+  }
+
+Double LunarModule::MaxDescentOxygen() {
+  return maxDescentOxygen;
+  }
+
+Double LunarModule::MaxDescentOxygen(Double d) {
+  maxDescentOxygen = d;
+  return maxDescentOxygen;
+  }
+
+Double LunarModule::MaxDescentEOxygen() {
+  return maxDescentEOxygen;
+  }
+
+Double LunarModule::MaxDescentEOxygen(Double d) {
+  maxDescentEOxygen = d;
+  return maxDescentEOxygen;
   }
 
 Double LunarModule::Oxygen() {
@@ -401,9 +589,9 @@ void LunarModule::Cycle() {
     faceLeft = faceUp.Cross(faceFront).Norm();
     }
   switch (rcsThrottle) {
-    case 1: rcsThrust = 19.7; rcsfuel = 0.005; break;
-    case 10: rcsThrust = 197.0; rcsfuel = 0.05; break;
-    case 100: rcsThrust = 1970.0; rcsfuel = 0.5; break;
+    case 1: rcsThrust = rcsNewtons/100.0; rcsfuel = rcsFuelRate/100.0; break;
+    case 10: rcsThrust = rcsNewtons/10.0; rcsfuel = rcsFuelRate/10.0; break;
+    case 100: rcsThrust = rcsNewtons; rcsfuel = rcsFuelRate; break;
     default : rcsThrust = 0;
     }
 //GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot(faceUp),faceLeft.Dot(faceUp));
@@ -436,16 +624,16 @@ void LunarModule::Cycle() {
   if (throttle != 0) {
     if (descentJettisoned) {
       throttle = 100;
-      mainThrust = ascentEngineEfficiency * 16890.0 / Mass();
-      if (ascentFuel >= 5) {
+      mainThrust = ascentEngineEfficiency * ascentNewtons / Mass();
+      if (ascentFuel >= ascentFuelRate) {
         thrust = thrust + faceUp.Scale(mainThrust);
-        ascentFuel -= 5;
+        ascentFuel -= ascentFuelRate;
         }
       }
     else {
       newtons = (double)throttle / 100.0;
-      mainfuel = 15.0 * newtons;
-      newtons *= descentEngineEfficiency * 49215;
+      mainfuel = descentFuelRate * newtons;
+      newtons *= descentEngineEfficiency * descentNewtons;
       mainThrust = newtons / Mass();
       if (mainfuel <= descentFuel) {
         thrust = thrust + faceUp.Scale(mainThrust);
@@ -520,11 +708,11 @@ void LunarModule::InitPanel() {
 
 Double LunarModule::Mass() {
   Double ret;
-  ret = 2234;
+  ret = ascentDryWeight;
   ret += ascentFuel;
   ret += rcsFuel;
   if (!descentJettisoned) {
-    ret += 2346;
+    ret += descentDryWeight;
     ret += descentFuel;
     }
   ret += rock;
@@ -759,6 +947,14 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  DescentfuelLeakage %.18f%s",descentFuelLeakage,LE);
   fprintf(file,"  DescentEngineEfficiency %.18f%s",descentEngineEfficiency,LE);
   fprintf(file,"  RcsFuelLeakage %.18f%s",rcsFuelLeakage,LE);
+  fprintf(file,"  AscentDryWeight %.18f%s",ascentDryWeight,LE);
+  fprintf(file,"  DescentDryWeight %.18f%s",descentDryWeight,LE);
+  fprintf(file,"  AscentIsp %.18f%s",ascentIsp,LE);
+  fprintf(file,"  DescentIsp %.18f%s",descentIsp,LE);
+  fprintf(file,"  RcsIsp %.18f%s",rcsIsp,LE);
+  fprintf(file,"  AscentNewtons %.18f%s",ascentNewtons,LE);
+  fprintf(file,"  DescentNewtons %.18f%s",descentNewtons,LE);
+  fprintf(file,"  RcsNewtons %.18f%s",rcsNewtons,LE);
   fprintf(file,"  }%s",LE);
   }
 
@@ -787,6 +983,14 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"descentfuelleakage ")) descentFuelLeakage = atof(nw(pline));
   else if (startsWith(pline,"descentengineefficiency ")) descentEngineEfficiency = atof(nw(pline));
   else if (startsWith(pline,"rcsfuelleakage ")) rcsFuelLeakage = atof(nw(pline));
+  else if (startsWith(pline,"ascentdryweight ")) ascentDryWeight = atof(nw(pline));
+  else if (startsWith(pline,"descentdryweight ")) descentDryWeight = atof(nw(pline));
+  else if (startsWith(pline,"ascentisp ")) ascentIsp = atof(nw(pline));
+  else if (startsWith(pline,"descentisp ")) descentIsp = atof(nw(pline));
+  else if (startsWith(pline,"rcsisp ")) rcsIsp = atof(nw(pline));
+  else if (startsWith(pline,"ascentnewtons ")) AscentNewtons(atof(nw(pline)));
+  else if (startsWith(pline,"descentnewtons ")) DescentNewtons(atof(nw(pline)));
+  else if (startsWith(pline,"rcsnewtons ")) RcsNewtons(atof(nw(pline)));
   else return 0;
   return -1;
   }

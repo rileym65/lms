@@ -28,17 +28,6 @@
 #define PILOT_LRV 'v'
 #define PILOT_LM  'm'
 #define PILOT_EVA 'e'
-#define FUEL_ASC  2615.0
-#define FUEL_RCS  316.0
-#define FUEL_DES  9720.0
-#define LM_DSC_OXYGEN 396000.0
-#define LM_ASC_OXYGEN 36000.0
-#define LM_DSC_BATTERY 396000.0
-#define LM_ASC_BATTERY 36000.0
-#define LM_ASC_EOXYGEN 7200.0
-#define LM_ASC_EBATTERY 7200.0
-#define LM_DSC_EOXYGEN 36000.0
-#define LM_DSC_EBATTERY 36000.0
 #define PLSS_OXYGEN 36000.0
 #define PLSS_BATTERY 36000.0
 #define PLSS_EOXYGEN 3600.0
@@ -71,6 +60,9 @@
 #define END_COLLISION     3
 #define END_DEAD          4
 #define END_CRASHED       5
+#define VEHICLE_APOLLO          1
+#define VEHICLE_APOLLO_J        2
+#define VEHICLE_APOLLO_MKII     3
 
 #define LE   "\n"
 
@@ -200,6 +192,7 @@ LINK UInt32       secondary1Samples;
 LINK UInt32       secondary2Samples;
 LINK UInt32       secondary3Samples;
 LINK Random       rng;
+LINK UInt8        vehicle;
 
 LINK Int32        ScoreLandedTime;
 LINK Int32        ScoreDescentFuel;

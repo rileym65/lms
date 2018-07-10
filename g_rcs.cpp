@@ -103,7 +103,7 @@ void G_Rcs::Update() {
     if (lastTranslationThrottle == 10) Write("--");
     if (lastTranslationThrottle == 100) Write("^^");
     }
-  i = (int)(lm->RcsFuel() / FUEL_RCS * 100);
+  i = (int)(lm->RcsFuel() / lm->MaxRcsFuel() * 100);
   if (i>99) i = 99;
   if (i != lastRcsFuel) {
     GotoXY(x+18,y+2); sprintf(buffer,"%2d",i); Write(buffer);

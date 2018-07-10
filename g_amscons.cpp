@@ -37,19 +37,19 @@ void G_AmsCons::Display() {
 void G_AmsCons::Update() {
   Int32 i;
   char buffer[32];
-  i = (int)(lm->AscentFuel() / FUEL_ASC * 100);
+  i = (int)(lm->AscentFuel() / lm->MaxAscentFuel() * 100);
   if (i>99) i = 99;
   if (i != lastAscentFuel) {
     GotoXY(x+5,y+1); sprintf(buffer,"%2d",i); Write(buffer);
     lastAscentFuel = i;
     }
-  i = (int)(lm->RcsFuel() / FUEL_RCS * 100);
+  i = (int)(lm->RcsFuel() / lm->MaxRcsFuel() * 100);
   if (i>99) i = 99;
   if (i != lastRcsFuel) {
     GotoXY(x+5,y+2); sprintf(buffer,"%2d",i); Write(buffer);
     lastRcsFuel = i;
     }
-  i = (int)(lm->DescentFuel() / FUEL_DES * 100);
+  i = (int)(lm->DescentFuel() / lm->MaxDescentFuel() * 100);
   if (i>99) i = 99;
   if (i != lastDescentFuel) {
     GotoXY(x+5,y+3);
@@ -74,13 +74,13 @@ void G_AmsCons::Update() {
     if (i > 0 && pilotLocation == PILOT_LM) Write("^"); else Write(" ");
     lastThrottle = i;
     }
-  i = (int)(lm->Oxygen() / (LM_ASC_OXYGEN + LM_DSC_OXYGEN) * 100);
+  i = (int)(lm->Oxygen() / (lm->MaxAscentOxygen() + lm->MaxDescentOxygen()) * 100);
   if (i>99) i = 99;
   if (i != lastOxygen) {
     GotoXY(x+5,y+5); sprintf(buffer,"%2d",i); Write(buffer);
     lastOxygen = i;
     }
-  i = (int)(lm->Battery() / (LM_ASC_BATTERY + LM_DSC_BATTERY) * 100);
+  i = (int)(lm->Battery() / (lm->MaxAscentBattery() + lm->MaxDescentBattery()) * 100);
   if (i>99) i = 99;
   if (i != lastBattery) {
     GotoXY(x+5,y+6); sprintf(buffer,"%2d",i); Write(buffer);

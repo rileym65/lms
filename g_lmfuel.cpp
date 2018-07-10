@@ -28,13 +28,13 @@ void G_LmFuel::Display() {
 void G_LmFuel::Update() {
   Int32 i;
   char buffer[32];
-  i = (int)(lm->AscentFuel() / FUEL_ASC * 100);
+  i = (int)(lm->AscentFuel() / lm->MaxAscentFuel() * 100);
   if (i>99) i = 99;
   if (i != lastAscentFuel) {
     GotoXY(x+5,y+0); sprintf(buffer,"%2d",i); Write(buffer);
     lastAscentFuel = i;
     }
-  i = (int)(lm->DescentFuel() / FUEL_DES * 100);
+  i = (int)(lm->DescentFuel() / lm->MaxDescentFuel() * 100);
   if (i>99) i = 99;
   if (i != lastDescentFuel || lastDescentJettisoned != lm->DescentJettisoned()) {
     GotoXY(x+5,y+1);
