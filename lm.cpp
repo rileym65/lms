@@ -955,6 +955,17 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  AscentNewtons %.18f%s",ascentNewtons,LE);
   fprintf(file,"  DescentNewtons %.18f%s",descentNewtons,LE);
   fprintf(file,"  RcsNewtons %.18f%s",rcsNewtons,LE);
+  fprintf(file,"  MaxAscentFuel %.18f%s",maxAscentFuel,LE);
+  fprintf(file,"  MaxAscentBattery %.18f%s",maxAscentBattery,LE);
+  fprintf(file,"  MaxAscentEBattery %.18f%s",maxAscentEBattery,LE);
+  fprintf(file,"  MaxAscentOxygen %.18f%s",maxAscentOxygen,LE);
+  fprintf(file,"  MaxAscentEOxygen %.18f%s",maxAscentEOxygen,LE);
+  fprintf(file,"  MaxDescentFuel %.18f%s",maxDescentFuel,LE);
+  fprintf(file,"  MaxDescentBattery %.18f%s",maxDescentBattery,LE);
+  fprintf(file,"  MaxDescentEBattery %.18f%s",maxDescentEBattery,LE);
+  fprintf(file,"  MaxDescentOxygen %.18f%s",maxDescentOxygen,LE);
+  fprintf(file,"  MaxDescentEOxygen %.18f%s",maxDescentEOxygen,LE);
+  fprintf(file,"  MaxRcsFuel %.18f%s",maxRcsFuel,LE);
   fprintf(file,"  }%s",LE);
   }
 
@@ -991,6 +1002,17 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"ascentnewtons ")) AscentNewtons(atof(nw(pline)));
   else if (startsWith(pline,"descentnewtons ")) DescentNewtons(atof(nw(pline)));
   else if (startsWith(pline,"rcsnewtons ")) RcsNewtons(atof(nw(pline)));
+  else if (startsWith(pline,"maxascentfuel ")) maxAscentFuel = atof(nw(pline));
+  else if (startsWith(pline,"maxascentbattery ")) maxAscentBattery = atof(nw(pline));
+  else if (startsWith(pline,"maxascentebattery ")) maxAscentEBattery = atof(nw(pline));
+  else if (startsWith(pline,"maxascentoxygen ")) maxAscentOxygen = atof(nw(pline));
+  else if (startsWith(pline,"maxascenteoxygen ")) maxAscentEOxygen = atof(nw(pline));
+  else if (startsWith(pline,"maxdescentfuel ")) maxDescentFuel = atof(nw(pline));
+  else if (startsWith(pline,"maxdescentbattery ")) maxDescentBattery = atof(nw(pline));
+  else if (startsWith(pline,"maxdescentebattery ")) maxDescentEBattery = atof(nw(pline));
+  else if (startsWith(pline,"maxdescentoxygen ")) maxDescentOxygen = atof(nw(pline));
+  else if (startsWith(pline,"maxdescenteoxygen ")) maxDescentEOxygen = atof(nw(pline));
+  else if (startsWith(pline,"maxrcsfuel ")) maxRcsFuel = atof(nw(pline));
   else return 0;
   return -1;
   }

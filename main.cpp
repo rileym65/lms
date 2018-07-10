@@ -21,84 +21,6 @@ Vector t;
   lm->FaceFront(Vector(1,0,0));
   lm->FaceLeft(Vector(0,-1,0));
   lm->FaceUp(Vector(0,0,-1));
-  switch (vehicle) {
-    case VEHICLE_APOLLO:
-         lm->AscentFuel(2375.0);
-         lm->AscentBattery(10 * 3600);
-         lm->AscentOxygen(10 * 3600);
-         lm->AscentEOxygen(2 * 3600);
-         lm->AscentEBattery(2 * 3600);
-         lm->AscentDryWeight(2150.0);
-         lm->AscentIsp(311.0);
-         lm->AscentNewtons(15570.0);
-         lm->DescentFuel(8873.0);
-         lm->DescentBattery(45 * 3600);
-         lm->DescentOxygen(45 * 3600);
-         lm->DescentEOxygen(10 * 3600);
-         lm->DescentEBattery(10 * 3600);
-         lm->DescentDryWeight(2134.0);
-         lm->DescentIsp(311.0);
-         lm->DescentNewtons(43900.0);
-         lm->RcsFuel(287.0);
-         lm->RcsIsp(290.0);
-         lm->RcsNewtons(1780.0);
-         break;
-    case VEHICLE_APOLLO_J:
-         lm->AscentFuel(2375.0);
-         lm->AscentBattery(10 * 3600);
-         lm->AscentOxygen(10 * 3600);
-         lm->AscentEOxygen(2 * 3600);
-         lm->AscentEBattery(2 * 3600);
-         lm->AscentDryWeight(2150.0);
-         lm->AscentIsp(311.0);
-         lm->AscentNewtons(15570.0);
-         lm->DescentFuel(9394.5);
-         lm->DescentBattery(75 * 3600);
-         lm->DescentOxygen(75 * 3600);
-         lm->DescentEOxygen(10 * 3600);
-         lm->DescentEBattery(10 * 3600);
-         lm->DescentDryWeight(2344.0);
-         lm->DescentIsp(311.0);
-         lm->DescentNewtons(43900.0);
-         lm->RcsFuel(287.0);
-         lm->RcsIsp(290.0);
-         lm->RcsNewtons(1780.0);
-         break;
-    case VEHICLE_APOLLO_MKII:
-         lm->AscentFuel(2615.0);
-         lm->AscentBattery(10 * 3600);
-         lm->AscentOxygen(10 * 3600);
-         lm->AscentEOxygen(2 * 3600);
-         lm->AscentEBattery(2 * 3600);
-         lm->AscentDryWeight(2234.0);
-         lm->AscentIsp(344.0);
-         lm->AscentNewtons(16890.0);
-         lm->DescentFuel(9720.0);
-         lm->DescentBattery(110 * 3600);
-         lm->DescentOxygen(110 * 3600);
-         lm->DescentEOxygen(10 * 3600);
-         lm->DescentEBattery(10 * 3600);
-         lm->DescentDryWeight(2346.0);
-         lm->DescentIsp(334.0);
-         lm->DescentNewtons(49215.0);
-         lm->RcsFuel(316.0);
-         lm->RcsIsp(401.0);
-         lm->RcsNewtons(1970.0);
-         break;
-    }
-  lm->MaxAscentFuel(lm->AscentFuel());
-  lm->MaxDescentFuel(lm->DescentFuel());
-  lm->MaxRcsFuel(lm->RcsFuel());
-  lm->MaxBattery(lm->AscentBattery() + lm->DescentBattery());
-  lm->MaxOxygen(lm->AscentOxygen() + lm->DescentOxygen());
-  lm->MaxAscentBattery(lm->AscentBattery());
-  lm->MaxAscentEBattery(lm->AscentEBattery());
-  lm->MaxAscentOxygen(lm->AscentOxygen());
-  lm->MaxAscentEOxygen(lm->AscentEOxygen());
-  lm->MaxDescentBattery(lm->DescentBattery());
-  lm->MaxDescentEBattery(lm->DescentEBattery());
-  lm->MaxDescentOxygen(lm->DescentOxygen());
-  lm->MaxDescentEOxygen(lm->DescentEOxygen());
   plss->Battery(36000);
   plss->Oxygen(36000);
   plss->FaceFront(Vector(1,0,0));
@@ -248,6 +170,21 @@ void setupVehicle() {
          lm->RcsNewtons(1970.0);
          break;
     }
+  lm->MaxAscentFuel(lm->AscentFuel());
+  lm->MaxDescentFuel(lm->DescentFuel());
+  lm->MaxRcsFuel(lm->RcsFuel());
+  lm->MaxBattery(lm->AscentBattery() + lm->DescentBattery());
+  lm->MaxOxygen(lm->AscentOxygen() + lm->DescentOxygen());
+  lm->MaxAscentBattery(lm->AscentBattery());
+  lm->MaxAscentEBattery(lm->AscentEBattery());
+  lm->MaxAscentOxygen(lm->AscentOxygen());
+  lm->MaxAscentEOxygen(lm->AscentEOxygen());
+  lm->MaxDescentBattery(lm->DescentBattery());
+  lm->MaxDescentEBattery(lm->DescentEBattery());
+  lm->MaxDescentOxygen(lm->DescentOxygen());
+  lm->MaxDescentEOxygen(lm->DescentEOxygen());
+  lm->MaxBattery(lm->MaxAscentBattery() + lm->MaxDescentBattery());
+  lm->MaxBattery(lm->MaxAscentOxygen() + lm->MaxDescentOxygen());
   }
 
 char* ClockToString(char* buffer, Int32 clock) {
@@ -438,6 +375,7 @@ int main(int argc, char** argv) {
       }
     mission->Load(file);
     fclose(file);
+    vehicle = mission->Vehicle();
     setupVehicle();
     }
   else if (!newGame) {
@@ -473,6 +411,7 @@ int main(int argc, char** argv) {
       sscanf(buffer,"%d",&i);
       vehicle = i;
       }
+    mission->Vehicle(vehicle);
     setupVehicle();
     }
   setupTargetData();

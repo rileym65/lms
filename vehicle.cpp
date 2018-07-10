@@ -430,8 +430,10 @@ void Vehicle::Load(FILE* file) {
     else if (startsWith(pline,"orientation ")) orientation = atom(nw(pline));
     else if (startsWith(pline,"throttle ")) throttle = atoi(nw(pline));
     else if (startsWith(pline,"battery ")) battery = atof(nw(pline));
+    else if (startsWith(pline,"maxbattery ")) maxBattery = atof(nw(pline));
     else if (startsWith(pline,"ebattery ")) ebattery = atof(nw(pline));
     else if (startsWith(pline,"oxygen ")) oxygen = atof(nw(pline));
+    else if (startsWith(pline,"maxoxygen ")) maxOxygen = atof(nw(pline));
     else if (startsWith(pline,"eoxygen ")) eoxygen = atof(nw(pline));
     else if (startsWith(pline,"pitchrate ")) PitchRate(atof(nw(pline)));
     else if (startsWith(pline,"rollrate ")) RollRate(atof(nw(pline)));
@@ -467,8 +469,10 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Longitude %.18f%s",longitude,LE);
   fprintf(file,"  Radius %.18f%s",radius,LE);
   fprintf(file,"  Battery %.18f%s",battery,LE);
+  fprintf(file,"  MaxBattery %.18f%s",maxBattery,LE);
   fprintf(file,"  EBattery %.18f%s",ebattery,LE);
   fprintf(file,"  Oxygen %.18f%s",oxygen,LE);
+  fprintf(file,"  MaxOxygen %.18f%s",maxOxygen,LE);
   fprintf(file,"  EOxygen %.18f%s",eoxygen,LE);
   fprintf(file,"  Throttle %d%s",throttle,LE);
   fprintf(file,"  RollRate %.18f%s",rollRate,LE);

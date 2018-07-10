@@ -8,6 +8,7 @@ class Mission {
     char   *name;
     char   *description;
     char   *region;
+    Int8    vehicle;
     Double  targetLongitude;
     Double  targetLatitude;
     Double  primaryLongitude;
@@ -47,6 +48,8 @@ class Mission {
     Double TargetLatitude(Double d);
     Double TargetLongitude();
     Double TargetLongitude(Double d);
+    Int8   Vehicle();
+    Int8   Vehicle(Int8 v);
     void   Save(FILE* file);
     void   Load(FILE* file);
   };

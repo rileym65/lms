@@ -315,7 +315,10 @@ void Menu() {
          mission->Secondary3Latitude(), mission->Secondary3Longitude());
       WriteLn(buffer);
       }
-
+  GotoXY(5,11); Write("9. Vehicle        :");
+  if (mission->Vehicle() == 1) WriteLn("Apollo      ");
+  if (mission->Vehicle() == 2) WriteLn("Apollo J    ");
+  if (mission->Vehicle() == 3) WriteLn("Apollo Mk II");
   GotoXY(5,18); WriteLn("S. Save and exit");
   GotoXY(5,19); WriteLn("Q. Quit without saving");
   GotoXY(8,21); Write("Option ? ");
@@ -469,6 +472,116 @@ Boolean SelectFromMap(Double* latitude, Double* longitude) {
   return false;
   }
 
+void ShowVehicle(Int8 vehicle) {
+  GotoXY(23, 3); WriteLn("Vehicle:    1. Apollo");
+  GotoXY(23, 4); WriteLn("            2. Apollo J");
+  GotoXY(23, 5); WriteLn("            3. Apollo Mk II");
+  GotoXY(32, 2+vehicle); Write("-->"); Flush();
+  GotoXY(20, 8); Write("Ascent Stage");
+  GotoXY(50, 8); Write("Descent Stage");
+  GotoXY(5, 10); Write(" Dry Weight:");
+  GotoXY(5, 11); Write("       Fuel:");
+  GotoXY(5, 12); Write("     Oxygen:");
+  GotoXY(5, 13); Write("    Battery:");
+  GotoXY(5, 14); Write("     Thrust:");
+  GotoXY(5, 15); Write("        Isp:");
+  GotoXY(5, 16); Write("    Delta-V:");
+  GotoXY(5, 17); Write("Full Weight:");
+  GotoXY(5, 18); Write("   Rcs Fuel:");
+  GotoXY(5, 19); Write(" Rcs Thrust:");
+  GotoXY(5, 20); Write("    Rcs Isp:");
+
+  switch (vehicle) {
+    case 1:
+         GotoXY(20,10); Write("2150 kg ");     /* Ascent Dry Weight */
+         GotoXY(20,11); Write("2375 kg ");     /* Ascent Fuel */
+         GotoXY(20,12); Write("10 hrs  ");     /* Ascent Oxygen */
+         GotoXY(20,13); Write("10 hrs  ");     /* Ascent Battery */
+         GotoXY(20,14); Write("15570 n ");     /* Ascent Thrust */
+         GotoXY(20,15); Write("311 s   ");     /* Ascent Isp */
+         GotoXY(20,16); Write("2074 m/s");     /* Ascent Delta V */
+         GotoXY(20,17); Write("4812 kg ");     /* Ascent Full Weight */
+         GotoXY(50,10); Write("2134 kg ");     /* Descent Dry Weight */
+         GotoXY(50,11); Write("8873 kg ");     /* Descent Fuel */
+         GotoXY(50,12); Write("45 hrs ");      /* Descent Oxygen */
+         GotoXY(50,13); Write("45 hrs ");      /* Descent Battery */
+         GotoXY(50,14); Write("43900 n ");     /* Descent Thrust */
+         GotoXY(50,15); Write("311 s   ");     /* Descent Isp */
+         GotoXY(50,16); Write("2688 m/s");     /* Descent Delta V */
+         GotoXY(50,17); Write("10334 kg");     /* Descent Full Weight */
+         GotoXY(20,18); Write("287 kg  ");     /* Rcs Fuel */
+         GotoXY(20,19); Write("1780 n  ");     /* Rcs Thurst */
+         GotoXY(20,20); Write("290 s  ");      /* Rcs Isp */
+         break;
+    case 2:
+         GotoXY(20,10); Write("2150 kg ");     /* Ascent Dry Weight */
+         GotoXY(20,11); Write("2375 kg ");     /* Ascent Fuel */
+         GotoXY(20,12); Write("10 hrs  ");     /* Ascent Oxygen */
+         GotoXY(20,13); Write("10 hrs  ");     /* Ascent Battery */
+         GotoXY(20,14); Write("15570 n ");     /* Ascent Thrust */
+         GotoXY(20,15); Write("311 s   ");     /* Ascent Isp */
+         GotoXY(20,16); Write("2074 m/s");     /* Ascent Delta V */
+         GotoXY(20,17); Write("4812 kg ");     /* Ascent Full Weight */
+         GotoXY(50,10); Write("2134 kg ");     /* Descent Dry Weight */
+         GotoXY(50,11); Write("9394 kg ");     /* Descent Fuel */
+         GotoXY(50,12); Write("75 hrs ");      /* Descent Oxygen */
+         GotoXY(50,13); Write("75 hrs ");      /* Descent Battery */
+         GotoXY(50,14); Write("43900 n ");     /* Descent Thrust */
+         GotoXY(50,15); Write("311 s   ");     /* Descent Isp */
+         GotoXY(50,16); Write("2791 m/s");     /* Descent Delta V */
+         GotoXY(50,17); Write("10855 kg");     /* Descent Full Weight */
+         GotoXY(20,18); Write("287 kg  ");     /* Rcs Fuel */
+         GotoXY(20,19); Write("1780 n  ");     /* Rcs Thurst */
+         GotoXY(20,20); Write("290 s  ");      /* Rcs Isp */
+         break;
+    case 3:
+         GotoXY(20,10); Write("2234 kg ");     /* Ascent Dry Weight */
+         GotoXY(20,11); Write("2615 kg ");     /* Ascent Fuel */
+         GotoXY(20,12); Write("10 hrs  ");     /* Ascent Oxygen */
+         GotoXY(20,13); Write("10 hrs  ");     /* Ascent Battery */
+         GotoXY(20,14); Write("16890 n ");     /* Ascent Thrust */
+         GotoXY(20,15); Write("344 s   ");     /* Ascent Isp */
+         GotoXY(20,16); Write("2381 m/s");     /* Ascent Delta V */
+         GotoXY(20,17); Write("5165 kg ");     /* Ascent Full Weight */
+         GotoXY(50,10); Write("2346 kg ");     /* Descent Dry Weight */
+         GotoXY(50,11); Write("9720 kg ");     /* Descent Fuel */
+         GotoXY(50,12); Write("110 hrs ");     /* Descent Oxygen */
+         GotoXY(50,13); Write("110 hrs ");     /* Descent Battery */
+         GotoXY(50,14); Write("49215 n ");     /* Descent Thrust */
+         GotoXY(50,15); Write("334 s   ");     /* Descent Isp */
+         GotoXY(50,16); Write("2719 m/s");     /* Descent Delta V */
+         GotoXY(50,17); Write("12066 kg");     /* Descent Full Weight */
+         GotoXY(20,18); Write("316 kg  ");     /* Rcs Fuel */
+         GotoXY(20,19); Write("1970 n  ");     /* Rcs Thurst */
+         GotoXY(20,20); Write("401 s  ");      /* Rcs Isp */
+         break;
+    }
+  Flush();
+  }
+
+void SelectVehicle() {
+  int key;
+  Int8 vehicle;
+  vehicle = mission->Vehicle();
+  ClearScreen();
+  ShowVehicle(vehicle);
+  HideCursor(); Flush();
+  while (key != 13 && key != 27) {
+    key = Inkey();
+    if (key == 10) key = 13;
+    if (key == KEY_DOWN_ARROW) {
+      if (++vehicle > 3) vehicle = 1;
+      ShowVehicle(vehicle);
+      }
+    if (key == KEY_UP_ARROW) {
+      if (--vehicle < 1) vehicle = 3;
+      ShowVehicle(vehicle);
+      }
+    }
+  ShowCursor(); Flush();
+  if (key == 13) mission->Vehicle(vehicle);
+  }
+
 void MissionEditor() {
   Double longitude;
   Double latitude;
@@ -551,6 +664,10 @@ void MissionEditor() {
         mission->Secondary3Longitude(longitude);
         mission->Secondary3Latitude(latitude);
         }
+      Menu();
+      }
+    if (key == '9') {
+      SelectVehicle();
       Menu();
       }
     if (key == 's') {

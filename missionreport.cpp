@@ -28,6 +28,12 @@ void MissionReport() {
   fprintf(file,"Mission    : %s%s",mission->Name(),LE);
   fprintf(file,"Description: %s%s",mission->Description(),LE);
   fprintf(file,"Region     : %s%s%s",mission->Region(),LE,LE);
+  if (mission->Vehicle() == VEHICLE_APOLLO)
+    fprintf(file,"Vehicle    : Apollo%s",LE);
+  if (mission->Vehicle() == VEHICLE_APOLLO_J)
+    fprintf(file,"Vehicle    : Apollo J%s",LE);
+  if (mission->Vehicle() == VEHICLE_APOLLO_MKII)
+    fprintf(file,"Vehicle    : Apollo Mk II%s",LE);
   fprintf(file,"Mission Time Line:%s",LE);
   fprintf(file,"  Undock UTC    : %s%s",ClockToString(buffer,clockUd),LE);
   if (clockDOI != 0)

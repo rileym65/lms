@@ -18,6 +18,7 @@ Mission::Mission() {
   secondary3Latitude = -99999;
   targetLongitude = -99999;
   targetLatitude = -99999;
+  vehicle = VEHICLE_APOLLO_MKII;
   }
 
 Mission::~Mission() {
@@ -148,6 +149,15 @@ Double Mission::TargetLongitude(Double d) {
   return targetLongitude;
   }
 
+Int8 Mission::Vehicle() {
+  return vehicle;
+  }
+
+Int8 Mission::Vehicle(Int8 v) {
+  vehicle = v;
+  return vehicle;
+  }
+
 void Mission::Load(FILE* file) {
   char* pline;
   while ((pline = nextLine(file)) != NULL) {
@@ -165,6 +175,7 @@ void Mission::Load(FILE* file) {
     else if (startsWith(pline,"secondary2longitude ")) secondary2Longitude = atof(nw(pline));
     else if (startsWith(pline,"secondary3latitude ")) secondary3Latitude = atof(nw(pline));
     else if (startsWith(pline,"secondary3longitude ")) secondary3Longitude = atof(nw(pline));
+    else if (startsWith(pline,"vehicle ")) vehicle = atoi(nw(pline));
     }
   }
 
@@ -194,5 +205,6 @@ void Mission::Save(FILE* file) {
     fprintf(file,"  Secondary3Latitude %f%s",secondary3Latitude,LE);
     fprintf(file,"  Secondary3Longitude %f%s",secondary3Longitude,LE);
     }
+  fprintf(file,"  Vehicle %d%s",vehicle,LE);
   fprintf(file,"  }%s",LE);
   }
