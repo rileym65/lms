@@ -493,43 +493,43 @@ void ShowVehicle(Int8 vehicle) {
 
   switch (vehicle) {
     case 1:
-         GotoXY(20,10); Write("2150 kg ");     /* Ascent Dry Weight */
+         GotoXY(20,10); Write("2179 kg ");     /* Ascent Dry Weight */
          GotoXY(20,11); Write("2375 kg ");     /* Ascent Fuel */
          GotoXY(20,12); Write("10 hrs  ");     /* Ascent Oxygen */
          GotoXY(20,13); Write("10 hrs  ");     /* Ascent Battery */
-         GotoXY(20,14); Write("15570 n ");     /* Ascent Thrust */
+         GotoXY(20,14); Write("14314 n ");     /* Ascent Thrust */
          GotoXY(20,15); Write("311 s   ");     /* Ascent Isp */
-         GotoXY(20,16); Write("2074 m/s");     /* Ascent Delta V */
+         GotoXY(20,16); Write("2057 m/s");     /* Ascent Delta V */
          GotoXY(20,17); Write("4812 kg ");     /* Ascent Full Weight */
-         GotoXY(50,10); Write("2134 kg ");     /* Descent Dry Weight */
-         GotoXY(50,11); Write("8873 kg ");     /* Descent Fuel */
+         GotoXY(50,10); Write("2033 kg ");     /* Descent Dry Weight */
+         GotoXY(50,11); Write("8248 kg ");     /* Descent Fuel */
          GotoXY(50,12); Write("45 hrs ");      /* Descent Oxygen */
          GotoXY(50,13); Write("45 hrs ");      /* Descent Battery */
-         GotoXY(50,14); Write("43900 n ");     /* Descent Thrust */
+         GotoXY(50,14); Write("43903 n ");     /* Descent Thrust */
          GotoXY(50,15); Write("311 s   ");     /* Descent Isp */
-         GotoXY(50,16); Write("2688 m/s");     /* Descent Delta V */
-         GotoXY(50,17); Write("10334 kg");     /* Descent Full Weight */
+         GotoXY(50,16); Write("2404 m/s");     /* Descent Delta V */
+         GotoXY(50,17); Write("10281 kg");     /* Descent Full Weight */
          GotoXY(20,18); Write("287 kg  ");     /* Rcs Fuel */
          GotoXY(20,19); Write("1780 n  ");     /* Rcs Thurst */
          GotoXY(20,20); Write("290 s  ");      /* Rcs Isp */
          break;
     case 2:
-         GotoXY(20,10); Write("2150 kg ");     /* Ascent Dry Weight */
+         GotoXY(20,10); Write("2127 kg ");     /* Ascent Dry Weight */
          GotoXY(20,11); Write("2375 kg ");     /* Ascent Fuel */
          GotoXY(20,12); Write("10 hrs  ");     /* Ascent Oxygen */
          GotoXY(20,13); Write("10 hrs  ");     /* Ascent Battery */
-         GotoXY(20,14); Write("15570 n ");     /* Ascent Thrust */
+         GotoXY(20,14); Write("14345 n ");     /* Ascent Thrust */
          GotoXY(20,15); Write("311 s   ");     /* Ascent Isp */
-         GotoXY(20,16); Write("2074 m/s");     /* Ascent Delta V */
-         GotoXY(20,17); Write("4812 kg ");     /* Ascent Full Weight */
-         GotoXY(50,10); Write("2134 kg ");     /* Descent Dry Weight */
-         GotoXY(50,11); Write("9394 kg ");     /* Descent Fuel */
+         GotoXY(20,16); Write("2089 m/s");     /* Ascent Delta V */
+         GotoXY(20,17); Write("4789 kg ");     /* Ascent Full Weight */
+         GotoXY(50,10); Write("2802 kg ");     /* Descent Dry Weight */
+         GotoXY(50,11); Write("8872 kg ");     /* Descent Fuel */
          GotoXY(50,12); Write("75 hrs ");      /* Descent Oxygen */
          GotoXY(50,13); Write("75 hrs ");      /* Descent Battery */
-         GotoXY(50,14); Write("43900 n ");     /* Descent Thrust */
+         GotoXY(50,14); Write("43903 n ");     /* Descent Thrust */
          GotoXY(50,15); Write("311 s   ");     /* Descent Isp */
-         GotoXY(50,16); Write("2791 m/s");     /* Descent Delta V */
-         GotoXY(50,17); Write("10855 kg");     /* Descent Full Weight */
+         GotoXY(50,16); Write("2361 m/s");     /* Descent Delta V */
+         GotoXY(50,17); Write("11674 kg");     /* Descent Full Weight */
          GotoXY(20,18); Write("287 kg  ");     /* Rcs Fuel */
          GotoXY(20,19); Write("1780 n  ");     /* Rcs Thurst */
          GotoXY(20,20); Write("290 s  ");      /* Rcs Isp */
