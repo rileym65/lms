@@ -63,6 +63,7 @@
 #define VEHICLE_APOLLO          1
 #define VEHICLE_APOLLO_J        2
 #define VEHICLE_APOLLO_MKII     3
+#define VEHICLE_APOLLO_MKIII    4
 
 #define LE   "\n"
 

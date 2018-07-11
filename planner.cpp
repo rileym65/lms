@@ -476,6 +476,7 @@ void ShowVehicle(Int8 vehicle) {
   GotoXY(23, 3); WriteLn("Vehicle:    1. Apollo");
   GotoXY(23, 4); WriteLn("            2. Apollo J");
   GotoXY(23, 5); WriteLn("            3. Apollo Mk II");
+  GotoXY(23, 6); WriteLn("            4. Apollo Mk III");
   GotoXY(32, 2+vehicle); Write("-->"); Flush();
   GotoXY(20, 8); Write("Ascent Stage");
   GotoXY(50, 8); Write("Descent Stage");
@@ -555,6 +556,27 @@ void ShowVehicle(Int8 vehicle) {
          GotoXY(20,19); Write("1970 n  ");     /* Rcs Thurst */
          GotoXY(20,20); Write("401 s  ");      /* Rcs Isp */
          break;
+    case 4:
+         GotoXY(20,10); Write("2410 kg ");     /* Ascent Dry Weight */
+         GotoXY(20,11); Write("3500 kg ");     /* Ascent Fuel */
+         GotoXY(20,12); Write("10 hrs  ");     /* Ascent Oxygen */
+         GotoXY(20,13); Write("10 hrs  ");     /* Ascent Battery */
+         GotoXY(20,14); Write("18000 n ");     /* Ascent Thrust */
+         GotoXY(20,15); Write("462 s   ");     /* Ascent Isp */
+         GotoXY(20,16); Write("3733 m/s");     /* Ascent Delta V */
+         GotoXY(20,17); Write("6235 kg ");     /* Ascent Full Weight */
+         GotoXY(50,10); Write("2546 kg ");     /* Descent Dry Weight */
+         GotoXY(50,11); Write("13000 kg ");    /* Descent Fuel */
+         GotoXY(50,12); Write("120 hrs ");     /* Descent Oxygen */
+         GotoXY(50,13); Write("120 hrs ");     /* Descent Battery */
+         GotoXY(50,14); Write("53500 n ");     /* Descent Thrust */
+         GotoXY(50,15); Write("462 s   ");     /* Descent Isp */
+         GotoXY(50,16); Write("4115 m/s");     /* Descent Delta V */
+         GotoXY(50,17); Write("15546 kg");     /* Descent Full Weight */
+         GotoXY(20,18); Write("325 kg  ");     /* Rcs Fuel */
+         GotoXY(20,19); Write("2150 n  ");     /* Rcs Thurst */
+         GotoXY(20,20); Write("340 s  ");      /* Rcs Isp */
+         break;
     }
   Flush();
   }
@@ -570,7 +592,7 @@ void SelectVehicle() {
     key = Inkey();
     if (key == 10) key = 13;
     if (key == KEY_DOWN_ARROW) {
-      if (++vehicle > 3) vehicle = 1;
+      if (++vehicle > 4) vehicle = 1;
       ShowVehicle(vehicle);
       }
     if (key == KEY_UP_ARROW) {

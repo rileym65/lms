@@ -169,6 +169,27 @@ void setupVehicle() {
          lm->RcsIsp(401.0);
          lm->RcsNewtons(1970.0);
          break;
+    case VEHICLE_APOLLO_MKIII:
+         lm->AscentFuel(3500.0);
+         lm->AscentBattery(10 * 3600);
+         lm->AscentOxygen(10 * 3600);
+         lm->AscentEOxygen(2 * 3600);
+         lm->AscentEBattery(2 * 3600);
+         lm->AscentDryWeight(2410.0);
+         lm->AscentIsp(462.0);
+         lm->AscentNewtons(18000.0);
+         lm->DescentFuel(13000.0);
+         lm->DescentBattery(110 * 3600);
+         lm->DescentOxygen(110 * 3600);
+         lm->DescentEOxygen(10 * 3600);
+         lm->DescentEBattery(10 * 3600);
+         lm->DescentDryWeight(2546.0);
+         lm->DescentIsp(462.0);
+         lm->DescentNewtons(53500.0);
+         lm->RcsFuel(325.0);
+         lm->RcsIsp(340.0);
+         lm->RcsNewtons(2150.0);
+         break;
     }
   lm->MaxAscentFuel(lm->AscentFuel());
   lm->MaxDescentFuel(lm->DescentFuel());
@@ -402,11 +423,12 @@ int main(int argc, char** argv) {
       if (buffer[i] >0 && buffer[i] < 32) buffer[i] = 0;
     mission->Name(buffer);
     vehicle = 0;
-    while (vehicle < 1 || vehicle > 3) {
+    while (vehicle < 1 || vehicle > 4) {
       WriteLn("Vehicle:");
       WriteLn("  1. Apollo");
       WriteLn("  2. Apollo-J");
       WriteLn("  3. Apollo Mk II");
+      WriteLn("  4. Apollo Mk III");
       fgets(buffer,20,stdin);
       sscanf(buffer,"%d",&i);
       vehicle = i;
