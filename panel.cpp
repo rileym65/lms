@@ -209,6 +209,102 @@ void Panel::addGauge(Gauge* g) {
   }
 
 void Panel::useDefault(const char* filename) {
+  if (strcmp(filename,"csm.pnl") == 0) {
+    Box(1,1,80,24);
+    VLine(47,1,24);
+    Box(56,4,71,6);
+    Box(49,9,77,17);
+    Box(56,20,72,22);
+    Label(63,2,"CSM");
+    addGauge(new G_AmsMessage(57, 21, false, vehicle));
+    addGauge(new G_Ins(50, 10, false, vehicle));
+    addGauge(new G_ClockUT(58, 5, false, vehicle));
+    addGauge(new G_OrbitLarge(2, 2, false, vehicle));
+    return;
+    }
+  if (strcmp(filename,"lm.pnl") == 0) {
+    Box(1,1,80,24);
+    Box(38,14,54,16);
+    HLine(1,16,80);
+    VLine(27,1,16);
+    VLine(54,1,16);
+    HLine(27,3,54);
+    VLine(22,16,24);
+    VLine(52,16,24);
+    VLine(60,16,22);
+    HLine(1,20,22);
+    HLine(52,22,73);
+    VLine(73,16,24);
+    Label(49,15,":");
+    addGauge(new G_AmsDock(41,4, false, vehicle));
+    addGauge(new G_MultiAxis(55,2, false, vehicle));
+    addGauge(new G_AmsLand(28,4, false, vehicle));
+    addGauge(new G_AmsMessage(39,15, false, vehicle));
+    addGauge(new G_PrecAxis(2,2, false, vehicle));
+    addGauge(new G_Clocks(61,17, false, vehicle));
+    addGauge(new G_EvaPrep(53,23, false, vehicle));
+    addGauge(new G_LmFuel(53,17, false, vehicle));
+    addGauge(new G_LmRock(74,23, false, vehicle));
+    addGauge(new G_OxyBat(53,20, false, vehicle));
+    addGauge(new G_Pilot(74,17, false, vehicle));
+    addGauge(new G_PilotLocation(75,21, false, vehicle));
+    addGauge(new G_Rcs(2,17, false, vehicle));
+    addGauge(new G_Attitude(5,12, false, vehicle));
+    addGauge(new G_Radars(31,13, false, vehicle));
+    addGauge(new G_Throttle(41,13, false, vehicle));
+    addGauge(new G_Computer(23,17, false, vehicle));
+    addGauge(new G_Lamps(2,21, false, vehicle));
+    addGauge(new G_Seq(29,2, false, vehicle));
+    return;
+    }
+  if (strcmp(filename,"lrv.pnl") == 0) {
+    Box(1,1,80,24);
+    VLine(47,1,24);
+    VLine(54,1,16);
+    HLine(47,4,54);
+    HLine(47,11,54);
+    HLine(47,16,80);
+    VLine(60,16,22);
+    VLine(73,16,24);
+    Box(52,22,68,24);
+    addGauge(new G_ClockUT(61,17, false, vehicle));
+    addGauge(new G_ClockMI(61,18, false, vehicle));
+    addGauge(new G_ClockEV(61,19, false, vehicle));
+    addGauge(new G_ClockTE(61,20, false, vehicle));
+    addGauge(new G_AmsDown(55,2, false, vehicle));
+    addGauge(new G_AmsLrv(48,12, false, vehicle));
+    addGauge(new G_AmsMessage(53,23, false, vehicle));
+    addGauge(new G_Pilot(74,17, false, vehicle));
+    addGauge(new G_PilotLocation(75,21, false, vehicle));
+    addGauge(new G_Plss(48,5, false, vehicle));
+    addGauge(new G_MapLarge(2,2, false, vehicle));
+    addGauge(new G_GroundIns(48,17, false, vehicle));
+    return;
+    }
+  if (strcmp(filename,"plss.pnl") == 0) {
+    Box(1,1,80,24);
+    VLine(47,1,24);
+    VLine(54,1,16);
+    HLine(47,4,54);
+    HLine(47,11,54);
+    HLine(47,16,80);
+    VLine(60,16,22);
+    VLine(73,16,24);
+    Box(52,22,68,24);
+    addGauge(new G_ClockUT(61,17, false, vehicle));
+    addGauge(new G_ClockMI(61,18, false, vehicle));
+    addGauge(new G_ClockEV(61,19, false, vehicle));
+    addGauge(new G_ClockTE(61,20, false, vehicle));
+    addGauge(new G_AmsDown(55,2, false, vehicle));
+    addGauge(new G_AmsLrv(48,12, false, vehicle));
+    addGauge(new G_AmsMessage(53,23, false, vehicle));
+    addGauge(new G_Pilot(74,17, false, vehicle));
+    addGauge(new G_PilotLocation(75,21, false, vehicle));
+    addGauge(new G_Plss(48,5, false, vehicle));
+    addGauge(new G_MapLarge(2,2, false, vehicle));
+    addGauge(new G_GroundIns(48,17, false, vehicle));
+    return;
+    }
   Box(1,1,80,16);
   Box(1,16,80,24);
   VLine(27,1,16);

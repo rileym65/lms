@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "header.h"
 #include "map.h"
+#include "lunarref.h"
 
 Map::Map() {
   Int32 i;
@@ -16,7 +17,8 @@ Map::Map() {
   for (y=0; y<61; y++)
     for (x=0; x<61; x++)
        levelM[y][x] = '_';
-  loadFeatures("lunarref.txt");
+//  loadFeatures("lunarref.txt");
+  loadFeatures(NULL);
   loadFeatures("userref.txt");
   generateLevelHMap();
   rng.Seed(1);
@@ -33,9 +35,7 @@ Map::Map() {
 Map::~Map() {
   }
 
-void Map::loadFeatures(const char* filename) {
-  FILE* file;
-  char  line[1024];
+void Map::processFeature(const char* line) {
   char  name[100];
   Double lng;
   Double lat;
@@ -45,9 +45,6 @@ void Map::loadFeatures(const char* filename) {
   Int32  cellX;
   Int32  cellY;
   char   symbol[64];
-  file = fopen(filename,"r");
-  if (file == NULL) return;
-  while (fgets(line,1024,file) != NULL) {
     sscanf(line,"%[^,], %lf, %lf, %lf, %1s",name,&lat,&lng,&diam,symbol);
     cellX = Cell(lng);
     cellY = Cell(lat);
@@ -76,13 +73,33 @@ void Map::loadFeatures(const char* filename) {
     features[numFeatures-1].maxCellY = Cell(features[numFeatures-1].maxLatitude);
     features[numFeatures-1].cellRadius = 
       (features[numFeatures-1].maxCellX - cellX) * (features[numFeatures-1].maxCellX - cellX);
+    features[numFeatures-1].radius = rad * rad;
     features[numFeatures-1].radius = rad;
     width = 25;
     if (rad < 200) width = 7;
     features[numFeatures-1].rad1 = (rad-width) * (rad-width);
     features[numFeatures-1].rad2 = (rad+width) * (rad+width);
+  }
+
+void Map::loadFeatures(const char* filename) {
+  FILE* file;
+  char  line[1024];
+  Int32  pos;
+  if (filename != NULL) {
+    file = fopen(filename,"r");
+    if (file == NULL) return;
+    while (fgets(line,1024,file) != NULL) {
+      processFeature(line);
+      }
+    fclose(file);
     }
-  fclose(file);
+  else {
+    pos = 0;
+    while (featureList[pos].valid != 0) {
+      processFeature(featureList[pos].data);
+      pos++;
+      }
+    }
   }
 
 FEATURE* Map::Features() {
@@ -215,6 +232,46 @@ void Map::drawFeature(Double longitude, Double latitude, Double diameter,char ch
     }
   }
 
+char Map::symbolAt(Double longitude, Double latitude) {
+  UInt32 i;
+  char   ret;
+  Double dx,dy,dist;
+  ret = '_';
+  for (i=0; i<numFeatures; i++)
+    if (features[i].diameter > 0 &&
+        features[i].symbol != '/') {
+      if (longitude >= features[i].minLongitude &&
+          longitude <= features[i].maxLongitude &&
+          latitude >= features[i].minLatitude &&
+          latitude <= features[i].maxLatitude) {
+        if (features[i].symbol == 'o') {
+          if (features[i].diameter < 5) ret = '.';
+          if (features[i].diameter < 15) ret = 'o';
+          if (features[i].diameter < 60) ret = 'X';
+          else ret = ' ';
+          }
+        else if (ret == '_') {
+          dx = (longitude - features[i].longitude) * METERS;
+          dy = (latitude - features[i].latitude) * METERS;
+          dist = dx*dx + dy*dy;
+          if (dist <= features[i].radius)
+            ret = features[i].symbol;
+          if (ret == 'O') ret = ' ';
+          }
+        }
+    }
+  return ret;
+  }
+
+/*
+void Map::generateLevelHMap() {
+  Int32 x,y;
+  for (y=-90; y<=90; y++)
+    for (x=-180; x<=180; x++)
+      levelH[y+90][x+180] = symbolAt(x, -y);
+  }
+*/
+
 void Map::generateLevelHMap() {
   Int32  i;
   Double lng;
@@ -225,7 +282,7 @@ void Map::generateLevelHMap() {
 //  Int32  cellX;
 //  Int32  cellY;
 //  char   symbol[64];
-  for (i=0; i<numFeatures; i++) {
+  for (i=0; (UInt32)i<numFeatures; i++) {
     lng = features[i].longitude;
     lat = features[i].latitude;
     diam = features[i].diameter;
@@ -310,7 +367,7 @@ void Map::drawCraterMedium(Double longitude, Double latitude, Double diameter) {
   }
 
 void Map::generateLevelMMap(Double longitude,Double latitude) {
-  Int32  i;
+  UInt32  i;
   Double lng;
   Double lat;
   Double diam;
@@ -407,7 +464,8 @@ char Map::Lurrain(Double longitude, Double latitude) {
   cellX = Cell(longitude);
   cellY = Cell(latitude);
   char ltype;
-  for (i=0; i<numFeatures; i++) {
+  ltype = '_';
+  for (i=0; (UInt32)i<numFeatures; i++) {
     if (features[i].cellX == cellX && features[i].cellY == cellY)
       return features[i].symbol;
     if (features[i].symbol == 'o' &&
@@ -418,12 +476,15 @@ char Map::Lurrain(Double longitude, Double latitude) {
       dist = dx*dx + dy*dy;
       if (dist >= features[i].rad1 && dist <= features[i].rad2)
         return '^';
+      else if (dist < features[i].rad1) ltype = ' ';
       }
     }
   i = (cellX & 0x7fffffff) ^ (cellY << 15);
+i = (cellX & 0x7fff) * ((~cellY) & 0x7fff);
   rng.Seed(i);
+//  if (ltype == '_') ltype = CellM(longitude, latitude);
+  if (ltype == '_') ltype = CellH(longitude, latitude);
   i = rng.Next(1000);
-  ltype = CellM(longitude, latitude);
   switch (ltype) {
     case '~':
          if ((i -= 6) < 0) return '.';

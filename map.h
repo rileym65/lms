@@ -28,7 +28,7 @@ typedef struct {
 class Map {
   protected:
     FEATURE *features;
-    Int32    numFeatures;
+    UInt32   numFeatures;
     char     levelH[182][362];
     char     levelM[62][62];
     Double   lastLongitude;
@@ -42,6 +42,8 @@ class Map {
     void generateLevelHMap();
     void drawCraterMedium(Double longitude, Double latitude, Double diameter);
     void generateLevelMMap(Double longitude,Double latitude);
+    char symbolAt(Double longitude, Double latitude);
+    void processFeature(const char* line);
   public:
     Map();
     ~Map();
