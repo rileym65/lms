@@ -136,7 +136,6 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"sampleplains ")) samplePlains = atoi(nw(pline));
     else if (startsWith(pline,"samplespecial ")) sampleSpecial = atoi(nw(pline));
     else if (startsWith(pline,"sampledepression ")) sampleDepression = atoi(nw(pline));
-
     else if (startsWith(pline,"lrvsamplesmallrock ")) lrvSampleSmallRock = atoi(nw(pline));
     else if (startsWith(pline,"lrvsamplemediumrock ")) lrvSampleMediumRock = atoi(nw(pline));
     else if (startsWith(pline,"lrvsamplelargerock ")) lrvSampleLargeRock = atoi(nw(pline));
@@ -147,6 +146,16 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"lrvsampleplains ")) lrvSamplePlains = atoi(nw(pline));
     else if (startsWith(pline,"lrvsamplespecial ")) lrvSampleSpecial = atoi(nw(pline));
     else if (startsWith(pline,"lrvsampledepression ")) lrvSampleDepression = atoi(nw(pline));
+    else if (startsWith(pline,"cartsamplesmallrock ")) cartSampleSmallRock = atoi(nw(pline));
+    else if (startsWith(pline,"cartsamplemediumrock ")) cartSampleMediumRock = atoi(nw(pline));
+    else if (startsWith(pline,"cartsamplelargerock ")) cartSampleLargeRock = atoi(nw(pline));
+    else if (startsWith(pline,"cartsamplesmallcrater ")) cartSampleSmallCrater = atoi(nw(pline));
+    else if (startsWith(pline,"cartsamplemediumcrater ")) cartSampleMediumCrater = atoi(nw(pline));
+    else if (startsWith(pline,"cartsamplelargecrater ")) cartSampleLargeCrater = atoi(nw(pline));
+    else if (startsWith(pline,"cartsamplerise ")) cartSampleRise = atoi(nw(pline));
+    else if (startsWith(pline,"cartsampleplains ")) cartSamplePlains = atoi(nw(pline));
+    else if (startsWith(pline,"cartsamplespecial ")) cartSampleSpecial = atoi(nw(pline));
+    else if (startsWith(pline,"cartsampledepression ")) cartSampleDepression = atoi(nw(pline));
     else if (startsWith(pline,"sample ")) {
       pline = nw(pline);
       sscanf(pline,"%d,%d",&samples[numSamples].cellX,&samples[numSamples].cellY);

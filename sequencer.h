@@ -38,6 +38,9 @@
 #define SEQ_GETALSEP    33
 #define SEQ_PUTALSEP    34
 #define SEQ_MESSAGE     35
+#define SEQ_TOCART      36
+#define SEQ_CARTTOLM    37
+#define SEQ_CARTTOLRV   38
 
 
 class Sequencer {
@@ -58,6 +61,8 @@ class Sequencer {
     void  BoxToLm();
     void  BoxToLrv();
     void  BoxToPlss();
+    void  CartToLm();
+    void  CartToLrv();
     void  Cycle();
     void  CabinEvacuate();
     void  CabinPressurize();
@@ -81,6 +86,7 @@ class Sequencer {
     void  PutFlag();
     void  PutLaser();
     void  Rest();
+    void  SampleToCart();
     void  SetupLaser();
     void  SetupLrv();
     void  Sleep();

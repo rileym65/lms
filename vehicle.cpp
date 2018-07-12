@@ -143,6 +143,14 @@ Double Vehicle::Latitude(Double d) {
   return latitude;
   }
 
+Double Vehicle::LatitudeVelocity() {
+  return latitudeVel;
+  }
+
+Double Vehicle::LatitudeAcceleration() {
+  return latitudeAcc;
+  }
+
 Double Vehicle::Longitude() {
   return longitude;
   }
@@ -341,7 +349,11 @@ void Vehicle::Cycle() {
   Double hyp;
   Double v1,v2;
   Double vel;
+  Double tmp;
   Vector vnorm;
+  lastLatitude = latitude;
+  lastLongitude = longitude;
+  lastLatitudeVel = latitudeVel;
   if (rollRate != 0) {
     roll += rollRate;
     if (roll > 180) roll -= 360;
@@ -394,6 +406,11 @@ void Vehicle::Cycle() {
   if (accelNorth < -999) accelNorth = -999;
   if (accelEast < -999) accelEast = -999;
   if (accelAltitude < -999) accelAltitude = -999;
+  tmp = latitude - lastLatitude;
+  if (tmp <= -180) tmp += 360;
+  if (tmp >= 180) tmp -= 360;
+  latitudeVel = tmp * METERS;
+  latitudeAcc = latitudeVel - lastLatitudeVel;
   }
 
 void Vehicle::Init() {

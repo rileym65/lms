@@ -10,8 +10,6 @@ Features:
 Bugs:
 -----
   - Larger crater rims need some work, they shift as you move
-  - Apparent large shift in position during descent that do not 
-    correlate with delta movements
 
 
 Done, but needs further testing:

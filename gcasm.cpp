@@ -110,6 +110,8 @@ SYMBOL symtab[] = {
   { "PITCH",  0x0000022b },
   { "YAW",    0x0000022c },
   { "CLKOR",  0x0000022d },
+  { "LATVEL", 0x0000022e },
+  { "LATACC", 0x0000022f },
 
   { "VEL",    0x00000300 },
   { "POS",    0x00000301 },

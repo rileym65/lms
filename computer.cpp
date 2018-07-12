@@ -299,6 +299,8 @@ Double Computer::read(UInt16 addr) {
       case 0x2b: return vehicle->Pitch();
       case 0x2c: return vehicle->Yaw();
       case 0x2d: return clockOr;
+      case 0x2e: return vehicle->LatitudeVelocity();
+      case 0x2f: return vehicle->LatitudeAcceleration();
       }
     }
   if ((addr & 0xf00) == 0x600) {

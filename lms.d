@@ -261,7 +261,6 @@
 [I4]
 [TB]
 	|M       |-|Move into LRV                                     |
-	|B       |-|Drop rock, Get box from LRV, put box in LM        |
 	|V       |-|Setup LRV                                         |
 	|F       |-|Get flag from LM, plant flag                      |
 	|f       |-|Put flag back into LM                             |
@@ -271,6 +270,8 @@
 	|<End>   |-|Throttle down 10%                                 |
 	|C       |-|Collect/Drop sample                               |
 	|S       |-|Store sample in lrv box or Box into LM            |
+	|D       |-|Drop sample                                       |
+	|s       |-|Store sample in cart                              |
 	|Z       |-|Show damage report                                |
 	|E       |-|End EVA                                           |
 	|R       |-|Return sample box to rover                        |
@@ -278,6 +279,8 @@
 	|L       |-|Get laser reflector from LM, setup laser reflector|
 	|l       |-|Put laser reflector back into LM                  |
 	|A       |-|Get ALSEP from LM, setup ALSEP                    |
+	|T       |-|Transfer cart contents to LM                      |
+	|t       |-|Transfer cart contents to LRV                     |
 [TE]
 [I-4]
 [=]
@@ -321,6 +324,52 @@
 [te]
 [i-4]
 [=]
+[H2]	Available Landers
+[=]
+[H1]	Ascent Stage
+[I4]
+[TB]
+	| Spec             | Apollo   | Apollo-J | Mk II    | Mk III   |
+	| ---------------- | -------- | -------- | -------- | -------- |
+	| Thrust (n)       | 14314    | 14345    | 16890    | 18000    |
+	| Isp (sec)        | 311      | 311      | 344      | 462      |
+	| Delta-V (m/s)    | 2057     | 2089     | 2381     | 3733     |
+	| Fuel Use (kg/s)  | 4.69     | 4.70     | 5.0      | 3.97     |
+	| Throttle (%)     | 100      | 100      | 100      | 100      |
+	| Rcs Thrust (n)   | 1780     | 1780     | 1970     | 2150     |
+	| RCS Throttle (%) | 1,10,100 | 1,10,100 | 1,10,100 | 1,10,100 |
+	| RCS Fuel Use (kg)| 0.62     | 0.62     | 0.50     | 0.64     |
+	| RCS Isp (sec)    | 290      | 290      | 401      | 340      |
+	| Battery (hrs)    | 10       | 10       | 10       | 10       |
+	| Oxygen (hrs)     | 10       | 10       | 10       | 10       |
+	| Dry Weight (kg)  | 2179     | 2127     | 2615     | 2410     |
+	| Fuel (kg)        | 2375     | 2375     | 2615     | 3500     |
+	| RCS Fuel (kg)    | 287      | 287      | 316      | 325      |
+	| Full Weight (kg) | 4841     | 4789     | 5165     | 6235     |
+[TE]
+[I-4]
+[=]
+[H1]	Descent Stage
+[I4]
+[TB]
+	| Spec             | Apollo   | Apollo-J | Mk II    | Mk III   |
+	| ---------------- | -------- | -------- | -------- | -------- |
+	| Thrust (n)       | 43903    | 43903    | 49215    | 53500    |
+	| Isp (sec)        | 311      | 311      | 334      | 462      |
+	| Delta-V (m/s)    | 2404     | 2361     | 2719     | 4115     |
+	| Fuel Use (kg/s)  | 14.39    | 14.39    | 15.00    | 11.80    |
+	| Throttle (%)     | 10-100   | 10-100   | 10-100   | 10-100   |
+	| Battery (hrs)    | 45       | 75       | 110      | 120      |
+	| Oxygen (hrs)     | 45       | 75       | 110      | 120      |
+	| Dry Weight (kg)  | 2033     | 2802     | 2346     | 2546     |
+	| Fuel (kg)        | 8248     | 8872     | 9720     | 13000    |
+	| Full Weight (kg) | 10281    | 11674    | 12066    | 15546    |
+	| Max HVel (m/s)   | 1.22     | 1.22     | 1.22     | 1.22     |
+	| Max VVel (m/s)   | 3.05     | 3.05     | 3.05     | 3.05     |
+[TE]
+[I-4]
+[=]
+
 
 [H2]	Typical Mission Profile
 [H1]	Undocking and separation maneuvers

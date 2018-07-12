@@ -77,6 +77,18 @@ Vector t;
   lrvSampleLargeCrater = 0;
   lrvSamplePlains = 0;
   lrvSampleRise = 0;
+  lrvSampleSpecial = 0;
+  lrvSampleDepression = 0;
+  cartSampleSmallRock = 0;
+  cartSampleMediumRock = 0;
+  cartSampleLargeRock = 0;
+  cartSampleSmallCrater = 0;
+  cartSampleMediumCrater = 0;
+  cartSampleLargeCrater = 0;
+  cartSamplePlains = 0;
+  cartSampleRise = 0;
+  cartSampleSpecial = 0;
+  cartSampleDepression = 0;
   landedMet = 0;
   liftoffMet = 0;
   landedLongitude = 0;
@@ -252,6 +264,7 @@ void cycle() {
   plss->Cycle();
   if (lrv->IsSetup()) lrv->Cycle();
   ins->Cycle();
+  if (lm->Comp() != NULL) lm->Comp()->Cycle();
   if (!docked && pilotLocation == PILOT_LM) {
     if (ins->RelPos().Length() < 19) {
       if (alignedForDocking()) {

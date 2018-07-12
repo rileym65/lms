@@ -27,6 +27,12 @@ class Vehicle {
     Vector    faceUp;
     Double    latitude;
     Double    longitude;
+    Double    lastLatitude;
+    Double    lastLatitudeVel;
+    Double    lastLongitude;
+    Double    latitudeVel;
+    Double    latitudeAcc;
+    Double    longitudeVel;
     Double    maxBattery;
     Double    maxOxygen;
     Matrix    orientation;
@@ -80,6 +86,8 @@ class Vehicle {
     virtual Vector    FaceUp(Vector v);
     virtual Double    Latitude();
     virtual Double    Latitude(Double d);
+    virtual Double    LatitudeVelocity();
+    virtual Double    LatitudeAcceleration();
     virtual Double    Longitude();
     virtual Double    Longitude(Double d);
     virtual Double    MaxBattery();

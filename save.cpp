@@ -81,6 +81,16 @@ void save() {
   fprintf(file,"  LrvSamplePlains %d%s",lrvSamplePlains,LE);
   fprintf(file,"  LrvSampleSpecial %d%s",lrvSampleSpecial,LE);
   fprintf(file,"  LrvSampleDepression %d%s",lrvSampleDepression,LE);
+  fprintf(file,"  CartSampleSmallRock %d%s",cartSampleSmallRock,LE);
+  fprintf(file,"  CartSampleMediumRock %d%s",cartSampleMediumRock,LE);
+  fprintf(file,"  CartSampleLargeRock %d%s",cartSampleLargeRock,LE);
+  fprintf(file,"  CartSampleSmallCrater %d%s",cartSampleSmallCrater,LE);
+  fprintf(file,"  CartSampleMediumCrater %d%s",cartSampleMediumCrater,LE);
+  fprintf(file,"  CartSampleLargeCrater %d%s",cartSampleLargeCrater,LE);
+  fprintf(file,"  CartSampleRise %d%s",cartSampleRise,LE);
+  fprintf(file,"  CartSamplePlains %d%s",cartSamplePlains,LE);
+  fprintf(file,"  CartSampleSpecial %d%s",cartSampleSpecial,LE);
+  fprintf(file,"  CartSampleDepression %d%s",cartSampleDepression,LE);
   for (i=0; i<numSamples; i++)
     fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
   fprintf(file,"  }%s",LE);

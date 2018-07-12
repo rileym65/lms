@@ -98,6 +98,8 @@ loop000101: calp   P10V00N01           ; Display POS^ABS data
             prog   P00V01N02
 loop000102: calp   P10V00N12           ; Display POS^TAR in meters
             calp   P11V00N03           ; Display perilune,apolune
+            mov    latvel,r6           ; Display latitude velocity
+            mov    latacc,r9           ; Display latitude acceleration
             mov    dfuel,r12           ; Display remaining descent fuel
             mov    thrtl,R20           ; Get current throttle setting
             div    R20,C100            ; divide by 100

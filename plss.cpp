@@ -73,6 +73,13 @@ printf("Len: %.18f\n",f.Length());
   exit(1);
   }
 
+Boolean Plss::AddToCart(Double v) {
+  if (cart >= 10) return false;
+  cart++;
+  cartValue += v;
+  return true;
+  }
+
 char Plss::Carrying() {
   return carrying;
   }
@@ -80,6 +87,25 @@ char Plss::Carrying() {
 char Plss::Carrying(char c) {
   carrying = c;
   return carrying;
+  }
+
+UInt32 Plss::Cart() {
+  return cart;
+  }
+
+UInt32 Plss::Cart(UInt32 i) {
+  if (i > 10) i = 10;
+  cart = i;
+  return cart;
+  }
+
+Double Plss::CartValue() {
+  return cartValue;
+  }
+
+Double Plss::CartValue(Double d) {
+  cartValue = d;
+  return cartValue;
   }
 
 void Plss::Damage(Double dmg) {
@@ -135,6 +161,8 @@ Int8 Plss::SubLoad(char* pline) {
   else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else if (startsWith(pline,"walked ")) walked = atof(nw(pline));
   else if (startsWith(pline,"oxygenleakage ")) oxygenLeakage = atof(nw(pline));
+  else if (startsWith(pline,"cart ")) cart = atoi(nw(pline));
+  else if (startsWith(pline,"cartvalue ")) cartValue = atof(nw(pline));
   else return GroundVehicle::SubLoad(pline);
   return -1;
   }
@@ -146,6 +174,8 @@ void Plss::Save(FILE* file) {
   fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  Walked %.18f%s",walked,LE);
   fprintf(file,"  OxygenLeakage %.18f%s",oxygenLeakage,LE);
+  fprintf(file,"  Cart %d%s",cart,LE);
+  fprintf(file,"  CartValue %.18f%s",cartValue,LE);
   fprintf(file,"  }%s",LE);
   }
 
@@ -175,11 +205,16 @@ void Plss::ProcessKey(Int32 key) {
       if (carrying == 'B' && lmPos < 100 && lrv->Boxes() > 0)
         seq->BoxToLm();
       }
+    if (key == 's' && carrying == 'R') {
+      seq->SampleToCart();
+      }
+    if (key == 'T' && cart > 0 && lmPos < 100) seq->CartToLm();
+    if (key == 't' && cart > 0 && lrvPos < 100) seq->CartToLrv();
     if (key == 'R' && carrying == 'B' && lrvPos < 100) seq->BoxToLrv();
     if (key == 'B' && carrying == ' ' && lrvPos < 40 && lrv->Boxes() > 0)
       seq->BoxToPlss();
     if (key == 'V' && (position - lm->Position()).Length() < 40 &&
-        !lrv->IsSetup())
+        !lrv->IsSetup() && mission->Vehicle() != 1)
       seq->SetupLrv();
     if (key == 'F') {
       if (carrying == ' ' && lmPos <= 40 && flagPlanted == 0) seq->GetFlag();

@@ -179,6 +179,25 @@ void Sequencer::Complete() {
            }
          evas[evaCount-1].samples++;
          break;
+    case SEQ_TOCART:
+         if (plss->AddToCart(plss->Value())) {
+           switch (sampleType) {
+             case S_SMALL_ROCK: cartSampleSmallRock++; break;
+             case S_MEDIUM_ROCK: cartSampleMediumRock++; break;
+             case S_LARGE_ROCK: cartSampleLargeRock++; break;
+             case S_SMALL_CRATER: cartSampleSmallCrater++; break;
+             case S_MEDIUM_CRATER: cartSampleMediumCrater++; break;
+             case S_LARGE_CRATER: cartSampleLargeCrater++; break;
+             case S_RISE: cartSampleRise++; break;
+             case S_PLAINS: cartSamplePlains++; break;
+             case S_SPECIAL: cartSampleSpecial++; break;
+             case S_DEPRESSION: cartSampleDepression++; break;
+             }
+           plss->Carrying(' ');
+           plss->Value(0);
+           evas[evaCount-1].samples++;
+           }
+         break;
     case SEQ_BOXPLSS:
          plss->Carrying('B');
          break;
@@ -209,6 +228,99 @@ void Sequencer::Complete() {
          lrvSamplePlains = 0;
          lrvSampleSpecial = 0;
          lrvSampleDepression = 0;
+         break;
+    case SEQ_CARTTOLM:
+         lm->Rock(lm->Rock() + plss->Cart());
+         plss->Cart(0);
+         lm->Value(lm->Value() + plss->CartValue());
+         plss->CartValue(0);
+         sampleSmallRock += cartSampleSmallRock;
+         sampleMediumRock += cartSampleMediumRock;
+         sampleLargeRock += cartSampleLargeRock;
+         sampleSmallCrater += cartSampleSmallCrater;
+         sampleMediumCrater += cartSampleMediumCrater;
+         sampleLargeCrater += cartSampleLargeCrater;
+         sampleRise += cartSampleRise;
+         samplePlains += cartSamplePlains;
+         sampleSpecial += cartSampleSpecial;
+         sampleDepression += cartSampleDepression;
+         cartSampleSmallRock = 0;
+         cartSampleMediumRock = 0;
+         cartSampleLargeRock = 0;
+         cartSampleSmallCrater = 0;
+         cartSampleMediumCrater = 0;
+         cartSampleLargeCrater = 0;
+         cartSampleRise = 0;
+         cartSamplePlains = 0;
+         cartSampleSpecial = 0;
+         cartSampleDepression = 0;
+         break;
+    case SEQ_CARTTOLRV:
+         while (lrv->Rock() < 30 && plss->Cart() > 0) {
+           lrv->Rock(lrv->Rock() + 1);
+           plss->Cart(plss->Cart() - 1);
+           if (cartSampleSmallRock > 0) {
+             lrvSampleSmallRock++;
+             cartSampleSmallRock--;
+             lrv->Value(lrv->Value() + 1.2);
+             plss->CartValue(plss->CartValue() - 1.2);
+             }
+           if (cartSampleMediumRock > 0) {
+             lrvSampleMediumRock++;
+             cartSampleMediumRock--;
+             lrv->Value(lrv->Value() + 1.4);
+             plss->CartValue(plss->CartValue() - 1.4);
+             }
+           if (cartSampleLargeRock > 0) {
+             lrvSampleLargeRock++;
+             cartSampleLargeRock--;
+             lrv->Value(lrv->Value() + 1.6);
+             plss->CartValue(plss->CartValue() - 1.6);
+             }
+           if (cartSampleSmallCrater > 0) {
+             lrvSampleSmallCrater++;
+             cartSampleSmallCrater--;
+             lrv->Value(lrv->Value() + 1.0);
+             plss->CartValue(plss->CartValue() - 1.0);
+             }
+           if (cartSampleMediumCrater > 0) {
+             lrvSampleMediumCrater++;
+             cartSampleMediumCrater--;
+             lrv->Value(lrv->Value() + 1.2);
+             plss->CartValue(plss->CartValue() - 1.2);
+             }
+           if (cartSampleLargeCrater > 0) {
+             lrvSampleLargeCrater++;
+             cartSampleLargeCrater--;
+             lrv->Value(lrv->Value() + 1.4);
+             plss->CartValue(plss->CartValue() - 1.4);
+             }
+           if (cartSampleRise > 0) {
+             lrvSampleRise++;
+             cartSampleRise--;
+             lrv->Value(lrv->Value() + 2.0);
+             plss->CartValue(plss->CartValue() - 2.0);
+             }
+           if (cartSampleDepression > 0) {
+             lrvSampleDepression++;
+             cartSampleDepression--;
+             lrv->Value(lrv->Value() + 2.0);
+             plss->CartValue(plss->CartValue() - 2.0);
+             }
+           if (cartSamplePlains > 0) {
+             lrvSamplePlains++;
+             cartSamplePlains--;
+             lrv->Value(lrv->Value() + 0.5);
+             plss->CartValue(plss->CartValue() - 0.5);
+             }
+           if (cartSampleSpecial > 0) {
+             lrvSampleSpecial++;
+             cartSampleSpecial--;
+             lrv->Value(lrv->Value() + 25.0);
+             plss->CartValue(plss->CartValue() - 25.0);
+             }
+           }
+         if (plss->Cart() <= 0) plss->CartValue(0);
          break;
     case SEQ_BOXLRV:
          plss->Carrying(' ');
@@ -321,6 +433,12 @@ void Sequencer::InProgress() {
          metabolicRate += 0.125;
          break;
     case SEQ_STORESAMPLE:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_CARTTOLRV:
+         metabolicRate += 0.108;
+         break;
+    case SEQ_CARTTOLM:
          metabolicRate += 0.108;
          break;
     case SEQ_BOXPLSS:
@@ -603,3 +721,26 @@ void Sequencer::Liftoff() {
   mode_jet = 0xff;
   }
 
+void Sequencer::SampleToCart() {
+  time = 5;
+  strcpy(message,"SAMP->CART");
+  function = SEQ_TOCART;
+  }
+
+void Sequencer::CartToLrv() {
+  Double dist;
+  dist = (plss->Position() - lrv->Position()).Length();
+  plss->Walked(plss->Walked() + dist + dist);
+  time = (1 * 60) + (2 * dist) + (20 * plss->Cart());
+  strcpy(message," CART->LRV");
+  function = SEQ_CARTTOLRV;
+  }
+
+void Sequencer::CartToLm() {
+  Double dist;
+  dist = (plss->Position() - lm->Position()).Length();
+  plss->Walked(plss->Walked() + dist + dist);
+  time = (1 * 60) + (2 * dist) + (20 * plss->Cart());
+  strcpy(message,"  CART->LM");
+  function = SEQ_CARTTOLM;
+  }

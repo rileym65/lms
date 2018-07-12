@@ -8,6 +8,7 @@ class Vehicle;
 
 class G_Plss : public Gauge {
   protected:
+    UInt32 lastCart;
     Int16 lastOxygen;
     Int16 lastBattery;
     char  lastCarrying;

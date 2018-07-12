@@ -488,7 +488,7 @@ void LunarModule::Cycle() {
   if (descentBattery < 0.0) descentBattery = 0.0;
   if (descentFuel < 0.0) descentFuel = 0.0;
   if (rcsFuel < 0.0) rcsFuel = 0.0;
-  if (comp != NULL) comp->Cycle();
+//  if (comp != NULL) comp->Cycle();
   if (damageReportStep != 0) {
     if (damageReportStep == 1) {
       if (seq->Time() <= 0) {
@@ -687,6 +687,9 @@ void LunarModule::Cycle() {
     velocityAltitude = 0;
     velocityNorth = 0;
     velocityEast = 0;
+    latitudeVel= 0.0;
+    latitudeAcc= 0.0;
+    lastLatitudeVel= 0.0;
     }
   }
 
