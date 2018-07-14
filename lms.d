@@ -221,6 +221,7 @@
 [I4]
 [TB]
 	|M      |-|Move to CSM if docked.  This will end the simulation |
+	|E      |-|Begin EVA                                            |
 	|U      |-|Undock if docked                                     |
 	|<      |-|Turn on/off the landing radar                        |
 	|>      |-|Turn on/off the docking radar                        |
@@ -264,6 +265,9 @@
 	|V       |-|Setup LRV                                         |
 	|F       |-|Get flag from LM, plant flag                      |
 	|f       |-|Put flag back into LM                             |
+	|A       |-|Get ALSEP from LM, setup ALSEP                    |
+	|L       |-|Get laser reflector from LM, setup laser reflector|
+	|l       |-|Put laser reflector back into LM                  |
 	|<left>  |-|Begin left turn/End right turn                    |
 	|<right> |-|Begin right turn/End left turn                    |
 	|<PgDn>  |-|Throttle up 10%                                   |
@@ -276,9 +280,6 @@
 	|E       |-|End EVA                                           |
 	|R       |-|Return sample box to rover                        |
 	|B       |-|Get sample Box from rover                         |
-	|L       |-|Get laser reflector from LM, setup laser reflector|
-	|l       |-|Put laser reflector back into LM                  |
-	|A       |-|Get ALSEP from LM, setup ALSEP                    |
 	|T       |-|Transfer cart contents to LM                      |
 	|t       |-|Transfer cart contents to LRV                     |
 [TE]

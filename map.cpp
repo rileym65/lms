@@ -461,23 +461,44 @@ char Map::Lurrain(Double longitude, Double latitude) {
   Int32 cellX, cellY;
   Double dist;
   Double dx,dy;
+  Double cLat,cLong;
   cellX = Cell(longitude);
   cellY = Cell(latitude);
+  cLat = Degrees(cellY);
+  cLong = Degrees(cellX);
   char ltype;
   ltype = '_';
   for (i=0; (UInt32)i<numFeatures; i++) {
     if (features[i].cellX == cellX && features[i].cellY == cellY)
       return features[i].symbol;
+
     if (features[i].symbol == 'o' &&
-        longitude >= features[i].minLongitude && longitude <= features[i].maxLongitude &&
-        latitude >= features[i].minLatitude && latitude <= features[i].maxLatitude) {
-      dx = (longitude - features[i].longitude) * METERS;
-      dy = (latitude - features[i].latitude) * METERS;
+        cLong >= features[i].minLongitude && cLong <= features[i].maxLongitude &&
+        cLat >= features[i].minLatitude && cLat <= features[i].maxLatitude) {
+      dx = (cLong - features[i].longitude) * METERS;
+      dy = (cLat - features[i].latitude) * METERS;
       dist = dx*dx + dy*dy;
       if (dist >= features[i].rad1 && dist <= features[i].rad2)
         return '^';
       else if (dist < features[i].rad1) ltype = ' ';
       }
+
+
+
+//    if (features[i].symbol == 'o' &&
+//        longitude >= features[i].minLongitude && longitude <= features[i].maxLongitude &&
+//        latitude >= features[i].minLatitude && latitude <= features[i].maxLatitude) {
+//      dx = (longitude - features[i].longitude) * METERS;
+//      dy = (latitude - features[i].latitude) * METERS;
+//      dist = dx*dx + dy*dy;
+//      if (dist >= features[i].rad1 && dist <= features[i].rad2)
+//        return '^';
+//      else if (dist < features[i].rad1) ltype = ' ';
+//      }
+
+
+
+
     }
   i = (cellX & 0x7fffffff) ^ (cellY << 15);
 i = (cellX & 0x7fff) * ((~cellY) & 0x7fff);

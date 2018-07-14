@@ -165,6 +165,70 @@
 	|APO:   98.7                |
 	+---------------------------+
 [ee]
+	This panel shows information from the vehicle's Inertial
+	Navigation System, or INS.
+[=]
+	POS - This line shows the position of the vehicle in relation
+	to the reference point.  Altitude is always displayed in meters.
+	East and north could be displayed as degress or meters.  If the
+	number contains 2 decimal digits then the value is in degrees,
+	otherwise the value displayed is in meters.
+[=]
+	VEL - This line shows the velocities in relation to the reference
+	point.  Velocity values are always shown in meters per second.
+[=]
+	ACC - This line shows the absolute acceleartions for each 
+	direction.  Accelerations are always displayed as meters per
+	second per second.
+[=]
+	MOM - The first field of this line shows which mode the INS
+	display is running in.  The second field shows the relative
+	angle between the vehicle's longitude of ascending node in
+	relation to the ascending node of the reference point.  The
+	third field shows the relative angle in degrees of the vehicle's
+	inclination in relation to the inclination of the reference
+	point.
+[=]
+	PER - This line shows the perilune of the current orbit, or
+	in other words the lowest point in the orbit.  This value is
+	in kilometers.
+[=]
+	APO - This line shows the apolune or highest point of the
+	current orbit.  This value is shown in kilometers.
+[=]
+	The INS display operates in 6 modes which can be accessed with
+	the <1> through <6> keys.  It is important to note that not
+	all information on the INS display is updated depening on which
+	mode the INS is running in.  The mode name will have a '^' or 'v'
+	symbol in the middle of its name.  If the symbol is '^' then
+	only the POS, VEL, and ACC lines are updated.  If the symbol is
+	a 'v' then only the MOM, PER, and APO lines are updated.
+[=]
+	1 POS^ABS.  In this mode position and velocity information
+	is relative to absolute Lunar coordintes.  North is in
+	relation to the Lunar equator and East is in relation to the
+	mid-Earth terminator.  Altitude is in reference to the ground.
+[=]
+	2 POS^TAR. In this mode position and velocity information is
+	in relation to the targeted landing site.
+[=]
+	3 POS^REL. In this mode position and velocity information is
+	in relation to the oribiting CSM.
+[=]
+	4 ORB^ABS. In this mode asending node is in relation to the
+	mid-Earth terminator and inclination is referenced to the 
+	equator.  An inclination of 90 is an equitoral orbit, while
+	0 would inidcate a polar orbit.
+[=]
+	5 ORB^TAR. This mode changes the ascending node and inclination
+	displays to be relative to the landing site.  You will pass
+	directly over the landing site if the ascending node and inclination
+	are both 0.
+[=]
+	6 ORB^REL. In this mode the ascending node and inclination are
+	displayed relative to the ascending node and inclination of the
+	CSM.  Your orbit is aligned with the CSM if both the ascending
+	node and inclination are both zero.
 [e-]
 [=]
 [h2]	Ams_LandingRadar
@@ -456,6 +520,42 @@
 	| U/D  YW: 0.0 PRP:95|
 	+--------------------+
 [ee]
+	This is the RCS control panel which shows everything related to
+	the Reaction Control System.
+[=]
+	F/B - This shows the status of the Forward and Backwards RCS jets.
+	if the forward RCS jet is on then a '<' will appear just to the left of
+	the F.  If the backwards RCS jet is on then a '>' will appear just
+	to the right of the B.
+[=]
+	L/R - This shows the status of the Left and Right RCS jets.
+	if the left RCS jet is on then a '<' will appear just to the left of
+	the L.  If the right RCS jet is on then a '>' will appear just
+	to the right of the R.
+[=]
+	U/D - This shows the status of the Up and Down RCS jets.
+	if the up RCS jet is on then a '<' will appear just to the left of
+	the U.  If the down RCS jet is on then a '>' will appear just
+	to the right of the D.
+[=]
+	PT - This shows the current pitch rate in degrees per second.
+[=]
+	RL - This shows the current roll rate in degrees per second.
+[=]
+	YW - This shows the current yaw rate in degress per second.
+[=]
+	RTH - This shows the current rotational RCS throttle.  When a
+	'^^' symbol is shown then the rotation throttle is set to high.
+	When a '--' symbol is shown then the rotation throttle is set to
+	medium and when a 'vv' symbol is shown then the rotation throttle
+	is set to low.
+[=]
+	TTH - This shows the current setting of the translation RCS
+	throttle.  When a '^^' symbol is shown the translation throttle
+	is set to high, when a '--' is shown then the throttle is set
+	to medium, and when a 'vv' is shown the throttle is set to low.
+[=]
+	PRP - This shows what percentage of RCS propellant remains.
 [e-]
 [=]
 [h2]	Attitude
@@ -466,6 +566,41 @@
 	|l/s: 90.0 l/o: 22.7|
 	+-------------------+
 [ee]
+	This panel shows a number of useful orientation angles.
+[=]
+	u/r - This shows the angle between the up face of the vehicle
+	and the ground.  A value of 0 would indicate that the up face
+	is facing away from the ground, while a value of 180 would 
+	indicate the up face is directly facing the ground.
+[=]
+	f/r - This shows the angle between the forward face of the
+	vehicle and the ground.  A value of 0 would indicate that the
+	forward face is facing directly away from the ground, while a
+	value of 180 would indicate that the forward face is directly
+	facing the ground.
+[=]
+	l/s - This shows the angle between the left face and absolute
+	south.  A value of 0 would indicate that the left face is pointing
+	directly south, while a value of 180 would indicate that the left
+	face is facing directly north.
+[=]
+	u/o - This shows the angle of the up face in relation to the
+	direction of travel, or prograde direction.  A value of 0
+	would indicate that the up face is pointing directly in the
+	direction of travel, while a value of 180 would indicate that
+	the up face is pointing directly retrograde.
+[=]
+	f/o - This shows the angle between the forward face in relation
+	to the direction of travel.  A value of 0 would indicate that
+	the forward face is facing directly prograde, while a value of
+	180 would indicate that the forward face is facing directly
+	retrograde.
+[=]
+	l/o - This shows the angle between the left face in relation
+	to the direction of travel.  A value of 0 would indicate
+	that the left face is facing directly prograde, while a value
+	of 180 would indicate that the left face is facing directly
+	retrograde.
 [e-]
 [=]
 [h2]	LmFuel
@@ -490,6 +625,8 @@
 	|BAT: 99|
 	+-------+
 [ee]
+	This guage shows what percentgage of oxygen and battery power
+	remain in the vehicle.
 [e-]
 [=]
 
@@ -501,6 +638,24 @@
 	|IN:  0|
 	+------+
 [ee]
+	This instrument shows information about the pilot's physical
+	status.
+[=]
+	MB - This shows the current metabolic rate.  The higher this
+	number the more the pilot's heart is beating.
+[=]
+	EF - This shows pilot efficiency.  The higher this number the
+	more efficient the pilot is at doing their job.  This number
+	is decreased by higher metabolic activity or injury.
+[=]
+	IN - This shows a combined value for hard and soft injury.
+	The higher this number is the more injured the pilot.  Injury
+	has a direct negative effect on efficiency.  Soft injury is due
+	to pilot fatigue, the longer a pilot is awake, the more their
+	soft injury goes up.  Sleeping will reduce soft injury.  Hard
+	injury are physical injuries sustained by the pilot as a result
+	of a hard landing or moving too quickly over rough ground.  Hard
+	injury cannot be reduced.
 [e-]
 [=]
 
@@ -510,6 +665,16 @@
 	|LM |
 	+---+
 [ee]
+	This instrument shows the current location of the pilot:
+[=]
+[i4]
+[lb]
+[li]	LM - The pilot is in the Lunar Module.
+[li]	CSM - The pilot is in the Command/Serive Module.
+[li]	EVA - The pilot is currently on EVA.
+[li]	LRV - The pilot is currently riding the rover.
+[le]
+[i-4]
 [e-]
 [=]
 
@@ -519,15 +684,32 @@
 	|RK:  0|
 	+------+
 [ee]
+	This guage shows how many kilograms of samples have been loaded
+	onto the LM.
 [e-]
 [=]
 
 [h2]	EvaPrep
 [er]
 	+-------------------+
-	|PAK: 4  vSS vPL ^CB|
+	|PAK: 4  @SS @PL  CB|
 	+-------------------+
 [ee]
+	This panel shows the current readiness for EVA.
+[=]
+	PAK - This shows how many PLSS charges are remaining.
+[=]
+	SS - This indicates whether or not the pilot is wearing
+	their space suit.  If the pilot is wearing their spacesuit
+	then a '@' will appear to the left of this indicator.
+[=]
+	PL - This indicates whether or not the pilot is wearing
+	their PLSS.  If the pilot is wearing their PLSS then a
+	'@' will appear to the left of this indicator.
+[=]
+	CB - This indicates whether or not the LM cabin is pressurized.
+	If the cabin is pressurized then a '@' will appear to the left
+	of this indicator.
 [e-]
 [=]
 
@@ -539,6 +721,18 @@
 	|@DSN|
 	+----+
 [ee]
+	This instrument shows which radar the INS is getting its
+	navigational information from:
+[=]
+[i4]
+[lb]
+[li]	LAN - Landing radar, which provides high resolution signals.
+[li]	DOK - Docking radar, which provides high resolution signals.
+[li]	DSN - Deep Space Network, which provides low resolution signals.
+[le]
+[i-4]
+[=]
+	An '@' symbol appears before the currently active radar.
 [e-]
 [=]
 
@@ -548,6 +742,8 @@
 	|^TD|
 	+---+
 [ee]
+	This guage shows whether or not the LM is in contact with the
+	Lunar surface.
 [e-]
 [=]
 
@@ -557,6 +753,7 @@
 	|^DK|
 	+---+
 [ee]
+	This guage shows whether or not the LM is docked with the CSM.
 [e-]
 [=]
 
@@ -566,6 +763,7 @@
 	|THR:  0|
 	+-------+
 [ee]
+	This guage shows the throttle setting of the main engine.
 [e-]
 [=]
 
@@ -575,10 +773,19 @@
 	|UT: 11:16:07|
 	|ME:  1:16:21|
 	|BU:  0:00:00|
-	|BU:  0:00:00|
+	|EV:  0:00:00|
 	|DK:  0:00:00|
 	+------------+
 [ee]
+	This guage shows a collection of clocks all in a single instrument.
+[=]
+[lb]
+[li]	UT - The current UTC time.
+[li]	ME - The current Mission Elapsed time.
+[li]	BU - The time of the current/last main engine burn.
+[li]	EV - The time of the current/last EVA.
+[li]	DK - The time since lifting off from the Lunar surface.
+[le]
 [e-]
 [=]
 
@@ -588,15 +795,18 @@
 	|UT: 10:25:07|
 	+------------+
 [ee]
+	This clock shows the current UTC time.
 [e-]
 [=]
 
 [h2]	ClockMI
 [er]
 	+------------+
-	|MI: 48:25:16|
+	|ME: 48:25:16|
 	+------------+
 [ee]
+	This clock shows the current mission elapsed time.  The
+	mission clock starts after undocking is completed.
 [e-]
 [=]
 
@@ -606,6 +816,7 @@
 	|EV:  3:19:09|
 	+------------+
 [ee]
+	This clock shows the duration of the current/last EVA.
 [e-]
 [=]
 
@@ -615,6 +826,7 @@
 	|TE: 15:26:51|
 	+------------+
 [ee]
+	This clock shows the total time spend on EVAs.
 [e-]
 [=]
 
@@ -628,6 +840,27 @@
 	| spd:  0.0  |
 	+------------+
 [ee]
+	The ground INS instrument gives navigational information for the
+	LRV or PLSS and is meant for moving around on the Lunar surface.
+	The ground INS operates in 8 modes, the keys <1> through <8>
+	select which mode the instrument is operating in:
+[=]
+[i4]
+[lb]
+[li]	1 - ABS - The coordinates are the absolute latitude and longitude.
+[li]	2 - REL - The coordinates are relative to the targetted landing site.
+[li]	3 - LM  - The coordinates are relative to the LM.
+[li]	4 - PRI - The coordinates are relative to the primary sampling site.
+[li]	5 - SEC1 - The coordinates are relative to secondary site 1.
+[li]	6 - SEC2 - The coordinates are relative to secondary site 2.
+[li]	7 - SEC3 - The coordinates are relative to secondary site 3.
+[li]	8 - LRV  - The coordinates are relative to the LRV.
+[le]
+[i-4]
+[=]
+	In addition to the coordinates this instrument also provides you
+	with the throttle setting and speed at which you are currently
+	moving in meters/second.
 [e-]
 [=]
 
@@ -657,6 +890,8 @@
 	| +--------------------|east----------------+ |
 	+---------------------------------------------+
 [ee]
+	This instrument gives a large detailed map of the lunar surface.  It is
+	primarily used for the LRV or PLSS panels for surface exploration.
 [e-]
 [=]
 
@@ -707,6 +942,42 @@
 	|RCS RLO LCT ELO ELO |
 	+--------------------+
 [ee]
+	This panel contains various indicator lights to alert
+	the pilot to various conditions.
+[=]
+	ASC - The ascent engine is currently running.
+[=]
+	DSC - The descent engine is currently running.
+[=]
+	RCS - An RCS translation thruster is on.
+[=]
+	ALO - Ascent fuel has fallen below 10%.
+[=]
+	DLO - Descent fuel has fallen below 10%.
+[=]
+	RLO - RCS propellant has fallen below 10%.
+[=]
+	ATT - The spacecraft is spinning on at least one axis.
+[=]
+	DCK - The spacecraft is currently docked.
+[=]
+	LCT - The spacecraft is in contact with the lunar surface.
+[=]
+	OXY - The available oxygen has fallen below 10%.
+[=]
+	EMG - This lamp below the OXY lamp indicates that emergency
+	oxygen is currently being used.
+[=]
+	ELO - This lamp below the OXY lamp indicates that emergency
+	oxygen has fallen below 10%.
+[=]
+	BAT - This indicates that battery power has fallen below 10%.
+[=]
+	EMG - This lamp below the BAT lamp indicates that emergency
+	battery power is being used.
+[=]
+	ELO - This lamp below the BAT lamp indicates that emergency
+	battery power has fallen below 10%.
 [e-]
 [=]
 
@@ -736,6 +1007,8 @@
 	| +--------------------|east----------------+ |
 	+---------------------------------------------+
 [ee]
+	This shows a low resolution map of the lunar surface.  It
+	is primarily used to show the moon from orbit.
 [e-]
 [=]
 
@@ -750,6 +1023,14 @@
 	|CAR: R|
 	+------+
 [ee]
+	This guage shows information related to the PLSS.  OXY
+	shows what percentage of oxygen remains.  BAT shows what
+	percentage of battery power remains.  CRT shows how many
+	kilograms of samples have been stored in the sample cart
+	and CAR shows what the astronaut is currently carrying and
+	may be any of these symbols: 'S' - Sample, 'B' - Sample box,
+	'F' - Flag, 'L' - Laser reflector, 'A' - ALSEP package, or
+	'-' - nothing.
 [e-]
 [=]
 
@@ -759,6 +1040,20 @@
 	|ARM  ABO  JET  KIL  LIF|
 	+-----------------------+
 [ee]
+	This instrument shows the status of any sequencer actions.
+[=]
+	ARM indicates that the ascent engine is armed and ready for
+	either and abort or liftoff action.
+[=]
+	ABO indicates that the abort sequencer has been activated.
+[=]
+	JET shows that the descent stage jettison sequence has been
+	started.
+[=]
+	KIL indicates that the rotation kill function has begun.
+[=]
+	LIF shows that the liftoff from lunar surface sequence has
+	been started.
 [e-]
 [=]
 

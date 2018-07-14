@@ -722,7 +722,7 @@ void Sequencer::Liftoff() {
   }
 
 void Sequencer::SampleToCart() {
-  time = 5;
+  time = 10;
   strcpy(message,"SAMP->CART");
   function = SEQ_TOCART;
   }

@@ -738,6 +738,10 @@ void LunarModule::ProcessKey(Int32 key) {
     if (landed && spaceSuitOn && plssOn && !cabinPressurized)
       seq->MoveEva();
     }
+  if (key == 'E') {
+    if (landed && spaceSuitOn && plssOn && !cabinPressurized)
+      seq->MoveEva();
+    }
   if (key == 'U' && docked) seq->Undock();
   if (key == 'S') {
     if (!spaceSuitOn) seq->SpaceSuitOn();

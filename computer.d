@@ -1,7 +1,7 @@
 [h2]	Instructions
 [I4]
 [TB]
-        | opcode | args     | description                              |
+	| opcode | args     | description                              |
 	| ACOS   | rs,rd    | Place arccos of rs into rd (degrees)     |
 	| ADD    | r1,r2    | Add r2 to r1                             |
 	| ASIN   | rs,rd    | Place arcsin of rs into rd (degrees)     |
@@ -45,49 +45,51 @@
 [h2]	Special Registers (Read only)
 [I4]
 [TB]
-        | LOC   | Returns                                          |
-	| AACC  | Altitude acceleration in m/s                     |
-        | ALT   | Altitude in meters                               |
-	| ANOD  | Longitude of ascending node                      |
-	| APOL  | Apolune in meters                                |
-	| AVEL  | Altitude velocity in m/s                         |
-	| C1    | Contant value of 1                               |
-	| C10   | Contant value of 10                              |
-	| C100  | Contant value of 100                             |
-	| C1000 | Contant value of 1000                            |
-	| CKKBU | Current value of engine burn clock in seconds    |
-	| CLKMI | Current value of mission clock in seconds        |
-	| CLKOR | Orbit time in seconds                            |
-	| EACC  | Longitudinal acceleration in m/s                 |
-	| EAST  | Longitude in degrees                             |
-	| EVEL  | Longitudinal velocity in m/s                     |
-	| GRND  | Ground radius in meters, 1738300                 |
-	| INCL  | Inclination of orbit                             |
-	| MASS  | Current mass of the vehicle in kilograms         |
-	| METR  | Constant, number of meters per degree at equater |
-	| NACC  | Latitudinal acceleration in m/s                  |
-	| NOUN  | Current value of Noun                            |
-	| NRTH  | Latitude in degrees                              |
-	| NVEL  | Latitudinal velocity in m/s                      |
-	| PERL  | Perilune in meters                               |
-	| PI    | Constant value of pi, 3.14159...                 |
-	| PITCH | Current pitch angle                              |
-	| RALT  | Altitude difference to CSM in meters             |
-	| RAVEL | Relative altitude velocity to CSM in m/s         |
-	| REVEL | Relative longitudinal velocity to CSM in m/s     |
-	| RLAT  | Latitudinal distance to CSM in degrees           |
-	| RLNG  | Longitudinal distance to CSM in degrees          |
-	| RNVEL | Relative latitudinal velocity to CSM in m/s      |
-	| ROLL  | Current roll angle                               |
-	| TALT  | Altitude different to target in meters           |
-	| TANOD | Relative target Longitude of ascending node      |
-	| TINCL | Relative target Inclination                      |
-	| TLAT  | Latitudinal distance to target in degrees        |
-	| TLNG  | Longitudinal distance to target in degrees       |
-	| VERB  | Current value of verb                            |
-	| VRES  | Holds vector results                             |
-	| YAW   | Current yaw angle                                |
-	| ZERO  | Constant value of 0                              |
+	| LOC    | Returns                                          |
+	| AACC   | Altitude acceleration in m/s                     |
+	| ALT    | Altitude in meters                               |
+	| ANOD   | Longitude of ascending node                      |
+	| APOL   | Apolune in meters                                |
+	| AVEL   | Altitude velocity in m/s                         |
+	| C1     | Contant value of 1                               |
+	| C10    | Contant value of 10                              |
+	| C100   | Contant value of 100                             |
+	| C1000  | Contant value of 1000                            |
+	| CKKBU  | Current value of engine burn clock in seconds    |
+	| CLKMI  | Current value of mission clock in seconds        |
+	| CLKOR  | Orbit time in seconds                            |
+	| EACC   | Longitudinal acceleration in m/s                 |
+	| EAST   | Longitude in degrees                             |
+	| EVEL   | Longitudinal velocity in m/s                     |
+	| GRND   | Ground radius in meters, 1738300                 |
+	| INCL   | Inclination of orbit                             |
+	| LATACC | Latitude acceleration in m/s                     |
+	| LATVEL | Latitude velocity in m/s                         |
+	| MASS   | Current mass of the vehicle in kilograms         |
+	| METR   | Constant, number of meters per degree at equater |
+	| NACC   | Latitudinal acceleration in m/s                  |
+	| NOUN   | Current value of Noun                            |
+	| NRTH   | Latitude in degrees                              |
+	| NVEL   | Latitudinal velocity in m/s                      |
+	| PERL   | Perilune in meters                               |
+	| PI     | Constant value of pi, 3.14159...                 |
+	| PITCH  | Current pitch angle                              |
+	| RALT   | Altitude difference to CSM in meters             |
+	| RAVEL  | Relative altitude velocity to CSM in m/s         |
+	| REVEL  | Relative longitudinal velocity to CSM in m/s     |
+	| RLAT   | Latitudinal distance to CSM in degrees           |
+	| RLNG   | Longitudinal distance to CSM in degrees          |
+	| RNVEL  | Relative latitudinal velocity to CSM in m/s      |
+	| ROLL   | Current roll angle                               |
+	| TALT   | Altitude different to target in meters           |
+	| TANOD  | Relative target Longitude of ascending node      |
+	| TINCL  | Relative target Inclination                      |
+	| TLAT   | Latitudinal distance to target in degrees        |
+	| TLNG   | Longitudinal distance to target in degrees       |
+	| VERB   | Current value of verb                            |
+	| VRES   | Holds vector results                             |
+	| YAW    | Current yaw angle                                |
+	| ZERO   | Constant value of 0                              |
 [TE]
 [I-4]
 [=]
