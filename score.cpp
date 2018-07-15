@@ -67,6 +67,18 @@ void Score() {
   ScoreEvaSecondary1Samples = 1000.0 * ((Double)secondary1Samples / 30.0);
   ScoreEvaSecondary2Samples = 1000.0 * ((Double)secondary2Samples / 30.0);
   ScoreEvaSecondary3Samples = 1000.0 * ((Double)secondary3Samples / 30.0);
+  ScoreEvaVariety = 0;
+  if (sampleSmallRock) ScoreEvaVariety += 100;
+  if (sampleMediumRock) ScoreEvaVariety += 100;
+  if (sampleLargeRock) ScoreEvaVariety += 100;
+  if (sampleSmallCrater) ScoreEvaVariety += 100;
+  if (sampleMediumCrater) ScoreEvaVariety += 100;
+  if (sampleLargeCrater) ScoreEvaVariety += 100;
+  if (samplePlains) ScoreEvaVariety += 100;
+  if (sampleRise) ScoreEvaVariety += 100;
+  if (sampleSpecial) ScoreEvaVariety += 100;
+  if (sampleDepression) ScoreEvaVariety += 100;
+
   
   ScoreEvaTotal = ScoreEvaCompleted + ScoreEvaSamples + ScoreEvaTime +
                   ScoreEvaValue + ScoreEvaFarthest + ScoreEvaDriven;
@@ -74,6 +86,7 @@ void Score() {
                    ScoreEvaLaserSetup + ScoreEvaAlsepSetup;
   ScoreEvaTotal += ScoreEvaPrimarySamples + ScoreEvaSecondary1Samples +
                    ScoreEvaSecondary2Samples + ScoreEvaSecondary3Samples;
+  ScoreEvaTotal += ScoreEvaVariety;
 
   ScoreDockTime = 1000 - (clockDk - 5400);
   if (ScoreDockTime < 0) ScoreDockTime = 0;
@@ -107,6 +120,7 @@ void Score() {
   printf("  Flag Planted:         %d%s",ScoreEvaFlagSetup,LE);
   printf("  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
   printf("  Samples Collected:    %d%s",ScoreEvaSamples,LE);
+  printf("  Sample Variety:       %d%s",ScoreEvaVariety,LE);
   printf("  Primary Samples:      %d%s",ScoreEvaPrimarySamples,LE);
   printf("  Sec. Site 1 Samples:  %d%s",ScoreEvaSecondary1Samples,LE);
   printf("  Sec. Site 2 Samples:  %d%s",ScoreEvaSecondary2Samples,LE);

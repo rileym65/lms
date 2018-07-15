@@ -227,6 +227,7 @@ LINK Int32        ScoreEvaPrimarySamples;
 LINK Int32        ScoreEvaSecondary1Samples;
 LINK Int32        ScoreEvaSecondary2Samples;
 LINK Int32        ScoreEvaSecondary3Samples;
+LINK Int32        ScoreEvaVariety;
 LINK Int32        ScoreEvaTotal;
 LINK Int32        ScoreDockTime;
 LINK Int32        ScoreDockAscentFuel;

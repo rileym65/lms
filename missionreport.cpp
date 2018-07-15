@@ -224,6 +224,7 @@ void MissionReport() {
   fprintf(file,"  Flag Planted:         %d%s",ScoreEvaFlagSetup,LE);
   fprintf(file,"  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
   fprintf(file,"  Samples Collected:    %d%s",ScoreEvaSamples,LE);
+  fprintf(file,"  Sample Variety:       %d%s",ScoreEvaVariety,LE);
   fprintf(file,"  Primary Samples:      %d%s",ScoreEvaPrimarySamples,LE);
   fprintf(file,"  Sec. Site 1 Samples:  %d%s",ScoreEvaSecondary1Samples,LE);
   fprintf(file,"  Sec. Site 2 Samples:  %d%s",ScoreEvaSecondary2Samples,LE);
