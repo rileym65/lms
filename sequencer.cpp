@@ -126,6 +126,8 @@ void Sequencer::Complete() {
            case '+': plss->Value(1.4); sampleType = S_MEDIUM_ROCK; break;
            case '*': plss->Value(1.6); sampleType = S_LARGE_ROCK; break;
            case '^': plss->Value(2.0); sampleType = S_RISE; break;
+           case '(': plss->Value(2.1); sampleType = S_CRATERWALL; break;
+           case ')': plss->Value(2.1); sampleType = S_CRATERWALL; break;
            case 'u': plss->Value(2.0); sampleType = S_DEPRESSION; break;
            case ' ': plss->Value(0.5); sampleType = S_PLAINS; break;
            case '=': plss->Value(25.0); sampleType = S_SPECIAL; break;
@@ -176,6 +178,7 @@ void Sequencer::Complete() {
            case S_PLAINS: lrvSamplePlains++; break;
            case S_SPECIAL: lrvSampleSpecial++; break;
            case S_DEPRESSION: lrvSampleDepression++; break;
+           case S_CRATERWALL: lrvSampleCraterWall++; break;
            }
          evas[evaCount-1].samples++;
          break;
@@ -192,6 +195,7 @@ void Sequencer::Complete() {
              case S_PLAINS: cartSamplePlains++; break;
              case S_SPECIAL: cartSampleSpecial++; break;
              case S_DEPRESSION: cartSampleDepression++; break;
+             case S_CRATERWALL: cartSampleCraterWall++; break;
              }
            plss->Carrying(' ');
            plss->Value(0);
@@ -218,6 +222,7 @@ void Sequencer::Complete() {
          samplePlains += lrvSamplePlains;
          sampleSpecial += lrvSampleSpecial;
          sampleDepression += lrvSampleDepression;
+         sampleCraterWall += lrvSampleCraterWall;
          lrvSampleSmallRock = 0;
          lrvSampleMediumRock = 0;
          lrvSampleLargeRock = 0;
@@ -228,6 +233,7 @@ void Sequencer::Complete() {
          lrvSamplePlains = 0;
          lrvSampleSpecial = 0;
          lrvSampleDepression = 0;
+         lrvSampleCraterWall = 0;
          break;
     case SEQ_CARTTOLM:
          lm->Rock(lm->Rock() + plss->Cart());
@@ -244,6 +250,7 @@ void Sequencer::Complete() {
          samplePlains += cartSamplePlains;
          sampleSpecial += cartSampleSpecial;
          sampleDepression += cartSampleDepression;
+         sampleCraterWall += cartSampleCraterWall;
          cartSampleSmallRock = 0;
          cartSampleMediumRock = 0;
          cartSampleLargeRock = 0;
@@ -254,6 +261,7 @@ void Sequencer::Complete() {
          cartSamplePlains = 0;
          cartSampleSpecial = 0;
          cartSampleDepression = 0;
+         cartSampleCraterWall = 0;
          break;
     case SEQ_CARTTOLRV:
          while (lrv->Rock() < 30 && plss->Cart() > 0) {
@@ -318,6 +326,12 @@ void Sequencer::Complete() {
              cartSampleSpecial--;
              lrv->Value(lrv->Value() + 25.0);
              plss->CartValue(plss->CartValue() - 25.0);
+             }
+           if (cartSampleCraterWall > 0) {
+             lrvSampleCraterWall++;
+             cartSampleCraterWall--;
+             lrv->Value(lrv->Value() + 2.1);
+             plss->CartValue(plss->CartValue() - 2.1);
              }
            }
          if (plss->Cart() <= 0) plss->CartValue(0);

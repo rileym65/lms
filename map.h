@@ -10,6 +10,7 @@ typedef struct {
   Double longitude;
   Double latitude;
   Double diameter;
+  Double peak;
   Double minLongitude;
   Double maxLongitude;
   Double minLatitude;
@@ -34,6 +35,9 @@ class Map {
     Double   lastLongitude;
     Double   lastLatitude;
     Random   rng;
+    UInt32   segments[360][1000];
+    UInt32   numSegments[360];
+    void addToSegment(Int32 segment, UInt32 value);
     void drawCrater(Double longitude, Double latitude, Double diameter);
     void drawFeature(Double longitude, Double latitude, Double diameter, char ch);
     void drawMare(Double longitude, Double latitude, Double diameter, char ch);

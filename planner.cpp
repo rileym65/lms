@@ -152,6 +152,7 @@ void GetRegion() {
   int line;
   int count;
   int len;
+  char temp[64];
   UInt32 i;
   HideCursor();
   Box(20,2,40,20);
@@ -173,13 +174,41 @@ void GetRegion() {
     if (key == KEY_UP_ARROW) {
       GotoXY(21,4+line); Write("    "); Flush();
       line--;
-      if (line < 0) line = count-1;
+      if (line < 0) {
+        line = 0;
+        if (top > 0) top--;
+        i = 0;
+        count = 0;
+        while (i < numCategories && count < 17) {
+          strcpy(temp, categories[top+i]);
+          while (strlen(temp) < 20) strcat(temp, " ");
+          GotoXY(26, 4+i); Write(temp);
+          i++;
+          count++;
+          }
+        }
       GotoXY(21,4+line); Write("--->"); Flush();
       }
     if (key == KEY_DOWN_ARROW) {
       GotoXY(21,4+line); Write("    "); Flush();
       line++;
-      if (line >= count) line = 0;
+      if (line >= count) {
+        if (line + top < numCategories) {
+          line--;
+          top++;
+          i = 0;
+          count = 0;
+          while (i < numCategories && count < 17) {
+            strcpy(temp, categories[top+i]);
+            while (strlen(temp) < 20) strcat(temp, " ");
+            GotoXY(26, 4+i); Write(temp);
+            i++;
+            count++;
+            }
+          }
+        else
+          line--;
+        }
       GotoXY(21,4+line); Write("--->"); Flush();
       }
     }

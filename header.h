@@ -55,6 +55,7 @@
 #define S_RISE            8
 #define S_SPECIAL         9
 #define S_DEPRESSION     10
+#define S_CRATERWALL     11
 #define END_QUIT          1
 #define END_MISSION       2
 #define END_COLLISION     3
@@ -159,6 +160,7 @@ LINK UInt8        samplePlains;
 LINK UInt8        sampleRise;
 LINK UInt8        sampleSpecial;
 LINK UInt8        sampleDepression;
+LINK UInt8        sampleCraterWall;
 LINK UInt8        lrvSampleSmallRock;
 LINK UInt8        lrvSampleMediumRock;
 LINK UInt8        lrvSampleLargeRock;
@@ -169,6 +171,7 @@ LINK UInt8        lrvSamplePlains;
 LINK UInt8        lrvSampleRise;
 LINK UInt8        lrvSampleSpecial;
 LINK UInt8        lrvSampleDepression;
+LINK UInt8        lrvSampleCraterWall;
 LINK UInt8        cartSampleSmallRock;
 LINK UInt8        cartSampleMediumRock;
 LINK UInt8        cartSampleLargeRock;
@@ -179,6 +182,7 @@ LINK UInt8        cartSamplePlains;
 LINK UInt8        cartSampleRise;
 LINK UInt8        cartSampleSpecial;
 LINK UInt8        cartSampleDepression;
+LINK UInt8        cartSampleCraterWall;
 LINK Double       landedLongitude;
 LINK Double       landedLatitude;
 LINK Double       landedVVel;

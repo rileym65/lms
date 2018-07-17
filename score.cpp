@@ -42,23 +42,23 @@ void Score() {
   for (i=0; i<numSamples; i++) {
     cellX = map->Cell(mission->PrimaryLongitude());
     cellY = map->Cell(mission->PrimaryLatitude());
-    if (abs(samples[i].cellX - cellX) <= 10 &&
-        abs(samples[i].cellY - cellY) <= 10) primarySamples++;
+    if (abs(samples[i].cellX - cellX) <= 20 &&
+        abs(samples[i].cellY - cellY) <= 20) primarySamples++;
     else {
       cellX = map->Cell(mission->Secondary1Longitude());
       cellY = map->Cell(mission->Secondary1Latitude());
-      if (abs(samples[i].cellX - cellX) <= 10 &&
-          abs(samples[i].cellY - cellY) <= 10) secondary1Samples++;
+      if (abs(samples[i].cellX - cellX) <= 20 &&
+          abs(samples[i].cellY - cellY) <= 20) secondary1Samples++;
       else {
         cellX = map->Cell(mission->Secondary2Longitude());
         cellY = map->Cell(mission->Secondary2Latitude());
-        if (abs(samples[i].cellX - cellX) <= 10 &&
-            abs(samples[i].cellY - cellY) <= 10) secondary2Samples++;
+        if (abs(samples[i].cellX - cellX) <= 20 &&
+            abs(samples[i].cellY - cellY) <= 20) secondary2Samples++;
         else {
           cellX = map->Cell(mission->Secondary3Longitude());
           cellY = map->Cell(mission->Secondary3Latitude());
-          if (abs(samples[i].cellX - cellX) <= 10 &&
-              abs(samples[i].cellY - cellY) <= 10) secondary3Samples++;
+          if (abs(samples[i].cellX - cellX) <= 20 &&
+              abs(samples[i].cellY - cellY) <= 20) secondary3Samples++;
           }
         }
       }
@@ -78,6 +78,7 @@ void Score() {
   if (sampleRise) ScoreEvaVariety += 100;
   if (sampleSpecial) ScoreEvaVariety += 100;
   if (sampleDepression) ScoreEvaVariety += 100;
+  if (sampleCraterWall) ScoreEvaVariety += 100;
 
   
   ScoreEvaTotal = ScoreEvaCompleted + ScoreEvaSamples + ScoreEvaTime +
