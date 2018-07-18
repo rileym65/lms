@@ -24,6 +24,7 @@ typedef struct {
   Double radius;
   Double rad1;
   Double rad2;
+  Double rad3;
   } FEATURE;
 
 class Map {

@@ -68,6 +68,7 @@ void Map::processFeature(const char* line) {
       exit(1);
       }
     rad = (diam * 1000) / 2;
+    peak = (peak * 1000.0) / 2.0;
     strcpy(features[numFeatures-1].name, name);
     features[numFeatures-1].longitude = lng;
     features[numFeatures-1].latitude = lat;
@@ -92,6 +93,7 @@ void Map::processFeature(const char* line) {
     if (rad < 200) width = 7;
     features[numFeatures-1].rad1 = (rad-width) * (rad-width);
     features[numFeatures-1].rad2 = (rad+width) * (rad+width);
+    features[numFeatures-1].rad3 = peak * peak;
     for (i=(int)(lng-2); i<=(int)(lng+2); i++)
       addToSegment(i, numFeatures-1);
   }
@@ -506,6 +508,7 @@ char Map::Lurrain(Double longitude, Double latitude) {
         if (latitude < features[i].latitude) return '(';
         return ')';
         }
+      else if (dist < features[i].rad3) return '^';
       else if (dist < features[i].rad1) ltype = ' ';
       }
 
