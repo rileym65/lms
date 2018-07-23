@@ -558,7 +558,7 @@ int main(int argc, char** argv) {
     WriteLn("result the spacecraft has been destroyed.");
     WriteLn("");
     file = fopen("userref.txt","a+");
-    fprintf(file,"Feature Wreckage,       %10.4f, %10.4f, 0, 0.00, &%s",
+    fprintf(file,"Manmade Wreckage,       %10.4f, %10.4f, 0, 0.00, &%s",
       lm->Latitude(), lm->Longitude(),LE);
     fclose(file);
     unlink("lms.sav");
@@ -567,19 +567,19 @@ int main(int argc, char** argv) {
     Score();
     MissionReport();
     file = fopen("userref.txt","a+");
-    fprintf(file,"Feature Descent Module, %10.4f, %10.4f, 0, 0.00, =%s",
+    fprintf(file,"Manmade Descent Module, %10.4f, %10.4f, 0, 0.00, =%s",
       landedLatitude, landedLongitude,LE);
     if (lrv->IsSetup()) 
-      fprintf(file,"Feature Rover,          %10.4f, %10.4f, 0, 0.00, %%%s",
+      fprintf(file,"Manmade Rover,          %10.4f, %10.4f, 0, 0.00, %%%s",
         lrv->Latitude(), lrv->Longitude(),LE);
     if (flagPlanted) 
-      fprintf(file,"Feature Flag,           %10.4f, %10.4f, 0, 0.00, f%s",
+      fprintf(file,"Manmade Flag,           %10.4f, %10.4f, 0, 0.00, f%s",
         flagLatitude, flagLongitude,LE);
     if (laserSetup) 
-      fprintf(file,"Feature Laser Refl.,    %10.4f, %10.4f, 0, 0.00, _%s",
+      fprintf(file,"Manmade Laser Refl.,    %10.4f, %10.4f, 0, 0.00, _%s",
         laserLatitude, laserLongitude,LE);
     if (alsepSetup) 
-      fprintf(file,"Feature ALSEP,          %10.4f, %10.4f, 0, 0.00, \"%s",
+      fprintf(file,"Manmade ALSEP,          %10.4f, %10.4f, 0, 0.00, \"%s",
         alsepLatitude, alsepLongitude,LE);
     fclose(file);
     unlink("lms.sav");

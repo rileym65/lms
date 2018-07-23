@@ -19,6 +19,8 @@
 	indicator of 180 would indicate that the left face was pointing north.
 [e-]
 [=]
+[--]
+[=]
 [h2]	Ams_Clocks
 [er]
 	+------------+
@@ -44,6 +46,8 @@
 	surface.  The OR clocks shows how long 1 orbit takes.  The INS must be set
 	to any of the ORB modes for this clock to show an accurate time.
 [e-]
+[=]
+[--]
 [=]
 [h2]	Ams_Consumables
 [er]
@@ -74,6 +78,8 @@
 	OXY shows the remaining percentage of oxygen and BAT shows the remaining
 	percentage of the battery.
 [e-]
+[=]
+[--]
 [=]
 [h2]	Ams_DockingRadar
 [er]
@@ -114,6 +120,8 @@
 	high for a successful docking.
 [e-]
 [=]
+[--]
+[=]
 [h2]	Ams_DownAxis
 [er]
 	+-------------------------+
@@ -152,6 +160,8 @@
 	face is facing directly westward, the left face is facing directly south
 	and the up face is pointing directly away from the lunar surface.
 [e-]
+[=]
+[--]
 [=]
 [h2]	Ams_Ins
 [er]
@@ -204,32 +214,36 @@
 	only the POS, VEL, and ACC lines are updated.  If the symbol is
 	a 'v' then only the MOM, PER, and APO lines are updated.
 [=]
-	1 POS^ABS.  In this mode position and velocity information
+[lb12]
+[LI]	POS^ABS.  In this mode position and velocity information
 	is relative to absolute Lunar coordintes.  North is in
 	relation to the Lunar equator and East is in relation to the
 	mid-Earth terminator.  Altitude is in reference to the ground.
 [=]
-	2 POS^TAR. In this mode position and velocity information is
+[LI]	POS^TAR. In this mode position and velocity information is
 	in relation to the targeted landing site.
 [=]
-	3 POS^REL. In this mode position and velocity information is
+[LI]	POS^REL. In this mode position and velocity information is
 	in relation to the oribiting CSM.
 [=]
-	4 ORB^ABS. In this mode asending node is in relation to the
+[LI]	ORB^ABS. In this mode asending node is in relation to the
 	mid-Earth terminator and inclination is referenced to the 
 	equator.  An inclination of 90 is an equitoral orbit, while
 	0 would inidcate a polar orbit.
 [=]
-	5 ORB^TAR. This mode changes the ascending node and inclination
+[LI]	ORB^TAR. This mode changes the ascending node and inclination
 	displays to be relative to the landing site.  You will pass
 	directly over the landing site if the ascending node and inclination
 	are both 0.
 [=]
-	6 ORB^REL. In this mode the ascending node and inclination are
+[LI]	ORB^REL. In this mode the ascending node and inclination are
 	displayed relative to the ascending node and inclination of the
 	CSM.  Your orbit is aligned with the CSM if both the ascending
 	node and inclination are both zero.
+[LE]
 [e-]
+[=]
+[--]
 [=]
 [h2]	Ams_LandingRadar
 [er]
@@ -263,6 +277,8 @@
 	landing radar to be receiving a signal.
 [e-]
 [=]
+[--]
+[=]
 [h2]	Ams_Lm
 [er]
 	+------+
@@ -277,6 +293,8 @@
 	LM.  The RK display indicates how many kilograms of samples have
 	been loaded.
 [e-]
+[=]
+[--]
 [=]
 [h2]Ams_Lrv
 [er]
@@ -298,6 +316,8 @@
 	away in the descent module.
 [e-]
 [=]
+[--]
+[=]
 [h2]	Ams_Message
 [er]
 	+---------------+
@@ -309,6 +329,8 @@
 	task the task and how many seconds left will be displayed
 	on this instrument.
 [e-]
+[=]
+[--]
 [=]
 [h2]	Ams_Pilot
 [er]
@@ -322,6 +344,8 @@
 	are CSM=Command Service Module, LM=Lunar Module, LRV=Lunar Rover and 
 	EVA=Outside any vehicle.
 [e-]
+[=]
+[--]
 [=]
 [h2]Ams_Plss
 [er]
@@ -338,6 +362,8 @@
 	many PLSS recharge packs are left.  If there are no packs left
 	then you will no longer be able to equip the PLSS.
 [e-]
+[=]
+[--]
 [=]
 [h2]	Ams_Sequencer
 [er]
@@ -357,6 +383,8 @@
 	pilot had been engaged.
 [e-]
 [=]
+[--]
+[=]
 [h2]	Ams_Spin
 [er]
 	+------+
@@ -371,6 +399,8 @@
 	shows the rotation rate around the Roll axis and YAW shows
 	the rotation rate around the Yaw axis.
 [e-]
+[=]
+[--]
 [=]
 [h2]	Ams_Status
 [er]
@@ -443,6 +473,8 @@
 	effect on efficiency.
 [e-]
 [=]
+[--]
+[=]
 [h2]	Ams_WestAxis
 [er]
 	+-------------------------+
@@ -488,6 +520,8 @@
 	Front face is facing directly west.
 [e-]
 [=]
+[--]
+[=]
 [h2]	MapMedium
 [er]
 	+-------------------------+
@@ -511,6 +545,8 @@
 	of the map represents 10m x 10m of the lunar surface.  the various
 	symbols on the map represent features on the lunar suface.
 [e-]
+[=]
+[--]
 [=]
 [h2]	Rcs
 [er]
@@ -558,6 +594,8 @@
 	PRP - This shows what percentage of RCS propellant remains.
 [e-]
 [=]
+[--]
+[=]
 [h2]	Attitude
 [er]
 	+-------------------+
@@ -603,6 +641,8 @@
 	retrograde.
 [e-]
 [=]
+[--]
+[=]
 [h2]	LmFuel
 [er]
 	+-------+
@@ -617,6 +657,8 @@
 	the DSC value will appear as "**".
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	OxygenBattery
 [er]
@@ -628,6 +670,8 @@
 	This guage shows what percentgage of oxygen and battery power
 	remain in the vehicle.
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	Pilot
@@ -658,6 +702,8 @@
 	injury cannot be reduced.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	PilotLocation
 [er]
@@ -677,6 +723,8 @@
 [i-4]
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	LmRock
 [er]
@@ -687,6 +735,8 @@
 	This guage shows how many kilograms of samples have been loaded
 	onto the LM.
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	EvaPrep
@@ -712,6 +762,8 @@
 	of this indicator.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	Radars
 [er]
@@ -735,6 +787,8 @@
 	An '@' symbol appears before the currently active radar.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	Landed
 [er]
@@ -746,6 +800,8 @@
 	Lunar surface.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	Docked
 [er]
@@ -756,6 +812,8 @@
 	This guage shows whether or not the LM is docked with the CSM.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	Throttle
 [er]
@@ -765,6 +823,8 @@
 [ee]
 	This guage shows the throttle setting of the main engine.
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	Clocks
@@ -788,6 +848,8 @@
 [le]
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	ClockUT
 [er]
@@ -797,6 +859,8 @@
 [ee]
 	This clock shows the current UTC time.
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	ClockMI
@@ -809,6 +873,8 @@
 	mission clock starts after undocking is completed.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	ClockEV
 [er]
@@ -819,6 +885,8 @@
 	This clock shows the duration of the current/last EVA.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	ClockTE
 [er]
@@ -828,6 +896,8 @@
 [ee]
 	This clock shows the total time spend on EVAs.
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	GroundIns
@@ -846,15 +916,15 @@
 	select which mode the instrument is operating in:
 [=]
 [i4]
-[lb]
-[li]	1 - ABS - The coordinates are the absolute latitude and longitude.
-[li]	2 - REL - The coordinates are relative to the targetted landing site.
-[li]	3 - LM  - The coordinates are relative to the LM.
-[li]	4 - PRI - The coordinates are relative to the primary sampling site.
-[li]	5 - SEC1 - The coordinates are relative to secondary site 1.
-[li]	6 - SEC2 - The coordinates are relative to secondary site 2.
-[li]	7 - SEC3 - The coordinates are relative to secondary site 3.
-[li]	8 - LRV  - The coordinates are relative to the LRV.
+[lb1]
+[li]	ABS - The coordinates are the absolute latitude and longitude.
+[li]	REL - The coordinates are relative to the targetted landing site.
+[li]	LM  - The coordinates are relative to the LM.
+[li]	PRI - The coordinates are relative to the primary sampling site.
+[li]	SEC1 - The coordinates are relative to secondary site 1.
+[li]	SEC2 - The coordinates are relative to secondary site 2.
+[li]	SEC3 - The coordinates are relative to secondary site 3.
+[li]	LRV  - The coordinates are relative to the LRV.
 [le]
 [i-4]
 [=]
@@ -862,6 +932,8 @@
 	with the throttle setting and speed at which you are currently
 	moving in meters/second.
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	MapLarge
@@ -894,6 +966,8 @@
 	primarily used for the LRV or PLSS panels for surface exploration.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	MultiAxis
 [er]
@@ -914,7 +988,76 @@
 	| +==========|inside====+ |
 	+-------------------------+
 [ee]
+	The Multi-Axis display gives you a graphic depiction of the
+	orientation of the vehicle.  The best way to visualize what
+	this guage is doing is to imagine yourself outside the
+	vehicle looking through the vehicle in the indicated direction.
+	For example, if the guage is set to 'LOOKING DOWN' mode, you
+	would be located above the vehicle looking through it to the
+	ground.
+[=]
+        Inside the guage itself you will find three letters:
+[=]
+[lb2]
+[liU]	This represents the up face of the lander.  This is the face
+	that would be above the pilot's head.
+[liF]	This represents the front face of the lander.  This is the face
+	the pilot is looking out.
+[liL]	This represents the left face of the lander.  This is the face
+	on the left side of the pilot.
+[LE]
+[=]
+	Any letter that is in lowercase indicates that the corresponding
+	face is directed away from the hypothetical viewer.  A letter
+	showing in uppercase indicates that the face is directed towards
+	the hypothetical viewer.
+[=]
+	This instrument has 4 operating modes: Down, West, Prograde, and
+	Absolute.  The modes may be cycled through with the '[' and ']'
+	keys.
+[=]
+[LB2]
+[LI]	DOWN
+[-]	This mode operates the same as the Ams_DownAxis guage.
+[LI]	WEST
+[-]	This mode operates the same as the Ams_WestAxis guage.
+[LI]	PROGRADE
+[-]	In this mode the viewer is directly behind the vehicle and
+	looking through it directly in the direction of travel.
+[=]
+	The horizontal axis of this modes shows the relationship of the
+	face to the orbit normal.  Orbit normal is a vector that is 90
+	degrees to the plane of the orbit.  Orbit normal will be towards
+	the north pole of the moon, while the orbit anti-normal will be
+	towards the south pole.  Orbit normal and anti-normal are 
+	important for plane change burns.
+[=]
+	The vertical axis of this mode shows whether the face is directed
+	inside or outside the orbit on the same plane as the orbit.  If
+	the face is above center then the face is pointing outside the
+	orbit, away from the orbit center.  If the face is below center
+	then the face is pointing inside the orbit, in the direction of
+	the orbit center.  for most maneuvers, burning inside or outside
+	the orbit is a waste of fuel.
+[LI]	Absolute (LOOKING -X)
+[-]	In this mode the orientation of the vehicle is shown in absolute
+	coordinates irregardless of location of the vehicle around the
+	moon.  In this mode the viewer is located in the +X direction
+	from the vehicle and looking directly through the vehicle in the
+	-X direction.
+[=]
+	The horizontal axis of this modes shows the face in relationship
+	to the absolute Z coordinate.  The vertical axis of this mode
+	shows the relationship of the face to the Y coordinate.
+[=]
+	This mode is most useful during docking operations since it allows
+	you to see the absolute orientation of the vehicle before you are
+	close enough to the CSM for the docking radar to give you alignment
+	data.
+[LE]
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	PrecisionAxis
@@ -933,6 +1076,8 @@
 [ee]
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	Lamps
 [er]
@@ -943,42 +1088,36 @@
 	+--------------------+
 [ee]
 	This panel contains various indicator lights to alert
-	the pilot to various conditions.
+	the pilot to various conditions.  The indicator for a condition
+	will only show if that condition is currently occuring, otherwise
+	the indicator will remain dark.
 [=]
-	ASC - The ascent engine is currently running.
+	The following indicators could appear on this panel:
 [=]
-	DSC - The descent engine is currently running.
-[=]
-	RCS - An RCS translation thruster is on.
-[=]
-	ALO - Ascent fuel has fallen below 10%.
-[=]
-	DLO - Descent fuel has fallen below 10%.
-[=]
-	RLO - RCS propellant has fallen below 10%.
-[=]
-	ATT - The spacecraft is spinning on at least one axis.
-[=]
-	DCK - The spacecraft is currently docked.
-[=]
-	LCT - The spacecraft is in contact with the lunar surface.
-[=]
-	OXY - The available oxygen has fallen below 10%.
-[=]
-	EMG - This lamp below the OXY lamp indicates that emergency
-	oxygen is currently being used.
-[=]
-	ELO - This lamp below the OXY lamp indicates that emergency
-	oxygen has fallen below 10%.
-[=]
-	BAT - This indicates that battery power has fallen below 10%.
-[=]
-	EMG - This lamp below the BAT lamp indicates that emergency
-	battery power is being used.
-[=]
-	ELO - This lamp below the BAT lamp indicates that emergency
-	battery power has fallen below 10%.
+[TB]
+	| ASC | - | The ascent engine is currently running.          |
+	| DSC | - | The descent engine is currently running.         |
+	| RCS | - | An RCS translation thruster is on.               |
+	| ALO | - | Ascent fuel has fallen below 10%.                |
+	| DLO | - | Descent fuel has fallen below 10%.               |
+	| RLO | - | RCS propellant has fallen below 10%.             |
+	| ATT | - | The spacecraft is spinning on at least one axis. |
+	| DCK | - | The spacecraft is currently docked.              |
+	| LCT | - | The spacecraft is in contact with the lunar surface.  |
+	| OXY | - | The available oxygen has fallen below 10%.            |
+	| EMG | - | This lamp below the OXY lamp indicates that emergency
+	oxygen is currently being used.                                   |
+	| ELO | - | This lamp below the OXY lamp indicates that emergency
+	oxygen has fallen below 10%.                                      |
+	| BAT | - | This indicates that battery power has fallen below 10%. |
+	| EMG | - | This lamp below the BAT lamp indicates that emergency
+	battery power is being used.                                        |
+	| ELO | - | This lamp below the BAT lamp indicates that emergency
+	battery power has fallen below 10%.                                 |
+[TE]
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	OrbitLarge
@@ -1011,6 +1150,8 @@
 	is primarily used to show the moon from orbit.
 [e-]
 [=]
+[--]
+[=]
 
 [h2]	Plss
 [er]
@@ -1032,6 +1173,8 @@
 	'F' - Flag, 'L' - Laser reflector, 'A' - ALSEP package, or
 	'-' - nothing.
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	Seq
@@ -1055,6 +1198,8 @@
 	LIF shows that the liftoff from lunar surface sequence has
 	been started.
 [e-]
+[=]
+[--]
 [=]
 
 [h2]	Computer
@@ -1084,5 +1229,7 @@
 	displayed in register 13 (lowest left register), refer to the
 	guidance computer manual for the meanings of error codes.
 [e-]
+[=]
+[--]
 [=]
 

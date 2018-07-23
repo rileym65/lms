@@ -340,7 +340,7 @@ void Map::generateLevelHMap() {
         strncasecmp(features[i].name,"Sinus ",6) == 0) {
       drawMare(lng,lat,diam,' ');
       }
-    if (strncasecmp(features[i].name,"Feature ",8) == 0) {
+    if (strncasecmp(features[i].name,"Manmade ",8) == 0) {
       }
     }
   }
@@ -444,7 +444,7 @@ void Map::generateLevelMMap(Double longitude,Double latitude) {
     if (strncasecmp(features[i].name,"Palus ",6) == 0 ||
         strncasecmp(features[i].name,"Sinus ",6) == 0) {
       }
-    if (strncasecmp(features[i].name,"Feature ",8) == 0) {
+    if (strncasecmp(features[i].name,"Manmade ",8) == 0) {
       }
     }
 
@@ -495,7 +495,8 @@ char Map::Lurrain(Double longitude, Double latitude) {
   while (segment >= 360) segment -= 360;
   for (j=0; j<numSegments[segment]; j++) {
     i = segments[segment][j];
-    if (features[i].cellX == cellX && features[i].cellY == cellY)
+    if (features[i].symbol != 'o' &&
+        features[i].cellX == cellX && features[i].cellY == cellY)
       return features[i].symbol;
 
     if (features[i].symbol == 'o' &&

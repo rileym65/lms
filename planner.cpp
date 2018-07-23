@@ -193,7 +193,7 @@ void GetRegion() {
       GotoXY(21,4+line); Write("    "); Flush();
       line++;
       if (line >= count) {
-        if (line + top < numCategories) {
+        if ((UInt32)(line + top) < numCategories) {
           line--;
           top++;
           i = 0;
@@ -348,6 +348,7 @@ void Menu() {
   if (mission->Vehicle() == 1) WriteLn("Apollo      ");
   if (mission->Vehicle() == 2) WriteLn("Apollo J    ");
   if (mission->Vehicle() == 3) WriteLn("Apollo Mk II");
+  if (mission->Vehicle() == 4) WriteLn("Apollo Mk III");
   GotoXY(5,18); WriteLn("S. Save and exit");
   GotoXY(5,19); WriteLn("Q. Quit without saving");
   GotoXY(8,21); Write("Option ? ");
