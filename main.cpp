@@ -403,7 +403,7 @@ int main(int argc, char** argv) {
   setup();
   if (missionPos > 0) {
     strcpy(buffer,argv[missionPos]);
-    strcat(buffer,".msn");
+    if (strchr(buffer,'.') == NULL) strcat(buffer,".msn");
     file = fopen(buffer,"r");
     if (file == NULL) {
       printf("\n\n");

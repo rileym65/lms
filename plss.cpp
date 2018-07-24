@@ -199,17 +199,17 @@ void Plss::ProcessKey(Int32 key) {
       if (carrying == 'R') seq->DropSample();
       }
     if (key == 'S') {
-      if (carrying == 'R' && lrvPos < 100) {
+      if (carrying == 'R' && lrvPos < 50) {
         if (lrv->Rock() < 30 && lrv->Boxes() > 0) seq->StoreSample();
         }
-      if (carrying == 'B' && lmPos < 100 && lrv->Boxes() > 0)
+      if (carrying == 'B' && lmPos < 50 && lrv->Boxes() > 0)
         seq->BoxToLm();
       }
     if (key == 's' && carrying == 'R') {
       seq->SampleToCart();
       }
-    if (key == 'T' && cart > 0 && lmPos < 100) seq->CartToLm();
-    if (key == 't' && cart > 0 && lrvPos < 100) seq->CartToLrv();
+    if (key == 'T' && cart > 0 && lmPos < 50) seq->CartToLm();
+    if (key == 't' && cart > 0 && lrvPos < 50) seq->CartToLrv();
     if (key == 'R' && carrying == 'B' && lrvPos < 100) seq->BoxToLrv();
     if (key == 'B' && carrying == ' ' && lrvPos < 40 && lrv->Boxes() > 0)
       seq->BoxToPlss();

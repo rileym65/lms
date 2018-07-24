@@ -319,6 +319,95 @@
 	for the mission planner.  As we are done defining missions, you
 	can just press the <3> key to exit.
 [=]
-
-
+[H2]	Landing on the moon
+[=]
+	Before we do the landing, read through the entire next section of
+	this tutorial.  Although there are many points during the landing
+	where there is time to read ahead, it is best to have a general
+	idea of what is to come, plus once powered descent begins you will
+	be too busy to do any reading.
+[=]
+	The landing is divided into several phases:
+[=]
+[I+4]
+[LB]
+[LI]	Undocking/Separation
+[LI]	Plane Change
+[LI]	Descent Orbit
+[LI]	Powered Descent
+[LI]	Landing
+[LE]
+[I-4]
+[=]
+	To start the simulation. just start the program with the name of
+	mission profile we created:
+[=]
+[I+4]
+	lms LunarI
+[I-4]
+[=]
+	When the simulation begins you will find yourself in the CSM.  On
+	the left side of the screen is a large orbital map of the mmon,
+	on the right is the INS display.  Above the INS we have the current
+	UTC time and below the INS is the sequencer message box.
+[=]
+[H1]	Undocking/Separation
+[=]
+[ER]
+	+---------------------------+
+	|   altitude    east   north|
+	|POS:  99257: -60.01:  -0.67|
+	|VEL:    0.5:-1634.5:   -0.1|
+	|ACC:    0.0:    0.0:    0.0|
+	|MOM:POS^TAR: 180.00:  90.00|
+	|PER:   98.4                |
+	|APO:  101.4    OR:  1:57:48|
+	+---------------------------+
+[EE]
+	When the POS East number shows that we are 60 degrees west of the
+	landing site, as shown here, it is time to <M>ove over to the LM.
+[E-]
+[=]
+[ER]
+	+-----------------------------+
+	|   P 00      V 00      N 02  |
+	|   100667   176.141   -0.6732|
+	|   0.1896  -1633.24    0.0837|
+	|  -0.0006    0.0002    0.0000|
+	|     RUN                     |
+	|   0.0000   77.3418    0.6692|
+	|  98.5771   101.174   7068.00|
+	+-----------------------------+
+[EE]
+	Once in the LM, you will need to turn on the guidance computer and
+	select a radar for INS input.  Press the '>' key to select the
+	docking radar, this gives us high resolution position data from the
+	CSM computer.  Next activate program P00V00N02.  With the computer
+	running you should see that we are around 175 degrees east of the
+	landing site.  Keep an eye on register 2 (176.141 in the display
+	shown at the right).  When we are 155 degrees east of the landing
+	site, <U>ndock.
+[E-]
+[=]
+[ER]
+	+-----------------------------+
+	|   P 00      V 00      N 13  |
+	|   0.0000    0.0000   19.3998|
+	|   0.0000    0.0000    0.0999|
+	|  -0.0006   -0.0001   -0.0000|
+	|     RUN                     |
+	|   0.0000   77.0883    0.6689|
+	|  98.8144   100.936   7068.00|
+	+-----------------------------+
+[EE]
+	After undocking, switch the computer to P00V00N13.  This will give
+	us our position in relation to the CSM in meters.  Be sure that the
+	rcs translation thruster is set to low, you should see 'vv' following
+	the 'TTH:' in the RCS panel.  When register 3 shows that we are 50
+	meters north of the CSM, activate the <d>own RCS thruster and leave
+	it on until register 6 shows that our velocity is 0.3, and then turn
+	off the <d>own RCS thruster.  This completes the first separation
+	maneuver.
+[E-]
+[=]
 
