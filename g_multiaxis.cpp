@@ -105,9 +105,6 @@ void G_MultiAxis::modeAbs() {
   xVec = Vector(0,0,1);
   yVec = Vector(0,-1,0);
   zVec = Vector(1,0,0);
-  GotoXY(x+faceX, y+faceY); Write(" ");
-  GotoXY(x+leftX, y+leftY); Write(" ");
-  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
@@ -137,9 +134,6 @@ void G_MultiAxis::modeDown() {
   yVec = Vector(pos.Y(),-pos.X(),0).Norm();
   zVec = vehicle->Position().Norm();
   xVec = yVec.Cross(zVec).Norm();
-  GotoXY(x+faceX, y+faceY); Write(" ");
-  GotoXY(x+leftX, y+leftY); Write(" ");
-  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
@@ -168,9 +162,6 @@ void G_MultiAxis::modePrograde() {
   xVec = vel.Cross(pos).Norm();
   yVec = xVec.Cross(vel);
   zVec = vel;
-  GotoXY(x+faceX, y+faceY); Write(" ");
-  GotoXY(x+leftX, y+leftY); Write(" ");
-  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
@@ -197,9 +188,6 @@ void G_MultiAxis::modeWest() {
   xVec = Vector(0,0,1);
   yVec = vehicle->Position().Norm();
   zVec = Vector(yVec.Y(), -yVec.X(), yVec.Z()).Norm();
-  GotoXY(x+faceX, y+faceY); Write(" ");
-  GotoXY(x+leftX, y+leftY); Write(" ");
-  GotoXY(x+upX, y+upY); Write(" ");
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
@@ -216,6 +204,21 @@ void G_MultiAxis::modeWest() {
   }
 
 void G_MultiAxis::Update() {
+  if (faceX > 22) faceX = 22;
+  if (faceX < 2) faceX = 2;
+  if (faceY > 12) faceY = 12;
+  if (faceY < 2) faceY = 2;
+  if (leftX > 22) leftX = 22;
+  if (leftX < 2) leftX = 2;
+  if (leftY > 12) leftY = 12;
+  if (leftY < 2) leftY = 2;
+  if (upX > 22) upX = 22;
+  if (upX < 2) upX = 2;
+  if (upY > 12) upY = 12;
+  if (upY < 2) upY = 2;
+  GotoXY(x+faceX, y+faceY); Write(" ");
+  GotoXY(x+leftX, y+leftY); Write(" ");
+  GotoXY(x+upX, y+upY); Write(" ");
   if (mode == MODE_ABS)  modeAbs();
   if (mode == MODE_DOWN) modeDown();
   if (mode == MODE_PRO)  modePrograde();

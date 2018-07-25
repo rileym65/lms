@@ -49,6 +49,18 @@ void G_AmsDown::Update() {
   yVec = Vector(pos.Y(),-pos.X(),0).Norm();
   zVec = vehicle->Position().Norm();
   xVec = yVec.Cross(zVec).Norm();
+  if (faceX > 22) faceX = 22;
+  if (faceX < 2) faceX = 2;
+  if (faceY > 12) faceY = 12;
+  if (faceY < 2) faceY = 2;
+  if (leftX > 22) leftX = 22;
+  if (leftX < 2) leftX = 2;
+  if (leftY > 12) leftY = 12;
+  if (leftY < 2) leftY = 2;
+  if (upX > 22) upX = 22;
+  if (upX < 2) upX = 2;
+  if (upY > 12) upY = 12;
+  if (upY < 2) upY = 2;
   GotoXY(x+faceX, y+faceY); Write(" ");
   GotoXY(x+leftX, y+leftY); Write(" ");
   GotoXY(x+upX, y+upY); Write(" ");
