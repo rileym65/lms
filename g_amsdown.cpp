@@ -46,7 +46,7 @@ void G_AmsDown::Update() {
   Vector yVec;
   Vector zVec;
   yVec = vehicle->Velocity().Norm();
-  yVec = Vector(pos.Y(),-pos.X(),0);
+  yVec = Vector(pos.Y(),-pos.X(),0).Norm();
   zVec = vehicle->Position().Norm();
   xVec = yVec.Cross(zVec).Norm();
   GotoXY(x+faceX, y+faceY); Write(" ");

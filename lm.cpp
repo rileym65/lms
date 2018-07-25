@@ -646,7 +646,7 @@ void LunarModule::Cycle() {
   if (radius <= GROUND) {
     vVel = fabs(velocityAltitude);
     hVel = sqrt(lm->VelocityEast() * lm->VelocityEast() +
-                lm->VelocityNorth() * lm->VelocityNorth());
+                lm->LatitudeVelocity() * lm->LatitudeVelocity());
     landedVVel = vVel;
     landedHVel = hVel;
     if (vVel >= 5.05 || hVel > 2.22) {
@@ -654,7 +654,7 @@ void LunarModule::Cycle() {
       endReason = END_CRASHED;
       }
     if (vVel >= 3.05 || hVel > 1.22) {
-      damage = (2.0 / (vVel - 3.05)) + (1.0 / (hVel - 1.22));
+      damage = ((vVel - 3.05) / 2.0) + (hVel - 1.22);
       if (damage > 1.0) damage = 1.0;
       lm->Damage(damage * 100.0);
       lrv->Damage(damage * 100.0);

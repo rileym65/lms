@@ -111,9 +111,9 @@ void G_AmsLand::Update() {
     GotoXY(x+10,y+7);
     if (lm->VelocityEast() > 1.22) Write("v"); else Write("-");
     GotoXY(x+11,y+6);
-    if (lm->VelocityNorth() > 1.22) Write(">"); else Write("|");
+    if (lm->LatitudeVelocity() > 1.22) Write(">"); else Write("|");
     GotoXY(x+1,y+6);
-    if (lm->VelocityNorth() < -1.22) Write("<"); else Write("|");
+    if (lm->LatitudeVelocity() < -1.22) Write("<"); else Write("|");
     }
   }
 
