@@ -56,20 +56,14 @@ void G_AmsDown::Update() {
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
   faceD = -vehicle->FaceFront().Dot(zVec);
-  if (faceX > 22) faceX = 22;
-  if (faceX < 2) faceX = 2;
   /* ***** Left ***** */
   leftX = 12.5 + ((vehicle->FaceLeft().Dot(xVec)) * 10.5);
   leftY = 7.5 - ((vehicle->FaceLeft().Dot(yVec)) * 5.5);
   leftD = -vehicle->FaceLeft().Dot(zVec);
-  if (leftX > 22) leftX = 22;
-  if (leftX < 2) leftX = 2;
   /* ***** Up ***** */
   upX = 12.5 + ((vehicle->FaceUp().Dot(xVec)) * 10.5);
   upY = 7.5 - ((vehicle->FaceUp().Dot(yVec)) * 5.5);
   upD = -vehicle->FaceUp().Dot(zVec);
-  if (upX > 22) upX = 22;
-  if (upX < 2) upX = 2;
   draw(faceX,faceY,faceD,leftX,leftY,leftD,upX,upY,upD);
   }
 

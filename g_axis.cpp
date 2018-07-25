@@ -35,6 +35,18 @@ void G_Axis::draw(Int32 fx,Int32 fy,Double fd,
   char   tc;
   Int32  ti;
   Double td;
+  if (fx > 22) fx = 22;
+  if (fx < 2) fx = 2;
+  if (fy > 12) fy = 12;
+  if (fy < 2) fy = 2;
+  if (lx > 22) lx = 22;
+  if (lx < 2) lx = 2;
+  if (ly > 12) ly = 12;
+  if (ly < 2) ly = 2;
+  if (ux > 22) ux = 22;
+  if (ux < 2) ux = 2;
+  if (uy > 12) uy = 12;
+  if (uy < 2) uy = 2;
   dx[0] = fx; dy[0] = fy; d[0] = fd;
   c[0] = (fd <= 0) ? 'F' : 'f';
   dx[1] = lx; dy[1] = ly; d[1] = ld;
