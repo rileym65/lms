@@ -700,7 +700,8 @@ void Sequencer::GetAlsep() {
   }
 
 void Sequencer::PutAlsep() {
-  time = 120 * 60;
+  if (mission->Lsep() == 2) time = 120 * 60;
+    else time = 90 * 60;
   strcpy(message,"ALSEP->GND");
   function = SEQ_PUTALSEP;
   }
