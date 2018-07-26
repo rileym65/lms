@@ -259,7 +259,9 @@ void setupVehicle() {
   if (mission->Rover() == 1) lrv->MaxSpeed(4.0);
   if (mission->Rover() == 2) lrv->MaxSpeed(6.0);
   if (mission->Rover() == 3) lrv->MaxSpeed(12.0);
+  if (mission->Rover() == 3) lrv->Oxygen(72 * 3600);
   lrv->MaxBattery(lrv->Battery());
+  lrv->MaxOxygen(lrv->Oxygen());
   }
 
 char* ClockToString(char* buffer, Int32 clock) {
@@ -544,8 +546,16 @@ int main(int argc, char** argv) {
       if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
         clockEv++;
         clockTe++;
-        plss->UseOxygen(1);
-        plss->UseBattery(1);
+        if (pilotLocation == PILOT_LRV && mission->Rover() == 3) {
+          if (lrv->UseOxygen(1) == false) {
+            plss->UseOxygen(1);
+            plss->UseBattery(1);
+            }
+          }
+        else {
+          plss->UseOxygen(1);
+          plss->UseBattery(1);
+          }
         if (plss->Oxygen() + plss->EOxygen() <= 0) injury += 0.3;
         if (plss->Battery() + plss->EBattery() <= 0) injury += 0.1;
         }
