@@ -213,22 +213,28 @@ void Plss::ProcessKey(Int32 key) {
     if (key == 'R' && carrying == 'B' && lrvPos < 100) seq->BoxToLrv();
     if (key == 'B' && carrying == ' ' && lrvPos < 40 && lrv->Boxes() > 0)
       seq->BoxToPlss();
-    if (key == 'V' && (position - lm->Position()).Length() < 40 &&
-        !lrv->IsSetup() && mission->Vehicle() != 1)
-      seq->SetupLrv();
+    if (mission->Rover() > 0) {
+      if (key == 'V' && (position - lm->Position()).Length() < 40 &&
+          !lrv->IsSetup() && mission->Vehicle() != 1)
+        seq->SetupLrv();
+      }
     if (key == 'F') {
       if (carrying == ' ' && lmPos <= 40 && flagPlanted == 0) seq->GetFlag();
       if (carrying == 'F' && lmPos >= 50) seq->PlantFlag();
       }
     if (key == 'f' && carrying == 'F' && lmPos <= 40) seq->PutFlag();
-    if (key == 'L') {
-      if (carrying == ' ' && lmPos <= 40 && laserSetup == 0) seq->GetLaser();
-      if (carrying == 'L' && lmPos >= 50) seq->SetupLaser();
+    if (mission->Laser() > 0) {
+      if (key == 'L') {
+        if (carrying == ' ' && lmPos <= 40 && laserSetup == 0) seq->GetLaser();
+        if (carrying == 'L' && lmPos >= 50) seq->SetupLaser();
+        }
+      if (key == 'l' && carrying == 'L' && lmPos <= 40) seq->PutLaser();
       }
-    if (key == 'l' && carrying == 'L' && lmPos <= 40) seq->PutLaser();
-    if (key == 'A') {
-      if (carrying == ' ' && lmPos <= 40 && alsepSetup == 0) seq->GetAlsep();
-      if (carrying == 'A' && lmPos >= 150) seq->PutAlsep();
+    if (mission->Lsep() > 0) {
+      if (key == 'A') {
+        if (carrying == ' ' && lmPos <= 40 && alsepSetup == 0) seq->GetAlsep();
+        if (carrying == 'A' && lmPos >= 150) seq->PutAlsep();
+        }
       }
     }
   if (key == KEY_INSERT) Throttle(0);
