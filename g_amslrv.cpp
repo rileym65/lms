@@ -31,7 +31,7 @@ void G_AmsLrv::Display() {
 void G_AmsLrv::Update() {
   Int32 i;
   char buffer[32];
-  i = (int)(lrv->Battery() / LRV_BATTERY * 100);
+  i = (int)(lrv->Battery() / lrv->MaxBattery() * 100);
   if (i>99) i = 99;
   if (i != lastBattery) {
     GotoXY(x+4,y+1); sprintf(buffer,"%2d",i); Write(buffer);

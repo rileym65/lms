@@ -123,6 +123,239 @@ Boolean Input(Int32 x, Int32 y, char* buffer, Boolean append) {
   return false;
   }
 
+Double NumericDialog(char* msg, Double max) {
+  int key;
+  char buffer[20];
+  Double v;
+  Double t;
+  UInt32 x,y;
+  x = 40 - ((strlen(msg)+2) / 2);
+  y = 10;
+  v = 0;
+  Box(x, y, strlen(msg)+4,4);
+  GotoXY(x+2,y+1); Write(msg);
+  strcpy(buffer,"");
+  ShowCursor();
+  GotoXY(38,y+2); Flush();
+  while (key != 13 && key != 27) {
+    key = Inkey();
+    if (key == 10) key = 13;
+    if ((key == 8 || key == 127) && strlen(buffer) > 0) {
+      buffer[strlen(buffer)-1] = 0;
+      GotoXY(38, y+2); Write(buffer); Write(" ");
+      GotoXY(38+strlen(buffer),y+2);
+      Flush();
+      }
+    if (key >= '0' && key <= '9') {
+      buffer[strlen(buffer)+1] = 0;
+      buffer[strlen(buffer)] = key;
+      t = atof(buffer);
+      if (t > max) {
+        buffer[strlen(buffer)-1] = 0;
+        }
+      GotoXY(38, y+2); Write(buffer); Write(" ");
+      GotoXY(38+strlen(buffer),y+2);
+      Flush();
+      }
+    }
+  v = atof(buffer);
+  HideCursor();
+  if (key == 27) return -1;
+  return v;
+  }
+
+#define M1 19
+#define M2 21
+#define C1 41
+#define C2 54
+
+void ShowLoadout() {
+  char buffer[64];
+  Double pay;
+  Double dry;
+  Double full;
+  Double deltaV;
+  Double cons;
+  sprintf(buffer,"%6.0f kg",mission->Model()->AscentEmptyWeight());
+  GotoXY(C2,5); Write(buffer);
+  sprintf(buffer,"%6.0f kg",mission->AscentFuel());
+  GotoXY(C1,6); Write(buffer);
+  GotoXY(C2,6); Write(buffer);
+  sprintf(buffer,"%6.0f kg",mission->RcsFuel());
+  GotoXY(C1,7); Write(buffer);
+  GotoXY(C2,7); Write(buffer);
+  dry = mission->Model()->AscentEmptyWeight() + mission->RcsFuel();
+  full = dry + mission->AscentFuel();
+  pay = full;
+  sprintf(buffer,"%6.0f kg",full);
+  GotoXY(C2,8); Write(buffer);
+  deltaV = (mission->Model()->AscentIsp() * 9.80655) * log(full/dry);
+  sprintf(buffer,"%6.0f m/s",deltaV);
+  GotoXY(C2,9); Write(buffer);
+
+  dry = mission->Model()->DescentEmptyWeight();
+  sprintf(buffer,"%6.0f kg",dry);
+  GotoXY(C2,12); Write(buffer);
+  sprintf(buffer,"%6.0f kg",mission->DescentFuel());
+  GotoXY(C1,13); Write(buffer);
+  GotoXY(C2,13); Write(buffer);
+  cons = mission->Consumables() / 3600;
+  cons = (cons * 0.060666) + (cons * 0.308333) + (cons * 0.205833);
+  sprintf(buffer,"%6d hrs",mission->Consumables() / 3600);
+  GotoXY(C1,14); Write(buffer);
+  sprintf(buffer,"%6.0f kg",cons);
+  GotoXY(C2,14); Write(buffer);
+  dry += cons;
+  switch (mission->Rover()) {
+    case 0:
+         GotoXY(C1,15); Write("  None");
+         sprintf(buffer,"%6.0f kg",(Double)0);
+         GotoXY(C2,15); Write(buffer);
+         break;
+    case 1:
+         GotoXY(C1,15); Write("  Mk I");
+         dry += ROVER_MKI_WEIGHT;
+         sprintf(buffer,"%6.0f kg",(Double)ROVER_MKI_WEIGHT);
+         GotoXY(C2,15); Write(buffer);
+         break;
+    case 2:
+         GotoXY(C1,15); Write(" Mk II");
+         dry += ROVER_MKII_WEIGHT;
+         sprintf(buffer,"%6.0f kg",(Double)ROVER_MKII_WEIGHT);
+         GotoXY(C2,15); Write(buffer);
+         break;
+    case 3:
+         GotoXY(C1,15); Write("Mk III");
+         dry += ROVER_MKIII_WEIGHT;
+         sprintf(buffer,"%6.0f kg",(Double)ROVER_MKIII_WEIGHT);
+         GotoXY(C2,15); Write(buffer);
+         break;
+    }
+  switch (mission->Lsep()) {
+    case 0:
+         GotoXY(C1,16); Write("  None");
+         sprintf(buffer,"%6.0f kg",(Double)0);
+         GotoXY(C2,16); Write(buffer);
+         break;
+    case 1:
+         GotoXY(C1,16); Write(" ELSEP");
+         sprintf(buffer,"%6.0f kg",(Double)ELSEP_WEIGHT);
+         GotoXY(C2,16); Write(buffer);
+         dry += ELSEP_WEIGHT;
+         break;
+    case 2:
+         GotoXY(C1,16); Write(" ALSEP");
+         sprintf(buffer,"%6.0f kg",(Double)ALSEP_WEIGHT);
+         GotoXY(C2,16); Write(buffer);
+         dry += ALSEP_WEIGHT;
+         break;
+    }
+  switch (mission->Laser()) {
+    case 0:
+         GotoXY(C1,17); Write("    No");
+         sprintf(buffer,"%6.0f kg",(Double)0);
+         GotoXY(C2,17); Write(buffer);
+         break;
+    case 1:
+         GotoXY(C1,17); Write("   Yes");
+         sprintf(buffer,"%6.0f kg",(Double)LASER_WEIGHT);
+         GotoXY(C2,17); Write(buffer);
+         dry += LASER_WEIGHT;
+         break;
+    }
+  sprintf(buffer,"%6.0f kg",dry + mission->DescentFuel());
+  GotoXY(C2,18); Write(buffer);
+  dry += pay;
+  full = dry + mission->DescentFuel();
+  deltaV = (mission->Model()->DescentIsp() * 9.80655) * log(full/dry);
+  sprintf(buffer,"%6.0f m/s",deltaV);
+  GotoXY(C2,19); Write(buffer);
+  sprintf(buffer,"%6.0f kg",full);
+  GotoXY(C2,21); Write(buffer);
+  Flush();
+  }
+
+void LoadoutMenu() {
+  ClearScreen();
+  WriteCentered(40,2,"Mission Loadout");
+  GotoXY(M1, 4); Write("Ascent Stage");
+  GotoXY(M2, 5); Write("   Empty Weight:");
+  GotoXY(M2, 6); Write("A. Ascent Fuel :");
+  GotoXY(M2, 7); Write("B. RCS Fuel    :");
+  GotoXY(M2, 8); Write("   Full Weight :");
+  GotoXY(M2, 9); Write("   Delta V     :");
+  GotoXY(M1,11); Write("Descent Stage");
+  GotoXY(M2,12); Write("   Empty Weight:");
+  GotoXY(M2,13); Write("C. Descent Fuel:");
+  GotoXY(M2,14); Write("D. Consumables :");
+  GotoXY(M2,15); Write("E. Rover       :");
+  GotoXY(M2,16); Write("F. Experiments :");
+  GotoXY(M2,17); Write("G. LLRE        :");
+  GotoXY(M2,18); Write("   Full Weight :");
+  GotoXY(M2,19); Write("   Delta V     :");
+  GotoXY(M2,21); Write("Mission Weight :");
+  }
+
+void DoLoadout() {
+  int key;
+  int i;
+  Double v;
+  char buffer[80];
+  HideCursor();
+  LoadoutMenu();
+  ShowLoadout();
+  while (key != 13 && key != 27) {
+    key = Inkey();
+    if (key == 10) key = 13;
+    if (key == 'a' || key == 'A') {
+      sprintf(buffer,"Enter Ascent Fuel (max: %.0f):",mission->Model()->AscentFuel());
+      v = NumericDialog(buffer,mission->Model()->AscentFuel());
+      if (v > 0) mission->AscentFuel(v);
+      LoadoutMenu();
+      ShowLoadout();
+      }
+    if (key == 'b' || key == 'B') {
+      sprintf(buffer,"Enter RCS Fuel (max: %.0f):",mission->Model()->RcsFuel());
+      v = NumericDialog(buffer,mission->Model()->RcsFuel());
+      if (v > 0) mission->RcsFuel(v);
+      LoadoutMenu();
+      ShowLoadout();
+      }
+    if (key == 'c' || key == 'C') {
+      sprintf(buffer,"Enter Descent Fuel (max: %.0f):",mission->Model()->DescentFuel());
+      v = NumericDialog(buffer,mission->Model()->DescentFuel());
+      if (v > 0) mission->DescentFuel(v);
+      LoadoutMenu();
+      ShowLoadout();
+      }
+    if (key == 'd' || key == 'D') {
+      sprintf(buffer,"Enter Consumables (max: %d):",mission->Model()->Consumables() / 3600);
+      v = NumericDialog(buffer,mission->Model()->Consumables() / 3600);
+      if (v > 0) mission->Consumables(v * 3600);
+      LoadoutMenu();
+      ShowLoadout();
+      }
+    if (key == 'g' || key == 'G') {
+      mission->Laser((mission->Laser() == 0) ? 1 : 0);
+      ShowLoadout();
+      }
+    if (key == 'f' || key == 'F') {
+      i = mission->Lsep() + 1;
+      if (i > 2) i = 0;
+      mission->Lsep(i);
+      ShowLoadout();
+      }
+    if (key == 'e' || key == 'E') {
+      i = mission->Rover() + 1;
+      if (i >= mission->Vehicle()) i = 0;
+      mission->Rover(i);
+      ShowLoadout();
+      }
+    }
+  ShowCursor();
+  }
+
+
 void ShowSelections(UInt32 top, UInt32 count) {
   UInt32 i;
   UInt32 f;
@@ -353,7 +586,7 @@ void Menu() {
   GotoXY(5,18); WriteLn("S. Save and exit");
   GotoXY(5,19); WriteLn("Q. Quit without saving");
   GotoXY(8,21); Write("Option ? ");
-  fflush(stdout);
+  Flush();
   }
 
 void LoadMap(Double latitude, Double longitude, UInt32 level) {
@@ -598,6 +831,7 @@ void MissionEditor() {
   Menu();
   while (key != 'q') {
     key = Inkey();
+GotoXY(2,2);
     if (key == 27) key ='q';
     if (key =='Q') key = 'q';
     if (key =='S') key = 's';
@@ -684,6 +918,10 @@ void MissionEditor() {
       }
     if (key == 'I') {
       SelectVehicle();
+      Menu();
+      }
+    if (key == 'J') {
+      DoLoadout();
       Menu();
       }
     if (key == 's') {

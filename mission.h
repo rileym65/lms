@@ -28,6 +28,7 @@ class Mission {
     Byte    lsep;
     Byte    laser;
     Lander *lander;
+    void    validate();
   public:
     Mission();
     ~Mission();

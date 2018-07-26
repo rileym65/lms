@@ -154,6 +154,10 @@ Double Mission::PrimaryLongitude(Double d) {
   return primaryLongitude;
   }
 
+Double Mission::RcsFuel() {
+  return rcsFuel;
+  }
+
 Double Mission::RcsFuel(Double d) {
   rcsFuel = d;
   if (rcsFuel < 0) rcsFuel = 0;
@@ -260,6 +264,7 @@ Int8 Mission::Vehicle() {
 
 Int8 Mission::Vehicle(Int8 v) {
   vehicle = v;
+  if (v < 1 || v > 4) return vehicle;
   if (lander != NULL) delete(lander);
   lander = new Lander(v);
   ascentFuel = lander->AscentFuel();
@@ -302,6 +307,7 @@ void Mission::Load(FILE* file) {
     else if (startsWith(pline,"lsep ")) lsep = atoi(nw(pline));
     else if (startsWith(pline,"laser ")) laser = atoi(nw(pline));
     }
+  validate();
   }
 
 void Mission::Save(FILE* file) {
@@ -340,3 +346,14 @@ void Mission::Save(FILE* file) {
   fprintf(file,"  Laser %d%s",laser,LE);
   fprintf(file,"  }%s",LE);
   }
+
+void Mission::validate() {
+  if (ascentFuel > lander->AscentFuel()) ascentFuel = lander->AscentFuel();
+  if (descentFuel > lander->DescentFuel()) descentFuel = lander->DescentFuel();
+  if (rcsFuel > lander->RcsFuel()) rcsFuel = lander->RcsFuel();
+  if (consumables > lander->Consumables()) consumables = lander->Consumables();
+  if (rover >= vehicle) rover = vehicle - 1;
+  if (lsep > 2) lsep = 2;
+  if (laser > 1) laser = 1;
+  }
+

@@ -5,6 +5,7 @@
 #include "header.h"
 #include "terminal.h"
 #include "computer.h"
+#include "lander.h"
 
 void setup() {
 Vector t;
@@ -251,6 +252,14 @@ void setupVehicle() {
   lm->MaxDescentEOxygen(lm->DescentEOxygen());
   lm->MaxBattery(lm->MaxAscentBattery() + lm->MaxDescentBattery());
   lm->MaxBattery(lm->MaxAscentOxygen() + lm->MaxDescentOxygen());
+  if (mission->Rover() == 0) lrv->MaxBattery(0.0);
+  if (mission->Rover() == 1) lrv->MaxBattery(35000.0);
+  if (mission->Rover() == 2) lrv->MaxBattery(200000.0);
+  if (mission->Rover() == 3) lrv->MaxBattery(1000000.0);
+  if (mission->Rover() == 1) lrv->MaxSpeed(4.0);
+  if (mission->Rover() == 2) lrv->MaxSpeed(6.0);
+  if (mission->Rover() == 3) lrv->MaxSpeed(12.0);
+  lrv->MaxBattery(lrv->Battery());
   }
 
 char* ClockToString(char* buffer, Int32 clock) {
