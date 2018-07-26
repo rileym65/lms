@@ -8,6 +8,7 @@ Mission::Mission() {
   name = NULL;
   description = NULL;
   region = NULL;
+  lander = NULL;
   primaryLongitude = -99999;
   primaryLatitude = -99999;
   secondary1Longitude = -99999;
@@ -18,12 +19,79 @@ Mission::Mission() {
   secondary3Latitude = -99999;
   targetLongitude = -99999;
   targetLatitude = -99999;
-  vehicle = VEHICLE_APOLLO_MKII;
+  Vehicle(VEHICLE_APOLLO_MKII);
   }
 
 Mission::~Mission() {
   if (name != NULL) free(name);
   if (region != NULL) free(region);
+  }
+
+Double Mission::AscentEmptyWeight() {
+  return lander->AscentEmptyWeight();
+  }
+
+Double Mission::AscentFullWeight() {
+  Double ret;
+  ret = AscentEmptyWeight();
+  ret += ascentFuel;
+  ret += rcsFuel;
+  return ret;
+  }
+
+Double Mission::AscentFuel() {
+  return ascentFuel;
+  }
+
+Double Mission::AscentFuel(Double d) {
+  ascentFuel = d;
+  if (ascentFuel < 0) ascentFuel = 0;
+  if (ascentFuel > lander->AscentFuel()) ascentFuel = lander->AscentFuel();
+  return ascentFuel;
+  }
+
+UInt32 Mission::Consumables() {
+  return consumables;
+  }
+
+UInt32 Mission::Consumables(UInt32 i) {
+  consumables = i;
+  if (consumables < 0) consumables = 0;
+  if (consumables > lander->Consumables()) consumables = lander->Consumables();
+  return consumables;
+  }
+
+Double Mission::DescentEmptyWeight() {
+  return lander->DescentEmptyWeight();
+  }
+
+Double Mission::DescentFullWeight() {
+  Double ret;
+  Double cons;
+  ret = DescentEmptyWeight();
+  ret += descentFuel;
+  if (rover == 1) ret += 210;
+  if (rover == 2) ret += 230;
+  if (rover == 3) ret += 310;
+  if (lsep == 1) ret += 49;
+  if (lsep == 2) ret += 163;
+  if (laser != 0) ret += 20;
+  cons = consumables;
+  ret += (cons * 0.060666);           /* Oxygen */
+  ret += (cons * 0.308333);           /* Water */
+  ret += (cons * 0.205833);           /* Food */
+  return ret;
+  }
+
+Double Mission::DescentFuel() {
+  return descentFuel;
+  }
+
+Double Mission::DescentFuel(Double d) {
+  descentFuel = d;
+  if (descentFuel < 0) descentFuel = 0;
+  if (descentFuel > lander->DescentFuel()) descentFuel = lander->DescentFuel();
+  return descentFuel;
   }
 
 char* Mission::Description() {
@@ -35,6 +103,26 @@ char* Mission::Description(char* s) {
   description = (char*)malloc(strlen(s) + 1);
   strcpy(description, s);
   return description;
+  }
+
+Byte Mission::Laser() {
+  return laser;
+  }
+
+Byte Mission::Laser(Byte b) {
+  laser = b;
+  if (laser > 1) laser = 1;
+  return laser;
+  }
+
+Byte Mission::Lsep() {
+  return lsep;
+  }
+
+Byte Mission::Lsep(Byte b) {
+  lsep = b;
+  if (lsep > 2) lsep = 2;
+  return lsep;
   }
 
 char* Mission::Name() {
@@ -66,6 +154,13 @@ Double Mission::PrimaryLongitude(Double d) {
   return primaryLongitude;
   }
 
+Double Mission::RcsFuel(Double d) {
+  rcsFuel = d;
+  if (rcsFuel < 0) rcsFuel = 0;
+  if (rcsFuel > lander->RcsFuel()) rcsFuel = lander->RcsFuel();
+  return rcsFuel;
+  }
+
 char* Mission::Region() {
   return region;
   }
@@ -75,6 +170,16 @@ char* Mission::Region(char* s) {
   region = (char*)malloc(strlen(s) + 1);
   strcpy(region, s);
   return region;
+  }
+
+Byte Mission::Rover() {
+  return rover;
+  }
+
+Byte Mission::Rover(Byte b) {
+  rover = b;
+  if (rover >= vehicle) rover = vehicle - 1;
+  return rover;
   }
 
 Double Mission::Secondary1Latitude() {
@@ -155,7 +260,20 @@ Int8 Mission::Vehicle() {
 
 Int8 Mission::Vehicle(Int8 v) {
   vehicle = v;
+  if (lander != NULL) delete(lander);
+  lander = new Lander(v);
+  ascentFuel = lander->AscentFuel();
+  rcsFuel = lander->RcsFuel();
+  descentFuel = lander->DescentFuel();
+  consumables = lander->Consumables();
+  rover = v - 1;
+  lsep = (v == 1) ? 1 : 2;
+  laser = 1;
   return vehicle;
+  }
+
+Lander* Mission::Model() {
+  return lander;
   }
 
 void Mission::Load(FILE* file) {
@@ -175,7 +293,14 @@ void Mission::Load(FILE* file) {
     else if (startsWith(pline,"secondary2longitude ")) secondary2Longitude = atof(nw(pline));
     else if (startsWith(pline,"secondary3latitude ")) secondary3Latitude = atof(nw(pline));
     else if (startsWith(pline,"secondary3longitude ")) secondary3Longitude = atof(nw(pline));
-    else if (startsWith(pline,"vehicle ")) vehicle = atoi(nw(pline));
+    else if (startsWith(pline,"vehicle ")) Vehicle(atoi(nw(pline)));
+    else if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
+    else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
+    else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
+    else if (startsWith(pline,"consumables ")) consumables = atoi(nw(pline));
+    else if (startsWith(pline,"rover ")) rover = atoi(nw(pline));
+    else if (startsWith(pline,"lsep ")) lsep = atoi(nw(pline));
+    else if (startsWith(pline,"laser ")) laser = atoi(nw(pline));
     }
   }
 
@@ -206,5 +331,12 @@ void Mission::Save(FILE* file) {
     fprintf(file,"  Secondary3Longitude %f%s",secondary3Longitude,LE);
     }
   fprintf(file,"  Vehicle %d%s",vehicle,LE);
+  fprintf(file,"  AscentFuel %f%s",ascentFuel,LE);
+  fprintf(file,"  RcsFuel %f%s",rcsFuel,LE);
+  fprintf(file,"  DescentFuel %f%s",descentFuel,LE);
+  fprintf(file,"  Consumables %d%s",consumables,LE);
+  fprintf(file,"  Rover %d%s",rover,LE);
+  fprintf(file,"  Lsep %d%s",lsep,LE);
+  fprintf(file,"  Laser %d%s",laser,LE);
   fprintf(file,"  }%s",LE);
   }

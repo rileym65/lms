@@ -93,6 +93,7 @@ OBJS = \
 	groundvehicle.o \
 	helpers.o \
 	ins.o \
+	lander.o \
 	lfsr.o \
 	load.o \
 	lrv.o \
@@ -124,6 +125,7 @@ MOBJS = \
 
 PLANNEROBJS = \
 	helpers.o \
+	lander.o \
 	lfsr.o \
 	map.o \
 	mission.o \
@@ -186,6 +188,7 @@ gauge.o:         $(HEADERS) gauge.h gauge.cpp
 groundvehicle.o: $(HEADERS) vehicle.h groundvehicle.h groundvehicle.cpp
 ins.o:           $(HEADERS) ins.cpp
 helpers.o:       $(HEADERS) helpers.cpp
+lander.o:        $(HEADERS) lander.cpp
 lfsr.o:          $(HEADERS) lfsr.h lfsr.cpp
 load.o:          $(HEADERS) load.cpp
 lrv.o:           $(HEADERS) vehicle.h lrv.h lrv.cpp

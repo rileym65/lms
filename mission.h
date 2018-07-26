@@ -2,6 +2,7 @@
 #define _MISSION_H
 
 #include "types.h"
+#include "lander.h"
 
 class Mission {
   protected:
@@ -19,19 +20,46 @@ class Mission {
     Double  secondary2Latitude;
     Double  secondary3Longitude;
     Double  secondary3Latitude;
+    Double  ascentFuel;
+    Double  rcsFuel;
+    Double  descentFuel;
+    UInt32  consumables;
+    Byte    rover;
+    Byte    lsep;
+    Byte    laser;
+    Lander *lander;
   public:
     Mission();
     ~Mission();
+    Double AscentEmptyWeight();
+    Double AscentFullWeight();
+    Double AscentFuel();
+    Double AscentFuel(Double d);
+    UInt32 Consumables();
+    UInt32 Consumables(UInt32 i);
+    Double DescentEmptyWeight();
+    Double DescentFullWeight();
+    Double DescentFuel();
+    Double DescentFuel(Double d);
     char*  Description();
     char*  Description(char* s);
+    Lander* Model();
+    Byte   Laser();
+    Byte   Laser(Byte b);
+    Byte   Lsep();
+    Byte   Lsep(Byte b);
     char*  Name();
     char*  Name(char* s);
     Double PrimaryLatitude();
     Double PrimaryLatitude(Double d);
     Double PrimaryLongitude();
     Double PrimaryLongitude(Double d);
+    Double RcsFuel();
+    Double RcsFuel(Double d);
     char*  Region();
     char*  Region(char* s);
+    Byte   Rover();
+    Byte   Rover(Byte b);
     Double Secondary1Latitude();
     Double Secondary1Latitude(Double d);
     Double Secondary1Longitude();
