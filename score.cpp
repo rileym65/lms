@@ -35,6 +35,8 @@ void Score() {
   ScoreEvaLrvSetup = (lrv->IsSetup()) ? 250 : 0;
   ScoreEvaLaserSetup = (laserSetup) ? 250 : 0;
   ScoreEvaAlsepSetup = (alsepSetup) ? 250 : 0;
+  if (ScoreEvaAlsepSetup == 250 && mission->Lsep() == 1)
+    ScoreEvaAlsepSetup = 125;
   primarySamples = 0;
   secondary1Samples = 0;
   secondary2Samples = 0;
