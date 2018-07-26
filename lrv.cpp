@@ -210,6 +210,10 @@ void Lrv::ProcessKey(Int32 key) {
   if (key == KEY_F10) Throttle(100);
   if (key == 'M' && throttle == 0) seq->ExitLrv();
   if (key == 'Z') damageReportStep = 1;
+  if (mission->Rover() == 3 && Throttle() == 0) {
+    if (key == '*') seq->Rest();
+    if (key == ')') seq->Sleep();
+    }
   panel->ProcessKey(key);
   }
 
