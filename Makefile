@@ -28,6 +28,7 @@ PHEADERS = panel.h gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_landed.h \
            g_lmfuel.h \
            g_lmrock.h \
+           g_lrv.h \
            g_maplarge.h \
            g_mapmed.h \
            g_multiaxis.h \
@@ -78,6 +79,7 @@ OBJS = \
 	g_landed.o \
         g_lmfuel.o \
         g_lmrock.o \
+	g_lrv.o \
 	g_multiaxis.o \
 	g_orbitlarge.o \
 	g_oxybat.o \
@@ -180,6 +182,7 @@ clean:
 	-rm lms.doc
 	-rm computer.doc
 	-rm training.doc
+	-rm tutorial.doc
 	-rm panel.html
 
 computer.o:      $(HEADERS) vehicle.h computer.h computer.cpp
@@ -240,6 +243,7 @@ g_lamps.o:      $(HEADERS) gauge.h terminal.h g_lamps.h g_lamps.cpp
 g_landed.o:     $(HEADERS) gauge.h terminal.h g_landed.h g_landed.cpp
 g_lmfuel.o:     $(HEADERS) gauge.h terminal.h g_lmfuel.h g_lmfuel.cpp
 g_lmrock.o:     $(HEADERS) gauge.h terminal.h g_lmrock.h g_lmrock.cpp
+g_lrv.o:        $(HEADERS) gauge.h terminal.h g_lrv.h g_lrv.cpp
 g_maplarge.o:   $(HEADERS) gauge.h terminal.h map.h g_maplarge.h g_maplarge.cpp
 g_mapmed.o:     $(HEADERS) gauge.h terminal.h map.h g_mapmed.h g_mapmed.cpp
 g_multiaxis.o:  $(HEADERS) gauge.h terminal.h map.h g_multiaxis.h g_multiaxis.cpp

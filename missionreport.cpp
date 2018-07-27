@@ -179,7 +179,7 @@ void MissionReport() {
     }
   if (singleDrive > records->LongestSingleDrive) {
     records->LongestSingleDrive = singleDrive;
-    fprintf(file,"  Longest Ind. EVA Drivin : %9.2fkm%s",singleDrive/1000.0,LE);
+    fprintf(file,"  Longest Ind. EVA Driven : %9.2fkm%s",singleDrive/1000.0,LE);
     }
   if (lrv->Driven() > records->LongestTotalDrive) {
     records->LongestTotalDrive = lrv->Driven();

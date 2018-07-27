@@ -35,6 +35,7 @@
 #include "g_landed.h"
 #include "g_lmfuel.h"
 #include "g_lmrock.h"
+#include "g_lrv.h"
 #include "g_maplarge.h"
 #include "g_mapmed.h"
 #include "g_multiaxis.h"
@@ -158,6 +159,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_LmFuel(x1, y1, false, vehicle));
       else if (strcasecmp(str,"lmrock") == 0)
         addGauge(new G_LmRock(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"lrv") == 0)
+        addGauge(new G_Lrv(x1, y1, false, vehicle));
       else if (strcasecmp(str,"maplarge") == 0)
         addGauge(new G_MapLarge(x1, y1, false, vehicle));
       else if (strcasecmp(str,"mapmedium") == 0)

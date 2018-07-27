@@ -96,7 +96,7 @@ void Records::Save() {
   fprintf(file,"  Lowest Latitude Landing : %9.2f%s",LowestLatitude,LE);
   fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",LongestSingleWalk/1000.0,LE);
   fprintf(file,"  Longest Tot. EVA Walked : %9.2fkm%s",LongestTotalWalk/1000.0,LE);
-  fprintf(file,"  Longest Ind. EVA Drivin : %9.2fkm%s",LongestSingleDrive/1000.0,LE);
+  fprintf(file,"  Longest Ind. EVA Driven : %9.2fkm%s",LongestSingleDrive/1000.0,LE);
   fprintf(file,"  Longest Tot. EVA Driven : %9.2fkm%s",LongestTotalDrive/1000.0,LE);
   fprintf(file,"  Farthest From LM        : %9.2fkm%s",FarthestFromLM/1000.0,LE);
   fprintf(file,"  Greatest Sample Value   : %9.2f%s",GreatestSampleValue,LE);
