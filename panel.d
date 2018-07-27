@@ -18,9 +18,11 @@
 	would indicate that the left face is pointing directly south, while an
 	indicator of 180 would indicate that the left face was pointing north.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Clocks
 [er]
 	+------------+
@@ -46,9 +48,11 @@
 	surface.  The OR clocks shows how long 1 orbit takes.  The INS must be set
 	to any of the ORB modes for this clock to show an accurate time.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Consumables
 [er]
 	+-------+
@@ -78,9 +82,11 @@
 	OXY shows the remaining percentage of oxygen and BAT shows the remaining
 	percentage of the battery.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_DockingRadar
 [er]
 	+-------------+
@@ -119,9 +125,11 @@
 	These symbols indicate that your horizontal or vertical velocity is too
 	high for a successful docking.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_DownAxis
 [er]
 	+-------------------------+
@@ -160,9 +168,11 @@
 	face is facing directly westward, the left face is facing directly south
 	and the up face is pointing directly away from the lunar surface.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Ins
 [er]
 	+---------------------------+
@@ -242,9 +252,11 @@
 	node and inclination are both zero.
 [LE]
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_LandingRadar
 [er]
 	+-------------+
@@ -276,9 +288,11 @@
 	the LM is below 18,000 meters and the LM is upright enough for the 
 	landing radar to be receiving a signal.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Lm
 [er]
 	+------+
@@ -293,10 +307,12 @@
 	LM.  The RK display indicates how many kilograms of samples have
 	been loaded.
 [e-]
+
 [=]
 [--]
 [=]
-[h2]Ams_Lrv
+
+[h2]	Ams_Lrv
 [er]
 	+------+
 	|^  lrv|
@@ -315,9 +331,11 @@
 	ready for use.  If this '^' flag is absent then the rover is still packed
 	away in the descent module.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Message
 [er]
 	+---------------+
@@ -329,9 +347,11 @@
 	task the task and how many seconds left will be displayed
 	on this instrument.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Pilot
 [er]
 	+-------------------+
@@ -344,9 +364,11 @@
 	are CSM=Command Service Module, LM=Lunar Module, LRV=Lunar Rover and 
 	EVA=Outside any vehicle.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]Ams_Plss
 [er]
 	+------+
@@ -362,9 +384,11 @@
 	many PLSS recharge packs are left.  If there are no packs left
 	then you will no longer be able to equip the PLSS.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Sequencer
 [er]
 	+--------------+
@@ -382,9 +406,11 @@
 	this simulator, but in AMS it indicated when the sequencer auto
 	pilot had been engaged.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Spin
 [er]
 	+------+
@@ -399,9 +425,11 @@
 	shows the rotation rate around the Roll axis and YAW shows
 	the rotation rate around the Yaw axis.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_Status
 [er]
 	+--------------+
@@ -472,9 +500,11 @@
 	that tracks how long the pilot has been awake, which has a negative
 	effect on efficiency.
 [e-]
+
 [=]
 [--]
 [=]
+
 [h2]	Ams_WestAxis
 [er]
 	+-------------------------+
@@ -519,83 +549,11 @@
 	from the lunar surface, the Left face is facing the south and the
 	Front face is facing directly west.
 [e-]
+
 [=]
 [--]
 [=]
-[h2]	MapMedium
-[er]
-	+-------------------------+
-	| +------west|----------+ |
-	| |                     |n|
-	| |       *    o    o  o|o|
-	| |       .o            |r|
-	| |  .       .          |t|
-	| |       .     *  ^    |h|
-	|--        O @       o  --|
-	|s|.o       lm   . *    | |
-	|o|                   * | |
-	|u|  .o                 | |
-	|t|.                  .o| |
-	|h|              O *    | |
-	| +----------|east------+ |
-	+-------------------------+
-[ee]
-	This shows the current lunar surface.  The pilot is always in the
-	middle of the display and represented by an '@' symbol.  Each cell
-	of the map represents 10m x 10m of the lunar surface.  the various
-	symbols on the map represent features on the lunar suface.
-[e-]
-[=]
-[--]
-[=]
-[h2]	Rcs
-[er]
-	+--------------------+
-	| F/B  PT: 0.0 RTH: ^|
-	| L/R  RL: 0.0 TTH:  |
-	| U/D  YW: 0.0 PRP:95|
-	+--------------------+
-[ee]
-	This is the RCS control panel which shows everything related to
-	the Reaction Control System.
-[=]
-	F/B - This shows the status of the Forward and Backwards RCS jets.
-	if the forward RCS jet is on then a '<' will appear just to the left of
-	the F.  If the backwards RCS jet is on then a '>' will appear just
-	to the right of the B.
-[=]
-	L/R - This shows the status of the Left and Right RCS jets.
-	if the left RCS jet is on then a '<' will appear just to the left of
-	the L.  If the right RCS jet is on then a '>' will appear just
-	to the right of the R.
-[=]
-	U/D - This shows the status of the Up and Down RCS jets.
-	if the up RCS jet is on then a '<' will appear just to the left of
-	the U.  If the down RCS jet is on then a '>' will appear just
-	to the right of the D.
-[=]
-	PT - This shows the current pitch rate in degrees per second.
-[=]
-	RL - This shows the current roll rate in degrees per second.
-[=]
-	YW - This shows the current yaw rate in degress per second.
-[=]
-	RTH - This shows the current rotational RCS throttle.  When a
-	'^^' symbol is shown then the rotation throttle is set to high.
-	When a '--' symbol is shown then the rotation throttle is set to
-	medium and when a 'vv' symbol is shown then the rotation throttle
-	is set to low.
-[=]
-	TTH - This shows the current setting of the translation RCS
-	throttle.  When a '^^' symbol is shown the translation throttle
-	is set to high, when a '--' is shown then the throttle is set
-	to medium, and when a 'vv' is shown the throttle is set to low.
-[=]
-	PRP - This shows what percentage of RCS propellant remains.
-[e-]
-[=]
-[--]
-[=]
+
 [h2]	Attitude
 [er]
 	+-------------------+
@@ -640,101 +598,130 @@
 	of 180 would indicate that the left face is facing directly
 	retrograde.
 [e-]
-[=]
-[--]
-[=]
-[h2]	LmFuel
-[er]
-	+-------+
-	|ASC: 99|
-	|DSC: 99|
-	+-------+
-[ee]
-	This instrument displays the amount of fuel and is only
-	valid for the LM.  ASC shows the percentage of ascent fuel
-	remaining while DSC shows the remaining percentage of 
-	descent fuel.  If the descent stage has been jettisoned then
-	the DSC value will appear as "**".
-[e-]
+
 [=]
 [--]
 [=]
 
-[h2]	OxygenBattery
+[h2]	ClockEV
 [er]
-	+-------+
-	|OXY: 99|
-	|BAT: 99|
-	+-------+
+	+------------+
+	|EV:  3:19:09|
+	+------------+
 [ee]
-	This guage shows what percentgage of oxygen and battery power
-	remain in the vehicle.
+	This clock shows the duration of the current/last EVA.
 [e-]
+
 [=]
 [--]
 [=]
 
-[h2]	Pilot
+[h2]	ClockMI
 [er]
-	+------+
-	|MB: 30|
-	|EF: 75|
-	|IN:  0|
-	+------+
+	+------------+
+	|ME: 48:25:16|
+	+------------+
 [ee]
-	This instrument shows information about the pilot's physical
-	status.
-[=]
-	MB - This shows the current metabolic rate.  The higher this
-	number the more the pilot's heart is beating.
-[=]
-	EF - This shows pilot efficiency.  The higher this number the
-	more efficient the pilot is at doing their job.  This number
-	is decreased by higher metabolic activity or injury.
-[=]
-	IN - This shows a combined value for hard and soft injury.
-	The higher this number is the more injured the pilot.  Injury
-	has a direct negative effect on efficiency.  Soft injury is due
-	to pilot fatigue, the longer a pilot is awake, the more their
-	soft injury goes up.  Sleeping will reduce soft injury.  Hard
-	injury are physical injuries sustained by the pilot as a result
-	of a hard landing or moving too quickly over rough ground.  Hard
-	injury cannot be reduced.
+	This clock shows the current mission elapsed time.  The
+	mission clock starts after undocking is completed.
 [e-]
+
 [=]
 [--]
 [=]
 
-[h2]	PilotLocation
+[h2]	Clocks
 [er]
-	+---+
-	|LM |
-	+---+
+	+------------+
+	|UT: 11:16:07|
+	|ME:  1:16:21|
+	|BU:  0:00:00|
+	|EV:  0:00:00|
+	|DK:  0:00:00|
+	+------------+
 [ee]
-	This instrument shows the current location of the pilot:
+	This guage shows a collection of clocks all in a single instrument.
 [=]
-[i4]
 [lb]
-[li]	LM - The pilot is in the Lunar Module.
-[li]	CSM - The pilot is in the Command/Serive Module.
-[li]	EVA - The pilot is currently on EVA.
-[li]	LRV - The pilot is currently riding the rover.
+[li]	UT - The current UTC time.
+[li]	ME - The current Mission Elapsed time.
+[li]	BU - The time of the current/last main engine burn.
+[li]	EV - The time of the current/last EVA.
+[li]	DK - The time since lifting off from the Lunar surface.
 [le]
-[i-4]
 [e-]
+
 [=]
 [--]
 [=]
 
-[h2]	LmRock
+[h2]	ClockTE
 [er]
-	+------+
-	|RK:  0|
-	+------+
+	+------------+
+	|TE: 15:26:51|
+	+------------+
 [ee]
-	This guage shows how many kilograms of samples have been loaded
-	onto the LM.
+	This clock shows the total time spend on EVAs.
 [e-]
+
+[=]
+[--]
+[=]
+
+[h2]	ClockUT
+[er]
+	+------------+
+	|UT: 10:25:07|
+	+------------+
+[ee]
+	This clock shows the current UTC time.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Computer
+[er]
+	+-----------------------------+
+	|   P 00      V 00      N 00  |
+	| -0000000  -0000000  -0000000|
+	| -0000000  -0000000  -0000000|
+	| -0000000  -0000000  -0000000|
+	|     RUN  IDL  INP  ERR      |
+	| -0000000  -0000000  -0000000|
+	| -0000000  -0000000  -0000000|
+	+-----------------------------+
+[ee]
+	This guage shows the UI of the guidance computer.  The 'P', 'V',
+	and 'N' fields show what the current Program, Verb and Noun are.
+	There are 15 register displays shown below the PVN line.  These
+	register displays show information from the currently running
+	program and their contents will vary by program.  Refer to the
+	guidance computer manual for more information about what is 
+	displayed.  the 'RUN' flag will be shown if the computer is
+	currently running a program.  'IDL' will be shown if the computer
+	is not running a program and is in the idle state.  The 'INP'
+	flag will be shown anytime the computer is expecting input from
+	the user.  'ERR' is displayd if the computer encounters any
+	errors during a program run.  Usually an error code will be
+	displayed in register 13 (lowest left register), refer to the
+	guidance computer manual for the meanings of error codes.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Docked
+[er]
+	+---+
+	|^DK|
+	+---+
+[ee]
+	This guage shows whether or not the LM is docked with the CSM.
+[e-]
+
 [=]
 [--]
 [=]
@@ -761,141 +748,7 @@
 	If the cabin is pressurized then a '@' will appear to the left
 	of this indicator.
 [e-]
-[=]
-[--]
-[=]
 
-[h2]	Radars
-[er]
-	+----+
-	| LAN|
-	| DOK|
-	|@DSN|
-	+----+
-[ee]
-	This instrument shows which radar the INS is getting its
-	navigational information from:
-[=]
-[i4]
-[lb]
-[li]	LAN - Landing radar, which provides high resolution signals.
-[li]	DOK - Docking radar, which provides high resolution signals.
-[li]	DSN - Deep Space Network, which provides low resolution signals.
-[le]
-[i-4]
-[=]
-	An '@' symbol appears before the currently active radar.
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	Landed
-[er]
-	+---+
-	|^TD|
-	+---+
-[ee]
-	This guage shows whether or not the LM is in contact with the
-	Lunar surface.
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	Docked
-[er]
-	+---+
-	|^DK|
-	+---+
-[ee]
-	This guage shows whether or not the LM is docked with the CSM.
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	Throttle
-[er]
-	+-------+
-	|THR:  0|
-	+-------+
-[ee]
-	This guage shows the throttle setting of the main engine.
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	Clocks
-[er]
-	+------------+
-	|UT: 11:16:07|
-	|ME:  1:16:21|
-	|BU:  0:00:00|
-	|EV:  0:00:00|
-	|DK:  0:00:00|
-	+------------+
-[ee]
-	This guage shows a collection of clocks all in a single instrument.
-[=]
-[lb]
-[li]	UT - The current UTC time.
-[li]	ME - The current Mission Elapsed time.
-[li]	BU - The time of the current/last main engine burn.
-[li]	EV - The time of the current/last EVA.
-[li]	DK - The time since lifting off from the Lunar surface.
-[le]
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	ClockUT
-[er]
-	+------------+
-	|UT: 10:25:07|
-	+------------+
-[ee]
-	This clock shows the current UTC time.
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	ClockMI
-[er]
-	+------------+
-	|ME: 48:25:16|
-	+------------+
-[ee]
-	This clock shows the current mission elapsed time.  The
-	mission clock starts after undocking is completed.
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	ClockEV
-[er]
-	+------------+
-	|EV:  3:19:09|
-	+------------+
-[ee]
-	This clock shows the duration of the current/last EVA.
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	ClockTE
-[er]
-	+------------+
-	|TE: 15:26:51|
-	+------------+
-[ee]
-	This clock shows the total time spend on EVAs.
-[e-]
 [=]
 [--]
 [=]
@@ -932,6 +785,111 @@
 	with the throttle setting and speed at which you are currently
 	moving in meters/second.
 [e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Lamps
+[er]
+	+--------------------+
+	|ASC ALO ATT OXY BAT |
+	|DSC DLO DCK EMG EMG |
+	|RCS RLO LCT ELO ELO |
+	+--------------------+
+[ee]
+	This panel contains various indicator lights to alert
+	the pilot to various conditions.  The indicator for a condition
+	will only show if that condition is currently occuring, otherwise
+	the indicator will remain dark.
+[=]
+	The following indicators could appear on this panel:
+[=]
+[TB]
+	| ASC | - | The ascent engine is currently running.          |
+	| DSC | - | The descent engine is currently running.         |
+	| RCS | - | An RCS translation thruster is on.               |
+	| ALO | - | Ascent fuel has fallen below 10%.                |
+	| DLO | - | Descent fuel has fallen below 10%.               |
+	| RLO | - | RCS propellant has fallen below 10%.             |
+	| ATT | - | The spacecraft is spinning on at least one axis. |
+	| DCK | - | The spacecraft is currently docked.              |
+	| LCT | - | The spacecraft is in contact with the lunar surface.  |
+	| OXY | - | The available oxygen has fallen below 10%.            |
+	| EMG | - | This lamp below the OXY lamp indicates that emergency
+	oxygen is currently being used.                                   |
+	| ELO | - | This lamp below the OXY lamp indicates that emergency
+	oxygen has fallen below 10%.                                      |
+	| BAT | - | This indicates that battery power has fallen below 10%. |
+	| EMG | - | This lamp below the BAT lamp indicates that emergency
+	battery power is being used.                                        |
+	| ELO | - | This lamp below the BAT lamp indicates that emergency
+	battery power has fallen below 10%.                                 |
+[TE]
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Landed
+[er]
+	+---+
+	|^TD|
+	+---+
+[ee]
+	This guage shows whether or not the LM is in contact with the
+	Lunar surface.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	LmFuel
+[er]
+	+-------+
+	|ASC: 99|
+	|DSC: 99|
+	+-------+
+[ee]
+	This instrument displays the amount of fuel and is only
+	valid for the LM.  ASC shows the percentage of ascent fuel
+	remaining while DSC shows the remaining percentage of 
+	descent fuel.  If the descent stage has been jettisoned then
+	the DSC value will appear as "**".
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	LmRock
+[er]
+	+------+
+	|RK:  0|
+	+------+
+[ee]
+	This guage shows how many kilograms of samples have been loaded
+	onto the LM.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Lrv
+[er]
+	+------+
+	|^  lrv|
+	|OXY:--|
+	|BAT:47|
+	|BOX: 6|
+	|ROK:20|
+	+------+
+[ee]
+[e-]
+
 [=]
 [--]
 [=]
@@ -965,6 +923,35 @@
 	This instrument gives a large detailed map of the lunar surface.  It is
 	primarily used for the LRV or PLSS panels for surface exploration.
 [e-]
+
+[=]
+[--]
+[=]
+
+[h2]	MapMedium
+[er]
+	+-------------------------+
+	| +------west|----------+ |
+	| |                     |n|
+	| |       *    o    o  o|o|
+	| |       .o            |r|
+	| |  .       .          |t|
+	| |       .     *  ^    |h|
+	|--        O @       o  --|
+	|s|.o       lm   . *    | |
+	|o|                   * | |
+	|u|  .o                 | |
+	|t|.                  .o| |
+	|h|              O *    | |
+	| +----------|east------+ |
+	+-------------------------+
+[ee]
+	This shows the current lunar surface.  The pilot is always in the
+	middle of the display and represented by an '@' symbol.  Each cell
+	of the map represents 10m x 10m of the lunar surface.  the various
+	symbols on the map represent features on the lunar suface.
+[e-]
+
 [=]
 [--]
 [=]
@@ -1056,66 +1043,7 @@
 	data.
 [LE]
 [e-]
-[=]
-[--]
-[=]
 
-[h2]	PrecisionAxis
-[er]
-	+-----------------------+
-	|   LOOKING   PROGRADE  |
-	|+---------------------+|
-	||    Elev     Norm    ||
-	||F:   75.94   -0.01  +||
-	||                     ||
-	||U:   -0.01  -89.99  -||
-	||                     ||
-	||L:   14.06   -0.00  -||
-	|+---------------------+|
-	+-----------------------+
-[ee]
-[e-]
-[=]
-[--]
-[=]
-
-[h2]	Lamps
-[er]
-	+--------------------+
-	|ASC ALO ATT OXY BAT |
-	|DSC DLO DCK EMG EMG |
-	|RCS RLO LCT ELO ELO |
-	+--------------------+
-[ee]
-	This panel contains various indicator lights to alert
-	the pilot to various conditions.  The indicator for a condition
-	will only show if that condition is currently occuring, otherwise
-	the indicator will remain dark.
-[=]
-	The following indicators could appear on this panel:
-[=]
-[TB]
-	| ASC | - | The ascent engine is currently running.          |
-	| DSC | - | The descent engine is currently running.         |
-	| RCS | - | An RCS translation thruster is on.               |
-	| ALO | - | Ascent fuel has fallen below 10%.                |
-	| DLO | - | Descent fuel has fallen below 10%.               |
-	| RLO | - | RCS propellant has fallen below 10%.             |
-	| ATT | - | The spacecraft is spinning on at least one axis. |
-	| DCK | - | The spacecraft is currently docked.              |
-	| LCT | - | The spacecraft is in contact with the lunar surface.  |
-	| OXY | - | The available oxygen has fallen below 10%.            |
-	| EMG | - | This lamp below the OXY lamp indicates that emergency
-	oxygen is currently being used.                                   |
-	| ELO | - | This lamp below the OXY lamp indicates that emergency
-	oxygen has fallen below 10%.                                      |
-	| BAT | - | This indicates that battery power has fallen below 10%. |
-	| EMG | - | This lamp below the BAT lamp indicates that emergency
-	battery power is being used.                                        |
-	| ELO | - | This lamp below the BAT lamp indicates that emergency
-	battery power has fallen below 10%.                                 |
-[TE]
-[e-]
 [=]
 [--]
 [=]
@@ -1149,6 +1077,76 @@
 	This shows a low resolution map of the lunar surface.  It
 	is primarily used to show the moon from orbit.
 [e-]
+
+[=]
+[--]
+[=]
+
+[h2]	OxygenBattery
+[er]
+	+-------+
+	|OXY: 99|
+	|BAT: 99|
+	+-------+
+[ee]
+	This guage shows what percentgage of oxygen and battery power
+	remain in the vehicle.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Pilot
+[er]
+	+------+
+	|MB: 30|
+	|EF: 75|
+	|IN:  0|
+	+------+
+[ee]
+	This instrument shows information about the pilot's physical
+	status.
+[=]
+	MB - This shows the current metabolic rate.  The higher this
+	number the more the pilot's heart is beating.
+[=]
+	EF - This shows pilot efficiency.  The higher this number the
+	more efficient the pilot is at doing their job.  This number
+	is decreased by higher metabolic activity or injury.
+[=]
+	IN - This shows a combined value for hard and soft injury.
+	The higher this number is the more injured the pilot.  Injury
+	has a direct negative effect on efficiency.  Soft injury is due
+	to pilot fatigue, the longer a pilot is awake, the more their
+	soft injury goes up.  Sleeping will reduce soft injury.  Hard
+	injury are physical injuries sustained by the pilot as a result
+	of a hard landing or moving too quickly over rough ground.  Hard
+	injury cannot be reduced.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	PilotLocation
+[er]
+	+---+
+	|LM |
+	+---+
+[ee]
+	This instrument shows the current location of the pilot:
+[=]
+[i4]
+[lb]
+[li]	LM - The pilot is in the Lunar Module.
+[li]	CSM - The pilot is in the Command/Serive Module.
+[li]	EVA - The pilot is currently on EVA.
+[li]	LRV - The pilot is currently riding the rover.
+[le]
+[i-4]
+[e-]
+
 [=]
 [--]
 [=]
@@ -1173,6 +1171,103 @@
 	'F' - Flag, 'L' - Laser reflector, 'A' - ALSEP package, or
 	'-' - nothing.
 [e-]
+
+[=]
+[--]
+[=]
+
+[h2]	PrecisionAxis
+[er]
+	+-----------------------+
+	|   LOOKING   PROGRADE  |
+	|+---------------------+|
+	||    Elev     Norm    ||
+	||F:   75.94   -0.01  +||
+	||                     ||
+	||U:   -0.01  -89.99  -||
+	||                     ||
+	||L:   14.06   -0.00  -||
+	|+---------------------+|
+	+-----------------------+
+[ee]
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Radars
+[er]
+	+----+
+	| LAN|
+	| DOK|
+	|@DSN|
+	+----+
+[ee]
+	This instrument shows which radar the INS is getting its
+	navigational information from:
+[=]
+[i4]
+[lb]
+[li]	LAN - Landing radar, which provides high resolution signals.
+[li]	DOK - Docking radar, which provides high resolution signals.
+[li]	DSN - Deep Space Network, which provides low resolution signals.
+[le]
+[i-4]
+[=]
+	An '@' symbol appears before the currently active radar.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Rcs
+[er]
+	+--------------------+
+	| F/B  PT: 0.0 RTH: ^|
+	| L/R  RL: 0.0 TTH:  |
+	| U/D  YW: 0.0 PRP:95|
+	+--------------------+
+[ee]
+	This is the RCS control panel which shows everything related to
+	the Reaction Control System.
+[=]
+	F/B - This shows the status of the Forward and Backwards RCS jets.
+	if the forward RCS jet is on then a '<' will appear just to the left of
+	the F.  If the backwards RCS jet is on then a '>' will appear just
+	to the right of the B.
+[=]
+	L/R - This shows the status of the Left and Right RCS jets.
+	if the left RCS jet is on then a '<' will appear just to the left of
+	the L.  If the right RCS jet is on then a '>' will appear just
+	to the right of the R.
+[=]
+	U/D - This shows the status of the Up and Down RCS jets.
+	if the up RCS jet is on then a '<' will appear just to the left of
+	the U.  If the down RCS jet is on then a '>' will appear just
+	to the right of the D.
+[=]
+	PT - This shows the current pitch rate in degrees per second.
+[=]
+	RL - This shows the current roll rate in degrees per second.
+[=]
+	YW - This shows the current yaw rate in degress per second.
+[=]
+	RTH - This shows the current rotational RCS throttle.  When a
+	'^^' symbol is shown then the rotation throttle is set to high.
+	When a '--' symbol is shown then the rotation throttle is set to
+	medium and when a 'vv' symbol is shown then the rotation throttle
+	is set to low.
+[=]
+	TTH - This shows the current setting of the translation RCS
+	throttle.  When a '^^' symbol is shown the translation throttle
+	is set to high, when a '--' is shown then the throttle is set
+	to medium, and when a 'vv' is shown the throttle is set to low.
+[=]
+	PRP - This shows what percentage of RCS propellant remains.
+[e-]
+
 [=]
 [--]
 [=]
@@ -1198,51 +1293,20 @@
 	LIF shows that the liftoff from lunar surface sequence has
 	been started.
 [e-]
+
 [=]
 [--]
 [=]
 
-[h2]	Computer
+[h2]	Throttle
 [er]
-	+-----------------------------+
-	|   P 00      V 00      N 00  |
-	| -0000000  -0000000  -0000000|
-	| -0000000  -0000000  -0000000|
-	| -0000000  -0000000  -0000000|
-	|     RUN  IDL  INP  ERR      |
-	| -0000000  -0000000  -0000000|
-	| -0000000  -0000000  -0000000|
-	+-----------------------------+
+	+-------+
+	|THR:  0|
+	+-------+
 [ee]
-	This guage shows the UI of the guidance computer.  The 'P', 'V',
-	and 'N' fields show what the current Program, Verb and Noun are.
-	There are 15 register displays shown below the PVN line.  These
-	register displays show information from the currently running
-	program and their contents will vary by program.  Refer to the
-	guidance computer manual for more information about what is 
-	displayed.  the 'RUN' flag will be shown if the computer is
-	currently running a program.  'IDL' will be shown if the computer
-	is not running a program and is in the idle state.  The 'INP'
-	flag will be shown anytime the computer is expecting input from
-	the user.  'ERR' is displayd if the computer encounters any
-	errors during a program run.  Usually an error code will be
-	displayed in register 13 (lowest left register), refer to the
-	guidance computer manual for the meanings of error codes.
+	This guage shows the throttle setting of the main engine.
 [e-]
-[=]
-[--]
-[=]
-[h2]	Lrv
-[er]
-	+------+
-	|^  lrv|
-	|OXY:--|
-	|BAT:47|
-	|BOX: 6|
-	|ROK:20|
-	+------+
-[ee]
-[e-]
+
 [=]
 [--]
 [=]

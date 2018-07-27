@@ -571,17 +571,99 @@ i = (cellX & 0x7fff) * ((~cellY) & 0x7fff);
   }
 
 Int32 Map::CellM(Double longitude, Double latitude) {
-  Int32 cellX,cellY;
-//  latitude = -latitude;
-  if (longitude < lastLongitude-1 || longitude > lastLongitude+1 ||
-      latitude < lastLatitude-1 || latitude > lastLatitude+1) {
-//printf("generate %f,%f > %f,%f\n",longitude,latitude,lastLongitude,lastLatitude);
-    generateLevelMMap(longitude,latitude);
+  Int32 i;
+  UInt32 j;
+  Int32 cellX, cellY;
+  Double dist;
+  Double dx,dy;
+  Double cLat,cLong;
+  Int32  segment;
+  cellX = Cell(longitude);
+  cellY = Cell(latitude);
+  cLat = Degrees(cellY);
+  cLong = Degrees(cellX);
+  char ltype;
+  ltype = '_';
+
+  segment = (int)longitude;
+  segment += 180;
+  while (segment <0) segment += 360;
+  while (segment >= 360) segment -= 360;
+  for (j=0; j<numSegments[segment]; j++) {
+    i = segments[segment][j];
+    if (features[i].symbol != 'o' &&
+        features[i].cellX == cellX && features[i].cellY == cellY)
+      return features[i].symbol;
+
+    if (features[i].symbol == 'o' &&
+        cLong >= features[i].minLongitude && cLong <= features[i].maxLongitude &&
+        cLat >= features[i].minLatitude && cLat <= features[i].maxLatitude) {
+      dx = (cLong - features[i].longitude) * METERS;
+      dy = (cLat - features[i].latitude) * METERS;
+      dist = sqrt(dx*dx + dy*dy);
+      if (dist >= sqrt(features[i].rad2)-1000 && dist <= sqrt(features[i].rad2)) {
+        if (latitude < features[i].latitude) return '(';
+        return ')';
+        }
+      else if (dist < sqrt(features[i].rad3)) return '^';
+      else if (dist < sqrt(features[i].rad1)) ltype = ' ';
+      }
+
     }
-  cellX = ((longitude-lastLongitude) / (1.0/30.0));
-  cellY = ((latitude - lastLatitude) / (1.0/30.0));
-//printf("%f,%f  ->  %d,%d\n",longitude,latitude,cellX,cellY);
-  return levelM[cellY+31][cellX+31];
+
+  i = (cellX & 0x7fffffff) ^ (cellY << 15);
+i = (cellX & 0x7fff) * ((~cellY) & 0x7fff);
+  rng.Seed(i);
+//  if (ltype == '_') ltype = CellM(longitude, latitude);
+  if (ltype == '_') ltype = CellH(longitude, latitude);
+  i = rng.Next(250);
+  switch (ltype) {
+    case '~':
+         if ((i -= 6) < 0) return '.';
+         if ((i -= 6) < 0) return 'o';
+         if ((i -= 5) < 0) return 'O';
+         if ((i -= 20) < 0) return ',';
+         if ((i -= 15) < 0) return '+';
+         if ((i -= 9) < 0) return '*';
+         if ((i -= 15) < 0) return 'u';
+         if ((i -= 15) < 0) return '^';
+         return ' ';
+         break;
+    case '^':
+         if ((i -= 8) < 0) return '.';
+         if ((i -= 8) < 0) return 'o';
+         if ((i -= 6) < 0) return 'O';
+         if ((i -= 80) < 0) return ',';
+         if ((i -= 40) < 0) return '+';
+         if ((i -= 20) < 0) return '*';
+         if ((i -= 30) < 0) return 'u';
+         if ((i -= 60) < 0) return '^';
+         return ' ';
+         break;
+    case 'u':
+         if ((i -= 8) < 0) return '.';
+         if ((i -= 8) < 0) return 'o';
+         if ((i -= 6) < 0) return 'O';
+         if ((i -= 30) < 0) return ',';
+         if ((i -= 20) < 0) return '+';
+         if ((i -= 12) < 0) return '*';
+         if ((i -= 20) < 0) return 'u';
+         if ((i -= 20) < 0) return '^';
+         return ' ';
+         break;
+    default:
+         if ((i -= 4) < 0) return '.';
+         if ((i -= 4) < 0) return 'o';
+         if ((i -= 3) < 0) return 'O';
+         if ((i -= 10) < 0) return ',';
+         if ((i -= 6) < 0) return '+';
+         if ((i -= 3) < 0) return '*';
+         if ((i -= 1) < 0) return 'u';
+         if ((i -= 1) < 0) return '^';
+         return ' ';
+         break;
+    }
+  return ' ';
   }
 
 

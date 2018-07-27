@@ -70,12 +70,14 @@ void fillMapH() {
 void fillMapM() {
   Int32 x,y;
   Double dx,dy;
+  Double o;
   Int32 i;
   UInt32 j;
   Double l;
   char n[8];
+  o = 1000.0 / METERSD;
   for (i=-3; i<=3; i++) {
-    l = latitude + (i * METERS * 10);
+    l = latitude + (i * o) * 10;
     if (l >= 0) sprintf(n,"%6.2fN",l);
       else sprintf(n,"%6.2fS",-l);
     for (j=0; j<strlen(n); j++) {
@@ -85,7 +87,7 @@ void fillMapM() {
     }
 
   for (i=-3; i<=3; i++) {
-    l = longitude + (i * METERS * 10);
+    l = longitude + (i * o) * 10;
     if (l >= 0) sprintf(n,"%6.2fE",l);
       else sprintf(n,"%6.2fW",-l);
     for (j=0; j<strlen(n); j++) {
@@ -96,8 +98,8 @@ void fillMapM() {
   x = map->CellM(longitude,latitude);
   for (x=-30; x<31; x++)
     for (y=-30; y<31; y++) {
-      dx = (x * METERS);
-      dy = (y * METERS);
+      dx = (x * o);
+      dy = (y * o);
       data[x+33][y+39] = map->CellM(longitude+dx,latitude+dy);
       }
   }
