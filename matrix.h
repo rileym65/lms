@@ -20,8 +20,8 @@ class Matrix {
     static Matrix Identity();
     Double Cell(int x,int y);
     void MultipliedBy(Matrix b);
-    Vector Row(Int8 r);
-    void   Row(Int8 r,Vector v);
+    Vector Row(UInt8 r);
+    void   Row(UInt8 r,Vector v);
     Vector Transform(Vector a);
   };
 

@@ -1,8 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include "types.h"
+
+#ifdef MINGW
+#include <windows.h>
+#include <conio.h>
+#endif
+
+#ifndef MINGW
 #include <termios.h>
+#include <unistd.h>
+struct termios original;
+#endif
+
 #include "terminal.h"
 
 typedef struct {
@@ -12,7 +23,6 @@ typedef struct {
 
 int esc_mode;
 char esc_seq[80];
-struct termios original;
 KEYDEF keys[] = {
   { "[A",          KEY_UP_ARROW                  },
   { "[B",          KEY_DOWN_ARROW                },
@@ -113,14 +123,42 @@ KEYDEF keys[] = {
   };
 
 void ClrScr() {
+#ifdef MINGW
+  HANDLE hConsole;
+  COORD coordScreen = {0,0};
+  DWORD cCharsWritten;
+  CONSOLE_SCREEN_BUFFER_INFO csbi;
+  DWORD dwConSize;
+  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+  GetConsoleScreenBufferInfo(hConsole,&csbi);
+  dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
+  FillConsoleOutputCharacter(hConsole,(TCHAR)' ',dwConSize,coordScreen,&cCharsWritten);
+  GetConsoleScreenBufferInfo(hConsole,&csbi);
+  FillConsoleOutputAttribute(hConsole,csbi.wAttributes,dwConSize,coordScreen,&cCharsWritten);
+  SetConsoleCursorPosition(hConsole,coordScreen);
+#else
   printf("\e[H\e[2J");
+#endif
   }
 
 void GotoXY(int x, int y) {
+#ifdef MINGW
+  HANDLE hConsole;
+  COORD coordScreen;
+  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+  coordScreen.X = x - 1;
+  coordScreen.Y = y - 1;
+  SetConsoleCursorPosition(hConsole,coordScreen);
+#else
   printf("\e[%d;%dH",y,x);
+#endif
   }
 
 int KeyPressed() {
+#ifdef MINGW
+  if (kbhit()) return 1;
+  return 0;
+#else
   int c;
   fd_set rfds;
   struct timeval tv;
@@ -130,17 +168,66 @@ int KeyPressed() {
   FD_SET(0,&rfds);
   c = select(FD_SETSIZE,&rfds,NULL,NULL,&tv);
   return (c != 0) ? -1 : 0;
+#endif
   }
 
 void HideCursor() {
+#ifdef MINGW
+  HANDLE hConsole;
+  CONSOLE_CURSOR_INFO cursor;
+  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+  cursor.dwSize = 100;
+  cursor.bVisible = FALSE;
+  SetConsoleCursorInfo(hConsole,&cursor);
+#else
   printf("\E[?25l");
+#endif
   }
 
 void ShowCursor() {
+#ifdef MINGW
+  HANDLE hConsole;
+  CONSOLE_CURSOR_INFO cursor;
+  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+  cursor.dwSize = 100;
+  cursor.bVisible = TRUE;
+  SetConsoleCursorInfo(hConsole,&cursor);
+#else
   printf("\E[?25h");
+#endif
   }
 
 int Inkey() {
+#ifdef MINGW
+  Int32           c;
+  unsigned char          key;
+  c = 0;
+  key = getch();
+  c = key;
+  if (key == 224 || key == 0) {
+      key = getch();
+      if (key == 72) c = '8';
+      if (key == 80) c = '2';
+      if (key == 75) c = '4';
+      if (key == 77) c = '6';
+      if (key == 71) c = '7';
+      if (key == 73) c = '9';
+      if (key == 79) c = '1';
+      if (key == 81) c = '3';
+      if (key == 59) c = KEY_F1;     // F1
+      if (key == 60) c = KEY_F2;     // F2
+      if (key == 61) c = KEY_F3;     // F3
+      if (key == 62) c = KEY_F4;     // F4
+      if (key == 63) c = KEY_F5;     // F5
+      if (key == 64) c = KEY_F6;     // F6
+      if (key == 65) c = KEY_F7;     // F7
+      if (key == 66) c = KEY_F8;     // F8
+      if (key == 67) c = KEY_F9;     // F9
+      if (key == 68) c = KEY_F10;     // F10
+      }
+  if (c == 10) c = 13;
+  return c;
+#else
   int i;
   int  c;
   char key;
@@ -172,6 +259,7 @@ int Inkey() {
       }
     }
   return c;
+#endif
   }
 
 void Write(const char* message) {
@@ -187,6 +275,8 @@ void WriteCh(char chr) {
   }
 
 int OpenTerminal() {
+#ifdef MINGW
+#else
   struct termios terminal;
   esc_mode = 0;
   tcgetattr(0, &terminal);
@@ -194,10 +284,15 @@ int OpenTerminal() {
   terminal.c_lflag &= ~ICANON;
   terminal.c_lflag &= ~ECHO;
   if (tcsetattr(0, TCSANOW, &terminal) != 0) return -1;
+#endif
   return 0;
   }
 
 void CloseTerminal() {
+#ifdef MINGW
+  ShowCursor();
+#else
   tcsetattr(0, TCSANOW, &original);
+#endif
   }
 

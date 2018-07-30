@@ -15,7 +15,7 @@ G_AmsLand::~G_AmsLand() {
   }
 
 void G_AmsLand::Reset() {
-  Int8 i;
+  UInt8 i;
   lastMode = ' ';
   lastLongitude = -9999;
   lastLatitude = -9999;

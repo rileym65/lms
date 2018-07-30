@@ -51,7 +51,7 @@
 #include "g_throttle.h"
 
 Panel::Panel(const char* filename,Vehicle* v) {
-  Int8 x,y;
+  UInt8 x,y;
   vehicle = v;
   for (y=0; y<24; y++)
     for (x=0; x<80; x++)
@@ -351,15 +351,15 @@ void Panel::useDefault(const char* filename) {
   else addGauge(new G_AmsWest( 2,  2, false, vehicle));
   }
 
-void Panel::Box(Int8 x1,Int8 y1,Int8 x2,Int8 y2) {
+void Panel::Box(UInt8 x1,UInt8 y1,UInt8 x2,UInt8 y2) {
   HLine(x1,y1,x2);
   HLine(x1,y2,x2);
   VLine(x1,y1,y2);
   VLine(x2,y1,y2);
   }
 
-void Panel::HLine(Int8 x1,Int8 y1,Int8 x2) {
-  Int8 i;
+void Panel::HLine(UInt8 x1,UInt8 y1,UInt8 x2) {
+  UInt8 i;
   y1--;
   for (i=x1-1; i<x2; i++) {
     if (screen[y1][i] == '|') screen[y1][i] = '+';
@@ -368,8 +368,8 @@ void Panel::HLine(Int8 x1,Int8 y1,Int8 x2) {
     }
   }
 
-void Panel::VLine(Int8 x1,Int8 y1,Int8 y2) {
-  Int8 i;
+void Panel::VLine(UInt8 x1,UInt8 y1,UInt8 y2) {
+  UInt8 i;
   x1--;
   for (i=y1-1; i<y2; i++) {
     if (screen[i][x1] == '-') screen[i][x1] = '+';
@@ -378,14 +378,14 @@ void Panel::VLine(Int8 x1,Int8 y1,Int8 y2) {
     }
   }
 
-void Panel::Label(Int8 x,Int8 y,const char* label) {
+void Panel::Label(UInt8 x,UInt8 y,const char* label) {
   UInt8 i;
   for (i=0; i<strlen(label); i++)
     screen[y-1][x-1+i] = label[i];
   }
 
 void Panel::Display() {
-  Int8 i;
+  UInt8 i;
   ClrScr();
   for (i=0; i<24; i++) {
     GotoXY(1,i+1);
@@ -397,27 +397,27 @@ void Panel::Display() {
   }
 
 void Panel::Update() {
-  Int8 i;
+  UInt8 i;
   for (i=0; i<numGauges; i++)
     gauges[i]->Update();
   fflush(stdout);
   }
 
 void Panel::Reset() {
-  Int8 i;
+  UInt8 i;
   for (i=0; i<numGauges; i++)
     gauges[i]->Reset();
   fflush(stdout);
   }
 
 void Panel::ProcessKey(Int32 key) {
-  Int8 i;
+  UInt8 i;
   for (i=0; i<numGauges; i++)
     gauges[i]->ProcessKey(key);
   }
 
 void Panel::Save(FILE* file) {
-  Int32 i;
+  UInt32 i;
   fprintf(file,"  Panel {%s",LE);
   for (i=0; i<numGauges; i++)
     gauges[i]->Save(file);
@@ -425,7 +425,7 @@ void Panel::Save(FILE* file) {
   }
 
 void Panel::Load(FILE* file) {
-  Int32 i;
+  UInt32 i;
   char* pline;
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"}")) return;

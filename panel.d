@@ -229,23 +229,18 @@
 	is relative to absolute Lunar coordintes.  North is in
 	relation to the Lunar equator and East is in relation to the
 	mid-Earth terminator.  Altitude is in reference to the ground.
-[=]
 [LI]	POS^TAR. In this mode position and velocity information is
 	in relation to the targeted landing site.
-[=]
 [LI]	POS^REL. In this mode position and velocity information is
 	in relation to the oribiting CSM.
-[=]
 [LI]	ORB^ABS. In this mode asending node is in relation to the
 	mid-Earth terminator and inclination is referenced to the 
 	equator.  An inclination of 90 is an equitoral orbit, while
 	0 would inidcate a polar orbit.
-[=]
 [LI]	ORB^TAR. This mode changes the ascending node and inclination
 	displays to be relative to the landing site.  You will pass
 	directly over the landing site if the ascending node and inclination
 	are both 0.
-[=]
 [LI]	ORB^REL. In this mode the ascending node and inclination are
 	displayed relative to the ascending node and inclination of the
 	CSM.  Your orbit is aligned with the CSM if both the ascending
@@ -1280,18 +1275,16 @@
 [ee]
 	This instrument shows the status of any sequencer actions.
 [=]
-	ARM indicates that the ascent engine is armed and ready for
-	either and abort or liftoff action.
-[=]
-	ABO indicates that the abort sequencer has been activated.
-[=]
-	JET shows that the descent stage jettison sequence has been
-	started.
-[=]
-	KIL indicates that the rotation kill function has begun.
-[=]
-	LIF shows that the liftoff from lunar surface sequence has
-	been started.
+[TB]
+	| ARM | indicates that the ascent engine is armed and ready for
+	        either and abort or liftoff action.|
+	| ABO | indicates that the abort sequencer has been activated. |
+	| JET | shows that the descent stage jettison sequence has been
+	        started. |
+	| KIL | indicates that the rotation kill function has begun.|
+	| LIF | shows that the liftoff from lunar surface sequence has
+	        been started. |
+[TE]
 [e-]
 
 [=]

@@ -184,7 +184,7 @@ void Computer::addOpcode(UInt16 addr,UInt32 opcode) {
   rom[addr] = opcode;
   }
 
-char* Computer::Reg(Int8 n) {
+char* Computer::Reg(UInt8 n) {
   if (n > 0 && n < 16) {
     if (fabs(regs[n]) > 9999999) sprintf(compOutput,"99999999");
     else if (fabs(regs[n]) > 99999) sprintf(compOutput,"%8.0f",regs[n]);

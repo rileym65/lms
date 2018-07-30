@@ -37,7 +37,7 @@ class Computer {
     virtual char* Prog();
     virtual char* Noun();
     virtual char* Verb();
-    virtual char* Reg(Int8 n);
+    virtual char* Reg(UInt8 n);
     virtual Boolean Running();
     virtual Boolean Input();
     virtual Boolean Err();

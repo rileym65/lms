@@ -7,6 +7,10 @@
 #include "computer.h"
 #include "lander.h"
 
+#ifdef MINGW
+#include <windows.h>
+#endif
+
 void setup() {
 Vector t;
   pilotLocation = PILOT_CSM;
@@ -569,7 +573,11 @@ int main(int argc, char** argv) {
       }
     else ticks++;
     if (keyDelay > 0) keyDelay--;
+#ifdef MINGW
+    Sleep(simSpeed / 1000);
+#else
     usleep(simSpeed);
+#endif
     if (KeyPressed() && keyDelay == 0) {
       keyDelay = (99 - efficiency) / 2;
       metabolicRate += 0.3;

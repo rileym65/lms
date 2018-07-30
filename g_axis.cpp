@@ -28,7 +28,7 @@ void G_Axis::draw(Int32 fx,Int32 fy,Double fd,
                   Int32 ux,Int32 uy,Double ud) {
   char buffer[32];
   Boolean flag;
-  Int8 i;
+  UInt8 i;
   Int32  dx[3], dy[3];
   Double d[3];
   char   c[3];

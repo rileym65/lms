@@ -1,6 +1,11 @@
 PROJECT = lms
 CC = g++
+# MINGW
+#DEFS = -Wall -DMINGW -UWIN32 -static-libstdc++ -static-libgcc -static
+
+#Linux
 DEFS = -Wall
+
 INCDIR =
 INCS =
 LIBDIR =

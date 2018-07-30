@@ -35,7 +35,7 @@ void G_AmsWest::Display() {
   }
 
 void G_AmsWest::Update() {
-  Int8 i;
+  UInt8 i;
   Int32  dx[3], dy[3];
   Double d[3];
   char   c[3];

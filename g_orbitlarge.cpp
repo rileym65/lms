@@ -16,7 +16,7 @@ G_OrbitLarge::~G_OrbitLarge() {
   }
 
 void G_OrbitLarge::Reset() {
-  Int8 i;
+  UInt8 i;
   lastCellX = -99999999;
   lastCellY = -99999999;
   for (i=0; i<19; i++)

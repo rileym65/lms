@@ -16,7 +16,7 @@ G_MapMed::~G_MapMed() {
   }
 
 void G_MapMed::Reset() {
-  Int8 i;
+  UInt8 i;
   lastCellX = -99999999;
   lastCellY = -99999999;
   for (i=0; i<11; i++)
