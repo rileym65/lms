@@ -550,33 +550,26 @@ void LunarModule::Cycle() {
   if (rollRate >= -0.0001 && rollRate < 0.0001) rollRate = 0;
   if (pitchRate >= -0.0001 && pitchRate < 0.0001) pitchRate = 0;
   if (yawRate >= -0.0001 && yawRate < 0.0001) yawRate = 0;
-  if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
+
+  if (rollRate != 0) {
+    m = Matrix::Rotate(faceUp, rollRate);
+    faceLeft = m.Transform(faceLeft).Norm();
+    faceFront = m.Transform(faceFront).Norm();
+    }
+  if (yawRate != 0) {
+    m = Matrix::Rotate(faceFront, yawRate);
+    faceUp = m.Transform(faceUp).Norm();
+    faceLeft = m.Transform(faceLeft).Norm();
+    }
+  if (pitchRate != 0) {
+    m = Matrix::Rotate(faceLeft, pitchRate);
+    faceUp = m.Transform(faceUp).Norm();
+    faceFront = m.Transform(faceFront).Norm();
+    }
+
 /*
-    m = Matrix::Identity();
-    if (rollRate != 0) {
-      roll += rollRate;
-      if (roll > 180) roll -= 360;
-      if (roll < -180) roll += 360;
-      rollMatrix = Matrix::RotateZ(roll);
-      }
-    m.MultipliedBy(rollMatrix);
-    if (pitchRate != 0) {
-      pitch += pitchRate;
-      if (pitch > 180) pitch -= 360;
-      if (pitch < -180) pitch += 360;
-      pitchMatrix = Matrix::RotateY(-pitch);
-      }
-    m.MultipliedBy(pitchMatrix);
-    if (yawRate != 0) {
-      yaw += yawRate;
-      if (yaw > 180) yaw -= 360;
-      if (yaw < -180) yaw += 360;
-      yawMatrix = Matrix::RotateX(yaw);
-      }
-    m.MultipliedBy(yawMatrix);
-    faceFront = m.Transform(baseFront).Norm();
-    faceLeft = m.Transform(baseLeft).Norm();
-*/
+  if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
+
     if (rollRate != 0) orientation.MultipliedBy(rollMatrix);
     if (pitchRate != 0) orientation.MultipliedBy(pitchMatrix);
     if (yawRate != 0) orientation.MultipliedBy(yawMatrix);
@@ -588,6 +581,8 @@ void LunarModule::Cycle() {
     faceUp = faceFront.Cross(faceLeft).Norm();
     faceLeft = faceUp.Cross(faceFront).Norm();
     }
+*/
+
   switch (rcsThrottle) {
     case 1: rcsThrust = rcsNewtons/100.0; rcsfuel = rcsFuelRate/100.0; break;
     case 10: rcsThrust = rcsNewtons/10.0; rcsfuel = rcsFuelRate/10.0; break;

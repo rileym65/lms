@@ -883,6 +883,24 @@
 	|ROK:20|
 	+------+
 [ee]
+	This guage provides information about the LRV.  If the lrv has
+	been setup then a '^' flag will appear in the upper left corner
+	of this guage.
+[=]
+	OXY gives the percentage of oxygen remaining in the LRV oxygen tank.
+	If a particular LRV model does not carry additional oxygen then a
+	'--' flag will be shown here.
+[=]
+	BAT gives the percentagle of battery remaining.  Once the battery
+	run out then the LRV will no longer be able to move.
+[=]
+	BOX specifies how many sample boxes remain.  The sample box 
+	currently carried on the rover is included in this count.  When
+	this number shows zero then you can no longer store samples on
+	the rover.
+[=]
+	ROK indicates how many of kilograms of samples are currently
+	stored on the rover.
 [e-]
 
 [=]

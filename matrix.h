@@ -16,6 +16,7 @@ class Matrix {
     static Matrix RotateX(Double angle);
     static Matrix RotateY(Double angle);
     static Matrix RotateZ(Double angle);
+    static Matrix Rotate(Vector v, Double angle);
     static Matrix Zero();
     static Matrix Identity();
     Double Cell(int x,int y);

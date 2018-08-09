@@ -2,8 +2,6 @@ Features:
 ---------
   - Orient faces properly upon landing
   - Lunar mid altitude maps
-  - Change 3d model for spacecraft orientation to use roll,pitch,yaw angles
-    instead of current transformation matrix method
   - Damage to rover for driving too fast over rough ground
   - Damage to pilot for moving too fast over rough ground
   - Damage to LM for landing on rugged features

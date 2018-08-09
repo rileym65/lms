@@ -66,7 +66,11 @@
 #define VEHICLE_APOLLO_MKII     3
 #define VEHICLE_APOLLO_MKIII    4
 
+#ifdef MINGW
+#define LE   "\r\n"
+#else
 #define LE   "\n"
+#endif
 
 typedef struct {
   Int32 cellX;
