@@ -1,0 +1,33 @@
+Box 1,1,80,24
+Box 64,1,80,6
+Gauge ClockUT 66,2
+Gauge ClockMI 66,3
+Gauge ClockBU 66,4
+Gauge ClockTB 66,5
+Box 21,18,27,24
+Gauge Engines 23,20
+Box 13,18,21,24
+Gauge Fuel 14,19
+Box 25,1,55,5
+Gauge Altitude 27,2
+Gauge Roc 27,3
+Gauge Velocity 41,2
+Gauge Accel 41,3
+Gauge Apoapsis 27,6
+Gauge Periapsis 27,7
+Gauge ClockOT 27,8
+Box 27,9,53,24
+Gauge Ams_DownAxis 28,10
+Box 1,18,13,24
+Gauge RollRate 3,19
+Gauge PitchRate 3,20
+Gauge YawRate 3,21
+Box 1,14,27,18
+Gauge Radial 3,15
+Gauge Orbit 16,15
+Box 1,9,27,14
+Gauge Prograde 3,10
+Box 25,5,55,9
+Gauge Position 3,6
+Gauge Lan 42,6
+Gauge Inclination 42,7

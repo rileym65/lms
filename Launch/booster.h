@@ -1,0 +1,65 @@
+#ifndef _BOOSTER_H
+#define _BOOSTER_H
+
+#include "vehicle.h"
+
+class Booster : public Vehicle {
+  protected:
+    Double dryWeight[10];
+    Byte   enginesLit;
+    Double fuel[10];
+    Double ispSl[10][10];
+    Double ispVac[10][10];
+    Double maxFuel[10];
+    Byte   starts[10];
+    Double payload;
+    Byte   numEngines[10];
+    Byte   numStages;
+    Byte   stage;
+    Double thrustSl[10][10];
+    Double thrustVac[10][10];
+  public:
+    Booster();
+    ~Booster();
+    virtual void   Cutoff();
+    virtual void   Cycle();
+    virtual Double DryWeight(Byte stage);
+    virtual Double DryWeight(Byte stage, Double d);
+    virtual Byte   EnginesLit();
+    virtual Double Fuel();
+    virtual Double Fuel(Byte stage);
+    virtual Double Fuel(Byte stage, Double d);
+    virtual void   Ignition();
+    virtual Double IspSl(Byte stage, Byte engine);
+    virtual Double IspSl(Byte stage, Byte engine, Double d);
+    virtual Double IspVac(Byte stage, Byte engine);
+    virtual Double IspVac(Byte stage, Byte engine, Double d);
+    virtual Double Mass();
+    virtual Double MaxFuel();
+    virtual Double MaxFuel(Byte stage);
+    virtual Double MaxFuel(Byte stage, Double d);
+    virtual void   NextStage();
+    virtual Byte   NumEngines();
+    virtual Byte   NumEngines(Byte stage);
+    virtual Byte   NumEngines(Byte stage, Byte b);
+    virtual Byte   NumStages();
+    virtual Byte   NumStages(Byte b);
+    virtual Double Payload();
+    virtual Double Payload(Double d);
+    virtual Byte   Stage();
+    virtual Byte   Stage(Byte b);
+    virtual Byte   Starts();
+    virtual Byte   Starts(Byte stage);
+    virtual Byte   Starts(Byte stage, Byte b);
+    virtual Double ThrustSl(Byte stage, Byte engine);
+    virtual Double ThrustSl(Byte stage, Byte engine, Double d);
+    virtual Double ThrustVac(Byte stage, Byte engine);
+    virtual Double ThrustVac(Byte stage, Byte engine, Double d);
+    virtual Byte   Type();
+    virtual void   ProcessKey(Int32 key);
+    virtual void   Save(FILE* file);
+    virtual Int8   SubLoad(char* pline);
+  };
+
+#endif
+
