@@ -14,7 +14,8 @@ PHEADERS = g_clockbu.h g_clockmi.h g_clockut.h g_engines.h g_altitude.h g_veloci
 	   g_accel.h g_fuel.h g_clocktb.h g_apoapsis.h g_periapsis.h g_amsdown.h \
 	   g_axis.h g_rollrate.h g_pitchrate.h g_yawrate.h g_clockot.h g_radial.h \
 	   g_orbit.h g_prograde.h g_position.h g_lan.h g_incl.h g_roc.h
-HEADERS = $(PHEADERS) header.h types.h vector.h matrix.h vehicle.h panel.h booster.h
+HEADERS = $(PHEADERS) header.h types.h vector.h matrix.h vehicle.h panel.h \
+	   booster.h body.h spacecraft.h
 OBJS = \
 	g_accel.o \
 	g_altitude.o \
@@ -40,11 +41,15 @@ OBJS = \
 	g_rollrate.o \
 	g_velocity.o \
 	g_yawrate.o \
+	body.o \
 	booster.o \
 	gauge.o \
 	helpers.o \
+	load.o \
 	matrix.o \
 	panel.o \
+	save.o \
+	spacecraft.o \
 	terminal.o \
 	vector.o \
 	vehicle.o \
@@ -89,12 +94,16 @@ g_roc.o:         $(HEADERS) g_roc.cpp
 g_rollrate.o:    $(HEADERS) g_rollrate.cpp
 g_velocity.o:    $(HEADERS) g_velocity.cpp
 g_yawrate.o:     $(HEADERS) g_yawrate.cpp
+body.o:          $(HEADERS) body.cpp
 booster.o:       $(HEADERS) booster.cpp
 gauge.o:         $(HEADERS) gauge.cpp
 helpers.o:       $(HEADERS) helpers.cpp
+load.o:          $(HEADERS) load.cpp
 main.o:          $(HEADERS) main.cpp
 matrix.o:        $(HEADERS) matrix.cpp
 panel.o:         $(HEADERS) panel.cpp
+save.o:          $(HEADERS) save.cpp
+spacecraft.o:    $(HEADERS) spacecraft.cpp
 terminal.o:      $(HEADERS) terminal.cpp
 vector.o:        $(HEADERS) vector.cpp
 vehicle.o:       $(HEADERS) vehicle.cpp

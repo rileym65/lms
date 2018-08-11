@@ -6,6 +6,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "panel.h"
+#include "body.h"
 
 class Computer;
 
@@ -14,11 +15,6 @@ class Vehicle {
     Double    accelAltitude;
     Double    accelEast;
     Double    accelNorth;
-    Double    altitude;
-    Double    apoapsis;
-    Vector    baseFront;
-    Vector    baseLeft;
-    Vector    baseUp;
     Double    battery;
     Computer *comp; 
     Double    ebattery;
@@ -26,11 +22,8 @@ class Vehicle {
     Vector    faceFront;
     Vector    faceLeft;
     Vector    faceUp;
-    Double    gravitation;
-    Double    incl;
     Double    latitude;
     Double    longitude;
-    Double    lan;
     Double    lastLatitude;
     Double    lastLatitudeVel;
     Double    lastLongitude;
@@ -39,23 +32,14 @@ class Vehicle {
     Double    longitudeVel;
     Double    maxBattery;
     Double    maxOxygen;
+    Body*     orbiting;
     Double    orbitTime;
-    Matrix    orientation;
     Double    oxygen;
     Panel    *panel;
-    Double    periapsis;
     Double    pitch;
-    Matrix    pitchMatrix;
     Double    pitchRate;
     Vector    position;
-    Double    radius;
-    char      rcsFbMode;
-    char      rcsLrMode;
-    Int8      rcsRotThrottle;
-    Int8      rcsThrottle;
-    char      rcsUdMode;
     Double    roll;
-    Matrix    rollMatrix;
     Double    rollRate;
     Int8      throttle;
     Vector    thrust;
@@ -64,7 +48,6 @@ class Vehicle {
     Double    velocityEast;
     Double    velocityNorth;
     Double    yaw;
-    Matrix    yawMatrix;
     Double    yawRate;
 
   public:
@@ -73,9 +56,6 @@ class Vehicle {
     virtual Double    AccelAltitude();
     virtual Double    AccelEast();
     virtual Double    AccelNorth();
-    virtual Double    Altitude();
-    virtual Double    Altitude(Double d);
-    virtual Double    Apoapsis();
     virtual Double    Battery();
     virtual Double    Battery(Double d);
     virtual Computer *Comp();
@@ -93,10 +73,6 @@ class Vehicle {
     virtual Vector    FaceUp();
     virtual Vector    FaceUp(Vector v);
     virtual Double    Fuel();
-    virtual Double    Gravitation();
-    virtual Double    Gravitation(Double d);
-    virtual Double    Inclination();
-    virtual Double    Lan();
     virtual Double    Latitude();
     virtual Double    Latitude(Double d);
     virtual Double    LatitudeVelocity();
@@ -111,27 +87,16 @@ class Vehicle {
     virtual Byte      NumEngines();
     virtual Byte      NumEngines(Byte stage);
     virtual Byte      NumStages();
+    virtual Body*     Orbiting();
+    virtual Body*     Orbiting(Body* b);
     virtual Double    OrbitTime();
     virtual Double    Oxygen();
     virtual Double    Oxygen(Double d);
-    virtual Double    Periapsis();
     virtual Double    Pitch();
     virtual Double    PitchRate();
     virtual Double    PitchRate(Double d);
     virtual Vector    Position();
     virtual Vector    Position(Vector v);
-    virtual Double    Radius();
-    virtual Double    Radius(Double d);
-    virtual char      RcsFbMode();
-    virtual char      RcsFbMode(char c);
-    virtual char      RcsLrMode();
-    virtual char      RcsLrMode(char c);
-    virtual Int8      RcsRotThrottle();
-    virtual Int8      RcsRotThrottle(Int8 i);
-    virtual Int8      RcsThrottle();
-    virtual Int8      RcsThrottle(Int8 i);
-    virtual char      RcsUdMode();
-    virtual char      RcsUdMode(char c);
     virtual Double    Roll();
     virtual Double    RollRate();
     virtual Double    RollRate(Double d);
@@ -158,7 +123,7 @@ class Vehicle {
     virtual void      ProcessKey(Int32 key);
     virtual void      Save(FILE* file);
     virtual void      SetupPanel();
-    virtual Int8      SubLoad(char* line);
+    virtual Int8      SubLoad(FILE* file, char* line);
     virtual void      UpdatePanel();
     virtual Boolean   UseBattery(Double units);
     virtual Boolean   UseOxygen(Double units);

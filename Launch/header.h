@@ -17,7 +17,7 @@
 #include "matrix.h"
 #include "vehicle.h"
 #include "booster.h"
-
+#include "body.h"
 
 #define GROUND 6378100
 #define METERS ((GROUND*2*M_PI) / 360.0)
@@ -25,7 +25,8 @@
 #define VT_NONE       0
 #define VT_SPACECRAFT 1
 #define VT_ROCKET     2
-#define VT_GROUND     3
+#define VT_GROUND     4
+#define GRAN          100.0
 
 #ifdef MINGW
 #define LE   "\r\n"
@@ -44,11 +45,15 @@ LINK Vector  pos;
 LINK UInt32  simSpeed;
 LINK Booster* booster;
 LINK Vector  vel;
+LINK Body   *Earth;
+LINK Body   *Moon;
 
 extern Matrix atom(char* buffer);
 extern Vector atov(char* buffer);
-extern char* nextLine(FILE* file);
-extern char* nw(char* buffer);
-extern Int8 startsWith(char* buffer, const char* check);
+extern Int8   load(const char* filename);
+extern char*  nextLine(FILE* file);
+extern char*  nw(char* buffer);
+extern void   save();
+extern Int8   startsWith(char* buffer, const char* check);
 
 #endif

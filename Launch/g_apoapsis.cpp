@@ -25,7 +25,7 @@ void G_Apoapsis::Update() {
   Vector pos;
   Double rad;
   char   buffer[16];
-  rad = vehicle->Apoapsis() - GROUND;
+  rad = ((Spacecraft*)vehicle)->Apoapsis() - GROUND;
   sprintf(buffer,"%8.1f",rad / 1000.0);
   GotoXY(x+4,y); Write(buffer);
   }

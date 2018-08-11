@@ -29,7 +29,6 @@ void Booster::Cutoff() {
   }
 
 void Booster::Cycle() {
-  Matrix m;
   Byte i;
   Double th;
   Double tth;
@@ -38,21 +37,6 @@ void Booster::Cycle() {
   Double isp;
   Double air;
   Byte   st;
-  if (rollRate != 0) {
-    m = Matrix::Rotate(faceUp, rollRate);
-    faceLeft = m.Transform(faceLeft).Norm();
-    faceFront = m.Transform(faceFront).Norm();
-    }
-  if (yawRate != 0) {
-    m = Matrix::Rotate(faceFront, yawRate);
-    faceUp = m.Transform(faceUp).Norm();
-    faceLeft = m.Transform(faceLeft).Norm();
-    }
-  if (pitchRate != 0) {
-    m = Matrix::Rotate(faceLeft, pitchRate);
-    faceUp = m.Transform(faceUp).Norm();
-    faceFront = m.Transform(faceFront).Norm();
-    }
   alt = position.Length() - GROUND;
   thrust = Vector(0,0,0);
   tth = 0;
@@ -63,7 +47,7 @@ void Booster::Cycle() {
         air = AirDensity(alt);
         isp = ispVac[st][i] - air * (ispVac[st][i]-ispSl[st][i]);
         th = thrustVac[st][i] - air * (thrustVac[st][i]-thrustSl[st][i]);
-        f = th/(9.80665 * isp);
+        f = th/(9.80665 * isp) / GRAN;
         th = th / Mass();
         if (f <= fuel[st]) {
           tth += th;
@@ -73,9 +57,8 @@ void Booster::Cycle() {
         }
       }
     thrust = faceUp.Scale(tth);
-GotoXY(1,30); printf("Thrust: %.2f\n",tth);
     }
-  Vehicle::Cycle();
+  Spacecraft::Cycle();
   }
 
 Double Booster::DryWeight(Byte stage) {
@@ -262,7 +245,8 @@ void Booster::Save(FILE* file) {
   Byte i;
   Byte j;
   fprintf(file,"Booster {%s",LE);
-  Vehicle::Save(file);
+  Spacecraft::Save(file);
+  fprintf(file,"  EnginesLit %d%s",enginesLit,LE);
   fprintf(file,"  Payload %.18f%s",payload,LE);
   fprintf(file,"  Stage %d%s",stage,LE);
   fprintf(file,"  NumStages %d%s",numStages,LE);
@@ -272,6 +256,7 @@ void Booster::Save(FILE* file) {
     fprintf(file,"    Fuel %.18f%s",fuel[i],LE);
     fprintf(file,"    MaxFuel %.18f%s",maxFuel[i],LE);
     fprintf(file,"    NumEngines %d%s",numEngines[i],LE);
+    fprintf(file,"    Starts %d%s",starts[i],LE);
     for (j=0; j<numEngines[i]; j++) {
       fprintf(file,"    Engine %d {%s",j,LE);
       fprintf(file,"      IspVac %.18f%s",ispVac[i][j],LE);
@@ -285,11 +270,52 @@ void Booster::Save(FILE* file) {
   fprintf(file,"  }%s",LE);
   }
 
-Int8 Booster::SubLoad(char* pline) {
-  if (startsWith(pline,"numstages ")) numStages = atoi(nw(pline));
-  else if (startsWith(pline,"stage ")) stage = atoi(nw(pline));
+Int8 Booster::loadEngine(FILE* file, char*line, Byte s) {
+  Int32 i;
+  char* pline;
+  i = atoi(line);
+printf("Loading engine %d for stage %d\n",i,s);
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return -1;
+    else if (startsWith(pline,"ispvac ")) ispVac[s][i] = atof(nw(pline));
+    else if (startsWith(pline,"ispsl ")) ispSl[s][i] = atof(nw(pline));
+    else if (startsWith(pline,"thrustvac ")) thrustVac[s][i] = atof(nw(pline));
+    else if (startsWith(pline,"thrustsl ")) thrustSl[s][i] = atof(nw(pline));
+    else return 0;
+    }
+  return -1;
+  }
+
+Int8 Booster::loadStage(FILE* file, char*line) {
+  Int32 i;
+  char* pline;
+  i = atoi(line) - 1;
+printf("loading stage %d\n",i);
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return -1;
+    else if (startsWith(pline,"dryweight ")) dryWeight[i] = atof(nw(pline));
+    else if (startsWith(pline,"fuel ")) fuel[i] = atof(nw(pline));
+    else if (startsWith(pline,"maxfuel ")) maxFuel[i] = atof(nw(pline));
+    else if (startsWith(pline,"numengines ")) numEngines[i] = atoi(nw(pline));
+    else if (startsWith(pline,"starts ")) starts[i] = atoi(nw(pline));
+    else if (startsWith(pline,"engine ") &&
+             (strchr(pline,'{') != NULL)) {
+      if (loadEngine(file,nw(pline), i) == 0) return 0;
+      }
+    else return 0;
+    }
+  return -1;
+  }
+
+Int8 Booster::SubLoad(FILE* file, char* pline) {
+  if (startsWith(pline,"engineslit ")) enginesLit = atoi(nw(pline));
+  else if (startsWith(pline,"numstages ")) numStages = atoi(nw(pline));
+  else if (startsWith(pline,"stage ") &&
+           strchr(pline,'{') == NULL) stage = atoi(nw(pline));
+  else if (startsWith(pline,"stage ") &&
+           strchr(pline,'{') != NULL) return loadStage(file,nw(pline));
   else if (startsWith(pline,"payload ")) payload = atof(nw(pline));
-  else return 0;
+  else return Spacecraft::SubLoad(file, pline);
   return -1;
   }
 

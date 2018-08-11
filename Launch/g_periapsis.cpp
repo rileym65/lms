@@ -25,7 +25,7 @@ void G_Periapsis::Update() {
   Vector pos;
   Double rad;
   char   buffer[16];
-  rad = vehicle->Periapsis() - GROUND;
+  rad = ((Spacecraft*)vehicle)->Periapsis() - GROUND;
   sprintf(buffer,"%8.1f",rad / 1000.0);
   GotoXY(x+4,y); Write(buffer);
   }

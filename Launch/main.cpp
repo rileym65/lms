@@ -3,7 +3,6 @@
 #include "header.h"
 
 void mercuryRedstone() {
-  booster = new Booster();
   booster->NumStages(1);
   booster->DryWeight(1, 6178);
   booster->Fuel(1, 23821);
@@ -16,11 +15,9 @@ void mercuryRedstone() {
   booster->ThrustSl(1, 1, 350000);
   booster->Starts(1,1);
   booster->MaxFuel(1, booster->Fuel(1));
-  booster->SetupPanel();
   }
 
 void geminiTitan() {
-  booster = new Booster();
   booster->NumStages(2);
   booster->DryWeight(1, 8532);
   booster->DryWeight(2, 1870);
@@ -42,11 +39,9 @@ void geminiTitan() {
   booster->Starts(2,1);
   booster->MaxFuel(1, booster->Fuel(1));
   booster->MaxFuel(2, booster->Fuel(2));
-  booster->SetupPanel();
   }
 
 void saturnV() {
-  booster = new Booster();
   booster->NumStages(3);
   booster->DryWeight(1, 130342 + 2447 + 4524);
   booster->DryWeight(2, 36479 + 423 + 3637);
@@ -109,7 +104,6 @@ void saturnV() {
   booster->MaxFuel(1, booster->Fuel(1));
   booster->MaxFuel(2, booster->Fuel(2));
   booster->MaxFuel(3, booster->Fuel(3));
-  booster->SetupPanel();
   }
 
 void init(Byte v) {
@@ -119,15 +113,13 @@ void init(Byte v) {
   engines = 0;
   launched = false;
   kscAngle = 0;
-  simSpeed = 1000000;
   if (v == 1) mercuryRedstone();
   if (v == 2) geminiTitan();
   if (v == 3) saturnV();
-  booster->Gravitation(3.9857605e14);
-  booster->SetupPanel();
   }
 
 void cycle() {
+  UInt32 i;
 Vector vu;
 Vector vl;
 Vector vf;
@@ -153,7 +145,9 @@ Vector vf;
       clockBu++;
       clockTb++;
       }
-    booster->Cycle();
+    for (i=0; i<GRAN; i++) {
+      booster->Cycle();
+      }
     booster->UpdatePanel();
     }
   }
@@ -181,14 +175,21 @@ int main(int argc, char** argv) {
   UInt32 v;
   Boolean flag;
   UInt32  key;
-  printf("1. Mercury/Redstone\n");
-  printf("2. Gemini/Titan\n");
-  printf("3. Apollo/Saturn V\n");
-  printf("   Vehicle: ");
-  fgets(buffer,31,stdin);
-  v = atoi(buffer);
-
-  init(v);
+  Earth = new Body("Earth", 5.972e+24, 6378100);
+  Moon = new Body("Moon", 7.34767309e+22, 1738300);
+  booster = new Booster();
+  if (load("launch.sav") == 0) {
+    printf("1. Mercury/Redstone\n");
+    printf("2. Gemini/Titan\n");
+    printf("3. Apollo/Saturn V\n");
+    printf("   Vehicle: ");
+    fgets(buffer,31,stdin);
+    v = atoi(buffer);
+    init(v);
+    }
+  booster->Orbiting(Earth);
+  booster->SetupPanel();
+  simSpeed = 1000000;
   OpenTerminal();
   HideCursor();
   flag = true;
@@ -204,6 +205,8 @@ int main(int argc, char** argv) {
     cycle();
     usleep(simSpeed);
     }
+  save();
+  GotoXY(1,25);
   ShowCursor();
   CloseTerminal();
   return 0;

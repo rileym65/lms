@@ -55,7 +55,5 @@ void G_Prograde::Update() {
   dz = asin(vehicle->FaceLeft().Dot(zVec)) * 180 / M_PI;
   GotoXY(x+3,y+3); sprintf(buffer,"%7.2f  %7.2f  ",dy,dx); Write(buffer);
   if (dz >= 0) Write("+"); else Write("-");
-GotoXY(1,26); printf("dot: %.5f              \n",vehicle->FaceLeft().Dot(xVec));
-GotoXY(1,27); printf("dot: %.5f              \n",asin(vehicle->FaceLeft().Dot(xVec)));
   }
 

@@ -23,7 +23,7 @@ void G_Incl::Display() {
 
 void G_Incl::Update() {
   char   buffer[16];
-  sprintf(buffer,"%7.2f",90+vehicle->Inclination());
+  sprintf(buffer,"%7.2f",90+((Spacecraft*)vehicle)->Inclination());
   GotoXY(x+5,y); Write(buffer);
   }
 

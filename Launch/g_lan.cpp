@@ -23,7 +23,7 @@ void G_Lan::Display() {
 
 void G_Lan::Update() {
   char   buffer[16];
-  sprintf(buffer,"%7.2f",vehicle->Lan());
+  sprintf(buffer,"%7.2f",((Spacecraft*)vehicle)->AscendingNode());
   GotoXY(x+5,y); Write(buffer);
   }
 

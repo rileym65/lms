@@ -2,8 +2,9 @@
 #define _BOOSTER_H
 
 #include "vehicle.h"
+#include "spacecraft.h"
 
-class Booster : public Vehicle {
+class Booster : public Spacecraft {
   protected:
     Double dryWeight[10];
     Byte   enginesLit;
@@ -18,6 +19,8 @@ class Booster : public Vehicle {
     Byte   stage;
     Double thrustSl[10][10];
     Double thrustVac[10][10];
+    Int8   loadEngine(FILE* file, char* line, Byte e);
+    Int8   loadStage(FILE* file, char* line);
   public:
     Booster();
     ~Booster();
@@ -58,7 +61,7 @@ class Booster : public Vehicle {
     virtual Byte   Type();
     virtual void   ProcessKey(Int32 key);
     virtual void   Save(FILE* file);
-    virtual Int8   SubLoad(char* pline);
+    virtual Int8   SubLoad(FILE* file, char* pline);
   };
 
 #endif
