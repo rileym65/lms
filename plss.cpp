@@ -132,6 +132,8 @@ Double Plss::Walked(Double d) {
   }
 
 void Plss::Cycle() {
+  Double damage;
+  char   cell;
   oxygen -= oxygenLeakage;
   battery -= batteryLeakage;
   if (oxygen < 0) oxygen = 0;
@@ -153,6 +155,33 @@ void Plss::Cycle() {
       seq->Message("    OXYGEN:",oxygenLeakage*100,5);
       damageReportStep = 0;
       }
+    }
+  damage = 0;
+  cell = map->Lurrain(lm->Longitude(), lm->Latitude());
+  switch (cell) {
+    case '.': if (velocity.Length() > 0.6) damage = 0.05; break;
+    case 'o': if (velocity.Length() > 0.6) damage = 0.10; break;
+    case 'O': if (velocity.Length() > 0.6) damage = 0.10; break;
+    case ',': if (velocity.Length() > 0.6) damage = 0.05; break;
+    case '+': if (velocity.Length() > 0.6) damage = 0.20; break;
+    case '*': if (velocity.Length() > 0.6) damage = 0.20; break;
+    case '^': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case '(': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case ')': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case 'u': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case ' ': break;
+    case '=': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case '%': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case 'f': break;
+    case '&': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case '/': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case '"': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case '_': break;
+    default : if (velocity.Length() > 0.2) damage = 0.50; break;
+    }
+  if (damage > 0) {
+    plss->Damage(damage * 100.0);
+    hardInjury += ((Double)rng.Next(damage * 100.0));
     }
   }
 

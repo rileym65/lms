@@ -1,10 +1,5 @@
 Features:
 ---------
-  - Orient faces properly upon landing
-  - Lunar mid altitude maps
-  - Damage to rover for driving too fast over rough ground
-  - Damage to pilot for moving too fast over rough ground
-  - Damage to LM for landing on rugged features
 
 Bugs:
 -----
@@ -12,6 +7,3 @@ Bugs:
 
 Done, but needs further testing:
 --------------------------------
-  - Damage from hard landing
-  - Fix bug where after moving on the surface for awhile bad data starts 
-    appearing on the map displays.

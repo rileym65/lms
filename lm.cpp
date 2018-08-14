@@ -474,6 +474,7 @@ void LunarModule::Cycle() {
   Double damage;
   Vector v;
   Matrix m;
+  char   cell;
   ascentOxygen -= ascentOxygenLeakage;
   ascentBattery -= ascentBatteryLeakage;
   ascentFuel -= (ascentFuelLeakage / 10.0);
@@ -648,14 +649,38 @@ void LunarModule::Cycle() {
       run = false;
       endReason = END_CRASHED;
       }
+    damage = 0;
     if (vVel >= 3.05 || hVel > 1.22) {
       damage = ((vVel - 3.05) / 2.0) + (hVel - 1.22);
+      }
+    cell = map->Lurrain(lm->Longitude(), lm->Latitude());
+    switch (cell) {
+      case '.': damage += 0.05; break;
+      case 'o': damage += 0.10; break;
+      case 'O': damage += 0.25; break;
+      case ',': damage += 0.05; break;
+      case '+': damage += 0.20; break;
+      case '*': damage += 0.50; break;
+      case '^': damage += 0.75; break;
+      case '(': damage += 0.75; break;
+      case ')': damage += 0.75; break;
+      case 'u': damage += 0.75; break;
+      case ' ': break;
+      case '=': damage += 1.0; break;
+      case '%': damage += 0.75; break;
+      case 'f': break;
+      case '&': damage += 0.50; break;
+      case '/': damage += 0.75; break;
+      case '"': damage += 0.25; break;
+      case '_': break;
+      default : damage += 1.0; break;
+      }
+    if (damage > 0) {
       if (damage > 1.0) damage = 1.0;
       lm->Damage(damage * 100.0);
       lrv->Damage(damage * 100.0);
       plss->Damage(damage * 100.0);
       hardInjury += ((Double)rng.Next(damage * 100.0));
- 
       }
     RollRate(0);
     PitchRate(0);

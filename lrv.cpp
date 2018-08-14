@@ -117,6 +117,8 @@ printf("Len: %.18f\n",f.Length());
   }
 
 void Lrv::Cycle() {
+  char cell;
+  Double damage;
   battery -= batteryLeakage;
   if (battery < 0) battery = 0;
   if (battery <= 0) throttle = 0;
@@ -139,6 +141,34 @@ void Lrv::Cycle() {
       damageReportStep = 0;
       }
     }
+  damage = 0;
+  cell = map->Lurrain(lm->Longitude(), lm->Latitude());
+  switch (cell) {
+    case '.': if (velocity.Length() > 5.0) damage = 0.05; break;
+    case 'o': if (velocity.Length() > 3.0) damage = 0.10; break;
+    case 'O': if (velocity.Length() > 2.0) damage = 0.10; break;
+    case ',': if (velocity.Length() > 5.0) damage = 0.05; break;
+    case '+': if (velocity.Length() > 3.0) damage = 0.20; break;
+    case '*': if (velocity.Length() > 2.0) damage = 0.20; break;
+    case '^': if (velocity.Length() > 1.0) damage = 0.50; break;
+    case '(': if (velocity.Length() > 1.0) damage = 0.50; break;
+    case ')': if (velocity.Length() > 1.0) damage = 0.50; break;
+    case 'u': if (velocity.Length() > 1.0) damage = 0.50; break;
+    case ' ': break;
+    case '=': if (velocity.Length() > 2.0) damage = 0.50; break;
+    case '%': if (velocity.Length() > 2.0) damage = 0.50; break;
+    case 'f': break;
+    case '&': if (velocity.Length() > 2.0) damage = 0.50; break;
+    case '/': if (velocity.Length() > 2.0) damage = 0.50; break;
+    case '"': if (velocity.Length() > 2.0) damage = 0.50; break;
+    case '_': break;
+    default : if (velocity.Length() > 2.0) damage = 0.50; break;
+    }
+  if (damage > 0) {
+    lrv->Damage(damage * 100.0);
+    hardInjury += ((Double)rng.Next(damage * 100.0));
+    }
+
   }
 
 /*
