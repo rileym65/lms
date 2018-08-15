@@ -9,9 +9,11 @@ class Spacecraft : public Vehicle {
     Double    apoapsis;
     Double    ascendingNode;
     Double    inclination;
+    Double    maxRcsFuel;
     Double    periapsis;
     Double    rateOfClimb;
     Double    radius;
+    Double    rcsFuel;
     char      rcsFbMode;
     Double    rcsIsp;
     char      rcsLrMode;
@@ -28,6 +30,8 @@ class Spacecraft : public Vehicle {
     virtual Double    Apoapsis();
     virtual Double    AscendingNode();
     virtual Double    Inclination();
+    virtual Double    MaxRcsFuel();
+    virtual Double    MaxRcsFuel(Double d);
     virtual Double    Periapsis();
     virtual Vector    Position();
     virtual Vector    Position(Vector v);
@@ -36,6 +40,8 @@ class Spacecraft : public Vehicle {
     virtual Double    RateOfClimb();
     virtual char      RcsFbMode();
     virtual char      RcsFbMode(char c);
+    virtual Double    RcsFuel();
+    virtual Double    RcsFuel(Double d);
     virtual Double    RcsIsp();
     virtual Double    RcsIsp(Double d);
     virtual char      RcsLrMode();

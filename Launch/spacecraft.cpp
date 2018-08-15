@@ -13,6 +13,8 @@ Spacecraft::Spacecraft() {
   rcsThrust = 0;
   rcsIsp = 0;
   rateOfClimb = 0;
+  rcsFuel = 0;
+  maxRcsFuel = 0;
   }
 
 Spacecraft::~Spacecraft() {
@@ -38,6 +40,15 @@ Double Spacecraft::AscendingNode() {
 
 Double Spacecraft::Inclination() {
   return inclination;
+  }
+
+Double Spacecraft::MaxRcsFuel() {
+  return maxRcsFuel;
+  }
+
+Double Spacecraft::MaxRcsFuel(Double d) {
+  maxRcsFuel = d;
+  return maxRcsFuel;
   }
 
 Double Spacecraft::Periapsis() {
@@ -74,6 +85,15 @@ char   Spacecraft::RcsFbMode() {
 char   Spacecraft::RcsFbMode(char c) {
   rcsFbMode = c;
   return rcsFbMode;
+  }
+
+Double Spacecraft::RcsFuel() {
+  return rcsFuel;
+  }
+
+Double Spacecraft::RcsFuel(Double d) {
+  rcsFuel = d;
+  return rcsFuel;
   }
 
 Double Spacecraft::RcsIsp() {

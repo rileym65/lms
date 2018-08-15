@@ -19,6 +19,10 @@ void mercuryRedstone() {
   csm->DryWeight(1341);
   csm->Diameter(1.78);
   csm->ParachuteDiameter(19.2);
+  csm->RetroModuleDryWeight(32);
+  csm->RetroModuleFuel(205);
+  csm->RetroModuleIsp(230);
+  csm->RetroModuleThrust(4450);
   }
 
 void geminiTitan() {
@@ -49,11 +53,25 @@ void geminiTitan() {
   csm->Diameter(2.30);
   csm->ParachuteDiameter(25.66);
   csm->ServiceModuleDryWeight(956);
-  csm->ServiceModuleFuel(322);
-  csm->ServiceModuleIsp(273);
+  csm->ServiceModuleFuel(0);
+  csm->ServiceModuleIsp(0);
   csm->ServiceModuleThrust(710);
   csm->ServiceModuleRcsIsp(273);
   csm->ServiceModuleRcsThrust(444);
+  csm->ServiceModuleRcsDThrust(756);
+  csm->ServiceModuleRcsUThrust(888);
+  csm->ServiceModuleRcsFuel(322);
+  csm->RetroModuleDryWeight(491);
+  csm->RetroModuleFuel(100);
+  csm->RetroModuleIsp(255);
+  csm->RetroModuleThrust(11120);
+  csm->CommandModuleRcsFuel(33);
+  csm->CommandModuleRcsIsp(283);
+  csm->CommandModuleRcsThrust(111);
+  csm->ServiceModuleMaxFuel(csm->ServiceModuleFuel());
+  csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
+  csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
+  csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
   }
 
 void saturn1B() {
@@ -116,7 +134,15 @@ void saturn1B() {
   csm->ServiceModuleIsp(314);
   csm->ServiceModuleThrust(91190);
   csm->ServiceModuleRcsIsp(290);
+  csm->ServiceModuleRcsFuel(617.79);
   csm->ServiceModuleRcsThrust(1780);
+  csm->CommandModuleRcsFuel(74);
+  csm->CommandModuleRcsIsp(290);
+  csm->CommandModuleRcsThrust(410);
+  csm->ServiceModuleMaxFuel(csm->ServiceModuleFuel());
+  csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
+  csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
+  csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
   }
 
 void saturnV() {
@@ -191,9 +217,17 @@ void saturnV() {
   csm->ServiceModuleDryWeight(6110);
   csm->ServiceModuleFuel(18413);
   csm->ServiceModuleIsp(314);
+  csm->ServiceModuleRcsFuel(617.79);
   csm->ServiceModuleThrust(91190);
   csm->ServiceModuleRcsIsp(290);
   csm->ServiceModuleRcsThrust(1780);
+  csm->CommandModuleRcsFuel(74);
+  csm->CommandModuleRcsIsp(290);
+  csm->CommandModuleRcsThrust(410);
+  csm->ServiceModuleMaxFuel(csm->ServiceModuleFuel());
+  csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
+  csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
+  csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
   }
 
 void init(Byte v) {

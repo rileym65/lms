@@ -7,8 +7,8 @@
 G_CsmLamps::G_CsmLamps(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
   Reset();
-  width = 11;
-  height = 1;
+  width = 15;
+  height = 2;
   }
 
 G_CsmLamps::~G_CsmLamps() {
@@ -18,18 +18,39 @@ void G_CsmLamps::Reset() {
   }
 
 void G_CsmLamps::Display() {
-  GotoXY(x,y); Write("CSP PAR OMS");
+  GotoXY(x,y+0); Write("CSP PAR        ");
+  GotoXY(x,y+1); Write("SMJ SPS        ");
+  GotoXY(x,y+2); Write("RMJ RTR        ");
   }
 
 void G_CsmLamps::Update() {
+  CommandModule* cm;
+  cm = (CommandModule*)vehicle;
   GotoXY(x+0,y+0);
   if (((CommandModule*)vehicle)->LaunchVehicleJettisoned())
     printf("CSP"); else printf("   ");
   GotoXY(x+4,y+0);
   if (((CommandModule*)vehicle)->ParachuteDeployment() > 0)
     printf("PAR"); else printf("   ");
-  GotoXY(x+8,y+0);
-  if (((CommandModule*)vehicle)->Throttle() > 0)
-    printf("OMS"); else printf("   ");
+  if (cm->Throttle() > 0) {
+    if (cm->ServiceModuleDryWeight() > 0) {
+      GotoXY(x+4, y+1);
+      printf("SPS");
+      }
+    else if (cm->RetroModuleDryWeight() > 0) {
+      GotoXY(x+4, y+2);
+      printf("RTR");
+      }
+    }
+  else {
+    GotoXY(x+4, y+1); printf("   ");
+    GotoXY(x+4, y+2); printf("   ");
+    }
+  GotoXY(x+0,y+1);
+  if (cm->ServiceModuleIsp() > 0 && cm->ServiceModuleDryWeight() == 0)
+    printf("SMJ"); else printf("   ");
+  GotoXY(x+0,y+2);
+  if (cm->RetroModuleIsp() > 0 && cm->RetroModuleDryWeight() == 0)
+    printf("RMJ"); else printf("   ");
   }
 

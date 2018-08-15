@@ -23,7 +23,9 @@
 #include "g_pitchrate.h"
 #include "g_position.h"
 #include "g_prograde.h"
+#include "g_propellant.h"
 #include "g_radial.h"
+#include "g_rcs.h"
 #include "g_roc.h"
 #include "g_rollrate.h"
 #include "g_velocity.h"
@@ -123,6 +125,10 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Roc(x1, y1, false, vehicle));
       else if (strcasecmp(str,"csmlamps") == 0)
         addGauge(new G_CsmLamps(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"rcs") == 0)
+        addGauge(new G_Rcs(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"propellant") == 0)
+        addGauge(new G_Propellant(x1, y1, false, vehicle));
       else {
         Write("Unknown guage: ");
         WriteLn(str);
