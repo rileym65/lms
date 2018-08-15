@@ -2,7 +2,6 @@
 #include "header.h"
 
 void save() {
-  Int32 i;
   FILE *file;
   file = fopen("launch.sav","w");
   fprintf(file,"Simulation {%s",LE);
@@ -14,6 +13,7 @@ void save() {
   if (launched) fprintf(file,"  Launched true%s",LE);
     else fprintf(file,"  Launched false%s",LE);
   fprintf(file,"  }%s",LE);
+  csm->Save(file);
   booster->Save(file);
   fclose(file);
   }

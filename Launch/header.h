@@ -16,6 +16,7 @@
 #include "vector.h"
 #include "matrix.h"
 #include "vehicle.h"
+#include "command.h"
 #include "booster.h"
 #include "body.h"
 
@@ -47,7 +48,9 @@ LINK Booster* booster;
 LINK Vector  vel;
 LINK Body   *Earth;
 LINK Body   *Moon;
+LINK CommandModule* csm;
 
+extern Double AirDensity(Double altitude);
 extern Matrix atom(char* buffer);
 extern Vector atov(char* buffer);
 extern Int8   load(const char* filename);

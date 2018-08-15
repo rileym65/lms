@@ -10,11 +10,15 @@ class Spacecraft : public Vehicle {
     Double    ascendingNode;
     Double    inclination;
     Double    periapsis;
+    Double    rateOfClimb;
     Double    radius;
     char      rcsFbMode;
+    Double    rcsIsp;
     char      rcsLrMode;
+    Double    rcsPropellant;
     Int8      rcsRotThrottle;
     Int8      rcsThrottle;
+    Double    rcsThrust;
     char      rcsUdMode;
   public:
     Spacecraft();
@@ -29,14 +33,21 @@ class Spacecraft : public Vehicle {
     virtual Vector    Position(Vector v);
     virtual Double    Radius();
     virtual Double    Radius(Double d);
+    virtual Double    RateOfClimb();
     virtual char      RcsFbMode();
     virtual char      RcsFbMode(char c);
+    virtual Double    RcsIsp();
+    virtual Double    RcsIsp(Double d);
     virtual char      RcsLrMode();
     virtual char      RcsLrMode(char c);
+    virtual Double    RcsPropellant();
+    virtual Double    RcsPropellant(Double d);
     virtual Int8      RcsRotThrottle();
     virtual Int8      RcsRotThrottle(Int8 i);
     virtual Int8      RcsThrottle();
     virtual Int8      RcsThrottle(Int8 i);
+    virtual Double    RcsThrust();
+    virtual Double    RcsThrust(Double d);
     virtual char      RcsUdMode();
     virtual char      RcsUdMode(char c);
 

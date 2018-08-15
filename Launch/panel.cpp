@@ -13,6 +13,7 @@
 #include "g_clockot.h"
 #include "g_clocktb.h"
 #include "g_clockut.h"
+#include "g_csmlamps.h"
 #include "g_engines.h"
 #include "g_fuel.h"
 #include "g_incl.h"
@@ -120,6 +121,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Incl(x1, y1, false, vehicle));
       else if (strcasecmp(str,"roc") == 0)
         addGauge(new G_Roc(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"csmlamps") == 0)
+        addGauge(new G_CsmLamps(x1, y1, false, vehicle));
       else {
         Write("Unknown guage: ");
         WriteLn(str);

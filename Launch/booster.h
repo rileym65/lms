@@ -6,6 +6,7 @@
 
 class Booster : public Spacecraft {
   protected:
+    Double area[10];
     Double dryWeight[10];
     Byte   enginesLit;
     Double fuel[10];
@@ -26,6 +27,7 @@ class Booster : public Spacecraft {
     ~Booster();
     virtual void   Cutoff();
     virtual void   Cycle();
+    virtual void   Diameter(Byte stage, Double d);
     virtual Double DryWeight(Byte stage);
     virtual Double DryWeight(Byte stage, Double d);
     virtual Byte   EnginesLit();

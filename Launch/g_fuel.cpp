@@ -23,7 +23,7 @@ void G_Fuel::Display() {
   char buffer[10];
   for (i=0; i<vehicle->NumStages(); i++) {
     GotoXY(x+0,y+i);
-    sprintf(buffer,"Fs%d: 99",i+1);
+    sprintf(buffer,"Fs%d: --",i+1);
     Write(buffer);
     }
   }

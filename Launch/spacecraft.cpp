@@ -9,6 +9,10 @@ Spacecraft::Spacecraft() {
   rcsUdMode = ' ';
   rcsThrottle = 1;
   rcsRotThrottle = 100;
+  rcsPropellant = 0;
+  rcsThrust = 0;
+  rcsIsp = 0;
+  rateOfClimb = 0;
   }
 
 Spacecraft::~Spacecraft() {
@@ -59,6 +63,10 @@ Double Spacecraft::Radius(Double d) {
   return radius;
   }
 
+Double Spacecraft::RateOfClimb() {
+  return rateOfClimb;
+  }
+
 char   Spacecraft::RcsFbMode() {
   return rcsFbMode;
   }
@@ -68,6 +76,15 @@ char   Spacecraft::RcsFbMode(char c) {
   return rcsFbMode;
   }
 
+Double Spacecraft::RcsIsp() {
+  return rcsIsp;
+  }
+
+Double Spacecraft::RcsIsp(Double d) {
+  rcsIsp = d;
+  return rcsIsp;
+  }
+
 char   Spacecraft::RcsLrMode() {
   return rcsLrMode;
   }
@@ -75,6 +92,15 @@ char   Spacecraft::RcsLrMode() {
 char   Spacecraft::RcsLrMode(char c) {
   rcsLrMode = c;
   return rcsLrMode;
+  }
+
+Double Spacecraft::RcsPropellant() {
+  return rcsPropellant;
+  }
+
+Double Spacecraft::RcsPropellant(Double d) {
+  rcsPropellant = d;
+  return rcsPropellant;
   }
 
 Int8   Spacecraft::RcsRotThrottle() {
@@ -88,6 +114,15 @@ Int8   Spacecraft::RcsRotThrottle(Int8 i) {
 
 Int8   Spacecraft::RcsThrottle() {
   return rcsThrottle;
+  }
+
+Double Spacecraft::RcsThrust() {
+  return rcsThrust;
+  }
+
+Double Spacecraft::RcsThrust(Double d) {
+  rcsThrust = d;
+  return rcsThrust;
   }
 
 Int8   Spacecraft::RcsThrottle(Int8 i) {
@@ -155,7 +190,9 @@ void Spacecraft::Cycle() {
   a = a.Scale(1/alt3);
   velocity = velocity + a.Scale(1/GRAN);
   velocity = velocity + thrust.Scale(1/GRAN);
+  velocity = velocity + drag.Scale(1/GRAN);
   position = position + velocity.Scale(1/GRAN);
+  rateOfClimb = (position.Length() - radius) * GRAN;
   Radius(position.Length());
 
   Vehicle::Cycle();
@@ -195,6 +232,9 @@ void Spacecraft::Save(FILE* file) {
   fprintf(file,"  Periapsis %.18f%s",periapsis,LE);
   fprintf(file,"  Radius %.18f%s",radius,LE);
   fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
+  fprintf(file,"  RcsThrust %.18f%s",rcsThrust,LE);
+  fprintf(file,"  RcsPropellant %.18f%s",rcsPropellant,LE);
+  fprintf(file,"  RcsIsp %.18f%s",rcsIsp,LE);
   fprintf(file,"  RcsRotThrottle %d%s",rcsRotThrottle,LE);
   fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
   fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
@@ -209,6 +249,9 @@ Int8 Spacecraft::SubLoad(FILE* file, char* line) {
   else if (startsWith(line,"periapsis ")) periapsis = atof(nw(line));
   else if (startsWith(line,"radius ")) radius = atof(nw(line));
   else if (startsWith(line,"rcsthrottle ")) rcsThrottle = atoi(nw(line));
+  else if (startsWith(line,"rcsthrust ")) rcsThrust = atof(nw(line));
+  else if (startsWith(line,"rcspropellant ")) rcsPropellant = atof(nw(line));
+  else if (startsWith(line,"rcsisp ")) rcsIsp = atof(nw(line));
   else if (startsWith(line,"rcsrotthrottle ")) rcsRotThrottle = atoi(nw(line));
   else if (startsWith(line,"rcsfbmode ")) rcsFbMode = atoi(nw(line));
   else if (startsWith(line,"rcslrmode ")) rcsLrMode = atoi(nw(line));

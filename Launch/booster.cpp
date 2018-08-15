@@ -2,21 +2,7 @@
 #include "header.h"
 #include "booster.h"
 
-Double AirDensity(Double altitude) {
-  if (altitude < 5500) {
-    return 1.0 - (0.5 * (altitude / 5500));
-    }
-  if (altitude < 16000) {
-    return 0.5 - (0.4 * ((altitude - 5500) / 10500));
-    }
-  if (altitude < 32000) {
-    return 0.1 - (0.09 * ((altitude - 16000) / 16000));
-    }
-  return 0;
-  }
-
 Booster::Booster() {
-  panel = new Panel("booster.pnl",this);
   stage = 1;
   enginesLit = 0;
   }
@@ -36,15 +22,18 @@ void Booster::Cycle() {
   Double alt;
   Double isp;
   Double air;
+  Double d;
+  Double v;
   Byte   st;
   alt = position.Length() - GROUND;
   thrust = Vector(0,0,0);
+  drag = Vector(0,0,0);
   tth = 0;
   st = stage - 1;
+  air = AirDensity(alt);
   if (throttle != 0) {
     for (i=0; i<numEngines[st]; i++) {
       if (enginesLit & (1 << i)) {
-        air = AirDensity(alt);
         isp = ispVac[st][i] - air * (ispVac[st][i]-ispSl[st][i]);
         th = thrustVac[st][i] - air * (thrustVac[st][i]-thrustSl[st][i]);
         f = th/(9.80665 * isp) / GRAN;
@@ -58,7 +47,19 @@ void Booster::Cycle() {
       }
     thrust = faceUp.Scale(tth);
     }
+  if (air > 0) {
+    v = velocity.Length() - 408;
+    d = 0.8 * area[st] * 0.5 * (air * 1.2 * v * v);
+    d /= Mass();
+    drag = velocity.Norm().Scale(d).Neg();
+    }
   Spacecraft::Cycle();
+  if (radius < GROUND) destroyed = true;
+  }
+
+void Booster::Diameter(Byte stage, Double d) {
+  d = d/2;
+  area[stage-1] = d * d * M_PI;
   }
 
 Double Booster::DryWeight(Byte stage) {
@@ -95,6 +96,9 @@ void Booster::Ignition() {
     if (numEngines[stage-1] == 3) enginesLit = 0x07;
     if (numEngines[stage-1] == 4) enginesLit = 0x0f;
     if (numEngines[stage-1] == 5) enginesLit = 0x1f;
+    if (numEngines[stage-1] == 6) enginesLit = 0x3f;
+    if (numEngines[stage-1] == 7) enginesLit = 0x7f;
+    if (numEngines[stage-1] == 8) enginesLit = 0xff;
     starts[stage-1]--;
     Throttle(100);
     }
@@ -152,6 +156,9 @@ void Booster::NextStage() {
     if (numEngines[stage-1] == 3) enginesLit = 0x07;
     if (numEngines[stage-1] == 4) enginesLit = 0x0f;
     if (numEngines[stage-1] == 5) enginesLit = 0x1f;
+    if (numEngines[stage-1] == 6) enginesLit = 0x3f;
+    if (numEngines[stage-1] == 7) enginesLit = 0x7f;
+    if (numEngines[stage-1] == 8) enginesLit = 0xff;
     Throttle(100);
     }
   }
@@ -253,6 +260,7 @@ void Booster::Save(FILE* file) {
   for (i=0; i<numStages; i++) {
     fprintf(file,"  Stage %d {%s",i+1,LE);
     fprintf(file,"    DryWeight %.18f%s",dryWeight[i],LE);
+    fprintf(file,"    Area %.18f%s",area[i],LE);
     fprintf(file,"    Fuel %.18f%s",fuel[i],LE);
     fprintf(file,"    MaxFuel %.18f%s",maxFuel[i],LE);
     fprintf(file,"    NumEngines %d%s",numEngines[i],LE);
@@ -294,6 +302,7 @@ printf("loading stage %d\n",i);
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"}")) return -1;
     else if (startsWith(pline,"dryweight ")) dryWeight[i] = atof(nw(pline));
+    else if (startsWith(pline,"area ")) area[i] = atof(nw(pline));
     else if (startsWith(pline,"fuel ")) fuel[i] = atof(nw(pline));
     else if (startsWith(pline,"maxfuel ")) maxFuel[i] = atof(nw(pline));
     else if (startsWith(pline,"numengines ")) numEngines[i] = atoi(nw(pline));

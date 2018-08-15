@@ -8,6 +8,7 @@ Vehicle::Vehicle() {
   velocityEast = 0;
   velocityNorth = 0;
   thrust = Vector(0,0,0);
+  drag = Vector(0,0,0);
   velocity = Vector(0,0,0);
   faceFront = Vector(0,1,0);
   faceLeft = Vector(1,0,0);
@@ -66,6 +67,19 @@ Computer* Vehicle::Comp(Computer* c) {
   }
 
 void Vehicle::Damage(Double dmg) {
+  }
+
+Boolean Vehicle::Destroyed() {
+  return destroyed;
+  }
+
+Double Vehicle::DryWeight() {
+  return dryWeight;
+  }
+
+Double Vehicle::DryWeight(Double d) {
+  dryWeight = d;
+  return dryWeight;
   }
 
 Double Vehicle::EBattery() {
@@ -473,6 +487,7 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Position %.18f %.18f %.18f%s",position.X(),position.Y(),position.Z(),LE);
   fprintf(file,"  Velocity %.18f %.18f %.18f%s",velocity.X(),velocity.Y(),velocity.Z(),LE);
   fprintf(file,"  Thrust %.18f %.18f %.18f%s",thrust.X(),thrust.Y(),thrust.Z(),LE);
+  fprintf(file,"  DryWeight %.18f%s",dryWeight,LE);
   if (panel != NULL) panel->Save(file);
   }
 
@@ -506,6 +521,7 @@ Int8 Vehicle::SubLoad(FILE* file, char* line) {
   else if (startsWith(line,"pitch ")) pitch = atof(nw(line));
   else if (startsWith(line,"roll ")) roll = atof(nw(line));
   else if (startsWith(line,"yaw ")) yaw = atof(nw(line));
+  else if (startsWith(line,"dryweight ")) dryWeight = atof(nw(line));
   else return 0;
   return -1;
   }

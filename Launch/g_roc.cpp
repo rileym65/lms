@@ -23,13 +23,8 @@ void G_Roc::Display() {
   }
 
 void G_Roc::Update() {
-  Vector pos;
-  Double rad;
   char   buffer[16];
-  pos = vehicle->Position();
-  rad = vehicle->Position().Length() - GROUND;
-  sprintf(buffer,"%8.0f",rad-lastAltitude);
+  sprintf(buffer,"%8.0f",((Spacecraft*)vehicle)->RateOfClimb());
   GotoXY(x+4,y); Write(buffer);
-  lastAltitude = rad;
   }
 

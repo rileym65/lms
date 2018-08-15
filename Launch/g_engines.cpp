@@ -46,6 +46,21 @@ void G_Engines::Display() {
          GotoXY(x,y+1); Write(" O ");
          GotoXY(x,y+2); Write("O O");
          break;
+    case 6:
+         GotoXY(x,y+0); Write("OOO");
+         GotoXY(x,y+1); Write("   ");
+         GotoXY(x,y+2); Write("OOO");
+         break;
+    case 7:
+         GotoXY(x,y+0); Write("OOO");
+         GotoXY(x,y+1); Write(" O ");
+         GotoXY(x,y+2); Write("OOO");
+         break;
+    case 8:
+         GotoXY(x,y+0); Write("OOO");
+         GotoXY(x,y+1); Write("O O");
+         GotoXY(x,y+2); Write("OOO");
+         break;
     }
   }
 
@@ -95,6 +110,54 @@ void G_Engines::Update() {
            if (e & 8) Write("*"); else Write("O");
            GotoXY(x+0,y+2);
            if (e & 16) Write("*"); else Write("O");
+           break;
+      case 6:
+           GotoXY(x+0,y+0);
+           if (e & 1) Write("*"); else Write("O");
+           GotoXY(x+1,y+0);
+           if (e & 2) Write("*"); else Write("O");
+           GotoXY(x+2,y+0);
+           if (e & 4) Write("*"); else Write("O");
+           GotoXY(x+0,y+2);
+           if (e & 8) Write("*"); else Write("O");
+           GotoXY(x+1,y+2);
+           if (e & 16) Write("*"); else Write("O");
+           GotoXY(x+2,y+2);
+           if (e & 32) Write("*"); else Write("O");
+           break;
+      case 7:
+           GotoXY(x+0,y+0);
+           if (e & 1) Write("*"); else Write("O");
+           GotoXY(x+1,y+0);
+           if (e & 2) Write("*"); else Write("O");
+           GotoXY(x+2,y+0);
+           if (e & 4) Write("*"); else Write("O");
+           GotoXY(x+0,y+2);
+           if (e & 8) Write("*"); else Write("O");
+           GotoXY(x+1,y+2);
+           if (e & 16) Write("*"); else Write("O");
+           GotoXY(x+2,y+2);
+           if (e & 32) Write("*"); else Write("O");
+           GotoXY(x+1,y+1);
+           if (e & 64) Write("*"); else Write("O");
+           break;
+      case 8:
+           GotoXY(x+0,y+0);
+           if (e & 1) Write("*"); else Write("O");
+           GotoXY(x+1,y+0);
+           if (e & 2) Write("*"); else Write("O");
+           GotoXY(x+2,y+0);
+           if (e & 4) Write("*"); else Write("O");
+           GotoXY(x+0,y+2);
+           if (e & 8) Write("*"); else Write("O");
+           GotoXY(x+1,y+2);
+           if (e & 16) Write("*"); else Write("O");
+           GotoXY(x+2,y+2);
+           if (e & 32) Write("*"); else Write("O");
+           GotoXY(x+0,y+1);
+           if (e & 64) Write("*"); else Write("O");
+           GotoXY(x+2,y+1);
+           if (e & 128) Write("*"); else Write("O");
            break;
       }
     lastEnginesLit = e;

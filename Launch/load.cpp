@@ -30,6 +30,7 @@ Int8 load(const char* filename) {
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"simulation {")) loadSimulation(file);
     else if (startsWith(pline,"booster {")) booster->Load(file);
+    else if (startsWith(pline,"commandmodule {")) csm->Load(file);
     else {
       Write("Unknown line found in save file: ");
       WriteLn(pline);

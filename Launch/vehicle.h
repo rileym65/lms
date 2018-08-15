@@ -17,6 +17,9 @@ class Vehicle {
     Double    accelNorth;
     Double    battery;
     Computer *comp; 
+    Boolean   destroyed;
+    Vector    drag;
+    Double    dryWeight;
     Double    ebattery;
     Double    eoxygen;
     Vector    faceFront;
@@ -61,6 +64,9 @@ class Vehicle {
     virtual Computer *Comp();
     virtual Computer *Comp(Computer* c);
     virtual void      Damage(Double dmg);
+    virtual Boolean   Destroyed();
+    virtual Double    DryWeight();
+    virtual Double    DryWeight(Double d);
     virtual Double    EBattery();
     virtual Double    EBattery(Double d);
     virtual Byte      EnginesLit();

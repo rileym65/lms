@@ -13,9 +13,10 @@ LIBS = -lm
 PHEADERS = g_clockbu.h g_clockmi.h g_clockut.h g_engines.h g_altitude.h g_velocity.h \
 	   g_accel.h g_fuel.h g_clocktb.h g_apoapsis.h g_periapsis.h g_amsdown.h \
 	   g_axis.h g_rollrate.h g_pitchrate.h g_yawrate.h g_clockot.h g_radial.h \
-	   g_orbit.h g_prograde.h g_position.h g_lan.h g_incl.h g_roc.h
+	   g_orbit.h g_prograde.h g_position.h g_lan.h g_incl.h g_roc.h \
+	   g_csmlamps.h
 HEADERS = $(PHEADERS) header.h types.h vector.h matrix.h vehicle.h panel.h \
-	   booster.h body.h spacecraft.h
+	   booster.h body.h spacecraft.h command.h
 OBJS = \
 	g_accel.o \
 	g_altitude.o \
@@ -27,6 +28,7 @@ OBJS = \
 	g_clockot.o \
 	g_clocktb.o \
 	g_clockut.o \
+	g_csmlamps.o \
 	g_engines.o \
 	g_fuel.o \
 	g_incl.o \
@@ -41,8 +43,10 @@ OBJS = \
 	g_rollrate.o \
 	g_velocity.o \
 	g_yawrate.o \
+	airdensity.o \
 	body.o \
 	booster.o \
+	command.o \
 	gauge.o \
 	helpers.o \
 	load.o \
@@ -80,6 +84,7 @@ g_clockmi.o:     $(HEADERS) g_clockmi.cpp
 g_clockot.o:     $(HEADERS) g_clockot.cpp
 g_clocktb.o:     $(HEADERS) g_clocktb.cpp
 g_clockut.o:     $(HEADERS) g_clockut.cpp
+g_csmlamps.o:    $(HEADERS) g_csmlamps.cpp
 g_engines.o:     $(HEADERS) g_engines.cpp
 g_fuel.o:        $(HEADERS) g_fuel.cpp
 g_incl.o:        $(HEADERS) g_incl.cpp
@@ -94,8 +99,10 @@ g_roc.o:         $(HEADERS) g_roc.cpp
 g_rollrate.o:    $(HEADERS) g_rollrate.cpp
 g_velocity.o:    $(HEADERS) g_velocity.cpp
 g_yawrate.o:     $(HEADERS) g_yawrate.cpp
+airdensity.o:    $(HEADERS) airdensity.cpp
 body.o:          $(HEADERS) body.cpp
 booster.o:       $(HEADERS) booster.cpp
+command.o:       $(HEADERS) command.cpp
 gauge.o:         $(HEADERS) gauge.cpp
 helpers.o:       $(HEADERS) helpers.cpp
 load.o:          $(HEADERS) load.cpp
