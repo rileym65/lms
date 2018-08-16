@@ -20,9 +20,72 @@ void mercuryRedstone() {
   csm->Diameter(1.78);
   csm->ParachuteDiameter(19.2);
   csm->RetroModuleDryWeight(32);
-  csm->RetroModuleFuel(205);
+  csm->RetroModuleFuel(60);
   csm->RetroModuleIsp(230);
   csm->RetroModuleThrust(4450);
+  csm->CommandModuleRcsFuel(25);
+  csm->CommandModuleRcsIsp(167);
+  csm->CommandModuleRcsThrust(107);
+  csm->Oxygen(36 * 3600);
+  csm->Battery(36 * 3600);
+  csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
+  csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
+  csm->MaxOxygen(csm->Oxygen());
+  csm->MaxBattery(csm->Battery());
+  }
+
+void mercuryAtlas() {
+  booster->NumStages(2);
+  booster->Payload(1400);
+  booster->Stage(1);
+
+  booster->Diameter(1,1.78);
+  booster->DryWeight(1, 3050);
+  booster->Fuel(1, 90923);
+  booster->NumEngines(1, 3);
+  booster->IspVac(1, 1, 309);
+  booster->IspVac(1, 2, 282);
+  booster->IspVac(1, 3, 282);
+  booster->IspSl(1, 1, 215);
+  booster->IspSl(1, 2, 248);
+  booster->IspSl(1, 3, 248);
+  booster->ThrustVac(1, 1, 363220);
+  booster->ThrustVac(1, 2, 758700);
+  booster->ThrustVac(1, 3, 758700);
+  booster->ThrustSl(1, 1, 252700);
+  booster->ThrustSl(1, 2, 667200);
+  booster->ThrustSl(1, 3, 667200);
+  booster->Starts(1,1);
+
+  booster->Diameter(2,1.78);
+  booster->DryWeight(2, 2347);
+  booster->Fuel(2, 19780);
+  booster->NumEngines(2, 1);
+  booster->IspVac(2, 1, 309);
+  booster->IspSl(2, 1, 215);
+  booster->ThrustVac(2, 1, 363220);
+  booster->ThrustSl(2, 1, 252700);
+  booster->Starts(2,1);
+
+  booster->MaxFuel(1, booster->Fuel(1));
+  booster->MaxFuel(2, booster->Fuel(2));
+  csm->DryWeight(1341);
+  csm->Diameter(1.78);
+  csm->ParachuteDiameter(19.2);
+  csm->RetroModuleDryWeight(32);
+//  csm->RetroModuleFuel(205);
+  csm->RetroModuleFuel(60);
+  csm->RetroModuleIsp(230);
+  csm->RetroModuleThrust(4450);
+  csm->CommandModuleRcsFuel(25);
+  csm->CommandModuleRcsIsp(167);
+  csm->CommandModuleRcsThrust(107);
+  csm->Oxygen(36 * 3600);
+  csm->Battery(36 * 3600);
+  csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
+  csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
+  csm->MaxOxygen(csm->Oxygen());
+  csm->MaxBattery(csm->Battery());
   }
 
 void geminiTitan() {
@@ -68,10 +131,14 @@ void geminiTitan() {
   csm->CommandModuleRcsFuel(33);
   csm->CommandModuleRcsIsp(283);
   csm->CommandModuleRcsThrust(111);
+  csm->Oxygen(14 * 24 * 3600);
+  csm->Battery(14 * 24 * 3600);
   csm->ServiceModuleMaxFuel(csm->ServiceModuleFuel());
   csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
   csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
   csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
+  csm->MaxOxygen(csm->Oxygen());
+  csm->MaxBattery(csm->Battery());
   }
 
 void saturn1B() {
@@ -139,10 +206,14 @@ void saturn1B() {
   csm->CommandModuleRcsFuel(74);
   csm->CommandModuleRcsIsp(290);
   csm->CommandModuleRcsThrust(410);
+  csm->Oxygen(14 * 24 * 3600);
+  csm->Battery(14 * 24 * 3600);
   csm->ServiceModuleMaxFuel(csm->ServiceModuleFuel());
   csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
   csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
   csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
+  csm->MaxOxygen(csm->Oxygen());
+  csm->MaxBattery(csm->Battery());
   }
 
 void saturnV() {
@@ -224,10 +295,14 @@ void saturnV() {
   csm->CommandModuleRcsFuel(74);
   csm->CommandModuleRcsIsp(290);
   csm->CommandModuleRcsThrust(410);
+  csm->Oxygen(14 * 24 * 3600);
+  csm->Battery(14 * 24 * 3600);
   csm->ServiceModuleMaxFuel(csm->ServiceModuleFuel());
   csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
   csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
   csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
+  csm->MaxOxygen(csm->Oxygen());
+  csm->MaxBattery(csm->Battery());
   }
 
 void init(Byte v) {
@@ -238,9 +313,10 @@ void init(Byte v) {
   launched = false;
   kscAngle = 0;
   if (v == 1) mercuryRedstone();
-  if (v == 2) geminiTitan();
-  if (v == 3) saturn1B();
-  if (v == 4) saturnV();
+  if (v == 2) mercuryAtlas();
+  if (v == 3) geminiTitan();
+  if (v == 4) saturn1B();
+  if (v == 5) saturnV();
   }
 
 void cycle() {
@@ -270,7 +346,22 @@ void cycle() {
     }
   else {
     clockMi++;
-    if (booster->EnginesLit() != 0) {
+    if (csm->UseOxygen(1) == false) {
+      GotoXY(1,25);
+      printf("Astronauts died due to lack of oxygen\n");
+      ShowCursor();
+      CloseTerminal();
+      exit(0);
+      }
+    if (csm->UseBattery(1) == false) {
+      GotoXY(1,25);
+      printf("Astronauts died due to lack of power\n");
+      ShowCursor();
+      CloseTerminal();
+      exit(0);
+      }
+//    if (booster->EnginesLit() != 0) {
+    if (csm->Throttle() != 0) {
       clockBu++;
       clockTb++;
       }
@@ -280,15 +371,15 @@ void cycle() {
         csm->Cycle();
         if (csm->Radius() <= GROUND) {
           if (csm->RateOfClimb() <= -11) {
-            printf("Vehicle destroyed due to high impact\n");
             GotoXY(1,25);
+            printf("Vehicle destroyed due to high velocity impact\n");
             ShowCursor();
             CloseTerminal();
             exit(0);
             }
           else {
-            printf("Vehicle has safely landed\n");
             GotoXY(1,25);
+            printf("Vehicle has safely landed\n");
             ShowCursor();
             CloseTerminal();
             exit(0);
@@ -339,9 +430,10 @@ int main(int argc, char** argv) {
   csm->LaunchVehicle(booster);
   if (load("launch.sav") == 0) {
     printf("1. Mercury/Redstone\n");
-    printf("2. Gemini/Titan\n");
-    printf("3. Apollo/Saturn IB\n");
-    printf("4. Apollo/Saturn V\n");
+    printf("2. Mercury/Atlas\n");
+    printf("3. Gemini/Titan\n");
+    printf("4. Apollo/Saturn IB\n");
+    printf("5. Apollo/Saturn V\n");
     printf("   Vehicle: ");
     fgets(buffer,31,stdin);
     v = atoi(buffer);

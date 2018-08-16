@@ -20,6 +20,8 @@ Box 27,9,53,24
 Gauge Ams_DownAxis 28,10
 Box 1,18,13,24
 Gauge Propellant 4,19
+Gauge Oxygen 4,20
+Gauge Battery 4,21
 Box 1,14,27,18
 Gauge Radial 3,15
 Gauge Orbit 16,15
@@ -30,5 +32,5 @@ Gauge Position 65,7
 Gauge Lan 42,6
 Gauge Inclination 42,7
 Line 1,5,25,5
-Gauge CsmLamps 2,2
+Gauge CsmLamps 3,2
 Gauge Rcs 3,6

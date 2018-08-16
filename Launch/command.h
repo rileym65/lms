@@ -8,6 +8,7 @@
 class CommandModule : public Spacecraft {
   protected:
     Double   area;
+    Boolean  armed;
     Booster* launchVehicle;
     Boolean  launchVehicleJettisoned;
     Double   parachuteArea;
@@ -42,6 +43,7 @@ class CommandModule : public Spacecraft {
     void Cycle();
     virtual Double AscendingNode();
     virtual Double Apoapsis();
+    virtual Boolean Armed();
     virtual Double CommandModuleRcsIsp(Double d);
     virtual Double CommandModuleRcsThrust(Double d);
     virtual Double CommandModuleRcsFuel();
@@ -99,6 +101,7 @@ class CommandModule : public Spacecraft {
     virtual Double ServiceModuleRcsFuel(Double d);
     virtual Double ServiceModuleRcsMaxFuel();
     virtual Double ServiceModuleRcsMaxFuel(Double d);
+    virtual Int8   Throttle();
     virtual Double YawRate();
 
     virtual Booster* LaunchVehicle();

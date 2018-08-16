@@ -8,6 +8,7 @@
 #include "g_altitude.h"
 #include "g_amsdown.h"
 #include "g_apoapsis.h"
+#include "g_battery.h"
 #include "g_clockbu.h"
 #include "g_clockmi.h"
 #include "g_clockot.h"
@@ -19,6 +20,7 @@
 #include "g_incl.h"
 #include "g_lan.h"
 #include "g_orbit.h"
+#include "g_oxygen.h"
 #include "g_periapsis.h"
 #include "g_pitchrate.h"
 #include "g_position.h"
@@ -129,6 +131,10 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Rcs(x1, y1, false, vehicle));
       else if (strcasecmp(str,"propellant") == 0)
         addGauge(new G_Propellant(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"oxygen") == 0)
+        addGauge(new G_Oxygen(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"battery") == 0)
+        addGauge(new G_Battery(x1, y1, false, vehicle));
       else {
         Write("Unknown guage: ");
         WriteLn(str);

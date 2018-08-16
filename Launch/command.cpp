@@ -29,6 +29,7 @@ CommandModule::CommandModule() {
   retroModuleFuel = 0;
   retroModuleIsp = 0;
   retroModuleThrust = 0;
+  armed = false;
   }
 
 CommandModule::~CommandModule() {
@@ -68,17 +69,47 @@ void CommandModule::Cycle() {
   Vector vel;
   Vector vl;
   Vector vu;
+Double dot;
+Double angle;
+Vector axis;
+Matrix m;
   vu = position.Norm();
   vl = Vector(vu.Y(),-vu.X(), 0).Norm().Scale(408);
   vel = velocity + vl;
   alt = position.Length() - GROUND;
   thrust = Vector(0,0,0);
   drag = Vector(0,0,0);
+  air = AirDensity(alt);
+  if (air > 0) {
+    cd = 0.8;
+    if (faceUp.Dot(vel) < 0) cd = 1.1;
+
+dot = faceUp.Norm().Dot(vel.Norm());
+angle = 180 - acos(dot)*180/M_PI;
+axis = vel.Norm().Cross(faceUp.Norm());
+m = Matrix::Rotate(axis, (angle / 1) / GRAN);
+faceLeft = m.Transform(faceLeft).Norm();
+faceUp = m.Transform(faceUp).Norm();
+faceFront = m.Transform(faceFront).Norm();
+
+    if (parachuteDeployment == 0) {
+      a = area;
+      }
+    else {
+      a = parachuteArea * parachuteDeployment;
+      parachuteDeployment += (parachuteDeployment / GRAN);
+      if (parachuteDeployment > 1) parachuteDeployment = 1;
+      }
+    v = vel.Length();
+    d = cd * a * 0.5 * (air * 1.2 * v * v);
+    d /= Mass();
+    drag = vel.Norm().Scale(d).Neg();
+    }
   if (serviceModuleDryWeight > 0) {
     switch (rcsThrottle) {
-      case 1: rcsThrust = 1.0; break;
+      case 1: rcsThrust = 0.01; break;
       case 10: rcsThrust = 0.10; break;
-      case 100: rcsThrust = 0.01; break;
+      case 100: rcsThrust = 1.00; break;
       default : rcsThrust = 0;
       }
     if (rcsUdMode == 'D') {
@@ -130,23 +161,6 @@ void CommandModule::Cycle() {
         }
       }
     }
-  air = AirDensity(alt);
-  if (air > 0) {
-    cd = 0.8;
-    if (faceUp.Dot(vel) < 0) cd = 1.1;
-    if (parachuteDeployment == 0) {
-      a = area;
-      }
-    else {
-      a = parachuteArea * parachuteDeployment;
-      parachuteDeployment += (parachuteDeployment / GRAN);
-      if (parachuteDeployment > 1) parachuteDeployment = 1;
-      }
-    v = vel.Length();
-    d = cd * a * 0.5 * (air * 1.2 * v * v);
-    d /= Mass();
-    drag = vel.Norm().Scale(d).Neg();
-    }
   if (throttle > 0) {
     if (serviceModuleDryWeight > 0) {
       th = serviceModuleThrust / Mass();
@@ -173,6 +187,10 @@ void CommandModule::Cycle() {
 Double CommandModule::Apoapsis() {
   if (!launchVehicleJettisoned) return booster->Apoapsis();
   return apoapsis;
+  }
+
+Boolean CommandModule::Armed() {
+  return armed;
   }
 
 Double CommandModule::AscendingNode() {
@@ -494,6 +512,11 @@ Byte CommandModule::Stage() {
   return 1;
   }
 
+Int8 CommandModule::Throttle() {
+  if (!launchVehicleJettisoned) return booster->Throttle();
+  return throttle;
+  }
+
 Double CommandModule::YawRate() {
   if (!launchVehicleJettisoned) return booster->YawRate();
   return yawRate;
@@ -512,17 +535,37 @@ void CommandModule::ProcessKey(Int32 key) {
   Double *rcsFuel;
   Double rf;
   if (!launchVehicleJettisoned) booster->ProcessKey(key);
-  if (key == 'J') {
-    if (!launchVehicleJettisoned) capsuleSep();
-    else if (serviceModuleDryWeight > 0) serviceModuleDryWeight = 0;
-    else if (retroModuleDryWeight > 0) retroModuleDryWeight = 0;
+  if (key == 9) {
+    armed = !armed;
+    }
+  if (key == 'J' && armed) {
+    if (!launchVehicleJettisoned) {
+      capsuleSep();
+      armed = false;
+      }
+    else if (serviceModuleDryWeight > 0) {
+      serviceModuleDryWeight = 0;
+      armed = false;
+      }
+    else if (retroModuleDryWeight > 0) {
+      retroModuleDryWeight = 0;
+      armed = false;
+      }
     }
   if (launchVehicleJettisoned) {
     if (key == 'P' && parachuteDeployment == 0 &&
         radius <= GROUND+5000) parachuteDeployment = 0.01;
-    if (key == 'I') {
-       if (serviceModuleDryWeight > 0 && serviceModuleIsp > 0) throttle = 100;
-       else if (retroModuleDryWeight > 0) throttle = 100;
+    if (key == 'I' && armed) {
+       if (serviceModuleDryWeight > 0 && serviceModuleIsp > 0) {
+         throttle = 100;
+         clockBu = 0;
+         armed = false;
+         }
+       else if (retroModuleDryWeight > 0) {
+         throttle = 100;
+         clockBu = 0;
+         armed = false;
+         }
       }
     if (key == 'i') {
       if (serviceModuleDryWeight > 0) throttle = 0;
@@ -637,6 +680,7 @@ void CommandModule::Save(FILE* file) {
   fprintf(file,"  ServiceModuleRcsBThrust %.18f%s",serviceModuleRcsBThrust,LE);
   fprintf(file,"  RetroModuleDryWeight %.18f%s",retroModuleDryWeight,LE);
   fprintf(file,"  RetroModuleFuel %.18f%s",retroModuleFuel,LE);
+  fprintf(file,"  RetroModuleMaxFuel %.18f%s",retroModuleMaxFuel,LE);
   fprintf(file,"  RetroModuleIsp %.18f%s",retroModuleIsp,LE);
   fprintf(file,"  RetroModuleThrust %.18f%s",retroModuleThrust,LE);
   fprintf(file,"  CommandModuleRcsIsp %.18f%s",commandModuleRcsIsp,LE);
@@ -670,6 +714,7 @@ Int8 CommandModule::SubLoad(FILE* file, char* pline) {
   else if (startsWith(pline,"servicemodulercsbthrust ")) serviceModuleRcsBThrust = atof(nw(pline));
   else if (startsWith(pline,"retromoduledryweight ")) retroModuleDryWeight = atof(nw(pline));
   else if (startsWith(pline,"retromodulefuel ")) retroModuleFuel = atof(nw(pline));
+  else if (startsWith(pline,"retromodulemaxfuel ")) retroModuleMaxFuel = atof(nw(pline));
   else if (startsWith(pline,"retromoduleisp ")) retroModuleIsp = atof(nw(pline));
   else if (startsWith(pline,"retromodulethrust ")) retroModuleThrust = atof(nw(pline));
   else if (startsWith(pline,"commandmodulercsisp ")) commandModuleRcsIsp = atof(nw(pline));
