@@ -272,10 +272,10 @@
 	|<right> |-|Begin right turn/End left turn                    |
 	|<PgDn>  |-|Throttle up 10%                                   |
 	|<End>   |-|Throttle down 10%                                 |
-	|C       |-|Collect                                           |
+	|c       |-|Collect                                           |
 	|S       |-|Store sample in lrv box or Box into LM            |
-	|D       |-|Drop sample                                       |
 	|s       |-|Store sample in cart                              |
+	|D       |-|Drop sample                                       |
 	|Z       |-|Show damage report                                |
 	|E       |-|End EVA                                           |
 	|R       |-|Return sample box to rover                        |

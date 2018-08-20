@@ -221,7 +221,7 @@ void Plss::ProcessKey(Int32 key) {
     if (key == 'M' && lrvPos < 100 && carrying == ' ') {
       seq->MoveLrv();
       }
-    if (key == 'C') {
+    if (key == 'c') {
       if (carrying == ' ') seq->TakeSample();
       }
     if (key == 'D') {
