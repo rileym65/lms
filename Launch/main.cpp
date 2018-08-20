@@ -117,7 +117,7 @@ void geminiTitan() {
   csm->ParachuteDiameter(25.66);
   csm->ServiceModuleDryWeight(956);
   csm->ServiceModuleFuel(0);
-  csm->ServiceModuleIsp(0);
+  csm->ServiceModuleIsp(230);
   csm->ServiceModuleThrust(710);
   csm->ServiceModuleRcsIsp(273);
   csm->ServiceModuleRcsThrust(444);
@@ -325,6 +325,7 @@ void cycle() {
   Vector vl;
   Vector vf;
   clockUt++;
+  if (clockUt >= 86400) clockUt = 0;
   kscAngle += 0.00417807464;
   if (kscAngle >= 180) kscAngle -= 360;
   if (!launched) {
@@ -449,6 +450,11 @@ int main(int argc, char** argv) {
   while (flag) {
     while (KeyPressed()) {
       key = Inkey();
+      if (key == '!') simSpeed = 1000000;
+      if (key == '@') simSpeed = 10000;
+      if (key == '#') simSpeed = 1000;
+      if (key == '$') simSpeed = 100;
+      if (key == '%') simSpeed = 10;
       if (key == 'Q') flag = false;
       if (key == 'I' && launched) booster->Ignition();
       if (key == 'L' && !launched) Launch();

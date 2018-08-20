@@ -15,10 +15,12 @@
 #include "g_clocktb.h"
 #include "g_clockut.h"
 #include "g_csmlamps.h"
+#include "g_dec.h"
 #include "g_engines.h"
 #include "g_fuel.h"
 #include "g_incl.h"
 #include "g_lan.h"
+#include "g_multiaxis.h"
 #include "g_orbit.h"
 #include "g_oxygen.h"
 #include "g_periapsis.h"
@@ -26,6 +28,7 @@
 #include "g_position.h"
 #include "g_prograde.h"
 #include "g_propellant.h"
+#include "g_ra.h"
 #include "g_radial.h"
 #include "g_rcs.h"
 #include "g_roc.h"
@@ -135,6 +138,12 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Oxygen(x1, y1, false, vehicle));
       else if (strcasecmp(str,"battery") == 0)
         addGauge(new G_Battery(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"rightascension") == 0)
+        addGauge(new G_RightAscension(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"declination") == 0)
+        addGauge(new G_Declination(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"multiaxis") == 0)
+        addGauge(new G_MultiAxis(x1, y1, false, vehicle));
       else {
         Write("Unknown guage: ");
         WriteLn(str);

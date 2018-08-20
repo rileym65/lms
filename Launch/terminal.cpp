@@ -206,14 +206,15 @@ int Inkey() {
   c = key;
   if (key == 224 || key == 0) {
       key = getch();
-      if (key == 72) c = '8';
-      if (key == 80) c = '2';
-      if (key == 75) c = '4';
-      if (key == 77) c = '6';
-      if (key == 71) c = '7';
-      if (key == 73) c = '9';
-      if (key == 79) c = '1';
-      if (key == 81) c = '3';
+      if (key == 72) c = KEY_UP_ARROW;
+      if (key == 80) c = KEY_DOWN_ARROW;
+      if (key == 75) c = KEY_LEFT_ARROW;
+      if (key == 77) c = KEY_RIGHT_ARROW;
+      if (key == 71) c = KEY_HOME;
+      if (key == 73) c = KEY_PGUP;
+      if (key == 79) c = KEY_END;
+      if (key == 81) c = KEY_PGDN;
+      if (key == 82) c = KEY_INSERT;
       if (key == 59) c = KEY_F1;     // F1
       if (key == 60) c = KEY_F2;     // F2
       if (key == 61) c = KEY_F3;     // F3

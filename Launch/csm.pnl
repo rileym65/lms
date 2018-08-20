@@ -16,8 +16,10 @@ Gauge Accel 41,3
 Gauge Apoapsis 27,6
 Gauge Periapsis 27,7
 Gauge ClockOT 27,8
+Gauge RightAscension 27,4
+Gauge Declination 41,4
 Box 27,9,53,24
-Gauge Ams_DownAxis 28,10
+Gauge MultiAxis 28,10
 Box 1,18,13,24
 Gauge Propellant 4,19
 Gauge Oxygen 4,20

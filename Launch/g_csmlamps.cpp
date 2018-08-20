@@ -32,7 +32,7 @@ void G_CsmLamps::Update() {
   GotoXY(x+4,y+0);
   if (((CommandModule*)vehicle)->ParachuteDeployment() > 0)
     printf("PAR"); else printf("   ");
-  if (cm->Throttle() > 0) {
+  if (cm->Throttle() > 0 && cm->LaunchVehicleJettisoned()) {
     if (cm->ServiceModuleDryWeight() > 0) {
       GotoXY(x+4, y+1);
       printf("SPS");

@@ -535,6 +535,7 @@ void CommandModule::ProcessKey(Int32 key) {
   Double *rcsFuel;
   Double rf;
   if (!launchVehicleJettisoned) booster->ProcessKey(key);
+  if (panel != NULL) panel->ProcessKey(key);
   if (key == 9) {
     armed = !armed;
     }
