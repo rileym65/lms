@@ -28,6 +28,7 @@
 #define VT_ROCKET     2
 #define VT_GROUND     4
 #define GRAN          100.0
+#define G             6.67408e-11
 
 #ifdef MINGW
 #define LE   "\r\n"

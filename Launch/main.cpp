@@ -2,6 +2,9 @@
 
 #include "header.h"
 
+int days;
+double mn,mx;
+
 void mercuryRedstone() {
   booster->NumStages(1);
   booster->DryWeight(1, 6178);
@@ -324,8 +327,33 @@ void cycle() {
   Vector vu;
   Vector vl;
   Vector vf;
+  Vector p,v;
+  Double d;
+  p = Moon->Position();
+  v = Moon->Velocity();
+  p = p + v;
+  d = p.Length();
+if (d > mx) {
+  mx = d;
+  GotoXY(1,29); printf("Max: %.2f\n",mx);
+  }
+if (d < mn) {
+  mn = d;
+  GotoXY(1,30); printf("Min: %.2f\n",mn);
+  }
+GotoXY(1,26); printf("Moon distance: %f\n",p.Length());
+  d = ((G * Moon->Mass() * Earth->Mass()) / (d * d) ) / Moon->Mass();
+GotoXY(1,28); printf("D=%f\n",d);
+  v = v - p.Norm().Scale(d);
+GotoXY(1,27); printf("X: %12.2f Y: %12.2f Z: %12.2f\n",v.X(),v.Y(),v.Z());
+  Moon->Position(p);
+  Moon->Velocity(v);
   clockUt++;
-  if (clockUt >= 86400) clockUt = 0;
+  if (clockUt >= 86400) {
+    clockUt = 0;
+    days++;
+GotoXY(1,25); printf("Days: %d\n",days);
+    }
   kscAngle += 0.00417807464;
   if (kscAngle >= 180) kscAngle -= 360;
   if (!launched) {
@@ -424,8 +452,13 @@ int main(int argc, char** argv) {
   UInt32 v;
   Boolean flag;
   UInt32  key;
+days = 0;
+mn=9e99;
+mx=0;
   Earth = new Body("Earth", 5.972e+24, 6378100);
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
+  Moon->Position(Vector(325266766, 0, 177193935));
+  Moon->Velocity(Vector(0,1060,0));
   booster = new Booster();
   csm = new CommandModule();
   csm->LaunchVehicle(booster);
