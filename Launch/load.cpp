@@ -31,6 +31,8 @@ Int8 load(const char* filename) {
     if (startsWith(pline,"simulation {")) loadSimulation(file);
     else if (startsWith(pline,"booster {")) booster->Load(file);
     else if (startsWith(pline,"commandmodule {")) csm->Load(file);
+    else if (startsWith(pline,"earth {")) Earth->Load(file);
+    else if (startsWith(pline,"moon {")) Moon->Load(file);
     else {
       Write("Unknown line found in save file: ");
       WriteLn(pline);

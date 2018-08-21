@@ -205,10 +205,24 @@ void Spacecraft::Cycle() {
     if (yaw < -180) yaw += 360;
     }
   alt3 = radius * radius * radius;
-  g = orbiting->Gravitation();
+//  g = orbiting->Gravitation();
+  g = Earth->Gravitation();
   a = position.Scale(-g);
   a = a.Scale(1/alt3);
+GotoXY(1,31); printf("G Earth: %.8f\n",a.Length());
   velocity = velocity + a.Scale(1/GRAN);
+
+  alt3 = (position - Moon->Position()).Length();
+  alt3 = alt3 * alt3 * alt3;
+  g = Moon->Gravitation();
+  a = position - Moon->Position();
+  a = a.Scale(-g);
+  a = a.Scale(1/alt3);
+GotoXY(1,32); printf("G Moon : %.8f\n",a.Length());
+  velocity = velocity + a.Scale(1/GRAN);
+
+  g = Earth->Gravitation();
+
   velocity = velocity + thrust.Scale(1/GRAN);
   velocity = velocity + drag.Scale(1/GRAN);
   position = position + velocity.Scale(1/GRAN);
@@ -231,7 +245,7 @@ void Spacecraft::Cycle() {
   periapsis = s * (1 - e);
   orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/g);
   if (thrust.Length() > 0) {
-  hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
+    hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
     ascendingNode = L.Y() / hyp;
     ascendingNode = asin(ascendingNode) * 180 / M_PI;
     if (L.X() < 0 && L.Y() < 0) ascendingNode = -180 - ascendingNode;

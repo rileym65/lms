@@ -447,9 +447,7 @@ void Vehicle::InitPanel() {
 void Vehicle::Load(FILE* file) {
   char* pline;
   while ((pline = nextLine(file)) != NULL) {
-printf(">>%s<<\n",pline);
     if (startsWith(pline,"}")) {
-printf("done with vehicle::load\n"); fflush(stdout);
       return;
       }
     else if (startsWith(pline,"panel {")) panel->Load(file);

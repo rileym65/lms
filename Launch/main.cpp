@@ -328,26 +328,28 @@ void cycle() {
   Vector vl;
   Vector vf;
   Vector p,v;
-  Double d;
-  p = Moon->Position();
-  v = Moon->Velocity();
-  p = p + v;
-  d = p.Length();
-if (d > mx) {
-  mx = d;
+  Moon->Cycle();
+//  Double d;
+//  p = Moon->Position();
+//  v = Moon->Velocity();
+//  p = p + v;
+//  d = p.Length();
+if (Moon->Position().Length() > mx) {
+  mx = Moon->Position().Length();
   GotoXY(1,29); printf("Max: %.2f\n",mx);
   }
-if (d < mn) {
-  mn = d;
+if (Moon->Position().Length() < mn) {
+  mn = Moon->Position().Length();
   GotoXY(1,30); printf("Min: %.2f\n",mn);
   }
-GotoXY(1,26); printf("Moon distance: %f\n",p.Length());
-  d = ((G * Moon->Mass() * Earth->Mass()) / (d * d) ) / Moon->Mass();
-GotoXY(1,28); printf("D=%f\n",d);
-  v = v - p.Norm().Scale(d);
-GotoXY(1,27); printf("X: %12.2f Y: %12.2f Z: %12.2f\n",v.X(),v.Y(),v.Z());
-  Moon->Position(p);
-  Moon->Velocity(v);
+GotoXY(1,26); printf("Moon distance: %f\n",Moon->Position().Length());
+GotoXY(1,27); printf("AN: %.2f   Inc: %.2f\n",Moon->AscendingNode(),Moon->Inclination());
+//  d = ((G * Moon->Mass() * Earth->Mass()) / (d * d) ) / Moon->Mass();
+//GotoXY(1,28); printf("D=%f\n",d);
+//  v = v - p.Norm().Scale(d);
+//GotoXY(1,27); printf("X: %12.2f Y: %12.2f Z: %12.2f\n",v.X(),v.Y(),v.Z());
+//  Moon->Position(p);
+//  Moon->Velocity(v);
   clockUt++;
   if (clockUt >= 86400) {
     clockUt = 0;
@@ -459,6 +461,8 @@ mx=0;
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
   Moon->Position(Vector(325266766, 0, 177193935));
   Moon->Velocity(Vector(0,1060,0));
+  Moon->Orbiting(Earth);
+  Moon->CalculateOrbit();
   booster = new Booster();
   csm = new CommandModule();
   csm->LaunchVehicle(booster);

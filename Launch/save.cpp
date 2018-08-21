@@ -15,6 +15,8 @@ void save() {
   fprintf(file,"  }%s",LE);
   csm->Save(file);
   booster->Save(file);
+  Earth->Save(file);
+  Moon->Save(file);
   fclose(file);
   }
 
