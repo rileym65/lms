@@ -15,6 +15,8 @@ class Body {
     Vector position;
     Vector velocity;
     Body  *orbiting;
+    Double latitude;
+    Double longitude;
   public:
     Body(const char* n, Double m, Double r);
     ~Body();
@@ -24,6 +26,8 @@ class Body {
     Double Inclination();
     char  *Name();
     Double Gravitation();
+    Double Latitude();
+    Double Longitude();
     Double Mass();
     Body  *Orbiting();
     Body  *Orbiting(Body* b);

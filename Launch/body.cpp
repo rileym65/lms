@@ -40,11 +40,20 @@ void Body::CalculateOrbit() {
 
 void Body::Cycle() {
   Double d;
+  Double hyp;
   if (orbiting == NULL) return;
   position = position + velocity;
   d = position.Length();
   d = ((G * mass * orbiting->Mass()) / (d * d) ) / mass;
   velocity = velocity - position.Norm().Scale(d);
+  hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
+  longitude = position.X() / hyp;
+  longitude = asin(longitude) * 180 / M_PI;
+  if (position.X() < 0 && position.Y() >= 0) longitude = -180 - longitude;
+  if (position.X() >= 0 && position.Y() >= 0) longitude = 180 - longitude;
+  hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
+  latitude = position.Z() / hyp;
+  latitude = asin(latitude) * 180 / M_PI;
   }
 
 char* Body::Name() {
@@ -53,6 +62,14 @@ char* Body::Name() {
 
 Double Body::Gravitation() {
   return gravitation;
+  }
+
+Double Body::Latitude() {
+  return latitude;
+  }
+
+Double Body::Longitude() {
+  return longitude;
   }
 
 Double Body::Mass() {
