@@ -1,9 +1,10 @@
 Box 1,1,80,24
-Box 64,1,80,6
+Box 64,1,80,7
 Gauge ClockUT 66,2
 Gauge ClockMI 66,3
 Gauge ClockBU 66,4
 Gauge ClockTB 66,5
+Gauge Days 66,6
 Box 21,18,27,24
 Gauge Engines 23,20
 Box 13,18,21,24
@@ -30,9 +31,11 @@ Gauge Orbit 16,15
 Box 1,9,27,14
 Gauge Prograde 3,10
 Box 25,5,55,9
-Gauge Position 65,7
+Gauge Position 65,8
 Gauge Lan 42,6
 Gauge Inclination 42,7
 Line 1,5,25,5
 Gauge CsmLamps 3,2
 Gauge Rcs 3,6
+Line 53,20,80,20
+Gauge Moon 55,21

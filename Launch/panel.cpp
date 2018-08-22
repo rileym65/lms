@@ -15,11 +15,13 @@
 #include "g_clocktb.h"
 #include "g_clockut.h"
 #include "g_csmlamps.h"
+#include "g_days.h"
 #include "g_dec.h"
 #include "g_engines.h"
 #include "g_fuel.h"
 #include "g_incl.h"
 #include "g_lan.h"
+#include "g_moon.h"
 #include "g_multiaxis.h"
 #include "g_orbit.h"
 #include "g_oxygen.h"
@@ -144,6 +146,10 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Declination(x1, y1, false, vehicle));
       else if (strcasecmp(str,"multiaxis") == 0)
         addGauge(new G_MultiAxis(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"moon") == 0)
+        addGauge(new G_Moon(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"days") == 0)
+        addGauge(new G_Days(x1, y1, false, vehicle));
       else {
         Write("Unknown guage: ");
         WriteLn(str);

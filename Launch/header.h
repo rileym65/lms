@@ -40,6 +40,7 @@ LINK UInt32  clockBu;
 LINK UInt32  clockUt;
 LINK UInt32  clockMi;
 LINK UInt32  clockTb;
+LINK UInt32  days;
 LINK Byte    engines;
 LINK Boolean launched;
 LINK Double  kscAngle;

@@ -9,6 +9,7 @@ void save() {
   fprintf(file,"  ClockMI %d%s",clockMi,LE);
   fprintf(file,"  ClockUT %d%s",clockUt,LE);
   fprintf(file,"  ClockTB %d%s",clockTb,LE);
+  fprintf(file,"  Days %d%s",days,LE);
   fprintf(file,"  KscAngle %.18f%s",kscAngle,LE);
   if (launched) fprintf(file,"  Launched true%s",LE);
     else fprintf(file,"  Launched false%s",LE);

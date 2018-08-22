@@ -2,7 +2,6 @@
 
 #include "header.h"
 
-int days;
 double mn,mx;
 
 void mercuryRedstone() {
@@ -312,6 +311,7 @@ void init(Byte v) {
   clockMi = 0;
   clockUt = 8 * 3600;
   clockTb = 0;
+  days = 0;
   engines = 0;
   launched = false;
   kscAngle = 0;
@@ -329,32 +329,10 @@ void cycle() {
   Vector vf;
   Vector p,v;
   Moon->Cycle();
-//  Double d;
-//  p = Moon->Position();
-//  v = Moon->Velocity();
-//  p = p + v;
-//  d = p.Length();
-if (Moon->Position().Length() > mx) {
-  mx = Moon->Position().Length();
-  GotoXY(1,29); printf("Max: %.2f\n",mx);
-  }
-if (Moon->Position().Length() < mn) {
-  mn = Moon->Position().Length();
-  GotoXY(1,30); printf("Min: %.2f\n",mn);
-  }
-GotoXY(1,26); printf("Moon distance: %f\n",Moon->Position().Length());
-GotoXY(1,27); printf("AN: %.2f   Inc: %.2f\n",Moon->AscendingNode(),Moon->Inclination());
-//  d = ((G * Moon->Mass() * Earth->Mass()) / (d * d) ) / Moon->Mass();
-//GotoXY(1,28); printf("D=%f\n",d);
-//  v = v - p.Norm().Scale(d);
-//GotoXY(1,27); printf("X: %12.2f Y: %12.2f Z: %12.2f\n",v.X(),v.Y(),v.Z());
-//  Moon->Position(p);
-//  Moon->Velocity(v);
   clockUt++;
   if (clockUt >= 86400) {
     clockUt = 0;
     days++;
-GotoXY(1,25); printf("Days: %d\n",days);
     }
   kscAngle += 0.00417807464;
   if (kscAngle >= 180) kscAngle -= 360;
@@ -373,6 +351,8 @@ GotoXY(1,25); printf("Days: %d\n",days);
     csm->FaceUp(booster->FaceUp());
     csm->FaceLeft(booster->FaceLeft());
     csm->FaceFront(booster->FaceFront());
+    booster->Ins();
+    csm->Ins();
     csm->UpdatePanel();
     }
   else {
@@ -400,7 +380,7 @@ GotoXY(1,25); printf("Days: %d\n",days);
       if (!booster->Destroyed()) booster->Cycle();
       if (csm->LaunchVehicleJettisoned()) {
         csm->Cycle();
-        if (csm->Radius() <= GROUND) {
+        if (csm->Radius() <= csm->Orbiting()->Radius()) {
           if (csm->RateOfClimb() <= -11) {
             GotoXY(1,25);
             printf("Vehicle destroyed due to high velocity impact\n");
@@ -439,9 +419,6 @@ void Launch() {
   vu = booster->Position().Norm();
   vl = Vector(vu.Y(), -vu.X(), 0).Norm();
   vf = vu.Cross(vl);
-//GotoXY(1,26); printf("U: %.4f %.4f %.4f\n",vu.X(),vu.Y(),vu.Z());
-//GotoXY(1,27); printf("L: %.4f %.4f %.4f\n",vl.X(),vl.Y(),vl.Z());
-//GotoXY(1,28); printf("F: %.4f %.4f %.4f\n",vf.X(),vf.Y(),vf.Z());
   booster->FaceUp(vu);
   booster->FaceLeft(vl);
   booster->FaceFront(vf);
@@ -454,9 +431,6 @@ int main(int argc, char** argv) {
   UInt32 v;
   Boolean flag;
   UInt32  key;
-days = 0;
-mn=9e99;
-mx=0;
   Earth = new Body("Earth", 5.972e+24, 6378100);
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
   Moon->Position(Vector(325266766, 0, 177193935));
