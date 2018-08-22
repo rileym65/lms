@@ -12,6 +12,7 @@ Booster::~Booster() {
 
 void Booster::Cutoff() {
   enginesLit = 0;
+  throttle = 0;
   }
 
 void Booster::Cycle() {
