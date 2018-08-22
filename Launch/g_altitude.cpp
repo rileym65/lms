@@ -25,8 +25,8 @@ void G_Altitude::Update() {
   Vector pos;
   Double rad;
   char   buffer[16];
-  pos = vehicle->Position();
-  rad = vehicle->Position().Length() - GROUND;
+  pos = vehicle->Position() - vehicle->Orbiting()->Position();
+  rad = pos.Length() - vehicle->Orbiting()->Radius();
   if (rad < 1000000) sprintf(buffer,"%8.0f",rad);
     else sprintf(buffer,"%8.1f",rad / 1000);
   GotoXY(x+4,y); Write(buffer);

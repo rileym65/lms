@@ -28,7 +28,7 @@ void G_Radial::Update() {
   Vector v2;
   Double d;
   char   buffer[16];
-  v1 = vehicle->Position().Norm();
+  v1 = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
   v2 = vehicle->FaceUp().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
   sprintf(buffer,"%6.1f",d);

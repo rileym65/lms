@@ -95,8 +95,8 @@ void G_MultiAxis::Display() {
 void G_MultiAxis::modeAbs() {
   Vector pos;
   Vector vel;
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   Vector xVec;
   Vector yVec;
   Vector zVec;
@@ -121,14 +121,14 @@ void G_MultiAxis::modeAbs() {
 void G_MultiAxis::modeDown() {
   Vector pos;
   Vector vel;
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   Vector xVec;
   Vector yVec;
   Vector zVec;
   yVec = vehicle->Velocity().Norm();
   yVec = Vector(pos.Y(),-pos.X(),0).Norm();
-  zVec = vehicle->Position().Norm();
+  zVec = pos;
   xVec = yVec.Cross(zVec).Norm();
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
@@ -151,8 +151,8 @@ void G_MultiAxis::modePrograde() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   xVec = vel.Cross(pos).Norm();
   yVec = xVec.Cross(vel);
   zVec = vel;
@@ -172,13 +172,15 @@ void G_MultiAxis::modePrograde() {
   }
 
 void G_MultiAxis::modeWest() {
+  Vector pos;
   Vector vel;
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   xVec = Vector(0,0,1);
-  yVec = vehicle->Position().Norm();
+  yVec = pos;
   zVec = Vector(yVec.Y(), -yVec.X(), yVec.Z()).Norm();
   /* ***** Face ***** */
   faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);

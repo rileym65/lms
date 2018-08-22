@@ -24,7 +24,7 @@ void G_Velocity::Display() {
 void G_Velocity::Update() {
   Vector vel;
   char   buffer[16];
-  vel = vehicle->Velocity();
+  vel = vehicle->Velocity() - vehicle->Orbiting()->Velocity();
   sprintf(buffer,"%8.1f",vel.Length());
   GotoXY(x+4,y); Write(buffer);
   }

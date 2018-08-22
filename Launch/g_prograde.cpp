@@ -32,8 +32,8 @@ void G_Prograde::Update() {
   Vector zVec;
   char buffer[40];
   Double dx,dy,dz;
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   xVec = vel.Cross(pos).Norm();
   yVec = xVec.Cross(vel).Norm();
   zVec = vel;

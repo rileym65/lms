@@ -27,7 +27,7 @@ void G_Accel::Update() {
   Double v;
   Double acc;
   char   buffer[16];
-  vel = vehicle->Velocity();
+  vel = vehicle->Velocity() - vehicle->Orbiting()->Velocity();
   v = vel.Length();
   acc = v - lastVelocity;
   sprintf(buffer,"%8.1f",acc);
