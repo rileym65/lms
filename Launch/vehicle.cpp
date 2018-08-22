@@ -332,7 +332,7 @@ void Vehicle::Cycle() {
 //  Double e;
   Vector a;
 //  Double alt3;
-  Double hyp;
+//  Double hyp;
   Double v1,v2;
   Double vel;
   Double tmp;
@@ -368,14 +368,15 @@ void Vehicle::Cycle() {
 
 //  g = orbiting->Gravitation();
   v1 = velocity.Dot(position.Norm());
-  hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
-  longitude = position.X() / hyp;
-  longitude = asin(longitude) * 180 / M_PI;
-  if (position.X() < 0 && position.Y() >= 0) longitude = -180 - longitude;
-  if (position.X() >= 0 && position.Y() >= 0) longitude = 180 - longitude;
-  hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
-  latitude = position.Z() / hyp;
-  latitude = asin(latitude) * 180 / M_PI;
+//  hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
+//  longitude = position.X() / hyp;
+//  longitude = asin(longitude) * 180 / M_PI;
+//  if (position.X() < 0 && position.Y() >= 0) longitude = -180 - longitude;
+//  if (position.X() >= 0 && position.Y() >= 0) longitude = 180 - longitude;
+//  hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
+//  latitude = position.Z() / hyp;
+//  latitude = asin(latitude) * 180 / M_PI;
+
   vnorm = velocity.Norm();
   v2 = velocity.Dot(position.Norm());
   a = Vector(position.Y(), -position.X(), 0.0).Norm();
@@ -479,6 +480,7 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  Roll %.18f%s",roll,LE);
   fprintf(file,"  Yaw %.18f%s",yaw,LE);
   fprintf(file,"  Pitch %.18f%s",pitch,LE);
+  fprintf(file,"  Orbiting %s%s",orbiting->Name(),LE);
   fprintf(file,"  FaceFront %.18f %.18f %.18f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
   fprintf(file,"  FaceUp %.18f %.18f %.18f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
   fprintf(file,"  FaceLeft %.18f %.18f %.18f%s",faceLeft.X(),faceLeft.Y(),faceLeft.Z(),LE);
@@ -520,6 +522,8 @@ Int8 Vehicle::SubLoad(FILE* file, char* line) {
   else if (startsWith(line,"roll ")) roll = atof(nw(line));
   else if (startsWith(line,"yaw ")) yaw = atof(nw(line));
   else if (startsWith(line,"dryweight ")) dryWeight = atof(nw(line));
+  else if (startsWith(line,"orbiting earth")) orbiting = Earth;
+  else if (startsWith(line,"orbiting moon")) orbiting = Moon;
   else return 0;
   return -1;
   }

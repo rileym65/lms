@@ -38,6 +38,10 @@ Double Spacecraft::AscendingNode() {
   return ascendingNode;
   }
 
+Double Spacecraft::EarthG() {
+  return earthG;
+  }
+
 Double Spacecraft::Inclination() {
   return inclination;
   }
@@ -51,6 +55,10 @@ Double Spacecraft::MaxRcsFuel(Double d) {
   return maxRcsFuel;
   }
 
+Double Spacecraft::MoonG() {
+  return moonG;
+  }
+
 Double Spacecraft::Periapsis() {
   return periapsis;
   }
@@ -60,7 +68,7 @@ Vector Spacecraft::Position() {
   }
 
 Vector Spacecraft::Position(Vector v) {
-  Radius(v.Length());
+  Radius((v - orbiting->Position()).Length());
   return Vehicle::Position(v);
   }
 
@@ -163,17 +171,59 @@ char   Spacecraft::RcsUdMode(char c) {
   }
 
 
-void Spacecraft::Cycle() {
+void Spacecraft::Ins() {
   Vector L;
   Double E;
-  Double e;
-  Double s;
   Double v1,v2;
+  Double s;
+  Double e;
+  Double g;
+  Double hyp;
+  Vector pos;
+  Vector vel;
+  pos = position - orbiting->Position();
+  vel = velocity - orbiting->Velocity();
+  g = orbiting->Gravitation();
+  L = vel.Cross(pos);
+  v1 = vel.Length();
+  v2 = pos.Length();
+  E = ((v1 * v1) / 2) - (g/ v2);
+  s = -g/ (2 * E);
+  v1 = L.Length();
+  v2 = g* g;
+  e = sqrt(1+2*E*(v1 * v1)/(v2));
+GotoXY(1,25); printf("E=%.6f\n",E);
+GotoXY(1,26); printf("e=%.6f\n",e);
+GotoXY(1,27); printf("s=%.6f\n",s);
+  apoapsis = s * (1 + e);
+  periapsis = s * (1 - e);
+  orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/g);
+  if (thrust.Length() > 0) {
+    hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
+    ascendingNode = L.Y() / hyp;
+    ascendingNode = asin(ascendingNode) * 180 / M_PI;
+    if (L.X() < 0 && L.Y() < 0) ascendingNode = -180 - ascendingNode;
+    if (L.X() < 0 && L.Y() >= 0) ascendingNode = 180 - ascendingNode;
+    hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
+    inclination = L.Z() / hyp;
+    inclination = asin(inclination) * 180 / M_PI;
+    }
+  hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
+  longitude = pos.X() / hyp;
+  longitude = asin(longitude) * 180 / M_PI;
+  if (pos.X() < 0 && pos.Y() >= 0) longitude = -180 - longitude;
+  if (pos.X() >= 0 && pos.Y() >= 0) longitude = 180 - longitude;
+  hyp = sqrt(pos.Z() * pos.Z() + hyp * hyp);
+  latitude = pos.Z() / hyp;
+  latitude = asin(latitude) * 180 / M_PI;
+  }
+
+void Spacecraft::Cycle() {
   Matrix m;
   Double alt3;
   Double g;
+  Double r;
   Vector a;
-  Double hyp;
   if (rollRate != 0) {
     m = Matrix::Rotate(faceUp, rollRate / GRAN);
     faceLeft = m.Transform(faceLeft).Norm();
@@ -204,11 +254,12 @@ void Spacecraft::Cycle() {
     if (yaw > 180) yaw -= 360;
     if (yaw < -180) yaw += 360;
     }
-  alt3 = radius * radius * radius;
-//  g = orbiting->Gravitation();
+  alt3 = (position - Earth->Position()).Length();
+  alt3 = alt3 * alt3 * alt3;
   g = Earth->Gravitation();
   a = position.Scale(-g);
   a = a.Scale(1/alt3);
+  earthG = a.Length();
 GotoXY(1,31); printf("G Earth: %.8f\n",a.Length());
   velocity = velocity + a.Scale(1/GRAN);
 
@@ -218,6 +269,7 @@ GotoXY(1,31); printf("G Earth: %.8f\n",a.Length());
   a = position - Moon->Position();
   a = a.Scale(-g);
   a = a.Scale(1/alt3);
+  moonG = a.Length();
 GotoXY(1,32); printf("G Moon : %.8f\n",a.Length());
   velocity = velocity + a.Scale(1/GRAN);
 
@@ -225,35 +277,17 @@ GotoXY(1,32); printf("G Moon : %.8f\n",a.Length());
 
   velocity = velocity + thrust.Scale(1/GRAN);
   velocity = velocity + drag.Scale(1/GRAN);
+  r = (position - orbiting->Position()).Length();
   position = position + velocity.Scale(1/GRAN);
-  rateOfClimb = (position.Length() - radius) * GRAN;
-  Radius(position.Length());
+  rateOfClimb = ((position - orbiting->Position()).Length() - r) * GRAN;
+  Radius((position - orbiting->Position()).Length());
+
+  if (orbiting == Earth && moonG > earthG) orbiting = Moon;
+  if (orbiting == Moon && earthG > moonG) orbiting = Earth;
 
   Vehicle::Cycle();
 
-  L = velocity.Cross(position);
-  v1 = velocity.Length();
-  v2 = position.Length();
-  E = ((v1 * v1) / 2) - (g/ v2);
-//  E = velocity.Length() * velocity.Length() / 2 - g/ position.Length();
-  s = -g/ (2 * E);
-  v1 = L.Length();
-  v2 = g* g;
-  e = sqrt(1+2*E*(v1 * v1)/(v2));
-//  e = sqrt(1+2*E*(L.Length()*L.Length())/(g*g));
-  apoapsis = s * (1 + e);
-  periapsis = s * (1 - e);
-  orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/g);
-  if (thrust.Length() > 0) {
-    hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
-    ascendingNode = L.Y() / hyp;
-    ascendingNode = asin(ascendingNode) * 180 / M_PI;
-    if (L.X() < 0 && L.Y() < 0) ascendingNode = -180 - ascendingNode;
-    if (L.X() < 0 && L.Y() >= 0) ascendingNode = 180 - ascendingNode;
-    hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
-    inclination = L.Z() / hyp;
-    inclination = asin(inclination) * 180 / M_PI;
-    }
+  Ins();
 
   }
 

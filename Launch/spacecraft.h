@@ -22,6 +22,8 @@ class Spacecraft : public Vehicle {
     Int8      rcsThrottle;
     Double    rcsThrust;
     char      rcsUdMode;
+    Double    moonG;
+    Double    earthG;
   public:
     Spacecraft();
     ~Spacecraft();
@@ -29,9 +31,12 @@ class Spacecraft : public Vehicle {
     virtual Double    Altitude(Double d);
     virtual Double    Apoapsis();
     virtual Double    AscendingNode();
+    virtual Double    EarthG();
     virtual Double    Inclination();
+    virtual void      Ins();
     virtual Double    MaxRcsFuel();
     virtual Double    MaxRcsFuel(Double d);
+    virtual Double    MoonG();
     virtual Double    Periapsis();
     virtual Vector    Position();
     virtual Vector    Position(Vector v);
