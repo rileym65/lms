@@ -24,7 +24,11 @@ void G_Roc::Display() {
 
 void G_Roc::Update() {
   char   buffer[16];
-  sprintf(buffer,"%8.0f",((Spacecraft*)vehicle)->RateOfClimb());
+  Double d;
+  d = ((Spacecraft*)vehicle)->RateOfClimb();
+  if (d > 999999) d = 999999;
+  if (d < -999999) d = -999999;
+  sprintf(buffer,"%8.0f",d);
   GotoXY(x+4,y); Write(buffer);
   }
 
