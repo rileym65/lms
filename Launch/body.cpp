@@ -38,13 +38,14 @@ void Body::CalculateOrbit() {
   inclination = asin(inclination) * 180 / M_PI;
   }
 
-void Body::Cycle() {
+void Body::Cycle(Double gran) {
   Double d;
   Double hyp;
   if (orbiting == NULL) return;
-  position = position + velocity;
+  position = position + velocity.Scale(1/GRAN);
   d = position.Length();
   d = ((G * mass * orbiting->Mass()) / (d * d) ) / mass;
+  d = d / GRAN;
   velocity = velocity - position.Norm().Scale(d);
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
   longitude = position.X() / hyp;

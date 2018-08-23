@@ -21,7 +21,7 @@ class Body {
     Body(const char* n, Double m, Double r);
     ~Body();
     void   CalculateOrbit();
-    void   Cycle();
+    void   Cycle(Double gran);
     Double AscendingNode();
     Double Inclination();
     char  *Name();
