@@ -60,7 +60,6 @@ class Booster : public Spacecraft {
     virtual Double ThrustSl(Byte stage, Byte engine, Double d);
     virtual Double ThrustVac(Byte stage, Byte engine);
     virtual Double ThrustVac(Byte stage, Byte engine, Double d);
-    virtual Byte   Type();
     virtual void   ProcessKey(Int32 key);
     virtual void   Save(FILE* file);
     virtual Int8   SubLoad(FILE* file, char* pline);

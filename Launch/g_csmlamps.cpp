@@ -25,6 +25,7 @@ void G_CsmLamps::Display() {
 
 void G_CsmLamps::Update() {
   CommandModule* cm;
+  if ((vehicle->Type() & VT_COMMAND) == 0) return;
   cm = (CommandModule*)vehicle;
   GotoXY(x+0,y+0);
   if (((CommandModule*)vehicle)->LaunchVehicleJettisoned())

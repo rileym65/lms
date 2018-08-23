@@ -37,6 +37,7 @@ void G_Rcs::Update() {
   Int32 i;
   char buffer[32];
   Spacecraft* v;
+  if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
   v = (Spacecraft*)vehicle;
   if (v->RcsFbMode() != lastRcsFbMode) {
     lastRcsFbMode = v->RcsFbMode();

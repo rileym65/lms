@@ -46,6 +46,7 @@ class Vehicle {
     Double    rollRate;
     Int8      throttle;
     Vector    thrust;
+    Int8      type;
     Vector    velocity;
     Double    velocityAltitude;
     Double    velocityEast;

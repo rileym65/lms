@@ -5,6 +5,7 @@
 Booster::Booster() {
   stage = 1;
   enginesLit = 0;
+  type |= VT_ROCKET;
   }
 
 Booster::~Booster() {
@@ -233,10 +234,6 @@ Double Booster::ThrustSl(Byte stage, Byte engine) {
 Double Booster::ThrustSl(Byte stage, Byte engine, Double d) {
   thrustSl[stage-1][engine-1] = d;
   return thrustSl[stage-1][engine-1];
-  }
-
-Byte Booster::Type() {
-  return VT_ROCKET;
   }
 
 void Booster::ProcessKey(Int32 key) {

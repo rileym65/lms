@@ -15,6 +15,7 @@ Spacecraft::Spacecraft() {
   rateOfClimb = 0;
   rcsFuel = 0;
   maxRcsFuel = 0;
+  type |= VT_SPACECRAFT;
   }
 
 Spacecraft::~Spacecraft() {

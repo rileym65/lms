@@ -25,6 +25,7 @@ void G_Roc::Display() {
 void G_Roc::Update() {
   char   buffer[16];
   Double d;
+  if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
   d = ((Spacecraft*)vehicle)->RateOfClimb();
   if (d > 999999) d = 999999;
   if (d < -999999) d = -999999;

@@ -18,6 +18,7 @@ Vehicle::Vehicle() {
   roll = 0;
   pitch = 0;
   yaw = 0;
+  type = VT_NONE;
   Init();
   InitPanel();
   }
@@ -284,7 +285,7 @@ Vector Vehicle::Thrust(Vector t) {
   }
 
 Byte Vehicle::Type() {
-  return VT_NONE;
+  return type;
   }
 
 Vector Vehicle::Velocity() {

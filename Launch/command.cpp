@@ -30,6 +30,7 @@ CommandModule::CommandModule() {
   retroModuleIsp = 0;
   retroModuleThrust = 0;
   armed = false;
+  type |= VT_COMMAND;
   }
 
 CommandModule::~CommandModule() {
