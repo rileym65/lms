@@ -39,3 +39,5 @@ Gauge CsmLamps 3,2
 Gauge Rcs 3,6
 Line 53,20,80,20
 Gauge Moon 55,21
+Line 55,3,64,3
+Gauge Orbiting 57,2

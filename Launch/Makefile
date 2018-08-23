@@ -15,7 +15,7 @@ PHEADERS = g_clockbu.h g_clockmi.h g_clockut.h g_engines.h g_altitude.h g_veloci
 	   g_axis.h g_rollrate.h g_pitchrate.h g_yawrate.h g_clockot.h g_radial.h \
 	   g_orbit.h g_prograde.h g_position.h g_lan.h g_incl.h g_roc.h \
 	   g_csmlamps.h g_rcs.h g_propellant.h g_oxygen.h g_battery.h g_ra.h\
-	   g_dec.h g_multiaxis.h g_moon.h g_days.h
+	   g_dec.h g_multiaxis.h g_moon.h g_days.h g_orbiting.h
 HEADERS = $(PHEADERS) header.h types.h vector.h matrix.h vehicle.h panel.h \
 	   booster.h body.h spacecraft.h command.h
 OBJS = \
@@ -40,6 +40,7 @@ OBJS = \
 	g_moon.o \
 	g_multiaxis.o \
 	g_orbit.o \
+	g_orbiting.o \
 	g_oxygen.o \
 	g_periapsis.o \
 	g_pitchrate.o \
@@ -105,6 +106,7 @@ g_lan.o:         $(HEADERS) g_lan.cpp
 g_moon.o:        $(HEADERS) g_moon.cpp
 g_multiaxis.o:   $(HEADERS) g_multiaxis.cpp
 g_orbit.o:       $(HEADERS) g_orbit.cpp
+g_orbiting.o:    $(HEADERS) g_orbiting.cpp
 g_oxygen.o:      $(HEADERS) g_oxygen.cpp
 g_periapsis.o:   $(HEADERS) g_periapsis.cpp
 g_pitchrate.o:   $(HEADERS) g_pitchrate.cpp

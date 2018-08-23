@@ -24,6 +24,7 @@
 #include "g_moon.h"
 #include "g_multiaxis.h"
 #include "g_orbit.h"
+#include "g_orbiting.h"
 #include "g_oxygen.h"
 #include "g_periapsis.h"
 #include "g_pitchrate.h"
@@ -150,6 +151,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Moon(x1, y1, false, vehicle));
       else if (strcasecmp(str,"days") == 0)
         addGauge(new G_Days(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"orbiting") == 0)
+        addGauge(new G_Orbiting(x1, y1, false, vehicle));
       else {
         Write("Unknown guage: ");
         WriteLn(str);
