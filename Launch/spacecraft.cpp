@@ -86,6 +86,11 @@ Double Spacecraft::RateOfClimb() {
   return rateOfClimb;
   }
 
+Double Spacecraft::RateOfClimb(Double d) {
+  rateOfClimb = d;
+  return rateOfClimb;
+  }
+
 char   Spacecraft::RcsFbMode() {
   return rcsFbMode;
   }
@@ -192,9 +197,6 @@ void Spacecraft::Ins() {
   v1 = L.Length();
   v2 = g* g;
   e = sqrt(1+2*E*(v1 * v1)/(v2));
-GotoXY(1,25); printf("E=%.6f\n",E);
-GotoXY(1,26); printf("e=%.6f\n",e);
-GotoXY(1,27); printf("s=%.6f\n",s);
   apoapsis = s * (1 + e);
   periapsis = s * (1 - e);
   orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/g);
@@ -222,7 +224,6 @@ void Spacecraft::Cycle() {
   Matrix m;
   Double alt3;
   Double g;
-  Double r;
   Vector a;
   if (rollRate != 0) {
     m = Matrix::Rotate(faceUp, rollRate / GRAN);
@@ -260,7 +261,6 @@ void Spacecraft::Cycle() {
   a = position.Scale(-g);
   a = a.Scale(1/alt3);
   earthG = a.Length();
-GotoXY(1,31); printf("G Earth: %.8f\n",a.Length());
   velocity = velocity + a.Scale(1/GRAN);
 
   alt3 = (position - Moon->Position()).Length();
@@ -270,16 +270,13 @@ GotoXY(1,31); printf("G Earth: %.8f\n",a.Length());
   a = a.Scale(-g);
   a = a.Scale(1/alt3);
   moonG = a.Length();
-GotoXY(1,32); printf("G Moon : %.8f\n",a.Length());
   velocity = velocity + a.Scale(1/GRAN);
 
   g = Earth->Gravitation();
 
   velocity = velocity + thrust.Scale(1/GRAN);
   velocity = velocity + drag.Scale(1/GRAN);
-  r = (position - orbiting->Position()).Length();
   position = position + velocity.Scale(1/GRAN);
-  rateOfClimb = ((position - orbiting->Position()).Length() - r) * GRAN;
   Radius((position - orbiting->Position()).Length());
 
   if (orbiting == Earth && moonG > earthG) orbiting = Moon;

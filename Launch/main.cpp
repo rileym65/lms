@@ -328,7 +328,8 @@ void cycle() {
   Vector vl;
   Vector vf;
   Vector p,v;
-  Moon->Cycle();
+  Double r1;
+  Double r2;
   clockUt++;
   if (clockUt >= 86400) {
     clockUt = 0;
@@ -337,6 +338,7 @@ void cycle() {
   kscAngle += 0.00417807464;
   if (kscAngle >= 180) kscAngle -= 360;
   if (!launched) {
+    Moon->Cycle(1);
     pos = Vector(sin(kscAngle*DR)*0.878817113,
                 -cos(kscAngle*DR)*0.878817113, 0.477158760).Norm();
     pos = pos.Scale(6378100);
@@ -376,7 +378,9 @@ void cycle() {
       clockBu++;
       clockTb++;
       }
+    r1 = (csm->Position() - csm->Orbiting()->Position()).Length();
     for (i=0; i<GRAN; i++) {
+      Moon->Cycle(GRAN);
       if (!booster->Destroyed()) booster->Cycle();
       if (csm->LaunchVehicleJettisoned()) {
         csm->Cycle();
@@ -398,6 +402,8 @@ void cycle() {
           }
         }
       }
+    r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
+    csm->RateOfClimb(r2-r1);
     if (!csm->LaunchVehicleJettisoned()) {
       csm->Position(booster->Position());
       csm->Velocity(booster->Velocity());

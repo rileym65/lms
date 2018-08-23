@@ -69,6 +69,7 @@ class CommandModule : public Spacecraft {
     virtual Double Radius();
     virtual Double Radius(Double d);
     virtual Double RateOfClimb();
+    virtual Double RateOfClimb(Double d);
     virtual Double RcsFuel();
     virtual Double RollRate();
     virtual Double RetroModuleDryWeight();

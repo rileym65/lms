@@ -43,6 +43,7 @@ class Spacecraft : public Vehicle {
     virtual Double    Radius();
     virtual Double    Radius(Double d);
     virtual Double    RateOfClimb();
+    virtual Double    RateOfClimb(Double d);
     virtual char      RcsFbMode();
     virtual char      RcsFbMode(char c);
     virtual Double    RcsFuel();

@@ -357,6 +357,12 @@ Double CommandModule::RateOfClimb() {
   return rateOfClimb;
   }
 
+Double CommandModule::RateOfClimb(Double d) {
+  rateOfClimb = d;
+  if (!launchVehicleJettisoned) return booster->RateOfClimb(d);
+  return rateOfClimb;
+  }
+
 Double CommandModule::RollRate() {
   if (!launchVehicleJettisoned) return booster->RollRate();
   return rollRate;
