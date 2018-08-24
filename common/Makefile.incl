@@ -1,0 +1,131 @@
+../common/body.o: ../common/types.h ../common/body.h ../common/body.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/body.cpp -o ../common/body.o
+
+../common/g_accel.o: ../common/gauge.h ../common/g_accel.h ../common/terminal.h ../common/g_accel.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_accel.cpp -o ../common/g_accel.o
+
+../common/g_altitude.o: ../common/gauge.h ../common/g_altitude.h ../common/terminal.h ../common/g_altitude.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_altitude.cpp -o ../common/g_altitude.o
+
+../common/g_apoapsis.o: ../common/gauge.h ../common/g_apoapsis.h ../common/terminal.h ../common/g_apoapsis.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_apoapsis.cpp -o ../common/g_apoapsis.o
+
+../common/g_axis.o: ../common/gauge.h ../common/g_axis.h ../common/terminal.h ../common/g_axis.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_axis.cpp -o ../common/g_axis.o
+
+../common/g_amsdown.o: ../common/gauge.h ../common/g_amsdown.h ../common/terminal.h ../common/g_amsdown.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amsdown.cpp -o ../common/g_amsdown.o
+
+../common/g_battery.o: ../common/gauge.h ../common/g_battery.h ../common/terminal.h ../common/g_battery.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_battery.cpp -o ../common/g_battery.o
+
+../common/g_clockbu.o: ../common/gauge.h ../common/g_clockbu.h ../common/terminal.h ../common/g_clockbu.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockbu.cpp -o ../common/g_clockbu.o
+
+../common/g_clockmi.o: ../common/gauge.h ../common/g_clockmi.h ../common/terminal.h ../common/g_clockmi.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockmi.cpp -o ../common/g_clockmi.o
+
+../common/g_clockot.o: ../common/gauge.h ../common/g_clockot.h ../common/terminal.h ../common/g_clockot.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockot.cpp -o ../common/g_clockot.o
+
+../common/g_clocktb.o: ../common/gauge.h ../common/g_clocktb.h ../common/terminal.h ../common/g_clocktb.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clocktb.cpp -o ../common/g_clocktb.o
+
+../common/g_clockut.o: ../common/gauge.h ../common/g_clockut.h ../common/terminal.h ../common/g_clockut.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockut.cpp -o ../common/g_clockut.o
+
+../common/g_csmlamps.o: ../common/gauge.h ../common/g_csmlamps.h ../common/terminal.h ../common/g_csmlamps.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_csmlamps.cpp -o ../common/g_csmlamps.o
+
+../common/g_days.o: ../common/gauge.h ../common/g_days.h ../common/terminal.h ../common/g_days.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_days.cpp -o ../common/g_days.o
+
+../common/g_dec.o: ../common/gauge.h ../common/g_dec.h ../common/terminal.h ../common/g_dec.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_dec.cpp -o ../common/g_dec.o
+
+../common/g_engines.o: ../common/gauge.h ../common/g_engines.h ../common/terminal.h ../common/g_engines.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_engines.cpp -o ../common/g_engines.o
+
+../common/g_fuel.o: ../common/gauge.h ../common/g_fuel.h ../common/terminal.h ../common/g_fuel.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_fuel.cpp -o ../common/g_fuel.o
+
+../common/g_incl.o: ../common/gauge.h ../common/g_incl.h ../common/terminal.h ../common/g_incl.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_incl.cpp -o ../common/g_incl.o
+
+../common/g_lan.o: ../common/gauge.h ../common/g_lan.h ../common/terminal.h ../common/g_lan.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_lan.cpp -o ../common/g_lan.o
+
+../common/g_moon.o: ../common/gauge.h ../common/g_moon.h ../common/terminal.h ../common/g_moon.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_moon.cpp -o ../common/g_moon.o
+
+../common/g_multiaxis.o: ../common/gauge.h ../common/g_multiaxis.h ../common/terminal.h ../common/g_multiaxis.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_multiaxis.cpp -o ../common/g_multiaxis.o
+
+../common/g_orbit.o: ../common/gauge.h ../common/g_orbit.h ../common/terminal.h ../common/g_orbit.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_orbit.cpp -o ../common/g_orbit.o
+
+../common/g_orbiting.o: ../common/gauge.h ../common/g_orbiting.h ../common/terminal.h ../common/g_orbiting.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_orbiting.cpp -o ../common/g_orbiting.o
+
+../common/g_oxygen.o: ../common/gauge.h ../common/g_oxygen.h ../common/terminal.h ../common/g_oxygen.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_oxygen.cpp -o ../common/g_oxygen.o
+
+../common/g_periapsis.o: ../common/gauge.h ../common/g_periapsis.h ../common/terminal.h ../common/g_periapsis.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_periapsis.cpp -o ../common/g_periapsis.o
+
+../common/g_pitchrate.o: ../common/gauge.h ../common/g_pitchrate.h ../common/terminal.h ../common/g_pitchrate.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_pitchrate.cpp -o ../common/g_pitchrate.o
+
+../common/g_position.o: ../common/gauge.h ../common/g_position.h ../common/terminal.h ../common/g_position.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_position.cpp -o ../common/g_position.o
+
+../common/g_prograde.o: ../common/gauge.h ../common/g_prograde.h ../common/terminal.h ../common/g_prograde.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_prograde.cpp -o ../common/g_prograde.o
+
+../common/g_propellant.o: ../common/gauge.h ../common/g_propellant.h ../common/terminal.h ../common/g_propellant.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_propellant.cpp -o ../common/g_propellant.o
+
+../common/g_ra.o: ../common/gauge.h ../common/g_ra.h ../common/terminal.h ../common/g_ra.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_ra.cpp -o ../common/g_ra.o
+
+../common/g_radial.o: ../common/gauge.h ../common/g_radial.h ../common/terminal.h ../common/g_radial.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_radial.cpp -o ../common/g_radial.o
+
+../common/g_rcs.o: ../common/gauge.h ../common/g_rcs.h ../common/terminal.h ../common/g_rcs.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_rcs.cpp -o ../common/g_rcs.o
+
+../common/g_roc.o: ../common/gauge.h ../common/g_roc.h ../common/terminal.h ../common/g_roc.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_roc.cpp -o ../common/g_roc.o
+
+../common/g_rollrate.o: ../common/gauge.h ../common/g_rollrate.h ../common/terminal.h ../common/g_rollrate.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_rollrate.cpp -o ../common/g_rollrate.o
+
+../common/g_velocity.o: ../common/gauge.h ../common/g_velocity.h ../common/terminal.h ../common/g_velocity.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_velocity.cpp -o ../common/g_velocity.o
+
+../common/g_yawrate.o: ../common/gauge.h ../common/g_yawrate.h ../common/terminal.h ../common/g_yawrate.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_yawrate.cpp -o ../common/g_yawrate.o
+
+../common/gauge.o: ../common/gauge.h ../common/gauge.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/gauge.cpp -o ../common/gauge.o
+
+../common/helpers.o: ../common/types.h ../common/helpers.h ../common/helpers.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/helpers.cpp -o ../common/helpers.o
+
+../common/panel.o: ../common/types.h ../common/panel.h ../common/panel.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/panel.cpp -o ../common/panel.o
+
+../common/matrix.o: ../common/types.h ../common/matrix.h ../common/matrix.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/matrix.cpp -o ../common/matrix.o
+
+../common/spacecraft.o: ../common/types.h ../common/spacecraft.h ../common/spacecraft.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/spacecraft.cpp -o ../common/spacecraft.o
+
+../common/terminal.o: ../common/terminal.h ../common/terminal.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/terminal.cpp -o ../common/terminal.o
+
+../common/vector.o: ../common/types.h ../common/vector.h ../common/vector.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/vector.cpp -o ../common/vector.o
+
+../common/vehicle.o: ../common/types.h ../common/vehicle.h ../common/vehicle.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/vehicle.cpp -o ../common/vehicle.o
