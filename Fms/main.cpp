@@ -409,8 +409,7 @@ void cycle() {
           }
         }
       }
-    r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
-    csm->RateOfClimb(r2-r1);
+    if (!booster->Destroyed()) booster->Ins();
     if (!csm->LaunchVehicleJettisoned()) {
       csm->Position(booster->Position());
       csm->Velocity(booster->Velocity());
@@ -420,6 +419,10 @@ void cycle() {
       csm->Latitude(booster->Latitude());
       csm->Longitude(booster->Longitude());
       }
+    csm->Ins();
+ 
+    r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
+    csm->RateOfClimb(r2-r1);
     csm->UpdatePanel();
     }
   }
@@ -453,7 +456,7 @@ int main(int argc, char** argv) {
   booster = new Booster();
   csm = new CommandModule();
   csm->LaunchVehicle(booster);
-  if (load("launch.sav") == 0) {
+  if (load("fms.sav") == 0) {
     printf("1. Mercury/Redstone\n");
     printf("2. Mercury/Atlas\n");
     printf("3. Gemini/Titan\n");

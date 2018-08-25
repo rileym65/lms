@@ -292,8 +292,7 @@ void Spacecraft::Cycle() {
 
   Vehicle::Cycle();
 
-  Ins();
-
+//  Ins();
   }
 
 void Spacecraft::Save(FILE* file) {

@@ -10,7 +10,7 @@
 
 void save() {
   FILE *file;
-  file = fopen("launch.sav","w");
+  file = fopen("fms.sav","w");
   fprintf(file,"Simulation {%s",LE);
   fprintf(file,"  ClockBU %d%s",clockBu,LE);
   fprintf(file,"  ClockMI %d%s",clockMi,LE);
