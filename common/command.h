@@ -5,6 +5,8 @@
 #include "spacecraft.h"
 #include "booster.h"
 
+class CsmComputer;
+
 class CommandModule : public Spacecraft {
   protected:
     Double   area;
@@ -36,6 +38,7 @@ class CommandModule : public Spacecraft {
     Double   retroModuleMaxFuel;
     Double   retroModuleIsp;
     Double   retroModuleThrust;
+    CsmComputer* computer;
     void     capsuleSep();
   public:
     CommandModule();
@@ -50,6 +53,7 @@ class CommandModule : public Spacecraft {
     virtual Double CommandModuleRcsFuel(Double d);
     virtual Double CommandModuleRcsMaxFuel();
     virtual Double CommandModuleRcsMaxFuel(Double d);
+    virtual void   Cutoff();
     virtual void   Diameter(Double d);
     virtual Byte   EnginesLit();
     virtual Double Inclination();

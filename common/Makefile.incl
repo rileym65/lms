@@ -106,6 +106,9 @@
 ../common/g_yawrate.o: ../common/gauge.h ../common/g_yawrate.h ../common/terminal.h ../common/g_yawrate.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_yawrate.cpp -o ../common/g_yawrate.o
 
+../common/csmcomputer.o: ../common/csmcomputer.h ../common/csmcomputer.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/csmcomputer.cpp -o ../common/csmcomputer.o
+
 ../common/gauge.o: ../common/gauge.h ../common/gauge.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/gauge.cpp -o ../common/gauge.o
 

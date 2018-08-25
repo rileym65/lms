@@ -55,7 +55,8 @@ HEADERS = $(PHEADERS) header.h ../common/types.h \
 	   ../common/booster.h \
 	   ../common/body.h \
 	   ../common/spacecraft.h \
-	   ../common/command.h
+	   ../common/command.h \
+	   ../common/csmcomputer.h
 OBJS = \
 	../common/g_accel.o \
 	../common/g_altitude.o \
@@ -96,6 +97,7 @@ OBJS = \
 	../common/body.o \
 	booster.o \
 	command.o \
+	../common/csmcomputer.o \
 	../common/gauge.o \
 	../common/helpers.o \
 	load.o \
@@ -133,6 +135,7 @@ include ../common/Makefile.incl
 airdensity.o:    $(HEADERS) airdensity.cpp
 booster.o:       $(HEADERS) booster.cpp
 command.o:       $(HEADERS) command.cpp
+csmcomputer.o:   $(HEADERS) csmcomputer.cpp
 gauge.o:         $(HEADERS) gauge.cpp
 load.o:          $(HEADERS) load.cpp
 main.o:          $(HEADERS) main.cpp

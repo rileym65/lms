@@ -2,6 +2,7 @@
 #include "header.h"
 #include "helpers.h"
 #include "g_clockbu.h"
+#include "csmcomputer.h"
 
 CommandModule::CommandModule() {
   launchVehicle = NULL;
@@ -33,6 +34,7 @@ CommandModule::CommandModule() {
   retroModuleThrust = 0;
   armed = false;
   type |= VT_COMMAND;
+  computer = new CsmComputer(this);
   }
 
 CommandModule::~CommandModule() {
@@ -76,115 +78,132 @@ Double dot;
 Double angle;
 Vector axis;
 Matrix m;
-  vu = position.Norm();
-  vl = Vector(vu.Y(),-vu.X(), 0).Norm().Scale(408);
-  vel = velocity + vl;
-  alt = position.Length() - GROUND;
-  thrust = Vector(0,0,0);
-  drag = Vector(0,0,0);
-  air = AirDensity(alt);
-  if (air > 0) {
-    cd = 0.8;
-    if (faceUp.Dot(vel) < 0) cd = 1.1;
-
-dot = faceUp.Norm().Dot(vel.Norm());
-angle = 180 - acos(dot)*180/M_PI;
-axis = vel.Norm().Cross(faceUp.Norm());
-m = Matrix::Rotate(axis, (angle / 1) / GRAN);
-faceLeft = m.Transform(faceLeft).Norm();
-faceUp = m.Transform(faceUp).Norm();
-faceFront = m.Transform(faceFront).Norm();
-
-    if (parachuteDeployment == 0) {
-      a = area;
-      }
-    else {
-      a = parachuteArea * parachuteDeployment;
-      parachuteDeployment += (parachuteDeployment / GRAN);
-      if (parachuteDeployment > 1) parachuteDeployment = 1;
-      }
-    v = vel.Length();
-    d = cd * a * 0.5 * (air * 1.2 * v * v);
-    d /= Mass();
-    drag = vel.Norm().Scale(d).Neg();
-    }
-  if (serviceModuleDryWeight > 0) {
-    switch (rcsThrottle) {
-      case 1: rcsThrust = 0.01; break;
-      case 10: rcsThrust = 0.10; break;
-      case 100: rcsThrust = 1.00; break;
-      default : rcsThrust = 0;
-      }
-    if (rcsUdMode == 'D') {
-      rcsThrust = (rcsThrust * serviceModuleRcsDThrust) / Mass();
-      rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
-      if (rcsFuel <= serviceModuleRcsFuel) {
-        thrust = thrust + (faceUp.Neg().Scale(rcsThrust));
-        serviceModuleRcsFuel -= rcsfuel;
+  if (launchVehicleJettisoned) {
+    vu = position.Norm();
+    vl = Vector(vu.Y(),-vu.X(), 0).Norm().Scale(408);
+    vel = velocity + vl;
+    alt = position.Length() - GROUND;
+    thrust = Vector(0,0,0);
+    drag = Vector(0,0,0);
+    air = AirDensity(alt);
+    if (air > 0) {
+      cd = 0.8;
+      if (faceUp.Dot(vel) < 0) cd = 1.1;
+ 
+    dot = faceUp.Norm().Dot(vel.Norm());
+    angle = 180 - acos(dot)*180/M_PI;
+    axis = vel.Norm().Cross(faceUp.Norm());
+    m = Matrix::Rotate(axis, (angle / 1) / GRAN);
+    faceLeft = m.Transform(faceLeft).Norm();
+    faceUp = m.Transform(faceUp).Norm();
+    faceFront = m.Transform(faceFront).Norm();
+ 
+      if (parachuteDeployment == 0) {
+        a = area;
         }
-      }
-    if (rcsUdMode == 'U') {
-      rcsThrust = (rcsThrust * serviceModuleRcsUThrust) / Mass();
-      rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
-      if (rcsFuel <= serviceModuleRcsFuel) {
-        thrust = thrust + (faceUp.Scale(rcsThrust));
-        serviceModuleRcsFuel -= rcsfuel;
+      else {
+        a = parachuteArea * parachuteDeployment;
+        parachuteDeployment += (parachuteDeployment / GRAN);
+        if (parachuteDeployment > 1) parachuteDeployment = 1;
         }
+      v = vel.Length();
+      d = cd * a * 0.5 * (air * 1.2 * v * v);
+      d /= Mass();
+      drag = vel.Norm().Scale(d).Neg();
       }
-    if (rcsLrMode == 'R') {
-      rcsThrust = (rcsThrust * serviceModuleRcsRThrust) / Mass();
-      rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
-      if (rcsFuel <= serviceModuleRcsFuel) {
-        thrust = thrust + (faceLeft.Neg().Scale(rcsThrust));
-        serviceModuleRcsFuel -= rcsFuel;
-        }
-      }
-    if (rcsLrMode == 'L') {
-      rcsThrust = (rcsThrust * serviceModuleRcsLThrust) / Mass();
-      rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
-      if (rcsFuel <= serviceModuleRcsFuel) {
-        thrust = thrust + (faceLeft.Scale(rcsThrust));
-        serviceModuleRcsFuel -= rcsFuel;
-        }
-      }
-    if (rcsFbMode == 'F') {
-      rcsThrust = (rcsThrust * serviceModuleRcsFThrust) / Mass();
-      rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
-      if (rcsFuel <= serviceModuleRcsFuel) {
-        thrust = thrust + (faceFront.Scale(rcsThrust));
-        serviceModuleRcsFuel -= rcsfuel;
-        }
-      }
-    if (rcsFbMode == 'B') {
-      rcsThrust = (rcsThrust * serviceModuleRcsBThrust) / Mass();
-      rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
-      if (rcsFuel <= serviceModuleRcsFuel) {
-        thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
-        serviceModuleRcsFuel -= rcsfuel;
-        }
-      }
-    }
-  if (throttle > 0) {
     if (serviceModuleDryWeight > 0) {
-      th = serviceModuleThrust / Mass();
-      f = serviceModuleThrust / (9.80665 * serviceModuleIsp) / GRAN;
-      if (f <= serviceModuleFuel) {
-        serviceModuleFuel -= f;
-        thrust = thrust + faceUp.Scale(th);
+      switch (rcsThrottle) {
+        case 1: rcsThrust = 0.01; break;
+        case 10: rcsThrust = 0.10; break;
+        case 100: rcsThrust = 1.00; break;
+        default : rcsThrust = 0;
         }
-      else throttle = 0;
-      }
-    else if (retroModuleDryWeight > 0) {
-      th = retroModuleThrust / Mass();
-      f = retroModuleThrust / (9.80665 * retroModuleIsp) / GRAN;
-      if (f <= retroModuleFuel) {
-        retroModuleFuel -= f;
-        thrust = thrust + faceUp.Scale(th);
+      if (rcsUdMode == 'D') {
+        rcsThrust = (rcsThrust * serviceModuleRcsDThrust) / Mass();
+        rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        if (rcsFuel <= serviceModuleRcsFuel) {
+          thrust = thrust + (faceUp.Neg().Scale(rcsThrust));
+          serviceModuleRcsFuel -= rcsfuel;
+          }
         }
-      else throttle = 0;
+      if (rcsUdMode == 'U') {
+        rcsThrust = (rcsThrust * serviceModuleRcsUThrust) / Mass();
+        rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        if (rcsFuel <= serviceModuleRcsFuel) {
+          thrust = thrust + (faceUp.Scale(rcsThrust));
+          serviceModuleRcsFuel -= rcsfuel;
+          }
+        }
+      if (rcsLrMode == 'R') {
+        rcsThrust = (rcsThrust * serviceModuleRcsRThrust) / Mass();
+        rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        if (rcsFuel <= serviceModuleRcsFuel) {
+          thrust = thrust + (faceLeft.Neg().Scale(rcsThrust));
+          serviceModuleRcsFuel -= rcsFuel;
+          }
+        }
+      if (rcsLrMode == 'L') {
+        rcsThrust = (rcsThrust * serviceModuleRcsLThrust) / Mass();
+        rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        if (rcsFuel <= serviceModuleRcsFuel) {
+          thrust = thrust + (faceLeft.Scale(rcsThrust));
+          serviceModuleRcsFuel -= rcsFuel;
+          }
+        }
+      if (rcsFbMode == 'F') {
+        rcsThrust = (rcsThrust * serviceModuleRcsFThrust) / Mass();
+        rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        if (rcsFuel <= serviceModuleRcsFuel) {
+          thrust = thrust + (faceFront.Scale(rcsThrust));
+          serviceModuleRcsFuel -= rcsfuel;
+          }
+        }
+      if (rcsFbMode == 'B') {
+        rcsThrust = (rcsThrust * serviceModuleRcsBThrust) / Mass();
+        rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        if (rcsFuel <= serviceModuleRcsFuel) {
+          thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
+          serviceModuleRcsFuel -= rcsfuel;
+          }
+        }
       }
+    if (throttle > 0) {
+      if (serviceModuleDryWeight > 0) {
+        th = serviceModuleThrust / Mass();
+        f = serviceModuleThrust / (9.80665 * serviceModuleIsp) / GRAN;
+        if (f <= serviceModuleFuel) {
+          serviceModuleFuel -= f;
+          thrust = thrust + faceUp.Scale(th);
+          }
+        else throttle = 0;
+        }
+      else if (retroModuleDryWeight > 0) {
+        th = retroModuleThrust / Mass();
+        f = retroModuleThrust / (9.80665 * retroModuleIsp) / GRAN;
+        if (f <= retroModuleFuel) {
+          retroModuleFuel -= f;
+          thrust = thrust + faceUp.Scale(th);
+          }
+        else throttle = 0;
+        }
+      }
+    Spacecraft::Cycle();
     }
-  Spacecraft::Cycle();
+  else {
+    position = booster->Position();
+    velocity = booster->Velocity();
+    faceUp = booster->FaceUp();
+    faceLeft = booster->FaceLeft();
+    faceFront = booster->FaceFront();
+    latitude = booster->Latitude();
+    booster->Longitude();
+    }
+  computer->Cycle();
+  }
+
+void CommandModule::Cutoff() {
+  if (!launchVehicleJettisoned) booster->Cutoff();
+  else throttle = 0;
   }
 
 Double CommandModule::Apoapsis() {

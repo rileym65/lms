@@ -392,37 +392,26 @@ void cycle() {
     for (i=0; i<GRAN; i++) {
       Moon->Cycle(GRAN);
       if (!booster->Destroyed()) booster->Cycle();
-      if (csm->LaunchVehicleJettisoned()) {
-        csm->Cycle();
-        if (csm->Radius() <= csm->Orbiting()->Radius()) {
-          if (csm->RateOfClimb() <= -11) {
-            GotoXY(1,25);
-            printf("Vehicle destroyed due to high velocity impact\n");
-            ShowCursor();
-            CloseTerminal();
-            exit(0);
-            }
-          else {
-            GotoXY(1,25);
-            printf("Vehicle has safely landed%s",LE);
-            printf("Total distance travelled: %.3fkm%s",distance/1000.0,LE);
-            ShowCursor();
-            CloseTerminal();
-            exit(0);
-            }
+      csm->Cycle();
+      if (csm->Radius() <= csm->Orbiting()->Radius()) {
+        if (csm->RateOfClimb() <= -11) {
+          GotoXY(1,25);
+          printf("Vehicle destroyed due to high velocity impact\n");
+          ShowCursor();
+          CloseTerminal();
+          exit(0);
+          }
+        else {
+          GotoXY(1,25);
+          printf("Vehicle has safely landed%s",LE);
+          printf("Total distance travelled: %.3fkm%s",distance/1000.0,LE);
+          ShowCursor();
+          CloseTerminal();
+          exit(0);
           }
         }
       }
     if (!booster->Destroyed()) booster->Ins();
-    if (!csm->LaunchVehicleJettisoned()) {
-      csm->Position(booster->Position());
-      csm->Velocity(booster->Velocity());
-      csm->FaceUp(booster->FaceUp());
-      csm->FaceLeft(booster->FaceLeft());
-      csm->FaceFront(booster->FaceFront());
-      csm->Latitude(booster->Latitude());
-      csm->Longitude(booster->Longitude());
-      }
     csm->Ins();
  
     r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
