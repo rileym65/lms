@@ -18,6 +18,7 @@ void save() {
   fprintf(file,"  ClockTB %d%s",clockTb,LE);
   fprintf(file,"  Days %d%s",days,LE);
   fprintf(file,"  KscAngle %.18f%s",kscAngle,LE);
+  fprintf(file,"  Distance %.18f%s",distance,LE);
   if (launched) fprintf(file,"  Launched true%s",LE);
     else fprintf(file,"  Launched false%s",LE);
   fprintf(file,"  }%s",LE);

@@ -322,6 +322,7 @@ void init(Byte v) {
   engines = 0;
   launched = false;
   kscAngle = 0;
+  distance = 0;
   if (v == 1) mercuryRedstone();
   if (v == 2) mercuryAtlas();
   if (v == 3) geminiTitan();
@@ -337,6 +338,7 @@ void cycle() {
   Vector p,v;
   Double r1;
   Double r2;
+  Vector p1,p2;
   clockUt++;
   if (clockUt >= 86400) {
     clockUt = 0;
@@ -386,6 +388,7 @@ void cycle() {
       clockTb++;
       }
     r1 = (csm->Position() - csm->Orbiting()->Position()).Length();
+    p1 = csm->Position();
     for (i=0; i<GRAN; i++) {
       Moon->Cycle(GRAN);
       if (!booster->Destroyed()) booster->Cycle();
@@ -401,7 +404,8 @@ void cycle() {
             }
           else {
             GotoXY(1,25);
-            printf("Vehicle has safely landed\n");
+            printf("Vehicle has safely landed%s",LE);
+            printf("Total distance travelled: %.3fkm%s",distance/1000.0,LE);
             ShowCursor();
             CloseTerminal();
             exit(0);
@@ -422,6 +426,9 @@ void cycle() {
     csm->Ins();
  
     r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
+    p2 = csm->Position();
+    distance += (p1 - p2).Length();
+GotoXY(1,25); printf("distance: %.2fkm\n",distance/1000.0);
     csm->RateOfClimb(r2-r1);
     csm->UpdatePanel();
     }

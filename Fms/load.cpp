@@ -21,6 +21,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clocktb ")) clockTb = atoi(nw(pline));
     else if (startsWith(pline,"days ")) days = atoi(nw(pline));
     else if (startsWith(pline,"kscangle ")) kscAngle = atof(nw(pline));
+    else if (startsWith(pline,"distance ")) distance = atof(nw(pline));
     else if (startsWith(pline,"launched true")) launched = true;
     else if (startsWith(pline,"launched false")) launched = false;
     else {

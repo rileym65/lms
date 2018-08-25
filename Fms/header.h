@@ -38,6 +38,7 @@
 #define LE   "\n"
 #endif
 
+LINK Double  distance;
 LINK Byte    engines;
 LINK Boolean launched;
 LINK Vector  pos;
