@@ -15,6 +15,7 @@
 #include "g_clockot.h"
 #include "g_clocktb.h"
 #include "g_clockut.h"
+#include "g_csmcomputer.h"
 #include "g_csmlamps.h"
 #include "g_days.h"
 #include "g_dec.h"
@@ -154,6 +155,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Days(x1, y1, false, vehicle));
       else if (strcasecmp(str,"orbiting") == 0)
         addGauge(new G_Orbiting(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"csmcomputer") == 0)
+        addGauge(new G_CsmComputer(x1, y1, false, vehicle));
       else {
         Write("Unknown guage: ");
         WriteLn(str);

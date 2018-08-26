@@ -248,6 +248,10 @@ Double CommandModule::CommandModuleRcsThrust(Double d) {
   return commandModuleRcsThrust;
   }
 
+CsmComputer* CommandModule::Computer() {
+  return computer;
+  }
+
 void CommandModule::Diameter(Double d) {
   d /= 2;
   area = d * d * M_PI;
@@ -564,6 +568,7 @@ void CommandModule::ProcessKey(Int32 key) {
   Double rf;
   if (!launchVehicleJettisoned) booster->ProcessKey(key);
   if (panel != NULL) panel->ProcessKey(key);
+  if (computer != NULL) computer->ProcessKey(key);
   if (key == 9) {
     armed = !armed;
     }
@@ -716,6 +721,7 @@ void CommandModule::Save(FILE* file) {
   fprintf(file,"  CommandModuleRcsFuel %.18f%s",commandModuleRcsFuel,LE);
   fprintf(file,"  CommandModuleRcsMaxFuel %.18f%s",commandModuleRcsMaxFuel,LE);
   fprintf(file,"  CommandModuleRcsThrust %.18f%s",commandModuleRcsThrust,LE);
+  computer->Save(file);
   fprintf(file,"  }%s",LE);
   }
 
@@ -750,6 +756,7 @@ Int8 CommandModule::SubLoad(FILE* file, char* pline) {
   else if (startsWith(pline,"commandmodulercsfuel ")) commandModuleRcsFuel = atof(nw(pline));
   else if (startsWith(pline,"commandmodulercsmaxfuel ")) commandModuleRcsMaxFuel = atof(nw(pline));
   else if (startsWith(pline,"commandmodulercsthrust ")) commandModuleRcsThrust = atof(nw(pline));
+  else if (startsWith(pline,"computer ")) return computer->Load(file);
   else return Spacecraft::SubLoad(file, pline);
   return -1;
   }

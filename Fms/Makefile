@@ -14,6 +14,7 @@ LIBS = -lm
 PHEADERS = ../common/g_clockbu.h \
 	   ../common/g_clockmi.h \
 	   ../common/g_clockut.h \
+	   ../common/g_csmcomputer.h \
 	   ../common/g_engines.h \
 	   ../common/g_altitude.h \
 	   ../common/g_velocity.h \
@@ -69,6 +70,7 @@ OBJS = \
 	../common/g_clockot.o \
 	../common/g_clocktb.o \
 	../common/g_clockut.o \
+	../common/g_csmcomputer.o \
 	../common/g_csmlamps.o \
 	../common/g_days.o \
 	../common/g_dec.o \

@@ -53,6 +53,7 @@ class CommandModule : public Spacecraft {
     virtual Double CommandModuleRcsFuel(Double d);
     virtual Double CommandModuleRcsMaxFuel();
     virtual Double CommandModuleRcsMaxFuel(Double d);
+    virtual CsmComputer* Computer();
     virtual void   Cutoff();
     virtual void   Diameter(Double d);
     virtual Byte   EnginesLit();

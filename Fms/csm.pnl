@@ -41,3 +41,6 @@ Line 53,20,80,20
 Gauge Moon 55,21
 Line 55,3,64,3
 Gauge Orbiting 57,2
+Line 53,11,64,11
+Line 64,6,64,11
+Gauge CsmComputer 57,4
