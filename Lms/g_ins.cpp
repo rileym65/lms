@@ -3,11 +3,15 @@
 #include "gauge.h"
 #include "g_ins.h"
 #include "terminal.h"
+#include "common.h"
+#include "vehicle.h"
+#include "spacecraft.h"
 
 G_Ins::G_Ins(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
   width = 27;
   height = 7;
+  mode = 1;
   Reset();
   }
 
@@ -30,6 +34,12 @@ void G_Ins::displayClock(Int32 x, Int32 y, Int32 clock) {
   Write(buffer);
   }
 
+void G_Ins::ProcessKey(Int32 key) {
+  if (key == '1') mode = 1;
+  if (key == '2') mode = 2;
+  if (key == '3') mode = 3;
+  }
+
 void G_Ins::Display() {
   GotoXY(x,y+0); Write("   altitude    east   north");
   GotoXY(x,y+1); Write("POS:       :       :       ");
@@ -42,38 +52,91 @@ void G_Ins::Display() {
 
 void G_Ins::Update() {
   char buffer[32];
-  if (ins->Mode() < 4) {
-    GotoXY(x+4,y+1); sprintf(buffer,"%7s",ins->DisplayPosAltitude()); Write(buffer);
-    GotoXY(x+12,y+1); sprintf(buffer,"%7s",ins->DisplayPosEast()); Write(buffer);
-    GotoXY(x+20,y+1); sprintf(buffer,"%7s",ins->DisplayPosNorth()); Write(buffer);
-    GotoXY(x+4,y+2); sprintf(buffer,"%7s",ins->DisplayVelAltitude()); Write(buffer);
-    GotoXY(x+12,y+2); sprintf(buffer,"%7s",ins->DisplayVelEast()); Write(buffer);
-    GotoXY(x+20,y+2); sprintf(buffer,"%7s",ins->DisplayVelNorth()); Write(buffer);
-    GotoXY(x+4,y+3); sprintf(buffer,"%7s",ins->DisplayAccAltitude()); Write(buffer);
-    GotoXY(x+12,y+3); sprintf(buffer,"%7s",ins->DisplayAccEast()); Write(buffer);
-    GotoXY(x+20,y+3); sprintf(buffer,"%7s",ins->DisplayAccNorth()); Write(buffer);
+  Spacecraft* sc;
+  if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
+  sc = (Spacecraft*)vehicle;
+  if (mode == 1) {
+    GotoXY(x+5, y+4); Write("ABS");
+    sprintf(buffer,"%7.0f",sc->Altitude());
+    GotoXY(x+4, y+1); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->Longitude());
+    GotoXY(x+12, y+1); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->Latitude());
+    GotoXY(x+20, y+1); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->VelocityAltitude());
+    GotoXY(x+4, y+2); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->VelocityEast());
+    GotoXY(x+12, y+2); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->VelocityNorth());
+    GotoXY(x+20, y+2); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->AccelAltitude());
+    GotoXY(x+4, y+3); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->AccelEast());
+    GotoXY(x+12, y+3); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->AccelNorth());
+    GotoXY(x+20, y+3); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->AscendingNode());
+    GotoXY(x+12, y+4); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->Inclination());
+    GotoXY(x+20, y+4); Write(buffer);
+    sprintf(buffer,"%7.2f",(sc->Periapsis()-sc->Orbiting()->Radius())/1000);
+    GotoXY(x+4, y+5); Write(buffer);
+    sprintf(buffer,"%7.2f",(sc->Apoapsis()-sc->Orbiting()->Radius())/1000);
+    GotoXY(x+4, y+6); Write(buffer);
+    sprintf(buffer,"%7.0f",sc->OrbitTime());
+    GotoXY(x+18,y+6); Write(buffer);
     }
-  else {
-    GotoXY(x+12,y+4); sprintf(buffer,"%7s",ins->DisplayMomEast()); Write(buffer);
-    GotoXY(x+20,y+4); sprintf(buffer,"%7s",ins->DisplayMomNorth()); Write(buffer);
-    GotoXY(x+4,y+5); sprintf(buffer,"%7s",ins->DisplayPerilune()); Write(buffer);
-    GotoXY(x+4,y+6); sprintf(buffer,"%7s",ins->DisplayApolune()); Write(buffer);
+  if (mode == 2) {
+    GotoXY(x+5, y+4); Write("TAR");
+    sprintf(buffer,"%7.0f",sc->Altitude());
+    GotoXY(x+4, y+1); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->TargetLongitude());
+    GotoXY(x+12, y+1); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->TargetLatitude());
+    GotoXY(x+20, y+1); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->VelocityAltitude());
+    GotoXY(x+4, y+2); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->VelocityEast());
+    GotoXY(x+12, y+2); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->VelocityNorth());
+    GotoXY(x+20, y+2); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->AccelAltitude());
+    GotoXY(x+4, y+3); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->AccelEast());
+    GotoXY(x+12, y+3); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->AccelNorth());
+    GotoXY(x+20, y+3); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->TargetMomEast());
+    GotoXY(x+12, y+4); Write(buffer);
+    sprintf(buffer,"%7.2f",sc->TargetMomNorth());
+    GotoXY(x+20, y+4); Write(buffer);
+
+    sprintf(buffer,"%7.2f",(sc->Periapsis()-sc->Orbiting()->Radius())/1000);
+    GotoXY(x+4, y+5); Write(buffer);
+    sprintf(buffer,"%7.2f",(sc->Apoapsis()-sc->Orbiting()->Radius())/1000);
+    GotoXY(x+4, y+6); Write(buffer);
+    sprintf(buffer,"%7.0f",sc->OrbitTime());
+    GotoXY(x+18,y+6); Write(buffer);
     }
-  if (insMode != lastInsMode) {
-    GotoXY(x+4, y+4);
-    switch (insMode) {
-      case INS_MODE_POS_ABS: Write("POS^ABS"); break;
-      case INS_MODE_POS_TAR: Write("POS^TAR"); break;
-      case INS_MODE_POS_REL: Write("POS^REL"); break;
-      case INS_MODE_ORB_ABS: Write("ORBvABS"); break;
-      case INS_MODE_ORB_TAR: Write("ORBvTAR"); break;
+  }
+
+void G_Ins::Load(FILE* file,char* firstLine) {
+  char* pline;
+  if (!startsWith(firstLine,"ins ")) return;
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"mode ")) mode = atoi(nw(pline));
+    else {
+      Write("Unknown line found in save file: ");
+      WriteLn(pline);
+      exit(1);
       }
-    lastInsMode = insMode;
     }
-  GotoXY(x+4,y+5); sprintf(buffer,"%7.1f",(ins->Perilune()-GROUND)/1000); Write(buffer);
-  GotoXY(x+4,y+6); sprintf(buffer,"%7.1f",(ins->Apolune()-GROUND)/1000); Write(buffer);
-  GotoXY(x+12,y+4); sprintf(buffer,"%7.2f",ins->MomEast()); Write(buffer);
-  GotoXY(x+20,y+4); sprintf(buffer,"%7.2f",ins->MomNorth()); Write(buffer);
-  displayClock(x+18,y+6,clockOr);
+  }
+
+void G_Ins::Save(FILE* file) {
+  fprintf(file,"    Ins {%s",LE);
+  fprintf(file,"      Mode %d%s",mode,LE);
+  fprintf(file,"      }%s",LE);
   }
 

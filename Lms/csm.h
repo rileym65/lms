@@ -3,12 +3,13 @@
 
 #include "vehicle.h"
 
-class CSM : public Vehicle {
+class CSM : public Spacecraft {
   protected:
   public:
     CSM();
     ~CSM();
     virtual void   Save(FILE* file);
+    virtual void ProcessKey(Int32 key);
   };
 
 #endif

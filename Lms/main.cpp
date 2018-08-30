@@ -8,6 +8,7 @@
 #include "lander.h"
 #include "g_clockmi.h"
 #include "g_clockut.h"
+#include "common.h"
 
 #ifdef MINGW
 #include <windows.h>
@@ -16,7 +17,7 @@
 void setup() {
 Vector t;
   pilotLocation = PILOT_CSM;
-  csm->Position(Vector(99810+1738300,0,100));
+  csm->Position(Vector(99810+1738300,100,100));
   csm->Velocity(Vector(0,-1634,0.0));
   csm->FaceFront(Vector(0,0,1));
   csm->FaceLeft(Vector(0,-1,0));
@@ -283,11 +284,11 @@ char* ClockToString(char* buffer, Int32 clock) {
 Boolean alignedForDocking() {
   Vector v;
   Double ax,ay,rx;
-  v = ins->RelVel();
+  v = lm->RelVel();
   dockingVel = v.Z();
   dockingLVel = sqrt(v.X()*v.X() + v.Y()*v.Y());
-  dockingXAlign = ins->RelPos().X();
-  dockingYAlign = ins->RelPos().Y();
+  dockingXAlign = lm->RelPos().X();
+  dockingYAlign = lm->RelPos().Y();
   if (dockingVel > -0.2) return false;
   if (dockingVel < -0.4) return false;
   if (dockingLVel >0.0283) return false;
@@ -299,50 +300,52 @@ Boolean alignedForDocking() {
   }
 
 void cycle() {
+  UInt32 i;
   Vector v,v1;
-  csm->Cycle();
-  if (docked) {
+  for (i=0; i<GRAN; i++) {
+    csm->Cycle();
     lm->Cycle();
-    lm->Position(csm->Position() + Vector(0,0,19));
-    lm->Velocity(csm->Velocity());
-    lm->Altitude(csm->Altitude());
-    lm->Latitude(csm->Latitude());
-    lm->Longitude(csm->Longitude());
-    lm->Radius(csm->Radius());
-    }
-  else lm->Cycle();
-  plss->Cycle();
-  if (lrv->IsSetup()) lrv->Cycle();
-  ins->Cycle();
-  if (lm->Comp() != NULL) lm->Comp()->Cycle();
-  if (!docked && pilotLocation == PILOT_LM) {
-    if (ins->RelPos().Length() < 19) {
-      if (alignedForDocking()) {
-        lm->Velocity(csm->Velocity());
-        docked = -1;
-        seq->Dock();
-        }
-      else {
-        v = ins->RelVel();
-        if (v.Length() > 2) {
-          ClrScr();
-          WriteLn("Collision with the CSM destroyed both vehicles!!!");
-          endReason = END_COLLISION;
-          run = false;
-//          ShowCursor();
-//          CloseTerminal();
-//          exit(0);
+    if (docked) {
+      lm->Position(csm->Position() + Vector(0,0,19));
+      lm->Velocity(csm->Velocity());
+      ((Spacecraft*)lm)->Altitude(((Spacecraft*)csm)->Altitude());
+      lm->Latitude(csm->Latitude());
+      lm->Longitude(csm->Longitude());
+      ((Spacecraft*)lm)->Radius(((Spacecraft*)csm)->Radius());
+      }
+    plss->Cycle();
+    if (lrv->IsSetup()) lrv->Cycle();
+    if (!docked && pilotLocation == PILOT_LM) {
+      if (lm->RelPos().Length() < 19) {
+        if (alignedForDocking()) {
+          lm->Velocity(csm->Velocity());
+          docked = -1;
+          seq->Dock();
           }
         else {
-          lm->Position(lm->Position() - v);
-          lm->Velocity(lm->Velocity() - v);
-          v = v.Scale(0.5);
-          csm->Velocity(csm->Velocity() + v);
-          lm->Velocity(lm->Velocity() - v);
+          v = lm->RelVel();
+          if (v.Length() > 2) {
+            ClrScr();
+            WriteLn("Collision with the CSM destroyed both vehicles!!!");
+            endReason = END_COLLISION;
+            run = false;
+            }
+          else {
+            lm->Position(lm->Position() - v);
+            lm->Velocity(lm->Velocity() - v);
+            v = v.Scale(0.5);
+            csm->Velocity(csm->Velocity() + v);
+            lm->Velocity(lm->Velocity() - v);
+            }
           }
         }
       }
     }
+  csm->Ins();
+  lm->Ins();
+  if (lm->Comp() != NULL) lm->Comp()->Cycle();
+
+
   if (metabolicRate > 99) metabolicRate = 99;
   softInjury += 0.000347222;
   if (softInjury > 100) softInjury = 100;
@@ -433,13 +436,22 @@ int main(int argc, char** argv) {
   WriteLn(""); WriteLn(""); WriteLn(""); WriteLn("");
   WriteLn(TITLE);
   WriteLn(""); WriteLn(""); WriteLn(""); WriteLn("");
+  Earth = NULL;
+  Moon = new Body("Moon", 7.34767309e+22, 1738300);
   csm = new CSM();
   lm = new LunarModule();
   lm->Comp(new Computer(lm));
   plss = new Plss();
   lrv = new Lrv();
-  ins = new INS();
   seq = new Sequencer();
+  csm->Orbiting(Moon);
+  lm->Orbiting(Moon);
+  plss->Orbiting(Moon);
+  lrv->Orbiting(Moon);
+  csm->TargetVehicle(lm);
+  lm->TargetVehicle(csm);
+  lrv->TargetVehicle(lm);
+  plss->TargetVehicle(lm);
   map = new Map();
   mission = new Mission();
   missionPos = -1;
@@ -503,23 +515,15 @@ int main(int argc, char** argv) {
   OpenTerminal();
   HideCursor();
   if (pilotLocation == PILOT_CSM) {
-    ins->Spacecraft(csm);
-    ins->Target(lm);
     currentVehicle = csm;
     }
   if (pilotLocation == PILOT_LM) {
-    ins->Spacecraft(lm);
-    ins->Target(csm);
     currentVehicle = lm;
     }
   if (pilotLocation == PILOT_EVA) {
-    ins->Spacecraft(plss);
-    ins->Target(lm);
     currentVehicle = plss;
     }
   if (pilotLocation == PILOT_LRV) {
-    ins->Spacecraft(lrv);
-    ins->Target(lm);
     currentVehicle = lrv;
     }
   currentVehicle->SetupPanel();
@@ -531,6 +535,7 @@ int main(int argc, char** argv) {
     if (ticks >= 10) {
       clockUt++;
       while (clockUt >= 86400) clockUt -= 86400;
+      if (!lm->Landed() && lm->DescentJettisoned() && !docked) clockDk++;
       if (lm->Throttle() != 0) clockBu++;
       if (!docked) {
         clockMi++;
@@ -538,7 +543,6 @@ int main(int argc, char** argv) {
           else lm->UseBattery(0.3);
         if (pilotLocation == PILOT_LM && cabinPressurized) {
           lm->UseOxygen(1);
-          if (!lm->Landed() && lm->DescentJettisoned() && !docked) clockDk++;
           if (lm->Oxygen() + lm->EOxygen() <= 0) injury += 0.3;
           if (lm->Battery() + lm->EBattery() <= 0) injury += 0.1;
           }
@@ -591,11 +595,6 @@ int main(int argc, char** argv) {
       if (key == '$') simSpeed = 100;
       if (key == '%') simSpeed = 10;
       if (seq->Time() == 0) {
-        if (key == '1') { insMode = INS_MODE_POS_ABS; ins->Mode(insMode); }
-        if (key == '2') { insMode = INS_MODE_POS_TAR; ins->Mode(insMode); }
-        if (key == '3') { insMode = INS_MODE_POS_REL; ins->Mode(insMode); }
-        if (key == '4') { insMode = INS_MODE_ORB_ABS; ins->Mode(insMode); }
-        if (key == '5') { insMode = INS_MODE_ORB_TAR; ins->Mode(insMode); }
         if (key == 'Q') { run = false; endReason = END_QUIT; }
         currentVehicle->ProcessKey(key);
         }

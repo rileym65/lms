@@ -15,6 +15,7 @@
 	| Prog | Function                                  |
 	|  01  | Engine cutoff at end of boost phast       |
 	|  02  | Engine cutoff for apoapsis x 1000km       |
+	|  03  | Engine cutoff for deltav in reg1          |
 	|  10  | Compute circular orbit velocity           |
 [TE]
 [=]

@@ -2,6 +2,7 @@
 #include "header.h"
 #include "lrv.h"
 #include "terminal.h"
+#include "common.h"
 
 Lrv::Lrv() {
   Init();
@@ -72,7 +73,7 @@ void Lrv::Setup() {
   Place(lm->Position());
   p = faceLeft.Norm().Scale(15);
   position = position + p;
-  position = position.Norm().Scale(GROUND);
+  position = position.Norm().Scale(orbiting->Radius());
   isSetup = true;
   Heading(-90);
   return;
@@ -84,7 +85,7 @@ void Lrv::Setup() {
   Double dist;
   fp = lm->Position();
   u = lm->Position().Norm();
-  position = u.Scale(GROUND);
+  position = u.Scale(orbiting->Radius());
   velocity = Vector(0,0,0);
   thrust = Vector(0,0,0);
   Radius(position.Length());
@@ -110,7 +111,6 @@ void Lrv::Setup() {
   printf("  U: %.18f %.18f %.18f\n",u.X(),u.Y(),u.Z());
   printf("  L: %.18f %.18f %.18f\n",l.X(),l.Y(),l.Z());
   printf("Dst: %.18f\n",dist);
-printf("Len: %.18f\n",f.Length());
   ShowCursor();
   CloseTerminal();
   exit(1);
@@ -123,7 +123,7 @@ void Lrv::Cycle() {
   if (battery < 0) battery = 0;
   if (battery <= 0) throttle = 0;
   GroundVehicle::Cycle();
-  if (!isnan(velocity.Length())) driven += velocity.Length();
+  if (!isnan(velocity.Length())) driven += velocity.Length() / GRAN;
   if (throttle > 0) {
     battery -= ( (maxSpeed * ((Double)throttle / 100.0)) +
                  (maxSpeed * batteryLeakage) );
@@ -182,7 +182,7 @@ void Lrv::Cycle() {
 //  velocity = velocity + thrust;
   velocity = thrust;
   position = position + velocity;
-  position = position.Norm().Scale(GROUND);
+  position = position.Norm().Scale(orbiting->Radius());
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
   longitude = position.X() / hyp;
@@ -195,14 +195,14 @@ void Lrv::Cycle() {
   }
 */
 
-Int8 Lrv::SubLoad(char* pline) {
+Int8 Lrv::SubLoad(FILE* file, char* pline) {
   if (startsWith(pline,"value ")) value = atof(nw(pline));
   else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
   else if (startsWith(pline,"sampleboxes ")) boxes = atoi(nw(pline));
   else if (startsWith(pline,"issetup true")) isSetup = true;
   else if (startsWith(pline,"issetup false")) isSetup = false;
   else if (startsWith(pline,"driven ")) driven = atof(nw(pline));
-  else return GroundVehicle::SubLoad(pline);
+  else return GroundVehicle::SubLoad(file, pline);
   return -1;
   }
 

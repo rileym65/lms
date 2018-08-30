@@ -1,8 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "header.h"
+#include <math.h>
 #include "mission.h"
+#include "common.h"
+#include "types.h"
+#include "vector.h"
+#include "helpers.h"
 
 Mission::Mission() {
   name = NULL;
@@ -25,6 +29,33 @@ Mission::Mission() {
 Mission::~Mission() {
   if (name != NULL) free(name);
   if (region != NULL) free(region);
+  }
+
+void Mission::_computeTargetData() {
+  Vector L;
+  Double hyp;
+  Double x,y,z;
+  Double c,s;
+  c = -1680.226342 * cos(targetLongitude*M_PI/180);
+  s = -1680.226342 * sin(targetLongitude*M_PI/180);
+  z = sin(targetLatitude*M_PI/180);
+  x = sin(targetLongitude*M_PI/180) *
+      cos(targetLatitude*M_PI/180);
+  y = -cos(targetLongitude*M_PI/180) *
+       cos(targetLatitude*M_PI/180);
+  targetPos = Vector(x*1738300,y*1738300,z*1738300).Norm();
+  targetVel = Vector(c,s,0).Norm();
+  L = targetVel.Cross(targetPos).Norm();
+  hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
+  targetMomEast = L.Y() / hyp;
+  targetMomEast = asin(targetMomEast) * 180 / M_PI;
+  if (L.X() < 0 && L.Y() < 0) targetMomEast = -180 - targetMomEast;
+  if (L.X() < 0 && L.Y() >= 0) targetMomEast = 180 - targetMomEast;
+  while (targetMomEast < -180) targetMomEast += 360;
+  while (targetMomEast > 180) targetMomEast -= 360;
+  hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
+  targetMomNorth = L.Z() / hyp;
+  targetMomNorth = asin(targetMomNorth) * 180 / M_PI;
   }
 
 Double Mission::AscentEmptyWeight() {
@@ -246,6 +277,7 @@ Double Mission::TargetLatitude() {
 
 Double Mission::TargetLatitude(Double d) {
   targetLatitude = d;
+  _computeTargetData();
   return targetLatitude;
   }
 
@@ -255,7 +287,16 @@ Double Mission::TargetLongitude() {
 
 Double Mission::TargetLongitude(Double d) {
   targetLongitude = d;
+  _computeTargetData();
   return targetLongitude;
+  }
+
+Double Mission::TargetMomNorth() {
+  return targetMomNorth;
+  }
+
+Double Mission::TargetMomEast() {
+  return targetMomEast;
   }
 
 Int8 Mission::Vehicle() {
@@ -284,7 +325,10 @@ Lander* Mission::Model() {
 void Mission::Load(FILE* file) {
   char* pline;
   while ((pline = nextLine(file)) != NULL) {
-    if (startsWith(pline,"}")) return;
+    if (startsWith(pline,"}")) {
+      _computeTargetData();
+      return;
+      }
     else if (startsWith(pline,"name ")) Name(nw(pline));
     else if (startsWith(pline,"region ")) Region(nw(pline));
     else if (startsWith(pline,"description ")) Description(nw(pline));
@@ -307,6 +351,7 @@ void Mission::Load(FILE* file) {
     else if (startsWith(pline,"lsep ")) lsep = atoi(nw(pline));
     else if (startsWith(pline,"laser ")) laser = atoi(nw(pline));
     }
+  _computeTargetData();
   validate();
   }
 

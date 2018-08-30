@@ -3,8 +3,9 @@
 
 #include "vector.h"
 #include "vehicle.h"
+#include "spacecraft.h"
 
-class LunarModule : public Vehicle {
+class LunarModule : public Spacecraft {
   protected:
     Double ascentFuel;
     Double descentFuel;
@@ -124,7 +125,7 @@ class LunarModule : public Vehicle {
     virtual Int16  Rock();
     virtual Int16  Rock(Int16 i);
     virtual void   Save(FILE* file);
-    virtual Int8   SubLoad(char* line);
+    virtual Int8   SubLoad(FILE* file, char* line);
     virtual Boolean UseBattery(Double units);
     virtual Boolean UseOxygen(Double units);
     virtual Double Value();

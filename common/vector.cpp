@@ -71,8 +71,6 @@ Vector Vector::Cross(const Vector& b) {
 Double Vector::Dot(const Vector& a) {
   Double ret;
   ret = (this->x * a.x) + (this->y * a.y) + (this->z * a.z);
-  if (ret < -1.0) ret = -1.0;
-  if (ret > 1.0) ret = 1.0;
   return ret;
   }
 

@@ -3,6 +3,7 @@
 #include "computer.h"
 #include "g_clockmi.h"
 #include "vehicle.h"
+#include "spacecraft.h"
 
 #define MODE_INP_P_1     1
 #define MODE_INP_P_2     2
@@ -251,33 +252,35 @@ Boolean Computer::Err() {
   }
 
 Double Computer::read(UInt16 addr) {
+  Spacecraft* sc;
+  sc = (Spacecraft*)vehicle;
   if ((addr & 0xf00) == 0x100) return regs[addr & 0xff];
   if ((addr & 0xf00) == 0x200) {
     switch (addr & 0xff) {
       case 0x00: return 0;
-      case 0x01: return ins->Altitude();
+      case 0x01: return sc->Altitude();
       case 0x02: return vehicle->VelocityAltitude();
       case 0x03: return vehicle->AccelAltitude();
-      case 0x04: return ins->Longitude();
+      case 0x04: return vehicle->Longitude();
       case 0x05: return vehicle->VelocityEast();
       case 0x06: return vehicle->AccelEast();
-      case 0x07: return ins->Latitude();
+      case 0x07: return vehicle->Latitude();
       case 0x08: return vehicle->VelocityNorth();
       case 0x09: return vehicle->AccelNorth();
-      case 0x0a: return ins->Perilune();
-      case 0x0b: return ins->Apolune();
-      case 0x0c: return GROUND;
-      case 0x0d: return ins->MomEast();
-      case 0x0e: return ins->MomNorth();
-      case 0x0f: return ins->RelAltitude();
-      case 0x10: return ins->TargetLongitude();
-      case 0x11: return ins->TargetLatitude();
-      case 0x12: return ins->RelLongitude();
-      case 0x13: return ins->RelLatitude();
-      case 0x14: return ins->RelAltitude();
-      case 0x15: return ins->RelVel().X();
-      case 0x16: return ins->RelVel().Y();
-      case 0x17: return ins->RelVel().Z();
+      case 0x0a: return sc->Periapsis();
+      case 0x0b: return sc->Apoapsis();
+      case 0x0c: return vehicle->Orbiting()->Radius();
+      case 0x0d: return sc->AscendingNode();
+      case 0x0e: return sc->Inclination();
+      case 0x0f: return sc->RelAltitude();
+      case 0x10: return sc->TargetLongitude();
+      case 0x11: return sc->TargetLatitude();
+      case 0x12: return sc->RelLongitude();
+      case 0x13: return sc->RelLatitude();
+      case 0x14: return sc->RelAltitude();
+      case 0x15: return sc->RelVel().X();
+      case 0x16: return sc->RelVel().Y();
+      case 0x17: return sc->RelVel().Z();
       case 0x18: return M_PI;
       case 0x19: return 1;
       case 0x1a: return 10;
@@ -292,14 +295,14 @@ Double Computer::read(UInt16 addr) {
       case 0x23: return lm->DescentFuel();
       case 0x24: return lm->AscentFuel();
       case 0x25: return lm->RcsFuel();
-      case 0x26: return ins->TargetMomEast();
-      case 0x27: return ins->TargetMomNorth();
-      case 0x28: return ins->RelMomEast();
-      case 0x29: return ins->RelMomNorth();
+      case 0x26: return sc->TargetMomEast();
+      case 0x27: return sc->TargetMomNorth();
+      case 0x28: return sc->RelMomEast();
+      case 0x29: return sc->RelMomNorth();
       case 0x2a: return vehicle->Roll();
       case 0x2b: return vehicle->Pitch();
       case 0x2c: return vehicle->Yaw();
-      case 0x2d: return clockOr;
+      case 0x2d: return vehicle->OrbitTime();
       case 0x2e: return vehicle->LatitudeVelocity();
       case 0x2f: return vehicle->LatitudeAcceleration();
       }
@@ -310,8 +313,8 @@ Double Computer::read(UInt16 addr) {
       case 0x01: return vehicle->RollRate();
       case 0x02: return vehicle->PitchRate();
       case 0x03: return vehicle->YawRate();
-      case 0x04: return vehicle->RcsThrottle();
-      case 0x05: return vehicle->RcsRotThrottle();
+      case 0x04: return ((Spacecraft*)vehicle)->RcsThrottle();
+      case 0x05: return ((Spacecraft*)vehicle)->RcsRotThrottle();
       }
     }
   return 0;
@@ -325,19 +328,21 @@ void Computer::write(UInt16 addr,Double value) {
       case 0x01: vehicle->RollRate(value); break;
       case 0x02: vehicle->PitchRate(value); break;
       case 0x03: vehicle->YawRate(value); break;
-      case 0x04: vehicle->RcsThrottle(value); break;
-      case 0x05: vehicle->RcsRotThrottle(value); break;
-      case 0x06: vehicle->RcsFbMode((value == 0) ? ' ' : 'F'); break;
-      case 0x07: vehicle->RcsFbMode((value == 0) ? ' ' : 'B'); break;
-      case 0x08: vehicle->RcsUdMode((value == 0) ? ' ' : 'U'); break;
-      case 0x09: vehicle->RcsUdMode((value == 0) ? ' ' : 'D'); break;
-      case 0x0a: vehicle->RcsLrMode((value == 0) ? ' ' : 'L'); break;
-      case 0x0b: vehicle->RcsLrMode((value == 0) ? ' ' : 'R'); break;
+      case 0x04: ((Spacecraft*)vehicle)->RcsThrottle(value); break;
+      case 0x05: ((Spacecraft*)vehicle)->RcsRotThrottle(value); break;
+      case 0x06: ((Spacecraft*)vehicle)->RcsFbMode((value == 0) ? ' ' : 'F'); break;
+      case 0x07: ((Spacecraft*)vehicle)->RcsFbMode((value == 0) ? ' ' : 'B'); break;
+      case 0x08: ((Spacecraft*)vehicle)->RcsUdMode((value == 0) ? ' ' : 'U'); break;
+      case 0x09: ((Spacecraft*)vehicle)->RcsUdMode((value == 0) ? ' ' : 'D'); break;
+      case 0x0a: ((Spacecraft*)vehicle)->RcsLrMode((value == 0) ? ' ' : 'L'); break;
+      case 0x0b: ((Spacecraft*)vehicle)->RcsLrMode((value == 0) ? ' ' : 'R'); break;
       }
     }
   }
 
 Vector Computer::readVector(UInt16 addr) {
+  Spacecraft* sc;
+  sc = (Spacecraft*)vehicle;
   if ((addr & 0xf00) == 0x300) {
     switch (addr & 0xff) {
       case 0x00: return vehicle->Velocity();
@@ -349,8 +354,8 @@ Vector Computer::readVector(UInt16 addr) {
       case 0x06: return vehicle->FaceLeft();
       case 0x07: return vehicle->FaceLeft().Neg();
       case 0x08: return vres;
-      case 0x09: return ins->RelVel();
-      case 0x0a: return ins->RelPos();
+      case 0x09: return sc->RelVel();
+      case 0x0a: return sc->RelPos();
       }
     }
   if ((addr & 0xf00) == 0x100) {

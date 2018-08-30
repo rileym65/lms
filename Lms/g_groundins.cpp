@@ -66,15 +66,15 @@ void G_GroundIns::Update() {
     targetLat = lrv->Latitude();
     }
   else {
-    GotoXY(x+5,y+0); sprintf(buffer,"%7s",ins->DisplayPosEast()); Write(buffer);
-    GotoXY(x+5,y+1); sprintf(buffer,"%7s",ins->DisplayPosNorth()); Write(buffer);
+    GotoXY(x+5,y+0); sprintf(buffer,"%7.2f",vehicle->Longitude()); Write(buffer);
+    GotoXY(x+5,y+1); sprintf(buffer,"%7.2f",vehicle->Latitude()); Write(buffer);
     }
   if (mode > 1) {
     if (targetLng < -180) targetLng = vehicle->Longitude();
     if (targetLat < -180) targetLat = vehicle->Latitude();
-    dist = (vehicle->Longitude() - targetLng) * METERS;
+    dist = (vehicle->Longitude() - targetLng) * vehicle->Orbiting()->Meters();
     GotoXY(x+5,y+0); sprintf(buffer,"%7.0f",dist); Write(buffer);
-    dist = (vehicle->Latitude() - targetLat) * METERS;
+    dist = (vehicle->Latitude() - targetLat) * vehicle->Orbiting()->Meters();
     GotoXY(x+5,y+1); sprintf(buffer,"%7.0f",dist); Write(buffer);
     }
   i = vehicle->Throttle();

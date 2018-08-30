@@ -21,6 +21,7 @@ Vehicle::Vehicle() {
   pitch = 0;
   yaw = 0;
   type = VT_NONE;
+  targetVehicle = NULL;
   Init();
   InitPanel();
   }
@@ -266,6 +267,15 @@ Byte Vehicle::Stage() {
   return 1;
   }
 
+Vehicle* Vehicle::TargetVehicle() {
+  return targetVehicle;
+  }
+
+Vehicle* Vehicle::TargetVehicle(Vehicle* v) {
+  targetVehicle = v;
+  return targetVehicle;
+  }
+
 Int8   Vehicle::Throttle() {
   return throttle;
   }
@@ -338,12 +348,12 @@ void Vehicle::Cycle() {
 //  Double hyp;
   Double v1,v2;
   Double vel;
-  Double tmp;
+//  Double tmp;
   Vector vnorm;
 //  Double g;
-  lastLatitude = latitude;
-  lastLongitude = longitude;
-  lastLatitudeVel = latitudeVel;
+//  lastLatitude = latitude;
+//  lastLongitude = longitude;
+//  lastLatitudeVel = latitudeVel;
 //  if (rollRate != 0) {
 //    roll += rollRate;
 //    if (roll > 180) roll -= 360;
@@ -384,13 +394,13 @@ void Vehicle::Cycle() {
   v2 = velocity.Dot(position.Norm());
   a = Vector(position.Y(), -position.X(), 0.0).Norm();
   vel= -(velocity.Dot(a));
-  accelEast = vel - velocityEast;
+  accelEast = (vel - velocityEast) * GRAN;
   velocityEast = vel;
   vel= velocity.Dot(Vector(0,0,1));
-  accelNorth = vel - velocityNorth;
+  accelNorth = (vel - velocityNorth) * GRAN;
   velocityNorth = vel;
   vel = v1 + ((v2 - v1) / 2);
-  accelAltitude = vel - velocityAltitude;
+  accelAltitude = (vel - velocityAltitude) * GRAN;
   velocityAltitude = vel;
   if (isnan(accelNorth)) accelNorth = 0;
   if (isnan(accelEast)) accelEast = 0;
@@ -401,11 +411,11 @@ void Vehicle::Cycle() {
   if (accelNorth < -999) accelNorth = -999;
   if (accelEast < -999) accelEast = -999;
   if (accelAltitude < -999) accelAltitude = -999;
-  tmp = latitude - lastLatitude;
-  if (tmp <= -180) tmp += 360;
-  if (tmp >= 180) tmp -= 360;
-  latitudeVel = tmp * orbiting->Meters();
-  latitudeAcc = latitudeVel - lastLatitudeVel;
+//  tmp = latitude - lastLatitude;
+//  if (tmp <= -180) tmp += 360;
+//  if (tmp >= 180) tmp -= 360;
+//  latitudeVel = tmp * orbiting->Meters();
+//  latitudeAcc = latitudeVel - lastLatitudeVel;
 
 /*
   L = velocity.Cross(position);

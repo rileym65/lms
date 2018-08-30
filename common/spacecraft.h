@@ -24,6 +24,10 @@ class Spacecraft : public Vehicle {
     char      rcsUdMode;
     Double    moonG;
     Double    earthG;
+    Double    tarLongitude;
+    Double    tarLatitude;
+    Double    tarMomEast;
+    Double    tarMomNorth;
   public:
     Spacecraft();
     ~Spacecraft();
@@ -62,6 +66,17 @@ class Spacecraft : public Vehicle {
     virtual Double    RcsThrust(Double d);
     virtual char      RcsUdMode();
     virtual char      RcsUdMode(char c);
+    virtual Double    RelAltitude();
+    virtual Vector    RelPos();
+    virtual Vector    RelVel();
+    virtual Double    RelLongitude();
+    virtual Double    RelLatitude();
+    virtual Double    RelMomEast();
+    virtual Double    RelMomNorth();
+    virtual Double    TargetLongitude();
+    virtual Double    TargetLatitude();
+    virtual Double    TargetMomEast();
+    virtual Double    TargetMomNorth();
 
     virtual void      Cycle();
     virtual void      Save(FILE* file);

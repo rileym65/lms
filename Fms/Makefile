@@ -102,8 +102,10 @@ OBJS = \
 	../common/csmcomputer.o \
 	../common/gauge.o \
 	../common/helpers.o \
+	../common/lander.o \
 	load.o \
 	../common/matrix.o \
+	../common/mission.o \
 	../common/panel.o \
 	save.o \
 	../common/spacecraft.o \

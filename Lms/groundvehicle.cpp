@@ -2,6 +2,7 @@
 #include "header.h"
 #include "groundvehicle.h"
 #include "terminal.h"
+#include "common.h"
 
 GroundVehicle::GroundVehicle() {
   Init();
@@ -18,6 +19,17 @@ void GroundVehicle::Init() {
   batteryLeakage = 0.0;
   }
 
+Double GroundVehicle::Radius() {
+  return radius;
+  }
+
+Double GroundVehicle::Radius(Double d) {
+  radius = d;
+  altitude = radius - orbiting->Radius();
+  return radius;
+  }
+
+
 void GroundVehicle::Cycle() {
   Vector a;
 //  Double alt3;
@@ -28,15 +40,15 @@ void GroundVehicle::Cycle() {
 //  velocity = velocity + a;
 //  velocity = velocity + thrust;
   if (turnRate != 0) {
-    heading += turnRate;
+    heading += (turnRate / GRAN);
     if (heading > 180) heading -= 360;
     if (heading < -180) heading += 360;
     Heading(heading);
     }
   thrust = faceFront.Norm().Scale(motorEfficiency * maxSpeed * ((Double)throttle / 100.0));
   velocity = thrust;
-  position = position + velocity;
-  position = position.Norm().Scale(GROUND);
+  position = position + velocity.Scale(1/GRAN);
+  position = position.Norm().Scale(orbiting->Radius());
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
   longitude = position.X() / hyp;
@@ -97,7 +109,7 @@ void GroundVehicle::Place(Vector pos) {
   Double dist;
   fp = pos;
   u = pos.Norm();
-  position = u.Scale(GROUND);
+  position = u.Scale(orbiting->Radius());
   velocity = Vector(0,0,0);
   thrust = Vector(0,0,0);
   Radius(position.Length());
@@ -127,12 +139,12 @@ void GroundVehicle::Place(Vector pos) {
   exit(1);
   }
 
-Int8 GroundVehicle::SubLoad(char* pline) {
+Int8 GroundVehicle::SubLoad(FILE* file, char* pline) {
   if (startsWith(pline,"heading ")) Heading(atof(nw(pline)));
   else if (startsWith(pline,"turnrate ")) turnRate = atoi(nw(pline));
   else if (startsWith(pline,"batteryleakage ")) batteryLeakage = atof(nw(pline));
   else if (startsWith(pline,"motorefficiency ")) motorEfficiency = atof(nw(pline));
-  else return 0;
+  else return Vehicle::SubLoad(file, pline);
   return -1;
   }
 

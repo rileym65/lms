@@ -18,7 +18,6 @@
 #include "plss.h"
 #include "csm.h"
 #include "lrv.h"
-#include "ins.h"
 #include "sequencer.h"
 #include "map.h"
 #include "mission.h"
@@ -120,14 +119,12 @@ LINK Double       efficiency;
 LINK Double       injury;
 LINK Double       softInjury;
 LINK Double       hardInjury;
-LINK INS         *ins;
 LINK Int8         insMode;
 LINK Int8         landingRadarOn;
 LINK LunarModule *lm;
 LINK Lrv         *lrv;
 LINK Map         *map;
 LINK Double       metabolicRate;
-LINK Mission     *mission;
 LINK Int8         mode_abo;
 LINK Int8         mode_arm;
 LINK Int8         mode_jet;

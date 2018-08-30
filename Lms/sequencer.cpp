@@ -41,8 +41,6 @@ void Sequencer::Complete() {
   switch (function) {
     case SEQ_END_EVA:
          pilotLocation = PILOT_LM;
-         ins->Spacecraft(lm);
-         ins->Target(csm);
          currentVehicle = lm;
          currentVehicle->SetupPanel();
          if (clockEv > longestEVA) longestEVA = clockEv;
@@ -52,15 +50,11 @@ void Sequencer::Complete() {
          break;
     case SEQ_MOVE_LM:
          pilotLocation = PILOT_LM;
-         ins->Spacecraft(lm);
-         ins->Target(csm);
          currentVehicle = lm;
          currentVehicle->SetupPanel();
          break;
     case SEQ_MOVE_CSM:
          pilotLocation = PILOT_CSM;
-         ins->Spacecraft(csm);
-         ins->Target(lm);
          currentVehicle = csm;
          currentVehicle->SetupPanel();
          endReason = END_MISSION;
@@ -68,8 +62,6 @@ void Sequencer::Complete() {
          break;
     case SEQ_MOVE_EVA:
          pilotLocation = PILOT_EVA;
-         ins->Spacecraft(plss);
-         ins->Target(lm);
          currentVehicle = plss;
          currentVehicle->SetupPanel();
          plss->BeginEva(lm);
@@ -85,10 +77,10 @@ void Sequencer::Complete() {
     case SEQ_UNDOCK:
          lm->Position(csm->Position() + Vector(0,0,19));
          lm->Velocity(csm->Velocity() + Vector(0,0,0.1));
-         lm->Altitude(csm->Altitude());
+         ((Spacecraft*)lm)->Altitude(((Spacecraft*)csm)->Altitude());
          lm->Latitude(csm->Latitude());
          lm->Longitude(csm->Longitude());
-         lm->Radius(csm->Radius());
+         ((Spacecraft*)lm)->Radius(((Spacecraft*)csm)->Radius());
          docked = 0;
          clockUd = clockUt;
          break;
@@ -343,15 +335,11 @@ void Sequencer::Complete() {
          break;
     case SEQ_MOVELRV:
          pilotLocation = PILOT_LRV;
-         ins->Spacecraft(lrv);
-         ins->Target(lm);
          currentVehicle = lrv;
          currentVehicle->SetupPanel();
          break;
     case SEQ_EXITLRV:
          pilotLocation = PILOT_EVA;
-         ins->Spacecraft(plss);
-         ins->Target(lm);
          currentVehicle = plss;
          currentVehicle->SetupPanel();
          plss->BeginEva(lrv);

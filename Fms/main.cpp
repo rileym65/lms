@@ -8,6 +8,7 @@
 #include "g_days.h"
 #include "g_moon.h"
 #include "g_position.h"
+#include "mission.h"
 
 double mn,mx;
 
@@ -443,6 +444,7 @@ int main(int argc, char** argv) {
   UInt32 v;
   Boolean flag;
   UInt32  key;
+  mission = NULL;
   Earth = new Body("Earth", 5.972e+24, 6378100);
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
   Moon->Position(Vector(325266766, 0, 177193935));

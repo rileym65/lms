@@ -53,6 +53,7 @@ class Vehicle {
     Double    velocityNorth;
     Double    yaw;
     Double    yawRate;
+    Vehicle  *targetVehicle;
 
   public:
     Vehicle();
@@ -108,6 +109,8 @@ class Vehicle {
     virtual Double    RollRate();
     virtual Double    RollRate(Double d);
     virtual Byte      Stage();
+    virtual Vehicle*  TargetVehicle();
+    virtual Vehicle*  TargetVehicle(Vehicle* v);
     virtual Int8      Throttle();
     virtual Int8      Throttle(Int8 i);
     virtual Vector    Thrust();

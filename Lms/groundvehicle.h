@@ -7,8 +7,10 @@
 
 class GroundVehicle : public Vehicle {
   protected:
+    Double altitude;
     Double heading;
     Double maxSpeed;
+    Double radius;
     Int8   turnRate;
     Double  motorEfficiency;
     Double  batteryLeakage;
@@ -22,7 +24,9 @@ class GroundVehicle : public Vehicle {
     virtual Double MaxSpeed();
     virtual Double MaxSpeed(Double d);
     virtual void Place(Vector pos);
-    virtual Int8 SubLoad(char* line);
+    virtual Double Radius();
+    virtual Double Radius(Double d);
+    virtual Int8 SubLoad(FILE* file, char* line);
     virtual void Save(FILE* file);
     virtual Int8 TurnRate();
     virtual Int8 TurnRate(Int8 i);

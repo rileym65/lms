@@ -3,6 +3,9 @@
 #include "gauge.h"
 #include "g_amsatt.h"
 #include "terminal.h"
+#include "vehicle.h"
+#include "spacecraft.h"
+#include "common.h"
 
 G_AmsAtt::G_AmsAtt(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -30,17 +33,20 @@ void G_AmsAtt::Display() {
 void G_AmsAtt::Update() {
   Int32 i;
   char buffer[32];
-  i = (int)(ins->AttUr()+.4);
+  Spacecraft* sc;
+  if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
+  sc = (Spacecraft*)vehicle;
+  i = (int)(acos(sc->Position().Norm().Dot(sc->FaceUp())) * 180 / M_PI + .4);
   if (lastUr != i) {
     GotoXY(x+4, y+1); sprintf(buffer,"%3d",i); Write(buffer);
     lastUr = i;
     }
-  i = (int)(ins->AttFr()+.4);
+  i = (int)(acos(sc->Position().Norm().Dot(sc->FaceFront())) * 180 / M_PI+.4);
   if (lastFr != i) {
     GotoXY(x+4, y+2); sprintf(buffer,"%3d",i); Write(buffer);
     lastFr = i;
     }
-  i = (int)(ins->AttLs()+.4);
+  i = (int)(acos(sc->FaceLeft().Dot(Vector(0,0,-1))) * 180 / M_PI +.4);
   if (lastLs != i) {
     GotoXY(x+4, y+3); sprintf(buffer,"%3d",i); Write(buffer);
     lastLs = i;

@@ -117,7 +117,6 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"injury ")) sscanf(nw(pline),"%lf",&injury);
     else if (startsWith(pline,"softinjury ")) sscanf(nw(pline),"%lf",&softInjury);
     else if (startsWith(pline,"hardinjury ")) sscanf(nw(pline),"%lf",&hardInjury);
-    else if (startsWith(pline,"insmode ")) insMode = atoi(nw(pline));
     else if (startsWith(pline,"landingradaron ")) landingRadarOn = atoi(nw(pline));
     else if (startsWith(pline,"metabolicrate ")) metabolicRate = atof(nw(pline));
     else if (startsWith(pline,"pilotlocation ")) pilotLocation = nw(pline)[0];
@@ -232,7 +231,6 @@ Int8 load(char* filename) {
     }
 
   fclose(file);
-  ins->Mode(insMode);
   return -1;
   }
 

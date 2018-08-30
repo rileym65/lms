@@ -27,7 +27,7 @@ class Lrv : public GroundVehicle {
     virtual Double Driven();
     virtual Int8   Rock();
     virtual Int8   Rock(Int8 i);
-    virtual Int8   SubLoad(char* line);
+    virtual Int8   SubLoad(FILE* file, char* line);
     virtual void   Save(FILE* file);
     virtual void   ProcessKey(Int32 key);
     virtual Double Value();

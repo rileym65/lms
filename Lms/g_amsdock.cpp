@@ -3,6 +3,9 @@
 #include "gauge.h"
 #include "g_amsdock.h"
 #include "terminal.h"
+#include "vehicle.h"
+#include "spacecraft.h"
+#include "common.h"
 
 G_AmsDock::G_AmsDock(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -47,7 +50,10 @@ void G_AmsDock::Update() {
   Vector v;
   Vector relPos;
   Vector relVel;
-  relPos = ins->RelPos();
+  Spacecraft *sc;
+  if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
+  sc = (Spacecraft*)vehicle;
+  relPos = sc->RelPos();
   if (pilotLocation != PILOT_LM || !dockingRadarOn ||
       dsnOn || landingRadarOn || relPos.Length() > 200) {
     px = 5; py = 3;
@@ -60,7 +66,7 @@ void G_AmsDock::Update() {
     rVel = '|';
     }
   else {
-    relVel = ins->RelVel();
+    relVel = sc->RelVel();
     py = 3 + relPos.X()+.5;
     if (py > 5) py = 5;
     if (py < 1) py = 1;

@@ -2,6 +2,7 @@
 #include "header.h"
 #include "plss.h"
 #include "terminal.h"
+#include "common.h"
 
 Plss::Plss() {
   Init();
@@ -29,7 +30,7 @@ void Plss::BeginEva(Vehicle* from) {
   Place(from->Position());
   p = faceFront.Norm().Scale(15);
   position = position + p;
-  position = position.Norm().Scale(GROUND);
+  position = position.Norm().Scale(orbiting->Radius());
   carrying = ' ';
   Heading(0);
   return;
@@ -41,7 +42,7 @@ void Plss::BeginEva(Vehicle* from) {
   Double dist;
   fp = from->Position();
   u = from->Position().Norm();
-  position = u.Scale(GROUND);
+  position = u.Scale(orbiting->Radius());
   velocity = Vector(0,0,0);
   thrust = Vector(0,0,0);
   Radius(position.Length());
@@ -140,9 +141,9 @@ void Plss::Cycle() {
   if (battery < 0) battery = 0;
   if (throttle > 30 && metabolicRate > 60) Throttle(30);
   GroundVehicle::Cycle();
-  if (!isnan(velocity.Length())) walked += velocity.Length();
+  if (!isnan(velocity.Length())) walked += velocity.Length() / GRAN;
   if (throttle > 0) {
-    metabolicRate += throttle * 0.0023;
+    metabolicRate += (throttle * 0.0023) / GRAN;
     }
   if (damageReportStep != 0) {
     if (damageReportStep == 1) {
@@ -185,14 +186,14 @@ void Plss::Cycle() {
     }
   }
 
-Int8 Plss::SubLoad(char* pline) {
+Int8 Plss::SubLoad(FILE* file, char* pline) {
   if (startsWith(pline,"carrying ")) carrying = atoi(nw(pline));
   else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else if (startsWith(pline,"walked ")) walked = atof(nw(pline));
   else if (startsWith(pline,"oxygenleakage ")) oxygenLeakage = atof(nw(pline));
   else if (startsWith(pline,"cart ")) cart = atoi(nw(pline));
   else if (startsWith(pline,"cartvalue ")) cartValue = atof(nw(pline));
-  else return GroundVehicle::SubLoad(pline);
+  else return GroundVehicle::SubLoad(file, pline);
   return -1;
   }
 

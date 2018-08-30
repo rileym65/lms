@@ -3,6 +3,7 @@
 #include "terminal.h"
 #include "computer.h"
 #include "g_clockmi.h"
+#include "common.h"
 
 LunarModule::LunarModule() {
   landed = 0;
@@ -33,15 +34,8 @@ LunarModule::LunarModule() {
   ascentFuelRate = ascentNewtons / (9.81 * ascentIsp);
   descentFuelRate = descentNewtons / (9.81 * descentIsp);
   rcsFuelRate = rcsNewtons / (9.81 * rcsIsp);
+  type |= VT_LANDER;
   InitPanel();
-/*
-  roll = 0;
-  pitch = 0;
-  yaw = 0;
-  rollMatrix = Matrix::RotateZ(roll);
-  pitchMatrix = Matrix::RotateY(pitch);
-  yawMatrix = Matrix::RotateX(yaw);
-*/
   }
 
 LunarModule::~LunarModule() {
@@ -473,6 +467,7 @@ void LunarModule::Cycle() {
   Double vVel;
   Double hVel;
   Double damage;
+  Double fuel;
   Vector v;
   Matrix m;
   char   cell;
@@ -490,7 +485,6 @@ void LunarModule::Cycle() {
   if (descentBattery < 0.0) descentBattery = 0.0;
   if (descentFuel < 0.0) descentFuel = 0.0;
   if (rcsFuel < 0.0) rcsFuel = 0.0;
-//  if (comp != NULL) comp->Cycle();
   if (damageReportStep != 0) {
     if (damageReportStep == 1) {
       if (seq->Time() <= 0) {
@@ -553,45 +547,13 @@ void LunarModule::Cycle() {
   if (pitchRate >= -0.0001 && pitchRate < 0.0001) pitchRate = 0;
   if (yawRate >= -0.0001 && yawRate < 0.0001) yawRate = 0;
 
-  if (rollRate != 0) {
-    m = Matrix::Rotate(faceUp, rollRate);
-    faceLeft = m.Transform(faceLeft).Norm();
-    faceFront = m.Transform(faceFront).Norm();
-    }
-  if (yawRate != 0) {
-    m = Matrix::Rotate(faceFront, yawRate);
-    faceUp = m.Transform(faceUp).Norm();
-    faceLeft = m.Transform(faceLeft).Norm();
-    }
-  if (pitchRate != 0) {
-    m = Matrix::Rotate(faceLeft, pitchRate);
-    faceUp = m.Transform(faceUp).Norm();
-    faceFront = m.Transform(faceFront).Norm();
-    }
-
-/*
-  if (rollRate != 0 || pitchRate != 0 || yawRate != 0) {
-
-    if (rollRate != 0) orientation.MultipliedBy(rollMatrix);
-    if (pitchRate != 0) orientation.MultipliedBy(pitchMatrix);
-    if (yawRate != 0) orientation.MultipliedBy(yawMatrix);
-//    orientation.Row(0,orientation.Row(0).Norm());
-//    orientation.Row(1,orientation.Row(1).Norm());
-//    orientation.Row(2,orientation.Row(2).Norm());
-    faceFront = orientation.Transform(baseFront).Norm();
-    faceLeft = orientation.Transform(baseLeft).Norm();
-    faceUp = faceFront.Cross(faceLeft).Norm();
-    faceLeft = faceUp.Cross(faceFront).Norm();
-    }
-*/
-
   switch (rcsThrottle) {
     case 1: rcsThrust = rcsNewtons/100.0; rcsfuel = rcsFuelRate/100.0; break;
     case 10: rcsThrust = rcsNewtons/10.0; rcsfuel = rcsFuelRate/10.0; break;
     case 100: rcsThrust = rcsNewtons; rcsfuel = rcsFuelRate; break;
     default : rcsThrust = 0;
     }
-//GotoXY(1,25); printf("fl %f fu %f lu %f\n",faceFront.Dot(faceLeft),faceFront.Dot(faceUp),faceLeft.Dot(faceUp));
+  rcsfuel = rcsThrust / (9.80665 * rcsIsp) / GRAN;
   rcsThrust = rcsThrust / Mass();
   thrust = Vector(0,0,0);
   if (rcsUdMode == 'D' && rcsfuel <= rcsFuel) {
@@ -621,16 +583,19 @@ void LunarModule::Cycle() {
   if (throttle != 0) {
     if (descentJettisoned) {
       throttle = 100;
-      mainThrust = ascentEngineEfficiency * ascentNewtons / Mass();
-      if (ascentFuel >= ascentFuelRate) {
+      mainThrust = ascentEngineEfficiency * ascentNewtons;
+      fuel = mainThrust / (9.80665 * ascentIsp) / GRAN;
+      mainThrust = mainThrust / Mass();
+      if (ascentFuel >= fuel) {
         thrust = thrust + faceUp.Scale(mainThrust);
-        ascentFuel -= ascentFuelRate;
+        ascentFuel -= fuel;
         }
       }
     else {
       newtons = (double)throttle / 100.0;
       mainfuel = descentFuelRate * newtons;
       newtons *= descentEngineEfficiency * descentNewtons;
+      mainfuel = newtons / (9.80665 * descentIsp) / GRAN;
       mainThrust = newtons / Mass();
       if (mainfuel <= descentFuel) {
         thrust = thrust + faceUp.Scale(mainThrust);
@@ -638,9 +603,8 @@ void LunarModule::Cycle() {
         }
       }
     }
-  Vehicle::Cycle();
-//  if (radius <= GROUND && !landed) {
-  if (radius <= GROUND) {
+  Spacecraft::Cycle();
+  if (radius <= orbiting->Radius()) {
     vVel = fabs(velocityAltitude);
     hVel = sqrt(lm->VelocityEast() * lm->VelocityEast() +
                 lm->LatitudeVelocity() * lm->LatitudeVelocity());
@@ -690,12 +654,12 @@ void LunarModule::Cycle() {
     velocityAltitude = 0;
     landed = -1;
     throttle = 0;
-    position = position.Norm().Scale(GROUND);
+    position = position.Norm().Scale(orbiting->Radius());
     rcsFbMode = ' ';
     rcsLrMode = ' ';
     rcsUdMode = ' ';
     altitude = 0;
-    radius = GROUND;
+    radius = orbiting->Radius();
     landedMet = clockMi;
     landedLongitude = longitude;
     landedLatitude = latitude;
@@ -819,20 +783,6 @@ void LunarModule::ProcessKey(Int32 key) {
       RcsLrMode(' ');
       RcsUdMode(' ');
       }
-/*
-    if (key == 'f' && RcsFbMode() == ' ') RcsFbMode('F');
-    if (key == 'f' && RcsFbMode() == 'B') RcsFbMode(' ');
-    if (key == 'b' && RcsFbMode() == ' ') RcsFbMode('B');
-    if (key == 'b' && RcsFbMode() == 'F') RcsFbMode(' ');
-    if (key == 'l' && RcsLrMode() == ' ') RcsLrMode('L');
-    if (key == 'l' && RcsLrMode() == 'R') RcsLrMode(' ');
-    if (key == 'r' && RcsLrMode() == ' ') RcsLrMode('R');
-    if (key == 'r' && RcsLrMode() == 'L') RcsLrMode(' ');
-    if (key == 'd' && RcsUdMode() == ' ') RcsUdMode('D');
-    if (key == 'd' && RcsUdMode() == 'U') RcsUdMode(' ');
-    if (key == 'u' && RcsUdMode() == ' ') RcsUdMode('U');
-    if (key == 'u' && RcsUdMode() == 'D') RcsUdMode(' ');
-*/
     if (key == '=' && RcsThrottle() == 10) RcsThrottle(100);
     if (key == '=' && RcsThrottle() == 1) RcsThrottle(10);
     if (key == '-' && RcsThrottle() == 10) RcsThrottle(1);
@@ -866,7 +816,7 @@ void LunarModule::ProcessKey(Int32 key) {
       else
         burn[numBurns-1].fuelUsed -= descentFuel;
       if (!descentJettisoned) {
-        if (ignitionAltitude > 50000 && ins->Perilune()-GROUND < 50000)
+        if (ignitionAltitude > 50000 && periapsis-orbiting->Radius() < 50000)
           clockDOI = ignitionTime;
         }
       }
@@ -947,7 +897,7 @@ void LunarModule::ProcessKey(Int32 key) {
 
 void LunarModule::Save(FILE* file) {
   fprintf(file,"LunarModule {%s",LE);
-  Vehicle::Save(file);
+  Spacecraft::Save(file);
   fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
   fprintf(file,"  RcsLrMode %d%s",rcsLrMode,LE);
   fprintf(file,"  RcsUdMode %d%s",rcsUdMode,LE);
@@ -997,7 +947,7 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  }%s",LE);
   }
 
-Int8 LunarModule::SubLoad(char* pline) {
+Int8 LunarModule::SubLoad(FILE* file, char* pline) {
   if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
   else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
   else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
@@ -1041,7 +991,7 @@ Int8 LunarModule::SubLoad(char* pline) {
   else if (startsWith(pline,"maxdescentoxygen ")) maxDescentOxygen = atof(nw(pline));
   else if (startsWith(pline,"maxdescenteoxygen ")) maxDescentEOxygen = atof(nw(pline));
   else if (startsWith(pline,"maxrcsfuel ")) maxRcsFuel = atof(nw(pline));
-  else return 0;
+  else return Spacecraft::SubLoad(file, pline);
   return -1;
   }
 

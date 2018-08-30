@@ -38,7 +38,7 @@ PHEADERS = panel.h ../common/gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_mapmed.h \
            g_multiaxis.h \
            g_orbitlarge.h \
-           g_oxybat.h \
+           ../common/g_oxybat.h \
            g_pilot.h \
            g_pilotloc.h \
            g_plss.h \
@@ -87,7 +87,7 @@ OBJS = \
 	g_lrv.o \
 	g_multiaxis.o \
 	g_orbitlarge.o \
-	g_oxybat.o \
+	../common/g_oxybat.o \
 	g_pilot.o \
 	g_pilotloc.o \
 	g_plss.o \
@@ -99,17 +99,17 @@ OBJS = \
 	computer.o \
 	groundvehicle.o \
 	helpers.o \
-	ins.o \
-	lander.o \
+	../common/lander.o \
 	lfsr.o \
 	load.o \
 	lrv.o \
 	map.o \
-	mission.o \
+	../common/mission.o \
 	records.o \
 	save.o \
 	lm.o \
 	../common/matrix.o \
+	../common/body.o \
 	missionreport.o \
 	panel.o \
 	plss.o \
@@ -119,7 +119,8 @@ OBJS = \
 	sgn.o \
 	../common/terminal.o \
 	../common/vector.o \
-	vehicle.o \
+	../common/vehicle.o \
+	../common/spacecraft.o \
 	main.o
 
 MOBJS = \
@@ -132,12 +133,13 @@ MOBJS = \
 
 PLANNEROBJS = \
 	helpers.o \
-	lander.o \
+	../common/lander.o \
 	lfsr.o \
 	map.o \
-	mission.o \
+	../common/mission.o \
 	planner.o \
 	random.o \
+	../common/vector.o \
 	../common/terminal.o
 
 GCASMOBJS = \
@@ -195,21 +197,20 @@ clean:
 cleancommon:
 	-rm ../common/*.o
 
-computer.o:      $(HEADERS) vehicle.h computer.h computer.cpp
+computer.o:      $(HEADERS) ../common/vehicle.h computer.h computer.cpp
 csm.o:           $(HEADERS) csm.cpp
-groundvehicle.o: $(HEADERS) vehicle.h groundvehicle.h groundvehicle.cpp
-ins.o:           $(HEADERS) ins.cpp
+groundvehicle.o: $(HEADERS) ../common/vehicle.h groundvehicle.h groundvehicle.cpp
 helpers.o:       $(HEADERS) helpers.cpp
 lander.o:        $(HEADERS) lander.cpp
 lfsr.o:          $(HEADERS) lfsr.h lfsr.cpp
 load.o:          $(HEADERS) load.cpp
-lrv.o:           $(HEADERS) vehicle.h lrv.h lrv.cpp
+lrv.o:           $(HEADERS) ../common/vehicle.h lrv.h lrv.cpp
 main.o:          $(HEADERS) main.cpp
 map.o:           $(HEADERS) lfsr.h random.h map.h map.cpp
 mapgen.o:        $(HEADERS) map.h random.h mapgen.cpp
 missionreport.o: $(HEADERS) missionreport.cpp
 panel.o:         $(HEADERS) $(PHEADERS)  panel.cpp
-plss.o:          $(HEADERS) vehicle.h plss.h plss.cpp
+plss.o:          $(HEADERS) ../common/vehicle.h plss.h plss.cpp
 random.o:        $(HEADERS) lfsr.h random.h random.cpp
 records.o:       $(HEADERS) records.h records.cpp
 save.o:          $(HEADERS) save.cpp
@@ -253,7 +254,6 @@ g_mapmed.o:     $(HEADERS) ../common/gauge.h  map.h g_mapmed.h g_mapmed.cpp
 g_multiaxis.o:  $(HEADERS) ../common/gauge.h  map.h g_multiaxis.h g_multiaxis.cpp
 g_evaprep.o:    $(HEADERS) ../common/gauge.h  g_evaprep.h g_evaprep.cpp
 g_orbitlarge.o: $(HEADERS) ../common/gauge.h  g_orbitlarge.h g_orbitlarge.cpp
-g_oxybat.o:     $(HEADERS) ../common/gauge.h  g_oxybat.h g_oxybat.cpp
 g_pilot.o:      $(HEADERS) ../common/gauge.h  g_pilot.h g_pilot.cpp
 g_pilotloc.o:   $(HEADERS) ../common/gauge.h  g_pilotloc.h g_pilotloc.cpp
 g_plss.o:       $(HEADERS) ../common/gauge.h  g_plss.h g_plss.cpp
@@ -263,6 +263,5 @@ g_radars.o:     $(HEADERS) ../common/gauge.h  g_radars.h g_radars.cpp
 g_seq.o:        $(HEADERS) ../common/gauge.h  g_seq.h g_seq.cpp
 g_throttle.o:   $(HEADERS) ../common/gauge.h  g_throttle.h g_throttle.cpp
 
-mission.o:     $(HEADERS) mission.h mission.cpp
-planner.o:     $(HEADERS) mission.h planner.cpp
+planner.o:     $(HEADERS) ../common/mission.h planner.cpp
 

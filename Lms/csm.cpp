@@ -11,6 +11,12 @@ CSM::~CSM() {
 
 void CSM::Save(FILE* file) {
   fprintf(file,"CSM {%s",LE);
-  Vehicle::Save(file);
+  Spacecraft::Save(file);
   fprintf(file,"  }%s",LE);
   }
+
+void CSM::ProcessKey(Int32 key) {
+  if (key == 'M') seq->MoveLm();
+  panel->ProcessKey(key);
+  }
+

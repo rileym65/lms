@@ -3,6 +3,7 @@
 #include "gauge.h"
 #include "g_amsland.h"
 #include "terminal.h"
+#include "common.h"
 
 G_AmsLand::G_AmsLand(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -47,16 +48,17 @@ void G_AmsLand::Update() {
   Double dlat;
   char   mode;
   char   buffer[32];
+  if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
   lat = (int)currentVehicle->Latitude();
   lng = (int)currentVehicle->Longitude();
-  dlng = currentVehicle->Longitude();
-  dlat = currentVehicle->Latitude();
-  alt = currentVehicle->Altitude();
+  dlng = vehicle->Longitude();
+  dlat = vehicle->Latitude();
+  alt = ((Spacecraft*)vehicle)->Altitude();
 
   mode = 'L';
   if (alt > 12000) mode = 'H';
   if (!landingRadarOn) mode = 'H';
-  if (ins->AttUr() > 60) mode = 'H';
+//  if (ins->AttUr() > 60) mode = 'H';
 
   if (mode == 'H') {
     if (mode != lastMode || lat != lastLatitude || lng != lastLongitude) {

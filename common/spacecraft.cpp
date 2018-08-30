@@ -7,6 +7,7 @@
 #include "helpers.h"
 #include "common.h"
 #include "body.h"
+#include "mission.h"
 
 Spacecraft::Spacecraft() {
   rcsFbMode = ' ';
@@ -21,6 +22,8 @@ Spacecraft::Spacecraft() {
   rcsFuel = 0;
   maxRcsFuel = 0;
   type |= VT_SPACECRAFT;
+  tarLongitude = 0;
+  tarLatitude = 0;
   }
 
 Spacecraft::~Spacecraft() {
@@ -172,6 +175,55 @@ Int8   Spacecraft::RcsThrottle(Int8 i) {
   return rcsThrottle;
   }
 
+Double Spacecraft::RelAltitude() {
+  if (targetVehicle == NULL) return 0;
+  return position.Length() - targetVehicle->Position().Length();
+  }
+
+Vector Spacecraft::RelPos() {
+  if (targetVehicle == NULL) return Vector(0,0,0);
+  return position - targetVehicle->Position();
+  }
+
+Vector Spacecraft::RelVel() {
+  if (targetVehicle == NULL) return Vector(0,0,0);
+  return velocity - targetVehicle->Velocity();
+  }
+
+Double Spacecraft::RelLongitude() {
+  Double ret;
+  if (targetVehicle == NULL) return 0;
+  ret = longitude - targetVehicle->Longitude();
+  while (ret < -180) ret += 360;
+  while (ret > 180) ret -= 360;
+  return ret;
+  }
+
+Double Spacecraft::RelLatitude() {
+  Double ret;
+  if (targetVehicle == NULL) return 0;
+  ret = latitude - targetVehicle->Latitude();
+  return ret;
+  }
+
+Double Spacecraft::RelMomEast() {
+  Double ret;
+  if (targetVehicle == NULL) return 0;
+  ret = ascendingNode - ((Spacecraft*)targetVehicle)->AscendingNode();
+  while (ret < -180) ret += 360;
+  while (ret > 180) ret -= 360;
+  return ret;
+  }
+
+Double Spacecraft::RelMomNorth() {
+  Double ret;
+  if (targetVehicle == NULL) return 0;
+  ret = inclination - ((Spacecraft*)targetVehicle)->Inclination();
+  while (ret < -180) ret += 360;
+  while (ret > 180) ret -= 360;
+  return ret;
+  }
+
 char   Spacecraft::RcsUdMode() {
   return rcsUdMode;
   }
@@ -181,6 +233,21 @@ char   Spacecraft::RcsUdMode(char c) {
   return rcsUdMode;
   }
 
+Double Spacecraft::TargetLongitude() {
+  return tarLongitude;
+  }
+
+Double Spacecraft::TargetLatitude() {
+  return tarLatitude;
+  }
+
+Double Spacecraft::TargetMomEast() {
+  return tarMomEast;
+  }
+
+Double Spacecraft::TargetMomNorth() {
+  return tarMomNorth;
+  }
 
 void Spacecraft::Ins() {
   Vector L;
@@ -192,6 +259,7 @@ void Spacecraft::Ins() {
   Double hyp;
   Vector pos;
   Vector vel;
+  Double tmp;
   pos = position - orbiting->Position();
   vel = velocity - orbiting->Velocity();
   g = orbiting->Gravitation();
@@ -206,16 +274,14 @@ void Spacecraft::Ins() {
   apoapsis = s * (1 + e);
   periapsis = s * (1 - e);
   orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/g);
-  if (thrust.Length() > 0) {
-    hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
-    ascendingNode = L.Y() / hyp;
-    ascendingNode = asin(ascendingNode) * 180 / M_PI;
-    if (L.X() < 0 && L.Y() < 0) ascendingNode = -180 - ascendingNode;
-    if (L.X() < 0 && L.Y() >= 0) ascendingNode = 180 - ascendingNode;
-    hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
-    inclination = L.Z() / hyp;
-    inclination = asin(inclination) * 180 / M_PI;
-    }
+  hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
+  ascendingNode = L.Y() / hyp;
+  ascendingNode = asin(ascendingNode) * 180 / M_PI;
+  if (L.X() < 0 && L.Y() < 0) ascendingNode = -180 - ascendingNode;
+  if (L.X() < 0 && L.Y() >= 0) ascendingNode = 180 - ascendingNode;
+  hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
+  inclination = L.Z() / hyp;
+  inclination = asin(inclination) * 180 / M_PI;
   hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
   longitude = pos.X() / hyp;
   longitude = asin(longitude) * 180 / M_PI;
@@ -224,6 +290,29 @@ void Spacecraft::Ins() {
   hyp = sqrt(pos.Z() * pos.Z() + hyp * hyp);
   latitude = pos.Z() / hyp;
   latitude = asin(latitude) * 180 / M_PI;
+
+  if (mission != NULL) {
+    tarLatitude = latitude - mission->TargetLatitude();
+    tarLongitude = longitude - mission->TargetLongitude();
+    while (tarLongitude < -180) tarLongitude += 360;
+    while (tarLongitude > 180) tarLongitude -= 360;
+    tarMomNorth = inclination - mission->TargetMomNorth();
+    tarMomEast = ascendingNode - mission->TargetMomEast();
+    while (tarMomNorth < -180) tarMomNorth += 360;
+    while (tarMomNorth > 180) tarMomNorth -= 360;
+    while (tarMomEast < -180) tarMomEast += 360;
+    while (tarMomEast > 180) tarMomEast -= 360;
+    }
+  tmp = latitude - lastLatitude;
+  if (tmp <= -180) tmp += 360;
+  if (tmp >= 180) tmp -= 360;
+  latitudeVel = tmp * orbiting->Meters();
+  latitudeAcc = latitudeVel - lastLatitudeVel;
+
+  lastLatitude = latitude;
+  lastLongitude = longitude;
+  lastLatitudeVel = latitudeVel;
+
   }
 
 void Spacecraft::Cycle() {
@@ -269,7 +358,7 @@ void Spacecraft::Cycle() {
     a = a.Scale(1/alt3);
     earthG = a.Length();
     velocity = velocity + a.Scale(1/GRAN);
-    }
+    } else earthG = 0;
 
   if (Moon != NULL) {
     alt3 = (position - Moon->Position()).Length();
@@ -280,7 +369,7 @@ void Spacecraft::Cycle() {
     a = a.Scale(1/alt3);
     moonG = a.Length();
     velocity = velocity + a.Scale(1/GRAN);
-    }
+    } else moonG = 0;
 
   velocity = velocity + thrust.Scale(1/GRAN);
   velocity = velocity + drag.Scale(1/GRAN);

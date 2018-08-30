@@ -2,6 +2,7 @@
 #define _MISSION_H
 
 #include "types.h"
+#include "vector.h"
 #include "lander.h"
 
 class Mission {
@@ -29,6 +30,11 @@ class Mission {
     Byte    laser;
     Lander *lander;
     void    validate();
+    Vector  targetPos;
+    Vector  targetVel;
+    Double  targetMomEast;
+    Double  targetMomNorth;
+    void    _computeTargetData();
   public:
     Mission();
     ~Mission();
@@ -77,11 +83,19 @@ class Mission {
     Double TargetLatitude(Double d);
     Double TargetLongitude();
     Double TargetLongitude(Double d);
+    Double TargetMomEast();
+    Double TargetMomNorth();
     Int8   Vehicle();
     Int8   Vehicle(Int8 v);
     void   Save(FILE* file);
     void   Load(FILE* file);
   };
+
+#ifdef MAIN
+Mission *mission;
+#else
+extern Mission *mission;
+#endif
 
 #endif
 

@@ -115,6 +115,15 @@ void CsmComputer::Cycle() {
       running = 0;
       }
     }
+  else if (prog == 3) {
+    vel = csm->Velocity() - csm->Orbiting()->Velocity();
+    a = vel.Length();
+    _reg3(reg2 - a);
+    if (reg3 <= 0) {
+      csm->Cutoff();
+      running = 0;
+      }
+    }
   else if (prog == 10) {
     a = sqrt(csm->Orbiting()->Gravitation() / (reg1*1000 + csm->Orbiting()->Radius()));
     _reg2(a*10);
@@ -172,6 +181,11 @@ void CsmComputer::ProcessKey(Int32 key) {
   char *buffer;
   if (key == 'g') {
     running = running ^ 0xff;
+    if (running != 0) {
+      if (prog == 3) {
+        _reg2(reg1 + (csm->Velocity() - csm->Orbiting()->Velocity()).Length());
+        }
+      }
     }
   if (key == 'p' && entryMode == '-') {
     entryMode = 'P';

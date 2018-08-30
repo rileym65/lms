@@ -73,6 +73,9 @@
 ../common/g_oxygen.o: ../common/gauge.h ../common/g_oxygen.h ../common/terminal.h ../common/g_oxygen.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_oxygen.cpp -o ../common/g_oxygen.o
 
+../common/g_oxybat.o: ../common/gauge.h ../common/g_oxybat.h ../common/terminal.h ../common/g_oxybat.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_oxybat.cpp -o ../common/g_oxybat.o
+
 ../common/g_periapsis.o: ../common/gauge.h ../common/g_periapsis.h ../common/terminal.h ../common/g_periapsis.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_periapsis.cpp -o ../common/g_periapsis.o
 
@@ -117,6 +120,12 @@
 
 ../common/helpers.o: ../common/types.h ../common/helpers.h ../common/helpers.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/helpers.cpp -o ../common/helpers.o
+
+../common/lander.o: ../common/types.h ../common/lander.h ../common/lander.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/lander.cpp -o ../common/lander.o
+
+../common/mission.o: ../common/types.h ../common/mission.h ../common/mission.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/mission.cpp -o ../common/mission.o
 
 ../common/panel.o: ../common/types.h ../common/panel.h ../common/panel.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/panel.cpp -o ../common/panel.o

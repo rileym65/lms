@@ -1,4 +1,5 @@
 #include <math.h>
+#include "types.h"
 #include "lander.h"
 
 Lander::Lander(Byte b) {

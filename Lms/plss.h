@@ -30,7 +30,7 @@ class Plss : public GroundVehicle {
     virtual Double CartValue();
     virtual Double CartValue(Double d);
     virtual void   Damage(Double dmg);
-    virtual Int8   SubLoad(char* line);
+    virtual Int8   SubLoad(FILE* file, char* line);
     virtual void   Save(FILE* file);
     virtual void   ProcessKey(Int32 key);
     virtual Double Value();
