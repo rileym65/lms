@@ -4,6 +4,7 @@
 #include "map.h"
 #include "g_maplarge.h"
 #include "terminal.h"
+#include "common.h"
 
 G_MapLarge::G_MapLarge(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

@@ -24,6 +24,7 @@ POBJS = \
 	../common/g_fuel.o \
 	../common/g_incl.o \
 	../common/g_lan.o \
+	../common/g_mapmed.o \
 	../common/g_moon.o \
 	../common/g_multiaxis.o \
 	../common/g_orbit.o \

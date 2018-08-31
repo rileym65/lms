@@ -1,7 +1,8 @@
+#include <stdlib.h>
 #include <math.h>
-#include "header.h"
 #include "groundvehicle.h"
 #include "terminal.h"
+#include "helpers.h"
 #include "common.h"
 
 GroundVehicle::GroundVehicle() {

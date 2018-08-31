@@ -4,6 +4,7 @@
 #include "map.h"
 #include "g_orbitlarge.h"
 #include "terminal.h"
+#include "common.h"
 
 G_OrbitLarge::G_OrbitLarge(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

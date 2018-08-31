@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "header.h"
+#include "common.h"
 #include "csm.h"
 
 CSM::CSM() {

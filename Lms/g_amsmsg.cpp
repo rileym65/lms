@@ -3,6 +3,7 @@
 #include "gauge.h"
 #include "g_amsmsg.h"
 #include "terminal.h"
+#include "common.h"
 
 G_AmsMessage::G_AmsMessage(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

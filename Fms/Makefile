@@ -14,6 +14,7 @@ LIBS = -lm
 
 include ../common/Makefile.pheaders
 include ../common/Makefile.pobjects
+include ../common/Makefile.cobjects
 
 HEADERS = $(PHEADERS) header.h ../common/types.h \
 	   ../common/vector.h \
@@ -27,23 +28,14 @@ HEADERS = $(PHEADERS) header.h ../common/types.h \
 	   ../common/csmcomputer.h
 OBJS = \
 	$(POBJS) \
+	$(COBJS) \
 	airdensity.o \
-	../common/body.o \
 	booster.o \
 	command.o \
-	../common/csmcomputer.o \
-	../common/gauge.o \
 	../common/helpers.o \
-	../common/lander.o \
 	load.o \
-	../common/matrix.o \
-	../common/mission.o \
 	../common/panel.o \
 	save.o \
-	../common/spacecraft.o \
-	../common/terminal.o \
-	../common/vector.o \
-	../common/vehicle.o \
 	main.o
 
 all: $(PROJECT)

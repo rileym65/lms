@@ -1,8 +1,13 @@
+#include <stdlib.h>
 #include <math.h>
-#include "header.h"
+#include "vehicle.h"
+#include "spacecraft.h"
 #include "lrv.h"
 #include "terminal.h"
 #include "common.h"
+#include "helpers.h"
+#include "random.h"
+#include "sequencer.h"
 
 Lrv::Lrv() {
   Init();
@@ -14,7 +19,7 @@ Lrv::~Lrv() {
 void Lrv::Init() {
   GroundVehicle::Init();
   panel = new Panel("lrv.pnl",this);
-  battery = LRV_BATTERY;
+  battery = 0;
   isSetup = false;
   rock = 0;
   boxes = 8;

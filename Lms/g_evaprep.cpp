@@ -3,6 +3,7 @@
 #include "gauge.h"
 #include "g_evaprep.h"
 #include "terminal.h"
+#include "common.h"
 
 G_EvaPrep::G_EvaPrep(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

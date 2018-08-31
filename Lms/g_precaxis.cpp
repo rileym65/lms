@@ -76,9 +76,7 @@ void G_PrecAxis::modeAbs() {
   Double dx,dy,dz;
   Vector pos;
   Vector vel;
-  Vehicle* vehicle;
   char buffer[40];
-  vehicle = currentVehicle;
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
   Vector xVec;
@@ -111,8 +109,6 @@ void G_PrecAxis::modeDown() {
   Vector pos;
   Vector vel;
   char buffer[40];
-  Vehicle* vehicle;
-  vehicle = currentVehicle;
   Double dx,dy,dz;
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
@@ -151,8 +147,6 @@ void G_PrecAxis::modePrograde() {
   Vector zVec;
   char buffer[40];
   Double dx,dy,dz;
-  Vehicle* vehicle;
-  vehicle = currentVehicle;
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
   xVec = vel.Cross(pos).Norm();
@@ -185,8 +179,6 @@ void G_PrecAxis::modeWest() {
   Vector zVec;
   char buffer[40];
   Double dx,dy,dz;
-  Vehicle* vehicle;
-  vehicle = currentVehicle;
   vel = vehicle->Velocity().Norm();
   xVec = Vector(0,0,1);
   yVec = vehicle->Position().Norm();

@@ -1,0 +1,20 @@
+COBJS = \
+	../common/body.o \
+	../common/computer.o \
+	../common/csmcomputer.o \
+        ../common/gauge.o \
+	../common/groundvehicle.o \
+	../common/lander.o \
+	../common/lfsr.o \
+	../common/lm.o \
+	../common/lrv.o \
+	../common/map.o \
+	../common/matrix.o \
+	../common/mission.o \
+	../common/plss.o \
+	../common/random.o \
+	../common/sequencer.o \
+	../common/spacecraft.o \
+	../common/terminal.o \
+	../common/vector.o \
+	../common/vehicle.o

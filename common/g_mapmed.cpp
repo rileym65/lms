@@ -1,9 +1,16 @@
-#include "header.h"
+#include <math.h>
+#include <string.h>
+#include "common.h"
 #include "types.h"
 #include "gauge.h"
 #include "map.h"
 #include "g_mapmed.h"
 #include "terminal.h"
+#include "vehicle.h"
+
+#define GROUND 1738300
+#define METERS ((GROUND*2*M_PI) / 360.0)
+#define MAPCELL           (1.0/(METERS/10.0))
 
 G_MapMed::G_MapMed(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -45,10 +52,10 @@ void G_MapMed::Update() {
   Int32 cellX, cellY;
   Double lat,lng;
   char buffer[64];
-  lng = currentVehicle->Longitude();
-  lat = currentVehicle->Latitude();
-  cellX = map->Cell(currentVehicle->Longitude());
-  cellY = map->Cell(currentVehicle->Latitude());
+  lng = vehicle->Longitude();
+  lat = vehicle->Latitude();
+  cellX = map->Cell(vehicle->Longitude());
+  cellY = map->Cell(vehicle->Latitude());
   if (cellX != lastCellX || cellY != lastCellY) {
     for (j=0; j<11; j++)
       for (i=0; i<21; i++)

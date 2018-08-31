@@ -95,8 +95,6 @@ void G_MultiAxis::Display() {
 void G_MultiAxis::modeAbs() {
   Vector pos;
   Vector vel;
-  Vehicle* vehicle;
-  vehicle = currentVehicle;
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
   Vector xVec;
@@ -123,8 +121,6 @@ void G_MultiAxis::modeAbs() {
 void G_MultiAxis::modeDown() {
   Vector pos;
   Vector vel;
-  Vehicle* vehicle;
-  vehicle = currentVehicle;
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
   Vector xVec;
@@ -155,8 +151,6 @@ void G_MultiAxis::modePrograde() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  Vehicle* vehicle;
-  vehicle = currentVehicle;
   pos = vehicle->Position().Norm();
   vel = vehicle->Velocity().Norm();
   xVec = vel.Cross(pos).Norm();
@@ -182,8 +176,6 @@ void G_MultiAxis::modeWest() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  Vehicle* vehicle;
-  vehicle = currentVehicle;
   vel = vehicle->Velocity().Norm();
   xVec = Vector(0,0,1);
   yVec = vehicle->Position().Norm();

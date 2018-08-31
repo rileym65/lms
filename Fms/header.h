@@ -42,10 +42,9 @@ LINK Double  distance;
 LINK Byte    engines;
 LINK Boolean launched;
 LINK Vector  pos;
-LINK UInt32  simSpeed;
 LINK Booster* booster;
 LINK Vector  vel;
-LINK CommandModule* csm;
+//LINK CommandModule* csm;
 
 extern Double AirDensity(Double altitude);
 extern Int8   load(const char* filename);

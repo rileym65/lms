@@ -1,6 +1,9 @@
 ../common/body.o: ../common/types.h ../common/body.h ../common/body.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/body.cpp -o ../common/body.o
 
+../common/computer.o: ../common/types.h ../common/computer.h ../common/computer.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/computer.cpp -o ../common/computer.o
+
 ../common/g_accel.o: ../common/gauge.h ../common/g_accel.h ../common/terminal.h ../common/g_accel.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_accel.cpp -o ../common/g_accel.o
 
@@ -76,6 +79,9 @@
 ../common/g_lan.o: ../common/gauge.h ../common/g_lan.h ../common/terminal.h ../common/g_lan.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_lan.cpp -o ../common/g_lan.o
 
+../common/g_mapmed.o: ../common/gauge.h ../common/g_mapmed.h ../common/terminal.h ../common/g_mapmed.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_mapmed.cpp -o ../common/g_mapmed.o
+
 ../common/g_moon.o: ../common/gauge.h ../common/g_moon.h ../common/terminal.h ../common/g_moon.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_moon.cpp -o ../common/g_moon.o
 
@@ -139,11 +145,26 @@
 ../common/gauge.o: ../common/gauge.h ../common/gauge.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/gauge.cpp -o ../common/gauge.o
 
+../common/groundvehicle.o: ../common/groundvehicle.h ../common/groundvehicle.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/groundvehicle.cpp -o ../common/groundvehicle.o
+
 ../common/helpers.o: ../common/types.h ../common/helpers.h ../common/helpers.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/helpers.cpp -o ../common/helpers.o
 
 ../common/lander.o: ../common/types.h ../common/lander.h ../common/lander.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/lander.cpp -o ../common/lander.o
+
+../common/lfsr.o: ../common/types.h ../common/lfsr.h ../common/lfsr.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/lfsr.cpp -o ../common/lfsr.o
+
+../common/lm.o: ../common/types.h ../common/lm.h ../common/lm.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/lm.cpp -o ../common/lm.o
+
+../common/lrv.o: ../common/types.h ../common/lrv.h ../common/lrv.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/lrv.cpp -o ../common/lrv.o
+
+../common/map.o: ../common/types.h ../common/map.h ../common/map.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/map.cpp -o ../common/map.o
 
 ../common/mission.o: ../common/types.h ../common/mission.h ../common/mission.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/mission.cpp -o ../common/mission.o
@@ -153,6 +174,15 @@
 
 ../common/matrix.o: ../common/types.h ../common/matrix.h ../common/matrix.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/matrix.cpp -o ../common/matrix.o
+
+../common/random.o: ../common/types.h ../common/random.h ../common/random.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/random.cpp -o ../common/random.o
+
+../common/plss.o: ../common/types.h ../common/plss.h ../common/plss.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/plss.cpp -o ../common/plss.o
+
+../common/sequencer.o: ../common/types.h ../common/sequencer.h ../common/sequencer.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/sequencer.cpp -o ../common/sequencer.o
 
 ../common/spacecraft.o: ../common/types.h ../common/spacecraft.h ../common/spacecraft.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/spacecraft.cpp -o ../common/spacecraft.o

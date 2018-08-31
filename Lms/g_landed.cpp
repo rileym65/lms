@@ -3,6 +3,7 @@
 #include "gauge.h"
 #include "g_landed.h"
 #include "terminal.h"
+#include "common.h"
 
 G_Landed::G_Landed(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

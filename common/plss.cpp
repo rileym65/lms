@@ -1,8 +1,14 @@
 #include <math.h>
-#include "header.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "common.h"
+#include "vehicle.h"
+#include "groundvehicle.h"
 #include "plss.h"
 #include "terminal.h"
 #include "common.h"
+#include "helpers.h"
 
 Plss::Plss() {
   Init();

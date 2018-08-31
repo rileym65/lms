@@ -29,6 +29,7 @@
 #include "g_fuel.h"
 #include "g_incl.h"
 #include "g_lan.h"
+#include "g_mapmed.h"
 #include "g_moon.h"
 #include "g_multiaxis.h"
 #include "g_orbit.h"
@@ -143,6 +144,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Incl(x1, y1, false, vehicle));
       else if (strcasecmp(str,"lan") == 0)
         addGauge(new G_Lan(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"mapmedium") == 0)
+        addGauge(new G_MapMed(x1, y1, false, vehicle));
       else if (strcasecmp(str,"moon") == 0)
         addGauge(new G_Moon(x1, y1, false, vehicle));
       else if (strcasecmp(str,"multiaxis") == 0)

@@ -1,10 +1,7 @@
 #include <string.h>
 #include "sequencer.h"
-#include "header.h"
 #include "terminal.h"
 #include "common.h"
-#include "g_clockev.h"
-#include "g_clockut.h"
 
 Sequencer::Sequencer() {
   time = 0; 

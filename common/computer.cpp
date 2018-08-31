@@ -1,9 +1,14 @@
-#include "header.h"
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 #include "types.h"
+#include "vector.h"
 #include "computer.h"
 #include "common.h"
 #include "vehicle.h"
 #include "spacecraft.h"
+#include "helpers.h"
 
 #define MODE_INP_P_1     1
 #define MODE_INP_P_2     2

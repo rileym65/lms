@@ -1,9 +1,15 @@
-#include "header.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include "vehicle.h"
+#include "spacecraft.h"
 #include "lm.h"
 #include "terminal.h"
 #include "computer.h"
 #include "g_clockmi.h"
 #include "common.h"
+#include "helpers.h"
 
 LunarModule::LunarModule() {
   landed = 0;

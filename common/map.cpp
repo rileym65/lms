@@ -1,9 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "header.h"
+#include <string.h>
+#include <math.h>
+#include "terminal.h"
 #include "map.h"
-//#include "lunarref_old.h"
 #include "lunarref.h"
+
+#define GROUND 1738300
+#define METERS ((GROUND*2*M_PI) / 360.0)
+#define MAPCELL           (1.0/(METERS/10.0))
+#define CELL (METERS / 10)
 
 Map::Map() {
   Int32 i;

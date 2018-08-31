@@ -11,6 +11,7 @@
 #include "g_moon.h"
 #include "g_position.h"
 #include "mission.h"
+#include "common.h"
 
 double mn,mx;
 

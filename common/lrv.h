@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "types.h"
 #include "groundvehicle.h"
-#include "plss.h"
 
 class Lrv : public GroundVehicle {
   protected:

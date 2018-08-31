@@ -24,6 +24,7 @@ PHEADERS = \
 	../common/g_fuel.h \
 	../common/g_incl.h \
 	../common/g_lan.h \
+	../common/g_mapmed.h \
 	../common/g_moon.h \
 	../common/g_multiaxis.h \
 	../common/g_orbit.h \

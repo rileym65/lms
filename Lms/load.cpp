@@ -210,7 +210,7 @@ Int8 load(char* filename) {
   if (file == NULL) return 0;
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"simulation {")) loadSimulation(file);
-    else if (startsWith(pline,"csm {")) csm->Load(file);
+    else if (startsWith(pline,"commandmodule {")) csm->Load(file);
     else if (startsWith(pline,"lunarmodule {")) lm->Load(file);
     else if (startsWith(pline,"plss {")) plss->Load(file);
     else if (startsWith(pline,"lrv {")) lrv->Load(file);

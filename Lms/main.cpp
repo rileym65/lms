@@ -440,7 +440,7 @@ int main(int argc, char** argv) {
   WriteLn(""); WriteLn(""); WriteLn(""); WriteLn("");
   Earth = NULL;
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
-  csm = new CSM();
+  csm = new CommandModule();
   lm = new LunarModule();
   lm->Comp(new Computer(lm));
   plss = new Plss();

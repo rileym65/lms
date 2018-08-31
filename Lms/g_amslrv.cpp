@@ -3,6 +3,7 @@
 #include "gauge.h"
 #include "g_amslrv.h"
 #include "terminal.h"
+#include "common.h"
 
 G_AmsLrv::G_AmsLrv(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
