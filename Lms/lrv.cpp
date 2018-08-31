@@ -126,7 +126,7 @@ void Lrv::Cycle() {
   if (!isnan(velocity.Length())) driven += velocity.Length() / GRAN;
   if (throttle > 0) {
     battery -= ( (maxSpeed * ((Double)throttle / 100.0)) +
-                 (maxSpeed * batteryLeakage) );
+                 (maxSpeed * batteryLeakage) ) / GRAN;
     if (battery < 0) battery = 0;
     }
   if (damageReportStep != 0) {
