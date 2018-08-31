@@ -4,12 +4,6 @@
 #include "types.h"
 #include "gauge.h"
 
-#ifdef MAIN
-UInt32 days;
-#else
-extern UInt32 days;
-#endif
-
 class Vehicle;
 
 class G_Days : public Gauge {

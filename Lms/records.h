@@ -17,7 +17,7 @@ class Records {
     Double HighestLatitude;
     Int32  LongestAverageEva;
     Int32  LongestEva;
-    UInt32 LongestMission;
+    Int32  LongestMission;
     Double LongestSingleDrive;
     Double LongestSingleWalk;
     Double LongestTotalDrive;

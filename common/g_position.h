@@ -4,12 +4,6 @@
 #include "types.h"
 #include "gauge.h"
 
-#ifdef MAIN
-Double kscAngle;
-#else
-extern Double kscAngle;
-#endif
-
 class Vehicle;
 
 class G_Position : public Gauge {

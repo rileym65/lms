@@ -91,11 +91,5 @@ class Mission {
     void   Load(FILE* file);
   };
 
-#ifdef MAIN
-Mission *mission;
-#else
-extern Mission *mission;
-#endif
-
 #endif
 

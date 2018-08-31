@@ -1,8 +1,8 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_amswest.h"
 #include "terminal.h"
+#include "vehicle.h"
 
 G_AmsWest::G_AmsWest(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -48,9 +48,7 @@ void G_AmsWest::Update() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  Vehicle* vehicle;
   char buffer[32];
-  vehicle = currentVehicle;
   vel = vehicle->Velocity().Norm();
   xVec = Vector(0,0,1);
   yVec = vehicle->Position().Norm();

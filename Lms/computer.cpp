@@ -1,7 +1,7 @@
 #include "header.h"
 #include "types.h"
 #include "computer.h"
-#include "g_clockmi.h"
+#include "common.h"
 #include "vehicle.h"
 #include "spacecraft.h"
 

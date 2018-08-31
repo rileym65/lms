@@ -1,6 +1,6 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
+#include "common.h"
 #include "g_clockte.h"
 #include "terminal.h"
 

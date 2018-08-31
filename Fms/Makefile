@@ -11,42 +11,9 @@ INCDIR = -I../common
 INCS =
 LIBDIR =
 LIBS = -lm
-PHEADERS = ../common/g_clockbu.h \
-	   ../common/g_clockmi.h \
-	   ../common/g_clockut.h \
-	   ../common/g_csmcomputer.h \
-	   ../common/g_engines.h \
-	   ../common/g_altitude.h \
-	   ../common/g_velocity.h \
-	   ../common/g_accel.h \
-	   ../common/g_fuel.h \
-	   ../common/g_clocktb.h \
-	   ../common/g_apoapsis.h \
-	   ../common/g_periapsis.h \
-	   ../common/g_amsdown.h \
-	   ../common/g_axis.h \
-	   ../common/g_rollrate.h \
-	   ../common/g_pitchrate.h \
-	   ../common/g_yawrate.h \
-	   ../common/g_clockot.h \
-	   ../common/g_radial.h \
-	   ../common/g_orbit.h \
-           ../common/g_prograde.h \
-	   ../common/g_position.h \
-	   ../common/g_lan.h \
-	   ../common/g_incl.h \
-	   ../common/g_roc.h \
-	   ../common/g_csmlamps.h \
-	   ../common/g_rcs.h \
-	   ../common/g_propellant.h \
-	   ../common/g_oxygen.h \
-	   ../common/g_battery.h \
-	   ../common/g_ra.h\
-	   ../common/g_dec.h \
-	   ../common/g_multiaxis.h \
-	   ../common/g_moon.h \
-	   ../common/g_days.h \
-	   ../common/g_orbiting.h
+
+include ../common/Makefile.pheaders
+include ../common/Makefile.pobjects
 
 HEADERS = $(PHEADERS) header.h ../common/types.h \
 	   ../common/vector.h \
@@ -59,42 +26,7 @@ HEADERS = $(PHEADERS) header.h ../common/types.h \
 	   ../common/command.h \
 	   ../common/csmcomputer.h
 OBJS = \
-	../common/g_accel.o \
-	../common/g_altitude.o \
-	../common/g_amsdown.o \
-	../common/g_apoapsis.o \
-	../common/g_axis.o \
-	../common/g_battery.o \
-	../common/g_clockbu.o \
-	../common/g_clockmi.o \
-	../common/g_clockot.o \
-	../common/g_clocktb.o \
-	../common/g_clockut.o \
-	../common/g_csmcomputer.o \
-	../common/g_csmlamps.o \
-	../common/g_days.o \
-	../common/g_dec.o \
-	../common/g_engines.o \
-	../common/g_fuel.o \
-	../common/g_incl.o \
-	../common/g_lan.o \
-	../common/g_moon.o \
-	../common/g_multiaxis.o \
-	../common/g_orbit.o \
-	../common/g_orbiting.o \
-	../common/g_oxygen.o \
-	../common/g_periapsis.o \
-	../common/g_pitchrate.o \
-	../common/g_position.o \
-	../common/g_prograde.o \
-	../common/g_propellant.o \
-	../common/g_ra.o \
-	../common/g_radial.o \
-	../common/g_rcs.o \
-	../common/g_roc.o \
-	../common/g_rollrate.o \
-	../common/g_velocity.o \
-	../common/g_yawrate.o \
+	$(POBJS) \
 	airdensity.o \
 	../common/body.o \
 	booster.o \
@@ -129,7 +61,7 @@ clean:
 	-rm $(PROJECT)
 	-rm *.o
 
-cleancommon:
+cleanall:
 	-rm $(PROJECT)
 	-rm *.o
 	-rm ../common/*.o

@@ -1,10 +1,8 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_clocks.h"
 #include "terminal.h"
-#include "g_clockmi.h"
-#include "g_clockut.h"
+#include "common.h"
 
 G_Clocks::G_Clocks(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

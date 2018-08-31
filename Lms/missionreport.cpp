@@ -2,7 +2,8 @@
 #include <string.h>
 #include "header.h"
 #include "records.h"
-#include "g_clockmi.h"
+#include "common.h"
+#include "g_clockte.h"
 
 void MissionReport() {
   Int32 i;

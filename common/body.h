@@ -42,13 +42,6 @@ class Body {
     virtual void Save(FILE* file);
   };
 
-#ifdef MAIN
-Body *Moon;
-Body *Earth;
-#else
-extern Body *Moon;
-extern Body *Earth;
-#endif
 
 #endif
 

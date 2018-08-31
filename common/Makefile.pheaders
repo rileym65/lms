@@ -1,0 +1,46 @@
+PHEADERS = \
+	../common/g_accel.h \
+	../common/g_altitude.h \
+	../common/g_amsatt.h \
+	../common/g_amsclocks.h \
+	../common/g_amsdown.h \
+	../common/g_amswest.h \
+	../common/g_apoapsis.h \
+	../common/g_axis.h \
+	../common/g_battery.h \
+	../common/g_clockbu.h \
+	../common/g_clockev.h \
+	../common/g_clockmi.h \
+	../common/g_clockot.h \
+	../common/g_clocks.h \
+	../common/g_clocktb.h \
+	../common/g_clockte.h \
+	../common/g_clockut.h \
+	../common/g_csmcomputer.h \
+	../common/g_csmlamps.h \
+	../common/g_days.h \
+	../common/g_dec.h \
+	../common/g_engines.h \
+	../common/g_fuel.h \
+	../common/g_incl.h \
+	../common/g_lan.h \
+	../common/g_moon.h \
+	../common/g_multiaxis.h \
+	../common/g_orbit.h \
+	../common/g_orbiting.h \
+	../common/g_oxybat.h \
+	../common/g_oxygen.h \
+	../common/g_periapsis.h \
+	../common/g_pitchrate.h \
+	../common/g_position.h \
+	../common/g_prograde.h \
+	../common/g_propellant.h \
+	../common/g_ra.h\
+	../common/g_radial.h \
+	../common/g_rcs.h \
+	../common/g_roc.h \
+	../common/g_rollrate.h \
+	../common/g_throttle.h \
+	../common/g_velocity.h \
+	../common/g_yawrate.h
+

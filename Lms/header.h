@@ -93,14 +93,6 @@ typedef struct {
   } BURN;
 
 LINK Int8         cabinPressurized;
-LINK Int32        clockBu;
-LINK Int32        clockDk;
-LINK Int32        clockEv;
-LINK Int32        clockOr;
-LINK Int32        clockTe;
-LINK Int32        clockUd;
-LINK Int32        clockDOI;
-LINK Int32        clockPDI;
 LINK Double       dockingVel;
 LINK Double       dockingLVel;
 LINK Double       dockingXAlign;

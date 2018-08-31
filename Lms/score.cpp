@@ -2,6 +2,7 @@
 #include <string.h>
 #include "header.h"
 #include "records.h"
+#include "common.h"
 
 void Score() {
   int i;

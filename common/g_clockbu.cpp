@@ -2,6 +2,7 @@
 #include "gauge.h"
 #include "g_clockbu.h"
 #include "terminal.h"
+#include "common.h"
 #include "vehicle.h"
 
 G_ClockBU::G_ClockBU(Int8 x,Int8 y,Boolean f,Vehicle* v) :

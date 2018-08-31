@@ -2,6 +2,7 @@
 #include "types.h"
 #include "gauge.h"
 #include "g_groundins.h"
+#include "common.h"
 #include "terminal.h"
 
 G_GroundIns::G_GroundIns(Int8 x,Int8 y,Boolean f,Vehicle* v) :

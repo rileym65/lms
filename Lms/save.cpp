@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include "header.h"
 #include "computer.h"
-#include "g_clockmi.h"
+#include "common.h"
+#include "g_clockev.h"
+#include "g_clockte.h"
 #include "g_clockut.h"
 
 void save() {

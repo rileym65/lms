@@ -7,14 +7,23 @@
 ../common/g_altitude.o: ../common/gauge.h ../common/g_altitude.h ../common/terminal.h ../common/g_altitude.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_altitude.cpp -o ../common/g_altitude.o
 
+../common/g_amsatt.o: ../common/gauge.h ../common/g_amsatt.h ../common/terminal.h ../common/g_amsatt.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amsatt.cpp -o ../common/g_amsatt.o
+
+../common/g_amsclocks.o: ../common/gauge.h ../common/g_amsclocks.h ../common/terminal.h ../common/g_amsclocks.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amsclocks.cpp -o ../common/g_amsclocks.o
+
 ../common/g_apoapsis.o: ../common/gauge.h ../common/g_apoapsis.h ../common/terminal.h ../common/g_apoapsis.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_apoapsis.cpp -o ../common/g_apoapsis.o
 
-../common/g_axis.o: ../common/gauge.h ../common/g_axis.h ../common/terminal.h ../common/g_axis.cpp
-	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_axis.cpp -o ../common/g_axis.o
-
 ../common/g_amsdown.o: ../common/gauge.h ../common/g_amsdown.h ../common/terminal.h ../common/g_amsdown.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amsdown.cpp -o ../common/g_amsdown.o
+
+../common/g_amswest.o: ../common/gauge.h ../common/g_amswest.h ../common/terminal.h ../common/g_amswest.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amswest.cpp -o ../common/g_amswest.o
+
+../common/g_axis.o: ../common/gauge.h ../common/g_axis.h ../common/terminal.h ../common/g_axis.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_axis.cpp -o ../common/g_axis.o
 
 ../common/g_battery.o: ../common/gauge.h ../common/g_battery.h ../common/terminal.h ../common/g_battery.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_battery.cpp -o ../common/g_battery.o
@@ -22,14 +31,23 @@
 ../common/g_clockbu.o: ../common/gauge.h ../common/g_clockbu.h ../common/terminal.h ../common/g_clockbu.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockbu.cpp -o ../common/g_clockbu.o
 
+../common/g_clockev.o: ../common/gauge.h ../common/g_clockev.h ../common/terminal.h ../common/g_clockev.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockev.cpp -o ../common/g_clockev.o
+
 ../common/g_clockmi.o: ../common/gauge.h ../common/g_clockmi.h ../common/terminal.h ../common/g_clockmi.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockmi.cpp -o ../common/g_clockmi.o
 
 ../common/g_clockot.o: ../common/gauge.h ../common/g_clockot.h ../common/terminal.h ../common/g_clockot.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockot.cpp -o ../common/g_clockot.o
 
+../common/g_clocks.o: ../common/gauge.h ../common/g_clocks.h ../common/terminal.h ../common/g_clocks.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clocks.cpp -o ../common/g_clocks.o
+
 ../common/g_clocktb.o: ../common/gauge.h ../common/g_clocktb.h ../common/terminal.h ../common/g_clocktb.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clocktb.cpp -o ../common/g_clocktb.o
+
+../common/g_clockte.o: ../common/gauge.h ../common/g_clockte.h ../common/terminal.h ../common/g_clockte.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockte.cpp -o ../common/g_clockte.o
 
 ../common/g_clockut.o: ../common/gauge.h ../common/g_clockut.h ../common/terminal.h ../common/g_clockut.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockut.cpp -o ../common/g_clockut.o
@@ -105,6 +123,9 @@
 
 ../common/g_rollrate.o: ../common/gauge.h ../common/g_rollrate.h ../common/terminal.h ../common/g_rollrate.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_rollrate.cpp -o ../common/g_rollrate.o
+
+../common/g_throttle.o: ../common/gauge.h ../common/g_throttle.h ../common/terminal.h ../common/g_throttle.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_throttle.cpp -o ../common/g_throttle.o
 
 ../common/g_velocity.o: ../common/gauge.h ../common/g_velocity.h ../common/terminal.h ../common/g_velocity.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_velocity.cpp -o ../common/g_velocity.o

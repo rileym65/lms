@@ -11,18 +11,23 @@ INCS =
 LIBDIR =
 LIBS = -lm
 HEADERS = header.h ../common/types.h
-PHEADERS = panel.h ../common/gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
-           g_amsdock.h g_amsdown.h g_amsins.h g_amsland.h g_amslm.h \
+PHEADERS = panel.h ../common/gauge.h \
+	   ../common/g_amsatt.h \
+	   ../common/g_amsclocks.h g_amscons.h \
+           g_amsdock.h \
+	   ../common/g_amsdown.h g_amsins.h g_amsland.h g_amslm.h \
            g_amslrv.h \
            g_amsplss.h \
            g_amspilot.h \
            g_amsseq.h \
-           g_amsspin.h g_amsstat.h g_amswest.h g_clocks.h \
-           g_axis.h \
+           g_amsspin.h g_amsstat.h \
+	   ../common/g_amswest.h \
+	   ../common/g_clocks.h \
+           ../common/g_axis.h \
            g_attitude.h \
-           g_clockev.h \
+           ../common/g_clockev.h \
            ../common/g_clockmi.h \
-           g_clockte.h \
+           ../common/g_clockte.h \
            ../common/g_clockut.h \
            g_computer.h \
            g_docked.h \
@@ -44,17 +49,17 @@ PHEADERS = panel.h ../common/gauge.h g_amsatt.h g_amsclocks.h g_amscons.h \
            g_plss.h \
            g_precaxis.h \
            g_radars.h \
-           g_rcs.h \
+           ../common/g_rcs.h \
            g_seq.h \
-           g_throttle.h
+           ../common/g_throttle.h
 OBJS = \
 	csm.o \
 	../common/gauge.o \
-        g_amsatt.o \
-        g_amsclocks.o \
+        ../common/g_amsatt.o \
+        ../common/g_amsclocks.o \
         g_amscons.o \
         g_amsdock.o \
-        g_amsdown.o \
+        ../common/g_amsdown.o \
         g_amsins.o \
         g_amsland.o \
         g_amslm.o \
@@ -67,13 +72,13 @@ OBJS = \
         g_amsseq.o \
         g_amsspin.o \
         g_amsstat.o \
-	g_amswest.o \
-	g_axis.o \
+	../common/g_amswest.o \
+	../common/g_axis.o \
 	g_attitude.o \
-	g_clocks.o \
-	g_clockev.o \
+	../common/g_clocks.o \
+	../common/g_clockev.o \
 	../common/g_clockmi.o \
-	g_clockte.o \
+	../common/g_clockte.o \
 	../common/g_clockut.o \
 	g_computer.o \
 	g_docked.o \
@@ -93,9 +98,9 @@ OBJS = \
 	g_plss.o \
 	g_precaxis.o \
 	g_radars.o \
-	g_rcs.o \
+	../common/g_rcs.o \
 	g_seq.o \
-	g_throttle.o \
+	../common/g_throttle.o \
 	computer.o \
 	groundvehicle.o \
 	helpers.o \
@@ -194,7 +199,19 @@ clean:
 	-rm tutorial.doc
 	-rm panel.html
 
-cleancommon:
+cleanall:
+	-rm $(PROJECT)
+	-rm mapgen
+	-rm planner
+	-rm gcasm
+	-rm *.o
+	-rm lms.doc
+	-rm *.html
+	-rm panel.doc
+	-rm lms.doc
+	-rm computer.doc
+	-rm training.doc
+	-rm tutorial.doc
 	-rm ../common/*.o
 
 computer.o:      $(HEADERS) ../common/vehicle.h computer.h computer.cpp
@@ -219,11 +236,8 @@ sequencer.o:     $(HEADERS) sequencer.cpp
 lm.o:            $(HEADERS) lm.h lm.cpp
 vehicle.o:       $(HEADERS) vehicle.h panel.h ../common/gauge.h vehicle.cpp
 
-g_amsatt.o:     $(HEADERS) ../common/gauge.h g_amsatt.h  g_amsatt.cpp
-g_amsclocks.o:  $(HEADERS) ../common/gauge.h g_amsclocks.h  g_amsclocks.cpp
 g_amscons.o:    $(HEADERS) ../common/gauge.h g_amscons.h  g_amscons.cpp
 g_amsdock.o:    $(HEADERS) ../common/gauge.h g_amsdock.h  g_amsdock.cpp
-g_amsdown.o:    $(HEADERS) ../common/gauge.h g_amsdown.h  g_amsdown.cpp
 g_amsins.o:     $(HEADERS) ../common/gauge.h g_amsins.h  g_amsins.cpp
 g_amsland.o:    $(HEADERS) ../common/gauge.h g_amsland.h  g_amsland.cpp
 g_amslm.o:      $(HEADERS) ../common/gauge.h g_amslm.h  g_amslm.cpp
@@ -234,12 +248,7 @@ g_amsplss.o:    $(HEADERS) ../common/gauge.h g_amsplss.h  g_amsplss.cpp
 g_amsseq.o:     $(HEADERS) ../common/gauge.h g_amsseq.h  g_amsseq.cpp
 g_amsspin.o:    $(HEADERS) ../common/gauge.h g_amsspin.h  g_amsspin.cpp
 g_amsstat.o:    $(HEADERS) ../common/gauge.h g_amsstat.h  g_amsstat.cpp
-g_amswest.o:    $(HEADERS) ../common/gauge.h g_amswest.h  g_amswest.cpp
-g_axis.o:       $(HEADERS) ../common/gauge.h  g_axis.h g_axis.cpp
 g_attitude.o:   $(HEADERS) ../common/gauge.h  g_attitude.h g_attitude.cpp
-g_clocks.o:     $(HEADERS) ../common/gauge.h  g_clocks.h g_clocks.cpp
-g_clockev.o:    $(HEADERS) ../common/gauge.h  g_clockev.h g_clockev.cpp
-g_clockte.o:    $(HEADERS) ../common/gauge.h  g_clockte.h g_clockte.cpp
 g_computer.o:   $(HEADERS) ../common/gauge.h  g_computer.h g_computer.cpp
 g_docked.o:     $(HEADERS) ../common/gauge.h  g_docked.h g_docked.cpp
 g_groundins.o:  $(HEADERS) ../common/gauge.h  g_groundins.h g_groundins.cpp
@@ -257,11 +266,9 @@ g_orbitlarge.o: $(HEADERS) ../common/gauge.h  g_orbitlarge.h g_orbitlarge.cpp
 g_pilot.o:      $(HEADERS) ../common/gauge.h  g_pilot.h g_pilot.cpp
 g_pilotloc.o:   $(HEADERS) ../common/gauge.h  g_pilotloc.h g_pilotloc.cpp
 g_plss.o:       $(HEADERS) ../common/gauge.h  g_plss.h g_plss.cpp
-g_precaxis.o:   $(HEADERS) ../common/gauge.h  g_axis.h g_precaxis.h g_precaxis.cpp
-g_rcs.o:        $(HEADERS) ../common/gauge.h  g_rcs.h g_rcs.cpp
+g_precaxis.o:   $(HEADERS) ../common/gauge.h  g_precaxis.h g_precaxis.cpp
 g_radars.o:     $(HEADERS) ../common/gauge.h  g_radars.h g_radars.cpp
 g_seq.o:        $(HEADERS) ../common/gauge.h  g_seq.h g_seq.cpp
-g_throttle.o:   $(HEADERS) ../common/gauge.h  g_throttle.h g_throttle.cpp
 
 planner.o:     $(HEADERS) ../common/mission.h planner.cpp
 

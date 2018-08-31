@@ -7,13 +7,19 @@
 #include "gauge.h"
 #include "g_accel.h"
 #include "g_altitude.h"
+#include "g_amsatt.h"
+#include "g_amsclocks.h"
 #include "g_amsdown.h"
+#include "g_amswest.h"
 #include "g_apoapsis.h"
 #include "g_battery.h"
 #include "g_clockbu.h"
+#include "g_clockev.h"
 #include "g_clockmi.h"
 #include "g_clockot.h"
+#include "g_clocks.h"
 #include "g_clocktb.h"
+#include "g_clockte.h"
 #include "g_clockut.h"
 #include "g_csmcomputer.h"
 #include "g_csmlamps.h"
@@ -27,6 +33,7 @@
 #include "g_multiaxis.h"
 #include "g_orbit.h"
 #include "g_orbiting.h"
+#include "g_oxybat.h"
 #include "g_oxygen.h"
 #include "g_periapsis.h"
 #include "g_pitchrate.h"
@@ -38,6 +45,7 @@
 #include "g_rcs.h"
 #include "g_roc.h"
 #include "g_rollrate.h"
+#include "g_throttle.h"
 #include "g_velocity.h"
 #include "g_yawrate.h"
 
@@ -87,76 +95,92 @@ Int8 Panel::loadFile(const char* filename) {
       }
     else if (strncasecmp(line,"gauge ",6) == 0) {
       sscanf(nw(line),"%s %d,%d",str,&x1,&y1);
-      if (strcasecmp(str,"ams_downaxis") == 0)
+      if (strcasecmp(str,"accel") == 0)
+        addGauge(new G_Accel(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"altitude") == 0)
+        addGauge(new G_Altitude(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_attitude") == 0)
+        addGauge(new G_AmsAtt(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_clocks") == 0)
+        addGauge(new G_AmsClocks(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_downaxis") == 0)
         addGauge(new G_AmsDown(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_westaxis") == 0)
+        addGauge(new G_AmsWest(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"apoapsis") == 0)
+        addGauge(new G_Apoapsis(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"battery") == 0)
+        addGauge(new G_Battery(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockbu") == 0)
         addGauge(new G_ClockBU(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clockev") == 0)
+        addGauge(new G_ClockEV(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockmi") == 0)
         addGauge(new G_ClockMI(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockot") == 0)
         addGauge(new G_ClockOT(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clocks") == 0)
+        addGauge(new G_Clocks(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clocktb") == 0)
         addGauge(new G_ClockTB(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clockte") == 0)
+        addGauge(new G_ClockTE(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockut") == 0)
         addGauge(new G_ClockUT(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"engines") == 0)
-        addGauge(new G_Engines(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"altitude") == 0)
-        addGauge(new G_Altitude(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"velocity") == 0)
-        addGauge(new G_Velocity(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"accel") == 0)
-        addGauge(new G_Accel(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"fuel") == 0)
-        addGauge(new G_Fuel(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"apoapsis") == 0)
-        addGauge(new G_Apoapsis(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"periapsis") == 0)
-        addGauge(new G_Periapsis(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"rollrate") == 0)
-        addGauge(new G_RollRate(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"pitchrate") == 0)
-        addGauge(new G_PitchRate(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"yawrate") == 0)
-        addGauge(new G_YawRate(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"radial") == 0)
-        addGauge(new G_Radial(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"orbit") == 0)
-        addGauge(new G_Orbit(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"prograde") == 0)
-        addGauge(new G_Prograde(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"position") == 0)
-        addGauge(new G_Position(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"lan") == 0)
-        addGauge(new G_Lan(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"inclination") == 0)
-        addGauge(new G_Incl(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"roc") == 0)
-        addGauge(new G_Roc(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"csmlamps") == 0)
-        addGauge(new G_CsmLamps(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"rcs") == 0)
-        addGauge(new G_Rcs(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"propellant") == 0)
-        addGauge(new G_Propellant(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"oxygen") == 0)
-        addGauge(new G_Oxygen(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"battery") == 0)
-        addGauge(new G_Battery(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"rightascension") == 0)
-        addGauge(new G_RightAscension(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"declination") == 0)
-        addGauge(new G_Declination(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"multiaxis") == 0)
-        addGauge(new G_MultiAxis(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"moon") == 0)
-        addGauge(new G_Moon(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"days") == 0)
-        addGauge(new G_Days(x1, y1, false, vehicle));
-      else if (strcasecmp(str,"orbiting") == 0)
-        addGauge(new G_Orbiting(x1, y1, false, vehicle));
       else if (strcasecmp(str,"csmcomputer") == 0)
         addGauge(new G_CsmComputer(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"csmlamps") == 0)
+        addGauge(new G_CsmLamps(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"days") == 0)
+        addGauge(new G_Days(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"declination") == 0)
+        addGauge(new G_Declination(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"engines") == 0)
+        addGauge(new G_Engines(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"fuel") == 0)
+        addGauge(new G_Fuel(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"inclination") == 0)
+        addGauge(new G_Incl(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"lan") == 0)
+        addGauge(new G_Lan(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"moon") == 0)
+        addGauge(new G_Moon(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"multiaxis") == 0)
+        addGauge(new G_MultiAxis(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"orbit") == 0)
+        addGauge(new G_Orbit(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"orbiting") == 0)
+        addGauge(new G_Orbiting(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"oxybat") == 0)
+        addGauge(new G_OxyBat(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"oxygen") == 0)
+        addGauge(new G_Oxygen(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"periapsis") == 0)
+        addGauge(new G_Periapsis(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"pitchrate") == 0)
+        addGauge(new G_PitchRate(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"position") == 0)
+        addGauge(new G_Position(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"prograde") == 0)
+        addGauge(new G_Prograde(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"propellant") == 0)
+        addGauge(new G_Propellant(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"radial") == 0)
+        addGauge(new G_Radial(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"rcs") == 0)
+        addGauge(new G_Rcs(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"rightascension") == 0)
+        addGauge(new G_RightAscension(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"roc") == 0)
+        addGauge(new G_Roc(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"rollrate") == 0)
+        addGauge(new G_RollRate(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"throttle") == 0)
+        addGauge(new G_Throttle(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"velocity") == 0)
+        addGauge(new G_Velocity(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"yawrate") == 0)
+        addGauge(new G_YawRate(x1, y1, false, vehicle));
       else {
         Write("Unknown guage: ");
         WriteLn(str);

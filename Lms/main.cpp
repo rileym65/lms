@@ -6,7 +6,9 @@
 #include "terminal.h"
 #include "computer.h"
 #include "lander.h"
+#include "g_clockev.h"
 #include "g_clockmi.h"
+#include "g_clockte.h"
 #include "g_clockut.h"
 #include "common.h"
 

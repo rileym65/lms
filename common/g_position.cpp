@@ -1,5 +1,6 @@
 #include "types.h"
 #include "gauge.h"
+#include "common.h"
 #include "g_position.h"
 #include "terminal.h"
 #include "vehicle.h"

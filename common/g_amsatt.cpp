@@ -1,4 +1,4 @@
-#include "header.h"
+#include <math.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_amsatt.h"

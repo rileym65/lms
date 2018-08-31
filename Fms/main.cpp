@@ -2,8 +2,10 @@
 
 #include "header.h"
 #include "g_clockbu.h"
+#include "g_clockev.h"
 #include "g_clockmi.h"
 #include "g_clocktb.h"
+#include "g_clockte.h"
 #include "g_clockut.h"
 #include "g_days.h"
 #include "g_moon.h"

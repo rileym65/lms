@@ -4,17 +4,11 @@
 #include "types.h"
 #include "gauge.h"
 
-#ifdef MAIN
-UInt32 clockUt;
-#else
-extern UInt32 clockUt;
-#endif
-
 class Vehicle;
 
 class G_ClockUT : public Gauge {
   protected:
-    UInt32 lastClock;
+    Int32 lastClock;
   public:
     G_ClockUT(Int8 x,Int8 y,Boolean f,Vehicle* v);
     virtual ~G_ClockUT();
