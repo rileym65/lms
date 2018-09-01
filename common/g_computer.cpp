@@ -1,9 +1,13 @@
-#include "header.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_computer.h"
 #include "terminal.h"
+#include "vector.h"
 #include "computer.h"
+#include "vehicle.h"
 
 G_Computer::G_Computer(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

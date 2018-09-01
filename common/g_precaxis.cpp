@@ -1,9 +1,12 @@
-#include "header.h"
+#include <stdlib.h>
+#include <math.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_axis.h"
 #include "g_precaxis.h"
 #include "terminal.h"
+#include "helpers.h"
+#include "vehicle.h"
 
 #define MODE_DOWN 1
 #define MODE_WEST 2

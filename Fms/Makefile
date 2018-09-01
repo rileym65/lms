@@ -32,9 +32,7 @@ OBJS = \
 	airdensity.o \
 	booster.o \
 	command.o \
-	../common/helpers.o \
 	load.o \
-	../common/panel.o \
 	save.o \
 	main.o
 

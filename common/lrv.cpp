@@ -11,6 +11,7 @@
 
 Lrv::Lrv() {
   Init();
+  type |= VT_ROVER;
   }
 
 Lrv::~Lrv() {

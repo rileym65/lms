@@ -1,9 +1,9 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_plss.h"
 #include "terminal.h"
 #include "common.h"
+#include "vehicle.h"
 
 G_Plss::G_Plss(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

@@ -29,7 +29,8 @@ void Booster::Cycle() {
   Double d;
   Double v;
   Byte   st;
-  alt = position.Length() - GROUND;
+//  alt = position.Length() - GROUND;
+  alt = position.Length() - orbiting->Radius();
   thrust = Vector(0,0,0);
   drag = Vector(0,0,0);
   tth = 0;
@@ -58,7 +59,8 @@ void Booster::Cycle() {
     drag = velocity.Norm().Scale(d).Neg();
     }
   Spacecraft::Cycle();
-  if (radius < GROUND) destroyed = true;
+//  if (radius < GROUND) destroyed = true;
+  if (radius < orbiting->Radius()) destroyed = true;
   }
 
 void Booster::Diameter(Byte stage, Double d) {

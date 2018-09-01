@@ -1,9 +1,11 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_lrv.h"
 #include "terminal.h"
 #include "common.h"
+#include "vehicle.h"
+#include "spacecraft.h"
+#include "lrv.h"
 
 G_Lrv::G_Lrv(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {

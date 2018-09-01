@@ -4,6 +4,7 @@ COBJS = \
 	../common/csmcomputer.o \
         ../common/gauge.o \
 	../common/groundvehicle.o \
+	../common/helpers.o \
 	../common/lander.o \
 	../common/lfsr.o \
 	../common/lm.o \

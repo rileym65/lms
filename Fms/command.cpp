@@ -82,7 +82,8 @@ Matrix m;
     vu = position.Norm();
     vl = Vector(vu.Y(),-vu.X(), 0).Norm().Scale(408);
     vel = velocity + vl;
-    alt = position.Length() - GROUND;
+//    alt = position.Length() - GROUND;
+    alt = position.Length() - orbiting->Radius();
     thrust = Vector(0,0,0);
     drag = Vector(0,0,0);
     air = AirDensity(alt);
@@ -588,7 +589,8 @@ void CommandModule::ProcessKey(Int32 key) {
     }
   if (launchVehicleJettisoned) {
     if (key == 'P' && parachuteDeployment == 0 &&
-        radius <= GROUND+5000) parachuteDeployment = 0.01;
+//        radius <= GROUND+5000) parachuteDeployment = 0.01;
+        radius <= orbiting->Radius()+5000) parachuteDeployment = 0.01;
     if (key == 'I' && armed) {
        if (serviceModuleDryWeight > 0 && serviceModuleIsp > 0) {
          throttle = 100;

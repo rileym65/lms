@@ -20,8 +20,8 @@
 #include "booster.h"
 #include "body.h"
 
-#define GROUND 6378100
-#define METERS ((GROUND*2*M_PI) / 360.0)
+// #define GROUND 6378100
+// #define METERS ((GROUND*2*M_PI) / 360.0)
 #define DR  (3.14159265358979323846 / 180)
 #define VT_NONE       0
 #define VT_SPACECRAFT 1

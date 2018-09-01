@@ -9,8 +9,10 @@ POBJS = \
 	../common/g_amsins.o \
 	../common/g_amsland.o \
 	../common/g_amslm.o \
+	../common/g_amslrv.o \
 	../common/g_amsmsg.o \
 	../common/g_amspilot.o \
+	../common/g_amsplss.o \
 	../common/g_amsseq.o \
 	../common/g_amsspin.o \
 	../common/g_amsstat.o \
@@ -27,23 +29,30 @@ POBJS = \
 	../common/g_clocktb.o \
 	../common/g_clockte.o \
 	../common/g_clockut.o \
+	../common/g_computer.o \
 	../common/g_csmcomputer.o \
 	../common/g_csmlamps.o \
 	../common/g_days.o \
 	../common/g_dec.o \
+	../common/g_docked.o \
 	../common/g_engines.o \
 	../common/g_evaprep.o \
 	../common/g_fuel.o \
+	../common/g_groundins.o \
 	../common/g_incl.o \
+	../common/g_ins.o \
 	../common/g_lamps.o \
 	../common/g_lan.o \
 	../common/g_landed.o \
 	../common/g_lmfuel.o \
 	../common/g_lmrock.o \
+	../common/g_lrv.o \
+	../common/g_maplarge.o \
 	../common/g_mapmed.o \
 	../common/g_moon.o \
 	../common/g_multiaxis.o \
 	../common/g_orbit.o \
+	../common/g_orbitlarge.o \
 	../common/g_orbiting.o \
 	../common/g_oxybat.o \
 	../common/g_oxygen.o \
@@ -51,7 +60,9 @@ POBJS = \
 	../common/g_pilot.o \
 	../common/g_pilotloc.o \
 	../common/g_pitchrate.o \
+	../common/g_plss.o \
 	../common/g_position.o \
+	../common/g_precaxis.o \
 	../common/g_prograde.o \
 	../common/g_propellant.o \
 	../common/g_ra.o\
@@ -63,5 +74,6 @@ POBJS = \
 	../common/g_seq.o \
 	../common/g_throttle.o \
 	../common/g_velocity.o \
-	../common/g_yawrate.o
+	../common/g_yawrate.o \
+	../common/panel.o
 

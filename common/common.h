@@ -29,6 +29,7 @@
 #define VT_GROUND     4
 #define VT_COMMAND    8
 #define VT_LANDER     16
+#define VT_ROVER      32
 #define GROUND 1738300
 #define METERS ((GROUND*2*M_PI) / 360.0)
 #define MAPCELL           (1.0/(METERS/10.0))

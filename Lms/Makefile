@@ -10,111 +10,23 @@ INCDIR = -I../common
 INCS =
 LIBDIR =
 LIBS = -lm
-HEADERS = header.h ../common/types.h
 
+include ../common/Makefile.pheaders
+include ../common/Makefile.pobjects
 include ../common/Makefile.cobjects
 
-PHEADERS = panel.h ../common/gauge.h \
-	   ../common/g_amsatt.h \
-	   ../common/g_amsclocks.h \
-	   ../common/g_amscons.h \
-           ../common/g_amsdock.h \
-	   ../common/g_amsdown.h \
-	   ../common/g_amsins.h \
-	   ../common/g_amsland.h \
-	   ../common/g_amslm.h \
-           g_amslrv.h \
-           g_amsplss.h \
-           ../common/g_amspilot.h \
-           ../common/g_amsseq.h \
-           ../common/g_amsspin.h \
-	   ../common/g_amsstat.h \
-	   ../common/g_amswest.h \
-	   ../common/g_clocks.h \
-           ../common/g_axis.h \
-           ../common/g_attitude.h \
-           ../common/g_clockev.h \
-           ../common/g_clockmi.h \
-           ../common/g_clockte.h \
-           ../common/g_clockut.h \
-           g_computer.h \
-           g_docked.h \
-           ../common/g_evaprep.h \
-           g_groundins.h \
-           g_ins.h \
-           ../common/g_lamps.h \
-           ../common/g_landed.h \
-           ../common/g_lmfuel.h \
-           ../common/g_lmrock.h \
-           g_lrv.h \
-           g_maplarge.h \
-           ../common/g_mapmed.h \
-           ../common/g_multiaxis.h \
-           g_orbitlarge.h \
-           ../common/g_oxybat.h \
-           ../common/g_pilot.h \
-           ../common/g_pilotloc.h \
-           g_plss.h \
-           g_precaxis.h \
-           ../common/g_radars.h \
-           ../common/g_rcs.h \
-           ../common/g_seq.h \
-           ../common/g_throttle.h
+HEADERS = \
+	$(PHEADERS) \
+	header.h ../common/types.h
+
 OBJS = \
 	$(COBJS) \
+	$(POBJS) \
 	command.o \
-        ../common/g_amsatt.o \
-        ../common/g_amsclocks.o \
-        ../common/g_amscons.o \
-        ../common/g_amsdock.o \
-        ../common/g_amsdown.o \
-        ../common/g_amsins.o \
-        ../common/g_amsland.o \
-        ../common/g_amslm.o \
-        g_amslrv.o \
-	g_maplarge.o \
-	../common/g_mapmed.o \
-        ../common/g_amsmsg.o \
-        ../common/g_amspilot.o \
-        g_amsplss.o \
-        ../common/g_amsseq.o \
-        ../common/g_amsspin.o \
-        ../common/g_amsstat.o \
-	../common/g_amswest.o \
-	../common/g_axis.o \
-	../common/g_attitude.o \
-	../common/g_clocks.o \
-	../common/g_clockev.o \
-	../common/g_clockmi.o \
-	../common/g_clockte.o \
-	../common/g_clockut.o \
-	g_computer.o \
-	g_docked.o \
-	../common/g_evaprep.o \
-	g_groundins.o \
-	g_ins.o \
-	../common/g_lamps.o \
-	../common/g_landed.o \
-        ../common/g_lmfuel.o \
-        ../common/g_lmrock.o \
-	g_lrv.o \
-	../common/g_multiaxis.o \
-	g_orbitlarge.o \
-	../common/g_oxybat.o \
-	../common/g_pilot.o \
-	../common/g_pilotloc.o \
-	g_plss.o \
-	g_precaxis.o \
-	../common/g_radars.o \
-	../common/g_rcs.o \
-	../common/g_seq.o \
-	../common/g_throttle.o \
-	../common/helpers.o \
 	load.o \
 	records.o \
 	save.o \
 	missionreport.o \
-	panel.o \
 	score.o \
 	sgn.o \
 	main.o
@@ -214,23 +126,11 @@ load.o:          $(HEADERS) load.cpp
 main.o:          $(HEADERS) main.cpp
 mapgen.o:        $(HEADERS) ../common/map.h ../common/random.h mapgen.cpp
 missionreport.o: $(HEADERS) missionreport.cpp
-panel.o:         $(HEADERS) $(PHEADERS)  panel.cpp
 records.o:       $(HEADERS) records.h records.cpp
 save.o:          $(HEADERS) save.cpp
 sgn.o:           $(HEADERS) sgn.cpp
 vehicle.o:       $(HEADERS) vehicle.h panel.h ../common/gauge.h vehicle.cpp
 
-g_amslrv.o:     $(HEADERS) ../common/gauge.h g_amslrv.h  g_amslrv.cpp
-g_amsplss.o:    $(HEADERS) ../common/gauge.h g_amsplss.h  g_amsplss.cpp
-g_computer.o:   $(HEADERS) ../common/gauge.h  g_computer.h g_computer.cpp
-g_docked.o:     $(HEADERS) ../common/gauge.h  g_docked.h g_docked.cpp
-g_groundins.o:  $(HEADERS) ../common/gauge.h  g_groundins.h g_groundins.cpp
-g_ins.o:        $(HEADERS) ../common/gauge.h  g_ins.h g_ins.cpp
-g_lrv.o:        $(HEADERS) ../common/gauge.h  g_lrv.h g_lrv.cpp
-g_maplarge.o:   $(HEADERS) ../common/gauge.h  ../common/map.h g_maplarge.h g_maplarge.cpp
-g_orbitlarge.o: $(HEADERS) ../common/gauge.h  g_orbitlarge.h g_orbitlarge.cpp
-g_plss.o:       $(HEADERS) ../common/gauge.h  g_plss.h g_plss.cpp
-g_precaxis.o:   $(HEADERS) ../common/gauge.h  g_precaxis.h g_precaxis.cpp
 
 planner.o:     $(HEADERS) ../common/mission.h planner.cpp
 

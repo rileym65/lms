@@ -34,11 +34,17 @@
 ../common/g_amslm.o: ../common/gauge.h ../common/g_amslm.h ../common/terminal.h ../common/g_amslm.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amslm.cpp -o ../common/g_amslm.o
 
+../common/g_amslrv.o: ../common/gauge.h ../common/g_amslrv.h ../common/terminal.h ../common/g_amslrv.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amslrv.cpp -o ../common/g_amslrv.o
+
 ../common/g_amsmsg.o: ../common/gauge.h ../common/g_amsmsg.h ../common/terminal.h ../common/g_amsmsg.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amsmsg.cpp -o ../common/g_amsmsg.o
 
 ../common/g_amspilot.o: ../common/gauge.h ../common/g_amspilot.h ../common/terminal.h ../common/g_amspilot.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amspilot.cpp -o ../common/g_amspilot.o
+
+../common/g_amsplss.o: ../common/gauge.h ../common/g_amsplss.h ../common/terminal.h ../common/g_amsplss.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amsplss.cpp -o ../common/g_amsplss.o
 
 ../common/g_amsseq.o: ../common/gauge.h ../common/g_amsseq.h ../common/terminal.h ../common/g_amsseq.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_amsseq.cpp -o ../common/g_amsseq.o
@@ -88,6 +94,9 @@
 ../common/g_clockut.o: ../common/gauge.h ../common/g_clockut.h ../common/terminal.h ../common/g_clockut.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockut.cpp -o ../common/g_clockut.o
 
+../common/g_computer.o: ../common/gauge.h ../common/g_computer.h ../common/terminal.h ../common/g_computer.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_computer.cpp -o ../common/g_computer.o
+
 ../common/g_csmcomputer.o: ../common/gauge.h ../common/g_csmcomputer.h ../common/terminal.h ../common/g_csmcomputer.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_csmcomputer.cpp -o ../common/g_csmcomputer.o
 
@@ -100,6 +109,9 @@
 ../common/g_dec.o: ../common/gauge.h ../common/g_dec.h ../common/terminal.h ../common/g_dec.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_dec.cpp -o ../common/g_dec.o
 
+../common/g_docked.o: ../common/gauge.h ../common/g_docked.h ../common/terminal.h ../common/g_docked.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_docked.cpp -o ../common/g_docked.o
+
 ../common/g_engines.o: ../common/gauge.h ../common/g_engines.h ../common/terminal.h ../common/g_engines.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_engines.cpp -o ../common/g_engines.o
 
@@ -109,8 +121,14 @@
 ../common/g_fuel.o: ../common/gauge.h ../common/g_fuel.h ../common/terminal.h ../common/g_fuel.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_fuel.cpp -o ../common/g_fuel.o
 
+../common/g_groundins.o: ../common/gauge.h ../common/g_groundins.h ../common/terminal.h ../common/g_groundins.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_groundins.cpp -o ../common/g_groundins.o
+
 ../common/g_incl.o: ../common/gauge.h ../common/g_incl.h ../common/terminal.h ../common/g_incl.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_incl.cpp -o ../common/g_incl.o
+
+../common/g_ins.o: ../common/gauge.h ../common/g_ins.h ../common/terminal.h ../common/g_ins.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_ins.cpp -o ../common/g_ins.o
 
 ../common/g_lamps.o: ../common/gauge.h ../common/g_lamps.h ../common/terminal.h ../common/g_lamps.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_lamps.cpp -o ../common/g_lamps.o
@@ -127,6 +145,12 @@
 ../common/g_lmrock.o: ../common/gauge.h ../common/g_lmrock.h ../common/terminal.h ../common/g_lmrock.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_lmrock.cpp -o ../common/g_lmrock.o
 
+../common/g_lrv.o: ../common/gauge.h ../common/g_lrv.h ../common/terminal.h ../common/g_lrv.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_lrv.cpp -o ../common/g_lrv.o
+
+../common/g_maplarge.o: ../common/gauge.h ../common/g_maplarge.h ../common/terminal.h ../common/g_maplarge.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_maplarge.cpp -o ../common/g_maplarge.o
+
 ../common/g_mapmed.o: ../common/gauge.h ../common/g_mapmed.h ../common/terminal.h ../common/g_mapmed.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_mapmed.cpp -o ../common/g_mapmed.o
 
@@ -138,6 +162,9 @@
 
 ../common/g_orbit.o: ../common/gauge.h ../common/g_orbit.h ../common/terminal.h ../common/g_orbit.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_orbit.cpp -o ../common/g_orbit.o
+
+../common/g_orbitlarge.o: ../common/types.h ../common/g_orbitlarge.h ../common/g_orbitlarge.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_orbitlarge.cpp -o ../common/g_orbitlarge.o
 
 ../common/g_orbiting.o: ../common/gauge.h ../common/g_orbiting.h ../common/terminal.h ../common/g_orbiting.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_orbiting.cpp -o ../common/g_orbiting.o
@@ -160,8 +187,14 @@
 ../common/g_pitchrate.o: ../common/gauge.h ../common/g_pitchrate.h ../common/terminal.h ../common/g_pitchrate.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_pitchrate.cpp -o ../common/g_pitchrate.o
 
+../common/g_plss.o: ../common/gauge.h ../common/g_plss.h ../common/terminal.h ../common/g_plss.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_plss.cpp -o ../common/g_plss.o
+
 ../common/g_position.o: ../common/gauge.h ../common/g_position.h ../common/terminal.h ../common/g_position.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_position.cpp -o ../common/g_position.o
+
+../common/g_precaxis.o: ../common/gauge.h ../common/g_precaxis.h ../common/terminal.h ../common/g_precaxis.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_precaxis.cpp -o ../common/g_precaxis.o
 
 ../common/g_prograde.o: ../common/gauge.h ../common/g_prograde.h ../common/terminal.h ../common/g_prograde.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_prograde.cpp -o ../common/g_prograde.o

@@ -1,9 +1,10 @@
-#include "header.h"
+#include <stdlib.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_ins.h"
 #include "terminal.h"
 #include "common.h"
+#include "helpers.h"
 #include "vehicle.h"
 #include "spacecraft.h"
 
