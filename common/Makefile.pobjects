@@ -3,12 +3,17 @@ POBJS = \
 	../common/g_altitude.o \
 	../common/g_amsatt.o \
 	../common/g_amsclocks.o \
+	../common/g_amscons.o \
+	../common/g_amsdock.o \
 	../common/g_amsdown.o \
+	../common/g_amsins.o \
+	../common/g_amsland.o \
 	../common/g_amslm.o \
 	../common/g_amsmsg.o \
 	../common/g_amspilot.o \
 	../common/g_amsseq.o \
 	../common/g_amsspin.o \
+	../common/g_amsstat.o \
 	../common/g_amswest.o \
 	../common/g_apoapsis.o \
 	../common/g_attitude.o \
@@ -30,6 +35,7 @@ POBJS = \
 	../common/g_evaprep.o \
 	../common/g_fuel.o \
 	../common/g_incl.o \
+	../common/g_lamps.o \
 	../common/g_lan.o \
 	../common/g_landed.o \
 	../common/g_lmfuel.o \

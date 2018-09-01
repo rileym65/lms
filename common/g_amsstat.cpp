@@ -1,9 +1,11 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_amsstat.h"
 #include "terminal.h"
 #include "common.h"
+#include "vehicle.h"
+#include "spacecraft.h"
+#include "lm.h"
 
 G_AmsStatus::G_AmsStatus(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -45,6 +47,7 @@ void G_AmsStatus::Display() {
 void G_AmsStatus::Update() {
   Int32 i;
   char buffer[32];
+  Spacecraft* sc;
   if (spaceSuitOn != lastSpaceSuitOn) {
     GotoXY(x+5,y+1);
     if (spaceSuitOn == 0) Write("v"); else Write("^");
@@ -64,11 +67,6 @@ void G_AmsStatus::Update() {
     GotoXY(x+5,y+5);
     if (docked == 0) Write(" "); else Write("^");
     lastDocked = docked;
-    }
-  if (lm->Landed() != lastLanded) {
-    GotoXY(x+5,y+6);
-    if (lm->Landed() == 0) Write(" "); else Write("^");
-    lastLanded = lm->Landed();
     }
   if (landingRadarOn != lastLandingRadarOn) {
     GotoXY(x,y+4);
@@ -106,26 +104,34 @@ void G_AmsStatus::Update() {
     Write(buffer);
     lastInjury = i;
     }
-  if (lm->RcsFbMode() != lastRcsFbMode) {
+  if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
+  sc = (Spacecraft*)vehicle;
+  if (sc->RcsFbMode() != lastRcsFbMode) {
     GotoXY(x,y+1);
-    lastRcsFbMode = lm->RcsFbMode();
+    lastRcsFbMode = sc->RcsFbMode();
     if (lastRcsFbMode == ' ') Write(" ");
     if (lastRcsFbMode == 'F') Write("^");
     if (lastRcsFbMode == 'B') Write("v");
     }
-  if (lm->RcsLrMode() != lastRcsLrMode) {
+  if (sc->RcsLrMode() != lastRcsLrMode) {
     GotoXY(x,y+2);
-    lastRcsLrMode = lm->RcsLrMode();
+    lastRcsLrMode = sc->RcsLrMode();
     if (lastRcsLrMode == ' ') Write(" ");
     if (lastRcsLrMode == 'L') Write("^");
     if (lastRcsLrMode == 'R') Write("v");
     }
-  if (lm->RcsUdMode() != lastRcsUdMode) {
+  if (sc->RcsUdMode() != lastRcsUdMode) {
     GotoXY(x,y+3);
-    lastRcsUdMode = lm->RcsUdMode();
+    lastRcsUdMode = sc->RcsUdMode();
     if (lastRcsUdMode == ' ') Write(" ");
     if (lastRcsUdMode == 'U') Write("^");
     if (lastRcsUdMode == 'D') Write("v");
+    }
+  if ((vehicle->Type() & VT_LANDER) == 0) return;
+  if (((LunarModule*)vehicle)->Landed() != lastLanded) {
+    GotoXY(x+5,y+6);
+    if (((LunarModule*)vehicle)->Landed() == 0) Write(" "); else Write("^");
+    lastLanded = ((LunarModule*)vehicle)->Landed();
     }
   }
 

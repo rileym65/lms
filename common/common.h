@@ -1,6 +1,7 @@
 #ifndef _COMMON_H
 #define _COMMON_H
 
+#include <math.h>
 #include "body.h"
 #include "mission.h"
 #include "lrv.h"
@@ -28,6 +29,10 @@
 #define VT_GROUND     4
 #define VT_COMMAND    8
 #define VT_LANDER     16
+#define GROUND 1738300
+#define METERS ((GROUND*2*M_PI) / 360.0)
+#define MAPCELL           (1.0/(METERS/10.0))
+#define CELL (METERS / 10)
 #define DR  (3.14159265358979323846 / 180)
 #define S_SMALL_ROCK      1
 #define S_MEDIUM_ROCK     2

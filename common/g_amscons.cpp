@@ -1,4 +1,3 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_amscons.h"
@@ -38,63 +37,66 @@ void G_AmsCons::Display() {
 void G_AmsCons::Update() {
   Int32 i;
   char buffer[32];
-  i = (int)(lm->AscentFuel() / lm->MaxAscentFuel() * 100);
+  LunarModule* sc;
+  if ((vehicle->Type() & VT_LANDER) == 0) return;
+  sc = (LunarModule*)vehicle;
+  i = (int)(sc->AscentFuel() / sc->MaxAscentFuel() * 100);
   if (i>99) i = 99;
   if (i != lastAscentFuel) {
     GotoXY(x+5,y+1); sprintf(buffer,"%2d",i); Write(buffer);
     lastAscentFuel = i;
     }
-  i = (int)(lm->RcsFuel() / lm->MaxRcsFuel() * 100);
+  i = (int)(sc->RcsFuel() / sc->MaxRcsFuel() * 100);
   if (i>99) i = 99;
   if (i != lastRcsFuel) {
     GotoXY(x+5,y+2); sprintf(buffer,"%2d",i); Write(buffer);
     lastRcsFuel = i;
     }
-  i = (int)(lm->DescentFuel() / lm->MaxDescentFuel() * 100);
+  i = (int)(sc->DescentFuel() / sc->MaxDescentFuel() * 100);
   if (i>99) i = 99;
   if (i != lastDescentFuel) {
     GotoXY(x+5,y+3);
-    if (!lm->DescentJettisoned()) {
+    if (!sc->DescentJettisoned()) {
       sprintf(buffer,"%2d",i);
       Write(buffer);
       }
       else Write("**");
     lastDescentFuel = i;
     }
-  i = lm->Throttle();
+  i = sc->Throttle();
   i = currentVehicle->Throttle();
   if (i > 99) i = 99;
   if (i != lastThrottle) {
     GotoXY(x+5,y+4);
-    if (!lm->DescentJettisoned()) {
+    if (!sc->DescentJettisoned()) {
       sprintf(buffer,"%2d",i);
       Write(buffer);
       }
       else Write("**");
-    if (!lm->DescentJettisoned()) GotoXY(x,y+3); else GotoXY(x, y+1);
+    if (!sc->DescentJettisoned()) GotoXY(x,y+3); else GotoXY(x, y+1);
     if (i > 0 && pilotLocation == PILOT_LM) Write("^"); else Write(" ");
     lastThrottle = i;
     }
-  i = (int)(lm->Oxygen() / (lm->MaxAscentOxygen() + lm->MaxDescentOxygen()) * 100);
+  i = (int)(sc->Oxygen() / (sc->MaxAscentOxygen() + sc->MaxDescentOxygen()) * 100);
   if (i>99) i = 99;
   if (i != lastOxygen) {
     GotoXY(x+5,y+5); sprintf(buffer,"%2d",i); Write(buffer);
     lastOxygen = i;
     }
-  i = (int)(lm->Battery() / (lm->MaxAscentBattery() + lm->MaxDescentBattery()) * 100);
+  i = (int)(sc->Battery() / (sc->MaxAscentBattery() + sc->MaxDescentBattery()) * 100);
   if (i>99) i = 99;
   if (i != lastBattery) {
     GotoXY(x+5,y+6); sprintf(buffer,"%2d",i); Write(buffer);
     lastBattery = i;
     }
-  if (lm->RcsThrottle() != lastRcsThrottle) {
+  if (sc->RcsThrottle() != lastRcsThrottle) {
     GotoXY(x,y+2);
-    switch (lm->RcsThrottle()) {
+    switch (sc->RcsThrottle()) {
       case   1: Write("v"); break;
       case  10: Write(" "); break;
       case 100: Write("^"); break;
       }
-    lastRcsThrottle = lm->RcsThrottle();
+    lastRcsThrottle = sc->RcsThrottle();
     }
   }
 

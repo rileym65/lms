@@ -9,12 +9,15 @@
 #include "g_altitude.h"
 #include "g_amsatt.h"
 #include "g_amsclocks.h"
+#include "g_amsdock.h"
 #include "g_amsdown.h"
+#include "g_amsland.h"
 #include "g_amslm.h"
 #include "g_amsmsg.h"
 #include "g_amspilot.h"
 #include "g_amsseq.h"
 #include "g_amsspin.h"
+#include "g_amsstat.h"
 #include "g_amswest.h"
 #include "g_apoapsis.h"
 #include "g_attitude.h"
@@ -35,6 +38,7 @@
 #include "g_evaprep.h"
 #include "g_fuel.h"
 #include "g_incl.h"
+#include "g_lamps.h"
 #include "g_lan.h"
 #include "g_landed.h"
 #include "g_lmfuel.h"
@@ -118,8 +122,12 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_AmsAtt(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_clocks") == 0)
         addGauge(new G_AmsClocks(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_dockingradar") == 0)
+        addGauge(new G_AmsDock(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_downaxis") == 0)
         addGauge(new G_AmsDown(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_landingradar") == 0)
+        addGauge(new G_AmsLand(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_lm") == 0)
         addGauge(new G_AmsLm(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_message") == 0)
@@ -130,6 +138,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_AmsSeq(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_spin") == 0)
         addGauge(new G_AmsSpin(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_status") == 0)
+        addGauge(new G_AmsStatus(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_westaxis") == 0)
         addGauge(new G_AmsWest(x1, y1, false, vehicle));
       else if (strcasecmp(str,"apoapsis") == 0)
@@ -170,6 +180,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Fuel(x1, y1, false, vehicle));
       else if (strcasecmp(str,"inclination") == 0)
         addGauge(new G_Incl(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"lamps") == 0)
+        addGauge(new G_Lamps(x1, y1, false, vehicle));
       else if (strcasecmp(str,"lan") == 0)
         addGauge(new G_Lan(x1, y1, false, vehicle));
       else if (strcasecmp(str,"landed") == 0)

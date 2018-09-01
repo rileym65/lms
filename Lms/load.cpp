@@ -36,7 +36,6 @@ char* nw(char* buffer) {
   while (buffer[0] > 0 && buffer[0] == ' ') buffer++;
   return buffer;
   }
-*/
 
 Vector atov(char* buffer) {
   Vector ret;
@@ -71,6 +70,7 @@ Matrix atom(char* buffer) {
   cz = atof(buffer);
   return Matrix(ax,ay,az,bx,by,bz,cx,cy,cz);
   }
+*/
 
 void loadSimulation(FILE* file) {
   char* pline;

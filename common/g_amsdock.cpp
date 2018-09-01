@@ -1,4 +1,4 @@
-#include "header.h"
+#include <math.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_amsdock.h"
@@ -73,14 +73,14 @@ void G_AmsDock::Update() {
     px = 5 + relPos.Y()+.5;
     if (px < 1) px = 1;
     if (px > 9) px = 9;
-    ax = 5 + asin(lm->FaceUp().Y()) * 180 / M_PI + 0.5;
-    ay = 3 - asin(lm->FaceUp().X()) * 180 / M_PI + 0.5;
+    ax = 5 + asin(sc->FaceUp().Y()) * 180 / M_PI + 0.5;
+    ay = 3 - asin(sc->FaceUp().X()) * 180 / M_PI + 0.5;
     if (ax < 1) ax = 1;
     if (ax > 9) ax = 9;
     if (ay < 1) ay = 1;
     if (ay > 5) ay = 5;
     v = Vector(0,-1,0);
-    dot = v.Dot(lm->FaceLeft());
+    dot = v.Dot(sc->FaceLeft());
     rx = 5 + acos(dot) * 180 / M_PI + 0.5;
     if (rx < 1) rx = 1;
     if (rx > 9) rx = 9;

@@ -31,11 +31,6 @@
 #define INS_MODE_ORB_TAR 5
 #define INS_MODE_ORB_REL 6
 #define MOON  4.9075e12
-#define GROUND 1738300
-#define METERS ((GROUND*2*M_PI) / 360.0)
-#define MAPCELL           (1.0/(METERS/10.0))
-#define CELL (METERS / 10)
-#define DR  (3.14159265358979323846 / 180)
 #define VEHICLE_APOLLO          1
 #define VEHICLE_APOLLO_J        2
 #define VEHICLE_APOLLO_MKII     3

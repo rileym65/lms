@@ -1,9 +1,12 @@
-#include "header.h"
+#include <string.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_amsland.h"
 #include "terminal.h"
 #include "common.h"
+#include "vehicle.h"
+#include "spacecraft.h"
+#include "lm.h"
 
 G_AmsLand::G_AmsLand(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -48,12 +51,14 @@ void G_AmsLand::Update() {
   Double dlat;
   char   mode;
   char   buffer[32];
+  LunarModule* sc;
   if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
-  lat = (int)currentVehicle->Latitude();
-  lng = (int)currentVehicle->Longitude();
-  dlng = vehicle->Longitude();
-  dlat = vehicle->Latitude();
-  alt = ((Spacecraft*)vehicle)->Altitude();
+  sc = (LunarModule*)vehicle;
+  lat = (int)sc->Latitude();
+  lng = (int)sc->Longitude();
+  dlng = sc->Longitude();
+  dlat = sc->Latitude();
+  alt = sc->Altitude();
 
   mode = 'L';
   if (alt > 12000) mode = 'H';
@@ -100,7 +105,7 @@ void G_AmsLand::Update() {
       lastCellX = cellX;
       lastCellY = cellY;
       }
-    if (lm->VelocityAltitude() <= -3) {
+    if (sc->VelocityAltitude() <= -3) {
       GotoXY(x+1,y+2); Write("+");
       GotoXY(x+11,y+2); Write("+");
       }
@@ -109,13 +114,13 @@ void G_AmsLand::Update() {
       GotoXY(x+11,y+2); Write("|");
       }
     GotoXY(x+10,y+1);
-    if (lm->VelocityEast() < -1.22) Write("^"); else Write("-");
+    if (sc->VelocityEast() < -1.22) Write("^"); else Write("-");
     GotoXY(x+10,y+7);
-    if (lm->VelocityEast() > 1.22) Write("v"); else Write("-");
+    if (sc->VelocityEast() > 1.22) Write("v"); else Write("-");
     GotoXY(x+11,y+6);
-    if (lm->LatitudeVelocity() > 1.22) Write(">"); else Write("|");
+    if (sc->LatitudeVelocity() > 1.22) Write(">"); else Write("|");
     GotoXY(x+1,y+6);
-    if (lm->LatitudeVelocity() < -1.22) Write("<"); else Write("|");
+    if (sc->LatitudeVelocity() < -1.22) Write("<"); else Write("|");
     }
   }
 

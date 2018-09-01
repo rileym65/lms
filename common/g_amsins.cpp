@@ -1,8 +1,9 @@
-#include "header.h"
+#include <stdlib.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_amsins.h"
 #include "terminal.h"
+#include "helpers.h"
 #include "common.h"
 
 G_AmsIns::G_AmsIns(Int8 x,Int8 y,Boolean f,Vehicle* v) :

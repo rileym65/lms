@@ -3,12 +3,17 @@ PHEADERS = \
 	../common/g_altitude.h \
 	../common/g_amsatt.h \
 	../common/g_amsclocks.h \
+	../common/g_amscons.h \
+	../common/g_amsdock.h \
 	../common/g_amsdown.h \
+	../common/g_amsins.h \
+	../common/g_amsland.h \
 	../common/g_amslm.h \
 	../common/g_amsmsg.h \
 	../common/g_amspilot.h \
 	../common/g_amsseq.h \
 	../common/g_amsspin.h \
+	../common/g_amsstat.h \
 	../common/g_amswest.h \
 	../common/g_apoapsis.h \
 	../common/g_attitude.h \
@@ -30,6 +35,7 @@ PHEADERS = \
 	../common/g_evaprep.h \
 	../common/g_fuel.h \
 	../common/g_incl.h \
+	../common/g_lamps.h \
 	../common/g_lan.h \
 	../common/g_landed.h \
 	../common/g_lmfuel.h \
