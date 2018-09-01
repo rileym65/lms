@@ -1,9 +1,11 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_amslm.h"
 #include "terminal.h"
 #include "common.h"
+#include "vehicle.h"
+#include "spacecraft.h"
+#include "lm.h"
 
 G_AmsLm::G_AmsLm(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -28,9 +30,10 @@ void G_AmsLm::Display() {
 
 void G_AmsLm::Update() {
   char buffer[32];
-  if (lm->Rock() != lastRock) {
-    GotoXY(x+3,y+3); sprintf(buffer,"%3d",lm->Rock()); Write(buffer);
-    lastRock = lm->Rock();
+  if ((vehicle->Type() & VT_LANDER) == 0) return;
+  if (((LunarModule*)lm)->Rock() != lastRock) {
+    GotoXY(x+3,y+3); sprintf(buffer,"%3d",((LunarModule*)lm)->Rock()); Write(buffer);
+    lastRock = ((LunarModule*)lm)->Rock();
     }
   }
 

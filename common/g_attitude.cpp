@@ -1,9 +1,10 @@
-#include "header.h"
+#include <math.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_attitude.h"
 #include "terminal.h"
 #include "common.h"
+#include "vehicle.h"
 
 G_Attitude::G_Attitude(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -35,8 +36,8 @@ void G_Attitude::Update() {
   Double d;
   Vector v1,v2;
   char buffer[32];
-  v1 = lm->Position().Norm();
-  v2 = lm->FaceUp().Norm();
+  v1 = vehicle->Position().Norm();
+  v2 = vehicle->FaceUp().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
   i = d * 10.0;
   if (i != lastUr) {
@@ -58,22 +59,22 @@ void G_Attitude::Update() {
     GotoXY(x+4,y+2); sprintf(buffer,"%5.1f",d); Write(buffer);
     lastLs = i;
     }
-  v1 = lm->Velocity().Norm();
-  v2 = lm->FaceUp().Norm();
+  v1 = vehicle->Velocity().Norm();
+  v2 = vehicle->FaceUp().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
   i = d * 10.0;
   if (i != lastUo) {
     GotoXY(x+14,y+0); sprintf(buffer,"%5.1f",d); Write(buffer);
     lastUo = i;
     }
-  v2 = lm->FaceFront().Norm();
+  v2 = vehicle->FaceFront().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
   i = d * 10.0;
   if (i != lastFo) {
     GotoXY(x+14,y+1); sprintf(buffer,"%5.1f",d); Write(buffer);
     lastFo = i;
     }
-  v2 = lm->FaceLeft().Norm();
+  v2 = vehicle->FaceLeft().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
   i = d * 10.0;
   if (i != lastLo) {

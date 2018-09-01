@@ -1,4 +1,3 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_pilot.h"

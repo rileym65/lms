@@ -10,8 +10,14 @@
 #include "g_amsatt.h"
 #include "g_amsclocks.h"
 #include "g_amsdown.h"
+#include "g_amslm.h"
+#include "g_amsmsg.h"
+#include "g_amspilot.h"
+#include "g_amsseq.h"
+#include "g_amsspin.h"
 #include "g_amswest.h"
 #include "g_apoapsis.h"
+#include "g_attitude.h"
 #include "g_battery.h"
 #include "g_clockbu.h"
 #include "g_clockev.h"
@@ -26,9 +32,13 @@
 #include "g_days.h"
 #include "g_dec.h"
 #include "g_engines.h"
+#include "g_evaprep.h"
 #include "g_fuel.h"
 #include "g_incl.h"
 #include "g_lan.h"
+#include "g_landed.h"
+#include "g_lmfuel.h"
+#include "g_lmrock.h"
 #include "g_mapmed.h"
 #include "g_moon.h"
 #include "g_multiaxis.h"
@@ -37,15 +47,19 @@
 #include "g_oxybat.h"
 #include "g_oxygen.h"
 #include "g_periapsis.h"
+#include "g_pilot.h"
+#include "g_pilotloc.h"
 #include "g_pitchrate.h"
 #include "g_position.h"
 #include "g_prograde.h"
 #include "g_propellant.h"
 #include "g_ra.h"
+#include "g_radars.h"
 #include "g_radial.h"
 #include "g_rcs.h"
 #include "g_roc.h"
 #include "g_rollrate.h"
+#include "g_seq.h"
 #include "g_throttle.h"
 #include "g_velocity.h"
 #include "g_yawrate.h"
@@ -106,10 +120,22 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_AmsClocks(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_downaxis") == 0)
         addGauge(new G_AmsDown(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_lm") == 0)
+        addGauge(new G_AmsLm(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_message") == 0)
+        addGauge(new G_AmsMessage(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_pilot") == 0)
+        addGauge(new G_AmsPilot(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_sequencer") == 0)
+        addGauge(new G_AmsSeq(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ams_spin") == 0)
+        addGauge(new G_AmsSpin(x1, y1, false, vehicle));
       else if (strcasecmp(str,"ams_westaxis") == 0)
         addGauge(new G_AmsWest(x1, y1, false, vehicle));
       else if (strcasecmp(str,"apoapsis") == 0)
         addGauge(new G_Apoapsis(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"attitude") == 0)
+        addGauge(new G_Attitude(x1, y1, false, vehicle));
       else if (strcasecmp(str,"battery") == 0)
         addGauge(new G_Battery(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockbu") == 0)
@@ -138,12 +164,20 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Declination(x1, y1, false, vehicle));
       else if (strcasecmp(str,"engines") == 0)
         addGauge(new G_Engines(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"evaprep") == 0)
+        addGauge(new G_EvaPrep(x1, y1, false, vehicle));
       else if (strcasecmp(str,"fuel") == 0)
         addGauge(new G_Fuel(x1, y1, false, vehicle));
       else if (strcasecmp(str,"inclination") == 0)
         addGauge(new G_Incl(x1, y1, false, vehicle));
       else if (strcasecmp(str,"lan") == 0)
         addGauge(new G_Lan(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"landed") == 0)
+        addGauge(new G_Landed(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"lmfuel") == 0)
+        addGauge(new G_LmFuel(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"lmrock") == 0)
+        addGauge(new G_LmRock(x1, y1, false, vehicle));
       else if (strcasecmp(str,"mapmedium") == 0)
         addGauge(new G_MapMed(x1, y1, false, vehicle));
       else if (strcasecmp(str,"moon") == 0)
@@ -160,6 +194,10 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Oxygen(x1, y1, false, vehicle));
       else if (strcasecmp(str,"periapsis") == 0)
         addGauge(new G_Periapsis(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"pilot") == 0)
+        addGauge(new G_Pilot(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"pilotlocation") == 0)
+        addGauge(new G_PilotLocation(x1, y1, false, vehicle));
       else if (strcasecmp(str,"pitchrate") == 0)
         addGauge(new G_PitchRate(x1, y1, false, vehicle));
       else if (strcasecmp(str,"position") == 0)
@@ -168,6 +206,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Prograde(x1, y1, false, vehicle));
       else if (strcasecmp(str,"propellant") == 0)
         addGauge(new G_Propellant(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"radars") == 0)
+        addGauge(new G_Radars(x1, y1, false, vehicle));
       else if (strcasecmp(str,"radial") == 0)
         addGauge(new G_Radial(x1, y1, false, vehicle));
       else if (strcasecmp(str,"rcs") == 0)
@@ -178,6 +218,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Roc(x1, y1, false, vehicle));
       else if (strcasecmp(str,"rollrate") == 0)
         addGauge(new G_RollRate(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"seq") == 0)
+        addGauge(new G_Seq(x1, y1, false, vehicle));
       else if (strcasecmp(str,"throttle") == 0)
         addGauge(new G_Throttle(x1, y1, false, vehicle));
       else if (strcasecmp(str,"velocity") == 0)

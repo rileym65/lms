@@ -1,4 +1,3 @@
-#include "header.h"
 #include "types.h"
 #include "gauge.h"
 #include "g_lmrock.h"
@@ -25,9 +24,10 @@ void G_LmRock::Display() {
 
 void G_LmRock::Update() {
   char buffer[32];
-  if (lm->Rock() != lastRock) {
-    GotoXY(x+3,y); sprintf(buffer,"%3d",lm->Rock()); Write(buffer);
-    lastRock = lm->Rock();
+  if ((vehicle->Type() & VT_LANDER) == 0) return;
+  if (((LunarModule*)lm)->Rock() != lastRock) {
+    GotoXY(x+3,y); sprintf(buffer,"%3d",((LunarModule*)lm)->Rock()); Write(buffer);
+    lastRock = ((LunarModule*)lm)->Rock();
     }
   }
 

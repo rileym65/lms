@@ -4,8 +4,14 @@ PHEADERS = \
 	../common/g_amsatt.h \
 	../common/g_amsclocks.h \
 	../common/g_amsdown.h \
+	../common/g_amslm.h \
+	../common/g_amsmsg.h \
+	../common/g_amspilot.h \
+	../common/g_amsseq.h \
+	../common/g_amsspin.h \
 	../common/g_amswest.h \
 	../common/g_apoapsis.h \
+	../common/g_attitude.h \
 	../common/g_axis.h \
 	../common/g_battery.h \
 	../common/g_clockbu.h \
@@ -21,9 +27,13 @@ PHEADERS = \
 	../common/g_days.h \
 	../common/g_dec.h \
 	../common/g_engines.h \
+	../common/g_evaprep.h \
 	../common/g_fuel.h \
 	../common/g_incl.h \
 	../common/g_lan.h \
+	../common/g_landed.h \
+	../common/g_lmfuel.h \
+	../common/g_lmrock.h \
 	../common/g_mapmed.h \
 	../common/g_moon.h \
 	../common/g_multiaxis.h \
@@ -32,15 +42,19 @@ PHEADERS = \
 	../common/g_oxybat.h \
 	../common/g_oxygen.h \
 	../common/g_periapsis.h \
+	../common/g_pilot.h \
+	../common/g_pilotloc.h \
 	../common/g_pitchrate.h \
 	../common/g_position.h \
 	../common/g_prograde.h \
 	../common/g_propellant.h \
 	../common/g_ra.h\
+	../common/g_radars.h\
 	../common/g_radial.h \
 	../common/g_rcs.h \
 	../common/g_roc.h \
 	../common/g_rollrate.h \
+	../common/g_seq.h \
 	../common/g_throttle.h \
 	../common/g_velocity.h \
 	../common/g_yawrate.h

@@ -1,4 +1,4 @@
-#include "header.h"
+#include <string.h>
 #include "types.h"
 #include "gauge.h"
 #include "g_amsmsg.h"
