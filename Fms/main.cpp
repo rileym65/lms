@@ -356,8 +356,8 @@ void cycle() {
                 -cos(kscAngle*DR)*0.878817113, 0.477158760).Norm();
     pos = pos.Scale(6378100);
     vu = booster->Position().Norm();
-    vl = Vector(vu.Y(), -vu.X(), 0).Norm();
-    vf = vu.Cross(vl);
+    vf = Vector(-vu.Y(), vu.X(), 0).Norm();
+    vl = vf.Cross(vu);
     booster->FaceUp(vu);
     booster->FaceLeft(vl);
     booster->FaceFront(vf);
@@ -433,12 +433,12 @@ void Launch() {
   Vector vf;
   booster->Ignition();
   vu = booster->Position().Norm();
-  vl = Vector(vu.Y(), -vu.X(), 0).Norm();
-  vf = vu.Cross(vl);
+  vf = Vector(-vu.Y(), vu.X(), 0).Norm();
+  vl = vf.Cross(vu);
   booster->FaceUp(vu);
   booster->FaceLeft(vl);
   booster->FaceFront(vf);
-  booster->Velocity(vl.Neg().Scale(408));
+  booster->Velocity(vf.Scale(408));
   launched = true;
   }
 
