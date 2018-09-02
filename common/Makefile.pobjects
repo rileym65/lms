@@ -23,6 +23,7 @@ POBJS = \
 	../common/g_battery.o \
 	../common/g_clockbu.o \
 	../common/g_clockev.o \
+	../common/g_clockge.o \
 	../common/g_clockmi.o \
 	../common/g_clockot.o \
 	../common/g_clocks.o \

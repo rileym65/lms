@@ -23,6 +23,7 @@ PHEADERS = \
 	../common/g_battery.h \
 	../common/g_clockbu.h \
 	../common/g_clockev.h \
+	../common/g_clockge.h \
 	../common/g_clockmi.h \
 	../common/g_clockot.h \
 	../common/g_clocks.h \

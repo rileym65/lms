@@ -191,7 +191,7 @@ Matrix m;
     Spacecraft::Cycle();
     }
   else {
-    position = booster->Position();
+    position = booster->Position()+booster->FaceUp().Scale(95);
     velocity = booster->Velocity();
     faceUp = booster->FaceUp();
     faceLeft = booster->FaceLeft();

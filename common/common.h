@@ -96,6 +96,7 @@ CLINK Int32        clockBu;
 CLINK Int32        clockDk;
 CLINK Int32        clockDOI;
 CLINK Int32        clockEv;
+CLINK Int32        clockGe;
 CLINK Int32        clockMi;
 CLINK Int32        clockOr;
 CLINK Int32        clockOt;

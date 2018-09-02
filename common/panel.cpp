@@ -28,6 +28,7 @@
 #include "g_battery.h"
 #include "g_clockbu.h"
 #include "g_clockev.h"
+#include "g_clockge.h"
 #include "g_clockmi.h"
 #include "g_clockot.h"
 #include "g_clocks.h"
@@ -173,6 +174,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_ClockBU(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockev") == 0)
         addGauge(new G_ClockEV(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clockge") == 0)
+        addGauge(new G_ClockGE(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockmi") == 0)
         addGauge(new G_ClockMI(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockot") == 0)

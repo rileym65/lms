@@ -229,7 +229,14 @@ void saturn1B() {
   csm->MaxBattery(csm->Battery());
   }
 
-void saturnV() {
+void saturnV(UInt8 lm) {
+  Double pl;
+  pl = 30364;
+  switch (lm) {
+    case      VEHICLE_APOLLO: pl += 15122; break;
+    case    VEHICLE_APOLLO_J: pl += 16411; break;
+    case VEHICLE_APOLLO_MKII: pl += 17231; break;
+    }
   booster->NumStages(3);
   booster->DryWeight(1, 130342 + 2447 + 4524);
   booster->DryWeight(2, 36479 + 423 + 3637);
@@ -237,7 +244,7 @@ void saturnV() {
   booster->Fuel(1, 649508 + 1503381);
   booster->Fuel(2, 382874 + 72779);
   booster->Fuel(3, 19845 + 88738);
-  booster->Payload(16448 + 30364);
+  booster->Payload(pl);
   booster->Stage(1);
   booster->NumEngines(1, 5);
   booster->NumEngines(2, 5);
@@ -319,6 +326,7 @@ void saturnV() {
   }
 
 void init(Byte v) {
+  clockGe = 0;
   clockMi = 0;
   clockUt = 8 * 3600;
   clockTb = 0;
@@ -331,7 +339,10 @@ void init(Byte v) {
   if (v == 2) mercuryAtlas();
   if (v == 3) geminiTitan();
   if (v == 4) saturn1B();
-  if (v == 5) saturnV();
+  if (v == 5) saturnV(0);
+  if (v == 6) saturnV(VEHICLE_APOLLO);
+  if (v == 7) saturnV(VEHICLE_APOLLO_J);
+  if (v == 8) saturnV(VEHICLE_APOLLO_MKII);
   }
 
 void cycle() {
@@ -362,7 +373,7 @@ void cycle() {
     booster->FaceLeft(vl);
     booster->FaceFront(vf);
     booster->Position(pos);
-    csm->Position(booster->Position());
+    csm->Position(booster->Position()+booster->FaceUp().Scale(95));
     csm->FaceUp(booster->FaceUp());
     csm->FaceLeft(booster->FaceLeft());
     csm->FaceFront(booster->FaceFront());
@@ -371,7 +382,7 @@ void cycle() {
     csm->UpdatePanel();
     }
   else {
-    clockMi++;
+    clockGe++;
     if (csm->UseOxygen(1) == false) {
       GotoXY(1,25);
       printf("Astronauts died due to lack of oxygen\n");
@@ -463,6 +474,9 @@ int main(int argc, char** argv) {
     printf("3. Gemini/Titan\n");
     printf("4. Apollo/Saturn IB\n");
     printf("5. Apollo/Saturn V\n");
+    printf("6. Apollo/LM/Saturn V\n");
+    printf("7. Apollo/LM-J/Saturn V\n");
+    printf("8. Apollo/LM-MkII/Saturn V\n");
     printf("   Vehicle: ");
     fgets(buffer,31,stdin);
     v = atoi(buffer);

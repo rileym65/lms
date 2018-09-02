@@ -13,6 +13,7 @@ void save() {
   file = fopen("fms.sav","w");
   fprintf(file,"Simulation {%s",LE);
   fprintf(file,"  ClockBU %d%s",clockBu,LE);
+  fprintf(file,"  ClockGe %d%s",clockGe,LE);
   fprintf(file,"  ClockMI %d%s",clockMi,LE);
   fprintf(file,"  ClockUT %d%s",clockUt,LE);
   fprintf(file,"  ClockTB %d%s",clockTb,LE);

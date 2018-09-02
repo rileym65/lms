@@ -76,6 +76,9 @@
 ../common/g_clockev.o: ../common/gauge.h ../common/g_clockev.h ../common/terminal.h ../common/g_clockev.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockev.cpp -o ../common/g_clockev.o
 
+../common/g_clockge.o: ../common/gauge.h ../common/g_clockge.h ../common/terminal.h ../common/g_clockge.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockge.cpp -o ../common/g_clockge.o
+
 ../common/g_clockmi.o: ../common/gauge.h ../common/g_clockmi.h ../common/terminal.h ../common/g_clockmi.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockmi.cpp -o ../common/g_clockmi.o
 

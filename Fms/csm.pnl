@@ -1,7 +1,7 @@
 Box 1,1,80,24
 Box 64,1,80,7
 Gauge ClockUT 66,2
-Gauge ClockMI 66,3
+Gauge ClockGE 66,3
 Gauge ClockBU 66,4
 Gauge ClockTB 66,5
 Gauge Days 66,6
