@@ -36,6 +36,7 @@
 #include "g_clockte.h"
 #include "g_clockut.h"
 #include "g_computer.h"
+#include "g_csmdock.h"
 #include "g_csmcomputer.h"
 #include "g_csmlamps.h"
 #include "g_days.h"
@@ -44,6 +45,7 @@
 #include "g_engines.h"
 #include "g_evaprep.h"
 #include "g_fuel.h"
+#include "g_ground.h"
 #include "g_groundins.h"
 #include "g_incl.h"
 #include "g_ins.h"
@@ -192,6 +194,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Computer(x1, y1, false, vehicle));
       else if (strcasecmp(str,"csmcomputer") == 0)
         addGauge(new G_CsmComputer(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"csmdock") == 0)
+        addGauge(new G_CsmDock(x1, y1, false, vehicle));
       else if (strcasecmp(str,"csmlamps") == 0)
         addGauge(new G_CsmLamps(x1, y1, false, vehicle));
       else if (strcasecmp(str,"days") == 0)
@@ -206,6 +210,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_EvaPrep(x1, y1, false, vehicle));
       else if (strcasecmp(str,"fuel") == 0)
         addGauge(new G_Fuel(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"ground") == 0)
+        addGauge(new G_Ground(x1, y1, false, vehicle));
       else if (strcasecmp(str,"groundins") == 0)
         addGauge(new G_GroundIns(x1, y1, false, vehicle));
       else if (strcasecmp(str,"inclination") == 0)

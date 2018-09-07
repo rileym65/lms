@@ -74,9 +74,13 @@ void CsmComputer::Cycle() {
   Double a;
   Double E;
   Double e;
+  Double l;
   Double g;
   Double s;
   Vector L;
+  Vector tvUp;
+  Vector tvFr;
+  Vector tvLf;
   Double v1,v2;
   Vector pos;
   Vector vel;
@@ -122,6 +126,21 @@ void CsmComputer::Cycle() {
     if (reg3 <= 0) {
       csm->Cutoff();
       running = 0;
+      }
+    }
+  else if (prog == 4) {
+    if (csm->TargetVehicle() != NULL) {
+      pos = csm->Position() - (csm->TargetVehicle())->Position();
+      tvUp = csm->TargetVehicle()->FaceUp().Norm();
+      tvFr = csm->TargetVehicle()->FaceFront().Norm();
+      tvLf = csm->TargetVehicle()->FaceLeft().Norm();
+      l = pos.Length();
+      _reg1(l*10);
+      a = (ram[0] - l) * 1000 * GRAN;
+      if (a <-99999) a = -99999;
+      if (a > 99999) a = 99999;
+      ram[0] = l;
+      _reg2(a);
       }
     }
   else if (prog == 10) {

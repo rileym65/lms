@@ -16,6 +16,7 @@ Gauge Velocity 41,2
 Gauge Accel 41,3
 Gauge Apoapsis 27,6
 Gauge Periapsis 27,7
+Gauge Ground 41,8
 Gauge ClockOT 27,8
 Gauge RightAscension 27,4
 Gauge Declination 41,4
@@ -31,7 +32,6 @@ Gauge Orbit 16,15
 Box 1,9,27,14
 Gauge Prograde 3,10
 Box 25,5,55,9
-Gauge Position 65,8
 Gauge Lan 42,6
 Gauge Inclination 42,7
 Line 1,5,25,5
@@ -39,8 +39,10 @@ Gauge CsmLamps 3,2
 Gauge Rcs 3,6
 Line 53,20,80,20
 Gauge Moon 55,21
-Line 55,3,64,3
-Gauge Orbiting 57,2
-Line 53,11,64,11
-Line 64,6,64,11
-Gauge CsmComputer 57,4
+Line 64,9,80,9
+Gauge Orbiting 70,8
+Line 53,9,64,9
+Line 64,6,64,9
+Gauge CsmComputer 57,2
+Gauge CsmDock 54,11
+Gauge Ams_Message 64,10

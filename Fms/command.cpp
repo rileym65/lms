@@ -45,8 +45,10 @@ Booster* CommandModule::LaunchVehicle() {
   }
 
 void CommandModule::capsuleSep() {
-  Position(booster->Position());
-  Velocity(booster->Velocity());
+  Double h;
+  h = booster->Height() + booster->CmOffset();
+  Position(booster->Position()+booster->FaceUp().Scale(h));
+  Velocity(booster->Velocity()+booster->FaceUp().Scale(0.1));
   faceUp = booster->FaceUp();
   faceLeft = booster->FaceLeft();
   faceFront = booster->FaceFront();
@@ -191,15 +193,15 @@ Matrix m;
     Spacecraft::Cycle();
     }
   else {
-    position = booster->Position()+booster->FaceUp().Scale(95);
+    position = booster->Position()+booster->FaceUp().Scale(booster->Height()+booster->CmOffset());
     velocity = booster->Velocity();
     faceUp = booster->FaceUp();
     faceLeft = booster->FaceLeft();
     faceFront = booster->FaceFront();
     latitude = booster->Latitude();
-    booster->Longitude();
+    longitude = booster->Longitude();
     }
-  computer->Cycle();
+//  computer->Cycle();
   }
 
 void CommandModule::Cutoff() {
@@ -303,7 +305,10 @@ Double CommandModule::Mass() {
     ret += retroModuleDryWeight;
     ret += retroModuleFuel;
     }
-
+  if (docked && targetVehicle != NULL) {
+    ret += targetVehicle->Mass();
+    if (lmExtracted == 0) ret += booster->Mass();
+    }
   return ret;
   }
 
@@ -588,8 +593,11 @@ void CommandModule::ProcessKey(Int32 key) {
       }
     }
   if (launchVehicleJettisoned) {
+    if (key == 'E' && docked && lmExtracted == 0) {
+      lmExtracted = -1;
+      velocity += faceUp.Norm().Neg().Scale(0.1);
+      }
     if (key == 'P' && parachuteDeployment == 0 &&
-//        radius <= GROUND+5000) parachuteDeployment = 0.01;
         radius <= orbiting->Radius()+5000) parachuteDeployment = 0.01;
     if (key == 'I' && armed) {
        if (serviceModuleDryWeight > 0 && serviceModuleIsp > 0) {

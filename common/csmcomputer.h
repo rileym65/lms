@@ -21,6 +21,7 @@ class CsmComputer {
     char dreg1[8];
     char dreg2[8];
     char dreg3[8];
+    Double ram[256];
     CommandModule* csm;
     Double altitude;
     Double velocity;

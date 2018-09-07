@@ -31,6 +31,7 @@ POBJS = \
 	../common/g_clockte.o \
 	../common/g_clockut.o \
 	../common/g_computer.o \
+	../common/g_csmdock.o \
 	../common/g_csmcomputer.o \
 	../common/g_csmlamps.o \
 	../common/g_days.o \
@@ -39,6 +40,7 @@ POBJS = \
 	../common/g_engines.o \
 	../common/g_evaprep.o \
 	../common/g_fuel.o \
+	../common/g_ground.o \
 	../common/g_groundins.o \
 	../common/g_incl.o \
 	../common/g_ins.o \

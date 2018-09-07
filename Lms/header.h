@@ -42,10 +42,6 @@
 #define LE   "\n"
 #endif
 
-LINK Double       dockingVel;
-LINK Double       dockingLVel;
-LINK Double       dockingXAlign;
-LINK Double       dockingYAlign;
 LINK Int8         insMode;
 LINK Vector       targetPos;
 LINK Vector       targetVel;

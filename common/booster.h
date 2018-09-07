@@ -7,9 +7,11 @@
 class Booster : public Spacecraft {
   protected:
     Double area[10];
+    Double cmOffset;
     Double dryWeight[10];
     Byte   enginesLit;
     Double fuel[10];
+    Double height;
     Double ispSl[10][10];
     Double ispVac[10][10];
     Double maxFuel[10];
@@ -25,6 +27,8 @@ class Booster : public Spacecraft {
   public:
     Booster();
     ~Booster();
+    virtual Double CmOffset();
+    virtual Double CmOffset(Double d);
     virtual void   Cutoff();
     virtual void   Cycle();
     virtual void   Diameter(Byte stage, Double d);
@@ -34,6 +38,8 @@ class Booster : public Spacecraft {
     virtual Double Fuel();
     virtual Double Fuel(Byte stage);
     virtual Double Fuel(Byte stage, Double d);
+    virtual Double Height();
+    virtual Double Height(Double d);
     virtual void   Ignition();
     virtual Double IspSl(Byte stage, Byte engine);
     virtual Double IspSl(Byte stage, Byte engine, Double d);

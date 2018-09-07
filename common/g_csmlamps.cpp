@@ -9,7 +9,7 @@
 G_CsmLamps::G_CsmLamps(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
   Reset();
-  width = 15;
+  width = 19;
   height = 2;
   }
 
@@ -20,9 +20,9 @@ void G_CsmLamps::Reset() {
   }
 
 void G_CsmLamps::Display() {
-  GotoXY(x,y+0); Write("CSP PAR        ");
-  GotoXY(x,y+1); Write("SMJ SPS        ");
-  GotoXY(x,y+2); Write("RMJ RTR     ARM");
+  GotoXY(x,y+0); Write("CSP PAR     DCK    ");
+  GotoXY(x,y+1); Write("SMJ SPS     BST    ");
+  GotoXY(x,y+2); Write("RMJ RTR         ARM");
   }
 
 void G_CsmLamps::Update() {
@@ -55,7 +55,12 @@ void G_CsmLamps::Update() {
   GotoXY(x+0,y+2);
   if (cm->RetroModuleIsp() > 0 && cm->RetroModuleDryWeight() == 0)
     printf("RMJ"); else printf("   ");
-  GotoXY(x+12, y+2);
+  GotoXY(x+16, y+2);
   if (cm->Armed()) Write("ARM"); else Write("   ");
+  GotoXY(x+12, y+0);
+  if (docked) Write("DCK"); else Write("   ");
+  GotoXY(x+12, y+1);
+  if (docked && (lmExtracted == 0)) Write("BST"); else Write("   ");
+
   }
 

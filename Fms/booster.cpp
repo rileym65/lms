@@ -6,6 +6,8 @@
 
 Booster::Booster() {
   stage = 1;
+  height = 0;
+  cmOffset = 0;
   enginesLit = 0;
   type |= VT_ROCKET;
   }
@@ -63,6 +65,15 @@ void Booster::Cycle() {
   if (radius < orbiting->Radius()) destroyed = true;
   }
 
+Double Booster::CmOffset() {
+  return cmOffset;
+  }
+
+Double Booster::CmOffset(Double d) {
+  cmOffset = d;
+  return cmOffset;
+  }
+
 void Booster::Diameter(Byte stage, Double d) {
   d = d/2;
   area[stage-1] = d * d * M_PI;
@@ -92,6 +103,15 @@ Double Booster::Fuel(Byte stage) {
 Double Booster::Fuel(Byte stage, Double d) {
   fuel[stage-1] = d;
   return fuel[stage-1];
+  }
+
+Double Booster::Height() { 
+  return height;
+  }
+
+Double Booster::Height(Double d) { 
+  height = d;
+  return height;
   }
 
 void Booster::Ignition() {
@@ -257,6 +277,8 @@ void Booster::Save(FILE* file) {
   Spacecraft::Save(file);
   fprintf(file,"  EnginesLit %d%s",enginesLit,LE);
   fprintf(file,"  Payload %.18f%s",payload,LE);
+  fprintf(file,"  Height %.18f%s",height,LE);
+  fprintf(file,"  CmOffset %.18f%s",cmOffset,LE);
   fprintf(file,"  Stage %d%s",stage,LE);
   fprintf(file,"  NumStages %d%s",numStages,LE);
   for (i=0; i<numStages; i++) {
@@ -326,6 +348,8 @@ Int8 Booster::SubLoad(FILE* file, char* pline) {
   else if (startsWith(pline,"stage ") &&
            strchr(pline,'{') != NULL) return loadStage(file,nw(pline));
   else if (startsWith(pline,"payload ")) payload = atof(nw(pline));
+  else if (startsWith(pline,"height ")) height = atof(nw(pline));
+  else if (startsWith(pline,"cmoffset ")) cmOffset = atof(nw(pline));
   else return Spacecraft::SubLoad(file, pline);
   return -1;
   }

@@ -491,7 +491,6 @@ void Sequencer::Cycle() {
       strcpy(message,"----------");
       simSpeed = 100000;
       Complete();
-      currentVehicle->UpdatePanel();
       }
     }
   }

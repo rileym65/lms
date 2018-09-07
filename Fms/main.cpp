@@ -12,6 +12,7 @@
 #include "g_position.h"
 #include "mission.h"
 #include "common.h"
+#include "csmcomputer.h"
 
 double mn,mx;
 
@@ -28,6 +29,8 @@ void mercuryRedstone() {
   booster->ThrustSl(1, 1, 350000);
   booster->Starts(1,1);
   booster->Diameter(1,1.78);
+  booster->Height(25.41);
+  booster->CmOffset(2.15);
   booster->MaxFuel(1, booster->Fuel(1));
   csm->DryWeight(1341);
   csm->Diameter(1.78);
@@ -51,7 +54,8 @@ void mercuryAtlas() {
   booster->NumStages(2);
   booster->Payload(1400);
   booster->Stage(1);
-
+  booster->Height(28.7);
+  booster->CmOffset(2.15);
   booster->Diameter(1,1.78);
   booster->DryWeight(1, 3050);
   booster->Fuel(1, 90923);
@@ -102,6 +106,8 @@ void mercuryAtlas() {
   }
 
 void geminiTitan() {
+  booster->Height(33.2);
+  booster->CmOffset(4);
   booster->NumStages(2);
   booster->DryWeight(1, 8532);
   booster->DryWeight(2, 1870);
@@ -155,6 +161,8 @@ void geminiTitan() {
   }
 
 void saturn1B() {
+  booster->Height(43.2);
+  booster->CmOffset(17.25);
   booster->NumStages(2);
   booster->DryWeight(1, 42000);
   booster->DryWeight(2, 10600);
@@ -229,14 +237,17 @@ void saturn1B() {
   csm->MaxBattery(csm->Battery());
   }
 
-void saturnV(UInt8 lm) {
+void saturnV(UInt8 lem) {
   Double pl;
   pl = 30364;
-  switch (lm) {
+  switch (lem) {
     case      VEHICLE_APOLLO: pl += 15122; break;
     case    VEHICLE_APOLLO_J: pl += 16411; break;
     case VEHICLE_APOLLO_MKII: pl += 17231; break;
     }
+  if (lem != 0) lm = new LunarModule();
+  booster->Height(85.9);
+  booster->CmOffset(17.25);
   booster->NumStages(3);
   booster->DryWeight(1, 130342 + 2447 + 4524);
   booster->DryWeight(2, 36479 + 423 + 3637);
@@ -326,10 +337,90 @@ void saturnV(UInt8 lm) {
   }
 
 void init(Byte v) {
+  Double dry;
+  cabinPressurized = -1;
+  clockBu = 0;
+  clockDk = 0;
+  clockEv = 0;
   clockGe = 0;
   clockMi = 0;
-  clockUt = 8 * 3600;
+  clockOr = 0;
+  clockUt = (8 * 3600) + (30 * 60);
+  clockUd = 0;
   clockTb = 0;
+  clockTe = 0;
+  lmExtracted = 0;
+  evaCount = 0;
+  longestEVA = 0;
+  docked = 0;
+  dockingRadarOn = 0;
+  dsnOn = 0;
+  efficiency = 99;
+  injury = 0;
+  landingRadarOn = 0;
+  metabolicRate = 30.0;
+  numSamples = 0;
+  mission->TargetLatitude(0.0);
+  mission->TargetLongitude(0.0);
+  plssOn = 0;
+  plssPacks = 4;
+  spaceSuitOn = 0;
+  sampleSmallRock = 0;
+  sampleMediumRock = 0;
+  sampleLargeRock = 0;
+  sampleSmallCrater = 0;
+  sampleMediumCrater = 0;
+  sampleLargeCrater = 0;
+  samplePlains = 0;
+  sampleRise = 0;
+  sampleCraterWall = 0;
+  lrvSampleSmallRock = 0;
+  lrvSampleMediumRock = 0;
+  lrvSampleLargeRock = 0;
+  lrvSampleSmallCrater = 0;
+  lrvSampleMediumCrater = 0;
+  lrvSampleLargeCrater = 0;
+  lrvSamplePlains = 0;
+  lrvSampleRise = 0;
+  lrvSampleSpecial = 0;
+  lrvSampleDepression = 0;
+  lrvSampleCraterWall = 0;
+  cartSampleSmallRock = 0;
+  cartSampleMediumRock = 0;
+  cartSampleLargeRock = 0;
+  cartSampleSmallCrater = 0;
+  cartSampleMediumCrater = 0;
+  cartSampleLargeCrater = 0;
+  cartSamplePlains = 0;
+  cartSampleRise = 0;
+  cartSampleSpecial = 0;
+  cartSampleDepression = 0;
+  cartSampleCraterWall = 0;
+  landedMet = 0;
+  liftoffMet = 0;
+  landedLongitude = 0;
+  landedLatitude = 0;
+  farthest = 0;
+  flagPlanted = 0;
+  flagLongitude = 0;
+  flagLatitude = 0;
+  alsepSetup = 0;
+  alsepLongitude = 0;
+  alsepLatitude = 0;
+  landedHVel = 0;
+  landedVVel = 0;
+  evas[0].start = 0;
+  clockDOI = 0;
+  clockPDI = 0;
+  numBurns = 0;
+  laserSetup = 0;
+  laserLongitude = 0;
+  laserLatitude = 0;
+  mode_abo = 0;
+  mode_arm = 0;
+  mode_jet = 0;
+  mode_kil = 0;
+  mode_lif = 0;
   days = 0;
   engines = 0;
   launched = false;
@@ -343,6 +434,81 @@ void init(Byte v) {
   if (v == 6) saturnV(VEHICLE_APOLLO);
   if (v == 7) saturnV(VEHICLE_APOLLO_J);
   if (v == 8) saturnV(VEHICLE_APOLLO_MKII);
+  pilotLocation = PILOT_CSM;
+  csm->TargetVehicle(lm);
+  if (lm != NULL) {
+    dry = mission->Model()->DescentEmptyWeight();
+    if (mission->Laser() != 0) dry += LASER_WEIGHT;
+    if (mission->Lsep() == 1) dry += ELSEP_WEIGHT;
+    if (mission->Lsep() == 2) dry += ALSEP_WEIGHT;
+    if (mission->Rover() == 1) dry += ROVER_MKI_WEIGHT;
+    if (mission->Rover() == 2) dry += ROVER_MKII_WEIGHT;
+    if (mission->Rover() == 3) dry += ROVER_MKIII_WEIGHT;
+    dry += (mission->Consumables() / 3600.0 * 0.060666);
+    dry += (mission->Consumables() / 3600.0 * 0.308333);
+    dry += (mission->Consumables() / 3600.0 * 0.205833);
+    lm->Orbiting(Earth);
+    lm->RcsFbMode(' ');
+    lm->RcsLrMode(' ');
+    lm->RcsUdMode(' ');
+    lm->RcsThrottle(1);
+    lm->AscentFuel(mission->Model()->AscentFuel());
+    lm->AscentDryWeight(mission->Model()->AscentEmptyWeight());
+    lm->AscentIsp(mission->Model()->AscentIsp());
+    lm->AscentNewtons(mission->Model()->AscentThrust());
+    lm->DescentFuel(mission->Model()->DescentFuel());
+    lm->DescentBattery(mission->Model()->Consumables());
+    lm->DescentOxygen(mission->Model()->Consumables());
+    lm->DescentDryWeight(dry);
+    lm->DescentIsp(mission->Model()->DescentIsp());
+    lm->DescentNewtons(mission->Model()->DescentThrust());
+    lm->RcsFuel(mission->Model()->RcsFuel());
+    lm->RcsIsp(mission->Model()->RcsIsp());
+    lm->RcsNewtons(mission->Model()->RcsThrust());
+    lm->AscentBattery(mission->Model()->AscentConsumables());
+    lm->AscentOxygen(mission->Model()->AscentConsumables());
+    lm->AscentEBattery(mission->Model()->AscentEConsumables());
+    lm->AscentEOxygen(mission->Model()->AscentEConsumables());
+    lm->DescentEBattery(mission->Model()->EConsumables());
+    lm->DescentEOxygen(mission->Model()->EConsumables());
+    lm->MaxAscentFuel(lm->AscentFuel());
+    lm->MaxDescentFuel(lm->DescentFuel());
+    lm->MaxRcsFuel(lm->RcsFuel());
+    lm->MaxBattery(lm->AscentBattery() + lm->DescentBattery());
+    lm->MaxOxygen(lm->AscentOxygen() + lm->DescentOxygen());
+    lm->MaxAscentBattery(lm->AscentBattery());
+    lm->MaxAscentEBattery(lm->AscentEBattery());
+    lm->MaxAscentOxygen(lm->AscentOxygen());
+    lm->MaxAscentEOxygen(lm->AscentEOxygen());
+    lm->MaxDescentBattery(lm->DescentBattery());
+    lm->MaxDescentEBattery(lm->DescentEBattery());
+    lm->MaxDescentOxygen(lm->DescentOxygen());
+    lm->MaxDescentEOxygen(lm->DescentEOxygen());
+    lm->MaxBattery(lm->MaxAscentBattery() + lm->MaxDescentBattery());
+    lm->MaxBattery(lm->MaxAscentOxygen() + lm->MaxDescentOxygen());
+    lm->TargetVehicle(csm);
+    }
+  }
+
+Int8 alignedForDocking() {
+  Vector pos;
+  Vector vel;
+  Double px,py;
+  if (lm == NULL) return 0;
+  if (csm->FaceUp().Dot(lm->FaceUp()) >= 0) return 0;
+  if (fabs(csm->FaceFront().Dot(lm->FaceUp())) > 0.150) return 0;
+  if (fabs(csm->FaceLeft().Dot(lm->FaceUp())) > 0.150) return 0;
+  if (fabs(csm->FaceFront().Dot(lm->FaceLeft())) > 0.150) return 0;
+  pos = csm->Position() - lm->Position();
+  px = pos.Norm().Dot(lm->FaceLeft()) * pos.Length();
+  py = pos.Norm().Dot(lm->FaceFront()) * pos.Length();
+  if (fabs(px) > 0.5) return 0;
+  if (fabs(py) > 0.5) return 0;
+  vel = csm->Velocity() - lm->Velocity();
+  if (vel.Length() < 0.2) return 0;
+  if (vel.Length() > 0.4) return 0;
+  return -1;
+
   }
 
 void cycle() {
@@ -373,10 +539,16 @@ void cycle() {
     booster->FaceLeft(vl);
     booster->FaceFront(vf);
     booster->Position(pos);
-    csm->Position(booster->Position()+booster->FaceUp().Scale(95));
+    csm->Position(booster->Position()+booster->FaceUp().Scale(booster->Height() + booster->CmOffset()));
     csm->FaceUp(booster->FaceUp());
     csm->FaceLeft(booster->FaceLeft());
     csm->FaceFront(booster->FaceFront());
+    if (lm != NULL) {
+      lm->Position(booster->Position()+booster->FaceUp().Scale(booster->Height()));
+      lm->FaceUp(booster->FaceUp());
+      lm->FaceLeft(booster->FaceLeft());
+      lm->FaceFront(booster->FaceFront());
+      }
     booster->Ins();
     csm->Ins();
     csm->UpdatePanel();
@@ -397,7 +569,6 @@ void cycle() {
       CloseTerminal();
       exit(0);
       }
-//    if (booster->EnginesLit() != 0) {
     if (csm->Throttle() != 0) {
       clockBu++;
       clockTb++;
@@ -406,8 +577,34 @@ void cycle() {
     p1 = csm->Position();
     for (i=0; i<GRAN; i++) {
       Moon->Cycle(GRAN);
-      if (!booster->Destroyed()) booster->Cycle();
+      if (!booster->Destroyed()) {
+        if (lmExtracted == 0 && docked) {
+          }
+        else booster->Cycle();
+        }
       csm->Cycle();
+      if (lm != NULL) {
+        if (docked) {
+          lm->Position(csm->Position()+csm->FaceUp().Scale(5.275));
+          lm->Velocity(csm->Velocity());
+          lm->FaceUp(csm->FaceUp().Neg());
+          lm->FaceLeft(csm->FaceLeft().Neg());
+          lm->FaceFront(csm->FaceFront());
+          lm->Latitude(csm->Latitude());
+          lm->Longitude(csm->Longitude());
+          }
+        else if (lmExtracted == 0) {
+          lm->Position(booster->Position()+booster->FaceUp().Scale(booster->Height()+3.5));
+          lm->Velocity(booster->Velocity());
+          lm->FaceUp(booster->FaceUp());
+          lm->FaceLeft(booster->FaceLeft());
+          lm->FaceFront(booster->FaceFront());
+          lm->Latitude(booster->Latitude());
+          lm->Longitude(booster->Longitude());
+          }
+        else lm->Cycle();
+        }
+      csm->Computer()->Cycle();
       if (csm->Radius() <= csm->Orbiting()->Radius()) {
         if (csm->RateOfClimb() <= -11) {
           GotoXY(1,25);
@@ -425,9 +622,33 @@ void cycle() {
           exit(0);
           }
         }
+
       }
     if (!booster->Destroyed()) booster->Ins();
     csm->Ins();
+    seq->Cycle();
+    if (lm != NULL) lm->Ins();
+    if (!docked && lm != NULL) {
+      if ((csm->Position() - lm->Position()).Length() < 5.275) {
+        if (alignedForDocking()) {
+          docked = -1;
+          seq->Dock();
+          }
+        else {
+          v = csm->Velocity() - csm->TargetVehicle()->Velocity();
+          csm->Velocity(csm->Velocity() - v);
+          csm->Velocity(csm->Velocity() - v.Scale(0.5));
+          lm->Velocity(lm->Velocity() + v.Scale(0.5));
+          csm->Position(csm->Position() - v);
+          lm->Position(lm->Position() + v);
+          if (lmExtracted == 0) {
+            booster->Velocity(booster->Velocity() + v.Scale(0.5));
+            booster->Position(booster->Position() + v);
+            }
+          }
+        }
+      }
+    
  
     r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
     p2 = csm->Position();
@@ -468,6 +689,14 @@ int main(int argc, char** argv) {
   booster = new Booster();
   csm = new CommandModule();
   csm->LaunchVehicle(booster);
+  lm = NULL;
+  lrv = NULL;
+  plss = NULL;
+  mission = new Mission();
+  mission->TargetLatitude(0);
+  mission->TargetLongitude(0);
+  mission->Name((char*)"Default");
+  seq = new Sequencer();
   if (load("fms.sav") == 0) {
     printf("1. Mercury/Redstone\n");
     printf("2. Mercury/Atlas\n");
@@ -480,19 +709,35 @@ int main(int argc, char** argv) {
     printf("   Vehicle: ");
     fgets(buffer,31,stdin);
     v = atoi(buffer);
+    if (v == 6) mission->Vehicle(VEHICLE_APOLLO);
+    if (v == 7) mission->Vehicle(VEHICLE_APOLLO_J);
+    if (v == 8) mission->Vehicle(VEHICLE_APOLLO_MKII);
     init(v);
+    }
+  else {
+    csm->TargetVehicle(lm);
+    if (lm != NULL) lm->TargetVehicle(csm);
     }
   csm->Orbiting(Earth);
   csm->SetupPanel();
   booster->Orbiting(Earth);
-  simSpeed = 1000000;
+  simSpeed = 100000;
   OpenTerminal();
   HideCursor();
   flag = true;
+  currentVehicle = csm;
+  ticks = 10;
+  keyDelay = 0;
   while (flag) {
-    while (KeyPressed()) {
+    if (ticks >= 10) {
+      ticks = 0;
+      cycle();
+      }
+    else ticks++;
+    usleep(simSpeed);
+    if (KeyPressed()) {
       key = Inkey();
-      if (key == '!') simSpeed = 1000000;
+      if (key == '!') simSpeed = 100000;
       if (key == '@') simSpeed = 10000;
       if (key == '#') simSpeed = 1000;
       if (key == '$') simSpeed = 100;
@@ -503,8 +748,6 @@ int main(int argc, char** argv) {
       if (key == 'S' && launched) booster->NextStage();
       csm->ProcessKey(key);
       }
-    cycle();
-    usleep(simSpeed);
     }
   save();
   GotoXY(1,25);

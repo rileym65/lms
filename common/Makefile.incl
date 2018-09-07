@@ -103,6 +103,9 @@
 ../common/g_csmcomputer.o: ../common/gauge.h ../common/g_csmcomputer.h ../common/terminal.h ../common/g_csmcomputer.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_csmcomputer.cpp -o ../common/g_csmcomputer.o
 
+../common/g_csmdock.o: ../common/gauge.h ../common/g_csmdock.h ../common/terminal.h ../common/g_csmdock.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_csmdock.cpp -o ../common/g_csmdock.o
+
 ../common/g_csmlamps.o: ../common/gauge.h ../common/g_csmlamps.h ../common/terminal.h ../common/g_csmlamps.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_csmlamps.cpp -o ../common/g_csmlamps.o
 
@@ -123,6 +126,9 @@
 
 ../common/g_fuel.o: ../common/gauge.h ../common/g_fuel.h ../common/terminal.h ../common/g_fuel.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_fuel.cpp -o ../common/g_fuel.o
+
+../common/g_ground.o: ../common/gauge.h ../common/g_ground.h ../common/terminal.h ../common/g_ground.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_ground.cpp -o ../common/g_ground.o
 
 ../common/g_groundins.o: ../common/gauge.h ../common/g_groundins.h ../common/terminal.h ../common/g_groundins.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_groundins.cpp -o ../common/g_groundins.o
