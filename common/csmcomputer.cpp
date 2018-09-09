@@ -67,6 +67,11 @@ void CsmComputer::_doShow() {
          _reg1(csm->Longitude() * 100);
          _reg2(csm->Latitude() * 100);
          break;
+    case 3:
+         _reg1(csm->Mass());
+         _reg2(csm->Fuel());
+         _reg3(csm->RcsFuel());
+         break;
     }
   }
 

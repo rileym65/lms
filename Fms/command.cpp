@@ -611,6 +611,9 @@ void CommandModule::ProcessKey(Int32 key) {
          armed = false;
          }
       }
+    if (key == 'M' && docked && lm != NULL) {
+      seq->MoveLm();
+      }
     if (key == 'i') {
       if (serviceModuleDryWeight > 0) throttle = 0;
       }

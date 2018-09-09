@@ -20,8 +20,8 @@ void G_CsmLamps::Reset() {
   }
 
 void G_CsmLamps::Display() {
-  GotoXY(x,y+0); Write("CSP PAR     DCK    ");
-  GotoXY(x,y+1); Write("SMJ SPS     BST    ");
+  GotoXY(x,y+0); Write("BSP PAR     DCK RCS");
+  GotoXY(x,y+1); Write("SMJ SPS     BST ATT");
   GotoXY(x,y+2); Write("RMJ RTR         ARM");
   }
 
@@ -31,7 +31,7 @@ void G_CsmLamps::Update() {
   cm = (CommandModule*)vehicle;
   GotoXY(x+0,y+0);
   if (((CommandModule*)vehicle)->LaunchVehicleJettisoned())
-    printf("CSP"); else printf("   ");
+    printf("BSP"); else printf("   ");
   GotoXY(x+4,y+0);
   if (((CommandModule*)vehicle)->ParachuteDeployment() > 0)
     printf("PAR"); else printf("   ");
@@ -61,6 +61,15 @@ void G_CsmLamps::Update() {
   if (docked) Write("DCK"); else Write("   ");
   GotoXY(x+12, y+1);
   if (docked && (lmExtracted == 0)) Write("BST"); else Write("   ");
-
+  GotoXY(x+16, y+0);
+  if (cm->RcsUdMode() != ' ' ||
+      cm->RcsLrMode() != ' ' ||
+      cm->RcsFbMode() != ' ') Write("RCS");
+    else Write("   ");
+  GotoXY(x+16, y+1);
+  if (cm->PitchRate() != 0 ||
+      cm->RollRate() != 0 ||
+      cm->YawRate() != 0) Write("ATT");
+    else Write("   ");
   }
 

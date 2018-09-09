@@ -1,6 +1,7 @@
 #define MAIN
 
 #include "header.h"
+#include "computer.h"
 #include "g_clockbu.h"
 #include "g_clockev.h"
 #include "g_clockmi.h"
@@ -245,7 +246,10 @@ void saturnV(UInt8 lem) {
     case    VEHICLE_APOLLO_J: pl += 16411; break;
     case VEHICLE_APOLLO_MKII: pl += 17231; break;
     }
-  if (lem != 0) lm = new LunarModule();
+  if (lem != 0) {
+    lm = new LunarModule();
+    lm->Comp(new Computer(lm));
+    }
   booster->Height(85.9);
   booster->CmOffset(17.25);
   booster->NumStages(3);
@@ -592,6 +596,7 @@ void cycle() {
           lm->FaceFront(csm->FaceFront());
           lm->Latitude(csm->Latitude());
           lm->Longitude(csm->Longitude());
+          lm->Orbiting(csm->Orbiting());
           }
         else if (lmExtracted == 0) {
           lm->Position(booster->Position()+booster->FaceUp().Scale(booster->Height()+3.5));
@@ -601,6 +606,7 @@ void cycle() {
           lm->FaceFront(booster->FaceFront());
           lm->Latitude(booster->Latitude());
           lm->Longitude(booster->Longitude());
+          lm->Orbiting(booster->Orbiting());
           }
         else lm->Cycle();
         }
@@ -627,7 +633,10 @@ void cycle() {
     if (!booster->Destroyed()) booster->Ins();
     csm->Ins();
     seq->Cycle();
-    if (lm != NULL) lm->Ins();
+    if (lm != NULL) {
+      lm->Ins();
+      if (lm->Comp() != NULL) lm->Comp()->Cycle();
+      }
     if (!docked && lm != NULL) {
       if ((csm->Position() - lm->Position()).Length() < 5.275) {
         if (alignedForDocking()) {
@@ -655,7 +664,20 @@ void cycle() {
     distance += (p1 - p2).Length();
 GotoXY(1,25); printf("distance: %.2fkm\n",distance/1000.0);
     csm->RateOfClimb(r2-r1);
-    csm->UpdatePanel();
+    if (metabolicRate > 99) metabolicRate = 99;
+    softInjury += 0.000347222;
+    if (softInjury > 100) softInjury = 100;
+    injury = softInjury + hardInjury;
+    if (metabolicRate > 30.0) metabolicRate -= 0.1;
+    if (metabolicRate < 30.0) metabolicRate = 30.0;
+    efficiency = 99.0;
+    if (metabolicRate < 40) efficiency -= (metabolicRate - 30) / 3;
+    else if (metabolicRate < 50) efficiency -= (metabolicRate - 30) / 2;
+    else if (metabolicRate < 60) efficiency -= (metabolicRate - 30);
+    else efficiency -= ((metabolicRate - 30) * 1.5);
+    efficiency -= (injury / 2.0);
+    if (efficiency < 20) efficiency = 20;
+    currentVehicle->UpdatePanel();
     }
   }
 
@@ -697,6 +719,7 @@ int main(int argc, char** argv) {
   mission->TargetLongitude(0);
   mission->Name((char*)"Default");
   seq = new Sequencer();
+  map = new Map();
   if (load("fms.sav") == 0) {
     printf("1. Mercury/Redstone\n");
     printf("2. Mercury/Atlas\n");
@@ -746,7 +769,7 @@ int main(int argc, char** argv) {
       if (key == 'I' && launched) booster->Ignition();
       if (key == 'L' && !launched) Launch();
       if (key == 'S' && launched) booster->NextStage();
-      csm->ProcessKey(key);
+      currentVehicle->ProcessKey(key);
       }
     }
   save();

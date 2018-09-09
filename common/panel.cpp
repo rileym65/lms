@@ -499,8 +499,9 @@ void Panel::Display() {
 
 void Panel::Update() {
   UInt8 i;
-  for (i=0; i<numGauges; i++)
+  for (i=0; i<numGauges; i++) {
     gauges[i]->Update();
+    }
   fflush(stdout);
   }
 

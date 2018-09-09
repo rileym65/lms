@@ -9,6 +9,7 @@
 	| Verb | Noun | Reg1      | Reg2      | Reg 3      |
 	|  01  |  01  | Apoapsis  | Periapsis | Orbit time |
 	|  01  |  02  | Longitude | Latitude  |            |
+	|  01  |  03  | Mass      | Fuel kg   | RCS Fuel kg|
 [TE]
 [=]
 [TB]
@@ -16,6 +17,7 @@
 	|  01  | Engine cutoff at end of boost phast       |
 	|  02  | Engine cutoff for apoapsis x 1000km       |
 	|  03  | Engine cutoff for deltav in reg1          |
+	|  04  | Distance to LM                            |
 	|  10  | Compute circular orbit velocity           |
 [TE]
 [=]

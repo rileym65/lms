@@ -2,6 +2,7 @@
 #include <string.h>
 #include "header.h"
 #include "helpers.h"
+#include "computer.h"
 #include "terminal.h"
 #include "g_clockbu.h"
 #include "g_clockmi.h"
@@ -137,6 +138,7 @@ Int8 load(const char* filename) {
     else if (startsWith(pline,"lunarmodule {")) {
       lm = new LunarModule();
       lm->Load(file);
+      lm->Comp(new Computer(lm));
       }
     else if (startsWith(pline,"mission {")) mission->Load(file);
     else if (startsWith(pline,"earth {")) Earth->Load(file);
@@ -147,6 +149,9 @@ Int8 load(const char* filename) {
       exit(1);
       }
     }
+  csm->TargetVehicle(lm);
+  if (lm != NULL) lm->TargetVehicle(csm);
+  if (lm->Orbiting() == NULL) lm->Orbiting(csm->Orbiting());
 
   fclose(file);
   return -1;
