@@ -559,6 +559,7 @@ void cycle() {
     }
   else {
     clockGe++;
+    if (pilotLocation == PILOT_LM && !docked) clockMi++;
     if (csm->UseOxygen(1) == false) {
       GotoXY(1,25);
       printf("Astronauts died due to lack of oxygen\n");
@@ -573,7 +574,7 @@ void cycle() {
       CloseTerminal();
       exit(0);
       }
-    if (csm->Throttle() != 0) {
+    if (currentVehicle->Throttle() != 0) {
       clockBu++;
       clockTb++;
       }

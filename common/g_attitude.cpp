@@ -35,8 +35,12 @@ void G_Attitude::Update() {
   Int32 i;
   Double d;
   Vector v1,v2;
+  Vector vel;
+  Vector pos;
   char buffer[32];
-  v1 = vehicle->Position().Norm();
+  vel = vehicle->Velocity() - vehicle->Orbiting()->Velocity();
+  pos = vehicle->Position() - vehicle->Orbiting()->Position();
+  v1 = pos.Norm();
   v2 = vehicle->FaceUp().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
   i = d * 10.0;
@@ -59,7 +63,7 @@ void G_Attitude::Update() {
     GotoXY(x+4,y+2); sprintf(buffer,"%5.1f",d); Write(buffer);
     lastLs = i;
     }
-  v1 = vehicle->Velocity().Norm();
+  v1 = vel.Norm();
   v2 = vehicle->FaceUp().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
   i = d * 10.0;

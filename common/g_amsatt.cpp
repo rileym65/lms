@@ -33,15 +33,19 @@ void G_AmsAtt::Display() {
 void G_AmsAtt::Update() {
   Int32 i;
   char buffer[32];
+  Vector vel;
+  Vector pos;
   Spacecraft* sc;
   if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
   sc = (Spacecraft*)vehicle;
-  i = (int)(acos(sc->Position().Norm().Dot(sc->FaceUp())) * 180 / M_PI + .4);
+  vel = vehicle->Velocity() - vehicle->Orbiting()->Velocity();
+  pos = vehicle->Position() - vehicle->Orbiting()->Position();
+  i = (int)(acos(pos.Norm().Dot(sc->FaceUp())) * 180 / M_PI + .4);
   if (lastUr != i) {
     GotoXY(x+4, y+1); sprintf(buffer,"%3d",i); Write(buffer);
     lastUr = i;
     }
-  i = (int)(acos(sc->Position().Norm().Dot(sc->FaceFront())) * 180 / M_PI+.4);
+  i = (int)(acos(pos.Norm().Dot(sc->FaceFront())) * 180 / M_PI+.4);
   if (lastFr != i) {
     GotoXY(x+4, y+2); sprintf(buffer,"%3d",i); Write(buffer);
     lastFr = i;
