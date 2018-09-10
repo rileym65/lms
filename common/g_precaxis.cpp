@@ -80,8 +80,8 @@ void G_PrecAxis::modeAbs() {
   Vector pos;
   Vector vel;
   char buffer[40];
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   Vector xVec;
   Vector yVec;
   Vector zVec;
@@ -113,8 +113,8 @@ void G_PrecAxis::modeDown() {
   Vector vel;
   char buffer[40];
   Double dx,dy,dz;
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   Vector xVec;
   Vector yVec;
   Vector zVec;
@@ -150,8 +150,8 @@ void G_PrecAxis::modePrograde() {
   Vector zVec;
   char buffer[40];
   Double dx,dy,dz;
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   xVec = vel.Cross(pos).Norm();
   yVec = xVec.Cross(vel);
   zVec = vel;
@@ -177,14 +177,16 @@ void G_PrecAxis::modePrograde() {
 
 void G_PrecAxis::modeWest() {
   Vector vel;
+  Vector pos;
   Vector xVec;
   Vector yVec;
   Vector zVec;
   char buffer[40];
   Double dx,dy,dz;
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   xVec = Vector(0,0,1);
-  yVec = vehicle->Position().Norm();
+  yVec = pos.Norm();
   zVec = Vector(yVec.Y(), -yVec.X(), yVec.Z()).Norm();
   /* ***** Face ***** */
   dx = asin(vehicle->FaceFront().Dot(xVec)) * 180 / M_PI;

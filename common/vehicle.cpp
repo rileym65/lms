@@ -340,6 +340,8 @@ Double Vehicle::YawRate(Double d) {
 
 void Vehicle::Cycle() {
   Vector L;
+  Vector rvel;
+  Vector rpos;
 //  Double E;
 //  Double s;
 //  Double e;
@@ -350,6 +352,8 @@ void Vehicle::Cycle() {
   Double vel;
 //  Double tmp;
   Vector vnorm;
+  rvel = velocity - orbiting->Velocity();
+  rpos = position - orbiting->Position();
 //  Double g;
 //  lastLatitude = latitude;
 //  lastLongitude = longitude;
@@ -380,7 +384,7 @@ void Vehicle::Cycle() {
 //  Radius(position.Length());
 
 //  g = orbiting->Gravitation();
-  v1 = velocity.Dot(position.Norm());
+  v1 = rvel.Dot(rpos.Norm());
 //  hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
 //  longitude = position.X() / hyp;
 //  longitude = asin(longitude) * 180 / M_PI;
@@ -390,13 +394,13 @@ void Vehicle::Cycle() {
 //  latitude = position.Z() / hyp;
 //  latitude = asin(latitude) * 180 / M_PI;
 
-  vnorm = velocity.Norm();
-  v2 = velocity.Dot(position.Norm());
-  a = Vector(position.Y(), -position.X(), 0.0).Norm();
-  vel= -(velocity.Dot(a));
+  vnorm = rvel.Norm();
+  v2 = rvel.Dot(rpos.Norm());
+  a = Vector(rpos.Y(), -rpos.X(), 0.0).Norm();
+  vel= -(rvel.Dot(a));
   accelEast = (vel - velocityEast) * GRAN;
   velocityEast = vel;
-  vel= velocity.Dot(Vector(0,0,1));
+  vel= rvel.Dot(Vector(0,0,1));
   accelNorth = (vel - velocityNorth) * GRAN;
   velocityNorth = vel;
   vel = v1 + ((v2 - v1) / 2);

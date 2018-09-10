@@ -380,8 +380,6 @@ void Spacecraft::Cycle() {
   if (orbiting == Moon && earthG > moonG) orbiting = Earth;
 
   Vehicle::Cycle();
-
-//  Ins();
   }
 
 void Spacecraft::Save(FILE* file) {
