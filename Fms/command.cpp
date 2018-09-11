@@ -60,6 +60,19 @@ void CommandModule::capsuleSep() {
   inclination = booster->Inclination();
   ascendingNode = booster->AscendingNode();
   launchVehicleJettisoned = true;
+  clockBsp = clockGe;
+  }
+
+void CommandModule::Undock() {
+  lm->Position(csm->Position()+csm->FaceUp().Scale(5.375));
+  lm->Velocity(csm->Velocity() + csm->FaceUp().Scale(0.1));
+  lm->FaceUp(csm->FaceUp().Neg());
+  lm->FaceLeft(csm->FaceLeft().Neg());
+  lm->FaceFront(csm->FaceFront());
+  lm->Latitude(csm->Latitude());
+  lm->Longitude(csm->Longitude());
+  lm->Orbiting(csm->Orbiting());
+  docked = 0;
   }
 
 void CommandModule::Cycle() {
@@ -586,10 +599,12 @@ void CommandModule::ProcessKey(Int32 key) {
     else if (serviceModuleDryWeight > 0) {
       serviceModuleDryWeight = 0;
       armed = false;
+      clockSmJt = clockGe;
       }
     else if (retroModuleDryWeight > 0) {
       retroModuleDryWeight = 0;
       armed = false;
+      clockRmJt = clockGe;
       }
     }
   if (launchVehicleJettisoned) {
@@ -598,7 +613,10 @@ void CommandModule::ProcessKey(Int32 key) {
       velocity += faceUp.Norm().Neg().Scale(0.1);
       }
     if (key == 'P' && parachuteDeployment == 0 &&
-        radius <= orbiting->Radius()+5000) parachuteDeployment = 0.01;
+        radius <= orbiting->Radius()+5000) {
+      parachuteDeployment = 0.01;
+      clockPara = clockGe;
+      }
     if (key == 'I' && armed) {
        if (serviceModuleDryWeight > 0 && serviceModuleIsp > 0) {
          throttle = 100;
@@ -613,6 +631,10 @@ void CommandModule::ProcessKey(Int32 key) {
       }
     if (key == 'M' && docked && lm != NULL) {
       seq->MoveLm();
+      }
+    if (key == 'U' && docked && lm != NULL && armed) {
+      seq->CmUndock();
+      armed = 0;
       }
     if (key == 'i') {
       if (serviceModuleDryWeight > 0) throttle = 0;

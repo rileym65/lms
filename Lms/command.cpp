@@ -375,6 +375,9 @@ Int8 CommandModule::Throttle() {
   return throttle;
   }
 
+void CommandModule::Undock() {
+  }
+
 Double CommandModule::YawRate() {
   return yawRate;
   }

@@ -116,6 +116,7 @@ class CommandModule : public Spacecraft {
     virtual Boolean  LaunchVehicleJettisoned(Boolean b);
     virtual void   ProcessKey(Int32 key);
     virtual Double rcsRotationFuelUsage();
+    virtual void   Undock();
     virtual Byte   Stage();
     virtual void     Save(FILE* file);
     virtual Int8   SubLoad(FILE* file, char* pline);
