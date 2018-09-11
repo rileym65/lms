@@ -29,6 +29,11 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockud ")) clockUd = atoi(nw(pline));
     else if (startsWith(pline,"clockdoi ")) clockDOI = atoi(nw(pline));
     else if (startsWith(pline,"clockpdi ")) clockPDI = atoi(nw(pline));
+    else if (startsWith(pline,"clockbsp ")) clockBsp = atoi(nw(pline));
+    else if (startsWith(pline,"clocklo ")) clockLo = atoi(nw(pline));
+    else if (startsWith(pline,"clockpara ")) clockPara = atoi(nw(pline));
+    else if (startsWith(pline,"clocksmjt ")) clockSmJt = atoi(nw(pline));
+    else if (startsWith(pline,"clockrmjt ")) clockRmJt = atoi(nw(pline));
     else if (startsWith(pline,"dockingvel ")) dockingVel = atof(nw(pline));
     else if (startsWith(pline,"dockinglvel ")) dockingLVel = atof(nw(pline));
     else if (startsWith(pline,"modeabo ")) mode_abo = atoi(nw(pline));
@@ -108,7 +113,7 @@ void loadSimulation(FILE* file) {
 
     else if (startsWith(pline,"days ")) days = atoi(nw(pline));
     else if (startsWith(pline,"kscangle ")) kscAngle = atof(nw(pline));
-    else if (startsWith(pline,"distance ")) distance = atof(nw(pline));
+    else if (startsWith(pline,"distance ")) distanceTravelled = atof(nw(pline));
     else if (startsWith(pline,"launched true")) launched = true;
     else if (startsWith(pline,"launched false")) launched = false;
 
@@ -123,6 +128,19 @@ void loadSimulation(FILE* file) {
       WriteLn(pline);
       exit(1);
       }
+    }
+  }
+
+void LoadBurn(FILE* file, char*line) {
+  Int32 i;
+  char* pline;
+  i = atoi(line);
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"start ")) burn[i].start = atoi(nw(pline));
+    else if (startsWith(pline,"end ")) burn[i].end = atoi(nw(pline));
+    else if (startsWith(pline,"fuelused ")) burn[i].fuelUsed = atof(nw(pline));
+    else if (startsWith(pline,"engine ")) burn[i].engine = nw(pline)[0];
     }
   }
 
@@ -141,6 +159,7 @@ Int8 load(const char* filename) {
       lm->Comp(new Computer(lm));
       }
     else if (startsWith(pline,"mission {")) mission->Load(file);
+    else if (startsWith(pline,"burn ")) LoadBurn(file,nw(pline));
     else if (startsWith(pline,"earth {")) Earth->Load(file);
     else if (startsWith(pline,"moon {")) Moon->Load(file);
     else {
@@ -150,9 +169,10 @@ Int8 load(const char* filename) {
       }
     }
   csm->TargetVehicle(lm);
-  if (lm != NULL) lm->TargetVehicle(csm);
-  if (lm->Orbiting() == NULL) lm->Orbiting(csm->Orbiting());
-
+  if (lm != NULL) {
+    lm->TargetVehicle(csm);
+    if (lm->Orbiting() == NULL) lm->Orbiting(csm->Orbiting());
+    }
   fclose(file);
   return -1;
   }

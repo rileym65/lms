@@ -273,16 +273,6 @@ void setupVehicle() {
   lrv->MaxOxygen(lrv->Oxygen());
   }
 
-char* ClockToString(char* buffer, Int32 clock) {
-  Int32 hours, minutes, seconds;
-  hours = clock / 3600;
-  clock -= (hours * 3600);
-  minutes = clock / 60;
-  seconds = clock - (minutes * 60);
-  sprintf(buffer,"%3d:%02d:%02d",hours,minutes,seconds);
-  return buffer;
-  }
-
 Boolean alignedForDocking() {
   Vector v;
   Double ax,ay,rx;

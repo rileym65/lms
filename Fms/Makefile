@@ -33,6 +33,7 @@ OBJS = \
 	booster.o \
 	command.o \
 	load.o \
+	missionreport.o \
 	save.o \
 	main.o
 
@@ -65,6 +66,7 @@ csmcomputer.o:   $(HEADERS) csmcomputer.cpp
 gauge.o:         $(HEADERS) gauge.cpp
 load.o:          $(HEADERS) load.cpp
 main.o:          $(HEADERS) main.cpp
+missionreport.o: $(HEADERS) missionreport.cpp
 save.o:          $(HEADERS) save.cpp
 terminal.o:      $(HEADERS) terminal.cpp
 

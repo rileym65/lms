@@ -27,6 +27,11 @@ void save() {
   fprintf(file,"  ClockUD %d%s",clockUd,LE);
   fprintf(file,"  ClockDOI %d%s",clockDOI,LE);
   fprintf(file,"  ClockPDI %d%s",clockPDI,LE);
+  fprintf(file,"  ClockBsp %d%s",clockBsp,LE);
+  fprintf(file,"  ClockLo %d%s",clockLo,LE);
+  fprintf(file,"  ClockPara %d%s",clockPara,LE);
+  fprintf(file,"  ClockSmJt %d%s",clockSmJt,LE);
+  fprintf(file,"  ClockRmJt %d%s",clockRmJt,LE);
   fprintf(file,"  DockingVel %.18f%s",dockingVel,LE);
   fprintf(file,"  DockingLVel %.18f%s",dockingLVel,LE);
   fprintf(file,"  ModeAbo %d%s",mode_abo,LE);
@@ -105,6 +110,12 @@ void save() {
   fprintf(file,"  CartSampleCraterWall %d%s",cartSampleCraterWall,LE);
   for (i=0; i<numSamples; i++)
     fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
+  fprintf(file,"  Days %d%s",days,LE);
+  fprintf(file,"  KscAngle %.18f%s",kscAngle,LE);
+  fprintf(file,"  Distance %.18f%s",distanceTravelled,LE);
+  if (launched) fprintf(file,"  Launched true%s",LE);
+    else fprintf(file,"  Launched false%s",LE);
+  fprintf(file,"  }%s",LE);
   for (i=0; i<evaCount; i++) {
     fprintf(file,"EVA %d {%s",i,LE);
     fprintf(file,"  Start %d%s",evas[i].start,LE);
@@ -123,12 +134,6 @@ void save() {
     fprintf(file,"  Engine %c%s",burn[i].engine,LE);
     fprintf(file,"  }%s",LE);
     }
-  fprintf(file,"  Days %d%s",days,LE);
-  fprintf(file,"  KscAngle %.18f%s",kscAngle,LE);
-  fprintf(file,"  Distance %.18f%s",distance,LE);
-  if (launched) fprintf(file,"  Launched true%s",LE);
-    else fprintf(file,"  Launched false%s",LE);
-  fprintf(file,"  }%s",LE);
   mission->Save(file);
   csm->Save(file);
   booster->Save(file);

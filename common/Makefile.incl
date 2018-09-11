@@ -280,6 +280,9 @@
 ../common/random.o: ../common/types.h ../common/random.h ../common/random.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/random.cpp -o ../common/random.o
 
+../common/records.o: ../common/types.h ../common/records.h ../common/records.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/records.cpp -o ../common/records.o
+
 ../common/plss.o: ../common/types.h ../common/plss.h ../common/plss.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/plss.cpp -o ../common/plss.o
 

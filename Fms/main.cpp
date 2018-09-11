@@ -344,15 +344,20 @@ void init(Byte v) {
   Double dry;
   cabinPressurized = -1;
   clockBu = 0;
+  clockBsp = 0;
   clockDk = 0;
   clockEv = 0;
   clockGe = 0;
   clockMi = 0;
   clockOr = 0;
+  clockPara = 0;
   clockUt = (8 * 3600) + (30 * 60);
   clockUd = 0;
+  clockSmJt = 0;
+  clockRmJt = 0;
   clockTb = 0;
   clockTe = 0;
+  clockLo = 0;
   lmExtracted = 0;
   evaCount = 0;
   longestEVA = 0;
@@ -429,7 +434,7 @@ void init(Byte v) {
   engines = 0;
   launched = false;
   kscAngle = 0;
-  distance = 0;
+  distanceTravelled = 0;
   if (v == 1) mercuryRedstone();
   if (v == 2) mercuryAtlas();
   if (v == 3) geminiTitan();
@@ -623,10 +628,9 @@ void cycle() {
         else {
           GotoXY(1,25);
           printf("Vehicle has safely landed%s",LE);
-          printf("Total distance travelled: %.3fkm%s",distance/1000.0,LE);
-          ShowCursor();
-          CloseTerminal();
-          exit(0);
+          printf("Total distance travelled: %.3fkm%s",distanceTravelled/1000.0,LE);
+          endReason = END_MISSION;
+          return;
           }
         }
 
@@ -662,8 +666,8 @@ void cycle() {
  
     r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
     p2 = csm->Position();
-    distance += (p1 - p2).Length();
-GotoXY(1,25); printf("distance: %.2fkm\n",distance/1000.0);
+    distanceTravelled += (p1 - p2).Length();
+GotoXY(1,25); printf("distance: %.2fkm\n",distanceTravelled/1000.0);
     csm->RateOfClimb(r2-r1);
     if (metabolicRate > 99) metabolicRate = 99;
     softInjury += 0.000347222;
@@ -695,6 +699,11 @@ void Launch() {
   booster->FaceFront(vf);
   booster->Velocity(vf.Scale(408));
   launched = true;
+  clockLo = clockUt;
+  burn[0].start = clockGe;
+  burn[0].fuelUsed = csm->Fuel();
+  burn[0].engine = '1';
+  numBurns++;
   }
 
 int main(int argc, char** argv) {
@@ -722,6 +731,7 @@ int main(int argc, char** argv) {
   seq = new Sequencer();
   map = new Map();
   if (load("fms.sav") == 0) {
+    ClrScr();
     printf("1. Mercury/Redstone\n");
     printf("2. Mercury/Atlas\n");
     printf("3. Gemini/Titan\n");
@@ -739,6 +749,7 @@ int main(int argc, char** argv) {
     init(v);
     }
   else {
+printf("Done loading\n\n"); fflush(stdout);
     csm->TargetVehicle(lm);
     if (lm != NULL) lm->TargetVehicle(csm);
     }
@@ -752,6 +763,7 @@ int main(int argc, char** argv) {
   currentVehicle = csm;
   ticks = 10;
   keyDelay = 0;
+  endReason = 0;
   while (flag) {
     if (ticks >= 10) {
       ticks = 0;
@@ -766,14 +778,22 @@ int main(int argc, char** argv) {
       if (key == '#') simSpeed = 1000;
       if (key == '$') simSpeed = 100;
       if (key == '%') simSpeed = 10;
-      if (key == 'Q') flag = false;
+      if (key == 'Q') {
+        flag = false;
+        endReason = END_QUIT;
+        }
       if (key == 'I' && launched) booster->Ignition();
       if (key == 'L' && !launched) Launch();
       if (key == 'S' && launched) booster->NextStage();
       currentVehicle->ProcessKey(key);
       }
+    if (endReason != 0) flag = false;
     }
-  save();
+  if (endReason == END_QUIT) save();
+  if (endReason == END_MISSION) {
+    MissionReport();
+    unlink("fms.sav");
+    }
   GotoXY(1,25);
   ShowCursor();
   CloseTerminal();

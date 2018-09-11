@@ -41,6 +41,7 @@
 #define SEQ_TOCART      36
 #define SEQ_CARTTOLM    37
 #define SEQ_CARTTOLRV   38
+#define SEQ_CMUNDOCK    39
 
 
 class Sequencer {
@@ -63,6 +64,7 @@ class Sequencer {
     void  BoxToPlss();
     void  CartToLm();
     void  CartToLrv();
+    void  CmUndock();
     void  Cycle();
     void  CabinEvacuate();
     void  CabinPressurize();

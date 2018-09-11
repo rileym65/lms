@@ -191,7 +191,11 @@ Matrix m;
           serviceModuleFuel -= f;
           thrust = thrust + faceUp.Scale(th);
           }
-        else throttle = 0;
+        else {
+          throttle = 0;
+          burn[numBurns-1].end = clockGe;
+          burn[numBurns-1].fuelUsed -= serviceModuleFuel;
+          }
         }
       else if (retroModuleDryWeight > 0) {
         th = retroModuleThrust / Mass();
@@ -200,7 +204,11 @@ Matrix m;
           retroModuleFuel -= f;
           thrust = thrust + faceUp.Scale(th);
           }
-        else throttle = 0;
+        else {
+          throttle = 0;
+          burn[numBurns-1].end = clockGe;
+          burn[numBurns-1].fuelUsed -= retroModuleFuel;
+          }
         }
       }
     Spacecraft::Cycle();
@@ -622,11 +630,19 @@ void CommandModule::ProcessKey(Int32 key) {
          throttle = 100;
          clockBu = 0;
          armed = false;
+         burn[numBurns].start = clockGe;
+         burn[numBurns].engine = 'S';
+         burn[numBurns].fuelUsed = Fuel();
+         numBurns++;
          }
        else if (retroModuleDryWeight > 0) {
          throttle = 100;
          clockBu = 0;
          armed = false;
+         burn[numBurns].start = clockGe;
+         burn[numBurns].engine = 'R';
+         burn[numBurns].fuelUsed = Fuel();
+         numBurns++;
          }
       }
     if (key == 'M' && docked && lm != NULL) {

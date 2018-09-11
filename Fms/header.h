@@ -38,7 +38,12 @@
 #define LE   "\n"
 #endif
 
-LINK Double  distance;
+LINK Int32   clockBsp;
+LINK Int32   clockLo;
+LINK Int32   clockPara;
+LINK Int32   clockRmJt;
+LINK Int32   clockSmJt;
+LINK Double  distanceTravelled;
 LINK Byte    engines;
 LINK Boolean launched;
 LINK Vector  pos;
@@ -48,6 +53,7 @@ LINK Vector  vel;
 
 extern Double AirDensity(Double altitude);
 extern Int8   load(const char* filename);
+extern void MissionReport();
 extern void   save();
 
 #endif

@@ -1,5 +1,9 @@
-#include "header.h"
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "common.h"
 #include "records.h"
+#include "helpers.h"
 
 Records::Records() {
   load();

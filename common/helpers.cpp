@@ -7,6 +7,16 @@
 #include "matrix.h"
 #include "helpers.h"
 
+char* ClockToString(char* buffer, Int32 clock) {
+  Int32 hours, minutes, seconds;
+  hours = clock / 3600;
+  clock -= (hours * 3600);
+  minutes = clock / 60;
+  seconds = clock - (minutes * 60);
+  sprintf(buffer,"%3d:%02d:%02d",hours,minutes,seconds);
+  return buffer;
+  }
+
 char* trim(char* buffer) {
   Int16 p;
   p = strlen(buffer) - 1;

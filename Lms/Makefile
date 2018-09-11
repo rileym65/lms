@@ -24,7 +24,6 @@ OBJS = \
 	$(POBJS) \
 	command.o \
 	load.o \
-	records.o \
 	save.o \
 	missionreport.o \
 	score.o \
@@ -126,7 +125,6 @@ load.o:          $(HEADERS) load.cpp
 main.o:          $(HEADERS) main.cpp
 mapgen.o:        $(HEADERS) ../common/map.h ../common/random.h mapgen.cpp
 missionreport.o: $(HEADERS) missionreport.cpp
-records.o:       $(HEADERS) records.h records.cpp
 save.o:          $(HEADERS) save.cpp
 sgn.o:           $(HEADERS) sgn.cpp
 vehicle.o:       $(HEADERS) vehicle.h panel.h ../common/gauge.h vehicle.cpp

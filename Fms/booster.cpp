@@ -53,6 +53,11 @@ void Booster::Cycle() {
         }
       }
     thrust = faceUp.Scale(tth);
+    if (enginesLit == 0) {
+      throttle = 0;
+      burn[numBurns-1].end = clockGe;
+      burn[numBurns-1].fuelUsed -= csm->Fuel();
+      }
     }
   if (air > 0) {
     v = velocity.Length() - 408;

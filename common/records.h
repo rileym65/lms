@@ -3,7 +3,8 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "header.h"
+#include "types.h"
+#include "common.h"
 
 class Records {
   protected:

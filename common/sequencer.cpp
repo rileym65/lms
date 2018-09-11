@@ -72,6 +72,10 @@ void Sequencer::Complete() {
          evas[evaCount-1].walked = plss->Walked();
          evas[evaCount-1].driven = lrv->Driven();
          break;
+    case SEQ_CMUNDOCK:
+         csm->Undock();
+         docked = 0;
+         break;
     case SEQ_UNDOCK:
          lm->Position(csm->Position() + Vector(0,0,19));
          lm->Velocity(csm->Velocity() + Vector(0,0,0.1));
@@ -523,6 +527,12 @@ void Sequencer::CabinPressurize() {
   time = 2 * 60;
   strcpy(message," CAB->PRES");
   function = SEQ_CABINPRESS;
+  }
+ 
+void Sequencer::CmUndock() {
+  time = 60;
+  strcpy(message,"    UNDOCK");
+  function = SEQ_CMUNDOCK;
   }
 
 void Sequencer::Dock() {
