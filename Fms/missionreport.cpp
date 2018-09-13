@@ -6,6 +6,39 @@
 #include "helpers.h"
 #include "g_clockte.h"
 
+Double eventTime[512];
+char   eventDesc[512][64];
+Int32  numEvents;
+UInt32  longestDesc;
+
+void AddEvent(Double time, const char* desc) {
+  eventTime[numEvents] = time;
+  strcpy(eventDesc[numEvents], desc);
+  numEvents++;
+  if (strlen(desc) > longestDesc) longestDesc = strlen(desc);
+  }
+
+void SortEvents() {
+  Double tmpD;
+  char   tmpS[64];
+  Int8   flag;
+  Int32 i;
+  flag = 0xff;
+  while (flag) {
+    flag = 0;
+    for (i=0; i<numEvents-1; i++)
+      if (eventTime[i] > eventTime[i+1]) {
+        flag = 0xff;
+        tmpD = eventTime[i];
+        eventTime[i] = eventTime[i+1];
+        eventTime[i+1] = tmpD;
+        strcpy(tmpS, eventDesc[i]);
+        strcpy(eventDesc[i], eventDesc[i+1]);
+        strcpy(eventDesc[i+1], tmpS);
+        }
+    }
+  }
+
 void MissionReport() {
   Int32 i;
   char  buffer[128];
@@ -37,17 +70,55 @@ void MissionReport() {
     fprintf(file,"Vehicle    : Apollo J%s",LE);
   if (mission->Vehicle() == VEHICLE_APOLLO_MKII)
     fprintf(file,"Vehicle    : Apollo Mk II%s",LE);
+  if (mission->Vehicle() == VEHICLE_MERCURY_REDSTONE)
+    fprintf(file,"Vehicle    : Mercury/Redsone%s",LE);
+  if (mission->Vehicle() == VEHICLE_MERCURY_ATLAS)
+    fprintf(file,"Vehicle    : Mercury/Atlas%s",LE);
+  if (mission->Vehicle() == VEHICLE_GEMINI_TITAN)
+    fprintf(file,"Vehicle    : Gemini/Titan%s",LE);
+  if (mission->Vehicle() == VEHICLE_APOLLO_SATURN_IB)
+    fprintf(file,"Vehicle    : Apollo/Saturn IB%s",LE);
+  if (mission->Vehicle() == VEHICLE_APOLLO_SATURN_V)
+    fprintf(file,"Vehicle    : Apollo/Saturn V%s",LE);
   fprintf(file,"%s",LE);
   fprintf(file,"Mission Time Line (All times in GET unless specified):%s",LE);
-  fprintf(file,"  Launch UTC    : %s%s",ClockToString(buffer,clockLo),LE);
+//  fprintf(file,"  Launch UTC    : %s%s",ClockToString(buffer,clockLo),LE);
+
+  numEvents = 0;
+  longestDesc = 0;
+
+  if (clockTli > 0) AddEvent(clockTli, "TLI");
+  if (clockTei > 0) AddEvent(clockTei, "TEI");
+  if (clockLoi > 0) AddEvent(clockLoi, "LOI");
+  if (clockMaxQ > 0) AddEvent(clockMaxQ, "Max Q");
+  if (clockBsp > 0) AddEvent(clockBsp, "Booster Sep");
+  if (clockSmJt != 0) AddEvent(clockSmJt, "SM Jet.");
+  if (clockRmJt != 0) AddEvent(clockRmJt, "RM Jet.");
+  if (clockRent != 0) AddEvent(clockRent, "Re-entry");
+  if (clockPara != 0) AddEvent(clockPara, "Parachutes");
+  if (clockMSoi != 0) AddEvent(clockMSoi, "Moon SOI");
+  if (clockESoi != 0) AddEvent(clockESoi, "Earth SOI");
+
   for (i=0; i<numBurns; i++) {
     if (burn[i].engine >= '1' && burn[i].engine <= '3') {
-      fprintf(file,"  Stage %d Ign.  : %s%s",i+1,ClockToString(buffer,burn[i].start),LE);
-      fprintf(file,"  Stage %d End   : %s%s",i+1,ClockToString(buffer,burn[i].end),LE);
+      sprintf(buffer,"Stage %d Ignition",i+1);
+      AddEvent(burn[i].start, buffer);
+      sprintf(buffer,"Stage %d Cutoff",i+1);
+      AddEvent(burn[i].end, buffer);
+      }
+    if (burn[i].engine == 'S') {
+      AddEvent(burn[i].start, "SPS Ignition");
+      AddEvent(burn[i].end, "SPS Cutoff");
+      }
+    if (burn[i].engine == 'R') {
+      AddEvent(burn[i].start, "Retro Ignition");
+      AddEvent(burn[i].end, "Retro Cutoff");
       }
     }
-  fprintf(file,"  Booster Sep   : %s%s",ClockToString(buffer,clockBsp),LE);
 
+
+
+/*
   if (lm != NULL) {
     fprintf(file,"  Undock UTC    : %s%s",ClockToString(buffer,clockUd),LE);
     if (clockDOI != 0)
@@ -62,30 +133,22 @@ void MissionReport() {
     fprintf(file,"  Liftoff MET   : %s%s",ClockToString(buffer,liftoffMet),LE);
     fprintf(file,"  Docking MET   : %s%s",ClockToString(buffer,clockMi),LE);
     }
+*/
 
-  for (i=0; i<numBurns; i++) {
-    if (burn[i].engine == 'S') {
-      fprintf(file,"  SPS Ign.       : %s%s",ClockToString(buffer,burn[i].start),LE);
-      fprintf(file,"  SPS End        : %s%s",ClockToString(buffer,burn[i].end),LE);
-      }
+
+  AddEvent(clockGe, "Landing");
+
+  SortEvents();
+
+  strcpy(buffer2,"Launch UTC");
+  while (strlen(buffer2) < longestDesc) strcat(buffer2," ");
+  fprintf(file,"  %s : %s%s", buffer2,ClockToString(buffer,clockLo),LE);
+  
+  for (i=0; i<numEvents; i++) {
+    while (strlen(eventDesc[i]) < longestDesc) strcat(eventDesc[i], " ");
+    fprintf(file,"  %s : %s%s", eventDesc[i],ClockToString(buffer,eventTime[i]),LE);
     }
 
-  if (clockSmJt != 0)
-     fprintf(file,"  SM Jet.       : %s%s",ClockToString(buffer,clockSmJt),LE);
-
-  for (i=0; i<numBurns; i++) {
-    if (burn[i].engine == 'R') {
-      fprintf(file,"  Retro Ign.      : %s%s",ClockToString(buffer,burn[i].start),LE);
-      fprintf(file,"  Retro End       : %s%s",ClockToString(buffer,burn[i].end),LE);
-      }
-    }
-
-  if (clockRmJt != 0)
-     fprintf(file,"  RM Jet.       : %s%s",ClockToString(buffer,clockRmJt),LE);
-
-  if (clockPara != 0)
-     fprintf(file,"  Parachutes    : %s%s",ClockToString(buffer,clockPara),LE);
-  fprintf(file,"  Landing       : %s%s",ClockToString(buffer,clockGe),LE);
   fprintf(file,"%s",LE);
 
   if (lm != NULL) {
@@ -175,12 +238,28 @@ void MissionReport() {
       else fprintf(file,"Ascent%s",LE);
     }
   fprintf(file,"%s",LE);
-/*
+
+  /* ******************* */
+  /* ***** Records ***** */
+  /* ******************* */
   fprintf(file,"Records Broken:%s",LE);
-  if (clockMi > records->LongestMission) {
-    records->LongestMission = clockMi;
-    fprintf(file,"  Longest Mission         : %s%s",ClockToString(buffer,clockMi),LE);
+  if (clockGe > records->LongestMission) {
+    records->LongestMission = clockGe;
+    fprintf(file,"  Longest Mission         : %s%s",ClockToString(buffer,clockGe),LE);
     }
+  if (highestVelocity > records->HighestVelocity) {
+    records->HighestVelocity = highestVelocity;
+    fprintf(file,"  Highest Velocity        : %.1fm/s%s",highestVelocity,LE);
+    }
+  if (farthestFromEarth > records->FarthestFromEarth) {
+    records->FarthestFromEarth = farthestFromEarth;
+    fprintf(file,"  Farthest from Earth     : %.1fkm%s",farthestFromEarth/1000.0,LE);
+    }
+  if (distanceTravelled > records->DistanceTravelled) {
+    records->DistanceTravelled = distanceTravelled;
+    fprintf(file,"  Distance Travelled      : %.1fkm%s",distanceTravelled/1000.0,LE);
+    }
+/*
   if (longestEVA > records->LongestEva) {
     records->LongestEva = longestEVA;
     fprintf(file,"  Longest EVA             : %s%s",ClockToString(buffer,longestEVA),LE);
@@ -253,52 +332,54 @@ void MissionReport() {
     fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",lm->RcsFuel(),LE);
     }
 */
-  fprintf(file,"%s%s",LE,LE);
-  fprintf(file,"Landing Score:%s",LE);
-  fprintf(file,"  Landing Time:         %d%s",ScoreLandedTime, LE);
-  fprintf(file,"  Fuel Remaining:       %d%s",ScoreDescentFuel, LE);
-  fprintf(file,"  Distance from target: %d%s",ScoreLandedDistance, LE);
-  fprintf(file,"  Vertical Velocity:    %d%s",ScoreLandedVVel, LE);
-  fprintf(file,"  Horizontal Velocity:  %d%s",ScoreLandedHVel, LE);
-  if (ScoreLatitudeBonus > 0)
-    fprintf(file,"  Latitude Bonus:       %d%s",ScoreLatitudeBonus, LE);
-  fprintf(file,"                                --------%s",LE);
-  fprintf(file,"    Landing Total:              %d%s",ScoreLanding,LE);
-  fprintf(file,"%s",LE);
-  fprintf(file,"Surface Operations Score:%s",LE);
-  fprintf(file,"  EVAs completed:       %d%s",ScoreEvaCompleted,LE);
-  fprintf(file,"  Time Spent on EVA:    %d%s",ScoreEvaTime,LE);
-  fprintf(file,"  LRV Setup:            %d%s",ScoreEvaLrvSetup,LE);
-  fprintf(file,"  Laser Refl. Setup:    %d%s",ScoreEvaLaserSetup,LE);
-  fprintf(file,"  Flag Planted:         %d%s",ScoreEvaFlagSetup,LE);
-  fprintf(file,"  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
-  fprintf(file,"  Samples Collected:    %d%s",ScoreEvaSamples,LE);
-  fprintf(file,"  Sample Variety:       %d%s",ScoreEvaVariety,LE);
-  fprintf(file,"  Primary Samples:      %d%s",ScoreEvaPrimarySamples,LE);
-  fprintf(file,"  Sec. Site 1 Samples:  %d%s",ScoreEvaSecondary1Samples,LE);
-  fprintf(file,"  Sec. Site 2 Samples:  %d%s",ScoreEvaSecondary2Samples,LE);
-  fprintf(file,"  Sec. Site 3 Samples:  %d%s",ScoreEvaSecondary3Samples,LE);
-  fprintf(file,"  Sample Value:         %d%s",ScoreEvaValue,LE);
-  fprintf(file,"  Distance from LM:     %d%s",ScoreEvaFarthest,LE);
-  fprintf(file,"  Distance Driven:      %d%s",ScoreEvaDriven,LE);
-  fprintf(file,"                                --------%s",LE);
-  fprintf(file,"    Surface Operations Total:   %d%s",ScoreEvaTotal,LE);
-  fprintf(file,"%s",LE);
-  fprintf(file,"Rendevous/Docking Score:%s",LE);
-  fprintf(file,"  Docking Time:         %d%s",ScoreDockTime,LE);
-  fprintf(file,"  Docking Velocity:     %d%s",ScoreDockVel,LE);
-  fprintf(file,"  Lateral Velocity:     %d%s",ScoreDockLVel,LE);
-  fprintf(file,"  Asc Fuel Remaining:   %d%s",ScoreDockAscentFuel,LE);
-  fprintf(file,"  RCS Fuel Remaining:   %d%s",ScoreDockRcsFuel,LE);
-  fprintf(file,"                                --------%s",LE);
-  fprintf(file,"    Rendevous/Docking Total:    %d%s",ScoreDockTotal,LE);
-  fprintf(file,"%s",LE);
-  fprintf(file,"                                --------%s",LE);
-  fprintf(file,"    Total Score:                %d%s",ScoreTotal,LE);
-  fprintf(file,"%s%s",LE,LE);
+  if (lm != NULL) {
+    fprintf(file,"%s%s",LE,LE);
+    fprintf(file,"Landing Score:%s",LE);
+    fprintf(file,"  Landing Time:         %d%s",ScoreLandedTime, LE);
+    fprintf(file,"  Fuel Remaining:       %d%s",ScoreDescentFuel, LE);
+    fprintf(file,"  Distance from target: %d%s",ScoreLandedDistance, LE);
+    fprintf(file,"  Vertical Velocity:    %d%s",ScoreLandedVVel, LE);
+    fprintf(file,"  Horizontal Velocity:  %d%s",ScoreLandedHVel, LE);
+    if (ScoreLatitudeBonus > 0)
+      fprintf(file,"  Latitude Bonus:       %d%s",ScoreLatitudeBonus, LE);
+    fprintf(file,"                                --------%s",LE);
+    fprintf(file,"    Landing Total:              %d%s",ScoreLanding,LE);
+    fprintf(file,"%s",LE);
+    fprintf(file,"Surface Operations Score:%s",LE);
+    fprintf(file,"  EVAs completed:       %d%s",ScoreEvaCompleted,LE);
+    fprintf(file,"  Time Spent on EVA:    %d%s",ScoreEvaTime,LE);
+    fprintf(file,"  LRV Setup:            %d%s",ScoreEvaLrvSetup,LE);
+    fprintf(file,"  Laser Refl. Setup:    %d%s",ScoreEvaLaserSetup,LE);
+    fprintf(file,"  Flag Planted:         %d%s",ScoreEvaFlagSetup,LE);
+    fprintf(file,"  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
+    fprintf(file,"  Samples Collected:    %d%s",ScoreEvaSamples,LE);
+    fprintf(file,"  Sample Variety:       %d%s",ScoreEvaVariety,LE);
+    fprintf(file,"  Primary Samples:      %d%s",ScoreEvaPrimarySamples,LE);
+    fprintf(file,"  Sec. Site 1 Samples:  %d%s",ScoreEvaSecondary1Samples,LE);
+    fprintf(file,"  Sec. Site 2 Samples:  %d%s",ScoreEvaSecondary2Samples,LE);
+    fprintf(file,"  Sec. Site 3 Samples:  %d%s",ScoreEvaSecondary3Samples,LE);
+    fprintf(file,"  Sample Value:         %d%s",ScoreEvaValue,LE);
+    fprintf(file,"  Distance from LM:     %d%s",ScoreEvaFarthest,LE);
+    fprintf(file,"  Distance Driven:      %d%s",ScoreEvaDriven,LE);
+    fprintf(file,"                                --------%s",LE);
+    fprintf(file,"    Surface Operations Total:   %d%s",ScoreEvaTotal,LE);
+    fprintf(file,"%s",LE);
+    fprintf(file,"Rendevous/Docking Score:%s",LE);
+    fprintf(file,"  Docking Time:         %d%s",ScoreDockTime,LE);
+    fprintf(file,"  Docking Velocity:     %d%s",ScoreDockVel,LE);
+    fprintf(file,"  Lateral Velocity:     %d%s",ScoreDockLVel,LE);
+    fprintf(file,"  Asc Fuel Remaining:   %d%s",ScoreDockAscentFuel,LE);
+    fprintf(file,"  RCS Fuel Remaining:   %d%s",ScoreDockRcsFuel,LE);
+    fprintf(file,"                                --------%s",LE);
+    fprintf(file,"    Rendevous/Docking Total:    %d%s",ScoreDockTotal,LE);
+    fprintf(file,"%s",LE);
+    fprintf(file,"                                --------%s",LE);
+    fprintf(file,"    Total Score:                %d%s",ScoreTotal,LE);
+    fprintf(file,"%s%s",LE,LE);
+    }
 
   if (file != stdout) fclose(file);
-//  records->Save();
+  records->Save();
   WriteLn("");
   Write("Mission report written to ");
   WriteLn(filename);

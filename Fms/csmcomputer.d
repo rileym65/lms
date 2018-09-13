@@ -1,15 +1,17 @@
 [TB]
 	| Verb | Noun | Function                            |
-	|  02  |  01  | Enter value for register 1          |
-	|  02  |  02  | Enter value for register 2          |
-	|  02  |  03  | Enter value for register 3          |
+	|  00  |  --  | Enter idle mode                     |
+	|  21  |  --  | Enter value for register 1          |
+	|  22  |  --  | Enter value for register 2          |
+	|  23  |  --  | Enter value for register 3          |
+	|  37  |  --  | Run program specified by noun       |
 [TE]
 [=]
 [TB]
 	| Verb | Noun | Reg1      | Reg2      | Reg 3      |
-	|  01  |  01  | Apoapsis  | Periapsis | Orbit time |
-	|  01  |  02  | Longitude | Latitude  |            |
-	|  01  |  03  | Mass      | Fuel kg   | RCS Fuel kg|
+	|  16  |  01  | Apoapsis  | Periapsis | Orbit time |
+	|  16  |  02  | Longitude | Latitude  |            |
+	|  16  |  03  | Mass      | Fuel kg   | RCS Fuel kg|
 [TE]
 [=]
 [TB]

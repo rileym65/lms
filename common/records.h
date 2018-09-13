@@ -13,9 +13,12 @@ class Records {
     Double AscentFuel;
     Double ClosestToTarget;
     Double DescentFuel;
+    Double DistanceTravelled;
+    Double FarthestFromEarth;
     Double FarthestFromLM;
     Double GreatestSampleValue;
     Double HighestLatitude;
+    Double HighestVelocity;
     Int32  LongestAverageEva;
     Int32  LongestEva;
     Int32  LongestMission;

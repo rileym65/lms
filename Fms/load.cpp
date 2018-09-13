@@ -31,9 +31,20 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockpdi ")) clockPDI = atoi(nw(pline));
     else if (startsWith(pline,"clockbsp ")) clockBsp = atoi(nw(pline));
     else if (startsWith(pline,"clocklo ")) clockLo = atoi(nw(pline));
+    else if (startsWith(pline,"clockmaxq ")) clockMaxQ = atoi(nw(pline));
     else if (startsWith(pline,"clockpara ")) clockPara = atoi(nw(pline));
+    else if (startsWith(pline,"clockrent ")) clockRent = atoi(nw(pline));
     else if (startsWith(pline,"clocksmjt ")) clockSmJt = atoi(nw(pline));
     else if (startsWith(pline,"clockrmjt ")) clockRmJt = atoi(nw(pline));
+    else if (startsWith(pline,"clocktli ")) clockTli = atoi(nw(pline));
+    else if (startsWith(pline,"clocktei ")) clockTei = atoi(nw(pline));
+    else if (startsWith(pline,"clockloi ")) clockLoi = atoi(nw(pline));
+    else if (startsWith(pline,"clockmsoi ")) clockMSoi = atoi(nw(pline));
+    else if (startsWith(pline,"clockesoi ")) clockESoi = atoi(nw(pline));
+    else if (startsWith(pline,"clocklmdk ")) clockLmDk = atoi(nw(pline));
+    else if (startsWith(pline,"clocklext ")) clockLExt = atoi(nw(pline));
+    else if (startsWith(pline,"clocklmjt ")) clockLmJt = atoi(nw(pline));
+    else if (startsWith(pline,"highestvel ")) highestVelocity = atof(nw(pline));
     else if (startsWith(pline,"dockingvel ")) dockingVel = atof(nw(pline));
     else if (startsWith(pline,"dockinglvel ")) dockingLVel = atof(nw(pline));
     else if (startsWith(pline,"modeabo ")) mode_abo = atoi(nw(pline));
@@ -49,6 +60,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"landedhvel ")) landedHVel = atof(nw(pline));
     else if (startsWith(pline,"landedvvel ")) landedVVel = atof(nw(pline));
     else if (startsWith(pline,"farthestdistance ")) farthest = atof(nw(pline));
+    else if (startsWith(pline,"farthestfromearth ")) farthestFromEarth = atof(nw(pline));
     else if (startsWith(pline,"flagplanted ")) flagPlanted = atoi(nw(pline));
     else if (startsWith(pline,"flaglongitude ")) flagLongitude = atof(nw(pline));
     else if (startsWith(pline,"flaglatitude ")) flagLatitude = atof(nw(pline));
@@ -114,8 +126,11 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"days ")) days = atoi(nw(pline));
     else if (startsWith(pline,"kscangle ")) kscAngle = atof(nw(pline));
     else if (startsWith(pline,"distance ")) distanceTravelled = atof(nw(pline));
+    else if (startsWith(pline,"maxq ")) maxQ = atof(nw(pline));
+    else if (startsWith(pline,"maxqaltitude ")) maxQAltitude = atof(nw(pline));
     else if (startsWith(pline,"launched true")) launched = true;
     else if (startsWith(pline,"launched false")) launched = false;
+    else if (startsWith(pline,"inatmosphere ")) inAtmosphere = atoi(nw(pline));
 
     else if (startsWith(pline,"sample ")) {
       pline = nw(pline);

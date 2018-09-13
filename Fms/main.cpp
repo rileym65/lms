@@ -224,7 +224,9 @@ void saturn1B() {
   csm->ServiceModuleThrust(91190);
   csm->ServiceModuleRcsIsp(290);
   csm->ServiceModuleRcsFuel(617.79);
-  csm->ServiceModuleRcsThrust(1780);
+  csm->ServiceModuleRcsThrust(890);
+  csm->ServiceModuleRcsDThrust(1780);
+  csm->ServiceModuleRcsUThrust(1780);
   csm->CommandModuleRcsFuel(74);
   csm->CommandModuleRcsIsp(290);
   csm->CommandModuleRcsThrust(410);
@@ -311,6 +313,8 @@ void saturnV(UInt8 lem) {
   booster->Starts(1,1);
   booster->Starts(2,1);
   booster->Starts(3,2);
+  booster->Ceco(1, 139);
+  booster->Ceco(2, 297);
   booster->Diameter(1, 10.1);
   booster->Diameter(2, 10.1);
   booster->Diameter(3, 6.6);
@@ -326,7 +330,9 @@ void saturnV(UInt8 lem) {
   csm->ServiceModuleRcsFuel(617.79);
   csm->ServiceModuleThrust(91190);
   csm->ServiceModuleRcsIsp(290);
-  csm->ServiceModuleRcsThrust(1780);
+  csm->ServiceModuleRcsThrust(890);
+  csm->ServiceModuleRcsDThrust(1780);
+  csm->ServiceModuleRcsUThrust(1780);
   csm->CommandModuleRcsFuel(74);
   csm->CommandModuleRcsIsp(290);
   csm->CommandModuleRcsThrust(410);
@@ -353,11 +359,24 @@ void init(Byte v) {
   clockPara = 0;
   clockUt = (8 * 3600) + (30 * 60);
   clockUd = 0;
+  clockMaxQ = 0;
   clockSmJt = 0;
+  clockRent = 0;
   clockRmJt = 0;
   clockTb = 0;
   clockTe = 0;
   clockLo = 0;
+  clockTli = 0;
+  clockTei = 0;
+  clockLoi = 0;
+  clockMSoi = 0;
+  clockESoi = 0;
+  clockLmDk = 0;
+  clockLExt = 0;
+  clockLmJt = 0;
+  ignitionApoapsis = 0;
+  ignitionPeriapsis = 0;
+  ignitionEccentricity = 0;
   lmExtracted = 0;
   evaCount = 0;
   longestEVA = 0;
@@ -365,8 +384,12 @@ void init(Byte v) {
   dockingRadarOn = 0;
   dsnOn = 0;
   efficiency = 99;
+  farthestFromEarth = 0;
+  highestVelocity = 0;
+  inAtmosphere = 0xff;
   injury = 0;
   landingRadarOn = 0;
+  maxQ = 0;
   metabolicRate = 30.0;
   numSamples = 0;
   mission->TargetLatitude(0.0);
@@ -647,6 +670,8 @@ void cycle() {
         if (alignedForDocking()) {
           docked = -1;
           seq->Dock();
+          if (currentVehicle == csm && clockLmDk == 0)
+            clockLmDk = clockGe;
           }
         else {
           v = csm->Velocity() - csm->TargetVehicle()->Velocity();
@@ -700,10 +725,6 @@ void Launch() {
   booster->Velocity(vf.Scale(408));
   launched = true;
   clockLo = clockUt;
-  burn[0].start = clockGe;
-  burn[0].fuelUsed = csm->Fuel();
-  burn[0].engine = '1';
-  numBurns++;
   }
 
 int main(int argc, char** argv) {

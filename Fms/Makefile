@@ -17,6 +17,7 @@ include ../common/Makefile.pobjects
 include ../common/Makefile.cobjects
 
 HEADERS = $(PHEADERS) header.h ../common/types.h \
+	   ../common/common.h \
 	   ../common/vector.h \
 	   ../common/matrix.h \
 	   ../common/vehicle.h \

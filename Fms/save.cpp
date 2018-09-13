@@ -29,9 +29,20 @@ void save() {
   fprintf(file,"  ClockPDI %d%s",clockPDI,LE);
   fprintf(file,"  ClockBsp %d%s",clockBsp,LE);
   fprintf(file,"  ClockLo %d%s",clockLo,LE);
+  fprintf(file,"  ClockMaxQ %d%s",clockMaxQ,LE);
   fprintf(file,"  ClockPara %d%s",clockPara,LE);
+  fprintf(file,"  ClockRent %d%s",clockRent,LE);
   fprintf(file,"  ClockSmJt %d%s",clockSmJt,LE);
   fprintf(file,"  ClockRmJt %d%s",clockRmJt,LE);
+  fprintf(file,"  ClockTli %d%s",clockTli,LE);
+  fprintf(file,"  ClockTei %d%s",clockTei,LE);
+  fprintf(file,"  ClockLoi %d%s",clockLoi,LE);
+  fprintf(file,"  ClockMSoi %d%s",clockMSoi,LE);
+  fprintf(file,"  ClockESoi %d%s",clockESoi,LE);
+  fprintf(file,"  ClockLmDk %d%s",clockLmDk,LE);
+  fprintf(file,"  ClockLExt %d%s",clockLExt,LE);
+  fprintf(file,"  ClockLmJt %d%s",clockLmJt,LE);
+  fprintf(file,"  HighestVel %.18f%s",highestVelocity,LE);
   fprintf(file,"  DockingVel %.18f%s",dockingVel,LE);
   fprintf(file,"  DockingLVel %.18f%s",dockingLVel,LE);
   fprintf(file,"  ModeAbo %d%s",mode_abo,LE);
@@ -47,6 +58,7 @@ void save() {
   fprintf(file,"  LandedHVel %.18f%s",landedHVel,LE);
   fprintf(file,"  LandedVVel %.18f%s",landedVVel,LE);
   fprintf(file,"  FarthestDistance %.18f%s",farthest,LE);
+  fprintf(file,"  FarthestFromEarth %.18f%s",farthestFromEarth,LE);
   fprintf(file,"  FlagPlanted %d%s",flagPlanted,LE);
   fprintf(file,"  FlagLongitude %.18f%s",flagLongitude,LE);
   fprintf(file,"  FlagLatitude %.18f%s",flagLatitude,LE);
@@ -108,13 +120,16 @@ void save() {
   fprintf(file,"  CartSampleSpecial %d%s",cartSampleSpecial,LE);
   fprintf(file,"  CartSampleDepression %d%s",cartSampleDepression,LE);
   fprintf(file,"  CartSampleCraterWall %d%s",cartSampleCraterWall,LE);
-  for (i=0; i<numSamples; i++)
-    fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
   fprintf(file,"  Days %d%s",days,LE);
   fprintf(file,"  KscAngle %.18f%s",kscAngle,LE);
   fprintf(file,"  Distance %.18f%s",distanceTravelled,LE);
+  fprintf(file,"  InAtmosphere %d%s",inAtmosphere,LE);
+  fprintf(file,"  MaxQ %.18f%s",maxQ,LE);
+  fprintf(file,"  MaxQAltitude %.18f%s",maxQAltitude,LE);
   if (launched) fprintf(file,"  Launched true%s",LE);
     else fprintf(file,"  Launched false%s",LE);
+  for (i=0; i<numSamples; i++)
+    fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
   fprintf(file,"  }%s",LE);
   for (i=0; i<evaCount; i++) {
     fprintf(file,"EVA %d {%s",i,LE);

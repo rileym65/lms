@@ -18,11 +18,14 @@ void Records::load() {
   file = fopen("records.dat","r");
   if (file == NULL) {
     AscentFuel = 0;
-    ClosestToTarget = 99e99;
+    ClosestToTarget = 400000000;
     DescentFuel = 0;
+    DistanceTravelled = 0;
+    FarthestFromEarth = 0;
     FarthestFromLM = 0;
     GreatestSampleValue = 0;
     HighestLatitude = 0;
+    HighestVelocity = 0;
     LongestAverageEva = 0;
     LongestEva = 0;
     LongestMission = 0;
@@ -41,9 +44,12 @@ void Records::load() {
       if (startsWith(pline,"AscentFuel")) AscentFuel = atof(nw(pline));
       if (startsWith(pline,"ClosestToTarget")) ClosestToTarget = atof(nw(pline));
       if (startsWith(pline,"DescentFuel")) DescentFuel = atof(nw(pline));
+      if (startsWith(pline,"DistanceTravelled")) DistanceTravelled = atof(nw(pline));
+      if (startsWith(pline,"FarthestFromEarth")) FarthestFromEarth = atof(nw(pline));
       if (startsWith(pline,"FarthestFromLM")) FarthestFromLM = atof(nw(pline));
       if (startsWith(pline,"GreatestSampleValue")) GreatestSampleValue = atof(nw(pline));
       if (startsWith(pline,"HighestLatitude")) HighestLatitude = atof(nw(pline));
+      if (startsWith(pline,"HighestVelocity")) HighestVelocity = atof(nw(pline));
       if (startsWith(pline,"LongestAverageEva")) LongestAverageEva = atoi(nw(pline));
       if (startsWith(pline,"LongestEva")) LongestEva = atoi(nw(pline));
       if (startsWith(pline,"LongestMission")) LongestMission = atoi(nw(pline));
@@ -68,9 +74,12 @@ void Records::Save() {
   fprintf(file,"AscentFuel %.18f%s",AscentFuel,LE);
   fprintf(file,"ClosestToTarget %.18f%s",ClosestToTarget,LE);
   fprintf(file,"DescentFuel %.18f%s",DescentFuel,LE);
+  fprintf(file,"DistanceTravelled %.18f%s",DistanceTravelled,LE);
+  fprintf(file,"FarthestFromEarth %.18f%s",FarthestFromEarth,LE);
   fprintf(file,"FarthestFromLM %.18f%s",FarthestFromLM,LE);
   fprintf(file,"GreatestSampleValue %.18f%s",GreatestSampleValue,LE);
   fprintf(file,"HighestLatitude %.18f%s",HighestLatitude,LE);
+  fprintf(file,"HighestVelocity %.18f%s",HighestVelocity,LE);
   fprintf(file,"LongestAverageEva %d%s",LongestAverageEva,LE);
   fprintf(file,"LongestEva %d%s",LongestEva,LE);
   fprintf(file,"LongestMission %d%s",LongestMission,LE);
@@ -87,6 +96,9 @@ void Records::Save() {
 
   file = fopen("records.txt","w");
   fprintf(file,"  Longest Mission         : %s%s",ClockToString(buffer,LongestMission),LE);
+  fprintf(file,"  Highest Velocity        : %9.2fm/s%s",HighestVelocity,LE);
+  fprintf(file,"  Farthest From Earth     : %9.2fkm%s",FarthestFromEarth/1000.0,LE);
+  fprintf(file,"  Distance Travelled      : %9.2fkm%s",DistanceTravelled/1000.0,LE);
   fprintf(file,"  Longest EVA             : %s%s",ClockToString(buffer,LongestEva),LE);
   fprintf(file,"  Longest Average EVA     : %s%s",ClockToString(buffer,LongestAverageEva),LE);
   fprintf(file,"  Longest Total EVA       : %s%s",ClockToString(buffer,LongestTotalEva),LE);

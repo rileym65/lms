@@ -54,6 +54,11 @@
 #define VEHICLE_APOLLO_J        2
 #define VEHICLE_APOLLO_MKII     3
 #define VEHICLE_APOLLO_MKIII    4
+#define VEHICLE_MERCURY_REDSTONE      5
+#define VEHICLE_MERCURY_ATLAS         6
+#define VEHICLE_GEMINI_TITAN          7
+#define VEHICLE_APOLLO_SATURN_IB      8
+#define VEHICLE_APOLLO_SATURN_V       9
 
 #ifdef MINGW
 #define LE   "\r\n"
@@ -121,12 +126,17 @@ CLINK Int8         endReason;
 CLINK Int32        evaCount;
 CLINK EVA          evas[256];
 CLINK Double       farthest;
+CLINK Double       farthestFromEarth;
 CLINK Int8         flagPlanted;
 CLINK Double       flagLongitude;
 CLINK Double       flagLatitude;
 CLINK Double       hardInjury;
+CLINK Double       highestVelocity;
 CLINK Int32        ignitionTime;
 CLINK Double       ignitionAltitude;
+CLINK Double       ignitionApoapsis;
+CLINK Double       ignitionPeriapsis;
+CLINK Double       ignitionEccentricity;
 CLINK Double       injury;
 CLINK Double       landedHVel;
 CLINK Double       landedLatitude;

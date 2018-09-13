@@ -40,12 +40,25 @@
 
 LINK Int32   clockBsp;
 LINK Int32   clockLo;
+LINK Int32   clockMaxQ;
 LINK Int32   clockPara;
+LINK Int32   clockRent;
 LINK Int32   clockRmJt;
 LINK Int32   clockSmJt;
+LINK Int32   clockTli;
+LINK Int32   clockTei;
+LINK Int32   clockLoi;
+LINK Int32   clockMSoi;
+LINK Int32   clockESoi;
+LINK Int32   clockLmDk;
+LINK Int32   clockLExt;
+LINK Int32   clockLmJt;
 LINK Double  distanceTravelled;
 LINK Byte    engines;
+LINK Byte    inAtmosphere;
 LINK Boolean launched;
+LINK Double  maxQ;
+LINK Double  maxQAltitude;
 LINK Vector  pos;
 LINK Booster* booster;
 LINK Vector  vel;

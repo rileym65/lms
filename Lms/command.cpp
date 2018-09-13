@@ -51,6 +51,10 @@ Booster* CommandModule::LaunchVehicle() {
 void CommandModule::capsuleSep() {
   }
 
+void CommandModule::Ins() {
+  Spacecraft::Ins();
+  }
+
 void CommandModule::Cycle() {
   Spacecraft::Cycle();
   }
