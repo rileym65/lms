@@ -21,6 +21,10 @@ void Gauge::displayClock(Int32 cx, Int32 cy, Int32 clock) {
   minutes = clock / 60;
   seconds = clock - (minutes * 60);
   GotoXY(cx, cy);
+  if (hours > 999) hours = 999;
+  if (hours < 0) hours = -99;
+  if (minutes < 0) minutes = 0;
+  if (seconds < 0) seconds = 0;
   sprintf(buffer,"%3d:%02d:%02d",hours,minutes,seconds);
   Write(buffer);
   }
