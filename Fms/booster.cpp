@@ -5,11 +5,13 @@
 #include "g_clockbu.h"
 
 Booster::Booster() {
+  UInt32 i;
   stage = 1;
   height = 0;
   cmOffset = 0;
   enginesLit = 0;
   type |= VT_ROCKET;
+  for (i=0; i<10; i++) ceco[i] = 0;
   }
 
 Booster::~Booster() {
@@ -18,6 +20,8 @@ Booster::~Booster() {
 void Booster::Cutoff() {
   enginesLit = 0;
   throttle = 0;
+  burn[numBurns-1].end = clockGe;
+  burn[numBurns-1].fuelUsed -= Fuel();
   }
 
 void Booster::Cycle() {
@@ -39,6 +43,10 @@ void Booster::Cycle() {
   st = stage - 1;
   air = AirDensity(alt);
   if (throttle != 0) {
+    if (ceco[st] != 0 && clockBu > ceco[st]) {
+      ceco[st] = 0;
+      enginesLit &= 0xfe;
+      }
     for (i=0; i<numEngines[st]; i++) {
       if (enginesLit & (1 << i)) {
         isp = ispVac[st][i] - air * (ispVac[st][i]-ispSl[st][i]);
@@ -56,18 +64,27 @@ void Booster::Cycle() {
     if (enginesLit == 0) {
       throttle = 0;
       burn[numBurns-1].end = clockGe;
-      burn[numBurns-1].fuelUsed -= csm->Fuel();
+      burn[numBurns-1].fuelUsed -= Fuel();
       }
     }
   if (air > 0) {
     v = velocity.Length() - 408;
     d = 0.8 * area[st] * 0.5 * (air * 1.2 * v * v);
+    if (clockBsp == 0 && d > maxQ) {
+      maxQ = d;
+      clockMaxQ = clockGe;
+      maxQAltitude = radius - orbiting->Radius();
+      }
     d /= Mass();
     drag = velocity.Norm().Scale(d).Neg();
     }
   Spacecraft::Cycle();
 //  if (radius < GROUND) destroyed = true;
   if (radius < orbiting->Radius()) destroyed = true;
+  }
+
+void Booster::Ceco(Byte stage, Double d) {
+  ceco[stage-1] = d;
   }
 
 Double Booster::CmOffset() {
@@ -132,6 +149,14 @@ void Booster::Ignition() {
     if (numEngines[stage-1] == 8) enginesLit = 0xff;
     starts[stage-1]--;
     Throttle(100);
+    ignitionTime = clockGe;
+    ignitionApoapsis = apoapsis;
+    ignitionPeriapsis = periapsis;
+    ignitionEccentricity = eccentricity;
+    burn[numBurns].start = clockGe;
+    burn[numBurns].fuelUsed = Fuel();
+    burn[numBurns].engine = '0' + stage;
+    numBurns++;
     }
   }
 
@@ -191,6 +216,10 @@ void Booster::NextStage() {
     if (numEngines[stage-1] == 7) enginesLit = 0x7f;
     if (numEngines[stage-1] == 8) enginesLit = 0xff;
     Throttle(100);
+    burn[numBurns].start = clockGe;
+    burn[numBurns].fuelUsed = Fuel();
+    burn[numBurns].engine = '0' + stage;
+    numBurns++;
     }
   }
 
@@ -294,6 +323,7 @@ void Booster::Save(FILE* file) {
     fprintf(file,"    MaxFuel %.18f%s",maxFuel[i],LE);
     fprintf(file,"    NumEngines %d%s",numEngines[i],LE);
     fprintf(file,"    Starts %d%s",starts[i],LE);
+    fprintf(file,"    Ceco %.18f%s",ceco[i],LE);
     for (j=0; j<numEngines[i]; j++) {
       fprintf(file,"    Engine %d {%s",j,LE);
       fprintf(file,"      IspVac %.18f%s",ispVac[i][j],LE);
@@ -336,6 +366,7 @@ printf("loading stage %d\n",i);
     else if (startsWith(pline,"maxfuel ")) maxFuel[i] = atof(nw(pline));
     else if (startsWith(pline,"numengines ")) numEngines[i] = atoi(nw(pline));
     else if (startsWith(pline,"starts ")) starts[i] = atoi(nw(pline));
+    else if (startsWith(pline,"ceco ")) ceco[i] = atof(nw(pline));
     else if (startsWith(pline,"engine ") &&
              (strchr(pline,'{') != NULL)) {
       if (loadEngine(file,nw(pline), i) == 0) return 0;

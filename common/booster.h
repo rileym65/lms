@@ -16,6 +16,7 @@ class Booster : public Spacecraft {
     Double ispVac[10][10];
     Double maxFuel[10];
     Byte   starts[10];
+    Double ceco[10];
     Double payload;
     Byte   numEngines[10];
     Byte   numStages;
@@ -27,6 +28,7 @@ class Booster : public Spacecraft {
   public:
     Booster();
     ~Booster();
+    virtual void   Ceco(Byte stage, Double d);
     virtual Double CmOffset();
     virtual Double CmOffset(Double d);
     virtual void   Cutoff();
