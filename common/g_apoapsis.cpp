@@ -29,9 +29,9 @@ void G_Apoapsis::Update() {
   char   buffer[16];
   if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
   rad = ((Spacecraft*)vehicle)->Apoapsis() - vehicle->Orbiting()->Radius();
-  if (rad > 999999000) rad = 999999000;
-  if (rad < -99999000) rad = -99999000;
-  sprintf(buffer,"%8.1f",rad / 1000.0);
+  if (rad > 999999000) rad = 999999990;
+  if (rad >= 0) sprintf(buffer,"%8.1f",rad / 1000.0);
+    else sprintf(buffer,"------.-");
   GotoXY(x+4,y); Write(buffer);
   }
 
