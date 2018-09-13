@@ -44,6 +44,27 @@ Booster* CommandModule::LaunchVehicle() {
   return launchVehicle;
   }
 
+void CommandModule::Ins() {
+  Spacecraft::Ins();
+  if ((velocity - orbiting->Velocity()).Length() > highestVelocity)
+    highestVelocity = (velocity - orbiting->Velocity()).Length();
+  if ((position - Earth->Position()).Length()-Earth->Radius() > farthestFromEarth)
+    farthestFromEarth = (position - Earth->Position()).Length()-Earth->Radius();
+  if (orbiting == Earth) {
+    if (inAtmosphere) {
+      if (radius  > orbiting->Radius() + 100000) inAtmosphere = 0;
+      }
+    else {
+      if (radius <= orbiting->Radius() + 100000) {
+        inAtmosphere = 0xff;
+        clockRent = clockGe;
+        }
+      }
+    }
+  if (orbiting == Moon && clockMSoi == 0) clockMSoi = clockGe;
+  if (orbiting == Earth && clockESoi == 0 && clockMSoi != 0) clockESoi = clockGe;
+  }
+
 void CommandModule::capsuleSep() {
   Double h;
   h = booster->Height() + booster->CmOffset();
@@ -135,48 +156,54 @@ Matrix m;
         default : rcsThrust = 0;
         }
       if (rcsUdMode == 'D') {
-        rcsThrust = (rcsThrust * serviceModuleRcsDThrust) / Mass();
+        rcsThrust = (rcsThrust * serviceModuleRcsDThrust);
         rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        rcsThrust /= Mass();
         if (rcsFuel <= serviceModuleRcsFuel) {
           thrust = thrust + (faceUp.Neg().Scale(rcsThrust));
           serviceModuleRcsFuel -= rcsfuel;
           }
         }
       if (rcsUdMode == 'U') {
-        rcsThrust = (rcsThrust * serviceModuleRcsUThrust) / Mass();
+        rcsThrust = (rcsThrust * serviceModuleRcsUThrust);
         rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        rcsThrust /= Mass();
         if (rcsFuel <= serviceModuleRcsFuel) {
           thrust = thrust + (faceUp.Scale(rcsThrust));
           serviceModuleRcsFuel -= rcsfuel;
           }
         }
       if (rcsLrMode == 'R') {
-        rcsThrust = (rcsThrust * serviceModuleRcsRThrust) / Mass();
+        rcsThrust = (rcsThrust * serviceModuleRcsRThrust);
         rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        rcsThrust /= Mass();
         if (rcsFuel <= serviceModuleRcsFuel) {
           thrust = thrust + (faceLeft.Neg().Scale(rcsThrust));
           serviceModuleRcsFuel -= rcsFuel;
           }
         }
       if (rcsLrMode == 'L') {
-        rcsThrust = (rcsThrust * serviceModuleRcsLThrust) / Mass();
+        rcsThrust = (rcsThrust * serviceModuleRcsLThrust);
         rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        rcsThrust /= Mass();
         if (rcsFuel <= serviceModuleRcsFuel) {
           thrust = thrust + (faceLeft.Scale(rcsThrust));
           serviceModuleRcsFuel -= rcsFuel;
           }
         }
       if (rcsFbMode == 'F') {
-        rcsThrust = (rcsThrust * serviceModuleRcsFThrust) / Mass();
+        rcsThrust = (rcsThrust * serviceModuleRcsFThrust);
         rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        rcsThrust /= Mass();
         if (rcsFuel <= serviceModuleRcsFuel) {
           thrust = thrust + (faceFront.Scale(rcsThrust));
           serviceModuleRcsFuel -= rcsfuel;
           }
         }
       if (rcsFbMode == 'B') {
-        rcsThrust = (rcsThrust * serviceModuleRcsBThrust) / Mass();
+        rcsThrust = (rcsThrust * serviceModuleRcsBThrust);
         rcsfuel = rcsThrust / (9.80665 * serviceModuleRcsIsp) / GRAN;
+        rcsThrust /= Mass();
         if (rcsFuel <= serviceModuleRcsFuel) {
           thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
           serviceModuleRcsFuel -= rcsfuel;
@@ -223,11 +250,23 @@ Matrix m;
     longitude = booster->Longitude();
     }
 //  computer->Cycle();
+
   }
 
 void CommandModule::Cutoff() {
   if (!launchVehicleJettisoned) booster->Cutoff();
-  else throttle = 0;
+  else {
+    throttle = 0;
+    burn[numBurns-1].end = clockGe;
+    burn[numBurns-1].fuelUsed -= Fuel();
+    }
+  if (orbiting == Moon) {
+    if (ignitionEccentricity >= 1 && eccentricity <1) clockLoi = ignitionTime;
+    if (ignitionEccentricity <1 && eccentricity >= 1) clockTei = ignitionTime;
+    }
+  if (orbiting == Earth) {
+    if (ignitionApoapsis < 200000000 && apoapsis > 350000000) clockTli = ignitionTime;
+    }
   }
 
 Double CommandModule::Apoapsis() {
@@ -619,6 +658,7 @@ void CommandModule::ProcessKey(Int32 key) {
     if (key == 'E' && docked && lmExtracted == 0) {
       lmExtracted = -1;
       velocity += faceUp.Norm().Neg().Scale(0.1);
+      clockLExt = clockGe;
       }
     if (key == 'P' && parachuteDeployment == 0 &&
         radius <= orbiting->Radius()+5000) {
@@ -634,6 +674,10 @@ void CommandModule::ProcessKey(Int32 key) {
          burn[numBurns].engine = 'S';
          burn[numBurns].fuelUsed = Fuel();
          numBurns++;
+         ignitionTime = clockGe;
+         ignitionApoapsis = apoapsis;
+         ignitionPeriapsis = periapsis;
+         ignitionEccentricity = eccentricity;
          }
        else if (retroModuleDryWeight > 0) {
          throttle = 100;
@@ -643,6 +687,10 @@ void CommandModule::ProcessKey(Int32 key) {
          burn[numBurns].engine = 'R';
          burn[numBurns].fuelUsed = Fuel();
          numBurns++;
+         ignitionTime = clockGe;
+         ignitionApoapsis = apoapsis;
+         ignitionPeriapsis = periapsis;
+         ignitionEccentricity = eccentricity;
          }
       }
     if (key == 'M' && docked && lm != NULL) {
@@ -651,9 +699,18 @@ void CommandModule::ProcessKey(Int32 key) {
     if (key == 'U' && docked && lm != NULL && armed) {
       seq->CmUndock();
       armed = 0;
+      clockLmJt = clockGe;
       }
-    if (key == 'i') {
-      if (serviceModuleDryWeight > 0) throttle = 0;
+    if (key == 'i' && throttle > 0) {
+      Cutoff();
+//      if (serviceModuleDryWeight > 0) throttle = 0;
+//      if (orbiting == Moon) {
+//        if (ignitionEccentricity >= 1 && eccentricity <1) clockLoi = ignitionTime;
+//        if (ignitionEccentricity <1 && eccentricity >= 1) clockTei = ignitionTime;
+//        }
+//      if (orbiting == Earth) {
+//        if (ignitionApoapsis < 200000000 && apoapsis > 350000000) clockTli = ignitionTime;
+//        }
       }
     if (key == 'f' && RcsFbMode() != 'F') RcsFbMode('F');
     else if (key == 'f' && RcsFbMode() == 'F') RcsFbMode(' ');
