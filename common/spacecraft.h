@@ -8,6 +8,7 @@ class Spacecraft : public Vehicle {
     Double    altitude;
     Double    apoapsis;
     Double    ascendingNode;
+    Double    eccentricity;
     Double    inclination;
     Double    maxRcsFuel;
     Double    periapsis;

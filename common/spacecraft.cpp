@@ -271,6 +271,7 @@ void Spacecraft::Ins() {
   v1 = L.Length();
   v2 = g* g;
   e = sqrt(1+2*E*(v1 * v1)/(v2));
+  eccentricity = e;
   apoapsis = s * (1 + e);
   periapsis = s * (1 - e);
   orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/g);
@@ -387,6 +388,7 @@ void Spacecraft::Save(FILE* file) {
   fprintf(file,"  Altitude %.18f%s",altitude,LE);
   fprintf(file,"  Apoapsis %.18f%s",apoapsis,LE);
   fprintf(file,"  AscendingNode %.18f%s",ascendingNode,LE);
+  fprintf(file,"  Eccentricity %.18f%s",eccentricity,LE);
   fprintf(file,"  Inclination %.18f%s",inclination,LE);
   fprintf(file,"  Periapsis %.18f%s",periapsis,LE);
   fprintf(file,"  Radius %.18f%s",radius,LE);
@@ -404,6 +406,7 @@ Int8 Spacecraft::SubLoad(FILE* file, char* line) {
   if (startsWith(line,"altitude ")) altitude = atof(nw(line));
   else if (startsWith(line,"apoapsis ")) apoapsis = atof(nw(line));
   else if (startsWith(line,"ascendingnode ")) ascendingNode = atof(nw(line));
+  else if (startsWith(line,"eccentricity ")) eccentricity = atof(nw(line));
   else if (startsWith(line,"inclination ")) inclination = atof(nw(line));
   else if (startsWith(line,"periapsis ")) periapsis = atof(nw(line));
   else if (startsWith(line,"radius ")) radius = atof(nw(line));
