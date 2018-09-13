@@ -29,7 +29,7 @@ class CsmComputer {
     void   _reg1(Int32 i);
     void   _reg2(Int32 i);
     void   _reg3(Int32 i);
-    void   _processNoun();
+    void   _processRequest();
   public:
     CsmComputer(CommandModule* c);
     ~CsmComputer();

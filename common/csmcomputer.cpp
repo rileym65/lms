@@ -89,8 +89,12 @@ void CsmComputer::Cycle() {
   Double v1,v2;
   Vector pos;
   Vector vel;
-  if (verb == 1) _doShow();
+  if (verb == 16) _doShow();
   if (running == 0) return;
+  if (prog == 0) {
+    running = 0;
+    return;
+    }
   if (prog == 1) {
     if (velocity == 0) {
       if (csm->Periapsis() >= csm->Orbiting()->Radius()) {
@@ -183,19 +187,30 @@ char* CsmComputer::Verb() {
   return dverb;
   }
 
-void CsmComputer::_processNoun() {
-  entryMode = '-';
-  if (verb == 2 && noun == 1) {
+void CsmComputer::_processRequest() {
+  if (verb == 0) {
+    running = 0;
+    }
+  if (verb == 21) {
     entryMode = '1';
     strcpy(dreg1,"+_____");
     }
-  if (verb == 2 && noun == 2) {
+  if (verb == 22) {
     entryMode = '2';
     strcpy(dreg2,"+_____");
     }
-  if (verb == 2 && noun == 3) {
+  if (verb == 23) {
     entryMode = '3';
     strcpy(dreg3,"+_____");
+    }
+  if (verb == 37) {
+    prog = noun;
+    sprintf(dprog,"%02d",prog);
+    running = 0xff;
+    if (prog == 3) {
+      _reg2(reg1 + (csm->Velocity() - csm->Orbiting()->Velocity()).Length());
+      }
+
     }
   }
 
@@ -203,17 +218,8 @@ void CsmComputer::ProcessKey(Int32 key) {
   UInt8 i;
   Int8 p;
   char *buffer;
-  if (key == 'g') {
-    running = running ^ 0xff;
-    if (running != 0) {
-      if (prog == 3) {
-        _reg2(reg1 + (csm->Velocity() - csm->Orbiting()->Velocity()).Length());
-        }
-      }
-    }
   if (key == 'p' && entryMode == '-') {
-    entryMode = 'P';
-    strcpy(dprog,"__");
+    _processRequest();
     }
   if (key == 'v' && entryMode == '-') {
     entryMode = 'V';
@@ -241,11 +247,8 @@ void CsmComputer::ProcessKey(Int32 key) {
         if (entryMode == '1') reg1 = atoi(dreg1);
         if (entryMode == '2') reg2 = atoi(dreg2);
         if (entryMode == '3') reg3 = atoi(dreg3);
-        if (entryMode == 'N') {
-          noun = atoi(dnoun);
-          _processNoun();
-          }
-        else entryMode = '-';
+        if (entryMode == 'N') noun = atoi(dnoun);
+        entryMode = '-';
         }
       }
     }
