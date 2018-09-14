@@ -54,7 +54,7 @@ void G_AmsDock::Update() {
   tvUp = vehicle->TargetVehicle()->FaceUp().Norm();
   tvFr = vehicle->TargetVehicle()->FaceFront().Norm();
   tvLf = vehicle->TargetVehicle()->FaceLeft().Norm();
-  if (vehicle->FaceUp().Dot(tvUp) >= 0) {
+  if (vehicle->FaceUp().Dot(tvUp) >= 0 || dockingRadarOn == 0) {
     GotoXY(x+6+lastDockingRadarPosX, y+4+lastDockingRadarPosY); Write(" ");
     GotoXY(x+6+lastDockingRadarYaw, y+4+lastDockingRadarPitch); Write(" ");
     GotoXY(x+6+lastDockingRadarRoll, y+2); Write(" ");
