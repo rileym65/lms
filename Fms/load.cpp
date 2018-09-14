@@ -177,6 +177,19 @@ Int8 load(const char* filename) {
     else if (startsWith(pline,"burn ")) LoadBurn(file,nw(pline));
     else if (startsWith(pline,"earth {")) Earth->Load(file);
     else if (startsWith(pline,"moon {")) Moon->Load(file);
+    else if (startsWith(pline,"computer ")) {
+      if (lm == NULL) {
+        WriteLn("Save file contains computer settings but no LM is defined");
+        WriteLn("Aborting");
+        exit(1);
+        }
+      if (lm->Comp() == NULL) {
+        WriteLn("Save file contains computer settings but LM does not");
+        WriteLn("have a computer defined.  Aborting");
+        exit(1);
+        }
+      lm->Comp()->Load(file);
+      }
     else {
       Write("Unknown line found in save file: ");
       WriteLn(pline);
@@ -189,6 +202,9 @@ Int8 load(const char* filename) {
     if (lm->Orbiting() == NULL) lm->Orbiting(csm->Orbiting());
     }
   fclose(file);
+  if (pilotLocation == PILOT_CSM) currentVehicle = csm;
+  if (pilotLocation == PILOT_LM) currentVehicle = lm;
+  currentVehicle->SetupPanel();
   return -1;
   }
 

@@ -7,6 +7,7 @@
 #include "g_days.h"
 #include "g_moon.h"
 #include "g_position.h"
+#include "computer.h"
 
 void save() {
   Int32 i;
@@ -154,7 +155,10 @@ void save() {
   booster->Save(file);
   Earth->Save(file);
   Moon->Save(file);
-  if (lm != NULL) lm->Save(file);
+  if (lm != NULL) {
+    lm->Save(file);
+    if (lm->Comp() != NULL) lm->Comp()->Save(file);
+    }
   fclose(file);
   }
 

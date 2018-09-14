@@ -768,20 +768,19 @@ int main(int argc, char** argv) {
     if (v == 7) mission->Vehicle(VEHICLE_APOLLO_J);
     if (v == 8) mission->Vehicle(VEHICLE_APOLLO_MKII);
     init(v);
+    csm->Orbiting(Earth);
+    csm->SetupPanel();
+    booster->Orbiting(Earth);
+    currentVehicle = csm;
     }
   else {
-printf("Done loading\n\n"); fflush(stdout);
     csm->TargetVehicle(lm);
     if (lm != NULL) lm->TargetVehicle(csm);
     }
-  csm->Orbiting(Earth);
-  csm->SetupPanel();
-  booster->Orbiting(Earth);
   simSpeed = 100000;
   OpenTerminal();
   HideCursor();
   flag = true;
-  currentVehicle = csm;
   ticks = 10;
   keyDelay = 0;
   endReason = 0;
