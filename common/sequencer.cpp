@@ -75,14 +75,18 @@ void Sequencer::Complete() {
          docked = 0;
          break;
     case SEQ_UNDOCK:
-         lm->Position(csm->Position() + Vector(0,0,19));
-         lm->Velocity(csm->Velocity() + Vector(0,0,0.1));
-         ((Spacecraft*)lm)->Altitude(((Spacecraft*)csm)->Altitude());
+         lm->Position(csm->Position()+csm->FaceUp().Scale(5.375));
+         lm->Velocity(csm->Velocity() + csm->FaceUp().Scale(0.1));
+         lm->FaceUp(csm->FaceUp().Neg());
+         lm->FaceLeft(csm->FaceLeft().Neg());
+         lm->FaceFront(csm->FaceFront());
          lm->Latitude(csm->Latitude());
          lm->Longitude(csm->Longitude());
-         ((Spacecraft*)lm)->Radius(((Spacecraft*)csm)->Radius());
+         lm->Orbiting(csm->Orbiting());
+         lm->Altitude(csm->Altitude());
+         lm->Radius(csm->Radius());
          docked = 0;
-         clockUd = clockUt;
+         clockUd = clockGe;
          break;
     case SEQ_SUITON:
          spaceSuitOn = -1;

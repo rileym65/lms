@@ -308,7 +308,7 @@ void cycle() {
     plss->Cycle();
     if (lrv->IsSetup()) lrv->Cycle();
     if (!docked && pilotLocation == PILOT_LM) {
-      if (lm->RelPos().Length() < 19) {
+      if (lm->RelPos().Length() < 5.275) {
         if (alignedForDocking()) {
           lm->Velocity(csm->Velocity());
           docked = -1;
