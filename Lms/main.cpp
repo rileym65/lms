@@ -352,6 +352,10 @@ void cycle() {
   efficiency -= (injury / 2.0);
   if (efficiency < 20) efficiency = 20;
   currentVehicle->UpdatePanel();
+  if (pilotLocation == PILOT_CSM && clockMi > 0) {
+    endReason = END_MISSION;
+    run = false;
+    }
   }
 
 void setupTargetData() {

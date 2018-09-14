@@ -55,8 +55,6 @@ void Sequencer::Complete() {
          pilotLocation = PILOT_CSM;
          currentVehicle = csm;
          currentVehicle->SetupPanel();
-         endReason = END_MISSION;
-         run = false;
          break;
     case SEQ_MOVE_EVA:
          pilotLocation = PILOT_EVA;
