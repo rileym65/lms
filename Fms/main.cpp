@@ -621,7 +621,7 @@ void cycle() {
           lm->Position(csm->Position()+csm->FaceUp().Scale(5.275));
           lm->Velocity(csm->Velocity());
           lm->FaceUp(csm->FaceUp().Neg());
-          lm->FaceLeft(csm->FaceLeft().Neg());
+          lm->FaceLeft(csm->FaceLeft());
           lm->FaceFront(csm->FaceFront());
           lm->Latitude(csm->Latitude());
           lm->Longitude(csm->Longitude());

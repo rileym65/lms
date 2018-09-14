@@ -37,6 +37,157 @@ void G_AmsDock::Display() {
   }
 
 void G_AmsDock::Update() {
+  Vector pos;
+  Vector tvUp;
+  Vector tvFr;
+  Vector tvLf;
+  Vector vUp;
+  Vector vFr;
+  Vector vLf;
+  Double d;
+  Double px,py;
+  Int8   aligned;
+  char buffer[32];
+  if (vehicle->TargetVehicle() == NULL) return;
+  aligned = -1;
+  pos = vehicle->Position() - (vehicle->TargetVehicle())->Position();
+  tvUp = vehicle->TargetVehicle()->FaceUp().Norm();
+  tvFr = vehicle->TargetVehicle()->FaceFront().Norm();
+  tvLf = vehicle->TargetVehicle()->FaceLeft().Norm();
+  if (vehicle->FaceUp().Dot(tvUp) >= 0) {
+    GotoXY(x+6+lastDockingRadarPosX, y+4+lastDockingRadarPosY); Write(" ");
+    GotoXY(x+6+lastDockingRadarYaw, y+4+lastDockingRadarPitch); Write(" ");
+    GotoXY(x+6+lastDockingRadarRoll, y+2); Write(" ");
+    GotoXY(x+6+lastDockingRadarRoll, y+6); Write(" ");
+    return;
+    }
+  vUp = vehicle->FaceUp().Norm();
+  vFr = vehicle->FaceFront().Norm();
+  vLf = vehicle->FaceLeft().Norm();
+
+  GotoXY(x+6+lastDockingRadarPosX, y+4+lastDockingRadarPosY); Write(" ");
+  GotoXY(x+6+lastDockingRadarYaw, y+4+lastDockingRadarPitch); Write(" ");
+  GotoXY(x+6+lastDockingRadarRoll, y+2); Write(" ");
+  GotoXY(x+6+lastDockingRadarRoll, y+6); Write(" ");
+
+  /* ************************** */
+  /* ***** Roll indicator ***** */
+  /* ************************** */
+  d = vFr.Dot(tvLf);
+  if (d < -0.0650) lastDockingRadarRoll = -4;
+  else if (d < -0.0500) lastDockingRadarRoll = -3;
+  else if (d < -0.0325) lastDockingRadarRoll = -2;
+  else if (d < -0.0150) lastDockingRadarRoll = -1;
+  else if (d > 0.0650) lastDockingRadarRoll = 4;
+  else if (d > 0.0500) lastDockingRadarRoll = 3;
+  else if (d > 0.0325) lastDockingRadarRoll = 2;
+  else if (d > 0.0150) lastDockingRadarRoll = 1;
+  else lastDockingRadarRoll = 0;
+
+  /* ***************** */
+  /* ***** Pitch ***** */
+  /* ***************** */
+  d = vFr.Dot(tvUp);
+  if (d < -0.0325) lastDockingRadarPitch = 2;
+  else if (d < -0.0150) lastDockingRadarPitch = 1;
+  else if (d > 0.0325) lastDockingRadarPitch = -2;
+  else if (d > 0.0150) lastDockingRadarPitch = -1;
+  else lastDockingRadarPitch = 0;
+
+  d = vLf.Dot(tvUp);
+  if (d < -0.0650) lastDockingRadarYaw = -4;
+  else if (d < -0.0500) lastDockingRadarYaw = -3;
+  else if (d < -0.0325) lastDockingRadarYaw = -2;
+  else if (d < -0.0150) lastDockingRadarYaw = -1;
+  else if (d > 0.0650) lastDockingRadarYaw = 4;
+  else if (d > 0.0500) lastDockingRadarYaw = 3;
+  else if (d > 0.0325) lastDockingRadarYaw = 2;
+  else if (d > 0.0150) lastDockingRadarYaw = 1;
+  else lastDockingRadarYaw = 0;
+
+
+
+  px = pos.Norm().Dot(tvLf);
+  py = pos.Norm().Dot(tvFr);
+
+  px = px * pos.Length();
+  py = py * pos.Length();
+
+  if (px < -3.5) lastPosX = 4;
+  else if (px < -2.5) lastDockingRadarPosX = 3;
+  else if (px < -1.5) lastDockingRadarPosX = 2;
+  else if (px < -0.5) lastDockingRadarPosX = 1;
+  else if (px > 3.5) lastDockingRadarPosX = -4;
+  else if (px > 2.5) lastDockingRadarPosX = -3;
+  else if (px > 1.5) lastDockingRadarPosX = -2;
+  else if (px > 0.5) lastDockingRadarPosX = -1;
+  else lastDockingRadarPosX = 0;
+  if (py < -1.5) lastDockingRadarPosY = -2;
+  else if (py < -0.5) lastDockingRadarPosY = -1;
+  else if (py > 1.5) lastDockingRadarPosY = 2;
+  else if (py > 0.5) lastDockingRadarPosY = 1;
+  else lastDockingRadarPosY = 0;
+
+  GotoXY(x+6+lastDockingRadarRoll, y+2); Write("v");
+  GotoXY(x+6+lastDockingRadarRoll, y+6); Write("^");
+  if (lastDockingRadarYaw == lastDockingRadarPosX &&
+      lastDockingRadarPitch == lastDockingRadarPosY) {
+    GotoXY(x+6+lastDockingRadarYaw, y+4+lastDockingRadarPitch); Write("*");
+    }
+  else {
+    GotoXY(x+6+lastDockingRadarYaw, y+4+lastDockingRadarPitch); Write("X");
+    GotoXY(x+6+lastDockingRadarPosX, y+4+lastDockingRadarPosY); Write("+");
+    }
+return;
+
+
+  d = px;
+  if (d >=100) d = 99.9999;
+  if (d <=-100) d = -99.9999;
+  sprintf(buffer,"%+8.4f",d);
+  GotoXY(x+17, y+2); Write(buffer);
+  d = py;
+  if (d >=100) d = 99.9999;
+  if (d <=-100) d = -99.9999;
+  sprintf(buffer,"%+8.4f",d);
+  GotoXY(x+17, y+5); Write(buffer);
+
+  d = px - lastPx;
+  if (d >=100) d = 99.9999;
+  if (d <=-100) d = -99.9999;
+  sprintf(buffer,"%+8.4f",d);
+  GotoXY(x+17, y+3); Write(buffer);
+  d = py - lastPy;
+  if (d >=100) d = 99.9999;
+  if (d <=-100) d = -99.9999;
+  sprintf(buffer,"%+8.4f",d);
+  GotoXY(x+17, y+6); Write(buffer);
+
+  lastPx = px;
+  lastPy = py;
+  GotoXY(x+6+lastPosX,y+4+lastPosY); Write(" ");
+  if (px < -3.5) lastPosX = 4;
+  else if (px < -2.5) lastPosX = 3;
+  else if (px < -1.5) lastPosX = 2;
+  else if (px < -0.5) lastPosX = 1;
+  else if (px > 3.5) lastPosX = -4;
+  else if (px > 2.5) lastPosX = -3;
+  else if (px > 1.5) lastPosX = -2;
+  else if (px > 0.5) lastPosX = -1;
+  else lastPosX = 0;
+  if (py < -1.5) lastPosY = -2;
+  else if (py < -0.5) lastPosY = -1;
+  else if (py > 1.5) lastPosY = 2;
+  else if (py > 0.5) lastPosY = 1;
+  else lastPosY = 0;
+  GotoXY(x+6+lastPosX,y+4+lastPosY); Write("+");
+  if (lastPosX != 0 || lastPosY != 0) aligned = 0;
+  GotoXY(x+13, y+0);
+  if (aligned) Write("Align "); else Write("      ");
+  }
+
+/*
+void G_AmsDock::Update() {
   char buffer[32];
   Int8 ax,ay;
   Int8 px,py;
@@ -121,4 +272,5 @@ void G_AmsDock::Update() {
   lastDockingRadarAngY = ay;
   lastDockingRadarRolX = rx;
   }
+*/
 

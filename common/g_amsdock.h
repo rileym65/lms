@@ -8,6 +8,13 @@ class Vehicle;
 
 class G_AmsDock : public Gauge {
   protected:
+    Double lastPx;
+    Double lastPy;
+    Int16 lastPosX;
+    Int16 lastPosY;
+    Int16 lastDockingRadarRoll;
+    Int16 lastDockingRadarPitch;
+    Int16 lastDockingRadarYaw;
     Int16 lastDockingRadarPosX;
     Int16 lastDockingRadarPosY;
     Int16 lastDockingRadarAngX;

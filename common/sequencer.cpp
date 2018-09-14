@@ -78,7 +78,7 @@ void Sequencer::Complete() {
          lm->Position(csm->Position()+csm->FaceUp().Scale(5.375));
          lm->Velocity(csm->Velocity() + csm->FaceUp().Scale(0.1));
          lm->FaceUp(csm->FaceUp().Neg());
-         lm->FaceLeft(csm->FaceLeft().Neg());
+         lm->FaceLeft(csm->FaceLeft());
          lm->FaceFront(csm->FaceFront());
          lm->Latitude(csm->Latitude());
          lm->Longitude(csm->Longitude());
