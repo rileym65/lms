@@ -48,6 +48,21 @@ void Body::Cycle(Double gran) {
   Double hyp;
   if (orbiting == NULL) return;
   position = position + velocity.Scale(1/GRAN);
+  if (lm != NULL) {
+    if (lm ->Orbiting() == this && lm->Landed()) {
+      lm->Position(lm->Position() + velocity.Scale(1/GRAN));
+      }
+    }
+  if (lrv != NULL) {
+    if (lrv ->Orbiting() == this) {
+      lrv->Position(lrv->Position() + velocity.Scale(1/GRAN));
+      }
+    }
+  if (plss != NULL) {
+    if (plss ->Orbiting() == this) {
+      plss->Position(plss->Position() + velocity.Scale(1/GRAN));
+      }
+    }
   d = position.Length();
   d = ((G * mass * orbiting->Mass()) / (d * d) ) / mass;
   d = d / GRAN;
