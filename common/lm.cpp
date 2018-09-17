@@ -362,6 +362,7 @@ void LunarModule::Abort() {
   clockBu = 0;
   liftoffMet = clockMi;
   numBurns++;
+  velocity = orbiting->Velocity();
   burn[numBurns-1].start = clockMi;
   if (descentJettisoned) {
     burn[numBurns-1].fuelUsed = ascentFuel;
@@ -660,7 +661,8 @@ void LunarModule::Cycle() {
     velocityAltitude = 0;
     landed = -1;
     throttle = 0;
-    position = position.Norm().Scale(orbiting->Radius());
+    position = (position - orbiting->Position()).Norm().Scale(orbiting->Radius()) +
+               orbiting->Position();
     rcsFbMode = ' ';
     rcsLrMode = ' ';
     rcsUdMode = ' ';
