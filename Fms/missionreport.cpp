@@ -92,12 +92,21 @@ void MissionReport() {
   if (clockLoi > 0) AddEvent(clockLoi, "LOI");
   if (clockMaxQ > 0) AddEvent(clockMaxQ, "Max Q");
   if (clockBsp > 0) AddEvent(clockBsp, "Booster Sep");
+  if (clockLmDk > 0) AddEvent(clockLmDk, "LM Docking");
+  if (clockLExt > 0) AddEvent(clockLExt, "LM Extraction");
+  if (clockMSoi != 0) AddEvent(clockMSoi, "Moon SOI");
+  if (clockESoi != 0) AddEvent(clockESoi, "Earth SOI");
+  if (clockUd != 0) AddEvent(clockUd, "LM Undock");
+  if (clockDOI != 0) AddEvent(clockDOI+clockUd, "DOI");
+  if (clockPDI != 0) AddEvent(clockPDI+clockUd, "PDI");
+  if (landedMet != 0) AddEvent(landedMet+clockUd, "Lunar Landing");
+  if (liftoffMet != 0) AddEvent(liftoffMet+clockUd, "Lunar Liftoff");
+  if (clockMi != 0) AddEvent(clockMi+clockUd, "Docking");
+  if (clockLmJt != 0) AddEvent(clockLmJt, "LM Jet.");
   if (clockSmJt != 0) AddEvent(clockSmJt, "SM Jet.");
   if (clockRmJt != 0) AddEvent(clockRmJt, "RM Jet.");
   if (clockRent != 0) AddEvent(clockRent, "Re-entry");
   if (clockPara != 0) AddEvent(clockPara, "Parachutes");
-  if (clockMSoi != 0) AddEvent(clockMSoi, "Moon SOI");
-  if (clockESoi != 0) AddEvent(clockESoi, "Earth SOI");
 
   for (i=0; i<numBurns; i++) {
     if (burn[i].engine >= '1' && burn[i].engine <= '3') {
@@ -114,26 +123,23 @@ void MissionReport() {
       AddEvent(burn[i].start, "Retro Ignition");
       AddEvent(burn[i].end, "Retro Cutoff");
       }
-    }
-
-
-
-/*
-  if (lm != NULL) {
-    fprintf(file,"  Undock UTC    : %s%s",ClockToString(buffer,clockUd),LE);
-    if (clockDOI != 0)
-      fprintf(file,"  DOI Burn      : %s%s",ClockToString(buffer,clockDOI),LE);
-    if (clockPDI != 0)
-      fprintf(file,"  PDI Burn      : %s%s",ClockToString(buffer,clockPDI),LE);
-    fprintf(file,"  Landed MET    : %s%s",ClockToString(buffer,landedMet),LE);
-    for (i=0; i<evaCount; i++) {
-      fprintf(file,"  EVA #%2d Start : %s%s",i+1,ClockToString(buffer,evas[i].start),LE);
-      fprintf(file,"  EVA #%2d End   : %s%s",i+1,ClockToString(buffer,evas[i].end),LE);
+    if (burn[i].engine == 'D') {
+      AddEvent(burn[i].start+clockUd, "LM Descent Ignition");
+      AddEvent(burn[i].end+clockUd, "LM Descent Cutoff");
       }
-    fprintf(file,"  Liftoff MET   : %s%s",ClockToString(buffer,liftoffMet),LE);
-    fprintf(file,"  Docking MET   : %s%s",ClockToString(buffer,clockMi),LE);
+    if (burn[i].engine == 'A') {
+      AddEvent(burn[i].start+clockUd, "LM Ascent Ignition");
+      AddEvent(burn[i].end+clockUd, "LM Ascent Cutoff");
+      }
     }
-*/
+
+  for (i=0; i<evaCount; i++) {
+    sprintf(buffer,"EVA #%d Start",i+1);
+    AddEvent(evas[i].start+clockUd,buffer);
+    sprintf(buffer,"EVA #%d End",i+1);
+    AddEvent(evas[i].end+clockUd,buffer);
+    }
+
 
 
   AddEvent(clockGe, "Landing");
@@ -181,8 +187,8 @@ void MissionReport() {
     singleDrive = 0;
     for (i=0; i<evaCount; i++) {
       fprintf(file,"    %2d %8s %8s  %8s %6.2fkm %6.2fkm  %6.2fkm   %3d%s",
-        i+1,ClockToString(buffer,evas[i].start),
-        ClockToString(buffer2,evas[i].end),
+        i+1,ClockToString(buffer,evas[i].start+clockUd),
+        ClockToString(buffer2,evas[i].end+clockUd),
         ClockToString(buffer3,evas[i].end-evas[i].start),
         evas[i].walked/1000.0,evas[i].driven/1000.0,evas[i].farthest/1000.0,
         evas[i].samples,LE);
@@ -224,11 +230,20 @@ void MissionReport() {
   fprintf(file,"     GET        GET                 kg          %s",LE);
   fprintf(file,"  -----------------------------------------------%s",LE);
   for (i=0; i<numBurns; i++) {
-    fprintf(file,"  %8s %8s %8s %8.2f  ",
-      ClockToString(buffer,burn[i].start),
-      ClockToString(buffer2,burn[i].end),
-      ClockToString(buffer3,burn[i].end-burn[i].start),
-      burn[i].fuelUsed);
+    if (burn[i].engine == 'A' || burn[i].engine == 'D') {
+      fprintf(file,"  %8s %8s %8s %8.2f  ",
+        ClockToString(buffer,burn[i].start+clockUd),
+        ClockToString(buffer2,burn[i].end+clockUd),
+        ClockToString(buffer3,burn[i].end-burn[i].start),
+        burn[i].fuelUsed);
+      }
+    else {
+      fprintf(file,"  %8s %8s %8s %8.2f  ",
+        ClockToString(buffer,burn[i].start),
+        ClockToString(buffer2,burn[i].end),
+        ClockToString(buffer3,burn[i].end-burn[i].start),
+        burn[i].fuelUsed);
+      }
     if (burn[i].engine == 'D') fprintf(file,"Descent%s",LE);
     else if (burn[i].engine == '1') fprintf(file,"Stage 1%s",LE);
     else if (burn[i].engine == '2') fprintf(file,"Stage 2%s",LE);
@@ -259,7 +274,6 @@ void MissionReport() {
     records->DistanceTravelled = distanceTravelled;
     fprintf(file,"  Distance Travelled      : %.1fkm%s",distanceTravelled/1000.0,LE);
     }
-/*
   if (longestEVA > records->LongestEva) {
     records->LongestEva = longestEVA;
     fprintf(file,"  Longest EVA             : %s%s",ClockToString(buffer,longestEVA),LE);
@@ -331,7 +345,6 @@ void MissionReport() {
     records->RcsFuel = lm->RcsFuel();
     fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",lm->RcsFuel(),LE);
     }
-*/
   if (lm != NULL) {
     fprintf(file,"%s%s",LE,LE);
     fprintf(file,"Landing Score:%s",LE);
