@@ -18,11 +18,14 @@ G_AmsDock::~G_AmsDock() {
   }
 
 void G_AmsDock::Reset() {
-  lastDockingRadarPosX = -99;
-  lastDockingRadarPosY = -99;
-  lastDockingRadarAngX = -99;
-  lastDockingRadarAngY = -99;
-  lastDockingRadarRolX = -99;
+  lastDockingRadarPosX = 0;
+  lastDockingRadarPosY = 0;
+  lastDockingRadarAngX = 0;
+  lastDockingRadarAngY = 0;
+  lastDockingRadarRolX = 0;
+  lastDockingRadarYaw = 0;
+  lastDockingRadarPitch = 0;
+  lastDockingRadarRoll = 0;
   }
 
 void G_AmsDock::Display() {
