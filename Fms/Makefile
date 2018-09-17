@@ -36,6 +36,7 @@ OBJS = \
 	load.o \
 	missionreport.o \
 	save.o \
+	score.o \
 	main.o
 
 all: $(PROJECT)
@@ -69,6 +70,7 @@ load.o:          $(HEADERS) load.cpp
 main.o:          $(HEADERS) main.cpp
 missionreport.o: $(HEADERS) missionreport.cpp
 save.o:          $(HEADERS) save.cpp
+score.o:         $(HEADERS) score.cpp
 terminal.o:      $(HEADERS) terminal.cpp
 
 

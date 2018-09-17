@@ -68,5 +68,6 @@ extern Double AirDensity(Double altitude);
 extern Int8   load(const char* filename);
 extern void MissionReport();
 extern void   save();
+extern void Score();
 
 #endif
