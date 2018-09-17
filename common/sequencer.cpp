@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include "sequencer.h"
 #include "terminal.h"
 #include "common.h"
@@ -31,6 +32,7 @@ void Sequencer::Message(const char* msg, Int32 v, Int32 t) {
   time = t;
   function = SEQ_MESSAGE;
   }
+
 void Sequencer::Complete() {
   Int32 i;
   Int32 cellX, cellY;
@@ -68,7 +70,8 @@ void Sequencer::Complete() {
          evas[evaCount-1].samples = 0;
          evas[evaCount-1].farthest = 0;
          evas[evaCount-1].walked = plss->Walked();
-         evas[evaCount-1].driven = lrv->Driven();
+         if (lrv != NULL) evas[evaCount-1].driven = lrv->Driven();
+         else evas[evaCount-1].driven = 0;
          break;
     case SEQ_CMUNDOCK:
          csm->Undock();
