@@ -39,14 +39,14 @@ void G_AmsDown::Display() {
 void G_AmsDown::Update() {
   Vector pos;
   Vector vel;
-  pos = vehicle->Position().Norm();
-  vel = vehicle->Velocity().Norm();
+  pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
+  vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  yVec = vehicle->Velocity().Norm();
+  yVec = vel;
   yVec = Vector(pos.Y(),-pos.X(),0).Norm();
-  zVec = vehicle->Position().Norm();
+  zVec = pos;
   xVec = yVec.Cross(zVec).Norm();
   if (faceX > 22) faceX = 22;
   if (faceX < 2) faceX = 2;

@@ -128,7 +128,7 @@ void G_MultiAxis::modeDown() {
   Vector xVec;
   Vector yVec;
   Vector zVec;
-  yVec = vehicle->Velocity().Norm();
+  yVec = vel;
   yVec = Vector(pos.Y(),-pos.X(),0).Norm();
   zVec = pos;
   xVec = yVec.Cross(zVec).Norm();
