@@ -176,8 +176,11 @@ Int8   Spacecraft::RcsThrottle(Int8 i) {
   }
 
 Double Spacecraft::RelAltitude() {
+  Vector v1,v2;
   if (targetVehicle == NULL) return 0;
-  return position.Length() - targetVehicle->Position().Length();
+  v1 = position - orbiting->Position();
+  v2 = targetVehicle->Position() - targetVehicle->Orbiting()->Position();
+  return v1.Length() - v2.Length();
   }
 
 Vector Spacecraft::RelPos() {
@@ -337,17 +340,17 @@ void Spacecraft::Cycle() {
     faceFront = m.Transform(faceFront).Norm();
     }
   if (rollRate != 0) {
-    roll += rollRate;
+    roll += (rollRate /GRAN);
     if (roll > 180) roll -= 360;
     if (roll < -180) roll += 360;
     }
   if (pitchRate != 0) {
-    pitch += pitchRate;
+    pitch += (pitchRate /GRAN);
     if (pitch > 180) pitch -= 360;
     if (pitch < -180) pitch += 360;
     }
   if (yawRate != 0) {
-    yaw += yawRate;
+    yaw += (yawRate /GRAN);
     if (yaw > 180) yaw -= 360;
     if (yaw < -180) yaw += 360;
     }
