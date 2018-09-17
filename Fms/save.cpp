@@ -159,6 +159,8 @@ void save() {
     lm->Save(file);
     if (lm->Comp() != NULL) lm->Comp()->Save(file);
     }
+  if (plss != NULL) plss->Save(file);
+  if (lrv != NULL) lrv->Save(file);
   fclose(file);
   }
 

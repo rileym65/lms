@@ -520,6 +520,22 @@ void init(Byte v) {
     lm->MaxBattery(lm->MaxAscentOxygen() + lm->MaxDescentOxygen());
     lm->TargetVehicle(csm);
     }
+  plss->Battery(36000);
+  plss->Oxygen(36000);
+  plss->FaceFront(Vector(1,0,0));
+  plss->FaceLeft(Vector(0,-1,0));
+  plss->FaceUp(Vector(0,0,-1));
+  plss->MaxSpeed(1.5);
+  plss->MaxBattery(PLSS_BATTERY);
+  plss->MaxOxygen(PLSS_OXYGEN);
+  lrv->Battery(LRV_BATTERY);
+  lrv->MaxBattery(LRV_BATTERY);
+  lrv->FaceFront(Vector(1,0,0));
+  lrv->FaceLeft(Vector(0,-1,0));
+  lrv->FaceUp(Vector(0,0,-1));
+  lrv->Boxes(8);
+  lrv->MaxSpeed(6.0);
+  lrv->MaxBattery(LRV_BATTERY);
   }
 
 Int8 alignedForDocking() {
@@ -588,6 +604,28 @@ void cycle() {
   else {
     clockGe++;
     if (pilotLocation == PILOT_LM && !docked) clockMi++;
+    if (pilotLocation == PILOT_LRV || pilotLocation == PILOT_EVA) {
+      clockEv++;
+      clockTe++;
+      }
+    if (!lm->Landed() && lm->DescentJettisoned() && !docked &&
+        pilotLocation == PILOT_LM) clockDk++;
+    if (pilotLocation == PILOT_LM && plssOn == 0) {
+      if (lm->UseOxygen(1) == false) {
+        GotoXY(1,25);
+        printf("Astronauts died due to lack of oxygen\n");
+        ShowCursor();
+        CloseTerminal();
+        exit(0);
+        }
+      if (lm->UseBattery(1) == false) {
+        GotoXY(1,25);
+        printf("Astronauts died due to lack of power\n");
+        ShowCursor();
+        CloseTerminal();
+        exit(0);
+        }
+      }
     if (csm->UseOxygen(1) == false) {
       GotoXY(1,25);
       printf("Astronauts died due to lack of oxygen\n");
@@ -602,9 +640,11 @@ void cycle() {
       CloseTerminal();
       exit(0);
       }
-    if (currentVehicle->Throttle() != 0) {
-      clockBu++;
-      clockTb++;
+    if (pilotLocation == PILOT_LM || pilotLocation == PILOT_CSM) {
+      if (currentVehicle->Throttle() != 0) {
+        clockBu++;
+        clockTb++;
+        }
       }
     r1 = (csm->Position() - csm->Orbiting()->Position()).Length();
     p1 = csm->Position();
@@ -640,6 +680,7 @@ void cycle() {
         else lm->Cycle();
         }
       csm->Computer()->Cycle();
+      if (pilotLocation == PILOT_EVA) plss->Cycle();
       if (csm->Radius() <= csm->Orbiting()->Radius()) {
         if (csm->RateOfClimb() <= -11) {
           GotoXY(1,25);
@@ -657,6 +698,12 @@ void cycle() {
           }
         }
 
+      }
+    if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
+      plss->UseOxygen(1);
+      plss->UseBattery(1);
+      if (plss->Oxygen() + plss->EOxygen() <= 0) injury += 0.3;
+      if (plss->Battery() + plss->EBattery() <= 0) injury += 0.1;
       }
     if (!booster->Destroyed()) booster->Ins();
     csm->Ins();
@@ -695,8 +742,12 @@ void cycle() {
 GotoXY(1,25); printf("distance: %.2fkm\n",distanceTravelled/1000.0);
     csm->RateOfClimb(r2-r1);
     if (metabolicRate > 99) metabolicRate = 99;
-    softInjury += 0.000347222;
-    if (softInjury > 100) softInjury = 100;
+    if (pilotLocation != PILOT_CSM) {
+      softInjury += 0.000347222;
+      if (softInjury > 100) softInjury = 100;
+      }
+    else
+      softInjury = 0;
     injury = softInjury + hardInjury;
     if (metabolicRate > 30.0) metabolicRate -= 0.1;
     if (metabolicRate < 30.0) metabolicRate = 30.0;
@@ -709,6 +760,10 @@ GotoXY(1,25); printf("distance: %.2fkm\n",distanceTravelled/1000.0);
     if (efficiency < 20) efficiency = 20;
     currentVehicle->UpdatePanel();
     }
+    if (injury >= 100) {
+      run = false;
+      endReason = END_DEAD;
+      }
   }
 
 void Launch() {
@@ -730,8 +785,8 @@ void Launch() {
 int main(int argc, char** argv) {
   char buffer[32];
   UInt32 v;
-  Boolean flag;
   UInt32  key;
+  FILE   *file;
   mission = NULL;
   Earth = new Body("Earth", 5.972e+24, 6378100);
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
@@ -743,8 +798,8 @@ int main(int argc, char** argv) {
   csm = new CommandModule();
   csm->LaunchVehicle(booster);
   lm = NULL;
-  lrv = NULL;
-  plss = NULL;
+  lrv = new Lrv();
+  plss = new Plss();
   mission = new Mission();
   mission->TargetLatitude(0);
   mission->TargetLongitude(0);
@@ -772,19 +827,22 @@ int main(int argc, char** argv) {
     csm->SetupPanel();
     booster->Orbiting(Earth);
     currentVehicle = csm;
+    plss->Orbiting(Moon);
+    lrv->Orbiting(Moon);
     }
   else {
     csm->TargetVehicle(lm);
     if (lm != NULL) lm->TargetVehicle(csm);
+    plss->TargetVehicle(lm);
     }
   simSpeed = 100000;
   OpenTerminal();
   HideCursor();
-  flag = true;
+  run = true;
   ticks = 10;
   keyDelay = 0;
   endReason = 0;
-  while (flag) {
+  while (run) {
     if (ticks >= 10) {
       ticks = 0;
       cycle();
@@ -799,7 +857,7 @@ int main(int argc, char** argv) {
       if (key == '$') simSpeed = 100;
       if (key == '%') simSpeed = 10;
       if (key == 'Q') {
-        flag = false;
+        run = false;
         endReason = END_QUIT;
         }
       if (key == 'I' && launched) booster->Ignition();
@@ -807,12 +865,29 @@ int main(int argc, char** argv) {
       if (key == 'S' && launched) booster->NextStage();
       currentVehicle->ProcessKey(key);
       }
-    if (endReason != 0) flag = false;
+    if (endReason != 0) run = false;
     }
   if (endReason == END_QUIT) save();
   if (endReason == END_MISSION) {
+    Score();
     MissionReport();
-    unlink("fms.sav");
+    file = fopen("userref.txt","a+");
+    fprintf(file,"Manmade Descent Module, %10.4f, %10.4f, 0, 0.00, =%s",
+      landedLatitude, landedLongitude,LE);
+    if (lrv->IsSetup())
+      fprintf(file,"Manmade Rover,          %10.4f, %10.4f, 0, 0.00, %%%s",
+        lrv->Latitude(), lrv->Longitude(),LE);
+    if (flagPlanted)
+      fprintf(file,"Manmade Flag,           %10.4f, %10.4f, 0, 0.00, f%s",
+        flagLatitude, flagLongitude,LE);
+    if (laserSetup)
+      fprintf(file,"Manmade Laser Refl.,    %10.4f, %10.4f, 0, 0.00, _%s",
+        laserLatitude, laserLongitude,LE);
+    if (alsepSetup)
+      fprintf(file,"Manmade ALSEP,          %10.4f, %10.4f, 0, 0.00, \"%s",
+        alsepLatitude, alsepLongitude,LE);
+    fclose(file);
+    unlink("lms.sav");
     }
   GotoXY(1,25);
   ShowCursor();

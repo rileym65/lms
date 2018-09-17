@@ -21,6 +21,7 @@ void Lrv::Init() {
   GroundVehicle::Init();
   panel = new Panel("lrv.pnl",this);
   battery = 0;
+  maxBattery = 0.000001;
   isSetup = false;
   rock = 0;
   boxes = 8;
@@ -76,10 +77,12 @@ void Lrv::Setup() {
   Vector p;
   latitude = lm->Latitude();
   longitude = lm->Longitude();
-  Place(lm->Position());
+  Place(lm->Position() - lm->Orbiting()->Position());
   p = faceLeft.Norm().Scale(15);
   position = position + p;
-  position = position.Norm().Scale(orbiting->Radius());
+//  position = position.Norm().Scale(orbiting->Radius());
+  position = (position - orbiting->Position()).Norm().Scale(orbiting->Radius()) +
+             orbiting->Position();
   isSetup = true;
   Heading(-90);
   return;

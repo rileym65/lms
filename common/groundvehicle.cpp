@@ -40,6 +40,7 @@ void GroundVehicle::Cycle() {
 //  a = a.Scale(1/alt3);
 //  velocity = velocity + a;
 //  velocity = velocity + thrust;
+  position = position - orbiting->Position();
   if (turnRate != 0) {
     heading += (turnRate / GRAN);
     if (heading > 180) heading -= 360;
@@ -59,6 +60,7 @@ void GroundVehicle::Cycle() {
   hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
   latitude = position.Z() / hyp;
   latitude = asin(latitude) * 180 / M_PI;
+  position = position + orbiting->Position();
   hyp = (position - lm->Position()).Length();
   if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
     if (hyp > farthest) {
@@ -123,6 +125,7 @@ void GroundVehicle::Place(Vector pos) {
   faceLeft = l;
   faceUp = u;
 
+  position = position + orbiting->Position();
   return;
 
   dist = (position - fp).Length();

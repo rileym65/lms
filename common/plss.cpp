@@ -27,16 +27,18 @@ void Plss::Init() {
   walked = 0;
   damageReportStep = 0;
   oxygenLeakage = 0;
+  cart = 0;
   }
 
 void Plss::BeginEva(Vehicle* from) {
   Vector p;
   latitude = from->Latitude();
   longitude = from->Longitude();
-  Place(from->Position());
+  Place(from->Position() - from->Orbiting()->Position());
   p = faceFront.Norm().Scale(15);
   position = position + p;
-  position = position.Norm().Scale(orbiting->Radius());
+  position = (position - orbiting->Position()).Norm().Scale(orbiting->Radius()) +
+             orbiting->Position();
   carrying = ' ';
   Heading(0);
   return;
