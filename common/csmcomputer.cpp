@@ -57,6 +57,7 @@ void CsmComputer::_reg3(Int32 i) {
   }
 
 void CsmComputer::_doShow() {
+  Double d;
   switch (noun) {
     case 1:
          _reg1((csm->Apoapsis()-csm->Orbiting()->Radius()) / 1000.0);
@@ -71,6 +72,14 @@ void CsmComputer::_doShow() {
          _reg1(csm->Mass());
          _reg2(csm->Fuel());
          _reg3(csm->RcsFuel());
+         break;
+    case 12:
+         d = csm->Longitude() - mission->TargetLongitude();
+         if (d >= 180) d-= 360;
+         if (d <= -180) d += 360;
+         _reg1(csm->Radius() - csm->Orbiting()->Radius());
+         _reg2(d * 100);
+         _reg3((csm->Latitude() - mission->TargetLatitude()) * 100);
          break;
     }
   }

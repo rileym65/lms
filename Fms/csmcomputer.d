@@ -12,6 +12,7 @@
 	|  16  |  01  | Apoapsis  | Periapsis | Orbit time |
 	|  16  |  02  | Longitude | Latitude  |            |
 	|  16  |  03  | Mass      | Fuel kg   | RCS Fuel kg|
+	|  16  |  12  | tarAlt    | TarLong   | TarLat     |
 [TE]
 [=]
 [TB]
