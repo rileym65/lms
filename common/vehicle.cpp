@@ -232,6 +232,11 @@ Double Vehicle::Pitch() {
   return pitch;
   }
 
+Double Vehicle::Pitch(Double d) {
+  pitch = d;
+  return pitch;
+  }
+
 Double Vehicle::PitchRate() {
   return pitchRate;
   }
@@ -251,6 +256,11 @@ Vector Vehicle::Position(Vector v) {
   }
 
 Double Vehicle::Roll() {
+  return roll;
+  }
+
+Double Vehicle::Roll(Double d) {
+  roll = d;
   return roll;
   }
 
@@ -322,6 +332,11 @@ Double Vehicle::VelocityNorth() {
   }
 
 Double Vehicle::Yaw() {
+  return yaw;
+  }
+
+Double Vehicle::Yaw(Double d) {
+  yaw = d;
   return yaw;
   }
 

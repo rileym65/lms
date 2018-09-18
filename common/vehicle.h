@@ -101,11 +101,13 @@ class Vehicle {
     virtual Double    Oxygen();
     virtual Double    Oxygen(Double d);
     virtual Double    Pitch();
+    virtual Double    Pitch(Double d);
     virtual Double    PitchRate();
     virtual Double    PitchRate(Double d);
     virtual Vector    Position();
     virtual Vector    Position(Vector v);
     virtual Double    Roll();
+    virtual Double    Roll(Double d);
     virtual Double    RollRate();
     virtual Double    RollRate(Double d);
     virtual Byte      Stage();
@@ -122,6 +124,7 @@ class Vehicle {
     virtual Double    VelocityEast();
     virtual Double    VelocityNorth();
     virtual Double    Yaw();
+    virtual Double    Yaw(Double d);
     virtual Double    YawRate();
     virtual Double    YawRate(Double d);
 
