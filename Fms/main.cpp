@@ -681,6 +681,7 @@ void cycle() {
         }
       csm->Computer()->Cycle();
       if (pilotLocation == PILOT_EVA) plss->Cycle();
+      if (pilotLocation == PILOT_LRV) lrv->Cycle();
       if (csm->Radius() <= csm->Orbiting()->Radius()) {
         if (csm->RateOfClimb() <= -11) {
           GotoXY(1,25);
@@ -835,6 +836,9 @@ int main(int argc, char** argv) {
     if (lm != NULL) lm->TargetVehicle(csm);
     plss->TargetVehicle(lm);
     }
+  if (mission->Rover() == 1) lrv->MaxSpeed(4.0);
+  if (mission->Rover() == 2) lrv->MaxSpeed(6.0);
+  if (mission->Rover() == 3) lrv->MaxSpeed(12.0);
   simSpeed = 100000;
   OpenTerminal();
   HideCursor();
