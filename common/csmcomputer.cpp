@@ -73,6 +73,11 @@ void CsmComputer::_doShow() {
          _reg2(csm->Fuel());
          _reg3(csm->RcsFuel());
          break;
+    case 4:
+         _reg1(csm->Roll() * 100);
+         _reg2(csm->Pitch() * 100);
+         _reg3(csm->Yaw() * 100);
+         break;
     case 12:
          d = csm->Longitude() - mission->TargetLongitude();
          if (d >= 180) d-= 360;
@@ -161,7 +166,7 @@ void CsmComputer::Cycle() {
       _reg2(a);
       }
     }
-  else if (prog == 10) {
+  else if (prog == 20) {
     a = sqrt(csm->Orbiting()->Gravitation() / (reg1*1000 + csm->Orbiting()->Radius()));
     _reg2(a*10);
     running = 0;
@@ -197,6 +202,7 @@ char* CsmComputer::Verb() {
   }
 
 void CsmComputer::_processRequest() {
+  Double d;
   if (verb == 0) {
     running = 0;
     }
@@ -211,6 +217,25 @@ void CsmComputer::_processRequest() {
   if (verb == 23) {
     entryMode = '3';
     strcpy(dreg3,"+_____");
+    }
+  if (verb == 30) {
+    csm->Roll(0);
+    csm->Pitch(0);
+    csm->Yaw(0);
+    }
+  if (verb == 31) {
+    d = reg1;
+    while (d >= 180) d -= 360;
+    while (d <= -180) d += 360;
+    csm->Roll(d);
+    d = reg2;
+    while (d >= 180) d -= 360;
+    while (d <= -180) d += 360;
+    csm->Pitch(d);
+    d = reg3;
+    while (d >= 180) d -= 360;
+    while (d <= -180) d += 360;
+    csm->Yaw(d);
     }
   if (verb == 37) {
     prog = noun;
