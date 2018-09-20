@@ -607,6 +607,7 @@ void cycle() {
     if (pilotLocation == PILOT_LRV || pilotLocation == PILOT_EVA) {
       clockEv++;
       clockTe++;
+      clockMi++;
       }
     if (!lm->Landed() && lm->DescentJettisoned() && !docked &&
         pilotLocation == PILOT_LM) clockDk++;
@@ -713,7 +714,7 @@ void cycle() {
       lm->Ins();
       if (lm->Comp() != NULL) lm->Comp()->Cycle();
       }
-    if (!docked && lm != NULL) {
+    if (mission->Vehicle() < 5 && !docked && lm != NULL) {
       if ((csm->Position() - lm->Position()).Length() < 5.275) {
         if (alignedForDocking()) {
           docked = -1;
@@ -798,9 +799,12 @@ int main(int argc, char** argv) {
   booster = new Booster();
   csm = new CommandModule();
   csm->LaunchVehicle(booster);
-  lm = NULL;
+  lm = new LunarModule();
   lrv = new Lrv();
   plss = new Plss();
+  lm->Orbiting(Earth);
+  lrv->Orbiting(Earth);
+  plss->Orbiting(Earth);
   mission = new Mission();
   mission->TargetLatitude(0);
   mission->TargetLongitude(0);
