@@ -226,6 +226,7 @@ Int8 load(const char* filename) {
   if (pilotLocation == PILOT_CSM) currentVehicle = csm;
   if (pilotLocation == PILOT_LM) currentVehicle = lm;
   if (pilotLocation == PILOT_EVA) currentVehicle = plss;
+  if (pilotLocation == PILOT_LRV) currentVehicle = lrv;
   currentVehicle->SetupPanel();
   return -1;
   }
