@@ -346,6 +346,112 @@ void saturnV(UInt8 lem) {
   csm->MaxBattery(csm->Battery());
   }
 
+void saturnVb(UInt8 lem) {
+  Double pl;
+  pl = 30364;
+  switch (lem) {
+    case      VEHICLE_APOLLO: pl += 15122; break;
+    case    VEHICLE_APOLLO_J: pl += 16411; break;
+    case VEHICLE_APOLLO_MKII: pl += 17231; break;
+    }
+  if (lem != 0) {
+    lm = new LunarModule();
+    lm->Comp(new Computer(lm));
+    }
+  booster->Height(85.9);
+  booster->CmOffset(17.25);
+  booster->NumStages(3);
+  booster->DryWeight(1, 130342 + 2447 + 4524);
+  booster->DryWeight(2, 36479 + 423 + 3637);
+  booster->DryWeight(3, 11357 + 752 + 2027 + 1796);
+  booster->Fuel(1, (649508 + 1503381) * 1.2);
+  booster->Fuel(2, (382874 + 72779) * 1.15);
+  booster->Fuel(3, (19845 + 88738) * 1.10);
+  booster->Payload(pl);
+  booster->Stage(1);
+  booster->NumEngines(1, 5);
+  booster->NumEngines(2, 5);
+  booster->NumEngines(3, 1);
+  booster->IspVac(1, 1, 304);
+  booster->IspVac(1, 2, 304);
+  booster->IspVac(1, 3, 304);
+  booster->IspVac(1, 4, 304);
+  booster->IspVac(1, 5, 304);
+  booster->IspVac(2, 1, 421);
+  booster->IspVac(2, 2, 421);
+  booster->IspVac(2, 3, 421);
+  booster->IspVac(2, 4, 421);
+  booster->IspVac(2, 5, 421);
+  booster->IspVac(3, 1, 421);
+  booster->IspSl(1, 1, 263);
+  booster->IspSl(1, 2, 263);
+  booster->IspSl(1, 3, 263);
+  booster->IspSl(1, 4, 263);
+  booster->IspSl(1, 5, 263);
+  booster->IspSl(2, 1, 200);
+  booster->IspSl(2, 2, 200);
+  booster->IspSl(2, 3, 200);
+  booster->IspSl(2, 4, 200);
+  booster->IspSl(2, 5, 200);
+  booster->IspSl(3, 1, 200);
+  booster->ThrustVac(1, 1, 8770000);
+  booster->ThrustVac(1, 2, 8770000);
+  booster->ThrustVac(1, 3, 8770000);
+  booster->ThrustVac(1, 4, 8770000);
+  booster->ThrustVac(1, 5, 8770000);
+  booster->ThrustVac(2, 1, 1033100);
+  booster->ThrustVac(2, 2, 1033100);
+  booster->ThrustVac(2, 3, 1033100);
+  booster->ThrustVac(2, 4, 1033100);
+  booster->ThrustVac(2, 5, 1033100);
+  booster->ThrustVac(3, 1, 1033100);
+  booster->ThrustSl(1, 1, 7770000);
+  booster->ThrustSl(1, 2, 7770000);
+  booster->ThrustSl(1, 3, 7770000);
+  booster->ThrustSl(1, 4, 7770000);
+  booster->ThrustSl(1, 5, 7770000);
+  booster->ThrustSl(2, 1, 486200);
+  booster->ThrustSl(2, 2, 486200);
+  booster->ThrustSl(2, 3, 486200);
+  booster->ThrustSl(2, 4, 486200);
+  booster->ThrustSl(2, 5, 486200);
+  booster->ThrustSl(3, 1, 486200);
+  booster->Starts(1,1);
+  booster->Starts(2,1);
+  booster->Starts(3,2);
+  booster->Ceco(1, 139);
+  booster->Ceco(2, 297);
+  booster->Diameter(1, 10.1);
+  booster->Diameter(2, 10.1);
+  booster->Diameter(3, 6.6);
+  booster->MaxFuel(1, booster->Fuel(1));
+  booster->MaxFuel(2, booster->Fuel(2));
+  booster->MaxFuel(3, booster->Fuel(3));
+  csm->DryWeight(5806);
+  csm->Diameter(3.90);
+  csm->ParachuteDiameter(42.26);
+  csm->ServiceModuleDryWeight(6110);
+  csm->ServiceModuleFuel(18413 * 1.05);
+  csm->ServiceModuleIsp(314);
+  csm->ServiceModuleRcsFuel(617.79);
+  csm->ServiceModuleThrust(91190);
+  csm->ServiceModuleRcsIsp(290);
+  csm->ServiceModuleRcsThrust(890);
+  csm->ServiceModuleRcsDThrust(1780);
+  csm->ServiceModuleRcsUThrust(1780);
+  csm->CommandModuleRcsFuel(74);
+  csm->CommandModuleRcsIsp(290);
+  csm->CommandModuleRcsThrust(410);
+  csm->Oxygen(14 * 24 * 3600);
+  csm->Battery(14 * 24 * 3600);
+  csm->ServiceModuleMaxFuel(csm->ServiceModuleFuel());
+  csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
+  csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
+  csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
+  csm->MaxOxygen(csm->Oxygen());
+  csm->MaxBattery(csm->Battery());
+  }
+
 void init(Byte v) {
   Double dry;
   cabinPressurized = -1;
@@ -465,7 +571,7 @@ void init(Byte v) {
   if (v == 5) saturnV(0);
   if (v == 6) saturnV(VEHICLE_APOLLO);
   if (v == 7) saturnV(VEHICLE_APOLLO_J);
-  if (v == 8) saturnV(VEHICLE_APOLLO_MKII);
+  if (v == 8) saturnVb(VEHICLE_APOLLO_MKII);
   pilotLocation = PILOT_CSM;
   csm->TargetVehicle(lm);
   if (lm != NULL) {
@@ -568,6 +674,7 @@ void cycle() {
   Double r1;
   Double r2;
   Vector p1,p2;
+  Vector lp1, lp2;
   clockUt++;
   if (clockUt >= 86400) {
     clockUt = 0;
@@ -659,6 +766,9 @@ void cycle() {
       csm->Cycle();
       if (lm != NULL) {
         if (docked) {
+          if (currentVehicle == lm) {
+            lp1 = lm->Position() - lm->Orbiting()->Position();
+            }
           lm->Position(csm->Position()+csm->FaceUp().Scale(5.275));
           lm->Velocity(csm->Velocity());
           lm->FaceUp(csm->FaceUp().Neg());
@@ -667,6 +777,10 @@ void cycle() {
           lm->Latitude(csm->Latitude());
           lm->Longitude(csm->Longitude());
           lm->Orbiting(csm->Orbiting());
+          if (currentVehicle == lm) {
+            lp2 = lm->Position() - lm->Orbiting()->Position();
+            lm->AddDistance((lp2-lp1).Length());
+            }
           }
         else if (lmExtracted == 0) {
           lm->Position(booster->Position()+booster->FaceUp().Scale(booster->Height()+3.5));
@@ -824,9 +938,60 @@ int main(int argc, char** argv) {
     printf("   Vehicle: ");
     fgets(buffer,31,stdin);
     v = atoi(buffer);
-    if (v == 6) mission->Vehicle(VEHICLE_APOLLO);
-    if (v == 7) mission->Vehicle(VEHICLE_APOLLO_J);
-    if (v == 8) mission->Vehicle(VEHICLE_APOLLO_MKII);
+    if (v == 1) {
+      mission->Vehicle(VEHICLE_MERCURY_REDSTONE);
+      mission->Rover(0);
+      mission->Lsep(0);
+      mission->Laser(0);
+      mission->AscentFuel(0);
+      mission->DescentFuel(0);
+      mission->RcsFuel(0);
+      }
+    if (v == 2) {
+      mission->Vehicle(VEHICLE_MERCURY_ATLAS);
+      mission->Rover(0);
+      mission->Lsep(0);
+      mission->Laser(0);
+      mission->AscentFuel(0);
+      mission->DescentFuel(0);
+      mission->RcsFuel(0);
+      }
+    if (v == 3) {
+      mission->Vehicle(VEHICLE_GEMINI_TITAN);
+      mission->Rover(0);
+      mission->Lsep(0);
+      mission->Laser(0);
+      mission->AscentFuel(0);
+      mission->DescentFuel(0);
+      mission->RcsFuel(0);
+      }
+    if (v == 4) {
+      mission->Vehicle(VEHICLE_APOLLO_SATURN_IB);
+      mission->Rover(0);
+      mission->Lsep(0);
+      mission->Laser(0);
+      mission->AscentFuel(0);
+      mission->DescentFuel(0);
+      mission->RcsFuel(0);
+      }
+    if (v == 5) {
+      mission->Vehicle(VEHICLE_APOLLO_SATURN_V);
+      mission->Rover(0);
+      mission->Lsep(0);
+      mission->Laser(0);
+      mission->AscentFuel(0);
+      mission->DescentFuel(0);
+      mission->RcsFuel(0);
+      }
+    if (v == 6) {
+      mission->Vehicle(VEHICLE_APOLLO);
+      }
+    if (v == 7) {
+      mission->Vehicle(VEHICLE_APOLLO_J);
+      }
+    if (v == 8) {
+      mission->Vehicle(VEHICLE_APOLLO_MKII);
+      }
     init(v);
     csm->Orbiting(Earth);
     csm->SetupPanel();
@@ -857,7 +1022,7 @@ int main(int argc, char** argv) {
       }
     else ticks++;
     usleep(simSpeed);
-    if (KeyPressed()) {
+    while (KeyPressed()) {
       key = Inkey();
       if (key == '!') simSpeed = 100000;
       if (key == '@') simSpeed = 10000;
@@ -879,23 +1044,25 @@ int main(int argc, char** argv) {
   if (endReason == END_MISSION) {
     Score();
     MissionReport();
-    file = fopen("userref.txt","a+");
-    fprintf(file,"Manmade Descent Module, %10.4f, %10.4f, 0, 0.00, =%s",
-      landedLatitude, landedLongitude,LE);
-    if (lrv->IsSetup())
-      fprintf(file,"Manmade Rover,          %10.4f, %10.4f, 0, 0.00, %%%s",
-        lrv->Latitude(), lrv->Longitude(),LE);
-    if (flagPlanted)
-      fprintf(file,"Manmade Flag,           %10.4f, %10.4f, 0, 0.00, f%s",
-        flagLatitude, flagLongitude,LE);
-    if (laserSetup)
-      fprintf(file,"Manmade Laser Refl.,    %10.4f, %10.4f, 0, 0.00, _%s",
-        laserLatitude, laserLongitude,LE);
-    if (alsepSetup)
-      fprintf(file,"Manmade ALSEP,          %10.4f, %10.4f, 0, 0.00, \"%s",
-        alsepLatitude, alsepLongitude,LE);
-    fclose(file);
-    unlink("lms.sav");
+    if (landedMet > 0) {
+      file = fopen("userref.txt","a+");
+      fprintf(file,"Manmade Descent Module, %10.4f, %10.4f, 0, 0.00, =%s",
+        landedLatitude, landedLongitude,LE);
+      if (lrv->IsSetup())
+        fprintf(file,"Manmade Rover,          %10.4f, %10.4f, 0, 0.00, %%%s",
+          lrv->Latitude(), lrv->Longitude(),LE);
+      if (flagPlanted)
+        fprintf(file,"Manmade Flag,           %10.4f, %10.4f, 0, 0.00, f%s",
+          flagLatitude, flagLongitude,LE);
+      if (laserSetup)
+        fprintf(file,"Manmade Laser Refl.,    %10.4f, %10.4f, 0, 0.00, _%s",
+          laserLatitude, laserLongitude,LE);
+      if (alsepSetup)
+        fprintf(file,"Manmade ALSEP,          %10.4f, %10.4f, 0, 0.00, \"%s",
+          alsepLatitude, alsepLongitude,LE);
+      fclose(file);
+      }
+    unlink("fms.sav");
     }
   GotoXY(1,25);
   ShowCursor();
