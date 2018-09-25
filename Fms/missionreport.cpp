@@ -80,6 +80,7 @@ void MissionReport() {
     fprintf(file,"Vehicle    : Apollo/Saturn IB%s",LE);
   if (mission->Vehicle() == VEHICLE_APOLLO_SATURN_V)
     fprintf(file,"Vehicle    : Apollo/Saturn V%s",LE);
+  fprintf(file,"Distance     : %.1fkm%s",distanceTravelled/1000.0,LE);
   fprintf(file,"%s",LE);
   fprintf(file,"Mission Time Line (All times in GET unless specified):%s",LE);
 //  fprintf(file,"  Launch UTC    : %s%s",ClockToString(buffer,clockLo),LE);
@@ -157,7 +158,7 @@ void MissionReport() {
 
   fprintf(file,"%s",LE);
 
-  if (lm != NULL) {
+  if (landedMet > 0) {
     fprintf(file,"Landing:%s",LE);
     fprintf(file,"  Target Longitude      : %.2f%s",mission->TargetLongitude(),LE);
     fprintf(file,"  Target Latitude       : %.2f%s",mission->TargetLatitude(),LE);
@@ -274,78 +275,81 @@ void MissionReport() {
     records->DistanceTravelled = distanceTravelled;
     fprintf(file,"  Distance Travelled      : %.1fkm%s",distanceTravelled/1000.0,LE);
     }
-  if (longestEVA > records->LongestEva) {
-    records->LongestEva = longestEVA;
-    fprintf(file,"  Longest EVA             : %s%s",ClockToString(buffer,longestEVA),LE);
+
+  if (landedMet > 0) {
+    if (longestEVA > records->LongestEva) {
+      records->LongestEva = longestEVA;
+      fprintf(file,"  Longest EVA             : %s%s",ClockToString(buffer,longestEVA),LE);
+      }
+    if (evaCount > 2 && clockTe/evaCount > records->LongestAverageEva) {
+      records->LongestAverageEva = clockTe/evaCount;
+      fprintf(file,"  Longest Average EVA     : %s%s",ClockToString(buffer,clockTe/evaCount),LE);
+      }
+    if (clockTe > records->LongestTotalEva) {
+      records->LongestTotalEva = clockTe;
+      fprintf(file,"  Longest Total EVA       : %s%s",ClockToString(buffer,clockTe),LE);
+      }
+    if (landedMet < records->ShortestLanding) {
+      records->ShortestLanding = landedMet;
+      fprintf(file,"  Shortest Time to Land   : %s%s",ClockToString(buffer,landedMet),LE);
+      }
+    if (clockDk < records->ShortestDocking) {
+      records->ShortestDocking = clockDk;
+      fprintf(file,"  Shortest Time to Dock   : %s%s",ClockToString(buffer,clockDk),LE);
+      }
+    if (dist < records->ClosestToTarget) {
+      records->ClosestToTarget = dist;
+      if (dist >= 10000)
+        fprintf(file,"  Closest to Target       : %9.2fkm%s",dist/1000.0,LE);
+      else 
+        fprintf(file,"  Closest to Target       : %9.2fm%s",dist,LE);
+      }
+    if (landedLatitude > records->HighestLatitude) {
+      records->HighestLatitude = landedLatitude;
+      fprintf(file,"  Highest Latitude Landing: %9.2f%s",landedLatitude,LE);
+      }
+    if (landedLatitude < records->LowestLatitude) {
+      records->LowestLatitude = landedLatitude;
+      fprintf(file,"  Lowest Latitude Landing : %9.2f%s",landedLatitude,LE);
+      }
+    if (singleWalk > records->LongestSingleWalk) {
+      records->LongestSingleWalk = singleWalk;
+      fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",singleWalk/1000.0,LE);
+      }
+    if (plss->Walked() > records->LongestTotalWalk) {
+      records->LongestTotalWalk = plss->Walked();
+      fprintf(file,"  Longest Tot. EVA Walked : %9.2fkm%s",plss->Walked()/1000.0,LE);
+      }
+    if (singleDrive > records->LongestSingleDrive) {
+      records->LongestSingleDrive = singleDrive;
+      fprintf(file,"  Longest Ind. EVA Driven : %9.2fkm%s",singleDrive/1000.0,LE);
+      }
+    if (lrv->Driven() > records->LongestTotalDrive) {
+      records->LongestTotalDrive = lrv->Driven();
+      fprintf(file,"  Longest Tot. EVA Driven : %9.2fkm%s",lrv->Driven()/1000.0,LE);
+      }
+    if (farthest > records->FarthestFromLM) {
+      records->FarthestFromLM = farthest;
+      fprintf(file,"  Farthest From LM        : %9.2fkm%s",farthest/1000.0,LE);
+      }
+    if (lm->Value() > records->GreatestSampleValue) {
+      records->GreatestSampleValue = lm->Value();
+      fprintf(file,"  Greatest Sample Value   : %9.2f%s",lm->Value(),LE);
+      }
+    if (lm->DescentFuel() > records->DescentFuel) {
+      records->DescentFuel = lm->DescentFuel();
+      fprintf(file,"  Descent Fuel Remaining  : %9.2fkg%s",lm->DescentFuel(),LE);
+      }
+    if (lm->AscentFuel() > records->AscentFuel) {
+      records->AscentFuel = lm->AscentFuel();
+      fprintf(file,"  Ascent Fuel Remaining   : %9.2fkg%s",lm->AscentFuel(),LE);
+      }
+    if (lm->RcsFuel() > records->RcsFuel) {
+      records->RcsFuel = lm->RcsFuel();
+      fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",lm->RcsFuel(),LE);
+      }
     }
-  if (evaCount > 2 && clockTe/evaCount > records->LongestAverageEva) {
-    records->LongestAverageEva = clockTe/evaCount;
-    fprintf(file,"  Longest Average EVA     : %s%s",ClockToString(buffer,clockTe/evaCount),LE);
-    }
-  if (clockTe > records->LongestTotalEva) {
-    records->LongestTotalEva = clockTe;
-    fprintf(file,"  Longest Total EVA       : %s%s",ClockToString(buffer,clockTe),LE);
-    }
-  if (landedMet < records->ShortestLanding) {
-    records->ShortestLanding = landedMet;
-    fprintf(file,"  Shortest Time to Land   : %s%s",ClockToString(buffer,landedMet),LE);
-    }
-  if (clockDk < records->ShortestDocking) {
-    records->ShortestDocking = clockDk;
-    fprintf(file,"  Shortest Time to Dock   : %s%s",ClockToString(buffer,clockDk),LE);
-    }
-  if (dist < records->ClosestToTarget) {
-    records->ClosestToTarget = dist;
-    if (dist >= 10000)
-      fprintf(file,"  Closest to Target       : %9.2fkm%s",dist/1000.0,LE);
-    else 
-      fprintf(file,"  Closest to Target       : %9.2fm%s",dist,LE);
-    }
-  if (landedLatitude > records->HighestLatitude) {
-    records->HighestLatitude = landedLatitude;
-    fprintf(file,"  Highest Latitude Landing: %9.2f%s",landedLatitude,LE);
-    }
-  if (landedLatitude < records->LowestLatitude) {
-    records->LowestLatitude = landedLatitude;
-    fprintf(file,"  Lowest Latitude Landing : %9.2f%s",landedLatitude,LE);
-    }
-  if (singleWalk > records->LongestSingleWalk) {
-    records->LongestSingleWalk = singleWalk;
-    fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",singleWalk/1000.0,LE);
-    }
-  if (plss->Walked() > records->LongestTotalWalk) {
-    records->LongestTotalWalk = plss->Walked();
-    fprintf(file,"  Longest Tot. EVA Walked : %9.2fkm%s",plss->Walked()/1000.0,LE);
-    }
-  if (singleDrive > records->LongestSingleDrive) {
-    records->LongestSingleDrive = singleDrive;
-    fprintf(file,"  Longest Ind. EVA Driven : %9.2fkm%s",singleDrive/1000.0,LE);
-    }
-  if (lrv->Driven() > records->LongestTotalDrive) {
-    records->LongestTotalDrive = lrv->Driven();
-    fprintf(file,"  Longest Tot. EVA Driven : %9.2fkm%s",lrv->Driven()/1000.0,LE);
-    }
-  if (farthest > records->FarthestFromLM) {
-    records->FarthestFromLM = farthest;
-    fprintf(file,"  Farthest From LM        : %9.2fkm%s",farthest/1000.0,LE);
-    }
-  if (lm->Value() > records->GreatestSampleValue) {
-    records->GreatestSampleValue = lm->Value();
-    fprintf(file,"  Greatest Sample Value   : %9.2f%s",lm->Value(),LE);
-    }
-  if (lm->DescentFuel() > records->DescentFuel) {
-    records->DescentFuel = lm->DescentFuel();
-    fprintf(file,"  Descent Fuel Remaining  : %9.2fkg%s",lm->DescentFuel(),LE);
-    }
-  if (lm->AscentFuel() > records->AscentFuel) {
-    records->AscentFuel = lm->AscentFuel();
-    fprintf(file,"  Ascent Fuel Remaining   : %9.2fkg%s",lm->AscentFuel(),LE);
-    }
-  if (lm->RcsFuel() > records->RcsFuel) {
-    records->RcsFuel = lm->RcsFuel();
-    fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",lm->RcsFuel(),LE);
-    }
-  if (lm != NULL) {
+  if (landedMet > 0) {
     fprintf(file,"%s%s",LE,LE);
     fprintf(file,"Landing Score:%s",LE);
     fprintf(file,"  Landing Time:         %d%s",ScoreLandedTime, LE);
