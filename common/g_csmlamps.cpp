@@ -67,9 +67,9 @@ void G_CsmLamps::Update() {
       cm->RcsFbMode() != ' ') Write("RCS");
     else Write("   ");
   GotoXY(x+16, y+1);
-  if (cm->PitchRate() != 0 ||
-      cm->RollRate() != 0 ||
-      cm->YawRate() != 0) Write("ATT");
+  if (fabs(cm->PitchRate()) >= 0.01 ||
+      fabs(cm->RollRate()) >= 0.01 ||
+      fabs(cm->YawRate()) >= 0.01) Write("ATT");
     else Write("   ");
   }
 
