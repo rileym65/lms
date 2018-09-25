@@ -128,11 +128,16 @@ void Lrv::Setup() {
 void Lrv::Cycle() {
   char cell;
   Double damage;
+  Double d;
   battery -= batteryLeakage;
   if (battery < 0) battery = 0;
   if (battery <= 0) throttle = 0;
   GroundVehicle::Cycle();
-  if (!isnan(velocity.Length())) driven += velocity.Length() / GRAN;
+  if (!isnan(velocity.Length())) {
+    d = velocity.Length() / GRAN;
+    driven += d;
+    distanceTravelled += d;
+    }
   if (throttle > 0) {
     battery -= ( (maxSpeed * ((Double)throttle / 100.0)) +
                  (maxSpeed * batteryLeakage) ) / GRAN;

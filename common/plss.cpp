@@ -141,6 +141,7 @@ Double Plss::Walked(Double d) {
   }
 
 void Plss::Cycle() {
+  Double d;
   Double damage;
   char   cell;
   oxygen -= oxygenLeakage;
@@ -149,7 +150,11 @@ void Plss::Cycle() {
   if (battery < 0) battery = 0;
   if (throttle > 30 && metabolicRate > 60) Throttle(30);
   GroundVehicle::Cycle();
-  if (!isnan(velocity.Length())) walked += velocity.Length() / GRAN;
+  if (!isnan(velocity.Length())) {
+    d = velocity.Length() / GRAN;
+    walked += d;
+    distanceTravelled += d;
+    }
   if (throttle > 0) {
     metabolicRate += (throttle * 0.0023) / GRAN;
     }

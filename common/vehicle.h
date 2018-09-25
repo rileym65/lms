@@ -18,6 +18,7 @@ class Vehicle {
     Double    battery;
     Computer *comp; 
     Boolean   destroyed;
+    Double    distanceTravelled;
     Vector    drag;
     Double    dryWeight;
     Double    ebattery;
@@ -61,12 +62,14 @@ class Vehicle {
     virtual Double    AccelAltitude();
     virtual Double    AccelEast();
     virtual Double    AccelNorth();
+    virtual Double    AddDistance(Double d);
     virtual Double    Battery();
     virtual Double    Battery(Double d);
     virtual Computer *Comp();
     virtual Computer *Comp(Computer* c);
     virtual void      Damage(Double dmg);
     virtual Boolean   Destroyed();
+    virtual Double    DistanceTravelled();
     virtual Double    DryWeight();
     virtual Double    DryWeight(Double d);
     virtual Double    EBattery();

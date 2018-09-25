@@ -6,6 +6,7 @@
 #include "common.h"
 
 Vehicle::Vehicle() {
+  distanceTravelled = 0;
   velocityAltitude = 0;
   velocityEast = 0;
   velocityNorth = 0;
@@ -51,6 +52,11 @@ Double Vehicle::AccelNorth() {
   return accelNorth;
   }
 
+Double Vehicle::AddDistance(Double d) {
+  distanceTravelled += d;
+  return distanceTravelled;
+  }
+
 Double Vehicle::Battery() {
   return battery;
   }
@@ -75,6 +81,10 @@ void Vehicle::Damage(Double dmg) {
 
 Boolean Vehicle::Destroyed() {
   return destroyed;
+  }
+
+Double Vehicle::DistanceTravelled() {
+  return distanceTravelled;
   }
 
 Double Vehicle::DryWeight() {
@@ -499,6 +509,7 @@ void Vehicle::ProcessKey(Int32 key) {
 void Vehicle::Save(FILE* file) {
   fprintf(file,"  Latitude %.18f%s",latitude,LE);
   fprintf(file,"  Longitude %.18f%s",longitude,LE);
+  fprintf(file,"  Distance %.18f%s",distanceTravelled,LE);
   fprintf(file,"  Battery %.18f%s",battery,LE);
   fprintf(file,"  MaxBattery %.18f%s",maxBattery,LE);
   fprintf(file,"  EBattery %.18f%s",ebattery,LE);
@@ -534,6 +545,7 @@ void Vehicle::SetupPanel() {
 Int8 Vehicle::SubLoad(FILE* file, char* line) {
   if (startsWith(line,"latitude ")) latitude = atof(nw(line));
   else if (startsWith(line,"longitude ")) longitude = atof(nw(line));
+  else if (startsWith(line,"distance ")) distanceTravelled = atof(nw(line));
   else if (startsWith(line,"facefront ")) faceFront = atov(nw(line));
   else if (startsWith(line,"faceup ")) faceUp = atov(nw(line));
   else if (startsWith(line,"faceleft ")) faceLeft = atov(nw(line));

@@ -7,10 +7,17 @@ class Spacecraft : public Vehicle {
   protected:
     Double    altitude;
     Double    apoapsis;
+    Double    argOfPeriapsis;
     Double    ascendingNode;
+    Int32     clockAp;
+    Int32     clockPe;
     Double    eccentricity;
     Double    inclination;
     Double    maxRcsFuel;
+    Double    meanAnomaly;
+    Double    trueAnomaly;
+    Double    trueLongitude;
+    Double    eccentricAnomaly;
     Double    periapsis;
     Double    rateOfClimb;
     Double    radius;
@@ -35,12 +42,17 @@ class Spacecraft : public Vehicle {
     virtual Double    Altitude();
     virtual Double    Altitude(Double d);
     virtual Double    Apoapsis();
+    virtual Double    ArgOfPeriapsis();
     virtual Double    AscendingNode();
+    virtual Int32     ClockAp();
+    virtual Int32     ClockPe();
     virtual Double    EarthG();
+    virtual Double    EccentricAnomaly();
     virtual Double    Inclination();
     virtual void      Ins();
     virtual Double    MaxRcsFuel();
     virtual Double    MaxRcsFuel(Double d);
+    virtual Double    MeanAnomaly();
     virtual Double    MoonG();
     virtual Double    Periapsis();
     virtual Vector    Position();
@@ -78,6 +90,8 @@ class Spacecraft : public Vehicle {
     virtual Double    TargetLatitude();
     virtual Double    TargetMomEast();
     virtual Double    TargetMomNorth();
+    virtual Double    TrueAnomaly();
+    virtual Double    TrueLongitude();
 
     virtual void      Cycle();
     virtual void      Save(FILE* file);
