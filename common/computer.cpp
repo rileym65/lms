@@ -135,6 +135,7 @@ void Computer::Reset() {
   inputMode = 0;
   err = false;
   pc = 0;
+  sp = 0;
   for (i=0; i<256; i++) regs[i] = 0;
   }
 
