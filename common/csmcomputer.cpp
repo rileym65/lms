@@ -58,6 +58,7 @@ void CsmComputer::_reg3(Int32 i) {
 
 void CsmComputer::_doShow() {
   Double d;
+  UInt32 i,j;
   switch (noun) {
     case 1:
          _reg1((csm->Apoapsis()-csm->Orbiting()->Radius()) / 1000.0);
@@ -78,6 +79,56 @@ void CsmComputer::_doShow() {
          _reg2(csm->Pitch() * 100);
          _reg3(csm->Yaw() * 100);
          break;
+    case 5:
+         _reg1(csm->TrueAnomaly() * 100);
+         _reg2(csm->MeanAnomaly() * 100);
+         _reg3(csm->EccentricAnomaly() * 100);
+         break;
+    case 6:
+         _reg1(csm->AscendingNode() * 100);
+         _reg2(csm->ArgOfPeriapsis() * 100);
+         _reg3((csm->AscendingNode() + csm->ArgOfPeriapsis()) * 100);
+         break;
+    case 7:
+         i = clockGe;
+         j = i / 3600;
+         i -= (j * 3600);
+         _reg1(j);
+         j = i / 60;
+         i -= (j * 60);
+         _reg2(j);
+         _reg3(i);
+         break;
+    case 8:
+         i = clockUt;
+         j = i / 3600;
+         i -= (j * 3600);
+         _reg1(j);
+         j = i / 60;
+         i -= (j * 60);
+         _reg2(j);
+         _reg3(i);
+         break;
+    case 9:
+         i = csm->ClockAp();
+         j = i / 3600;
+         i -= (j * 3600);
+         _reg1(j);
+         j = i / 60;
+         i -= (j * 60);
+         _reg2(j);
+         _reg3(i);
+         break;
+    case 10:
+         i = csm->ClockPe();
+         j = i / 3600;
+         i -= (j * 3600);
+         _reg1(j);
+         j = i / 60;
+         i -= (j * 60);
+         _reg2(j);
+         _reg3(i);
+         break;
     case 12:
          d = csm->Longitude() - mission->TargetLongitude();
          if (d >= 180) d-= 360;
@@ -96,6 +147,7 @@ void CsmComputer::Cycle() {
   Double l;
   Double g;
   Double s;
+  Double d;
   Vector L;
   Vector tvUp;
   Vector tvFr;
@@ -170,6 +222,10 @@ void CsmComputer::Cycle() {
     a = sqrt(csm->Orbiting()->Gravitation() / (reg1*1000 + csm->Orbiting()->Radius()));
     _reg2(a*10);
     running = 0;
+    }
+  else if (prog == 21) {
+    d = acos(csm->Velocity().Norm().Dot(csm->FaceFront())) * 180 / M_PI;
+GotoXY(1,28); printf("%.2f\n",d);
     }
   }
 
