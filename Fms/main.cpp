@@ -634,14 +634,25 @@ void init(Byte v) {
   plss->MaxSpeed(1.5);
   plss->MaxBattery(PLSS_BATTERY);
   plss->MaxOxygen(PLSS_OXYGEN);
-  lrv->Battery(LRV_BATTERY);
-  lrv->MaxBattery(LRV_BATTERY);
   lrv->FaceFront(Vector(1,0,0));
   lrv->FaceLeft(Vector(0,-1,0));
   lrv->FaceUp(Vector(0,0,-1));
   lrv->Boxes(8);
-  lrv->MaxSpeed(6.0);
-  lrv->MaxBattery(LRV_BATTERY);
+  if (mission->Rover() == 1) {
+    lrv->MaxSpeed(4.0);
+    lrv->Battery(35000);
+    lrv->MaxBattery(35000);
+    }
+  if (mission->Rover() == 2) {
+    lrv->MaxSpeed(6.0);
+    lrv->Battery(200000);
+    lrv->MaxBattery(200000);
+    }
+  if (mission->Rover() == 3) {
+    lrv->MaxSpeed(12.0);
+    lrv->Battery(2000000);
+    lrv->MaxBattery(2000000);
+    }
   }
 
 Int8 alignedForDocking() {
@@ -1005,9 +1016,6 @@ int main(int argc, char** argv) {
     if (lm != NULL) lm->TargetVehicle(csm);
     plss->TargetVehicle(lm);
     }
-  if (mission->Rover() == 1) lrv->MaxSpeed(4.0);
-  if (mission->Rover() == 2) lrv->MaxSpeed(6.0);
-  if (mission->Rover() == 3) lrv->MaxSpeed(12.0);
   simSpeed = 100000;
   OpenTerminal();
   HideCursor();
