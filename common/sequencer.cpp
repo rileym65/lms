@@ -559,6 +559,7 @@ void Sequencer::EndEva() {
   function = SEQ_END_EVA;
   dist = (plss->Position() - lm->Position()).Length();
   plss->Walked(plss->Walked() + dist);
+  plss->AddDistance(dist);
   }
 
 void Sequencer::MoveCsm() {
@@ -625,6 +626,7 @@ void Sequencer::StoreSample() {
   Double dist;
   dist = (plss->Position() - lrv->Position()).Length();
   plss->Walked(plss->Walked() + dist + dist);
+  plss->AddDistance(dist + dist);
   time = (1 * 60) + (2 * dist);
   strcpy(message," SAMP->LRV");
   function = SEQ_STORESAMPLE;
@@ -646,6 +648,7 @@ void Sequencer::MoveLrv() {
   Double dist;
   dist = (plss->Position() - lrv->Position()).Length();
   plss->Walked(plss->Walked() + dist);
+  plss->AddDistance(dist);
   time = 1.5 * 60 + dist;
   strcpy(message," MOVE->LRV");
   function = SEQ_MOVELRV;
@@ -748,6 +751,7 @@ void Sequencer::CartToLrv() {
   Double dist;
   dist = (plss->Position() - lrv->Position()).Length();
   plss->Walked(plss->Walked() + dist + dist);
+  plss->AddDistance(dist + dist);
   time = (1 * 60) + (2 * dist) + (20 * plss->Cart());
   strcpy(message," CART->LRV");
   function = SEQ_CARTTOLRV;
@@ -757,6 +761,7 @@ void Sequencer::CartToLm() {
   Double dist;
   dist = (plss->Position() - lm->Position()).Length();
   plss->Walked(plss->Walked() + dist + dist);
+  plss->AddDistance(dist + dist);
   time = (1 * 60) + (2 * dist) + (20 * plss->Cart());
   strcpy(message,"  CART->LM");
   function = SEQ_CARTTOLM;
