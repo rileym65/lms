@@ -29,6 +29,7 @@ void Records::load() {
     LongestAverageEva = 0;
     LongestEva = 0;
     LongestMission = 0;
+    LongestLunarMission = 0;
     LongestSingleDrive = 0.0;
     LongestSingleWalk = 0.0;
     LongestTotalEva = 0;
@@ -53,6 +54,7 @@ void Records::load() {
       if (startsWith(pline,"LongestAverageEva")) LongestAverageEva = atoi(nw(pline));
       if (startsWith(pline,"LongestEva")) LongestEva = atoi(nw(pline));
       if (startsWith(pline,"LongestMission")) LongestMission = atoi(nw(pline));
+      if (startsWith(pline,"LongestLunarMission")) LongestLunarMission = atoi(nw(pline));
       if (startsWith(pline,"LongestSingleDrive")) LongestSingleDrive = atof(nw(pline));
       if (startsWith(pline,"LongestSingleWalk")) LongestSingleWalk = atof(nw(pline));
       if (startsWith(pline,"LongestTotalEva")) LongestTotalEva = atoi(nw(pline));
@@ -83,6 +85,7 @@ void Records::Save() {
   fprintf(file,"LongestAverageEva %d%s",LongestAverageEva,LE);
   fprintf(file,"LongestEva %d%s",LongestEva,LE);
   fprintf(file,"LongestMission %d%s",LongestMission,LE);
+  fprintf(file,"LongestLunarMission %d%s",LongestLunarMission,LE);
   fprintf(file,"LongestSingleDrive %.18f%s",LongestSingleDrive,LE);
   fprintf(file,"LongestSingleWalk %.18f%s",LongestSingleWalk,LE);
   fprintf(file,"LongestTotalEva %d%s",LongestTotalEva,LE);

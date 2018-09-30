@@ -22,6 +22,7 @@ class Records {
     Int32  LongestAverageEva;
     Int32  LongestEva;
     Int32  LongestMission;
+    Int32  LongestLunarMission;
     Double LongestSingleDrive;
     Double LongestSingleWalk;
     Double LongestTotalDrive;

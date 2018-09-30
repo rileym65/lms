@@ -132,9 +132,9 @@ void MissionReport() {
     }
   fprintf(file,"%s",LE);
   fprintf(file,"Records Broken:%s",LE);
-  if (clockMi > records->LongestMission) {
-    records->LongestMission = clockMi;
-    fprintf(file,"  Longest Mission         : %s%s",ClockToString(buffer,clockMi),LE);
+  if (clockMi > records->LongestLunarMission) {
+    records->LongestLunarMission = clockMi;
+    fprintf(file,"  Longest Lunar Mission   : %s%s",ClockToString(buffer,clockMi),LE);
     }
   if (longestEVA > records->LongestEva) {
     records->LongestEva = longestEVA;

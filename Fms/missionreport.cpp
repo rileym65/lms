@@ -263,6 +263,10 @@ void MissionReport() {
     records->LongestMission = clockGe;
     fprintf(file,"  Longest Mission         : %s%s",ClockToString(buffer,clockGe),LE);
     }
+  if (clockMi > records->LongestLunarMission) {
+    records->LongestLunarMission = clockMi;
+    fprintf(file,"  Longest Lunar Mission   : %s%s",ClockToString(buffer,clockMi),LE);
+    }
   if (highestVelocity > records->HighestVelocity) {
     records->HighestVelocity = highestVelocity;
     fprintf(file,"  Highest Velocity        : %.1fm/s%s",highestVelocity,LE);
