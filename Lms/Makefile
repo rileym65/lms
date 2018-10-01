@@ -30,16 +30,6 @@ OBJS = \
 	sgn.o \
 	main.o
 
-MOBJS = \
-	../common/helpers.o \
-	../common/lfsr.o \
-	../common/map.o \
-	../common/random.o \
-	../common/terminal.o \
-	../common/vector.o \
-	../common/matrix.o \
-	mapgen.o
-
 PLANNEROBJS = \
 	../common/helpers.o \
 	../common/lander.o \
@@ -52,25 +42,15 @@ PLANNEROBJS = \
 	../common/matrix.o \
 	../common/terminal.o
 
-GCASMOBJS = \
-	../common/terminal.o \
-	gcasm.o
-
-all: $(PROJECT) mapgen planner gcasm
+all: $(PROJECT) planner
 
 $(PROJECT): $(OBJS)
 	$(CC) $(DEFS) $(LIBDIR) $(OBJS) $(LIBS) -o $(PROJECT)
 
 include ../common/Makefile.incl
 
-mapgen: $(MOBJS)
-	$(CC) $(DEFS) $(LIBDIR) $(MOBJS) $(LIBS) -o mapgen
-
 planner: $(PLANNEROBJS)
 	$(CC) $(DEFS) $(LIBDIR) $(PLANNEROBJS) $(LIBS) -o planner
-
-gcasm: $(GCASMOBJS)
-	$(CC) $(DEFS) $(LIBDIR) $(GCASMOBJS) $(LIBS) -o gcasm
 
 .cpp.o:
 	$(CC) $(DEFS) $(INCDIR) $(INCS) -c $<
@@ -86,14 +66,9 @@ doc:
 	makedoc landing.d
 	makedoc tutorial.d
 
-core:	gcasm core.asm
-	./gcasm core.asm
-
 clean:
 	-rm $(PROJECT)
-	-rm mapgen
 	-rm planner
-	-rm gcasm
 	-rm *.o
 	-rm lms.doc
 	-rm *.html
@@ -106,9 +81,7 @@ clean:
 
 cleanall:
 	-rm $(PROJECT)
-	-rm mapgen
 	-rm planner
-	-rm gcasm
 	-rm *.o
 	-rm lms.doc
 	-rm *.html
@@ -123,7 +96,6 @@ command.o:       $(HEADERS) command.cpp
 lander.o:        $(HEADERS) lander.cpp
 load.o:          $(HEADERS) load.cpp
 main.o:          $(HEADERS) main.cpp
-mapgen.o:        $(HEADERS) ../common/map.h ../common/random.h mapgen.cpp
 missionreport.o: $(HEADERS) missionreport.cpp
 save.o:          $(HEADERS) save.cpp
 sgn.o:           $(HEADERS) sgn.cpp
