@@ -227,19 +227,19 @@ void MissionReport() {
     fprintf(file,"%s",LE);
     }
   fprintf(file,"Engine Burns:%s",LE);
-  fprintf(file,"    Start       End    Duration    Fuel   Engine%s",LE);
-  fprintf(file,"     GET        GET                 kg          %s",LE);
-  fprintf(file,"  -----------------------------------------------%s",LE);
+  fprintf(file,"    Start       End    Duration      Fuel   Engine%s",LE);
+  fprintf(file,"     GET        GET                   kg          %s",LE);
+  fprintf(file,"  -------------------------------------------------%s",LE);
   for (i=0; i<numBurns; i++) {
     if (burn[i].engine == 'A' || burn[i].engine == 'D') {
-      fprintf(file,"  %8s %8s %8s %8.2f  ",
+      fprintf(file,"  %8s %8s %8s %10.2f  ",
         ClockToString(buffer,burn[i].start+clockUd),
         ClockToString(buffer2,burn[i].end+clockUd),
         ClockToString(buffer3,burn[i].end-burn[i].start),
         burn[i].fuelUsed);
       }
     else {
-      fprintf(file,"  %8s %8s %8s %8.2f  ",
+      fprintf(file,"  %8s %8s %8s %10.2f  ",
         ClockToString(buffer,burn[i].start),
         ClockToString(buffer2,burn[i].end),
         ClockToString(buffer3,burn[i].end-burn[i].start),
