@@ -866,7 +866,6 @@ void cycle() {
     r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
     p2 = csm->Position();
     distanceTravelled += (p1 - p2).Length();
-GotoXY(1,25); printf("distance: %.2fkm\n",distanceTravelled/1000.0);
     csm->RateOfClimb(r2-r1);
     if (metabolicRate > 99) metabolicRate = 99;
     if (pilotLocation != PILOT_CSM) {
