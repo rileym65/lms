@@ -11,7 +11,7 @@
 CommandModule::CommandModule() {
   launchVehicle = NULL;
   launchVehicleJettisoned = true;
-  panel = new Panel("csm.pnl",this);
+  panel = new Panel("csms.pnl",this);
   parachuteArea = 0;
   parachuteDeployment = 0;
   serviceModuleDryWeight = 0;

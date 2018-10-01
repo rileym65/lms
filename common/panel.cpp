@@ -314,6 +314,57 @@ void Panel::addGauge(Gauge* g) {
 
 void Panel::useDefault(const char* filename) {
   if (strcmp(filename,"csm.pnl") == 0) {
+    Box( 1,1,80,24);
+    Box( 64,1,80,7);
+    Box( 21,18,27,24);
+    Box( 13,18,21,24);
+    Box( 25,1,55,5);
+    Box( 27,9,53,24);
+    Box( 1,18,13,24);
+    Box( 1,14,27,18);
+    Box( 1,9,27,14);
+    Box( 25,5,55,9);
+    HLine(1,5,25);
+    HLine(53,20,80);
+    HLine(64,9,80);
+    HLine(53,9,64);
+    VLine(64,6,9);
+    addGauge(new G_ClockUT(66,2, false, vehicle));
+    addGauge(new G_ClockGE(66,3, false, vehicle));
+    addGauge(new G_ClockBU(66,4, false, vehicle));
+    addGauge(new G_ClockTB(66,5, false, vehicle));
+    addGauge(new G_Days(66,6, false, vehicle));
+    addGauge(new G_Engines(23,20, false, vehicle));
+    addGauge(new G_Fuel(14,19, false, vehicle));
+    addGauge(new G_Altitude(27,2, false, vehicle));
+    addGauge(new G_Roc(27,3, false, vehicle));
+    addGauge(new G_Velocity(41,2, false, vehicle));
+    addGauge(new G_Accel(41,3, false, vehicle));
+    addGauge(new G_Apoapsis(27,6, false, vehicle));
+    addGauge(new G_Periapsis(27,7, false, vehicle));
+    addGauge(new G_Ground(41,8, false, vehicle));
+    addGauge(new G_ClockOT(27,8, false, vehicle));
+    addGauge(new G_RightAscension(27,4, false, vehicle));
+    addGauge(new G_Declination(41,4, false, vehicle));
+    addGauge(new G_MultiAxis(28,10, false, vehicle));
+    addGauge(new G_Propellant(4,19, false, vehicle));
+    addGauge(new G_Oxygen(4,20, false, vehicle));
+    addGauge(new G_Battery(4,21, false, vehicle));
+    addGauge(new G_Radial(3,15, false, vehicle));
+    addGauge(new G_Orbit(16,15, false, vehicle));
+    addGauge(new G_Prograde(3,10, false, vehicle));
+    addGauge(new G_Lan(42,6, false, vehicle));
+    addGauge(new G_Incl(42,7, false, vehicle));
+    addGauge(new G_CsmLamps(3,2, false, vehicle));
+    addGauge(new G_Rcs(3,6, false, vehicle));
+    addGauge(new G_Moon(55,21, false, vehicle));
+    addGauge(new G_Orbiting(70,8, false, vehicle));
+    addGauge(new G_CsmComputer(57,2, false, vehicle));
+    addGauge(new G_CsmDock(54,11, false, vehicle));
+    addGauge(new G_AmsMessage(64,10, false, vehicle));
+    return;
+    }
+  if (strcmp(filename,"csms.pnl") == 0) {
     Box(1,1,80,24);
     VLine(47,1,24);
     Box(56,4,71,6);
