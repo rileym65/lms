@@ -21,9 +21,9 @@ Vector t;
   pilotLocation = PILOT_CSM;
   csm->Position(Vector(99810+1738300,100,100));
   csm->Velocity(Vector(0,-1634,0.0));
-  csm->FaceFront(Vector(0,0,1));
+  csm->FaceFront(Vector(1,0,0));
   csm->FaceLeft(Vector(0,-1,0));
-  csm->FaceUp(Vector(1,0,0));
+  csm->FaceUp(Vector(0,0,1));
   lm->RcsFbMode(' ');
   lm->RcsLrMode(' ');
   lm->RcsUdMode(' ');
@@ -298,7 +298,7 @@ void cycle() {
     csm->Cycle();
     lm->Cycle();
     if (docked) {
-      lm->Position(csm->Position() + Vector(0,0,19));
+      lm->Position(csm->Position() + Vector(0,0,5.3));
       lm->Velocity(csm->Velocity());
       ((Spacecraft*)lm)->Altitude(((Spacecraft*)csm)->Altitude());
       lm->Latitude(csm->Latitude());
