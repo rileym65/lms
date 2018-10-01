@@ -30,27 +30,12 @@ OBJS = \
 	sgn.o \
 	main.o
 
-PLANNEROBJS = \
-	../common/helpers.o \
-	../common/lander.o \
-	../common/lfsr.o \
-	../common/map.o \
-	../common/mission.o \
-	planner.o \
-	../common/random.o \
-	../common/vector.o \
-	../common/matrix.o \
-	../common/terminal.o
-
-all: $(PROJECT) planner
+all: $(PROJECT)
 
 $(PROJECT): $(OBJS)
 	$(CC) $(DEFS) $(LIBDIR) $(OBJS) $(LIBS) -o $(PROJECT)
 
 include ../common/Makefile.incl
-
-planner: $(PLANNEROBJS)
-	$(CC) $(DEFS) $(LIBDIR) $(PLANNEROBJS) $(LIBS) -o planner
 
 .cpp.o:
 	$(CC) $(DEFS) $(INCDIR) $(INCS) -c $<
@@ -68,7 +53,6 @@ doc:
 
 clean:
 	-rm $(PROJECT)
-	-rm planner
 	-rm *.o
 	-rm lms.doc
 	-rm *.html
@@ -81,7 +65,6 @@ clean:
 
 cleanall:
 	-rm $(PROJECT)
-	-rm planner
 	-rm *.o
 	-rm lms.doc
 	-rm *.html
@@ -100,7 +83,4 @@ missionreport.o: $(HEADERS) missionreport.cpp
 save.o:          $(HEADERS) save.cpp
 sgn.o:           $(HEADERS) sgn.cpp
 vehicle.o:       $(HEADERS) vehicle.h panel.h ../common/gauge.h vehicle.cpp
-
-
-planner.o:     $(HEADERS) ../common/mission.h planner.cpp
 

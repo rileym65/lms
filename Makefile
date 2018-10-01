@@ -9,3 +9,5 @@ all:
 	make
 	cd GcAsm; \
 	make
+	cd Planner; \
+	make
