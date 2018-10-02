@@ -61,26 +61,35 @@ void MissionReport() {
     file = fopen(filename,"r");
     }
   file = fopen(filename,"w");
-  fprintf(file,"Mission    : %s%s",mission->Name(),LE);
-  fprintf(file,"Description: %s%s",mission->Description(),LE);
-  fprintf(file,"Region     : %s%s",mission->Region(),LE);
+  fprintf(file,"Mission         : %s%s",mission->Name(),LE);
+  fprintf(file,"Description     : %s%s",mission->Description(),LE);
+  fprintf(file,"Region          : %s%s",mission->Region(),LE);
   if (mission->Vehicle() == VEHICLE_APOLLO)
-    fprintf(file,"Vehicle    : Apollo%s",LE);
+    fprintf(file,"Vehicle         : Apollo%s",LE);
   if (mission->Vehicle() == VEHICLE_APOLLO_J)
-    fprintf(file,"Vehicle    : Apollo J%s",LE);
+    fprintf(file,"Vehicle         : Apollo J%s",LE);
   if (mission->Vehicle() == VEHICLE_APOLLO_MKII)
-    fprintf(file,"Vehicle    : Apollo Mk II%s",LE);
+    fprintf(file,"Vehicle         : Apollo Mk II%s",LE);
   if (mission->Vehicle() == VEHICLE_MERCURY_REDSTONE)
-    fprintf(file,"Vehicle    : Mercury/Redsone%s",LE);
+    fprintf(file,"Vehicle         : Mercury/Redsone%s",LE);
   if (mission->Vehicle() == VEHICLE_MERCURY_ATLAS)
-    fprintf(file,"Vehicle    : Mercury/Atlas%s",LE);
+    fprintf(file,"Vehicle         : Mercury/Atlas%s",LE);
   if (mission->Vehicle() == VEHICLE_GEMINI_TITAN)
-    fprintf(file,"Vehicle    : Gemini/Titan%s",LE);
+    fprintf(file,"Vehicle         : Gemini/Titan%s",LE);
   if (mission->Vehicle() == VEHICLE_APOLLO_SATURN_IB)
-    fprintf(file,"Vehicle    : Apollo/Saturn IB%s",LE);
+    fprintf(file,"Vehicle         : Apollo/Saturn IB%s",LE);
   if (mission->Vehicle() == VEHICLE_APOLLO_SATURN_V)
-    fprintf(file,"Vehicle    : Apollo/Saturn V%s",LE);
-  fprintf(file,"Distance     : %.1fkm%s",distanceTravelled/1000.0,LE);
+    fprintf(file,"Vehicle         : Apollo/Saturn V%s",LE);
+  fprintf(file,"Distance in CSM : %.1fkm%s",csm->DistanceTravelled()/1000.0,LE);
+  if (lm->DistanceTravelled() > 0)
+    fprintf(file,"Distance in LM  : %.1fkm%s",lm->DistanceTravelled()/1000.0,LE);
+  if (plss->DistanceTravelled() > 0)
+    fprintf(file,"Distance in PLSS: %.1fkm%s",plss->DistanceTravelled()/1000.0,LE);
+  if (lrv->DistanceTravelled() > 0)
+    fprintf(file,"Distance in LRV : %.1fkm%s",lrv->DistanceTravelled()/1000.0,LE);
+  distanceTravelled = csm->DistanceTravelled() + lm->DistanceTravelled() +
+                      plss->DistanceTravelled() + lrv->DistanceTravelled();
+  fprintf(file,"Total Distance  : %.1fkm%s",distanceTravelled/1000.0,LE);
   fprintf(file,"%s",LE);
   fprintf(file,"Mission Time Line (All times in GET unless specified):%s",LE);
 //  fprintf(file,"  Launch UTC    : %s%s",ClockToString(buffer,clockLo),LE);
