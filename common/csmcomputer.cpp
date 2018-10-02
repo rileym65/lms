@@ -162,6 +162,9 @@ void CsmComputer::Cycle() {
     return;
     }
   if (prog == 1) {
+    _reg1(csm->Altitude() / 100);
+    _reg2(csm->RateOfClimb());
+    _reg3(csm->Velocity().Length());
     if (velocity == 0) {
       if (csm->Periapsis() >= csm->Orbiting()->Radius()) {
         velocity = sqrt(csm->Orbiting()->Gravitation() / csm->Apoapsis());
