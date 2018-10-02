@@ -320,7 +320,7 @@ void Spacecraft::Ins() {
   Double tmp;
   pos = position - orbiting->Position();
   vel = velocity - orbiting->Velocity();
-
+  altitude = pos.Length() - orbiting->Radius();
 //  g = orbiting->Gravitation();
 //  L = vel.Cross(pos);
 //  v1 = vel.Length();
