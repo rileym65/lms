@@ -400,8 +400,7 @@ Byte CommandModule::NumEngines(Byte stage, Byte b) {
   }
 
 Byte CommandModule::NumStages() {
-  if (!launchVehicleJettisoned) return booster->NumStages();
-  return 1;
+  return booster->NumStages();
   }
 
 Double CommandModule::OrbitTime() {
