@@ -48,6 +48,7 @@ class Booster : public Spacecraft {
     virtual Double IspVac(Byte stage, Byte engine);
     virtual Double IspVac(Byte stage, Byte engine, Double d);
     virtual Double Mass();
+    virtual Byte   MaxEngines();
     virtual Double MaxFuel();
     virtual Double MaxFuel(Byte stage);
     virtual Double MaxFuel(Byte stage, Double d);

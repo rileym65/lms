@@ -223,6 +223,15 @@ void Booster::NextStage() {
     }
   }
 
+Byte Booster::MaxEngines() {
+  UInt32 i;
+  Byte ret;
+  ret = 0;
+  for (i=0; i<numStages; i++)
+    if (numEngines[i] > ret) ret = numEngines[i];
+  return ret;
+  }
+
 Byte Booster::NumEngines() {
   return numEngines[stage - 1];
   }

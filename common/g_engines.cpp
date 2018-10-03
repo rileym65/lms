@@ -1,8 +1,12 @@
 #include "types.h"
+#include "common.h"
 #include "gauge.h"
 #include "g_engines.h"
 #include "terminal.h"
 #include "vehicle.h"
+#include "spacecraft.h"
+#include "booster.h"
+#include "command.h"
 
 G_Engines::G_Engines(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -20,7 +24,10 @@ void G_Engines::Reset() {
   }
 
 void G_Engines::Display() {
-  switch (vehicle->NumEngines()) {
+  Booster* lv;
+  if ((vehicle->Type() & VT_COMMAND) == 0) return;
+  lv = ((CommandModule*)vehicle)->LaunchVehicle();
+  switch (lv->MaxEngines()) {
     case 1:
          GotoXY(x,y+0); Write("   ");
          GotoXY(x,y+1); Write(" O ");
