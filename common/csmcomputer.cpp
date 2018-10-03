@@ -60,6 +60,11 @@ void CsmComputer::_doShow() {
   Double d;
   UInt32 i,j;
   switch (noun) {
+    case 0:
+         _reg1(preg1);
+         _reg2(preg2);
+         _reg3(preg3);
+         break;
     case 1:
          _reg1((csm->Apoapsis()-csm->Orbiting()->Radius()) / 1000.0);
          _reg2((csm->Periapsis()-csm->Orbiting()->Radius()) / 1000.0);
@@ -162,13 +167,13 @@ void CsmComputer::Cycle() {
     return;
     }
   if (prog == 1) {
-    _reg1(csm->Altitude() / 100);
-    _reg2(csm->RateOfClimb());
-    _reg3(csm->Velocity().Length());
+    preg1 = csm->Altitude() / 100;
+    preg2 = csm->RateOfClimb();
+    preg3 = csm->Velocity().Length();
     if (velocity == 0) {
       if (csm->Periapsis() >= csm->Orbiting()->Radius()) {
         velocity = sqrt(csm->Orbiting()->Gravitation() / csm->Apoapsis());
-        _reg1((Int32)velocity);
+        preg1 = (Int32)velocity;
         }
       }
     else {
@@ -191,8 +196,8 @@ void CsmComputer::Cycle() {
     v2 = g* g;
     e = sqrt(1+2*E*(v1 * v1)/(v2));
     a = (s * (1 + e)) - csm->Orbiting()->Radius();
-    _reg2(a / 1000000);
-    if (reg2 >= reg1) {
+    preg2 = a / 1000000;
+    if (preg2 >= preg1) {
       csm->Cutoff();
       running = 0;
       }
@@ -200,8 +205,8 @@ void CsmComputer::Cycle() {
   else if (prog == 3) {
     vel = csm->Velocity() - csm->Orbiting()->Velocity();
     a = vel.Length();
-    _reg3(reg2 - a);
-    if (reg3 <= 0) {
+    preg3 = preg2 - a;
+    if (preg3 <= 0) {
       csm->Cutoff();
       running = 0;
       }
@@ -213,17 +218,17 @@ void CsmComputer::Cycle() {
       tvFr = csm->TargetVehicle()->FaceFront().Norm();
       tvLf = csm->TargetVehicle()->FaceLeft().Norm();
       l = pos.Length();
-      _reg1(l*10);
+      preg1 = l*10;
       a = (ram[0] - l) * 1000 * GRAN;
       if (a <-99999) a = -99999;
       if (a > 99999) a = 99999;
       ram[0] = l;
-      _reg2(a);
+      preg2 = a;
       }
     }
   else if (prog == 20) {
-    a = sqrt(csm->Orbiting()->Gravitation() / (reg1*1000 + csm->Orbiting()->Radius()));
-    _reg2(a*10);
+    a = sqrt(csm->Orbiting()->Gravitation() / (preg1*1000 + csm->Orbiting()->Radius()));
+    preg2 = a*10;
     running = 0;
     }
   else if (prog == 21) {
@@ -300,8 +305,11 @@ void CsmComputer::_processRequest() {
     prog = noun;
     sprintf(dprog,"%02d",prog);
     running = 0xff;
+    preg1 = reg1;
+    preg2 = reg2;
+    preg3 = reg3;
     if (prog == 3) {
-      _reg2(reg1 + (csm->Velocity() - csm->Orbiting()->Velocity()).Length());
+      preg2 = preg1 + (csm->Velocity() - csm->Orbiting()->Velocity()).Length();
       }
 
     }
@@ -382,6 +390,9 @@ Int8 CsmComputer::Load(FILE* file) {
     else if (startsWith(pline,"reg1 ")) _reg1(atoi(nw(pline)));
     else if (startsWith(pline,"reg2 ")) _reg2(atoi(nw(pline)));
     else if (startsWith(pline,"reg3 ")) _reg3(atoi(nw(pline)));
+    else if (startsWith(pline,"preg1 ")) preg1 = atoi(nw(pline));
+    else if (startsWith(pline,"preg2 ")) preg2 = atoi(nw(pline));
+    else if (startsWith(pline,"preg3 ")) preg3 = atoi(nw(pline));
     else if (startsWith(pline,"running ")) running = atoi(nw(pline));
     else if (startsWith(pline,"entrymode ")) entryMode = (nw(pline))[0];
     else return 0;
@@ -402,6 +413,9 @@ void CsmComputer::Save(FILE* file) {
   fprintf(file,"    Reg1 %d%s",reg1,LE);
   fprintf(file,"    Reg2 %d%s",reg2,LE);
   fprintf(file,"    Reg3 %d%s",reg3,LE);
+  fprintf(file,"    PReg1 %d%s",preg1,LE);
+  fprintf(file,"    PReg2 %d%s",preg2,LE);
+  fprintf(file,"    PReg3 %d%s",preg3,LE);
   fprintf(file,"    Running %d%s",running,LE);
   fprintf(file,"    EntryMode %c%s",entryMode,LE);
   fprintf(file,"    }%s",LE);

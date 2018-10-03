@@ -14,6 +14,9 @@ class CsmComputer {
     Int32 reg1;
     Int32 reg2;
     Int32 reg3;
+    Int32 preg1;
+    Int32 preg2;
+    Int32 preg3;
     Byte  running;
     char dprog[4];
     char dnoun[4];

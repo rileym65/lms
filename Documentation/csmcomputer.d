@@ -11,6 +11,7 @@
 [=]
 [TB]
 	| Verb | Noun | Reg1        | Reg2         | Reg 3      |
+	|  16  |  00  | preg1       | preg2        | preg3      |
 	|  16  |  01  | Apoapsis    | Periapsis    | Orbit time |
 	|  16  |  02  | Longitude   | Latitude     |            |
 	|  16  |  03  | Mass        | Fuel kg      | RCS Fuel kg|
