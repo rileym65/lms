@@ -118,6 +118,16 @@ Double Booster::Fuel() {
   return fuel[stage-1];
   }
 
+Double Booster::Isp() {
+  Int32 i;
+  Double ret;
+  ret = 0;
+  for (i=0; i<numEngines[stage-1]; i++)
+    ret += ispVac[stage-1][i];
+  ret /= numEngines[stage-1];
+  return ret;
+  }
+
 Double Booster::Fuel(Byte stage) {
   return fuel[stage-1];
   }

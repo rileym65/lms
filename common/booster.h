@@ -42,6 +42,7 @@ class Booster : public Spacecraft {
     virtual Double Fuel(Byte stage, Double d);
     virtual Double Height();
     virtual Double Height(Double d);
+    virtual Double Isp();
     virtual void   Ignition();
     virtual Double IspSl(Byte stage, Byte engine);
     virtual Double IspSl(Byte stage, Byte engine, Double d);

@@ -59,6 +59,7 @@ class CommandModule : public Spacecraft {
     virtual Byte   EnginesLit();
     virtual Double Inclination();
     virtual void   Ins();
+    virtual Double Isp();
     virtual Double Mass();
     virtual Double MaxRcsFuel();
     virtual Byte   NumEngines();
@@ -77,6 +78,7 @@ class CommandModule : public Spacecraft {
     virtual Double RateOfClimb();
     virtual Double RateOfClimb(Double d);
     virtual Double RcsFuel();
+    virtual Double RcsIsp();
     virtual Double RollRate();
     virtual Double RetroModuleDryWeight();
     virtual Double RetroModuleDryWeight(Double d);

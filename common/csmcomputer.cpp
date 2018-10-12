@@ -142,6 +142,12 @@ void CsmComputer::_doShow() {
          _reg2(d * 100);
          _reg3((csm->Latitude() - mission->TargetLatitude()) * 100);
          break;
+    case 14:
+         d = 9.80665 * csm->Isp() * log(csm->Mass() / (csm->Mass() - csm->Fuel()));
+         _reg1(d);
+         d = 9.80665 * csm->RcsIsp() * log(csm->Mass() / (csm->Mass() - csm->RcsFuel()));
+         _reg2(d);
+         break;
     }
   }
 

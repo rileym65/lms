@@ -119,6 +119,14 @@ Double CommandModule::Fuel() {
   return 0;
   }
 
+Double CommandModule::RcsIsp() {
+  return 0;
+  }
+
+Double CommandModule::Isp() {
+  return 0;
+  }
+
 Double CommandModule::Inclination() {
   return inclination;
   }

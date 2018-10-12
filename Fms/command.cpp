@@ -332,6 +332,13 @@ Double CommandModule::Fuel() {
   return 0;
   }
 
+Double CommandModule::Isp() {
+  if (!launchVehicleJettisoned) return booster->Isp();
+  else if (serviceModuleDryWeight > 0) return serviceModuleIsp;
+  else if (retroModuleDryWeight > 0) return retroModuleIsp;
+  return 0;
+  }
+
 Double CommandModule::Inclination() {
   if (!launchVehicleJettisoned) return booster->Inclination();
   return inclination;
@@ -369,6 +376,7 @@ Double CommandModule::Mass() {
     ret += targetVehicle->Mass();
     if (lmExtracted == 0) ret += booster->Mass();
     }
+  if (!launchVehicleJettisoned) ret += booster->Mass();
   return ret;
   }
 
@@ -430,6 +438,11 @@ Double CommandModule::PitchRate() {
 Double CommandModule::RcsFuel() {
   if (serviceModuleDryWeight > 0) return serviceModuleRcsFuel;
   return commandModuleRcsFuel;
+  }
+
+Double CommandModule::RcsIsp() {
+  if (serviceModuleDryWeight > 0) return serviceModuleRcsIsp;
+  return rcsIsp;
   }
 
 Double CommandModule::Radius() {
