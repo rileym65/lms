@@ -1,3 +1,34 @@
+[h2]	Accel
+[er]
+	+------------+
+	|Acc:       0|
+	+------------+
+[ee]
+	This instrument shows the amount of acceleration in meters/second
+	that the vehicle is currently experiencing.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Altitude
+[er]
+	+------------+
+	|Alt:       0|
+	+------------+
+[ee]
+	This guage shows the current altitude above the primary body.
+	Altitude is measured above the average radius of the body being
+	orbited.  If there is no decimal point in the value then the
+	value is in meters, otherwise when a decimal point is present
+	then the value is in kilometers.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	Ams_Attitude
 [er]
 	+-------+
@@ -598,6 +629,33 @@
 [--]
 [=]
 
+[h2]	Battery
+[er]
+	+-------+
+	|Bat: 99|
+	+-------+
+[ee]
+	This instrument shows the percentage of battery remaining in
+	the current vehicle.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	ClockBu
+[er]
+	+------------+
+	|BU:  0:00:00|
+	+------------+
+[ee]
+	This clock shows the duration of the current/last main engine burn.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	ClockEV
 [er]
 	+------------+
@@ -611,14 +669,44 @@
 [--]
 [=]
 
+[h2]	ClockGE
+[er]
+	+------------+
+	|GE:102:25:31|
+	+------------+
+[ee]
+	This clock shows the current ground elapsed time for the entire
+	mission.  This clock starts with launch from earth and stops at
+	splashdown.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	ClockMI
 [er]
 	+------------+
 	|ME: 48:25:16|
 	+------------+
 [ee]
-	This clock shows the current mission elapsed time.  The
-	mission clock starts after undocking is completed.
+	This clock shows the current time for the Lunar mission phase of a
+	mission.  It starts when the LM is undocked from the CSM and stops
+	when the LM redocks with the CSM.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	ClockOT
+[er]
+	+------------+
+	|OT:  1:28:22|
+	+------------+
+[ee]
+	This clock shows the amount of time to complete 1 orbit of the 
+	primary body.
 [e-]
 
 [=]
@@ -644,6 +732,19 @@
 [li]	EV - The time of the current/last EVA.
 [li]	DK - The time since lifting off from the Lunar surface.
 [le]
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	ClockTB
+[er]
+	+------------+
+	|TB:  0:11:21|
+	+------------+
+[ee]
+	This clock shows the total time that main engines have been operating.
 [e-]
 
 [=]
@@ -708,6 +809,147 @@
 [--]
 [=]
 
+[h2]	CsmComputer
+[er]
+	+------+
+	|R    P|
+	|    02|
+	|  V  N|
+	| 16 09|
+	|+00000|
+	|+00045|
+	|+00037|
+	+------+
+[ee]
+	This is the main interface for the CSM computer.  The number 
+	below P specifies which program number is running.  The number
+	below V specifies what the current verb is, while the number
+	below N specifies what the current noun is.  The three five
+	digit numbers below these are registers 1, 2, and 3 of the
+	computer.  Refer to the CSM Computer Operators Guide for
+	details on how to use the CSM guidance computer.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	CsmDock
+[er]
+	+-------------------------+
+	|      v      Align       |
+	| +----|----+             |
+	| |         | pX: +00.0231|
+	| |         | dX: +00.0012|
+	|>-    +    -             |
+	| |         | pY: +00.1073|
+	| |         | dX: -00.0102|
+	| +----|----+             |
+	|      ^                  |
+	+-------------------------+
+[ee]
+	This panel contains the docking radar.  The arrow above the
+	targetting display indicates the relative roll angle to the
+	target.  When the roll is aligned with the target the arrow
+	will be centered.
+[=]
+	The arrow along the left edge shows the relative pitch angle
+	to the target.  When the arrow is centered then the pitch angle
+	is aligned with the target.
+[=]
+	The arrow under the target display indicates the current yaw
+	angle in relation to the target.  When the yaw angle is aligned
+	with the target the arrow will be centered.
+[=]
+	When the docking port of the current vehicle is pointing away
+	from the docking point of the target then all the angle arrows
+	will point away from the target display.
+[=]
+	The '+' in the target display indicates your lateral alignment
+	to the docking port of the target.  When it is centered then
+	your are lateraly aligned with docking port, otherwise the '+'
+	symbol indicates the direction you need to go in order to become
+	aligned.
+[=]
+	The pX and pY indicate your current position in meters from the
+	center of the target docking port.  These give you a more precise
+	location than the '+' in the docking display.
+[=]
+	The dX and dY values indicates your velocity in relation to the
+	target docking port.  dX indicates your left/right movement while
+	the dY indicates your forward/backward movement.
+[=]
+	When you are properly aligned with the docking port, both in angles
+	and position the the 'Align' lamp will be lit and it is safe to dock.
+	If the 'Align' lamp is not lit then you are not aligned and docking
+	cannot be performed.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	CsmLamps
+[er]
+	+-------------------+
+	|BSP PAR     DCK RCS|
+	|SMJ SPS     BST ATT|
+	|RMJ RTR         ARM|
+	+-------------------+
+[ee]
+	This panel contains annunciator lamps to indicate various status
+	conditions relevant to the CSM.
+[=]
+	The following indicators could appear on this panel:
+[=]
+[TB]
+	| BSP | - | The spacecraft has been separated from the booster.     |
+	| SMJ | - | The service module has been jettisoned.                 |
+	| RMJ | - | The retro module has been jettisoned.                   |
+	| PAR | - | The main parachutes have been deployed.                 |
+	| SPS | - | The service module engine is currently running.         |
+	| RTR | - | The retro module engine is currently running.           |
+	| DCK | - | The CSM is currently docked with the LM                 |
+	| BST | - | The CSM is docked with the LM and still attached to the booster |
+	| RCS | - | An RCS translation thruster is currently running        |
+	| ATT | - | The spacecraft is spinning on at least one axis         |
+	| ARM | - | The ARM switch is currently set                         |
+[TE]
+[e-]
+	
+[=]
+[--]
+[=]
+
+[h2]	Days
+[er]
+	+------------+
+	|DY:        0|
+	+------------+
+[ee]
+	This indicates how many days have elapsed since the simulation first
+	started.
+[e-]
+	
+[=]
+[--]
+[=]
+
+[h2]	Declination
+[er]
+	+------------+
+	|Dec:   21.99|
+	+------------+
+[ee]
+	This gauge shows the spacecraft's current declination (or celestial
+	latitude) in relation to the equator of the primary body the craft
+	is in orbit of.
+[e-]
+	
+[=]
+[--]
+[=]
+
 [h2]	Docked
 [er]
 	+---+
@@ -715,6 +957,25 @@
 	+---+
 [ee]
 	This guage shows whether or not the LM is docked with the CSM.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Engines
+[er]
+	+---+
+	|O O|
+	| O |
+	|O O|
+	+---+
+[ee]
+	This instrument shows the status of the engines on the launch
+	vehicle.  There will be as many symbols as the most engines used
+	on any stage of the launch vehicle.  An 'O' indicates that engine
+	is not currently running.  A '*' symbol indicates an engine that
+	is running.
 [e-]
 
 [=]
@@ -742,6 +1003,39 @@
 	CB - This indicates whether or not the LM cabin is pressurized.
 	If the cabin is pressurized then a '@' will appear to the left
 	of this indicator.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Fuel
+[er]
+	+-------+
+	|Fs1: 99|
+	|Fs2: 99|
+	|Fs3: 99|
+	+-------+
+[ee]
+	This instrument show what percentage of fuel remains in each
+	stage of the launch vehicle.  There will be as many entries
+	showing on the gauge as their are stages in the launch vehicle.
+	If the spacecraft has been separated from the launch vehicle
+	then all values on the gauge will display as '--'.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Ground
+[er]
+	+------------+
+	|Gnd:  -73.52|
+	+------------+
+[ee]
+	This instrument shows what the current gound longitude is that
+	is immediately below the spacecraft.
 [e-]
 
 [=]
@@ -785,6 +1079,20 @@
 [--]
 [=]
 
+[h2]	Inclination
+[er]
+	+------------+
+	|Inc:   28.50|
+	+------------+
+[ee]
+	This gauge shows what the inclination of the spacecraft's current
+	orbit is around the primary body.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	Lamps
 [er]
 	+--------------------+
@@ -821,6 +1129,21 @@
 	| ELO | - | This lamp below the BAT lamp indicates that emergency
 	battery power has fallen below 10%.                                 |
 [TE]
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Lan
+[er]
+	+------------+
+	|Lan: -165.47|
+	+------------+
+[ee]
+	This instrument shows the longitude of ascending node of the spacecraft's
+	current orbit.  This longitude is the celestial longitude and not
+	the ground longitude.
 [e-]
 
 [=]
@@ -969,6 +1292,40 @@
 [--]
 [=]
 
+[h2]	Moon
+[er]
+	+--------------------------+
+	| Moon           G:   0.00 |
+	| Dst: 370400  Ang:  89.99 |
+	| Ra:   90.00  Dec:  28.58 |
+	+--------------------------+
+[ee]
+	This panel gives information on the location of the Moon and can be
+	used to determine when to initiate TLI or TEI.
+[=]
+ 	The panel contains the following data:
+[=]
+[tb]
+	| Dst: | - | This is the current distance in km between the center
+	             of the Moon and the center of the earth.|
+	| Ra:  | - | This is the current Right Ascension (celestial longitude)
+	             of the Moon in relation to the Earth. |
+	| Dec: | - | This is the current declination (celestial latitude)
+	             of the Moon in relation to the Earth. |
+	| G:   | - | This indicates the current gravitation effect the Moon
+	             has on the spacecraft.|
+	| Ang: | - | This indicates the angle difference between the Moon
+	             and the spacecraft.  A positive number indicates how
+	             many degrees the Moon is ahead of the spacecraft, while
+	             a negative number indicates how many degress the Moon
+	             is behind the spacecraft. |
+[te]
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	MultiAxis
 [er]
 	+-------------------------+
@@ -1061,6 +1418,38 @@
 [--]
 [=]
 
+[h2]	Orbit
+[er]
+	+----------+
+	|u/o:   0.0|
+	|f/o:  90.0|
+	|l/o:  90.0|
+	+----------+
+[ee]
+	This panel shows the relative angles of the spacecraft primary
+	faces in relation to the direction of orbit.  u/o shows the
+	angle for the upward face, f/o shows the angle for the forward
+	face, and l/o shows the angle for the left face.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Orbiting
+[er]
+	+------+
+	|EARTH |
+	+------+
+[ee]
+	This gauge indicates what the primary body is that the navigation
+	instruments are using as the origin.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	OrbitLarge
 [er]
 	+---------------------------------------------+
@@ -1095,6 +1484,20 @@
 [--]
 [=]
 
+[h2]	Oxygen
+[er]
+	+-------+
+	|Oxy: 99|
+	+-------+
+[ee]
+	This instrument shows the percentage of oxygen remaining in
+	the current vehicle.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	OxygenBattery
 [er]
 	+-------+
@@ -1104,6 +1507,20 @@
 [ee]
 	This guage shows what percentgage of oxygen and battery power
 	remain in the vehicle.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Periapsis
+[er]
+	+------------+
+	|Per:   100.0|
+	+------------+
+[ee]
+	This instrument shows the periapsis for the spacecraft's current
+	orbit, measured in kilometers.
 [e-]
 
 [=]
@@ -1164,6 +1581,20 @@
 [--]
 [=]
 
+[h2]	PitchRate
+[er]
+	+--------+
+	|PT:  0.0|
+	+--------+
+[ee]
+	This gauge indicates how quickly the spacecraft is rotating around
+	its pitch axis, measured in degrees/second.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	Plss
 [er]
 	+------+
@@ -1183,6 +1614,23 @@
 	may be any of these symbols: 'S' - Sample, 'B' - Sample box,
 	'F' - Flag, 'L' - Laser reflector, 'A' - ALSEP package, or
 	'-' - nothing.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Position
+[er]
+	+------------+
+	|Lat:  +18.71|
+	|Lng: -121.45|
+	|Gnd:  -80.12|
+	+------------+
+[ee]
+	This panel shows the current celestial latitude, celestial
+	longitude, and ground longitude of the spacecraft in relation
+	to the primary body.
 [e-]
 
 [=]
@@ -1209,6 +1657,61 @@
 [--]
 [=]
 
+[h2]	Prograde
+[er]
+	+----------------------+
+	|    Elev     Norm     |
+	|U:    0.94    -0.10  -|
+	|F:  -88.86     0.64  -|
+	|L:    -0.64  -89.35  +|
+	+----------------------+
+[ee]
+	This panel shows precision data on the angle relationships
+	between the spacecraft primary faces and the spacecraft's
+	direction of travel.  'U' shows the angles for the upward
+	face, 'F' shows the angles for the forward face, and 'L'
+	shows the angles for the left face.
+[=]
+	The 'Elev' numbers show the angles relative to elevation.  If
+	the number is positive then the face is pointing in a direction
+	that is higher in altitude than the current flight path, or is pointing
+	away from the orbit's center point.  A negative number would 
+	indicate that the face is facing a lower altitude, or pointing
+	inside the orbit toward the orbit's center.
+[=]
+	The 'Norm' numbers show the angles in relation to the orbit's
+	normal vector.  Positive numbers indicate that the face is angled
+	towards the orbit normal, while negative numbers indicate that
+	the face is angled away from the orbit normal.
+[=]
+	The final column of the panel will contain either '+' or '-'
+	symbols.  A '+' symbol indicates that the face is angled within
+	90 degrees of the direction of flight, while a '-' symbol
+	indicates the face is angled greater then 90 degrees from the
+	angle for flight.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Propellant
+[er]
+	+-------+
+	|Prp: 99|
+	+-------+
+[ee]
+	This gauge shows the percentagle of propellant for the current main
+	engine.  If the spacecraft is still attached to the launch vehicle
+	this will be the fuel percentage of the current stage, otherwise
+	it will be the fuel available for the service module engine or
+	retro engine.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	Radars
 [er]
 	+----+
@@ -1229,6 +1732,24 @@
 [i-4]
 [=]
 	An '@' symbol appears before the currently active radar.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Radial
+[er]
+	+----------+
+	|u/r:   0.0|
+	|f/r:  90.0|
+	|l/r:  90.0|
+	+----------+
+[ee]
+	This panel shows the relative angles of the spacecraft primary
+	faces in relation to the local ground.  u/r shows the
+	angle for the upward face, f/r shows the angle for the forward
+	face, and l/r shows the angle for the left face.
 [e-]
 
 [=]
@@ -1285,6 +1806,51 @@
 [--]
 [=]
 
+[h2]	RightAscension
+[er]
+	+------------+
+	|RtA:  145.32|
+	+------------+
+[ee]
+	This gauge shows the spacecraft's current Right Ascension, or
+	celestial longitude in relation to the primary body.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	Roc
+[er]
+	+------------+
+	|Roc:    1200|
+	+------------+
+[ee]
+	This instrument shows the current rate of climb, this is the amount
+	that altitude is increasing/decreasing, which may be a different
+	value than the spacecraft's velocity, depending on the current trajectory.
+	A positive number indicates a climb, while a negative number indicates
+	a descent.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	RollRate
+[er]
+	+--------+
+	|RL:  0.0|
+	+--------+
+[ee]
+	This gauge indicates how quickly the spacecraft is rotating around
+	its roll axis, measured in degrees/second.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	Seq
 [er]
 	+-----------------------+
@@ -1322,3 +1888,31 @@
 [--]
 [=]
 
+[h2]	Velocity
+[er]
+	+------------+
+	|Vel:  7809.4|
+	+------------+
+[ee]
+	This indicates the vehicle's current velocity in meters/second.
+	The velocity shown is relative to the center of the primary body,
+	rotation of the primary body does not effect the value shown.
+[e-]
+
+[=]
+[--]
+[=]
+
+[h2]	YawRate
+[er]
+	+--------+
+	|YW:  0.0|
+	+--------+
+[ee]
+	This gauge indicates how quickly the spacecraft is rotating around
+	its yaw axis, measured in degrees/second.
+[e-]
+
+[=]
+[--]
+[=]
