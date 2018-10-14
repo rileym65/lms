@@ -18,7 +18,7 @@ void G_YawRate::Reset() {
   }
 
 void G_YawRate::Display() {
-  GotoXY(x,y); Write("RL:-99.9");
+  GotoXY(x,y); Write("YW:-99.9");
   }
 
 void G_YawRate::Update() {
