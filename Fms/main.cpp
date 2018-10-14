@@ -219,7 +219,7 @@ void saturn1B() {
   csm->Diameter(3.90);
   csm->ParachuteDiameter(42.26);
   csm->ServiceModuleDryWeight(6110);
-  csm->ServiceModuleFuel(18413);
+  csm->ServiceModuleFuel(2785);
   csm->ServiceModuleIsp(314);
   csm->ServiceModuleThrust(91190);
   csm->ServiceModuleRcsIsp(290);
@@ -232,7 +232,7 @@ void saturn1B() {
   csm->CommandModuleRcsThrust(410);
   csm->Oxygen(14 * 24 * 3600);
   csm->Battery(14 * 24 * 3600);
-  csm->ServiceModuleMaxFuel(csm->ServiceModuleFuel());
+  csm->ServiceModuleMaxFuel(18413);
   csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
   csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
   csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
