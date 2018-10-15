@@ -1040,7 +1040,6 @@ int main(int argc, char** argv) {
         run = false;
         endReason = END_QUIT;
         }
-      if (key == 'I' && launched) booster->Ignition();
       if (key == 'L' && !launched) Launch();
       if (key == 'S' && launched) booster->NextStage();
       currentVehicle->ProcessKey(key);

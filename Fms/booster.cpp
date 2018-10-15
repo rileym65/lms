@@ -314,6 +314,7 @@ Double Booster::ThrustSl(Byte stage, Byte engine, Double d) {
   }
 
 void Booster::ProcessKey(Int32 key) {
+  if (key == 'I' && launched) Ignition();
   if (key == 'C') Cutoff();
   if (key == KEY_KP_HOME) rollRate++;
   if (key == KEY_PGUP) rollRate--;
