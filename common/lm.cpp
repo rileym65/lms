@@ -587,6 +587,7 @@ void LunarModule::Cycle() {
     thrust = thrust + (faceFront.Neg().Scale(rcsThrust));
     rcsFuel -= rcsfuel;
     }
+  fuelUsed = 0;
   if (throttle != 0) {
     if (descentJettisoned) {
       throttle = 100;
@@ -596,6 +597,7 @@ void LunarModule::Cycle() {
       if (ascentFuel >= fuel) {
         thrust = thrust + faceUp.Scale(mainThrust);
         ascentFuel -= fuel;
+        fuelUsed += fuel;
         }
       }
     else {
@@ -607,9 +609,11 @@ void LunarModule::Cycle() {
       if (mainfuel <= descentFuel) {
         thrust = thrust + faceUp.Scale(mainThrust);
         descentFuel -= mainfuel;
+        fuelUsed += mainfuel;
         }
       }
     }
+  fuelUsed *= GRAN;
   Spacecraft::Cycle();
   if (radius <= orbiting->Radius()) {
     vVel = fabs(velocityAltitude);
