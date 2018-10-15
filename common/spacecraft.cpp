@@ -67,6 +67,10 @@ Double Spacecraft::EccentricAnomaly() {
   return eccentricAnomaly;
   }
 
+Double Spacecraft::FuelUsed() {
+  return fuelUsed;
+  }
+
 Double Spacecraft::Inclination() {
   return inclination;
   }

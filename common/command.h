@@ -57,6 +57,7 @@ class CommandModule : public Spacecraft {
     virtual void   Cutoff();
     virtual void   Diameter(Double d);
     virtual Byte   EnginesLit();
+    virtual Double FuelUsed();
     virtual Double Inclination();
     virtual void   Ins();
     virtual Double Isp();

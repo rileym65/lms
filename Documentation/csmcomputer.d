@@ -23,7 +23,7 @@
 	|  16  |  09  | Apo HH      | Apo MM       | Apo SS     |
 	|  16  |  10  | Per HH      | Per MM       | Per SS     |
 	|  16  |  12  | tarAlt      | TarLong      | TarLat     |
-	|  16  |  14  | Main DeltaV | Rcs DeltaV   |            |
+	|  16  |  14  | Main DeltaV | Rcs DeltaV   | Fuel flow  |
 [TE]
 [=]
 [TB]

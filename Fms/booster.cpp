@@ -42,6 +42,7 @@ void Booster::Cycle() {
   tth = 0;
   st = stage - 1;
   air = AirDensity(alt);
+  fuelUsed = 0;
   if (throttle != 0) {
     if (ceco[st] != 0 && clockBu > ceco[st]) {
       ceco[st] = 0;
@@ -56,10 +57,12 @@ void Booster::Cycle() {
         if (f <= fuel[st]) {
           tth += th;
           fuel[st] -= f;
+          fuelUsed += f;
           }
         else enginesLit &= (~(1 << i));
         }
       }
+    fuelUsed *= GRAN;
     thrust = faceUp.Scale(tth);
     if (enginesLit == 0) {
       throttle = 0;

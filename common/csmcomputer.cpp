@@ -59,7 +59,7 @@ void CsmComputer::_reg3(Int32 i) {
 void CsmComputer::_doShow() {
   Double d;
   UInt32 i,j;
-  switch (noun) {
+  switch (pnoun) {
     case 0:
          _reg1(preg1);
          _reg2(preg2);
@@ -147,6 +147,7 @@ void CsmComputer::_doShow() {
          _reg1(d);
          d = 9.80665 * csm->RcsIsp() * log(csm->Mass() / (csm->Mass() - csm->RcsFuel()));
          _reg2(d);
+         _reg3(csm->FuelUsed());
          break;
     }
   }
@@ -166,7 +167,7 @@ void CsmComputer::Cycle() {
   Double v1,v2;
   Vector pos;
   Vector vel;
-  if (verb == 16) _doShow();
+  if (pverb == 16) _doShow();
   if (running == 0) return;
   if (prog == 0) {
     running = 0;
@@ -273,6 +274,8 @@ char* CsmComputer::Verb() {
 
 void CsmComputer::_processRequest() {
   Double d;
+  pnoun = noun;
+  pverb = verb;
   if (verb == 0) {
     running = 0;
     }
@@ -317,7 +320,8 @@ void CsmComputer::_processRequest() {
     if (prog == 3) {
       preg2 = preg1 + (csm->Velocity() - csm->Orbiting()->Velocity()).Length();
       }
-
+    pverb = 16;
+    pnoun = 0;
     }
   }
 

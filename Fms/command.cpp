@@ -210,12 +210,14 @@ Matrix m;
           }
         }
       }
+    fuelUsed = 0;
     if (throttle > 0) {
       if (serviceModuleDryWeight > 0) {
         th = serviceModuleThrust / Mass();
         f = serviceModuleThrust / (9.80665 * serviceModuleIsp) / GRAN;
         if (f <= serviceModuleFuel) {
           serviceModuleFuel -= f;
+          fuelUsed += f * GRAN;
           thrust = thrust + faceUp.Scale(th);
           }
         else {
@@ -330,6 +332,11 @@ Double CommandModule::Fuel() {
   else if (serviceModuleDryWeight > 0) return serviceModuleFuel;
   else if (retroModuleDryWeight > 0) return retroModuleFuel;
   return 0;
+  }
+
+Double CommandModule::FuelUsed() {
+  if (!launchVehicleJettisoned) return booster->FuelUsed();
+  return fuelUsed;
   }
 
 Double CommandModule::Isp() {

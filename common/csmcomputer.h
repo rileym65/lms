@@ -11,6 +11,8 @@ class CsmComputer {
     Byte prog;
     Byte noun;
     Byte verb;
+    Byte pnoun;
+    Byte pverb;
     Int32 reg1;
     Int32 reg2;
     Int32 reg3;

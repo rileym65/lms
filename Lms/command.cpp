@@ -119,6 +119,10 @@ Double CommandModule::Fuel() {
   return 0;
   }
 
+Double CommandModule::FuelUsed() {
+  return 0;
+  }
+
 Double CommandModule::RcsIsp() {
   return 0;
   }
