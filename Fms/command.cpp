@@ -317,6 +317,11 @@ CsmComputer* CommandModule::Computer() {
   return computer;
   }
 
+Double CommandModule::DeltaV() {
+  if (!launchVehicleJettisoned) return booster->DeltaV();
+  return deltaV;
+  }
+
 void CommandModule::Diameter(Double d) {
   d /= 2;
   area = d * d * M_PI;

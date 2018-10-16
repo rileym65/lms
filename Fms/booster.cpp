@@ -151,6 +151,7 @@ Double Booster::Height(Double d) {
 
 void Booster::Ignition() {
   if (starts[stage-1] > 0) {
+    deltaV = 0;
     clockBu = 0;
     if (numEngines[stage-1] == 1) enginesLit = 0x01;
     if (numEngines[stage-1] == 2) enginesLit = 0x03;
@@ -216,6 +217,7 @@ Double Booster::MaxFuel(Byte stage, Double d) {
 void Booster::NextStage() {
   if (enginesLit != 0) return;
   if (stage < numStages) {
+    deltaV = 0;
     clockBu = 0;
     stage++;
     enginesLit = 0;

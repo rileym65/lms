@@ -12,6 +12,7 @@ class Spacecraft : public Vehicle {
     Int32     clockAp;
     Int32     clockPe;
     Double    eccentricity;
+    Double    deltaV;
     Double    fuelUsed;
     Double    inclination;
     Double    maxRcsFuel;
@@ -47,6 +48,7 @@ class Spacecraft : public Vehicle {
     virtual Double    AscendingNode();
     virtual Int32     ClockAp();
     virtual Int32     ClockPe();
+    virtual Double    DeltaV();
     virtual Double    EarthG();
     virtual Double    EccentricAnomaly();
     virtual Double    FuelUsed();

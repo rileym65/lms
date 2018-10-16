@@ -106,6 +106,10 @@ CsmComputer* CommandModule::Computer() {
   return NULL;
   }
 
+Double CommandModule::DeltaV() {
+  return 0;
+  }
+
 void CommandModule::Diameter(Double d) {
   d /= 2;
   area = d * d * M_PI;

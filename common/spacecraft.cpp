@@ -59,6 +59,10 @@ Int32 Spacecraft::ClockPe() {
   return clockPe;
   }
 
+Double Spacecraft::DeltaV() {
+  return deltaV;
+  }
+
 Double Spacecraft::EarthG() {
   return earthG;
   }
@@ -544,6 +548,8 @@ void Spacecraft::Cycle() {
 
   p1 = position - orbiting->Position();
   velocity = velocity + thrust.Scale(1/GRAN);
+  deltaV += thrust.Scale(1/GRAN).Length();
+
   velocity = velocity + drag.Scale(1/GRAN);
   position = position + velocity.Scale(1/GRAN);
   Radius((position - orbiting->Position()).Length());
@@ -565,6 +571,7 @@ void Spacecraft::Save(FILE* file) {
   fprintf(file,"  Apoapsis %.18f%s",apoapsis,LE);
   fprintf(file,"  AscendingNode %.18f%s",ascendingNode,LE);
   fprintf(file,"  Eccentricity %.18f%s",eccentricity,LE);
+  fprintf(file,"  DeltaV %.18f%s",deltaV,LE);
   fprintf(file,"  Inclination %.18f%s",inclination,LE);
   fprintf(file,"  Periapsis %.18f%s",periapsis,LE);
   fprintf(file,"  Radius %.18f%s",radius,LE);
@@ -583,6 +590,7 @@ Int8 Spacecraft::SubLoad(FILE* file, char* line) {
   else if (startsWith(line,"apoapsis ")) apoapsis = atof(nw(line));
   else if (startsWith(line,"ascendingnode ")) ascendingNode = atof(nw(line));
   else if (startsWith(line,"eccentricity ")) eccentricity = atof(nw(line));
+  else if (startsWith(line,"deltav ")) deltaV = atof(nw(line));
   else if (startsWith(line,"inclination ")) inclination = atof(nw(line));
   else if (startsWith(line,"periapsis ")) periapsis = atof(nw(line));
   else if (startsWith(line,"radius ")) radius = atof(nw(line));
