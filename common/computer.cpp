@@ -311,6 +311,7 @@ Double Computer::read(UInt16 addr) {
       case 0x2d: return vehicle->OrbitTime();
       case 0x2e: return vehicle->LatitudeVelocity();
       case 0x2f: return vehicle->LatitudeAcceleration();
+      case 0x30: return sc->RelOrbitTime();
       }
     }
   if ((addr & 0xf00) == 0x600) {

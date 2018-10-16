@@ -90,6 +90,7 @@ class Spacecraft : public Vehicle {
     virtual Double    RelLatitude();
     virtual Double    RelMomEast();
     virtual Double    RelMomNorth();
+    virtual Double    RelOrbitTime();
     virtual Double    TargetLongitude();
     virtual Double    TargetLatitude();
     virtual Double    TargetMomEast();

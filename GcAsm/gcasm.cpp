@@ -112,6 +112,7 @@ SYMBOL symtab[] = {
   { "CLKOR",  0x0000022d },
   { "LATVEL", 0x0000022e },
   { "LATACC", 0x0000022f },
+  { "ROTIME", 0x00000230 },
 
   { "VEL",    0x00000300 },
   { "POS",    0x00000301 },

@@ -40,6 +40,7 @@ loop000002: calp   P10V00N02           ; Display POS^TAR data
 loop000003: calp   P10V00N03           ; Display POS^REL data
             calp   P11V00N03           ; display perilune/apolune
             calp   P11V00N05           ; display orbital information
+            mov    rotime,R15          ; Relative orbit time
             wait
             jmp    loop000003
 

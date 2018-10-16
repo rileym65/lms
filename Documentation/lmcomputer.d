@@ -80,6 +80,7 @@
 	| RLAT   | Latitudinal distance to CSM in degrees           |
 	| RLNG   | Longitudinal distance to CSM in degrees          |
 	| RNVEL  | Relative latitudinal velocity to CSM in m/s      |
+	| ROTIME | Relative orbit time                              |
 	| ROLL   | Current roll angle                               |
 	| TALT   | Altitude different to target in meters           |
 	| TANOD  | Relative target Longitude of ascending node      |

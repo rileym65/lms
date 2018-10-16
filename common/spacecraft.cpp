@@ -237,6 +237,11 @@ Double Spacecraft::RelLatitude() {
   return ret;
   }
 
+Double Spacecraft::RelOrbitTime() {
+  if (targetVehicle == NULL) return 0;
+  return orbitTime - ((Spacecraft*)targetVehicle)->OrbitTime();
+  }
+
 Double Spacecraft::RelMomEast() {
   Double ret;
   if (targetVehicle == NULL) return 0;
