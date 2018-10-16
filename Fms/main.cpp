@@ -165,11 +165,11 @@ void saturn1B() {
   booster->Height(43.2);
   booster->CmOffset(17.25);
   booster->NumStages(2);
-  booster->DryWeight(1, 42000);
+  booster->DryWeight(1, 40856);
   booster->DryWeight(2, 10600);
-  booster->Fuel(1, 399400);
-  booster->Fuel(2, 103600);
-  booster->Payload(18000);
+  booster->Fuel(1, 411952);
+  booster->Fuel(2, 105795);
+  booster->Payload(15392);
   booster->Stage(1);
   booster->NumEngines(1, 8);
   booster->NumEngines(2, 1);
