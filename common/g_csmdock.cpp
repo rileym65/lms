@@ -27,14 +27,14 @@ void G_CsmDock::Reset() {
 
 void G_CsmDock::Display() {
   GotoXY(x,y+0); Write("      v      Align       ");
-  GotoXY(x,y+1); Write(" +----|----+             ");
-  GotoXY(x,y+2); Write(" |         | pX: +99.9999");
-  GotoXY(x,y+3); Write(" |         | dX: +99.9999");
-  GotoXY(x,y+4); Write(">-    +    -             ");
-  GotoXY(x,y+5); Write(" |         | pY: +99.9999");
-  GotoXY(x,y+6); Write(" |         | dX: +99.9999");
-  GotoXY(x,y+7); Write(" +----|----+             ");
-  GotoXY(x,y+8); Write("      ^                  ");
+  GotoXY(x,y+1); Write(" +----|----+ pX: +99.9999");
+  GotoXY(x,y+2); Write(" |         | dX: +99.9999");
+  GotoXY(x,y+3); Write(" |         |             ");
+  GotoXY(x,y+4); Write(">-    +    - pY: +99.9999");
+  GotoXY(x,y+5); Write(" |         | dY: +99.9999");
+  GotoXY(x,y+6); Write(" |         |             ");
+  GotoXY(x,y+7); Write(" +----|----+ pZ: +99.9999");
+  GotoXY(x,y+8); Write("      ^      dZ: +99.9999");
   }
 
 void G_CsmDock::Update() {
@@ -46,7 +46,7 @@ void G_CsmDock::Update() {
   Vector vFr;
   Vector vLf;
   Double d;
-  Double px,py;
+  Double px,py,pz;
   Int8   aligned;
   char buffer[32];
   if (csm->TargetVehicle() == NULL) return;
@@ -116,6 +116,7 @@ void G_CsmDock::Update() {
 
   px = pos.Norm().Dot(tvLf);
   py = pos.Norm().Dot(tvFr);
+  pz = pos.Length();
 
   px = px * pos.Length();
   py = py * pos.Length();
@@ -123,26 +124,38 @@ void G_CsmDock::Update() {
   if (d >=100) d = 99.9999;
   if (d <=-100) d = -99.9999;
   sprintf(buffer,"%+8.4f",d);
-  GotoXY(x+17, y+2); Write(buffer);
+  GotoXY(x+17, y+1); Write(buffer);
   d = py;
   if (d >=100) d = 99.9999;
   if (d <=-100) d = -99.9999;
   sprintf(buffer,"%+8.4f",d);
-  GotoXY(x+17, y+5); Write(buffer);
-
+  GotoXY(x+17, y+4); Write(buffer);
+  d = pz;
+  if (d >=100) d = 99.9999;
+  if (d <=-100) d = -99.9999;
+  sprintf(buffer,"%+8.4f",d);
+  GotoXY(x+17, y+7); Write(buffer);
+  
   d = px - lastPx;
   if (d >=100) d = 99.9999;
   if (d <=-100) d = -99.9999;
   sprintf(buffer,"%+8.4f",d);
-  GotoXY(x+17, y+3); Write(buffer);
+  GotoXY(x+17, y+2); Write(buffer);
   d = py - lastPy;
   if (d >=100) d = 99.9999;
   if (d <=-100) d = -99.9999;
   sprintf(buffer,"%+8.4f",d);
-  GotoXY(x+17, y+6); Write(buffer);
+  GotoXY(x+17, y+5); Write(buffer);
+  d = pz - lastPz;
+  if (d >=100) d = 99.9999;
+  if (d <=-100) d = -99.9999;
+  sprintf(buffer,"%+8.4f",d);
+  GotoXY(x+17, y+8); Write(buffer);
 
   lastPx = px;
   lastPy = py;
+  lastPz = pz;
+
   GotoXY(x+6+lastPosX,y+4+lastPosY); Write(" ");
   if (px < -3.5) lastPosX = 4;
   else if (px < -2.5) lastPosX = 3;

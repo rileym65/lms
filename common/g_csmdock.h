@@ -10,6 +10,7 @@ class G_CsmDock : public Gauge {
   protected:
     Double lastPx;
     Double lastPy;
+    Double lastPz;
     Int16 lastPosX;
     Int16 lastPosY;
     Int16 lastDockingRadarRoll;
