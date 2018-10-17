@@ -33,6 +33,7 @@
 	|  03  | Engine cutoff for deltav in reg1          |
 	|  04  | Distance to LM                            |
 	|  20  | Compute circular orbit velocity           |
+	|  30  | Hohmann Transfer                          |
 [TE]
 [=]
 [H2]	Programs
@@ -48,6 +49,14 @@
 [TB]
 	| Reg2 | Velocity in m/s * 10                      |
 [TE]
+[=]
+
+[h1]	30
+	Input:
+[=]
+[tb]
+	| Reg1 | Destination orbit altitude in km  |
+[te]
 [=]
 
 

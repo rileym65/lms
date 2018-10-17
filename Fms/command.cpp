@@ -702,6 +702,7 @@ void CommandModule::ProcessKey(Int32 key) {
          ignitionApoapsis = apoapsis;
          ignitionPeriapsis = periapsis;
          ignitionEccentricity = eccentricity;
+         deltaV = 0;
          }
        else if (retroModuleDryWeight > 0) {
          throttle = 100;

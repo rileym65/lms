@@ -210,10 +210,9 @@ void CsmComputer::Cycle() {
       }
     }
   else if (prog == 3) {
-    vel = csm->Velocity() - csm->Orbiting()->Velocity();
-    a = vel.Length();
-    preg3 = preg2 - a;
-    if (preg3 <= 0) {
+    if (csm->Throttle() == 0) return;
+    preg2 = preg1 - csm->DeltaV();
+    if (preg2 <= 0) {
       csm->Cutoff();
       running = 0;
       }
@@ -241,6 +240,25 @@ void CsmComputer::Cycle() {
   else if (prog == 21) {
     d = acos(csm->Velocity().Norm().Dot(csm->FaceFront())) * 180 / M_PI;
 GotoXY(1,28); printf("%.2f\n",d);
+    }
+  else if (prog == 30) {
+    if (csm->Throttle() == 0) return;
+    if (ram[0] == 1) {
+      preg1 = ram[1] - (csm->DeltaV() * 10);
+      if (preg1 <= 0) {
+        csm->Cutoff();
+        ram[0] = 2;
+        preg1 = 0;
+        }
+      }
+    else {
+      preg2 = ram[2] - (csm->DeltaV() * 10);
+      if (preg2 <= 0) {
+        csm->Cutoff();
+        preg2 = 0;
+        running = 0;
+        }
+      }
     }
   }
 
@@ -274,6 +292,8 @@ char* CsmComputer::Verb() {
 
 void CsmComputer::_processRequest() {
   Double d;
+  Double atx,via,vfb,vtxa,vtxb,dva,dvb;
+  Double ra,rb;
   pnoun = noun;
   pverb = verb;
   if (verb == 0) {
@@ -318,7 +338,23 @@ void CsmComputer::_processRequest() {
     preg2 = reg2;
     preg3 = reg3;
     if (prog == 3) {
-      preg2 = preg1 + (csm->Velocity() - csm->Orbiting()->Velocity()).Length();
+      preg2 = preg1;
+      }
+    if (prog == 30) {
+      ra = csm->Radius();
+      rb = (preg1 * 1000) + csm->Orbiting()->Radius();
+      atx = (ra + rb) / 2;
+      via = sqrt(csm->Orbiting()->Gravitation() / ra);
+      vfb = sqrt(csm->Orbiting()->Gravitation() / rb);
+      vtxa = sqrt(csm->Orbiting()->Gravitation() * (2/ra - 1/atx));
+      vtxb = sqrt(csm->Orbiting()->Gravitation() * (2/rb - 1/atx));
+      dva = fabs(vtxa-via);
+      dvb = fabs(vfb-vtxb);
+      preg1 = (dva * 10);
+      preg2 = (dvb * 10);
+      ram[0] = 1;
+      ram[1] = preg1;
+      ram[2] = preg2;
       }
     pverb = 16;
     pnoun = 0;
@@ -384,6 +420,7 @@ void CsmComputer::ProcessKey(Int32 key) {
   }
 
 Int8 CsmComputer::Load(FILE* file) {
+  UInt32 addr;
   char* pline;
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"}")) {
@@ -396,6 +433,8 @@ Int8 CsmComputer::Load(FILE* file) {
     else if (startsWith(pline,"velocity ")) velocity = atof(nw(pline));
     else if (startsWith(pline,"prog ")) prog = atoi(nw(pline));
     else if (startsWith(pline,"noun ")) noun = atoi(nw(pline));
+    else if (startsWith(pline,"pverb ")) pverb = atoi(nw(pline));
+    else if (startsWith(pline,"pnoun ")) pnoun = atoi(nw(pline));
     else if (startsWith(pline,"verb ")) verb = atoi(nw(pline));
     else if (startsWith(pline,"reg1 ")) _reg1(atoi(nw(pline)));
     else if (startsWith(pline,"reg2 ")) _reg2(atoi(nw(pline)));
@@ -405,6 +444,10 @@ Int8 CsmComputer::Load(FILE* file) {
     else if (startsWith(pline,"preg3 ")) preg3 = atoi(nw(pline));
     else if (startsWith(pline,"running ")) running = atoi(nw(pline));
     else if (startsWith(pline,"entrymode ")) entryMode = (nw(pline))[0];
+    else if (startsWith(pline,"ram")) {
+      addr = atoi(pline+3);
+      ram[addr] = atof(nw(pline));
+      }
     else return 0;
     }
   sprintf(dprog,"%02d",prog);
@@ -414,12 +457,15 @@ Int8 CsmComputer::Load(FILE* file) {
   }
 
 void CsmComputer::Save(FILE* file) {
+  Int32 i;
   fprintf(file,"  Computer {%s",LE);
   fprintf(file,"    Altitude %.18f%s",altitude,LE);
   fprintf(file,"    Velocity %.18f%s",velocity,LE);
   fprintf(file,"    Prog %d%s",prog,LE);
   fprintf(file,"    Verb %d%s",verb,LE);
   fprintf(file,"    Noun %d%s",noun,LE);
+  fprintf(file,"    PVerb %d%s",pverb,LE);
+  fprintf(file,"    PNoun %d%s",pnoun,LE);
   fprintf(file,"    Reg1 %d%s",reg1,LE);
   fprintf(file,"    Reg2 %d%s",reg2,LE);
   fprintf(file,"    Reg3 %d%s",reg3,LE);
@@ -428,6 +474,8 @@ void CsmComputer::Save(FILE* file) {
   fprintf(file,"    PReg3 %d%s",preg3,LE);
   fprintf(file,"    Running %d%s",running,LE);
   fprintf(file,"    EntryMode %c%s",entryMode,LE);
+  for (i=0; i<256; i++)
+    if (ram[i] != 0) fprintf(file,"    Ram%d %f%s",i,ram[i],LE);
   fprintf(file,"    }%s",LE);
   }
 
