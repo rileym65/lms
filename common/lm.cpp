@@ -355,14 +355,13 @@ Double LunarModule::Value(Double d) {
 /* ************************* */
 
 void LunarModule::Abort() {
-  landed = 0;
   descentJettisoned = -1;
   mode_arm = 0;
   throttle = 100;
   clockBu = 0;
   liftoffMet = clockMi;
   numBurns++;
-  velocity = orbiting->Velocity();
+  if (landed) velocity = orbiting->Velocity();
   burn[numBurns-1].start = clockMi;
   if (descentJettisoned) {
     burn[numBurns-1].fuelUsed = ascentFuel;
@@ -372,6 +371,7 @@ void LunarModule::Abort() {
     burn[numBurns-1].fuelUsed = descentFuel;
     burn[numBurns-1].engine = 'D';
     }
+  landed = 0;
   }
 
 Boolean LunarModule::UseBattery(Double units) {
