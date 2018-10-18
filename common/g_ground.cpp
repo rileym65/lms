@@ -29,7 +29,7 @@ void G_Ground::Update() {
   d = d - kscAngle - 80.6077;
   while (d >= 180) d -= 360;
   while (d <= -180) d += 360;
-  sprintf(buffer,"%+8.2f",d);
+  sprintf(buffer,"%+7.2f",d);
   GotoXY(x+5,y+0); Write(buffer);
   }
 

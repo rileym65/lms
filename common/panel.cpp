@@ -342,7 +342,7 @@ void Panel::useDefault(const char* filename) {
     addGauge(new G_Accel(41,3, false, vehicle));
     addGauge(new G_Apoapsis(27,6, false, vehicle));
     addGauge(new G_Periapsis(27,7, false, vehicle));
-    addGauge(new G_Ground(41,8, false, vehicle));
+    addGauge(new G_Ground(42,8, false, vehicle));
     addGauge(new G_ClockOT(27,8, false, vehicle));
     addGauge(new G_RightAscension(27,4, false, vehicle));
     addGauge(new G_Declination(41,4, false, vehicle));
