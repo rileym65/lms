@@ -25,8 +25,11 @@ void G_Incl::Display() {
 
 void G_Incl::Update() {
   char   buffer[16];
+  Double d;
   if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
-  sprintf(buffer,"%7.2f",((Spacecraft*)vehicle)->Inclination());
+  d = ((Spacecraft*)vehicle)->Inclination();
+  if (isnan(d)) d = 0.0;
+  sprintf(buffer,"%7.2f",d);
   GotoXY(x+5,y); Write(buffer);
   }
 
