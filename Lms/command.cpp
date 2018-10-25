@@ -135,6 +135,9 @@ Double CommandModule::Isp() {
   return 0;
   }
 
+void CommandModule::Ignition() {
+  }
+
 Double CommandModule::Inclination() {
   return inclination;
   }
@@ -411,6 +414,12 @@ Double CommandModule::rcsRotationFuelUsage() {
   return 0.01;
   }
   
+void CommandModule::Prograde(Double maxRate) {
+  }
+
+void CommandModule::Retrograde(Double maxRate) {
+  }
+
 void CommandModule::ProcessKey(Int32 key) {
   if (key == 'M') seq->MoveLm();
   panel->ProcessKey(key);

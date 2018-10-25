@@ -32,11 +32,24 @@
 	|  02  | Engine cutoff for apoapsis x 1000km       |
 	|  03  | Engine cutoff for deltav in reg1          |
 	|  04  | Distance to LM                            |
+	|  15  | Automated TLI                             |
 	|  20  | Compute circular orbit velocity           |
+	|  21  | Hold prograde attitude                    |
+	|  22  | Hold retrograde attitude                  |
 	|  30  | Hohmann Transfer                          |
 [TE]
 [=]
 [H2]	Programs
+[h1]	15
+	Input:
+[=]
+[tb]
+	| Reg1 | Altitude in Kilometers * 1000             |
+	| Reg2 | Angle to Moon * 100                       |
+[te]
+
+[--]
+
 [H1]	20
 	Input:
 [=]

@@ -59,6 +59,7 @@ class CommandModule : public Spacecraft {
     virtual void   Diameter(Double d);
     virtual Byte   EnginesLit();
     virtual Double FuelUsed();
+    virtual void   Ignition();
     virtual Double Inclination();
     virtual void   Ins();
     virtual Double Isp();
@@ -75,12 +76,14 @@ class CommandModule : public Spacecraft {
     virtual void   ParachuteDiameter(Double d);
     virtual Double PitchRate();
     virtual Double Periapsis();
+    virtual void   Prograde(Double maxRate);
     virtual Double Radius();
     virtual Double Radius(Double d);
     virtual Double RateOfClimb();
     virtual Double RateOfClimb(Double d);
     virtual Double RcsFuel();
     virtual Double RcsIsp();
+    virtual void   Retrograde(Double maxRate);
     virtual Double RollRate();
     virtual Double RetroModuleDryWeight();
     virtual Double RetroModuleDryWeight(Double d);

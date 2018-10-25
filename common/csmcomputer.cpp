@@ -164,9 +164,12 @@ void CsmComputer::Cycle() {
   Vector tvUp;
   Vector tvFr;
   Vector tvLf;
+  Vector crs;
+  Vector xvec;
   Double v1,v2;
   Vector pos;
   Vector vel;
+  Matrix m;
   if (pverb == 16) _doShow();
   if (running == 0) return;
   if (prog == 0) {
@@ -232,14 +235,50 @@ void CsmComputer::Cycle() {
       preg2 = a;
       }
     }
+  else if (prog == 15) {
+    csm->Prograde(3);
+    if (ram[0] == 1) {
+      d = (Moon->Longitude() + 360) - (csm->Longitude() + 360) - 360;
+      while (d >= 180) d -= 360;
+      while (d <= -180) d += 360;
+      preg3 = d*100;
+      if (fabs(d-ram[2]/100) < 2) {
+        if (d < ram[2]/100) {
+          csm->Ignition();
+          ram[0] = 2;
+          }
+        }
+      }
+    if (ram[0] == 2) {
+      pos = csm->Position() - csm->Orbiting()->Position();
+      vel = csm->Velocity() - csm->Orbiting()->Velocity();
+      g = csm->Orbiting()->Gravitation();
+      L = vel.Cross(pos);
+      v1 = vel.Length();
+      v2 = pos.Length();
+      E = ((v1 * v1) / 2) - (g/ v2);
+      s = -g/ (2 * E);
+      v1 = L.Length();
+      v2 = g* g;
+      e = sqrt(1+2*E*(v1 * v1)/(v2));
+      a = (s * (1 + e)) - csm->Orbiting()->Radius();
+      preg2 = a / 1000000;
+      if (preg2 >= preg1) {
+        csm->Cutoff();
+        running = 0;
+        }
+      }
+    }
   else if (prog == 20) {
     a = sqrt(csm->Orbiting()->Gravitation() / (preg1*1000 + csm->Orbiting()->Radius()));
     preg2 = a*10;
     running = 0;
     }
   else if (prog == 21) {
-    d = acos(csm->Velocity().Norm().Dot(csm->FaceFront())) * 180 / M_PI;
-GotoXY(1,28); printf("%.2f\n",d);
+    csm->Prograde(3);
+    }
+  else if (prog == 22) {
+    csm->Retrograde(3);
     }
   else if (prog == 30) {
     if (csm->Throttle() == 0) return;
@@ -339,6 +378,11 @@ void CsmComputer::_processRequest() {
     preg3 = reg3;
     if (prog == 3) {
       preg2 = preg1;
+      }
+    if (prog == 15) {
+      ram[0] = 1;
+      ram[1] = preg1;
+      ram[2] = preg2;
       }
     if (prog == 30) {
       ra = csm->Radius();

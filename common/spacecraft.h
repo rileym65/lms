@@ -61,6 +61,7 @@ class Spacecraft : public Vehicle {
     virtual Double    Periapsis();
     virtual Vector    Position();
     virtual Vector    Position(Vector v);
+    virtual void      Prograde(Double maxRate);
     virtual Double    Radius();
     virtual Double    Radius(Double d);
     virtual Double    RateOfClimb();
@@ -91,6 +92,7 @@ class Spacecraft : public Vehicle {
     virtual Double    RelMomEast();
     virtual Double    RelMomNorth();
     virtual Double    RelOrbitTime();
+    virtual void      Retrograde(Double maxRate);
     virtual Double    TargetLongitude();
     virtual Double    TargetLatitude();
     virtual Double    TargetMomEast();

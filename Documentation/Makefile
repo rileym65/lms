@@ -1,8 +1,8 @@
 # For creating Unix documentation
-#FLAGS = -u
+FLAGS = -u
 
 # For creating Windows documentation
-FLAGS = -w
+#FLAGS = -w
 
 all: csmcomputer.d lmcomputer.d panel.d keys.d
 	makedoc $(FLAGS) csmcomputer.d

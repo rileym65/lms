@@ -320,6 +320,40 @@ double arctan2(double Ey, double Ex) {
   return u;
   }
 
+void Spacecraft::Prograde(Double maxRate) {
+  Vector crs;
+  Vector vel;
+  Double d;
+  Matrix m;
+  vel = (velocity - orbiting->Velocity()).Norm();
+  d = (asin(faceFront.Dot(vel)) * 180 / M_PI);
+  if (d > 0) d = -d;
+  if (d > maxRate) d = maxRate;
+  if (d < -maxRate) d = -maxRate;
+  crs = vel.Cross(faceUp).Norm();
+  m = Matrix::Rotate(crs, d / GRAN);
+  faceUp = m.Transform(faceUp).Norm();
+  faceLeft = m.Transform(faceLeft).Norm();
+  faceFront = m.Transform(faceFront).Norm();
+  }
+
+void Spacecraft::Retrograde(Double maxRate) {
+  Vector crs;
+  Vector vel;
+  Double d;
+  Matrix m;
+  vel = (velocity - orbiting->Velocity()).Norm();
+  d = (asin(faceFront.Dot(vel)) * 180 / M_PI);
+  if (d < 0) d = -d;
+  if (d > maxRate) d = maxRate;
+  if (d < -maxRate) d = -maxRate;
+  crs = vel.Cross(faceUp).Norm();
+  m = Matrix::Rotate(crs, d / GRAN);
+  faceUp = m.Transform(faceUp).Norm();
+  faceLeft = m.Transform(faceLeft).Norm();
+  faceFront = m.Transform(faceFront).Norm();
+  }
+
 void Spacecraft::Ins() {
   Vector L;
 //  Double E;

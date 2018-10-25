@@ -351,6 +351,26 @@ Double CommandModule::Isp() {
   return 0;
   }
 
+void CommandModule::Ignition() {
+  if (!launchVehicleJettisoned) booster->Ignition();
+  else {
+    if (serviceModuleDryWeight > 0 && serviceModuleIsp > 0) {
+      throttle = 100;
+      clockBu = 0;
+      armed = false;
+      burn[numBurns].start = clockGe;
+      burn[numBurns].engine = 'S';
+      burn[numBurns].fuelUsed = Fuel();
+      numBurns++;
+      ignitionTime = clockGe;
+      ignitionApoapsis = apoapsis;
+      ignitionPeriapsis = periapsis;
+      ignitionEccentricity = eccentricity;
+      deltaV = 0;
+      }
+    }
+  }
+
 Double CommandModule::Inclination() {
   if (!launchVehicleJettisoned) return booster->Inclination();
   return inclination;
@@ -653,6 +673,16 @@ Double CommandModule::rcsRotationFuelUsage() {
   return 0.01;
   }
   
+void CommandModule::Prograde(Double maxRate) {
+  if (!launchVehicleJettisoned) booster->Prograde(maxRate);
+    else Spacecraft::Prograde(maxRate);
+  }
+
+void CommandModule::Retrograde(Double maxRate) {
+  if (!launchVehicleJettisoned) booster->Retrograde(maxRate);
+    else Spacecraft::Retrograde(maxRate);
+  }
+
 void CommandModule::ProcessKey(Int32 key) {
   Double *rcsFuel;
   Double rf;
