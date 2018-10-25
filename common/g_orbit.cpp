@@ -1,3 +1,4 @@
+#include <string.h>
 #include <math.h>
 #include "types.h"
 #include "gauge.h"
@@ -34,15 +35,18 @@ void G_Orbit::Update() {
   v1 = v1.Norm();
   v2 = vehicle->FaceUp().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
-  sprintf(buffer,"%6.1f",d);
+  if (isnan(d)) strcpy(buffer," ---.-");
+    else sprintf(buffer,"%6.1f",d);
   GotoXY(x+4,y+0); Write(buffer);
   v2 = vehicle->FaceFront().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
-  sprintf(buffer,"%6.1f",d);
+  if (isnan(d)) strcpy(buffer," ---.-");
+    else sprintf(buffer,"%6.1f",d);
   GotoXY(x+4,y+1); Write(buffer);
   v2 = vehicle->FaceLeft().Norm();
   d = acos(v1.Dot(v2)) * 180 / M_PI;
-  sprintf(buffer,"%6.1f",d);
+  if (isnan(d)) strcpy(buffer," ---.-");
+    else sprintf(buffer,"%6.1f",d);
   GotoXY(x+4,y+2); Write(buffer);
   }
 

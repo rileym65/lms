@@ -1,3 +1,4 @@
+#include <string.h>
 #include <math.h>
 #include "types.h"
 #include "gauge.h"
@@ -32,6 +33,8 @@ void G_Prograde::Update() {
   Vector yVec;
   Vector zVec;
   char buffer[40];
+  char num1[16];
+  char num2[16];
   Double dx,dy,dz;
   pos = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
   vel = (vehicle->Velocity() - vehicle->Orbiting()->Velocity()).Norm();
@@ -42,19 +45,31 @@ void G_Prograde::Update() {
   dx = asin(vehicle->FaceUp().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceUp().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceUp().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+3,y+1); sprintf(buffer,"%7.2f  %7.2f  ",dy,dx); Write(buffer);
+  if (isnan(dy)) strcpy(num1," ---.--");
+    else sprintf(num1,"%7.2f",dy);
+  if (isnan(dx)) strcpy(num2," ---.--");
+    else sprintf(num2,"%7.2f",dx);
+  GotoXY(x+3,y+1); sprintf(buffer,"%7s  %7s  ",num1,num2); Write(buffer);
   if (dz >= 0) Write("+"); else Write("-");
   /* ***** Face ***** */
   dx = asin(vehicle->FaceFront().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceFront().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceFront().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+3,y+2); sprintf(buffer,"%7.2f  %7.2f  ",dy,dx); Write(buffer);
+  if (isnan(dy)) strcpy(num1," ---.--");
+    else sprintf(num1,"%7.2f",dy);
+  if (isnan(dx)) strcpy(num2," ---.--");
+    else sprintf(num2,"%7.2f",dx);
+  GotoXY(x+3,y+2); sprintf(buffer,"%7s  %7s  ",num1,num2); Write(buffer);
   if (dz >= 0) Write("+"); else Write("-");
   /* ***** Left ***** */
   dx = asin(vehicle->FaceLeft().Dot(xVec)) * 180 / M_PI;
   dy = asin(vehicle->FaceLeft().Dot(yVec)) * 180 / M_PI;
   dz = asin(vehicle->FaceLeft().Dot(zVec)) * 180 / M_PI;
-  GotoXY(x+3,y+3); sprintf(buffer,"%7.2f  %7.2f  ",dy,dx); Write(buffer);
+  if (isnan(dy)) strcpy(num1," ---.--");
+    else sprintf(num1,"%7.2f",dy);
+  if (isnan(dx)) strcpy(num2," ---.--");
+    else sprintf(num2,"%7.2f",dx);
+  GotoXY(x+3,y+3); sprintf(buffer,"%7s  %7s  ",num1,num2); Write(buffer);
   if (dz >= 0) Write("+"); else Write("-");
   }
 
