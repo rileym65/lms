@@ -142,6 +142,9 @@ Double CommandModule::Inclination() {
   return inclination;
   }
 
+void CommandModule::Launch() {
+  }
+
 Booster* CommandModule::LaunchVehicle(Booster* lv) {
   launchVehicle = lv;
   launchVehicleJettisoned = false;

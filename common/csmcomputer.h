@@ -30,11 +30,15 @@ class CsmComputer {
     CommandModule* csm;
     Double altitude;
     Double velocity;
+    Double lastApo;
     void   _doShow();
     void   _reg1(Int32 i);
     void   _reg2(Int32 i);
     void   _reg3(Int32 i);
     void   _processRequest();
+    void   _program11();
+    Byte   _rollProgram();
+    Double _ascent(Double angle,Double maxRage,Double apo);
   public:
     CsmComputer(CommandModule* c);
     ~CsmComputer();

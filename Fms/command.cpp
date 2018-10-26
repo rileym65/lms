@@ -96,6 +96,22 @@ void CommandModule::Undock() {
   docked = 0;
   }
 
+void CommandModule::Launch() {
+  Vector vu;
+  Vector vl;
+  Vector vf;
+  booster->Ignition();
+  vu = booster->Position().Norm();
+  vf = Vector(-vu.Y(), vu.X(), 0).Norm();
+  vl = vf.Cross(vu);
+  booster->FaceUp(vu);
+  booster->FaceLeft(vl);
+  booster->FaceFront(vf);
+  booster->Velocity(vf.Scale(408));
+  launched = true;
+  clockLo = clockUt;
+  }
+
 void CommandModule::Cycle() {
   Double alt;
   Double air;

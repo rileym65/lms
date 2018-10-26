@@ -866,7 +866,7 @@ void cycle() {
     r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
     p2 = csm->Position();
     distanceTravelled += (p1 - p2).Length();
-    csm->RateOfClimb(r2-r1);
+//    csm->RateOfClimb(r2-r1);
     if (metabolicRate > 99) metabolicRate = 99;
     if (pilotLocation != PILOT_CSM) {
       softInjury += 0.000347222;
@@ -893,19 +893,7 @@ void cycle() {
   }
 
 void Launch() {
-  Vector vu;
-  Vector vl;
-  Vector vf;
-  booster->Ignition();
-  vu = booster->Position().Norm();
-  vf = Vector(-vu.Y(), vu.X(), 0).Norm();
-  vl = vf.Cross(vu);
-  booster->FaceUp(vu);
-  booster->FaceLeft(vl);
-  booster->FaceFront(vf);
-  booster->Velocity(vf.Scale(408));
-  launched = true;
-  clockLo = clockUt;
+  csm->Launch();
   }
 
 int main(int argc, char** argv) {

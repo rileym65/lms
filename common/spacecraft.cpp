@@ -532,6 +532,7 @@ void Spacecraft::Cycle() {
   Double g;
   Vector a;
   Vector p1,p2;
+  Double r1;
 
   if (rollRate != 0) {
     m = Matrix::Rotate(faceUp, rollRate / GRAN);
@@ -591,7 +592,9 @@ void Spacecraft::Cycle() {
 
   velocity = velocity + drag.Scale(1/GRAN);
   position = position + velocity.Scale(1/GRAN);
+  r1 = radius;
   Radius((position - orbiting->Position()).Length());
+  rateOfClimb = (radius - r1) * GRAN;
 
   if (currentVehicle == this) {
     p2 = position - orbiting->Position();

@@ -32,6 +32,7 @@
 	|  02  | Engine cutoff for apoapsis x 1000km       |
 	|  03  | Engine cutoff for deltav in reg1          |
 	|  04  | Distance to LM                            |
+	|  11  | Automated launch to orbit                 |
 	|  15  | Automated TLI                             |
 	|  20  | Compute circular orbit velocity           |
 	|  21  | Hold prograde attitude                    |
@@ -40,6 +41,16 @@
 [TE]
 [=]
 [H2]	Programs
+[h1]	11
+	Input:
+[=]
+[tb]
+	| Reg1 | Orbit altitude in kilometers * 10         |
+	| Reg2 | Launch azimuth. 90=east, 0=north          |
+[te]
+
+[--]
+
 [h1]	15
 	Input:
 [=]

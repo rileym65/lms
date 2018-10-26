@@ -63,6 +63,7 @@ class CommandModule : public Spacecraft {
     virtual Double Inclination();
     virtual void   Ins();
     virtual Double Isp();
+    virtual void   Launch();
     virtual Double Mass();
     virtual Double MaxRcsFuel();
     virtual Byte   NumEngines();

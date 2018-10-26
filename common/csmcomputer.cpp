@@ -152,6 +152,329 @@ void CsmComputer::_doShow() {
     }
   }
 
+Byte CsmComputer::_rollProgram() {
+  Double d;
+  if (fabs((Double)preg2/10.0 - ram[1]) < 0.05) {
+    csm->LaunchVehicle()->RollRate(0);
+    return -1;
+    ram[0] = 3;
+    }
+  d = ram[1] - ((Double)preg2/10.0);
+  if (d < -3) d = -3;
+  if (d > 3) d = 3;
+  ram[1] -= (d / GRAN);
+  csm->LaunchVehicle()->RollRate(d);
+  return 0;
+  }
+
+Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
+  Double alt;
+  Double d;
+  Double g;
+  Vector pos;
+  Vector vel;
+  Vector L;
+  Double v1,v2;
+  Double E;
+  Double s;
+  Double e;
+  Double a;
+  Double da;
+  pos = csm->Position() - csm->Orbiting()->Position();
+  alt = pos.Length() - csm->Orbiting()->Radius();
+
+  vel = csm->Velocity() - csm->Orbiting()->Velocity();
+  g = csm->Orbiting()->Gravitation();
+  L = vel.Cross(pos);
+  v1 = vel.Length();
+  v2 = pos.Length();
+  E = ((v1 * v1) / 2) - (g/ v2);
+  s = -g/ (2 * E);
+  v1 = L.Length();
+  v2 = g* g;
+  e = sqrt(1+2*E*(v1 * v1)/(v2));
+  a = (s * (1 + e)) - csm->Orbiting()->Radius();
+  da = a - lastApo;
+
+  if (csm->RateOfClimb() < 0) d = maxRate;
+  else if (lastApo + da * 20 * GRAN > apo * 100 &&
+      da > 0) d = -maxRate;
+  else {
+    pos = pos.Norm();
+    d = pos.Dot(csm->FaceUp());
+    d = acos(d) * 180 / M_PI;
+    d -= angle;
+    if (d < -maxRate) d = -maxRate;
+    if (d > maxRate) d = maxRate;
+    }
+  csm->LaunchVehicle()->PitchRate(d);
+  lastApo = a;
+  return alt;
+  }
+
+void CsmComputer::_program11() {
+  Vector pos;
+  Vector vel;
+  switch (mission->Vehicle()) {
+
+/* **************************************************************** */
+/* *****                    Mercury Redstone                  ***** */
+/* **************************************************************** */
+
+    case VEHICLE_MERCURY_REDSTONE:
+         if (ram[0] == 1) {
+           pos = csm->Position() - csm->Orbiting()->Position();
+           if (pos.Length() > csm->Orbiting()->Radius() + 100) {
+             ram[0] = 2;
+             }
+           }
+         if (ram[0] == 2) {
+           if (_rollProgram()) ram[0] = 3;
+           }
+         if (ram[0] == 3) {
+           _ascent((Double)preg1 / 10.0,1.0,0);
+           if (csm->Throttle() == 0) {
+             ram[0] = 4;
+             }
+           }
+         if (ram[0] == 4) {
+           csm->LaunchVehicle()->PitchRate(0);
+           running = 0;
+           }
+         break;
+
+/* **************************************************************** */
+/* *****                     Mercury Atlas                    ***** */
+/* **************************************************************** */
+
+    case VEHICLE_MERCURY_ATLAS:
+         /* ************************ */
+         /* ***** Clear launch tower */
+         /* ************************ */
+         if (ram[0] == 1) {
+           pos = csm->Position() - csm->Orbiting()->Position();
+           if (pos.Length() > csm->Orbiting()->Radius() + 100) {
+             ram[0] = 2;
+             }
+           }
+         /* ****************************************** */
+         /* ***** Perform roll to launch azimuth ***** */
+         /* ****************************************** */
+         if (ram[0] == 2) {
+           if (_rollProgram()) ram[0] = 3;
+           }
+         /* ********************************************************* */
+         /* ***** Pitch back to 20 degrees and hold until 8000m ***** */
+         /* ********************************************************* */
+         if (ram[0] == 3) {
+           if (_ascent(20,1.0,preg1) >= 8000) ram[0] = 4;
+           if (csm->Throttle() == 0) ram[0] = 4;
+           }
+         /* ********************************************* */
+         /* ***** Picth back to 65 degrees and hold ***** */
+         /* ********************************************* */
+         if (ram[0] == 4) {
+           _ascent(65,1.0,preg1);
+           if (csm->Throttle() == 0) {
+             ram[0] = 5;
+             ram[2] = clockGe;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+         /* ******************************************************* */
+         /* ***** Wait three seconds and then perform staging ***** */
+         /* ******************************************************* */
+         if (ram[0] == 5) {
+           if (clockGe - ram[2] > 3) {
+             csm->LaunchVehicle()->NextStage();
+             ram[0] = 6;
+             }
+           }
+         /* ************************ */
+         /* ***** Second stage ***** */
+         /* ************************ */
+         if (ram[0] == 6) {
+           _ascent(65,1.0,preg1);
+           if (csm->Velocity().Length() > ram[3]) {
+             ram[0] = 7;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           if (csm->Throttle() == 0) {
+             ram[0] = 7;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+
+         if (ram[0] == 7) {
+           csm->Cutoff();
+           running = 0;
+           }
+         break;
+
+/* **************************************************************** */
+/* *****                     Gemini Titan                     ***** */
+/* **************************************************************** */
+
+    case VEHICLE_GEMINI_TITAN:
+         /* ************************ */
+         /* ***** Clear launch tower */
+         /* ************************ */
+         if (ram[0] == 1) {
+           pos = csm->Position() - csm->Orbiting()->Position();
+           if (pos.Length() > csm->Orbiting()->Radius() + 100) {
+             ram[0] = 2;
+             }
+           }
+         /* ****************************************** */
+         /* ***** Perform roll to launch azimuth ***** */
+         /* ****************************************** */
+         if (ram[0] == 2) {
+           if (_rollProgram()) ram[0] = 3;
+           }
+         /* ********************************************************* */
+         /* ***** Pitch back to 20 degrees and hold until 8000m ***** */
+         /* ********************************************************* */
+         if (ram[0] == 3) {
+           if (_ascent(20,1.0,preg1) >= 8000) ram[0] = 4;
+           if (csm->Throttle() == 0) ram[0] = 4;
+           }
+         /* ********************************************* */
+         /* ***** Picth back to 65 degrees and hold ***** */
+         /* ********************************************* */
+         if (ram[0] == 4) {
+           _ascent(65,1.0,preg1);
+           if (csm->Throttle() == 0) {
+             ram[0] = 5;
+             ram[2] = clockGe;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+         /* ******************************************************* */
+         /* ***** Wait three seconds and then perform staging ***** */
+         /* ******************************************************* */
+         if (ram[0] == 5) {
+           if (clockGe - ram[2] > 3) {
+             csm->LaunchVehicle()->NextStage();
+             ram[0] = 6;
+             }
+           }
+         /* ************************ */
+         /* ***** Second stage ***** */
+         /* ************************ */
+         if (ram[0] == 6) {
+           _ascent(65,1.0,preg1);
+           if (csm->Velocity().Length() > ram[3]) {
+             ram[0] = 7;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           if (csm->Throttle() == 0) {
+             ram[0] = 7;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+
+         if (ram[0] == 7) {
+           csm->Cutoff();
+           running = 0;
+           }
+         break;
+
+/* **************************************************************** */
+/* *****                     Apollo SaturnV                   ***** */
+/* **************************************************************** */
+
+    case VEHICLE_APOLLO:
+    case VEHICLE_APOLLO_J:
+    case VEHICLE_APOLLO_SATURN_V:
+         /* ************************ */
+         /* ***** Clear launch tower */
+         /* ************************ */
+         if (ram[0] == 1) {
+           pos = csm->Position() - csm->Orbiting()->Position();
+           if (pos.Length() > csm->Orbiting()->Radius() + 200) {
+             ram[0] = 2;
+             }
+           }
+         /* ****************************************** */
+         /* ***** Perform roll to launch azimuth ***** */
+         /* ****************************************** */
+         if (ram[0] == 2) {
+           if (_rollProgram()) ram[0] = 3;
+           }
+         /* ********************************************************* */
+         /* ***** Pitch back to 20 degrees and hold until 8000m ***** */
+         /* ********************************************************* */
+         if (ram[0] == 3) {
+           if (_ascent(20,1.0,preg1) >= 8000) ram[0] = 4;
+           if (csm->Throttle() == 0) ram[0] = 4;
+           }
+         /* ********************************************* */
+         /* ***** Picth back to 65 degrees and hold ***** */
+         /* ********************************************* */
+         if (ram[0] == 4) {
+           _ascent(64,1.0,preg1);
+           if (csm->Throttle() == 0) {
+             ram[0] = 5;
+             ram[2] = clockGe;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+         /* ******************************************************* */
+         /* ***** Wait three seconds and then perform staging ***** */
+         /* ******************************************************* */
+         if (ram[0] == 5) {
+           if (clockGe - ram[2] > 3) {
+             csm->LaunchVehicle()->NextStage();
+             ram[0] = 6;
+             }
+           }
+         /* ************************ */
+         /* ***** Second stage ***** */
+         /* ************************ */
+         if (ram[0] == 6) {
+           _ascent(64,1.0,preg1);
+           if (csm->Velocity().Length() > ram[3]) {
+             ram[0] = 9;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           if (csm->Throttle() == 0) {
+             ram[0] = 7;
+             csm->LaunchVehicle()->PitchRate(0);
+             ram[2] = clockGe;
+             }
+           }
+         /* ******************************************************* */
+         /* ***** Wait three seconds and then perform staging ***** */
+         /* ******************************************************* */
+         if (ram[0] == 7) {
+           if (clockGe - ram[2] > 3) {
+             csm->LaunchVehicle()->NextStage();
+             ram[0] = 8;
+             }
+           }
+         /* *********************** */
+         /* ***** Third stage ***** */
+         /* *********************** */
+         if (ram[0] == 8) {
+           _ascent(65,1.0,preg1);
+           if (csm->Velocity().Length() > ram[3]) {
+             ram[0] = 9;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           if (csm->Throttle() == 0) {
+             ram[0] = 9;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+
+         if (ram[0] == 9) {
+           csm->Cutoff();
+           running = 0;
+           }
+         break;
+    }
+  }
+
 void CsmComputer::Cycle() {
   Double a;
   Double E;
@@ -235,6 +558,7 @@ void CsmComputer::Cycle() {
       preg2 = a;
       }
     }
+  else if (prog == 11) _program11();
   else if (prog == 15) {
     csm->Prograde(3);
     if (ram[0] == 1) {
@@ -378,6 +702,11 @@ void CsmComputer::_processRequest() {
     preg3 = reg3;
     if (prog == 3) {
       preg2 = preg1;
+      }
+    if (prog == 11) {
+      ram[0] = 1;
+      ram[1] = 90;
+      ram[3] = sqrt(csm->Orbiting()->Gravitation() / (preg1*100 + csm->Orbiting()->Radius()));
       }
     if (prog == 15) {
       ram[0] = 1;
