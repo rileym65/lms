@@ -489,6 +489,7 @@ void CsmComputer::Cycle() {
   Vector tvLf;
   Vector crs;
   Vector xvec;
+  Vector vec1,vec2;
   Double v1,v2;
   Vector pos;
   Vector vel;
@@ -593,16 +594,30 @@ void CsmComputer::Cycle() {
         }
       }
     }
+  else if (prog == 17) {
+    csm->Prograde(3);
+    if (ram[0] == 1) {
+      d = Moon->Longitude() - csm->Longitude();
+      while (d <= -180) d += 360;
+      while (d >= 180) d -= 360;
+      if (fabs(d) < 0.2) {
+        csm->Ignition();
+        ram[0] = 2;
+        }
+      }
+    if (ram[0] == 2) {
+      if (csm->Throttle() == 0) return;
+      preg2 = preg1 - csm->DeltaV();
+      if (preg2 <= 0) {
+        csm->Cutoff();
+        running = 0;
+        }
+      }
+    }
   else if (prog == 20) {
     a = sqrt(csm->Orbiting()->Gravitation() / (preg1*1000 + csm->Orbiting()->Radius()));
     preg2 = a*10;
     running = 0;
-    }
-  else if (prog == 21) {
-    csm->Prograde(3);
-    }
-  else if (prog == 22) {
-    csm->Retrograde(3);
     }
   else if (prog == 30) {
     if (csm->Throttle() == 0) return;
@@ -622,6 +637,12 @@ void CsmComputer::Cycle() {
         running = 0;
         }
       }
+    }
+  else if (prog == 31) {
+    csm->Prograde(3);
+    }
+  else if (prog == 32) {
+    csm->Retrograde(3);
     }
   }
 
@@ -712,6 +733,10 @@ void CsmComputer::_processRequest() {
       ram[0] = 1;
       ram[1] = preg1;
       ram[2] = preg2;
+      }
+    if (prog == 17) {
+      preg2 = preg1;
+      ram[0] = 1;
       }
     if (prog == 30) {
       ra = csm->Radius();

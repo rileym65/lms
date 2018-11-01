@@ -34,10 +34,11 @@
 	|  04  | Distance to LM                            |
 	|  11  | Automated launch to orbit                 |
 	|  15  | Automated TLI                             |
+	|  17  | Automated TEI                             |
 	|  20  | Compute circular orbit velocity           |
-	|  21  | Hold prograde attitude                    |
-	|  22  | Hold retrograde attitude                  |
 	|  30  | Hohmann Transfer                          |
+	|  31  | Hold prograde attitude                    |
+	|  32  | Hold retrograde attitude                  |
 [TE]
 [=]
 [H2]	Programs
@@ -57,6 +58,15 @@
 [tb]
 	| Reg1 | Altitude in Kilometers * 1000             |
 	| Reg2 | Angle to Moon * 100                       |
+[te]
+
+[--]
+
+[h1]	17
+	Input:
+[=]
+[tb]
+	| Reg1 | DeltaV                                    |
 [te]
 
 [--]
