@@ -99,6 +99,7 @@ void Records::Save() {
 
   file = fopen("records.txt","w");
   fprintf(file,"  Longest Mission         : %s%s",ClockToString(buffer,LongestMission),LE);
+  fprintf(file,"  Longest Lunar Mission   : %s%s",ClockToString(buffer,LongestLunarMission),LE);
   fprintf(file,"  Highest Velocity        : %9.2fm/s%s",HighestVelocity,LE);
   fprintf(file,"  Farthest From Earth     : %9.2fkm%s",FarthestFromEarth/1000.0,LE);
   fprintf(file,"  Distance Travelled      : %9.2fkm%s",DistanceTravelled/1000.0,LE);
