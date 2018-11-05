@@ -19,6 +19,8 @@ class CsmComputer {
     Int32 preg1;
     Int32 preg2;
     Int32 preg3;
+    Double eventClock;
+    char  eventMode;
     Byte  running;
     char dprog[4];
     char dnoun[4];
@@ -39,6 +41,7 @@ class CsmComputer {
     void   _program11();
     Byte   _rollProgram();
     Double _ascent(Double angle,Double maxRage,Double apo);
+    Double _periapsis();
   public:
     CsmComputer(CommandModule* c);
     ~CsmComputer();
@@ -50,6 +53,7 @@ class CsmComputer {
     virtual char* Reg3();
     virtual Byte  Running();
     virtual char* Verb();
+    virtual char  EntryMode();
     virtual void ProcessKey(Int32 key);
     virtual Int8 Load(FILE* file);
     virtual void Save(FILE* file);

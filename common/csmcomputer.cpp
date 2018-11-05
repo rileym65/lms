@@ -13,6 +13,8 @@ CsmComputer::CsmComputer(CommandModule* c) {
   velocity = 0;
   noun = 0;
   verb = 0;
+  eventClock = 0;
+  eventMode = 'S';
   _reg1(0);
   _reg2(0);
   _reg3(0);
@@ -149,6 +151,16 @@ void CsmComputer::_doShow() {
          _reg2(d);
          _reg3(csm->FuelUsed());
          break;
+    case 16:
+         i = eventClock;
+         j = i / 3600;
+         i -= (j * 3600);
+         _reg1(j);
+         j = i / 60;
+         i -= (j * 60);
+         _reg2(j);
+         _reg3(i);
+         break;
     }
   }
 
@@ -210,6 +222,29 @@ Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
   csm->LaunchVehicle()->PitchRate(d);
   lastApo = a;
   return alt;
+  }
+
+Double CsmComputer::_periapsis() {
+  Double g;
+  Vector pos;
+  Vector vel;
+  Vector L;
+  Double v1,v2;
+  Double E;
+  Double s;
+  Double e;
+  pos = csm->Position() - csm->Orbiting()->Position();
+  vel = csm->Velocity() - csm->Orbiting()->Velocity();
+  g = csm->Orbiting()->Gravitation();
+  L = vel.Cross(pos);
+  v1 = vel.Length();
+  v2 = pos.Length();
+  E = ((v1 * v1) / 2) - (g/ v2);
+  s = -g/ (2 * E);
+  v1 = L.Length();
+  v2 = g* g;
+  e = sqrt(1+2*E*(v1 * v1)/(v2));
+  return (s * (1 - e));
   }
 
 void CsmComputer::_program11() {
@@ -495,6 +530,11 @@ void CsmComputer::Cycle() {
   Vector vel;
   Matrix m;
   if (pverb == 16) _doShow();
+  if (eventMode == 'U') eventClock += (1/GRAN);
+  if (eventMode == 'D') {
+    eventClock -= (1/GRAN);
+    if (eventClock < 0) eventClock = 0;
+    }
   if (running == 0) return;
   if (prog == 0) {
     running = 0;
@@ -594,6 +634,43 @@ void CsmComputer::Cycle() {
         }
       }
     }
+
+  else if (prog == 16) {
+    csm->Retrograde(3);
+    if (ram[0] == 1) {
+      d = (csm->Radius() - csm->Orbiting()->Radius()) -
+          (_periapsis() - csm->Orbiting()->Radius());
+      if (d < 50000) {
+        csm->Ignition();
+        ram[0] = 2;
+        }
+      }
+    if (ram[0] == 2) {
+      d = (_periapsis() - csm->Orbiting()->Radius()) / 1000.0;
+      if (d <= preg1) {
+        csm->Cutoff();
+        ram[0] = 3;
+        }
+      }
+    if (ram[0] == 3) {
+      d = (csm->Radius() - csm->Orbiting()->Radius()) / 1000.0;
+      if (d < preg1+1 && csm->RateOfClimb() >= 0) {
+        csm->Ignition();
+        ram[0] = 4;
+        a = sqrt(csm->Orbiting()->Gravitation() / csm->Radius());
+        preg2 = a;
+        ram[1] = a;
+        }
+      }
+    if (ram[0] == 4) {
+      d = (csm->Velocity() - csm->Orbiting()->Velocity()).Length();
+      if (d <= ram[1]) {
+        csm->Cutoff();
+        running = 0;
+        }
+      }
+    }
+
   else if (prog == 17) {
     csm->Prograde(3);
     if (ram[0] == 1) {
@@ -674,6 +751,10 @@ char* CsmComputer::Verb() {
   return dverb;
   }
 
+char CsmComputer::EntryMode() {
+  return entryMode;
+  }
+
 void CsmComputer::_processRequest() {
   Double d;
   Double atx,via,vfb,vtxa,vtxb,dva,dvb;
@@ -682,6 +763,9 @@ void CsmComputer::_processRequest() {
   pverb = verb;
   if (verb == 0) {
     running = 0;
+    }
+  if (verb == 6) {
+    _doShow();
     }
   if (verb == 21) {
     entryMode = '1';
@@ -694,6 +778,14 @@ void CsmComputer::_processRequest() {
   if (verb == 23) {
     entryMode = '3';
     strcpy(dreg3,"+_____");
+    }
+  if (verb == 24) {
+    entryMode = '1';
+    strcpy(dreg1,"+_____");
+    }
+  if (verb == 25) {
+    entryMode = '1';
+    strcpy(dreg1,"+_____");
     }
   if (verb == 30) {
     csm->Roll(0);
@@ -734,6 +826,9 @@ void CsmComputer::_processRequest() {
       ram[1] = preg1;
       ram[2] = preg2;
       }
+    if (prog == 16) {
+      ram[0] = 1;
+      }
     if (prog == 17) {
       preg2 = preg1;
       ram[0] = 1;
@@ -757,6 +852,21 @@ void CsmComputer::_processRequest() {
     pverb = 16;
     pnoun = 0;
     }
+  if (verb == 41) {
+    eventClock = 0;
+    }
+  if (verb == 42) {
+    eventClock = (reg1 * 3600) + (reg2 * 60) + reg3;
+    }
+  if (verb == 43) {
+    eventMode = 'U';
+    }
+  if (verb == 44) {
+    eventMode = 'D';
+    }
+  if (verb == 45) {
+    eventMode = 'S';
+    }
   }
 
 void CsmComputer::ProcessKey(Int32 key) {
@@ -774,6 +884,48 @@ void CsmComputer::ProcessKey(Int32 key) {
     entryMode = 'N';
     strcpy(dnoun,"__");
     }
+  if (key == 'c' && entryMode != '-') {
+    if (entryMode == 'P') strcpy(dprog,"__");
+    if (entryMode == 'V') strcpy(dverb,"__");
+    if (entryMode == 'N') strcpy(dnoun,"__");
+    if (entryMode == '1') strcpy(dreg1,"+_____");
+    if (entryMode == '2') strcpy(dreg2,"+_____");
+    if (entryMode == '3') strcpy(dreg3,"+_____");
+    }
+
+  if (key == 13 && entryMode != '-') {
+    if (entryMode == 'P') buffer=dprog;
+    if (entryMode == 'V') buffer=dverb;
+    if (entryMode == 'N') buffer=dnoun;
+    if (entryMode == '1') buffer=dreg1;
+    if (entryMode == '2') buffer=dreg2;
+    if (entryMode == '3') buffer=dreg3;
+    p = -1;
+    for (i=0; i<strlen(buffer); i++)
+      if (buffer[i] == '_') p = i;
+    if (p < 0) {
+      if (entryMode == 'P') prog = atoi(dprog);
+      if (entryMode == 'V') verb = atoi(dverb);
+      if (entryMode == '1') reg1 = atoi(dreg1);
+      if (entryMode == '2') reg2 = atoi(dreg2);
+      if (entryMode == '3') reg3 = atoi(dreg3);
+      if (entryMode == 'N') noun = atoi(dnoun);
+      if (verb == 24 && entryMode == '1') {
+        entryMode = '2';
+        strcpy(dreg2,"+_____");
+        }
+      else if (verb == 25 && entryMode == '1') {
+        entryMode = '2';
+        strcpy(dreg2,"+_____");
+        }
+      else if (verb == 25 && entryMode == '2') {
+        entryMode = '3';
+        strcpy(dreg3,"+_____");
+        }
+      else entryMode = '-';
+      }
+    }
+
   if (key >= '0' && key <= '9' && entryMode != '-') {
     p = -1;
     if (entryMode == 'P') buffer=dprog;
@@ -793,7 +945,19 @@ void CsmComputer::ProcessKey(Int32 key) {
         if (entryMode == '2') reg2 = atoi(dreg2);
         if (entryMode == '3') reg3 = atoi(dreg3);
         if (entryMode == 'N') noun = atoi(dnoun);
-        entryMode = '-';
+        if (verb == 24 && entryMode == '1') {
+          entryMode = '2';
+          strcpy(dreg2,"+_____");
+          }
+        else if (verb == 25 && entryMode == '1') {
+          entryMode = '2';
+          strcpy(dreg2,"+_____");
+          }
+        else if (verb == 25 && entryMode == '2') {
+          entryMode = '3';
+          strcpy(dreg3,"+_____");
+          }
+        else entryMode = '-';
         }
       }
     }
@@ -842,6 +1006,8 @@ Int8 CsmComputer::Load(FILE* file) {
     else if (startsWith(pline,"preg3 ")) preg3 = atoi(nw(pline));
     else if (startsWith(pline,"running ")) running = atoi(nw(pline));
     else if (startsWith(pline,"entrymode ")) entryMode = (nw(pline))[0];
+    else if (startsWith(pline,"eventclock ")) eventClock = atof(nw(pline));
+    else if (startsWith(pline,"eventmode ")) eventMode = (nw(pline))[0];
     else if (startsWith(pline,"ram")) {
       addr = atoi(pline+3);
       ram[addr] = atof(nw(pline));
@@ -872,6 +1038,8 @@ void CsmComputer::Save(FILE* file) {
   fprintf(file,"    PReg3 %d%s",preg3,LE);
   fprintf(file,"    Running %d%s",running,LE);
   fprintf(file,"    EntryMode %c%s",entryMode,LE);
+  fprintf(file,"    EventClock %f%s",eventClock,LE);
+  fprintf(file,"    EventMode %c%s",eventMode,LE);
   for (i=0; i<256; i++)
     if (ram[i] != 0) fprintf(file,"    Ram%d %f%s",i,ram[i],LE);
   fprintf(file,"    }%s",LE);

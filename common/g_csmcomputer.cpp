@@ -36,6 +36,7 @@ void G_CsmComputer::Update() {
   if ((vehicle->Type() & VT_COMMAND) == 0) return;
   computer = ((CommandModule*)vehicle)->Computer();
   GotoXY(x+0, y+0); Write((computer->Running()) ? "R" : " ");
+  GotoXY(x+0, y+1); Write((computer->EntryMode() == '-') ? " " : "I");
   GotoXY(x+4, y+1); Write(computer->Prog());
   GotoXY(x+1, y+3); Write(computer->Verb());
   GotoXY(x+4, y+3); Write(computer->Noun());

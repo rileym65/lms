@@ -1,12 +1,21 @@
 [TB]
 	| Verb | Noun | Function                            |
 	|  00  |  --  | Enter idle mode                     |
+	|  06  |  ??  | Show data                           |
+	|  16  |  ??  | Monitor data                        |
 	|  21  |  --  | Enter value for register 1          |
 	|  22  |  --  | Enter value for register 2          |
 	|  23  |  --  | Enter value for register 3          |
+	|  24  |  --  | Enter value for reg1, reg2          |
+	|  25  |  --  | Enter value for reg1, reg2, reg3    |
 	|  30  |  --  | Set gimbal angles to zero           |
 	|  31  |  --  | Set gimbal angles to reg1,reg2,reg3 |
 	|  37  |  --  | Run program specified by noun       |
+	|  41  |  --  | Clear event clock                   |
+	|  42  |  --  | Set event clock to Reg1,Reg2,Reg3   |
+	|  43  |  --  | Start event clock in up mode        |
+	|  44  |  --  | Start event clock in down mode      |
+	|  45  |  --  | Stop event clock                    |
 [TE]
 [=]
 [TB]
@@ -24,6 +33,7 @@
 	|  16  |  10  | Per HH      | Per MM       | Per SS     |
 	|  16  |  12  | tarAlt      | TarLong      | TarLat     |
 	|  16  |  14  | Main DeltaV | Rcs DeltaV   | Fuel flow  |
+	|  16  |  16  | Event HH    | Event MM     | Event SS   |
 [TE]
 [=]
 [TB]
@@ -34,6 +44,7 @@
 	|  04  | Distance to LM                            |
 	|  11  | Automated launch to orbit                 |
 	|  15  | Automated TLI                             |
+	|  16  | Automated LOI                             |
 	|  17  | Automated TEI                             |
 	|  20  | Compute circular orbit velocity           |
 	|  30  | Hohmann Transfer                          |
@@ -58,6 +69,14 @@
 [tb]
 	| Reg1 | Altitude in Kilometers * 1000             |
 	| Reg2 | Angle to Moon * 100                       |
+[te]
+
+[--]
+
+[h1]	16
+[=]
+[tb]
+	| Reg1 | Desired orbit altitude                    |
 [te]
 
 [--]
