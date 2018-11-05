@@ -12,14 +12,14 @@ Gauge Fuel 14,19
 Box 25,1,55,5
 Gauge Altitude 27,2
 Gauge Roc 27,3
-Gauge Velocity 41,2
-Gauge Accel 41,3
+Gauge Velocity 42,2
+Gauge Accel 42,3
 Gauge Apoapsis 27,6
 Gauge Periapsis 27,7
 Gauge Ground 42,8
 Gauge ClockOT 27,8
 Gauge RightAscension 27,4
-Gauge Declination 41,4
+Gauge Declination 42,4
 Box 27,9,53,24
 Gauge MultiAxis 28,10
 Box 1,18,13,24
