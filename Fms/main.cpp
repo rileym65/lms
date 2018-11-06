@@ -682,8 +682,6 @@ void cycle() {
   Vector vl;
   Vector vf;
   Vector p,v;
-  Double r1;
-  Double r2;
   Vector p1,p2;
   Vector lp1, lp2;
   clockUt++;
@@ -765,7 +763,6 @@ void cycle() {
         clockTb++;
         }
       }
-    r1 = (csm->Position() - csm->Orbiting()->Position()).Length();
     p1 = csm->Position();
     for (i=0; i<GRAN; i++) {
       Moon->Cycle(GRAN);
@@ -863,10 +860,8 @@ void cycle() {
       }
     
  
-    r2 = (csm->Position() - csm->Orbiting()->Position()).Length();
     p2 = csm->Position();
     distanceTravelled += (p1 - p2).Length();
-//    csm->RateOfClimb(r2-r1);
     if (metabolicRate > 99) metabolicRate = 99;
     if (pilotLocation != PILOT_CSM) {
       softInjury += 0.000347222;
@@ -937,6 +932,8 @@ int main(int argc, char** argv) {
     fgets(buffer,31,stdin);
     v = atoi(buffer);
     if (v == 1) {
+      mission->Name("Mercury");
+      mission->Description("Mercury/Redstone");
       mission->Vehicle(VEHICLE_MERCURY_REDSTONE);
       mission->Rover(0);
       mission->Lsep(0);
@@ -946,6 +943,8 @@ int main(int argc, char** argv) {
       mission->RcsFuel(0);
       }
     if (v == 2) {
+      mission->Name("Mercury");
+      mission->Description("Mercury/Atlas");
       mission->Vehicle(VEHICLE_MERCURY_ATLAS);
       mission->Rover(0);
       mission->Lsep(0);
@@ -955,6 +954,8 @@ int main(int argc, char** argv) {
       mission->RcsFuel(0);
       }
     if (v == 3) {
+      mission->Name("Gemini");
+      mission->Description("Gemini/Titan");
       mission->Vehicle(VEHICLE_GEMINI_TITAN);
       mission->Rover(0);
       mission->Lsep(0);
@@ -964,6 +965,8 @@ int main(int argc, char** argv) {
       mission->RcsFuel(0);
       }
     if (v == 4) {
+      mission->Name("Apollo");
+      mission->Description("Apollo/Saturn IB");
       mission->Vehicle(VEHICLE_APOLLO_SATURN_IB);
       mission->Rover(0);
       mission->Lsep(0);
@@ -973,6 +976,8 @@ int main(int argc, char** argv) {
       mission->RcsFuel(0);
       }
     if (v == 5) {
+      mission->Name("Apollo");
+      mission->Description("Apollo/Saturn V");
       mission->Vehicle(VEHICLE_APOLLO_SATURN_V);
       mission->Rover(0);
       mission->Lsep(0);
@@ -982,12 +987,18 @@ int main(int argc, char** argv) {
       mission->RcsFuel(0);
       }
     if (v == 6) {
+      mission->Name("Apollo");
+      mission->Description("Apollo/Saturn V");
       mission->Vehicle(VEHICLE_APOLLO);
       }
     if (v == 7) {
+      mission->Name("Apollo");
+      mission->Description("Apollo/Saturn V");
       mission->Vehicle(VEHICLE_APOLLO_J);
       }
     if (v == 8) {
+      mission->Name("Apollo");
+      mission->Description("Apollo/Saturn V");
       mission->Vehicle(VEHICLE_APOLLO_MKII);
       }
     init(v);

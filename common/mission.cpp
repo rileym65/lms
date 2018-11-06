@@ -129,7 +129,7 @@ char* Mission::Description() {
   return description;
   }
 
-char* Mission::Description(char* s) {
+char* Mission::Description(const char* s) {
   if (description != NULL) free(description);
   description = (char*)malloc(strlen(s) + 1);
   strcpy(description, s);
@@ -160,7 +160,7 @@ char* Mission::Name() {
   return name;
   }
 
-char* Mission::Name(char* s) {
+char* Mission::Name(const char* s) {
   if (name != NULL) free(name);
   name = (char*)malloc(strlen(s) + 1);
   strcpy(name, s);

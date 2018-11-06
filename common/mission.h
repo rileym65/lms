@@ -49,14 +49,14 @@ class Mission {
     Double DescentFuel();
     Double DescentFuel(Double d);
     char*  Description();
-    char*  Description(char* s);
+    char*  Description(const char* s);
     Lander* Model();
     Byte   Laser();
     Byte   Laser(Byte b);
     Byte   Lsep();
     Byte   Lsep(Byte b);
     char*  Name();
-    char*  Name(char* s);
+    char*  Name(const char* s);
     Double PrimaryLatitude();
     Double PrimaryLatitude(Double d);
     Double PrimaryLongitude();
