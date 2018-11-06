@@ -873,9 +873,6 @@ void CsmComputer::ProcessKey(Int32 key) {
   UInt8 i;
   Int8 p;
   char *buffer;
-  if (key == 'p' && entryMode == '-') {
-    _processRequest();
-    }
   if (key == 'v' && entryMode == '-') {
     entryMode = 'V';
     strcpy(dverb,"__");
@@ -883,6 +880,16 @@ void CsmComputer::ProcessKey(Int32 key) {
   if (key == 'n' && entryMode == '-') {
     entryMode = 'N';
     strcpy(dnoun,"__");
+    }
+  if (key == 'n' && entryMode == 'V') {
+    p = -1;
+    for (i=0; i<strlen(dverb); i++)
+      if (dverb[i] == '_') p = i;
+    if (p < 0) {
+      verb = atoi(dverb);
+      strcpy(dnoun,"__");
+      entryMode = 'N';
+      }
     }
   if (key == 'c' && entryMode != '-') {
     if (entryMode == 'P') strcpy(dprog,"__");
@@ -893,7 +900,7 @@ void CsmComputer::ProcessKey(Int32 key) {
     if (entryMode == '3') strcpy(dreg3,"+_____");
     }
 
-  if (key == 13 && entryMode != '-') {
+  if ((key == 13 || key == 10 || key == 'e') && entryMode != '-') {
     if (entryMode == 'P') buffer=dprog;
     if (entryMode == 'V') buffer=dverb;
     if (entryMode == 'N') buffer=dnoun;
@@ -910,7 +917,11 @@ void CsmComputer::ProcessKey(Int32 key) {
       if (entryMode == '2') reg2 = atoi(dreg2);
       if (entryMode == '3') reg3 = atoi(dreg3);
       if (entryMode == 'N') noun = atoi(dnoun);
-      if (verb == 24 && entryMode == '1') {
+      if (entryMode == 'V' || entryMode == 'N') {
+        entryMode = '-';
+        _processRequest();
+        }
+      else if (verb == 24 && entryMode == '1') {
         entryMode = '2';
         strcpy(dreg2,"+_____");
         }
@@ -938,27 +949,27 @@ void CsmComputer::ProcessKey(Int32 key) {
       if (p == -1 && buffer[i] == '_') p = i;
     if (p >= 0) {
       buffer[p] = key;
-      if ((UInt8)p == strlen(buffer) - 1) {
-        if (entryMode == 'P') prog = atoi(dprog);
-        if (entryMode == 'V') verb = atoi(dverb);
-        if (entryMode == '1') reg1 = atoi(dreg1);
-        if (entryMode == '2') reg2 = atoi(dreg2);
-        if (entryMode == '3') reg3 = atoi(dreg3);
-        if (entryMode == 'N') noun = atoi(dnoun);
-        if (verb == 24 && entryMode == '1') {
-          entryMode = '2';
-          strcpy(dreg2,"+_____");
-          }
-        else if (verb == 25 && entryMode == '1') {
-          entryMode = '2';
-          strcpy(dreg2,"+_____");
-          }
-        else if (verb == 25 && entryMode == '2') {
-          entryMode = '3';
-          strcpy(dreg3,"+_____");
-          }
-        else entryMode = '-';
-        }
+//      if ((UInt8)p == strlen(buffer) - 1) {
+//        if (entryMode == 'P') prog = atoi(dprog);
+//        if (entryMode == 'V') verb = atoi(dverb);
+//        if (entryMode == '1') reg1 = atoi(dreg1);
+//        if (entryMode == '2') reg2 = atoi(dreg2);
+//        if (entryMode == '3') reg3 = atoi(dreg3);
+//        if (entryMode == 'N') noun = atoi(dnoun);
+//        if (verb == 24 && entryMode == '1') {
+//          entryMode = '2';
+//          strcpy(dreg2,"+_____");
+//          }
+//        else if (verb == 25 && entryMode == '1') {
+//          entryMode = '2';
+//          strcpy(dreg2,"+_____");
+//          }
+//        else if (verb == 25 && entryMode == '2') {
+//          entryMode = '3';
+//          strcpy(dreg3,"+_____");
+//          }
+//        else entryMode = '-';
+//        }
       }
     }
   if (key == '-' && entryMode != '-') {
