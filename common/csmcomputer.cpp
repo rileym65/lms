@@ -873,6 +873,9 @@ void CsmComputer::ProcessKey(Int32 key) {
   UInt8 i;
   Int8 p;
   char *buffer;
+  if (key == 'p') {
+    running = (running == 0) ? 0xff : 0;
+    }
   if (key == 'v' && entryMode == '-') {
     entryMode = 'V';
     strcpy(dverb,"__");
