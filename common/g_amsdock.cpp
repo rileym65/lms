@@ -116,19 +116,19 @@ void G_AmsDock::Update() {
   px = px * pos.Length();
   py = py * pos.Length();
 
-  if (px < -3.5) lastPosX = 4;
-  else if (px < -2.5) lastDockingRadarPosX = 3;
-  else if (px < -1.5) lastDockingRadarPosX = 2;
-  else if (px < -0.5) lastDockingRadarPosX = 1;
-  else if (px > 3.5) lastDockingRadarPosX = -4;
-  else if (px > 2.5) lastDockingRadarPosX = -3;
-  else if (px > 1.5) lastDockingRadarPosX = -2;
-  else if (px > 0.5) lastDockingRadarPosX = -1;
+  if (px <= -2.5) lastDockingRadarPosX = 4;
+  else if (px < -1.5) lastDockingRadarPosX = 3;
+  else if (px < -0.5) lastDockingRadarPosX = 2;
+  else if (px < -0.4) lastDockingRadarPosX = 1;
+  else if (px > 2.5) lastDockingRadarPosX = -4;
+  else if (px > 1.5) lastDockingRadarPosX = -3;
+  else if (px > 0.5) lastDockingRadarPosX = -2;
+  else if (px > 0.4) lastDockingRadarPosX = -1;
   else lastDockingRadarPosX = 0;
-  if (py < -1.5) lastDockingRadarPosY = -2;
-  else if (py < -0.5) lastDockingRadarPosY = -1;
-  else if (py > 1.5) lastDockingRadarPosY = 2;
-  else if (py > 0.5) lastDockingRadarPosY = 1;
+  if (py < -0.5) lastDockingRadarPosY = -2;
+  else if (py < -0.4) lastDockingRadarPosY = -1;
+  else if (py > 0.5) lastDockingRadarPosY = 2;
+  else if (py > 0.4) lastDockingRadarPosY = 1;
   else lastDockingRadarPosY = 0;
 
   GotoXY(x+6+lastDockingRadarRoll, y+2); Write("v");
