@@ -61,8 +61,12 @@ void CommandModule::Ins() {
         }
       }
     }
-  if (orbiting == Moon && clockMSoi == 0) clockMSoi = clockGe;
-  if (orbiting == Earth && clockESoi == 0 && clockMSoi != 0) clockESoi = clockGe;
+  if (orbiting == Moon && clockMSoi == 0) {
+    clockMSoi = clockGe;
+    }
+  if (orbiting == Earth && clockESoi == 0 && clockMSoi != 0) {
+    clockESoi = clockGe;
+    }
   }
 
 void CommandModule::capsuleSep() {
