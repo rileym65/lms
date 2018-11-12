@@ -106,46 +106,5 @@ void Score() {
 
   ScoreTotal = ScoreLanding + ScoreEvaTotal + ScoreDockTotal;
 
-  printf("Landing Score:%s",LE);
-  printf("  Landing Time:         %d%s",ScoreLandedTime, LE);
-  printf("  Fuel Remaining:       %d%s",ScoreDescentFuel, LE);
-  printf("  Distance from target: %d%s",ScoreLandedDistance, LE);
-  printf("  Vertical Velocity:    %d%s",ScoreLandedVVel, LE);
-  printf("  Horizontal Velocity:  %d%s",ScoreLandedHVel, LE);
-  if (ScoreLatitudeBonus > 0)
-    printf("  Latitude Bonus:       %d%s",ScoreLatitudeBonus, LE);
-  printf("                                --------%s",LE);
-  printf("    Landing Total:              %d%s",ScoreLanding,LE);
-  printf("%s",LE);
-  printf("Surface Operations Score:%s",LE);
-  printf("  EVAs completed:       %d%s",ScoreEvaCompleted,LE);
-  printf("  Time Spent on EVA:    %d%s",ScoreEvaTime,LE);
-  printf("  LRV Setup:            %d%s",ScoreEvaLrvSetup,LE);
-  printf("  Laser Refl. Setup:    %d%s",ScoreEvaLaserSetup,LE);
-  printf("  Flag Planted:         %d%s",ScoreEvaFlagSetup,LE);
-  printf("  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
-  printf("  Samples Collected:    %d%s",ScoreEvaSamples,LE);
-  printf("  Sample Variety:       %d%s",ScoreEvaVariety,LE);
-  printf("  Primary Samples:      %d%s",ScoreEvaPrimarySamples,LE);
-  printf("  Sec. Site 1 Samples:  %d%s",ScoreEvaSecondary1Samples,LE);
-  printf("  Sec. Site 2 Samples:  %d%s",ScoreEvaSecondary2Samples,LE);
-  printf("  Sec. Site 3 Samples:  %d%s",ScoreEvaSecondary3Samples,LE);
-  printf("  Sample Value:         %d%s",ScoreEvaValue,LE);
-  printf("  Distance from LM:     %d%s",ScoreEvaFarthest,LE);
-  printf("  Distance Driven:      %d%s",ScoreEvaDriven,LE);
-  printf("                                --------%s",LE);
-  printf("    Surface Operations Total:   %d%s",ScoreEvaTotal,LE);
-  printf("%s",LE);
-  printf("Rendevous/Docking Score:%s",LE);
-  printf("  Docking Time:         %d%s",ScoreDockTime,LE);
-  printf("  Docking Velocity:     %d%s",ScoreDockVel,LE);
-  printf("  Lateral Velocity:     %d%s",ScoreDockLVel,LE);
-  printf("  Asc Fuel Remaining:   %d%s",ScoreDockAscentFuel,LE);
-  printf("  RCS Fuel Remaining:   %d%s",ScoreDockRcsFuel,LE);
-  printf("                                --------%s",LE);
-  printf("    Rendevous/Docking Total:    %d%s",ScoreDockTotal,LE);
-  printf("%s",LE);
-  printf("                                --------%s",LE);
-  printf("    Total Score:                %d%s",ScoreTotal,LE);
   }
 
