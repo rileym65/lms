@@ -26,6 +26,7 @@ class Vehicle {
     Vector    faceFront;
     Vector    faceLeft;
     Vector    faceUp;
+    Vector    gimbals;
     Double    latitude;
     Double    longitude;
     Double    lastLatitude;
@@ -40,10 +41,8 @@ class Vehicle {
     Double    orbitTime;
     Double    oxygen;
     Panel    *panel;
-    Double    pitch;
     Double    pitchRate;
     Vector    position;
-    Double    roll;
     Double    rollRate;
     Int8      throttle;
     Vector    thrust;
@@ -52,7 +51,6 @@ class Vehicle {
     Double    velocityAltitude;
     Double    velocityEast;
     Double    velocityNorth;
-    Double    yaw;
     Double    yawRate;
     Vehicle  *targetVehicle;
 

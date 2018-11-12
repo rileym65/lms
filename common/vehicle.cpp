@@ -16,11 +16,9 @@ Vehicle::Vehicle() {
   faceFront = Vector(0,1,0);
   faceLeft = Vector(1,0,0);
   faceUp = Vector(0,0,1);
+  gimbals = Vector(0,0,0);
   panel = NULL;
   comp= NULL;
-  roll = 0;
-  pitch = 0;
-  yaw = 0;
   type = VT_NONE;
   targetVehicle = NULL;
   Init();
@@ -239,12 +237,12 @@ Double Vehicle::Oxygen(Double d) {
   }
 
 Double Vehicle::Pitch() {
-  return pitch;
+  return gimbals.Y();
   }
 
 Double Vehicle::Pitch(Double d) {
-  pitch = d;
-  return pitch;
+  gimbals.Y(d);
+  return gimbals.Y();
   }
 
 Double Vehicle::PitchRate() {
@@ -266,12 +264,12 @@ Vector Vehicle::Position(Vector v) {
   }
 
 Double Vehicle::Roll() {
-  return roll;
+  return gimbals.X();
   }
 
 Double Vehicle::Roll(Double d) {
-  roll = d;
-  return roll;
+  gimbals.X(d);
+  return gimbals.X();
   }
 
 Double Vehicle::RollRate() {
@@ -342,12 +340,12 @@ Double Vehicle::VelocityNorth() {
   }
 
 Double Vehicle::Yaw() {
-  return yaw;
+  return gimbals.Z();
   }
 
 Double Vehicle::Yaw(Double d) {
-  yaw = d;
-  return yaw;
+  gimbals.Z(d);
+  return gimbals.Z();
   }
 
 Double Vehicle::YawRate() {
@@ -520,10 +518,8 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  RollRate %.18f%s",rollRate,LE);
   fprintf(file,"  YawRate %.18f%s",yawRate,LE);
   fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
-  fprintf(file,"  Roll %.18f%s",roll,LE);
-  fprintf(file,"  Yaw %.18f%s",yaw,LE);
-  fprintf(file,"  Pitch %.18f%s",pitch,LE);
   fprintf(file,"  Orbiting %s%s",orbiting->Name(),LE);
+  fprintf(file,"  Gimbals %.18f %.18f %.18f%s",gimbals.X(),gimbals.Y(),gimbals.Z(),LE);
   fprintf(file,"  FaceFront %.18f %.18f %.18f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
   fprintf(file,"  FaceUp %.18f %.18f %.18f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
   fprintf(file,"  FaceLeft %.18f %.18f %.18f%s",faceLeft.X(),faceLeft.Y(),faceLeft.Z(),LE);
@@ -546,6 +542,7 @@ Int8 Vehicle::SubLoad(FILE* file, char* line) {
   if (startsWith(line,"latitude ")) latitude = atof(nw(line));
   else if (startsWith(line,"longitude ")) longitude = atof(nw(line));
   else if (startsWith(line,"distance ")) distanceTravelled = atof(nw(line));
+  else if (startsWith(line,"gimbals ")) gimbals = atov(nw(line));
   else if (startsWith(line,"facefront ")) faceFront = atov(nw(line));
   else if (startsWith(line,"faceup ")) faceUp = atov(nw(line));
   else if (startsWith(line,"faceleft ")) faceLeft = atov(nw(line));
@@ -562,9 +559,9 @@ Int8 Vehicle::SubLoad(FILE* file, char* line) {
   else if (startsWith(line,"pitchrate ")) PitchRate(atof(nw(line)));
   else if (startsWith(line,"rollrate ")) RollRate(atof(nw(line)));
   else if (startsWith(line,"yawrate ")) YawRate(atof(nw(line)));
-  else if (startsWith(line,"pitch ")) pitch = atof(nw(line));
-  else if (startsWith(line,"roll ")) roll = atof(nw(line));
-  else if (startsWith(line,"yaw ")) yaw = atof(nw(line));
+  else if (startsWith(line,"pitch ")) gimbals.Y(atof(nw(line)));
+  else if (startsWith(line,"roll ")) gimbals.X(atof(nw(line)));
+  else if (startsWith(line,"yaw ")) gimbals.Z(atof(nw(line)));
   else if (startsWith(line,"dryweight ")) dryWeight = atof(nw(line));
   else if (startsWith(line,"orbiting earth")) orbiting = Earth;
   else if (startsWith(line,"orbiting moon")) orbiting = Moon;
