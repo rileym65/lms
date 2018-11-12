@@ -816,7 +816,6 @@ void cycle() {
         else {
           GotoXY(1,25);
           printf("Vehicle has safely landed%s",LE);
-          printf("Total distance travelled: %.3fkm%s",distanceTravelled/1000.0,LE);
           endReason = END_MISSION;
           return;
           }
@@ -1045,7 +1044,10 @@ int main(int argc, char** argv) {
       }
     if (endReason != 0) run = false;
     }
-  if (endReason == END_QUIT) save();
+  if (endReason == END_QUIT) {
+    save();
+    GotoXY(1,25);
+    }
   if (endReason == END_MISSION) {
     Score();
     MissionReport();
@@ -1069,7 +1071,6 @@ int main(int argc, char** argv) {
       }
     unlink("fms.sav");
     }
-  GotoXY(1,25);
   ShowCursor();
   CloseTerminal();
   return 0;
