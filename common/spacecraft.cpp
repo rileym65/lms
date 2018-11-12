@@ -549,21 +549,21 @@ void Spacecraft::Cycle() {
     faceUp = m.Transform(faceUp).Norm();
     faceFront = m.Transform(faceFront).Norm();
     }
-  if (rollRate != 0) {
-    roll += (rollRate /GRAN);
-    if (roll > 180) roll -= 360;
-    if (roll < -180) roll += 360;
-    }
-  if (pitchRate != 0) {
-    pitch += (pitchRate /GRAN);
-    if (pitch > 180) pitch -= 360;
-    if (pitch < -180) pitch += 360;
-    }
-  if (yawRate != 0) {
-    yaw += (yawRate /GRAN);
-    if (yaw > 180) yaw -= 360;
-    if (yaw < -180) yaw += 360;
-    }
+//  if (rollRate != 0) {
+//    roll += (rollRate /GRAN);
+//    if (roll > 180) roll -= 360;
+//    if (roll < -180) roll += 360;
+//    }
+//  if (pitchRate != 0) {
+//    pitch += (pitchRate /GRAN);
+//    if (pitch > 180) pitch -= 360;
+//    if (pitch < -180) pitch += 360;
+//    }
+//  if (yawRate != 0) {
+//    yaw += (yawRate /GRAN);
+//    if (yaw > 180) yaw -= 360;
+//    if (yaw < -180) yaw += 360;
+//    }
   if (Earth != NULL) {
     alt3 = (position - Earth->Position()).Length();
     alt3 = alt3 * alt3 * alt3;
@@ -601,8 +601,14 @@ void Spacecraft::Cycle() {
     distanceTravelled += ((p1-p2).Length());
     }
 
-  if (orbiting == Earth && moonG > earthG) orbiting = Moon;
-  if (orbiting == Moon && earthG > moonG) orbiting = Earth;
+  if (orbiting == Earth && moonG > earthG) {
+    orbiting = Moon;
+    simSpeed = 100000;
+    }
+  if (orbiting == Moon && earthG > moonG) {
+    orbiting = Earth;
+    simSpeed = 100000;
+    }
 
   Vehicle::Cycle();
   }
