@@ -110,7 +110,7 @@ void MissionReport() {
   if (clockDOI != 0) AddEvent(clockDOI+clockUd, "DOI");
   if (clockPDI != 0) AddEvent(clockPDI+clockUd, "PDI");
   if (landedMet != 0) AddEvent(landedMet+clockUd, "Lunar Landing");
-  if (liftoffMet != 0) AddEvent(liftoffMet+clockUd, "Lunar Liftoff");
+  if (liftoffMet != 0 && landedMet != 0) AddEvent(liftoffMet+clockUd, "Lunar Liftoff");
   if (clockMi != 0) AddEvent(clockMi+clockUd, "Docking");
   if (clockLmJt != 0) AddEvent(clockLmJt, "LM Jet.");
   if (clockSmJt != 0) AddEvent(clockSmJt, "SM Jet.");
