@@ -6,6 +6,13 @@
 #include "common.h"
 #include "helpers.h"
 
+#define P11_MODE      0
+#define P11_HEADING   1
+#define P11_CLOCKGE   2
+#define P11_TARGETVEL 3
+#define P11_ORBIT    11
+#define P11_AZIMUTH  12
+
 CsmComputer::CsmComputer(CommandModule* c) {
   prog = 0;
   csm = c;
@@ -166,15 +173,15 @@ void CsmComputer::_doShow() {
 
 Byte CsmComputer::_rollProgram() {
   Double d;
-  if (fabs((Double)preg2/10.0 - ram[1]) < 0.05) {
+  if (fabs(ram[P11_AZIMUTH]/10.0 - ram[P11_HEADING]) < 0.05) {
     csm->LaunchVehicle()->RollRate(0);
     return -1;
-    ram[0] = 3;
+    ram[P11_MODE] = 3;
     }
-  d = ram[1] - ((Double)preg2/10.0);
+  d = ram[P11_HEADING] - (ram[P11_AZIMUTH]/10.0);
   if (d < -3) d = -3;
   if (d > 3) d = 3;
-  ram[1] -= (d / GRAN);
+  ram[P11_HEADING] -= (d / GRAN);
   csm->LaunchVehicle()->RollRate(d);
   return 0;
   }
@@ -208,7 +215,9 @@ Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
   a = (s * (1 + e)) - csm->Orbiting()->Radius();
   da = a - lastApo;
 
-  if (csm->RateOfClimb() < 0) d = maxRate;
+  if (csm->RateOfClimb() < 0) {
+    if (csm->RateOfClimb() < ram[4]) d = maxRate;
+    }
   else if (lastApo + da * 20 * GRAN > apo * 100 &&
       da > 0) d = -maxRate;
   else {
@@ -221,6 +230,7 @@ Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
     }
   csm->LaunchVehicle()->PitchRate(d);
   lastApo = a;
+  ram[4] = csm->RateOfClimb();
   return alt;
   }
 
@@ -257,22 +267,22 @@ void CsmComputer::_program11() {
 /* **************************************************************** */
 
     case VEHICLE_MERCURY_REDSTONE:
-         if (ram[0] == 1) {
+         if (ram[P11_MODE] == 1) {
            pos = csm->Position() - csm->Orbiting()->Position();
            if (pos.Length() > csm->Orbiting()->Radius() + 100) {
-             ram[0] = 2;
+             ram[P11_MODE] = 2;
              }
            }
-         if (ram[0] == 2) {
-           if (_rollProgram()) ram[0] = 3;
+         if (ram[P11_MODE] == 2) {
+           if (_rollProgram()) ram[P11_MODE] = 3;
            }
-         if (ram[0] == 3) {
-           _ascent((Double)preg1 / 10.0,1.0,0);
+         if (ram[P11_MODE] == 3) {
+           _ascent(ram[11] / 10.0,1.0,0);
            if (csm->Throttle() == 0) {
-             ram[0] = 4;
+             ram[P11_MODE] = 4;
              }
            }
-         if (ram[0] == 4) {
+         if (ram[P11_MODE] == 4) {
            csm->LaunchVehicle()->PitchRate(0);
            running = 0;
            }
@@ -286,61 +296,61 @@ void CsmComputer::_program11() {
          /* ************************ */
          /* ***** Clear launch tower */
          /* ************************ */
-         if (ram[0] == 1) {
+         if (ram[P11_MODE] == 1) {
            pos = csm->Position() - csm->Orbiting()->Position();
            if (pos.Length() > csm->Orbiting()->Radius() + 100) {
-             ram[0] = 2;
+             ram[P11_MODE] = 2;
              }
            }
          /* ****************************************** */
          /* ***** Perform roll to launch azimuth ***** */
          /* ****************************************** */
-         if (ram[0] == 2) {
-           if (_rollProgram()) ram[0] = 3;
+         if (ram[P11_MODE] == 2) {
+           if (_rollProgram()) ram[P11_MODE] = 3;
            }
          /* ********************************************************* */
          /* ***** Pitch back to 20 degrees and hold until 8000m ***** */
          /* ********************************************************* */
-         if (ram[0] == 3) {
-           if (_ascent(20,1.0,preg1) >= 8000) ram[0] = 4;
-           if (csm->Throttle() == 0) ram[0] = 4;
+         if (ram[P11_MODE] == 3) {
+           if (_ascent(20,1.0,ram[P11_ORBIT]) >= 8000) ram[P11_MODE] = 4;
+           if (csm->Throttle() == 0) ram[P11_MODE] = 4;
            }
          /* ********************************************* */
          /* ***** Picth back to 65 degrees and hold ***** */
          /* ********************************************* */
-         if (ram[0] == 4) {
-           _ascent(65,1.0,preg1);
+         if (ram[P11_MODE] == 4) {
+           _ascent(65,1.0,ram[P11_ORBIT]);
            if (csm->Throttle() == 0) {
-             ram[0] = 5;
-             ram[2] = clockGe;
+             ram[P11_MODE] = 5;
+             ram[P11_CLOCKGE] = clockGe;
              csm->LaunchVehicle()->PitchRate(0);
              }
            }
          /* ******************************************************* */
          /* ***** Wait three seconds and then perform staging ***** */
          /* ******************************************************* */
-         if (ram[0] == 5) {
-           if (clockGe - ram[2] > 3) {
+         if (ram[P11_MODE] == 5) {
+           if (clockGe - ram[P11_CLOCKGE] > 3) {
              csm->LaunchVehicle()->NextStage();
-             ram[0] = 6;
+             ram[P11_MODE] = 6;
              }
            }
          /* ************************ */
          /* ***** Second stage ***** */
          /* ************************ */
-         if (ram[0] == 6) {
-           _ascent(65,1.0,preg1);
-           if (csm->Velocity().Length() > ram[3]) {
-             ram[0] = 7;
+         if (ram[P11_MODE] == 6) {
+           _ascent(65,1.0,ram[P11_ORBIT]);
+           if (csm->Velocity().Length() > ram[P11_TARGETVEL]) {
+             ram[P11_MODE] = 7;
              csm->LaunchVehicle()->PitchRate(0);
              }
            if (csm->Throttle() == 0) {
-             ram[0] = 7;
+             ram[P11_MODE] = 7;
              csm->LaunchVehicle()->PitchRate(0);
              }
            }
 
-         if (ram[0] == 7) {
+         if (ram[P11_MODE] == 7) {
            csm->Cutoff();
            running = 0;
            }
@@ -354,61 +364,61 @@ void CsmComputer::_program11() {
          /* ************************ */
          /* ***** Clear launch tower */
          /* ************************ */
-         if (ram[0] == 1) {
+         if (ram[P11_MODE] == 1) {
            pos = csm->Position() - csm->Orbiting()->Position();
            if (pos.Length() > csm->Orbiting()->Radius() + 100) {
-             ram[0] = 2;
+             ram[P11_MODE] = 2;
              }
            }
          /* ****************************************** */
          /* ***** Perform roll to launch azimuth ***** */
          /* ****************************************** */
-         if (ram[0] == 2) {
-           if (_rollProgram()) ram[0] = 3;
+         if (ram[P11_MODE] == 2) {
+           if (_rollProgram()) ram[P11_MODE] = 3;
            }
          /* ********************************************************* */
          /* ***** Pitch back to 20 degrees and hold until 8000m ***** */
          /* ********************************************************* */
-         if (ram[0] == 3) {
-           if (_ascent(20,1.0,preg1) >= 8000) ram[0] = 4;
-           if (csm->Throttle() == 0) ram[0] = 4;
+         if (ram[P11_MODE] == 3) {
+           if (_ascent(20,1.0,ram[P11_ORBIT]) >= 8000) ram[P11_MODE] = 4;
+           if (csm->Throttle() == 0) ram[P11_MODE] = 4;
            }
          /* ********************************************* */
          /* ***** Picth back to 65 degrees and hold ***** */
          /* ********************************************* */
-         if (ram[0] == 4) {
-           _ascent(65,1.0,preg1);
+         if (ram[P11_MODE] == 4) {
+           _ascent(65,1.0,ram[P11_ORBIT]);
            if (csm->Throttle() == 0) {
-             ram[0] = 5;
-             ram[2] = clockGe;
+             ram[P11_MODE] = 5;
+             ram[P11_CLOCKGE] = clockGe;
              csm->LaunchVehicle()->PitchRate(0);
              }
            }
          /* ******************************************************* */
          /* ***** Wait three seconds and then perform staging ***** */
          /* ******************************************************* */
-         if (ram[0] == 5) {
-           if (clockGe - ram[2] > 3) {
+         if (ram[P11_MODE] == 5) {
+           if (clockGe - ram[P11_CLOCKGE] > 3) {
              csm->LaunchVehicle()->NextStage();
-             ram[0] = 6;
+             ram[P11_MODE] = 6;
              }
            }
          /* ************************ */
          /* ***** Second stage ***** */
          /* ************************ */
-         if (ram[0] == 6) {
-           _ascent(65,1.0,preg1);
-           if (csm->Velocity().Length() > ram[3]) {
-             ram[0] = 7;
+         if (ram[P11_MODE] == 6) {
+           _ascent(65,1.0,ram[P11_ORBIT]);
+           if (csm->Velocity().Length() > ram[P11_TARGETVEL]) {
+             ram[P11_MODE] = 7;
              csm->LaunchVehicle()->PitchRate(0);
              }
            if (csm->Throttle() == 0) {
-             ram[0] = 7;
+             ram[P11_MODE] = 7;
              csm->LaunchVehicle()->PitchRate(0);
              }
            }
 
-         if (ram[0] == 7) {
+         if (ram[P11_MODE] == 7) {
            csm->Cutoff();
            running = 0;
            }
@@ -424,85 +434,85 @@ void CsmComputer::_program11() {
          /* ************************ */
          /* ***** Clear launch tower */
          /* ************************ */
-         if (ram[0] == 1) {
+         if (ram[P11_MODE] == 1) {
            pos = csm->Position() - csm->Orbiting()->Position();
            if (pos.Length() > csm->Orbiting()->Radius() + 200) {
-             ram[0] = 2;
+             ram[P11_MODE] = 2;
              }
            }
          /* ****************************************** */
          /* ***** Perform roll to launch azimuth ***** */
          /* ****************************************** */
-         if (ram[0] == 2) {
-           if (_rollProgram()) ram[0] = 3;
+         if (ram[P11_MODE] == 2) {
+           if (_rollProgram()) ram[P11_MODE] = 3;
            }
          /* ********************************************************* */
          /* ***** Pitch back to 20 degrees and hold until 8000m ***** */
          /* ********************************************************* */
-         if (ram[0] == 3) {
-           if (_ascent(20,1.0,preg1) >= 8000) ram[0] = 4;
-           if (csm->Throttle() == 0) ram[0] = 4;
+         if (ram[P11_MODE] == 3) {
+           if (_ascent(20,1.0,ram[P11_ORBIT]) >= 8000) ram[P11_MODE] = 4;
+           if (csm->Throttle() == 0) ram[P11_MODE] = 4;
            }
          /* ********************************************* */
          /* ***** Picth back to 65 degrees and hold ***** */
          /* ********************************************* */
-         if (ram[0] == 4) {
-           _ascent(64,1.0,preg1);
+         if (ram[P11_MODE] == 4) {
+           _ascent(64,1.0,ram[P11_ORBIT]);
            if (csm->Throttle() == 0) {
-             ram[0] = 5;
-             ram[2] = clockGe;
+             ram[P11_MODE] = 5;
+             ram[P11_CLOCKGE] = clockGe;
              csm->LaunchVehicle()->PitchRate(0);
              }
            }
          /* ******************************************************* */
          /* ***** Wait three seconds and then perform staging ***** */
          /* ******************************************************* */
-         if (ram[0] == 5) {
-           if (clockGe - ram[2] > 3) {
+         if (ram[P11_MODE] == 5) {
+           if (clockGe - ram[P11_CLOCKGE] > 3) {
              csm->LaunchVehicle()->NextStage();
-             ram[0] = 6;
+             ram[P11_MODE] = 6;
              }
            }
          /* ************************ */
          /* ***** Second stage ***** */
          /* ************************ */
-         if (ram[0] == 6) {
-           _ascent(64,1.0,preg1);
-           if (csm->Velocity().Length() > ram[3]) {
-             ram[0] = 9;
+         if (ram[P11_MODE] == 6) {
+           _ascent(64,1.0,ram[P11_ORBIT]);
+           if (csm->Velocity().Length() > ram[P11_TARGETVEL]) {
+             ram[P11_MODE] = 9;
              csm->LaunchVehicle()->PitchRate(0);
              }
            if (csm->Throttle() == 0) {
-             ram[0] = 7;
+             ram[P11_MODE] = 7;
              csm->LaunchVehicle()->PitchRate(0);
-             ram[2] = clockGe;
+             ram[P11_CLOCKGE] = clockGe;
              }
            }
          /* ******************************************************* */
          /* ***** Wait three seconds and then perform staging ***** */
          /* ******************************************************* */
-         if (ram[0] == 7) {
-           if (clockGe - ram[2] > 3) {
+         if (ram[P11_MODE] == 7) {
+           if (clockGe - ram[P11_CLOCKGE] > 3) {
              csm->LaunchVehicle()->NextStage();
-             ram[0] = 8;
+             ram[P11_MODE] = 8;
              }
            }
          /* *********************** */
          /* ***** Third stage ***** */
          /* *********************** */
-         if (ram[0] == 8) {
-           _ascent(65,1.0,preg1);
-           if (csm->Velocity().Length() > ram[3]) {
-             ram[0] = 9;
+         if (ram[P11_MODE] == 8) {
+           _ascent(65,1.0,ram[P11_ORBIT]);
+           if (csm->Velocity().Length() > ram[P11_TARGETVEL]) {
+             ram[P11_MODE] = 9;
              csm->LaunchVehicle()->PitchRate(0);
              }
            if (csm->Throttle() == 0) {
-             ram[0] = 9;
+             ram[P11_MODE] = 9;
              csm->LaunchVehicle()->PitchRate(0);
              }
            }
 
-         if (ram[0] == 9) {
+         if (ram[P11_MODE] == 9) {
            csm->Cutoff();
            running = 0;
            }
@@ -599,7 +609,12 @@ void CsmComputer::Cycle() {
       preg2 = a;
       }
     }
-  else if (prog == 11) _program11();
+  else if (prog == 11) {
+    _program11();
+    preg1 = csm->Altitude() / 100;
+    preg2 = csm->RateOfClimb();
+    preg3 = csm->Velocity().Length();
+    }
   else if (prog == 15) {
     csm->Prograde(3);
     if (ram[0] == 1) {
@@ -817,9 +832,11 @@ void CsmComputer::_processRequest() {
       preg2 = preg1;
       }
     if (prog == 11) {
-      ram[0] = 1;
-      ram[1] = 90;
-      ram[3] = sqrt(csm->Orbiting()->Gravitation() / (preg1*100 + csm->Orbiting()->Radius()));
+      ram[P11_MODE] = 1;
+      ram[P11_HEADING] = 90;
+      ram[P11_TARGETVEL] = sqrt(csm->Orbiting()->Gravitation() / (preg1*100 + csm->Orbiting()->Radius()));
+      ram[P11_ORBIT] = reg1;
+      ram[P11_AZIMUTH] = reg2;
       }
     if (prog == 15) {
       ram[0] = 1;
