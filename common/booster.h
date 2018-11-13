@@ -15,6 +15,9 @@ class Booster : public Spacecraft {
     Double ispSl[10][10];
     Double ispVac[10][10];
     Double maxFuel[10];
+    Double maxPitchRate[10];
+    Double maxRollRate[10];
+    Double maxYawRate[10];
     Byte   starts[10];
     Double ceco[10];
     Double payload;
@@ -53,6 +56,15 @@ class Booster : public Spacecraft {
     virtual Double MaxFuel();
     virtual Double MaxFuel(Byte stage);
     virtual Double MaxFuel(Byte stage, Double d);
+    virtual Double MaxPitchRate();
+    virtual Double MaxPitchRate(Byte stage);
+    virtual Double MaxPitchRate(Byte stage, Double d);
+    virtual Double MaxRollRate();
+    virtual Double MaxRollRate(Byte stage);
+    virtual Double MaxRollRate(Byte stage, Double d);
+    virtual Double MaxYawRate();
+    virtual Double MaxYawRate(Byte stage);
+    virtual Double MaxYawRate(Byte stage, Double d);
     virtual void   NextStage();
     virtual Byte   NumEngines();
     virtual Byte   NumEngines(Byte stage);
@@ -61,6 +73,12 @@ class Booster : public Spacecraft {
     virtual Byte   NumStages(Byte b);
     virtual Double Payload();
     virtual Double Payload(Double d);
+    virtual Double PitchRate();
+    virtual Double RollRate();
+    virtual Double YawRate();
+    virtual Double PitchRate(Double d);
+    virtual Double RollRate(Double d);
+    virtual Double YawRate(Double d);
     virtual Byte   Stage();
     virtual Byte   Stage(Byte b);
     virtual Byte   Starts();

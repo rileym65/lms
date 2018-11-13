@@ -11,7 +11,12 @@ Booster::Booster() {
   cmOffset = 0;
   enginesLit = 0;
   type |= VT_ROCKET;
-  for (i=0; i<10; i++) ceco[i] = 0;
+  for (i=0; i<10; i++) {
+    ceco[i] = 0;
+    maxPitchRate[i] = 1;
+    maxYawRate[i] = 1;
+    maxRollRate[i] = 4;
+    }
   }
 
 Booster::~Booster() {
@@ -214,6 +219,45 @@ Double Booster::MaxFuel(Byte stage, Double d) {
   return maxFuel[stage-1];
   }
 
+Double Booster::MaxPitchRate() {
+  return maxPitchRate[stage-1];
+  }
+
+Double Booster::MaxPitchRate(Byte stage) {
+  return maxPitchRate[stage-1];
+  }
+
+Double Booster::MaxPitchRate(Byte stage, Double d) {
+  maxPitchRate[stage-1] = d;
+  return maxPitchRate[stage-1];
+  }
+
+Double Booster::MaxRollRate() {
+  return maxRollRate[stage-1];
+  }
+
+Double Booster::MaxRollRate(Byte stage) {
+  return maxRollRate[stage-1];
+  }
+
+Double Booster::MaxRollRate(Byte stage, Double d) {
+  maxRollRate[stage-1] = d;
+  return maxRollRate[stage-1];
+  }
+
+Double Booster::MaxYawRate() {
+  return maxYawRate[stage-1];
+  }
+
+Double Booster::MaxYawRate(Byte stage) {
+  return maxYawRate[stage-1];
+  }
+
+Double Booster::MaxYawRate(Byte stage, Double d) {
+  maxYawRate[stage-1] = d;
+  return maxYawRate[stage-1];
+  }
+
 void Booster::NextStage() {
   if (enginesLit != 0) return;
   if (stage < numStages) {
@@ -318,6 +362,39 @@ Double Booster::ThrustSl(Byte stage, Byte engine, Double d) {
   return thrustSl[stage-1][engine-1];
   }
 
+Double Booster::PitchRate() {
+  return pitchRate;
+  }
+
+Double Booster::RollRate() {
+  return rollRate;
+  }
+
+Double Booster::YawRate() {
+  return yawRate;
+  }
+
+Double Booster::PitchRate(Double d) {
+  if (d > 0 && d > maxPitchRate[stage-1]) d = maxPitchRate[stage-1];
+  if (d < 0 && d < -maxPitchRate[stage-1]) d = -maxPitchRate[stage-1];
+  pitchRate = d;
+  return pitchRate;
+  }
+
+Double Booster::RollRate(Double d) {
+  if (d > 0 && d > maxRollRate[stage-1]) d = maxRollRate[stage-1];
+  if (d < 0 && d < -maxRollRate[stage-1]) d = -maxRollRate[stage-1];
+  rollRate = d;
+  return rollRate;
+  }
+
+Double Booster::YawRate(Double d) {
+  if (d > 0 && d > maxYawRate[stage-1]) d = maxYawRate[stage-1];
+  if (d < 0 && d < -maxYawRate[stage-1]) d = -maxYawRate[stage-1];
+  yawRate = d;
+  return yawRate;
+  }
+
 void Booster::ProcessKey(Int32 key) {
   if (key == 'I' && launched) Ignition();
   if (key == 'C') Cutoff();
@@ -349,6 +426,9 @@ void Booster::Save(FILE* file) {
     fprintf(file,"    NumEngines %d%s",numEngines[i],LE);
     fprintf(file,"    Starts %d%s",starts[i],LE);
     fprintf(file,"    Ceco %.18f%s",ceco[i],LE);
+    fprintf(file,"    MaxPitchRate %.18f%s",maxPitchRate[i],LE);
+    fprintf(file,"    MaxRollRate %.18f%s",maxRollRate[i],LE);
+    fprintf(file,"    MaxYawRate %.18f%s",maxYawRate[i],LE);
     for (j=0; j<numEngines[i]; j++) {
       fprintf(file,"    Engine %d {%s",j,LE);
       fprintf(file,"      IspVac %.18f%s",ispVac[i][j],LE);
@@ -392,6 +472,9 @@ printf("loading stage %d\n",i);
     else if (startsWith(pline,"numengines ")) numEngines[i] = atoi(nw(pline));
     else if (startsWith(pline,"starts ")) starts[i] = atoi(nw(pline));
     else if (startsWith(pline,"ceco ")) ceco[i] = atof(nw(pline));
+    else if (startsWith(pline,"maxpitchrate ")) maxPitchRate[i] = atof(nw(pline));
+    else if (startsWith(pline,"maxrollrate ")) maxRollRate[i] = atof(nw(pline));
+    else if (startsWith(pline,"maxyawrate ")) maxYawRate[i] = atof(nw(pline));
     else if (startsWith(pline,"engine ") &&
              (strchr(pline,'{') != NULL)) {
       if (loadEngine(file,nw(pline), i) == 0) return 0;
