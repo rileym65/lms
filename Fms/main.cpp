@@ -1015,7 +1015,6 @@ int main(int argc, char** argv) {
     }
   else {
     csm->TargetVehicle(lm);
-    csm->LaunchVehicle(booster);
     if (lm != NULL) lm->TargetVehicle(csm);
     plss->TargetVehicle(lm);
     }

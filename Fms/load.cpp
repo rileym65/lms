@@ -177,6 +177,7 @@ void LoadEva(FILE* file, char*line) {
 Int8 load(const char* filename) {
   FILE* file;
   char* pline;
+  csm->LaunchVehicle(booster);
   file = fopen(filename,"r");
   if (file == NULL) return 0;
   while ((pline = nextLine(file)) != NULL) {
@@ -218,7 +219,6 @@ Int8 load(const char* filename) {
       }
     }
   csm->TargetVehicle(lm);
-  csm->LaunchVehicle(booster);
   if (lm != NULL) {
     lm->TargetVehicle(csm);
     if (lm->Orbiting() == NULL) lm->Orbiting(csm->Orbiting());
