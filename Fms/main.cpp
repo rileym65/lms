@@ -49,6 +49,7 @@ void mercuryRedstone() {
   csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
   csm->MaxOxygen(csm->Oxygen());
   csm->MaxBattery(csm->Battery());
+  csm->LaunchVehicle(booster);
   }
 
 void mercuryAtlas() {
@@ -104,6 +105,7 @@ void mercuryAtlas() {
   csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
   csm->MaxOxygen(csm->Oxygen());
   csm->MaxBattery(csm->Battery());
+  csm->LaunchVehicle(booster);
   }
 
 void geminiTitan() {
@@ -159,9 +161,33 @@ void geminiTitan() {
   csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
   csm->MaxOxygen(csm->Oxygen());
   csm->MaxBattery(csm->Battery());
+  csm->LaunchVehicle(booster);
   }
 
 void saturn1B() {
+  csm->DryWeight(5806);
+  csm->Diameter(3.90);
+  csm->ParachuteDiameter(42.26);
+  csm->ServiceModuleDryWeight(6110);
+  csm->ServiceModuleFuel(2785);
+  csm->ServiceModuleIsp(314);
+  csm->ServiceModuleThrust(91190);
+  csm->ServiceModuleRcsIsp(290);
+  csm->ServiceModuleRcsFuel(617.79);
+  csm->ServiceModuleRcsThrust(890);
+  csm->ServiceModuleRcsDThrust(1780);
+  csm->ServiceModuleRcsUThrust(1780);
+  csm->CommandModuleRcsFuel(74);
+  csm->CommandModuleRcsIsp(290);
+  csm->CommandModuleRcsThrust(410);
+  csm->Oxygen(14 * 24 * 3600);
+  csm->Battery(14 * 24 * 3600);
+  csm->ServiceModuleMaxFuel(18413);
+  csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
+  csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
+  csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
+  csm->MaxOxygen(csm->Oxygen());
+  csm->MaxBattery(csm->Battery());
   booster->Height(43.2);
   booster->CmOffset(17.25);
   booster->NumStages(2);
@@ -169,7 +195,7 @@ void saturn1B() {
   booster->DryWeight(2, 10600);
   booster->Fuel(1, 411952);
   booster->Fuel(2, 105795);
-  booster->Payload(15392);
+  booster->Payload(csm->Mass());
   booster->Stage(1);
   booster->NumEngines(1, 8);
   booster->NumEngines(2, 1);
@@ -215,29 +241,7 @@ void saturn1B() {
   booster->Diameter(2, 6.53);
   booster->MaxFuel(1, booster->Fuel(1));
   booster->MaxFuel(2, booster->Fuel(2));
-  csm->DryWeight(5806);
-  csm->Diameter(3.90);
-  csm->ParachuteDiameter(42.26);
-  csm->ServiceModuleDryWeight(6110);
-  csm->ServiceModuleFuel(2785);
-  csm->ServiceModuleIsp(314);
-  csm->ServiceModuleThrust(91190);
-  csm->ServiceModuleRcsIsp(290);
-  csm->ServiceModuleRcsFuel(617.79);
-  csm->ServiceModuleRcsThrust(890);
-  csm->ServiceModuleRcsDThrust(1780);
-  csm->ServiceModuleRcsUThrust(1780);
-  csm->CommandModuleRcsFuel(74);
-  csm->CommandModuleRcsIsp(290);
-  csm->CommandModuleRcsThrust(410);
-  csm->Oxygen(14 * 24 * 3600);
-  csm->Battery(14 * 24 * 3600);
-  csm->ServiceModuleMaxFuel(18413);
-  csm->ServiceModuleRcsMaxFuel(csm->ServiceModuleRcsFuel());
-  csm->RetroModuleMaxFuel(csm->RetroModuleFuel());
-  csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
-  csm->MaxOxygen(csm->Oxygen());
-  csm->MaxBattery(csm->Battery());
+  csm->LaunchVehicle(booster);
   }
 
 void saturnV(UInt8 lem) {
@@ -344,6 +348,7 @@ void saturnV(UInt8 lem) {
   csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
   csm->MaxOxygen(csm->Oxygen());
   csm->MaxBattery(csm->Battery());
+  csm->LaunchVehicle(booster);
   }
 
 void saturnVb(UInt8 lem) {
@@ -450,6 +455,7 @@ void saturnVb(UInt8 lem) {
   csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
   csm->MaxOxygen(csm->Oxygen());
   csm->MaxBattery(csm->Battery());
+  csm->LaunchVehicle(booster);
   }
 
 void init(Byte v) {
@@ -904,7 +910,6 @@ int main(int argc, char** argv) {
   Moon->CalculateOrbit();
   booster = new Booster();
   csm = new CommandModule();
-  csm->LaunchVehicle(booster);
   lm = new LunarModule();
   lrv = new Lrv();
   plss = new Plss();
@@ -1010,6 +1015,7 @@ int main(int argc, char** argv) {
     }
   else {
     csm->TargetVehicle(lm);
+    csm->LaunchVehicle(booster);
     if (lm != NULL) lm->TargetVehicle(csm);
     plss->TargetVehicle(lm);
     }

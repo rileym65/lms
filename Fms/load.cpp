@@ -218,6 +218,7 @@ Int8 load(const char* filename) {
       }
     }
   csm->TargetVehicle(lm);
+  csm->LaunchVehicle(booster);
   if (lm != NULL) {
     lm->TargetVehicle(csm);
     if (lm->Orbiting() == NULL) lm->Orbiting(csm->Orbiting());
