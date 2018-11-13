@@ -66,6 +66,12 @@ void G_CsmDock::Update() {
     GotoXY(x+0, y+4+lastDockingRadarPitch); Write("<");
     GotoXY(x+6+lastDockingRadarYaw, y+8); Write("v");
     GotoXY(x+13, y+0); Write("      ");
+    GotoXY(x+17, y+1); Write("---.----");
+    GotoXY(x+17, y+2); Write("---.----");
+    GotoXY(x+17, y+4); Write("---.----");
+    GotoXY(x+17, y+5); Write("---.----");
+    GotoXY(x+17, y+7); Write("---.----");
+    GotoXY(x+17, y+8); Write("---.----");
     return;
     }
   vUp = csm->FaceUp().Norm();
