@@ -216,7 +216,6 @@ Int8 Lrv::SubLoad(FILE* file, char* pline) {
   else if (startsWith(pline,"issetup true")) isSetup = true;
   else if (startsWith(pline,"issetup false")) isSetup = false;
   else if (startsWith(pline,"driven ")) driven = atof(nw(pline));
-  else if (startsWith(pline,"maxspeed ")) maxSpeed = atof(nw(pline));
   else return GroundVehicle::SubLoad(file, pline);
   return -1;
   }
@@ -226,7 +225,6 @@ void Lrv::Save(FILE* file) {
   GroundVehicle::Save(file);
   fprintf(file,"  Rock %d%s",rock,LE);
   fprintf(file,"  Value %.18f%s",value,LE);
-  fprintf(file,"  MaxSpeed %.18f%s",maxSpeed,LE);
   fprintf(file,"  SampleBoxes %d%s",boxes,LE);
   if (isSetup)
     fprintf(file,"  IsSetup true%s",LE);

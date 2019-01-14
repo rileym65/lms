@@ -150,6 +150,7 @@ void Plss::Cycle() {
   if (battery < 0) battery = 0;
   if (throttle > 30 && metabolicRate > 60) Throttle(30);
   GroundVehicle::Cycle();
+GotoXY(1,25); printf("ms: %.2f\n",maxSpeed);
   if (!isnan(velocity.Length())) {
     d = velocity.Length() / GRAN;
     walked += d;
@@ -173,25 +174,25 @@ void Plss::Cycle() {
   damage = 0;
   cell = map->Lurrain(lm->Longitude(), lm->Latitude());
   switch (cell) {
-    case '.': if (velocity.Length() > 0.6) damage = 0.05; break;
-    case 'o': if (velocity.Length() > 0.6) damage = 0.10; break;
-    case 'O': if (velocity.Length() > 0.6) damage = 0.10; break;
-    case ',': if (velocity.Length() > 0.6) damage = 0.05; break;
-    case '+': if (velocity.Length() > 0.6) damage = 0.20; break;
-    case '*': if (velocity.Length() > 0.6) damage = 0.20; break;
-    case '^': if (velocity.Length() > 0.2) damage = 0.50; break;
-    case '(': if (velocity.Length() > 0.2) damage = 0.50; break;
-    case ')': if (velocity.Length() > 0.2) damage = 0.50; break;
-    case 'u': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case '.': if (velocity.Length() > 1.6) damage = 0.05; break;
+    case 'o': if (velocity.Length() > 1.6) damage = 0.10; break;
+    case 'O': if (velocity.Length() > 1.6) damage = 0.10; break;
+    case ',': if (velocity.Length() > 1.6) damage = 0.05; break;
+    case '+': if (velocity.Length() > 1.6) damage = 0.20; break;
+    case '*': if (velocity.Length() > 1.6) damage = 0.20; break;
+    case '^': if (velocity.Length() > 1.2) damage = 0.50; break;
+    case '(': if (velocity.Length() > 1.2) damage = 0.50; break;
+    case ')': if (velocity.Length() > 1.2) damage = 0.50; break;
+    case 'u': if (velocity.Length() > 1.2) damage = 0.50; break;
     case ' ': break;
-    case '=': if (velocity.Length() > 0.2) damage = 0.50; break;
-    case '%': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case '=': if (velocity.Length() > 1.2) damage = 0.50; break;
+    case '%': if (velocity.Length() > 1.2) damage = 0.50; break;
     case 'f': break;
-    case '&': if (velocity.Length() > 0.2) damage = 0.50; break;
-    case '/': if (velocity.Length() > 0.2) damage = 0.50; break;
-    case '"': if (velocity.Length() > 0.2) damage = 0.50; break;
+    case '&': if (velocity.Length() > 1.2) damage = 0.50; break;
+    case '/': if (velocity.Length() > 1.2) damage = 0.50; break;
+    case '"': if (velocity.Length() > 1.2) damage = 0.50; break;
     case '_': break;
-    default : if (velocity.Length() > 0.2) damage = 0.50; break;
+    default : if (velocity.Length() > 1.2) damage = 0.50; break;
     }
   if (damage > 0) {
     plss->Damage(damage * 100.0);

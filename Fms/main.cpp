@@ -637,7 +637,7 @@ void init(Byte v) {
   plss->FaceFront(Vector(1,0,0));
   plss->FaceLeft(Vector(0,-1,0));
   plss->FaceUp(Vector(0,0,-1));
-  plss->MaxSpeed(1.5);
+  plss->MaxSpeed(3.0);
   plss->MaxBattery(PLSS_BATTERY);
   plss->MaxOxygen(PLSS_OXYGEN);
   lrv->FaceFront(Vector(1,0,0));

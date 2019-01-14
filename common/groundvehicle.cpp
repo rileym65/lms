@@ -148,6 +148,7 @@ Int8 GroundVehicle::SubLoad(FILE* file, char* pline) {
   else if (startsWith(pline,"turnrate ")) turnRate = atoi(nw(pline));
   else if (startsWith(pline,"batteryleakage ")) batteryLeakage = atof(nw(pline));
   else if (startsWith(pline,"motorefficiency ")) motorEfficiency = atof(nw(pline));
+  else if (startsWith(pline,"maxspeed ")) maxSpeed = atof(nw(pline));
   else return Vehicle::SubLoad(file, pline);
   return -1;
   }
@@ -158,6 +159,7 @@ void GroundVehicle::Save(FILE* file) {
   fprintf(file,"  TurnRate %d%s",turnRate,LE);
   fprintf(file,"  MotorEfficiency %.18f%s",motorEfficiency,LE);
   fprintf(file,"  BatteryLeakage %.18f%s",batteryLeakage,LE);
+  fprintf(file,"  MaxSpeed %.18f%s",maxSpeed,LE);
   }
 
 Int8 GroundVehicle::TurnRate() {

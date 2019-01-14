@@ -18,10 +18,11 @@ void Score() {
   if (ScoreLandedVVel < 0) ScoreLandedVVel = 0;
   ScoreLandedHVel = 1000 - (landedHVel * 819.6721);
   if (ScoreLandedHVel < 0) ScoreLandedHVel = 0;
-  if (fabs(landedLatitude) >= 1) {
-    ScoreLatitudeBonus = (200.0 * (fabs(landedLatitude) - 1.0));
-    }
-  else ScoreLatitudeBonus = 0;
+//  if (fabs(landedLatitude) >= 1) {
+//    ScoreLatitudeBonus = (200.0 * (fabs(landedLatitude) - 1.0));
+//    }
+//  else ScoreLatitudeBonus = 0;
+  ScoreLatitudeBonus = 0;
   ScoreLanding = ScoreLandedTime + ScoreDescentFuel + ScoreLandedDistance +
                  ScoreLandedVVel + ScoreLandedHVel + ScoreLatitudeBonus;
 
