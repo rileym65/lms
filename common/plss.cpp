@@ -150,7 +150,6 @@ void Plss::Cycle() {
   if (battery < 0) battery = 0;
   if (throttle > 30 && metabolicRate > 60) Throttle(30);
   GroundVehicle::Cycle();
-GotoXY(1,25); printf("ms: %.2f\n",maxSpeed);
   if (!isnan(velocity.Length())) {
     d = velocity.Length() / GRAN;
     walked += d;
