@@ -32,6 +32,7 @@ class Records {
     Double RcsFuel;
     Int32  ShortestDocking;
     Int32  ShortestLanding;
+    Int32  Samples;
     Records();
     ~Records();
     void Save();

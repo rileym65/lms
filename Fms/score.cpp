@@ -32,8 +32,22 @@ void Score() {
   ScoreEvaSamples = (lm->Rock() * 4.16666667);
   ScoreEvaTime = clockTe * 0.009259;
   ScoreEvaValue = lm->Value() * 3;
-  ScoreEvaFarthest = farthest / 100;
-  ScoreEvaDriven = lrv->Driven() / 200.0;
+  if (mission->Rover() == 1) {
+    ScoreEvaDriven = lrv->Driven() / 35.0;
+    ScoreEvaFarthest = farthest / 17.5;
+    }
+  else if (mission->Rover() == 2) {
+    ScoreEvaDriven = lrv->Driven() / 200.0;
+    ScoreEvaFarthest = farthest / 100.0;
+    }
+  else if (mission->Rover() == 3) {
+    ScoreEvaDriven = lrv->Driven() / 2000.0;
+    ScoreEvaFarthest = farthest / 1000.0;
+    }
+  else {
+    ScoreEvaDriven = 0;
+    ScoreEvaFarthest = farthest / 5.0;
+    }
   ScoreEvaFlagSetup = (flagPlanted) ? 250 : 0;
   ScoreEvaLrvSetup = (lrv->IsSetup()) ? 250 : 0;
   ScoreEvaLaserSetup = (laserSetup) ? 250 : 0;

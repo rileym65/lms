@@ -349,6 +349,10 @@ void MissionReport() {
       records->GreatestSampleValue = lm->Value();
       fprintf(file,"  Greatest Sample Value   : %9.2f%s",lm->Value(),LE);
       }
+    if (lm->Rock() > records->Samples) {
+      records->Samples = lm->Rock();
+      fprintf(file,"  Samples Collected       : %9dkg%s",lm->Rock(),LE);
+      }
     if (lm->DescentFuel() > records->DescentFuel) {
       records->DescentFuel = lm->DescentFuel();
       fprintf(file,"  Descent Fuel Remaining  : %9.2fkg%s",lm->DescentFuel(),LE);

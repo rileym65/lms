@@ -39,6 +39,7 @@ void Records::load() {
     RcsFuel = 0;
     ShortestDocking = 999999999;
     ShortestLanding = 999999999;
+    Samples = 0;
     }
   else {
     while ((pline = nextLine(file)) != NULL) {
@@ -64,6 +65,7 @@ void Records::load() {
       if (startsWith(pline,"RcsFuel")) RcsFuel = atof(nw(pline));
       if (startsWith(pline,"ShortestDocking")) ShortestDocking = atoi(nw(pline));
       if (startsWith(pline,"ShortestLanding")) ShortestLanding = atoi(nw(pline));
+      if (startsWith(pline,"Samples")) Samples = atoi(nw(pline));
       }
     fclose(file);
     }
@@ -95,6 +97,7 @@ void Records::Save() {
   fprintf(file,"RcsFuel %.18f%s",RcsFuel,LE);
   fprintf(file,"ShortestDocking %d%s",ShortestDocking,LE);
   fprintf(file,"ShortestLanding %d%s",ShortestLanding,LE);
+  fprintf(file,"Samples %d%s",Samples,LE);
   fclose(file);
 
   file = fopen("records.txt","w");
@@ -120,6 +123,7 @@ void Records::Save() {
   fprintf(file,"  Longest Tot. EVA Driven : %9.2fkm%s",LongestTotalDrive/1000.0,LE);
   fprintf(file,"  Farthest From LM        : %9.2fkm%s",FarthestFromLM/1000.0,LE);
   fprintf(file,"  Greatest Sample Value   : %9.2f%s",GreatestSampleValue,LE);
+  fprintf(file,"  Samples Collected       : %9dkg%s",Samples,LE);
   fprintf(file,"  Descent Fuel Remaining  : %9.2fkg%s",DescentFuel,LE);
   fprintf(file,"  Ascent Fuel Remaining   : %9.2fkg%s",AscentFuel,LE);
   fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",RcsFuel,LE);
