@@ -60,6 +60,7 @@ INST inst[] = {
   { "VLEN", 0x24000000, ARGS2 },
   { "VNEG", 0x25000000, ARGS2 },
   { "VSCL", 0x26000000, ARGS2 },
+  { "CALL", 0x27000000, ARGS1 },
   { "",     0x7fffffff, 0     },
   };
 
@@ -125,6 +126,7 @@ SYMBOL symtab[] = {
   { "VRES",   0x00000308 },
   { "RVEL",   0x00000309 },
   { "RPOS",   0x0000030a },
+  { "TPOS",   0x0000030b },
 
   { "THRTL",  0x00000600 },
   { "RLRAT",  0x00000601 },
@@ -151,6 +153,7 @@ char    arg3[1024];
 Int8    fields;
 UInt32  program[128000];
 UInt32  address;
+UInt32  errors;
 
 void Parse(char* line) {
   char *orig;
@@ -352,10 +355,12 @@ Boolean Pass(Int8 pass,char* filename) {
         WriteLn(command);
         return false;
         }
+      if (pass == 2) printf("%08x ",address);
       opcode = inst[i].value;
       switch (inst[i].flags) {
         case ARGS0:
              program[address++] = opcode;
+             if (pass == 2) printf("%08x ",opcode);
              break;
         case ARGS1:
              a1 = GetArgValue(pass,arg1);
@@ -366,6 +371,7 @@ Boolean Pass(Int8 pass,char* filename) {
                }
              opcode |= (a1 & 0xffffff);
              program[address++] = opcode;
+             if (pass == 2) printf("%08x ",opcode);
              break;
         case ARGS2:
              a1 = GetArgValue(pass,arg1);
@@ -383,6 +389,7 @@ Boolean Pass(Int8 pass,char* filename) {
              opcode |= ((a1 & 0xfff) << 12);
              opcode |= (a2 & 0xfff);
              program[address++] = opcode;
+             if (pass == 2) printf("%08x ",opcode);
              break;
         case IMM2:
              a1 = GetArgValue(pass,arg1);
@@ -395,6 +402,10 @@ Boolean Pass(Int8 pass,char* filename) {
              opcode |= ((a1 & 0xfff) << 12);
              program[address++] = opcode;
              program[address++] = a2;
+             if (pass == 2) {
+               printf("%08x \n",opcode);
+               printf("%08x %08x ",address-1,a2);
+               }
              break;
         case JMP2:
              a1 = GetArgValue(pass,arg1);
@@ -404,10 +415,12 @@ Boolean Pass(Int8 pass,char* filename) {
              program[address++] = opcode;
              a1 = GetArgValue(pass,arg3);
              program[address++] = a1;
+             if (pass == 2) printf("%08x ",opcode);
              break;
         }
 
       }
+    if (pass == 2) printf("%s\n",line);
     }
   return true;
   }
@@ -423,6 +436,7 @@ int main(int argc, char** argv) {
     }
   labels = NULL;
   numLabels = 0;
+  errors = 0;
   i = 0;
   while (strlen(symtab[i].symbol) != 0) {
     AddLabel(symtab[i].symbol, symtab[i].value);
@@ -441,6 +455,7 @@ int main(int argc, char** argv) {
     fprintf(file,"%08x\n",program[i]);
   fclose(file);
 
+  printf("Errors: %d\n",errors);
   if (labels != NULL) free(labels);
   return 0;
   }

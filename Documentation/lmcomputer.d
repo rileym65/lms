@@ -7,6 +7,7 @@
 	| ASIN   | rs,rd    | Place arcsin of rs into rd (degrees)     |
 	| ATAN   | rs,rd    | Place arctan of rs into rd (degrees)     |
 	| CALP   | pvn      | Call another program as subroutine       |
+	| CALL   | ad       | Call subroutine                          |
 	| COS    | rs,rd    | Place cos of rs in degrees into rd       |
 	| CRS    | v1,v2    | Vector cross product, Result in VRES     |
 	| DIV    | r1,r2    | Divide r1 by r2                          |
@@ -105,6 +106,7 @@
 	| RIGHT | Orientation of Right face                       |
 	| RPOS  | Relative position to CSM                        |
 	| RVEL  | Relative velocity to CSM                        |
+	| TPOS  | Target position                                 |
 	| UP    | Orientation of Up face                          |
 	| VEL   | Current velocity                                |
 	| VRES  | Result of last vector function                  |
@@ -134,32 +136,13 @@
 [I4]
 [TB]
 	| P  | V  | N  | Program                                |
-	| 00 | 00 | 01 | Display POS^ABS and ORB^ABS data       |
-	| 00 | 00 | 02 | Display POS^TAR and ORB^TAR data       |
-	| 00 | 00 | 03 | Display POS^REL and ORB^REL data       |
-	| 00 | 00 | 12 | Display POS^TAR data in meters         |
-	| 00 | 00 | 13 | Display POS^REL data in meters         |
-	| 00 | 01 | 01 | Display POS^ABS and ascent fuel usage  |
-	| 00 | 01 | 02 | Display POS^TAR and descent fuel usage |
+	| 00 | 16 | 01 | Monitor POS^ABS and ORB^ABS data       |
+	| 00 | 16 | 02 | Monitor POS^TAR and ORB^TAR data       |
+	| 00 | 16 | 03 | Monitor POS^REL and ORB^REL data       |
+	| 00 | 16 | 12 | Display POS^TAR data in meters         |
+	| 00 | 16 | 13 | Display POS^REL data in meters         |
+	| 00 | 16 | 21 | Display POS^ABS and ascent fuel usage  |
+	| 00 | 16 | 22 | Display POS^TAR and descent fuel usage |
 [TE]
 [I-4]
-[=]
-[h2]	Core Subroutines
-[I4]
-[TB]
-	| P  | V  | N  | Program                                 |
-	| 10 | 00 | 01 | Displays POS^ABS data in R1-R9          |
-	| 10 | 00 | 02 | Displays POS^TAR data in R1-R9          |
-	| 10 | 00 | 03 | Displays POS^REL data in R1-R9          |
-	| 10 | 00 | 12 | POS^TAR data in meters in R1-R9         |
-	| 10 | 00 | 13 | POS^REL data in meters in R1-R9         |
-	| 11 | 00 | 00 | Absolute velocitys in R4-R6             |
-	| 11 | 00 | 01 | Absolute accelerations in R7-R9         |
-	| 11 | 00 | 02 | Orbital inclination and A.N. in R11,R12 |
-	| 11 | 00 | 03 | Perilune and Apolune in R13,R14         |
-	| 11 | 00 | 04 | Target incl and A.N. in R11,R12         |
-	| 11 | 00 | 05 | Relative incl and a.n. in R11,R12       |
-[TE]
-[I-4]
-[=]
 

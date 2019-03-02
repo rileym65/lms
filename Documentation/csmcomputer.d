@@ -16,6 +16,11 @@
 	|  43  |  --  | Start event clock in up mode        |
 	|  44  |  --  | Start event clock in down mode      |
 	|  45  |  --  | Stop event clock                    |
+	|  50  |  --  | Set target. reg1=long*100, reg2=lat*100 |
+	|  60  |  --  | reg1 = reg1 + reg2                      |
+	|  61  |  --  | reg1 = reg1 - reg2                      |
+	|  62  |  --  | reg1 = reg1 * reg2                      |
+	|  63  |  --  | reg1 = reg1 / reg2                      |
 [TE]
 [=]
 [TB]
@@ -58,7 +63,7 @@
 [=]
 [tb]
 	| Reg1 | Orbit altitude in kilometers * 10         |
-	| Reg2 | Launch azimuth. 90=east, 0=north          |
+	| Reg2 | Launch azimuth * 10. 900=east, 0=north    |
 [te]
 
 [--]

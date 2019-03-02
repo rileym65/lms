@@ -7,10 +7,10 @@
 ; ***** This program displays the POS^ABS and ORB^ABS data from the   *****
 ; ***** INS                                                           *****
 ; *************************************************************************
-            prog   P00V00N01
-loop000001: calp   P10V00N01           ; Display POS^ABS data
-            calp   P11V00N03           ; display perilune/apolune
-            calp   P11V00N02           ; display orbital information
+            prog   P00V16N01
+loop000001: call   posabs              ; Display POS^ABS data
+            call   periapo             ; display perilune/apolune
+            call   absorbit            ; display orbital information
             wait
             jmp    loop000001
 
@@ -23,10 +23,15 @@ loop000001: calp   P10V00N01           ; Display POS^ABS data
 ; ***** This program displays the POS^TAR and ORB^TAR data from the   *****
 ; ***** INS                                                           *****
 ; *************************************************************************
-            prog   P00V00N02
-loop000002: calp   P10V00N02           ; Display POS^TAR data
-            calp   P11V00N03           ; display perilune/apolune
-            calp   P11V00N04           ; display orbital information
+            prog   P00V16N02
+loop000002: call   postar              ; Display POS^TAR data
+            call   periapo             ; display perilune/apolune
+            call   tarorbit            ; display orbital information
+            vmov   tpos,r20            ; get target position
+            vmov   pos,r23             ; get current position
+            vsub   r20,r23             ; subtract
+            vlen   r20,r10             ; get length
+            div    r10,c1000           ; convert to kilometers
             wait                       ; Wait for next cycle
             jmp    loop000002          ; Loop back to beginning
 
@@ -36,11 +41,14 @@ loop000002: calp   P10V00N02           ; Display POS^TAR data
 ; ***** Type: Main program                                            *****
 ; ***** This program displays the data associated with INS POS^REL    *****
 ; *************************************************************************
-            prog   P00V00N03
-loop000003: calp   P10V00N03           ; Display POS^REL data
-            calp   P11V00N03           ; display perilune/apolune
-            calp   P11V00N05           ; display orbital information
+            prog   P00V16N03
+loop000003: call   posrel              ; Display POS^REL data
+            call   periapo             ; display perilune/apolune
+            call   relorbit            ; display orbital information
             mov    rotime,R15          ; Relative orbit time
+            vmov   rpos,r20            ; Get relative postion to csm
+            vlen   r20,r10             ; convert to distance
+            div    r10,c1000           ; convert to kilometers
             wait
             jmp    loop000003
 
@@ -51,8 +59,8 @@ loop000003: calp   P10V00N03           ; Display POS^REL data
 ; ***** This program displays the data associated with INS POS^TAR    *****
 ; ***** North and east are represented in meters instead of degrees   *****
 ; *************************************************************************
-            prog   P00V00N12
-loop000012: calp   P10V00N12           ; Display POS^TAR in meters
+            prog   P00V16N12
+loop000012: call   postarmet           ; Display POS^TAR in meters
             wait
             jmp    loop000012
 
@@ -63,8 +71,8 @@ loop000012: calp   P10V00N12           ; Display POS^TAR in meters
 ; ***** This program displays the data associated with INS POS^REL    *****
 ; ***** North and east are represented in meters instead of degrees   *****
 ; *************************************************************************
-            prog   P00V00N13
-loop000013: calp   P10V00N13           ; Display POS^REL in meters
+            prog   P00V16N13
+loop000013: call   posrelmet           ; Display POS^REL in meters
             wait
             jmp    loop000013
 
@@ -75,9 +83,9 @@ loop000013: calp   P10V00N13           ; Display POS^REL in meters
 ; ***** This program displays the data associated with INS POS^ABS    *****
 ; ***** Display ascent fuel info in R10,R11,R12                       *****
 ; *************************************************************************
-            prog   P00V01N01
-loop000101: calp   P10V00N01           ; Display POS^ABS data
-            calp   P11V00N03           ; Display perilune,apolune
+            prog   P00V16N21
+loop000101: call   posabs              ; Display POS^ABS data
+            call   periapo             ; display perilune/apolune
             mov    afuel,R10
             ldi    r11,5
             div    r10,r11
@@ -96,9 +104,9 @@ loop000101: calp   P10V00N01           ; Display POS^ABS data
 ; ***** distances to target in meters as well as the descent fuel     *****
 ; ***** remaining, burn rate and seconds of fuel remaining            *****
 ; *************************************************************************
-            prog   P00V01N02
-loop000102: calp   P10V00N12           ; Display POS^TAR in meters
-            calp   P11V00N03           ; Display perilune,apolune
+            prog   P00V16N22
+loop000102: call   postarmet           ; Display POS^TAR in meters
+            call   periapo             ; display perilune/apolune
             mov    latvel,r6           ; Display latitude velocity
             mov    latacc,r9           ; Display latitude acceleration
             mov    dfuel,r12           ; Display remaining descent fuel
@@ -107,6 +115,13 @@ loop000102: calp   P10V00N12           ; Display POS^TAR in meters
             ldi    R21,15              ; 15kg/s is maximum thrust
             mul    R20,R21             ; Now have fuel burn rate
             mov    R20,R11             ; Show burn rate in register 11
+
+            vmov   tpos,r20            ; get target position
+            vmov   pos,r23             ; get current position
+            vsub   r20,r23             ; subtract
+            vlen   r20,r13             ; get length
+            div    r13,c1000           ; convert to kilometers
+
             jeq    R11,ZERO,notrun     ; jump if engine not running
             mov    R12,R10             ; get Descent fuel
             div    R10,R11             ; divide by burn rate to get seconds
@@ -130,54 +145,46 @@ looptest:   norm   pos,r20
             end
 
 ; *************************************************************************
-; ***** Prog: 10   Verb: 00   Noun: 01                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** This subroutine displays the data associated with INS POS^ABS *****
 ; *************************************************************************
-            prog   P10V00N01
-            mov    alt,r1
+posabs:     mov    alt,r1
             mov    east,r2
             mov    nrth,r3
-            calp   P11V00N00               ; display absolute velocities
-            calp   P11V00N01               ; display absolute accelerations
+            call   absvel                  ; display absolute velocities
+            call   absacc                  ; display absolute accelerations
             ret
 
 ; *************************************************************************
-; ***** Prog: 10   Verb: 00   Noun: 02                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** This subroutine displays the data associated with INS POS^TAR *****
 ; *************************************************************************
-            prog   P10V00N02
-            mov    alt,r1
+postar:     mov    alt,r1
             mov    tlng,r2
             mov    tlat,r3
-            calp   P11V00N00               ; display absolute velocities
-            calp   P11V00N01               ; display absolute accelerations
+            call   absvel                  ; display absolute velocities
+            call   absacc                  ; display absolute accelerations
             ret
 
 ; *************************************************************************
-; ***** Prog: 10   Verb: 00   Noun: 03                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** This subroutine displays the data associated with INS POS^REL *****
 ; *************************************************************************
-            prog   P10V00N03
-            mov    ralt,r1
+posrel:     mov    ralt,r1
             mov    rlng,r2
             mov    rlat,r3
             mov    ravel,r4
             mov    revel,r5
             mov    rnvel,r6
-            calp   P11V00N01               ; display absolute accelerations
+            call   absacc                  ; display absolute accelerations
             ret
 
 ; *************************************************************************
-; ***** Prog: 10   Verb: 00   Noun: 12                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** This subroutine displays the data associated with INS POS^TAR *****
 ; ***** North and east are represented in meters instead of degrees   *****
 ; *************************************************************************
-            prog   P10V00N12
-            mov    alt,r1
+postarmet:  mov    alt,r1
             mov    nrth,r20
             cos    r20,r20
             mul    r20,metr
@@ -185,74 +192,64 @@ looptest:   norm   pos,r20
             mul    r2,r20
             mov    tlat,r3
             mul    r3,metr
-            calp   P11V00N00               ; display absolute velocities
-            calp   P11V00N01               ; display absolute accelerations
+            call   absvel                  ; display absolute velocities
+            call   absacc                  ; display absolute accelerations
             ret
 
 ; *************************************************************************
-; ***** Prog: 10   Verb: 00   Noun: 13                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** This subroutine displays the data associated with INS POS^REL *****
 ; ***** North and east are represented in meters instead of degrees   *****
 ; *************************************************************************
-            prog   P10V00N13
-            vmov   rpos,r20
+posrelmet:  vmov   rpos,r20
             mov    r20,r1
             mov    r21,r2
             mov    r22,r3
             mov    ravel,r4
             mov    revel,r5
             mov    rnvel,r6
-            calp   P11V00N01               ; display absolute accelerations
+            call   absacc                  ; display absolute accelerations
             ret
 
 
 ; *************************************************************************
-; ***** Prog: 11   Verb: 00   Noun: 00                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** Display abosulute altitude, east, and north velocities        *****
 ; ***** Into regs 4,5,6                                               *****
 ; *************************************************************************
-            prog   P11V00N00
-            mov    AVEL,R4
+absvel:     mov    AVEL,R4
             mov    EVEL,R5
             mov    NVEL,R6
             ret
 
 
 ; *************************************************************************
-; ***** Prog: 11   Verb: 00   Noun: 01                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** Display abosulute altitude, east, and north Accelerations     *****
 ; ***** Into regs 7,8,9                                               *****
 ; *************************************************************************
-            prog   P11V00N01
-            mov    AACC,R7
+absacc:     mov    AACC,R7
             mov    EACC,R8
             mov    NACC,R9
             ret
 
 
 ; *************************************************************************
-; ***** Prog: 11   Verb: 00   Noun: 02                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** Display orbital inclination and longitude of ascending node   *****
 ; ***** Into regs 11,12                                               *****
 ; *************************************************************************
-            prog   P11V00N02
-            mov    ANOD,R11
+absorbit:   mov    ANOD,R11
             mov    INCL,R12
             ret
 
 
 ; *************************************************************************
-; ***** Prog: 11   Verb: 00   Noun: 03                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** Display Perilune in kilometers in register 13                 *****
 ; ***** Display Apolune in kilometers in register 14                  *****
 ; *************************************************************************
-            prog   P11V00N03
-            ldi    R20,1000
+periapo:    ldi    R20,1000
             mov    PERL,R13
             sub    R13,GRND
             div    R13,R20
@@ -264,31 +261,27 @@ looptest:   norm   pos,r20
 
 
 ; *************************************************************************
-; ***** Prog: 11   Verb: 00   Noun: 04                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** Display relative inclination and longitude of ascending node  *****
 ; ***** to target landing site Into regs 11,12                        *****
 ; *************************************************************************
-            prog   P11V00N04
-            mov    TANOD,R11
+tarorbit:   mov    TANOD,R11
             mov    TINCL,R12
             ret
 
 
 ; *************************************************************************
-; ***** Prog: 11   Verb: 00   Noun: 05                                *****
 ; ***** Type: Subroutine                                              *****
 ; ***** Display relative inclination and longitude of ascending node  *****
 ; ***** to CSM Into regs 11,12                                        *****
 ; *************************************************************************
-            prog   P11V00N05
-            mov    RANOD,R11
+relorbit:   mov    RANOD,R11
             mov    RINCL,R12
             ret
 
 
             prog   P60V00N00
-p60lp1:     calp   P10V00N13            ; Show POS^REL data in meters
+p60lp1:     call   posrelmet            ; Display POS^REL in meters
             vlen   rpos,r20             ; get distance from CSM
             ldi    r21,50               ; need to compare to 50 meters
             jge    r20,r21,p60l1        ; jump if so
@@ -296,7 +289,7 @@ p60lp1:     calp   P10V00N13            ; Show POS^REL data in meters
             jmp    p60lp1               ; loop back
 p60l1:      mov    c1,rcsth             ; set rcs translation throttle to low
             mov    c1,rcsd              ; activate down rcs thruster
-p60lp2:     calp   P10V00N13            ; Show POS^REL data in meters
+p60lp2:     call   posrelmet           ; Display POS^REL in meters
             vlen   rvel,r20             ; get length of velocity vector
             ldi    r21,3                ; need 0.3
             div    r21,c10              ; r21 now has 0.3

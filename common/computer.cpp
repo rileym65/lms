@@ -14,13 +14,16 @@
 #define MODE_INP_P_2     2
 #define MODE_INP_V_1     3
 #define MODE_INP_V_2     4
-#define MODE_INP_N_1     5
-#define MODE_INP_N_2     6
+#define MODE_INP_V_3     5
+#define MODE_INP_N_1     6
+#define MODE_INP_N_2     7
+#define MODE_INP_N_3     8
 
 #define ERR_NO_PRGM      1001
 #define ERR_STK_OVER     1002
 #define ERR_STK_UNDER    1003
 #define ERR_DIV0         1004
+#define ERR_INV_INST     1005
 
 char compOutput[128];
 
@@ -75,14 +78,16 @@ void Computer::Load(FILE* file) {
       if (check != Check()) {
         run = false;
         }
-      running = run;
+      p_running = run;
       return;
       }
     else if (startsWith(pline,"program ")) prog = atoi(nw(pline));
     else if (startsWith(pline,"verb ")) verb = atoi(nw(pline));
     else if (startsWith(pline,"noun ")) noun = atoi(nw(pline));
-    else if (startsWith(pline,"sp ")) sp = atoi(nw(pline));
-    else if (startsWith(pline,"pc ")) pc = atoi(nw(pline));
+    else if (startsWith(pline,"sp ")) p_sp = atoi(nw(pline));
+    else if (startsWith(pline,"pc ")) p_pc = atoi(nw(pline));
+    else if (startsWith(pline,"vnsp ")) vn_sp = atoi(nw(pline));
+    else if (startsWith(pline,"vnpc ")) vn_pc = atoi(nw(pline));
     else if (startsWith(pline,"check ")) check = atoi(nw(pline));
     else if (startsWith(pline,"running true")) run = true;
     else if (startsWith(pline,"running false")) run = false;
@@ -96,7 +101,13 @@ void Computer::Load(FILE* file) {
       pline = nw(pline);
       i = atoi(pline);
       pline = nw(pline);
-      stack[i] = atoi(pline);
+      p_stack[i] = atoi(pline);
+      }
+    else if (startsWith(pline,"vnstack ")) {
+      pline = nw(pline);
+      i = atoi(pline);
+      pline = nw(pline);
+      vn_stack[i] = atoi(pline);
       }
     else {
       Write("Unknown line found in save file: ");
@@ -112,12 +123,16 @@ void Computer::Save(FILE* file) {
   fprintf(file,"  Program %d%s",prog,LE);
   fprintf(file,"  Verb %d%s",verb,LE);
   fprintf(file,"  Noun %d%s",noun,LE);
-  fprintf(file,"  SP %d%s",sp,LE);
-  fprintf(file,"  PC %d%s",pc,LE);
+  fprintf(file,"  SP %d%s",p_sp,LE);
+  fprintf(file,"  PC %d%s",p_pc,LE);
+  fprintf(file,"  VNSP %d%s",vn_sp,LE);
+  fprintf(file,"  VNPC %d%s",vn_pc,LE);
   if (running) fprintf(file,"  Running True%s",LE);
     else fprintf(file,"  Running False%s",LE);
-  for (i=0; i<sp; i++)
-    fprintf(file,"  Stack %d %d%s",i,stack[i],LE);
+  for (i=0; i<p_sp; i++)
+    fprintf(file,"  Stack %d %d%s",i,p_stack[i],LE);
+  for (i=0; i<p_sp; i++)
+    fprintf(file,"  VNStack %d %d%s",i,vn_stack[i],LE);
   for (i=0; i<256; i++)
     if (regs[i] != 0.0)
       fprintf(file,"  Register %d %.18f%s",i,regs[i],LE);
@@ -130,13 +145,17 @@ void Computer::Reset() {
   prog = 0;
   verb = 0;
   noun = 1;
-  running = false;
+  p_running = false;
+  vn_running = false;
   input = false;
   inputMode = 0;
   err = false;
-  pc = 0;
-  sp = 0;
+  p_pc = 0;
+  p_sp = 0;
   for (i=0; i<256; i++) regs[i] = 0;
+  vn_pc = 0;
+  vn_sp = 0;
+  vn_running = false;
   }
 
 Boolean Computer::loadCoreFile() {
@@ -224,7 +243,10 @@ char* Computer::Verb() {
     strcpy(compOutput,"__");
     }
   else if (input && inputMode == MODE_INP_V_2) {
-    sprintf(compOutput,"%d_",verb / 10);
+    sprintf(compOutput,"%d_",verbIn / 10);
+    }
+  else if (input && inputMode == MODE_INP_V_3) {
+    sprintf(compOutput,"%02d",verbIn);
     }
   else {
     sprintf(compOutput,"%02d",verb);
@@ -237,7 +259,10 @@ char* Computer::Noun() {
     strcpy(compOutput,"__");
     }
   else if (input && inputMode == MODE_INP_N_2) {
-    sprintf(compOutput,"%d_",noun / 10);
+    sprintf(compOutput,"%d_",nounIn / 10);
+    }
+  else if (input && inputMode == MODE_INP_N_3) {
+    sprintf(compOutput,"%02d",nounIn);
     }
   else {
     sprintf(compOutput,"%02d",noun);
@@ -348,6 +373,8 @@ void Computer::write(UInt16 addr,Double value) {
   }
 
 Vector Computer::readVector(UInt16 addr) {
+  Vector v;
+  Double x,y,z;
   Spacecraft* sc;
   sc = (Spacecraft*)vehicle;
   if ((addr & 0xf00) == 0x300) {
@@ -363,6 +390,14 @@ Vector Computer::readVector(UInt16 addr) {
       case 0x08: return vres;
       case 0x09: return sc->RelVel();
       case 0x0a: return sc->RelPos();
+      case 0x0b:
+                 z = cos(mission->TargetLatitude() * DR) * GROUND;
+                 x = sin(mission->TargetLongitude() * DR) * z;
+                 y = -cos(mission->TargetLongitude() * DR) * z;
+                 z = sin(mission->TargetLatitude() * DR) * GROUND;
+                 v = Vector(x,y,z);
+                 v += Moon->Position();
+                 return v;
       }
     }
   if ((addr & 0xf00) == 0x100) {
@@ -379,6 +414,16 @@ void Computer::writeVector(UInt16 addr, Vector v) {
     regs[addr+1] = v.Y();
     regs[addr+2] = v.Z();
     }
+  }
+
+void Computer::Push(UInt32 v) {
+  if (*sp >= 255) {
+    *running = false;
+    err = true;
+    regs[13] = ERR_STK_OVER;
+    return;
+    }
+  stack[*sp++] = v;
   }
 
 Boolean Computer::exec(UInt32 cmd) {
@@ -402,10 +447,10 @@ Boolean Computer::exec(UInt32 cmd) {
     case 0x03000000:                                         /* WAIT */
          return false;
     case 0x04000000:                                         /* JMP */
-         pc = cmd & 0xffffff;
+         *pc = cmd & 0xffffff;
          return true;
     case 0x05000000:                                         /* END */
-         running = false;
+         *running = false;
          return false;
     case 0x06000000:                                         /* SUB */
          d1 = read(arg1) - read(arg2);
@@ -414,32 +459,34 @@ Boolean Computer::exec(UInt32 cmd) {
     case 0x07000000:                                         /* CALP */
          i1 = findProgram(cmd & 0xffffff);
          if (i1 == -1) {
-           running = false;
+           *running = false;
            err = true;
            regs[13] = ERR_NO_PRGM;
            return false;
            }
          i1++;
-         if (sp >= 255) {
-           running = false;
+         if (*sp >= 255) {
+           *running = false;
            err = true;
            regs[13] = ERR_STK_OVER;
            return false;
            }
-         stack[sp++] = pc;
-         pc = i1;
+         stack[*sp] = *pc;
+         *sp = *sp + 1;
+         *pc = i1;
          return true;
     case 0x08000000:                                        /* RET */
-         if (sp == 0) {
-           running = false;
+         if (*sp == 0) {
+           *running = false;
            err = true;
            regs[13] = ERR_STK_UNDER;
            return false;
            }
-         pc = stack[--sp];
+         *sp = *sp - 1;
+         *pc = stack[*sp];
          return true;
     case 0x09000000:                                       /* END */
-         running = false;
+         *running = false;
          return false;
     case 0x0a000000:                                       /* ADD */
          d1 = read(arg1) + read(arg2);
@@ -454,7 +501,7 @@ Boolean Computer::exec(UInt32 cmd) {
          a2 = read(arg2);
          if (a2 == 0) {
            err = true;
-           running = false;
+           *running = false;
            regs[13] = ERR_DIV0;
            return false;
            }
@@ -464,7 +511,7 @@ Boolean Computer::exec(UInt32 cmd) {
            return true;
            }
     case 0x0d000000:                                       /* LDI */
-         a1 = rom[pc++];
+         a1 = rom[(*pc)++];
          write(arg1, a1);
          return true;
     case 0x0e000000:                                       /* NEG */
@@ -475,38 +522,38 @@ Boolean Computer::exec(UInt32 cmd) {
     case 0x0f000000:                                       /* JEQ */
          a1 = read(arg1);
          a2 = read(arg2);
-         i1 = rom[pc++];
-         if (a1 == a2) pc = i1;
+         i1 = rom[(*pc)++];
+         if (a1 == a2) *pc = i1;
          return true;
     case 0x10000000:                                       /* JNE */
          a1 = read(arg1);
          a2 = read(arg2);
-         i1 = rom[pc++];
-         if (a1 != a2) pc = i1;
+         i1 = rom[(*pc)++];
+         if (a1 != a2) *pc = i1;
          return true;
     case 0x11000000:                                       /* JG  */
          a1 = read(arg1);
          a2 = read(arg2);
-         i1 = rom[pc++];
-         if (a1 > a2) pc = i1;
+         i1 = rom[(*pc)++];
+         if (a1 > a2) *pc = i1;
          return true;
     case 0x12000000:                                       /* JGE */
          a1 = read(arg1);
          a2 = read(arg2);
-         i1 = rom[pc++];
-         if (a1 >= a2) pc = i1;
+         i1 = rom[(*pc)++];
+         if (a1 >= a2) *pc = i1;
          return true;
     case 0x13000000:                                       /* JL  */
          a1 = read(arg1);
          a2 = read(arg2);
-         i1 = rom[pc++];
-         if (a1 < a2) pc = i1;
+         i1 = rom[(*pc)++];
+         if (a1 < a2) *pc = i1;
          return true;
     case 0x14000000:                                       /* JLE */
          a1 = read(arg1);
          a2 = read(arg2);
-         i1 = rom[pc++];
-         if (a1 <= a2) pc = i1;
+         i1 = rom[(*pc)++];
+         if (a1 <= a2) *pc = i1;
          return true;
     case 0x15000000:                                       /* COS */
          a1 = read(arg1) * DR;
@@ -597,9 +644,23 @@ Boolean Computer::exec(UInt32 cmd) {
          a1 = read(arg2);
          vres = v1.Scale(a1);
          return true;
+    case 0x27000000:                                         /* CALL */
+         if (*sp >= 255) {
+           *running = false;
+           err = true;
+           regs[13] = ERR_STK_OVER;
+           return false;
+           }
+         stack[*sp] = *pc;
+         *sp = *sp + 1;
+         *pc = cmd & 0xffffff;
+         return true;
     default:
-         running = false;
+         *running = false;
          err = true;
+         regs[13] = ERR_INV_INST;
+         regs[14] = (cmd & 0xff000000) >> 24;
+         regs[15] = *pc-1;
          return false;
     }
   }
@@ -609,16 +670,38 @@ void Computer::Cycle() {
   Int16 count;
   flag = true;
   count = 100;
-  if (!running) flag = false;
+  running = &p_running;
+  if (!*running) flag = false;
+  stack = p_stack;
+  sp = &p_sp;
+  pc = &p_pc;
   while (flag) {
     if ((UInt32)pc >= romLength) {
-      running = false;
+      *running = false;
       flag = false;
       err = true;
-      return;
       }
-    flag = exec(rom[pc++]);
-    if (--count <= 0) flag = false;
+    else {
+      flag = exec(rom[(*pc)++]);
+      if (--count <= 0) flag = false;
+      }
+    }
+  count = 50;
+  flag = true;
+  stack = vn_stack;
+  sp = &vn_sp;
+  pc = &vn_pc;
+  running = &vn_running;
+  if (!*running) flag = false;
+  while (flag) {
+    if ((UInt32)vn_pc >= romLength) {
+      *running = false;
+      flag = false;
+      }
+    else {
+      flag = exec(rom[vn_pc++]);
+      if (--count <= 0) flag = false;
+      }
     }
   }
 
@@ -637,40 +720,69 @@ Int32 Computer::findProgram(UInt32 code) {
 
 void Computer::ProcessKey(Int32 key) {
   UInt32 code;
-  if (key == 'g' && inputMode == 0 && !running) {
+  if ((key == 13 || key == 10 || key == 'e') &&
+      (inputMode == MODE_INP_V_3 || inputMode == MODE_INP_N_3)) {
+    if (inputMode == MODE_INP_V_3) verb = verbIn;
+    if (inputMode == MODE_INP_N_3) noun = nounIn;
+    inputMode = 0;
+    input = false;
     err = false;
     code = 0x00000000;
     code |= (prog << 16);
     code |= (verb << 8);
     code |= noun;
-    pc = findProgram(code);
-    if (pc == -1) {
-      running = false;
+    vn_pc = findProgram(code);
+    if (vn_pc == -1) {
+      vn_running = false;
       err = true;
       regs[13] = ERR_NO_PRGM;
       }
     else {
-      running = true;
-      sp = 0;
+      vn_running = true;
+      vn_sp = 0;
       }
     }
-  if (key == 'p' && inputMode == 0) {
-    running = false;
-    err = false;
-    input = true;
-    inputMode = MODE_INP_P_1;
-    }
+//  if (key == 'p' && inputMode == 0) {
+//    p_running = false;
+//    err = false;
+//    input = true;
+//    inputMode = MODE_INP_P_1;
+//    }
   if (key == 'v' && inputMode == 0) {
-    running = false;
+    verbIn = 0;
+    vn_running = false;
     err = false;
     input = true;
     inputMode = MODE_INP_V_1;
     }
   if (key == 'n' && inputMode == 0) {
-    running = false;
+    nounIn = 0;
+    vn_running = false;
     err = false;
     input = true;
     inputMode = MODE_INP_N_1;
+    }
+  if (key == 'n' && inputMode == MODE_INP_V_3) {
+    verb = verbIn;
+    nounIn = 0;
+    vn_running = false;
+    err = false;
+    input = true;
+    inputMode = MODE_INP_N_1;
+    }
+  if (key == 'c') {
+    if (inputMode == MODE_INP_V_1 ||
+        inputMode == MODE_INP_V_2 ||
+        inputMode == MODE_INP_V_3) {
+      verbIn = 0;
+      inputMode = MODE_INP_V_1;
+      }
+    if (inputMode == MODE_INP_N_1 ||
+        inputMode == MODE_INP_N_2 ||
+        inputMode == MODE_INP_N_3) {
+      nounIn = 0;
+      inputMode = MODE_INP_N_1;
+      }
     }
   if (key >= '0' && key <= '9') {
     switch (inputMode) {
@@ -684,22 +796,20 @@ void Computer::ProcessKey(Int32 key) {
            input = false;
            break;
       case MODE_INP_V_1:
-           verb = (key - '0') * 10;
+           verbIn = (key - '0') * 10;
            inputMode = MODE_INP_V_2;
            break;
       case MODE_INP_V_2:
-           verb += (key - '0');
-           inputMode = 0;
-           input = false;
+           verbIn += (key - '0');
+           inputMode = MODE_INP_V_3;
            break;
       case MODE_INP_N_1:
-           noun = (key - '0') * 10;
+           nounIn = (key - '0') * 10;
            inputMode = MODE_INP_N_2;
            break;
       case MODE_INP_N_2:
-           noun += (key - '0');
-           inputMode = 0;
-           input = false;
+           nounIn += (key - '0');
+           inputMode = MODE_INP_N_3;
            break;
       }
     }
