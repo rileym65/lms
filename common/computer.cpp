@@ -44,6 +44,7 @@ UInt32 defaultprog[] = {
 
 Computer::Computer(Vehicle* v) {
   vehicle = v;
+  ins = vehicle->GetIns();
   rom = NULL;
   romLength = 0;
   Reset();
@@ -289,23 +290,23 @@ Double Computer::read(UInt16 addr) {
   if ((addr & 0xf00) == 0x200) {
     switch (addr & 0xff) {
       case 0x00: return 0;
-      case 0x01: return sc->Altitude();
+      case 0x01: return ins->Altitude();
       case 0x02: return vehicle->VelocityAltitude();
       case 0x03: return vehicle->AccelAltitude();
-      case 0x04: return vehicle->Longitude();
+      case 0x04: return ins->Longitude();
       case 0x05: return vehicle->VelocityEast();
       case 0x06: return vehicle->AccelEast();
-      case 0x07: return vehicle->Latitude();
+      case 0x07: return ins->Latitude();
       case 0x08: return vehicle->VelocityNorth();
       case 0x09: return vehicle->AccelNorth();
-      case 0x0a: return sc->Periapsis();
-      case 0x0b: return sc->Apoapsis();
-      case 0x0c: return vehicle->Orbiting()->Radius();
-      case 0x0d: return sc->AscendingNode();
-      case 0x0e: return sc->Inclination();
+      case 0x0a: return ins->Periapsis();
+      case 0x0b: return ins->Apoapsis();
+      case 0x0c: return ins->Orbiting()->Radius();
+      case 0x0d: return ins->AscendingNode();
+      case 0x0e: return ins->Inclination();
       case 0x0f: return sc->RelAltitude();
-      case 0x10: return sc->TargetLongitude();
-      case 0x11: return sc->TargetLatitude();
+      case 0x10: return ins->TarLongitude();
+      case 0x11: return ins->TarLatitude();
       case 0x12: return sc->RelLongitude();
       case 0x13: return sc->RelLatitude();
       case 0x14: return sc->RelAltitude();
@@ -333,10 +334,22 @@ Double Computer::read(UInt16 addr) {
       case 0x2a: return vehicle->Roll();
       case 0x2b: return vehicle->Pitch();
       case 0x2c: return vehicle->Yaw();
-      case 0x2d: return vehicle->OrbitTime();
+      case 0x2d: return ins->OrbitTime();
       case 0x2e: return vehicle->LatitudeVelocity();
       case 0x2f: return vehicle->LatitudeAcceleration();
       case 0x30: return sc->RelOrbitTime();
+      case 0x31: return clockUt;
+      case 0x32: return clockGe;
+      case 0x33: return ins->ClockAp();
+      case 0x34: return ins->ClockPe();
+      case 0x35: return sc->Fuel();
+      case 0x36: return ins->TrueAnomaly();
+      case 0x37: return ins->MeanAnomaly();
+      case 0x38: return ins->EccentricAnomaly();
+      case 0x39: return 9.80665;
+      case 0x3a: return sc->Isp();
+      case 0x3b: return sc->RcsIsp();
+      case 0x3c: return sc->FuelUsed();
       }
     }
   if ((addr & 0xf00) == 0x600) {
@@ -431,7 +444,7 @@ Boolean Computer::exec(UInt32 cmd) {
   UInt16 arg2;
   Double d1;
   Double a1,a2;
-  Int32 i1;
+  Int32 i1,i2;
   Vector v1,v2,v3;
   arg1 = (cmd >> 12) & 0xfff;
   arg2 = cmd & 0xfff;
@@ -654,6 +667,30 @@ Boolean Computer::exec(UInt32 cmd) {
          stack[*sp] = *pc;
          *sp = *sp + 1;
          *pc = cmd & 0xffffff;
+         return true;
+    case 0x28000000:                                         /* INT */
+         a1 = read(arg1);
+         a1 = floor(a1);
+         write(arg2,a1);
+         return true;
+    case 0x29000000:                                         /* MOD */
+         i1 = floor(read(arg1));
+         i2 = floor(read(arg2));
+         if (i2 == 0) {
+           err = true;
+           *running = false;
+           regs[13] = ERR_DIV0;
+           return false;
+           }
+         else {
+           d1 = i1 % i2;
+           write(arg1, d1);
+           return true;
+           }
+    case 0x2a000000:                                         /* LOG */
+         a1 = read(arg1);
+         d1 = log(a1);
+         write(arg1, d1);
          return true;
     default:
          *running = false;

@@ -253,6 +253,9 @@
 ../common/helpers.o: ../common/types.h ../common/helpers.h ../common/helpers.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/helpers.cpp -o ../common/helpers.o
 
+../common/ins.o: ../common/types.h ../common/ins.h ../common/ins.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/ins.cpp -o ../common/ins.o
+
 ../common/lander.o: ../common/types.h ../common/lander.h ../common/lander.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/lander.cpp -o ../common/lander.o
 

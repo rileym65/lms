@@ -46,25 +46,25 @@ Booster* CommandModule::LaunchVehicle() {
 
 void CommandModule::Ins() {
   Spacecraft::Ins();
-  if ((velocity - orbiting->Velocity()).Length() > highestVelocity)
-    highestVelocity = (velocity - orbiting->Velocity()).Length();
+  if ((velocity - Orbiting()->Velocity()).Length() > highestVelocity)
+    highestVelocity = (velocity - Orbiting()->Velocity()).Length();
   if ((position - Earth->Position()).Length()-Earth->Radius() > farthestFromEarth)
     farthestFromEarth = (position - Earth->Position()).Length()-Earth->Radius();
-  if (orbiting == Earth) {
+  if (Orbiting() == Earth) {
     if (inAtmosphere) {
-      if (radius  > orbiting->Radius() + 100000) inAtmosphere = 0;
+      if (Radius()  > Orbiting()->Radius() + 100000) inAtmosphere = 0;
       }
     else {
-      if (radius <= orbiting->Radius() + 100000) {
+      if (Radius() <= Orbiting()->Radius() + 100000) {
         inAtmosphere = 0xff;
         clockRent = clockGe;
         }
       }
     }
-  if (orbiting == Moon && clockMSoi == 0) {
+  if (Orbiting() == Moon && clockMSoi == 0) {
     clockMSoi = clockGe;
     }
-  if (orbiting == Earth && clockESoi == 0 && clockMSoi != 0) {
+  if (Orbiting() == Earth && clockESoi == 0 && clockMSoi != 0) {
     clockESoi = clockGe;
     }
   }
@@ -77,13 +77,13 @@ void CommandModule::capsuleSep() {
   faceUp = booster->FaceUp();
   faceLeft = booster->FaceLeft();
   faceFront = booster->FaceFront();
-  latitude = booster->Latitude();
-  longitude = booster->Longitude();
-  apoapsis = booster->Apoapsis();
-  periapsis = booster->Periapsis();
-  radius = booster->Radius();
-  inclination = booster->Inclination();
-  ascendingNode = booster->AscendingNode();
+  Latitude(booster->Latitude());
+  Longitude(booster->Longitude());
+  ins->Apoapsis(booster->Apoapsis());
+  ins->Periapsis(booster->Periapsis());
+  Radius(booster->Radius());
+  ins->Inclination(booster->Inclination());
+  ins->AscendingNode(booster->AscendingNode());
   launchVehicleJettisoned = true;
   clockBsp = clockGe;
   }
@@ -139,7 +139,7 @@ Matrix m;
     vl = Vector(vu.Y(),-vu.X(), 0).Norm().Scale(408);
     vel = velocity + vl;
 //    alt = position.Length() - GROUND;
-    alt = position.Length() - orbiting->Radius();
+    alt = position.Length() - Orbiting()->Radius();
     thrust = Vector(0,0,0);
     drag = Vector(0,0,0);
     air = AirDensity(alt);
@@ -268,8 +268,8 @@ Matrix m;
     faceUp = booster->FaceUp();
     faceLeft = booster->FaceLeft();
     faceFront = booster->FaceFront();
-    latitude = booster->Latitude();
-    longitude = booster->Longitude();
+    Latitude(booster->Latitude());
+    Longitude(booster->Longitude());
     }
 //  computer->Cycle();
 
@@ -282,18 +282,18 @@ void CommandModule::Cutoff() {
     burn[numBurns-1].end = clockGe;
     burn[numBurns-1].fuelUsed -= Fuel();
     }
-  if (orbiting == Moon) {
-    if (ignitionEccentricity >= 1 && eccentricity <1) clockLoi = ignitionTime;
-    if (ignitionEccentricity <1 && eccentricity >= 1) clockTei = ignitionTime;
+  if (Orbiting() == Moon) {
+    if (ignitionEccentricity >= 1 && ins->Eccentricity() <1) clockLoi = ignitionTime;
+    if (ignitionEccentricity <1 && ins->Eccentricity() >= 1) clockTei = ignitionTime;
     }
-  if (orbiting == Earth) {
-    if (ignitionApoapsis < 200000000 && apoapsis > 350000000) clockTli = ignitionTime;
+  if (Orbiting() == Earth) {
+    if (ignitionApoapsis < 200000000 && ins->Apoapsis() > 350000000) clockTli = ignitionTime;
     }
   }
 
 Double CommandModule::Apoapsis() {
   if (!launchVehicleJettisoned) return booster->Apoapsis();
-  return apoapsis;
+  return ins->Apoapsis();
   }
 
 Boolean CommandModule::Armed() {
@@ -302,7 +302,7 @@ Boolean CommandModule::Armed() {
 
 Double CommandModule::AscendingNode() {
   if (!launchVehicleJettisoned) return booster->AscendingNode();
-  return ascendingNode;
+  return ins->AscendingNode();
   }
 
 Double CommandModule::CommandModuleRcsIsp(Double d) {
@@ -383,9 +383,9 @@ void CommandModule::Ignition() {
       burn[numBurns].fuelUsed = Fuel();
       numBurns++;
       ignitionTime = clockGe;
-      ignitionApoapsis = apoapsis;
-      ignitionPeriapsis = periapsis;
-      ignitionEccentricity = eccentricity;
+      ignitionApoapsis = ins->Apoapsis();
+      ignitionPeriapsis = ins->Periapsis();
+      ignitionEccentricity = ins->Eccentricity();
       deltaV = 0;
       }
     }
@@ -393,7 +393,7 @@ void CommandModule::Ignition() {
 
 Double CommandModule::Inclination() {
   if (!launchVehicleJettisoned) return booster->Inclination();
-  return inclination;
+  return ins->Inclination();
   }
 
 Booster* CommandModule::LaunchVehicle(Booster* lv) {
@@ -465,7 +465,7 @@ Byte CommandModule::NumStages() {
 
 Double CommandModule::OrbitTime() {
   if (!launchVehicleJettisoned) return booster->OrbitTime();
-  return orbitTime;
+  return ins->OrbitTime();
   }
 
 Double CommandModule::ParachuteDeployment() {
@@ -479,7 +479,7 @@ void CommandModule::ParachuteDiameter(Double d) {
 
 Double CommandModule::Periapsis() {
   if (!launchVehicleJettisoned) return booster->Periapsis();
-  return periapsis;
+  return ins->Periapsis();
   }
 
 Double CommandModule::PitchRate() {
@@ -499,13 +499,12 @@ Double CommandModule::RcsIsp() {
 
 Double CommandModule::Radius() {
   if (!launchVehicleJettisoned) return booster->Radius();
-  return radius;
+  return ins->Radius();
   }
 
 Double CommandModule::Radius(Double d) {
   if (!launchVehicleJettisoned) return booster->Radius(d);
-  radius = d;
-  return radius;
+  return ins->Radius(d);
   }
 
 Double CommandModule::RateOfClimb() {
@@ -735,7 +734,7 @@ void CommandModule::ProcessKey(Int32 key) {
       clockLExt = clockGe;
       }
     if (key == 'P' && parachuteDeployment == 0 &&
-        radius <= orbiting->Radius()+5000) {
+        Radius() <= Orbiting()->Radius()+5000) {
       parachuteDeployment = 0.01;
       clockPara = clockGe;
       }
@@ -749,9 +748,9 @@ void CommandModule::ProcessKey(Int32 key) {
          burn[numBurns].fuelUsed = Fuel();
          numBurns++;
          ignitionTime = clockGe;
-         ignitionApoapsis = apoapsis;
-         ignitionPeriapsis = periapsis;
-         ignitionEccentricity = eccentricity;
+         ignitionApoapsis = ins->Apoapsis();
+         ignitionPeriapsis = ins->Periapsis();
+         ignitionEccentricity = ins->Eccentricity();
          deltaV = 0;
          }
        else if (retroModuleDryWeight > 0) {
@@ -763,9 +762,9 @@ void CommandModule::ProcessKey(Int32 key) {
          burn[numBurns].fuelUsed = Fuel();
          numBurns++;
          ignitionTime = clockGe;
-         ignitionApoapsis = apoapsis;
-         ignitionPeriapsis = periapsis;
-         ignitionEccentricity = eccentricity;
+         ignitionApoapsis = ins->Apoapsis();
+         ignitionPeriapsis = ins->Periapsis();
+         ignitionEccentricity = ins->Eccentricity();
          }
       }
     if (key == 'M' && docked && lm != NULL) {
@@ -779,12 +778,12 @@ void CommandModule::ProcessKey(Int32 key) {
     if (key == 'i' && throttle > 0) {
       Cutoff();
 //      if (serviceModuleDryWeight > 0) throttle = 0;
-//      if (orbiting == Moon) {
-//        if (ignitionEccentricity >= 1 && eccentricity <1) clockLoi = ignitionTime;
-//        if (ignitionEccentricity <1 && eccentricity >= 1) clockTei = ignitionTime;
+//      if (Orbiting() == Moon) {
+//        if (ignitionEccentricity >= 1 && ins->Eccentricity() <1) clockLoi = ignitionTime;
+//        if (ignitionEccentricity <1 && ins->Eccentricity() >= 1) clockTei = ignitionTime;
 //        }
-//      if (orbiting == Earth) {
-//        if (ignitionApoapsis < 200000000 && apoapsis > 350000000) clockTli = ignitionTime;
+//      if (Orbiting() == Earth) {
+//        if (ignitionApoapsis < 200000000 && ins->Apoapsis() > 350000000) clockTli = ignitionTime;
 //        }
       }
     if (key == 'f' && RcsFbMode() != 'F') RcsFbMode('F');

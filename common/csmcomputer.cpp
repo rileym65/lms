@@ -10,8 +10,10 @@
 #define P11_HEADING   1
 #define P11_CLOCKGE   2
 #define P11_TARGETVEL 3
+#define P11_LASTROC   4
 #define P11_ORBIT    11
 #define P11_AZIMUTH  12
+#define P11_ASCMODE  13
 
 CsmComputer::CsmComputer(CommandModule* c) {
   prog = 0;
@@ -63,6 +65,24 @@ void CsmComputer::_reg3(Int32 i) {
     sprintf(dreg3,"%06d",abs(reg3));
     dreg3[0] = (reg3 >= 0) ? '+' : '-';
     }
+  }
+
+void CsmComputer::_preg1(Int32 i) {
+  if (i > 99999) i = 99999;
+  if (i < -99999) i = -99999;
+  preg1 = i;
+  }
+
+void CsmComputer::_preg2(Int32 i) {
+  if (i > 99999) i = 99999;
+  if (i < -99999) i = -99999;
+  preg2 = i;
+  }
+
+void CsmComputer::_preg3(Int32 i) {
+  if (i > 99999) i = 99999;
+  if (i < -99999) i = -99999;
+  preg3 = i;
   }
 
 void CsmComputer::_doShow() {
@@ -186,6 +206,77 @@ Byte CsmComputer::_rollProgram() {
   return 0;
   }
 
+/*
+Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
+  Double alt;
+  Double d;
+  Double g;
+  Vector pos;
+  Vector vel;
+  Vector L;
+  Double v1,v2;
+  Double E;
+  Double s;
+  Double e;
+  Double a;
+  Double da;
+  Double proc;
+  pos = csm->Position() - csm->Orbiting()->Position();
+  alt = pos.Length() - csm->Orbiting()->Radius();
+
+  vel = csm->Velocity() - csm->Orbiting()->Velocity();
+  g = csm->Orbiting()->Gravitation();
+  L = vel.Cross(pos);
+  v1 = vel.Length();
+  v2 = pos.Length();
+  E = ((v1 * v1) / 2) - (g/ v2);
+  s = -g/ (2 * E);
+  v1 = L.Length();
+  v2 = g* g;
+  e = sqrt(1+2*E*(v1 * v1)/(v2));
+  a = (s * (1 + e)) - csm->Orbiting()->Radius();
+  da = a - lastApo;
+
+  proc = ((apo * 100) - csm->Altitude()) / 60.0;
+  a = pos.Norm().Dot(csm->FaceUp());
+  a = acos(a) * 180 / M_PI;
+
+GotoXY(1,26); printf("orbit: %f\n",apo * 100);
+GotoXY(1,27); printf("Roc  : %f\n",csm->RateOfClimb());
+GotoXY(1,28); printf("proj : %f\n",csm->Altitude() + csm->RateOfClimb() * 60);
+GotoXY(1,29); printf("droc : %f\n",proc);
+GotoXY(1,30); printf("angle: %f\n",a);
+  if (ram[P11_ASCMODE] == 1) {
+    if (csm->RateOfClimb() > proc) {
+      d = -maxRate;
+      if (a-d > 100) d = 0;
+      }
+    else if (csm->RateOfClimb() < proc) {
+      d = maxRate;
+      if (a-d < 80) d = 0;
+      }
+    }
+  else {
+    if (csm->Altitude() + csm->RateOfClimb() * 90 > apo * 100) {
+      ram[P11_ASCMODE] = 1;
+        d = 0;
+      }
+    else {
+      pos = pos.Norm();
+      d = pos.Dot(csm->FaceUp());
+      d = acos(d) * 180 / M_PI;
+      d -= angle;
+      if (d < -maxRate) d = -maxRate;
+      if (d > maxRate) d = maxRate;
+      }
+    }
+  csm->LaunchVehicle()->PitchRate(d);
+  lastApo = a;
+  ram[P11_LASTROC] = csm->RateOfClimb();
+  return alt;
+  }
+*/
+
 Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
   Double alt;
   Double d;
@@ -216,10 +307,11 @@ Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
   da = a - lastApo;
 
   if (csm->RateOfClimb() < 0) {
-    if (csm->RateOfClimb() < ram[4]) d = maxRate;
+    if (csm->RateOfClimb() < ram[P11_LASTROC]) d = maxRate;
     }
-  else if (lastApo + da * 20 * GRAN > apo * 100 &&
-      da > 0) d = -maxRate;
+  else if (lastApo + da * 25 * GRAN > apo * 100 && da > 0) {
+    d = -maxRate;
+    }
   else {
     pos = pos.Norm();
     d = pos.Dot(csm->FaceUp());
@@ -230,7 +322,7 @@ Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
     }
   csm->LaunchVehicle()->PitchRate(d);
   lastApo = a;
-  ram[4] = csm->RateOfClimb();
+  ram[P11_LASTROC] = csm->RateOfClimb();
   return alt;
   }
 
@@ -408,6 +500,74 @@ void CsmComputer::_program11() {
          /* ************************ */
          if (ram[P11_MODE] == 6) {
            _ascent(65,1.0,ram[P11_ORBIT]);
+           if (csm->Velocity().Length() > ram[P11_TARGETVEL]) {
+             ram[P11_MODE] = 7;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           if (csm->Throttle() == 0) {
+             ram[P11_MODE] = 7;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+
+         if (ram[P11_MODE] == 7) {
+           csm->Cutoff();
+           running = 0;
+           }
+         break;
+
+/* **************************************************************** */
+/* *****                     Apollo Saturn IB                 ***** */
+/* **************************************************************** */
+
+    case VEHICLE_APOLLO_SATURN_IB:
+         /* ************************ */
+         /* ***** Clear launch tower */
+         /* ************************ */
+         if (ram[P11_MODE] == 1) {
+           pos = csm->Position() - csm->Orbiting()->Position();
+           if (pos.Length() > csm->Orbiting()->Radius() + 200) {
+             ram[P11_MODE] = 2;
+             }
+           }
+         /* ****************************************** */
+         /* ***** Perform roll to launch azimuth ***** */
+         /* ****************************************** */
+         if (ram[P11_MODE] == 2) {
+           if (_rollProgram()) ram[P11_MODE] = 3;
+           }
+         /* ********************************************************* */
+         /* ***** Pitch back to 20 degrees and hold until 8000m ***** */
+         /* ********************************************************* */
+         if (ram[P11_MODE] == 3) {
+           if (_ascent(20,1.0,ram[P11_ORBIT]) >= 8000) ram[P11_MODE] = 4;
+           if (csm->Throttle() == 0) ram[P11_MODE] = 4;
+           }
+         /* ********************************************* */
+         /* ***** Picth back to 60 degrees and hold ***** */
+         /* ********************************************* */
+         if (ram[P11_MODE] == 4) {
+           _ascent(65,1.0,ram[P11_ORBIT]);
+           if (csm->Throttle() == 0) {
+             ram[P11_MODE] = 5;
+             ram[P11_CLOCKGE] = clockGe;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+         /* ******************************************************* */
+         /* ***** Wait three seconds and then perform staging ***** */
+         /* ******************************************************* */
+         if (ram[P11_MODE] == 5) {
+           if (clockGe - ram[P11_CLOCKGE] > 3) {
+             csm->LaunchVehicle()->NextStage();
+             ram[P11_MODE] = 6;
+             }
+           }
+         /* ************************ */
+         /* ***** Second stage ***** */
+         /* ************************ */
+         if (ram[P11_MODE] == 6) {
+           _ascent(50,1.0,ram[P11_ORBIT]);
            if (csm->Velocity().Length() > ram[P11_TARGETVEL]) {
              ram[P11_MODE] = 7;
              csm->LaunchVehicle()->PitchRate(0);
@@ -611,9 +771,15 @@ void CsmComputer::Cycle() {
     }
   else if (prog == 11) {
     _program11();
-    preg1 = csm->Altitude() / 100;
-    preg2 = csm->RateOfClimb();
-    preg3 = csm->Velocity().Length();
+    _preg1((Int32)csm->Altitude() / 100);
+    _preg2((Int32)csm->RateOfClimb());
+/* ********************************************************************* */
+/* ***** Some kind of weird bug is happening here, retrieving the  ***** */
+/* ***** velocity here causes all loss of data about 10 minutes    ***** */
+/* ***** into the flight.  Commenting it out for now until I have  ***** */
+/* ***** time to figure why it fails                               ***** */
+/* ********************************************************************* */
+//    _preg3((Int32)csm->Velocity().Length());
     }
   else if (prog == 15) {
     csm->Prograde(3);
@@ -736,6 +902,10 @@ void CsmComputer::Cycle() {
   else if (prog == 32) {
     csm->Retrograde(3);
     }
+  else if (prog == 50) {
+    mission->TargetLongitude((Double)preg1 / 100.0);
+    mission->TargetLatitude((Double)preg2 / 100.0);
+    }
   }
 
 char* CsmComputer::Noun() {
@@ -837,6 +1007,7 @@ void CsmComputer::_processRequest() {
       ram[P11_TARGETVEL] = sqrt(csm->Orbiting()->Gravitation() / (preg1*100 + csm->Orbiting()->Radius()));
       ram[P11_ORBIT] = reg1;
       ram[P11_AZIMUTH] = reg2;
+      ram[P11_ASCMODE] = 0;
       }
     if (prog == 15) {
       ram[0] = 1;
@@ -883,6 +1054,22 @@ void CsmComputer::_processRequest() {
     }
   if (verb == 45) {
     eventMode = 'S';
+    }
+  else if (verb == 50) {
+    mission->TargetLongitude((Double)reg1 / 100.0);
+    mission->TargetLatitude((Double)reg2 / 100.0);
+    }
+  else if (verb == 60) {
+    _reg1(reg1 + reg2);
+    }
+  else if (verb == 61) {
+    _reg1(reg1 - reg2);
+    }
+  else if (verb == 62) {
+    _reg1(reg1 * reg2);
+    }
+  else if (verb == 63) {
+    _reg1((Double)reg1 / (Double)reg2);
     }
   }
 

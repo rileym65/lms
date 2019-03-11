@@ -26,7 +26,7 @@ Double GroundVehicle::Radius() {
 
 Double GroundVehicle::Radius(Double d) {
   radius = d;
-  altitude = radius - orbiting->Radius();
+  altitude = radius - Orbiting()->Radius();
   return radius;
   }
 
@@ -40,7 +40,7 @@ void GroundVehicle::Cycle() {
 //  a = a.Scale(1/alt3);
 //  velocity = velocity + a;
 //  velocity = velocity + thrust;
-  position = position - orbiting->Position();
+  position = position - Orbiting()->Position();
   if (turnRate != 0) {
     heading += (turnRate / GRAN);
     if (heading > 180) heading -= 360;
@@ -50,17 +50,17 @@ void GroundVehicle::Cycle() {
   thrust = faceFront.Norm().Scale(motorEfficiency * maxSpeed * ((Double)throttle / 100.0));
   velocity = thrust;
   position = position + velocity.Scale(1/GRAN);
-  position = position.Norm().Scale(orbiting->Radius());
+  position = position.Norm().Scale(Orbiting()->Radius());
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
-  longitude = position.X() / hyp;
-  longitude = asin(longitude) * 180 / M_PI;
-  if (position.X() < 0 && position.Y() >= 0) longitude = -180 - longitude;
-  if (position.X() >= 0 && position.Y() >= 0) longitude = 180 - longitude;
+  Longitude(position.X() / hyp);
+  Longitude(asin(Longitude()) * 180 / M_PI);
+  if (position.X() < 0 && position.Y() >= 0) Longitude(-180 - Longitude());
+  if (position.X() >= 0 && position.Y() >= 0) Longitude(180 - Longitude());
   hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
-  latitude = position.Z() / hyp;
-  latitude = asin(latitude) * 180 / M_PI;
-  position = position + orbiting->Position();
+  Latitude(position.Z() / hyp);
+  Latitude(asin(Latitude()) * 180 / M_PI);
+  position = position + Orbiting()->Position();
   hyp = (position - lm->Position()).Length();
   if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
     if (hyp > farthest) {
@@ -80,13 +80,13 @@ Double GroundVehicle::Heading(Double d) {
   Double s,c;
   heading = d;
   v = Vector(sin(heading*DR), 0, cos(heading*DR));
-  c = cos(latitude * DR);
-  s = sin(latitude * DR);
+  c = cos(Latitude() * DR);
+  s = sin(Latitude() * DR);
   v = Vector( v.X(),
               -(v.Y()*c + v.Z()*-s),
               v.Y()*s + v.Z()*c);
-  c = cos(longitude * DR);
-  s = sin(longitude * DR);
+  c = cos(Longitude() * DR);
+  s = sin(Longitude() * DR);
   v = Vector( v.X()*c + v.Y()*-s,
               v.X()*s + v.Y()*c,
               v.Z());
@@ -112,7 +112,7 @@ void GroundVehicle::Place(Vector pos) {
   Double dist;
   fp = pos;
   u = pos.Norm();
-  position = u.Scale(orbiting->Radius());
+  position = u.Scale(Orbiting()->Radius());
   velocity = Vector(0,0,0);
   thrust = Vector(0,0,0);
   Radius(position.Length());
@@ -125,7 +125,7 @@ void GroundVehicle::Place(Vector pos) {
   faceLeft = l;
   faceUp = u;
 
-  position = position + orbiting->Position();
+  position = position + Orbiting()->Position();
   return;
 
   dist = (position - fp).Length();

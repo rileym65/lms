@@ -279,6 +279,136 @@ relorbit:   mov    RANOD,R11
             mov    RINCL,R12
             ret
 
+; *************************************
+; ***** Equivalent to CSM V16 N01 *****
+; *************************************
+            prog   P00V16N51
+v16n51:     mov    apol,r1              ; put apoapsis into register 1
+            sub    r1,grnd              ; convert radius to altitude
+            mov    perl,r2              ; put periapsis into register 2
+            sub    r2,grnd              ; convert radius to altitude
+            mov    clkor,r3             ; put orbit time into register 3
+            wait                        ; wait until next cycle
+            jmp    v16n51               ; and repeat
+
+; *************************************
+; ***** Equivalent to CSM V16 N02 *****
+; *************************************
+            prog   P00V16N52
+v16n52:     mov    east,r1              ; put longitude into register 1
+            mov    nrth,r2              ; put latitude into register 2
+            wait                        ; wait until next cycle
+            jmp    v16n52               ; and repeat
+
+; *************************************
+; ***** Equivalent to CSM V16 N03 *****
+; *************************************
+            prog   P00V16N53
+v16n53:     mov    mass,r1              ; put vehicle mass into register 1
+            mov    fuel,r2              ; Put current stage fuel into register 2
+            mov    rfuel,r3             ; Put rcs fuel into register 3
+            wait                        ; wait until next cycle
+            jmp    v16n53               ; and repeat
+
+; *************************************
+; ***** Equivalent to CSM V16 N05 *****
+; *************************************
+            prog   P00V16N55
+v16n55:     mov    tanom,r1             ; put true anomaly into register 1
+            mov    manom,r2             ; put mean anomaly into register 2
+            mov    eanom,r3             ; put eccentric anomaly into register 3
+            wait                        ; wait until next cycle
+            jmp    v16n55               ; and repeat
+
+; *************************************
+; ***** Equivalent to CSM V16 N07 *****
+; *************************************
+            prog   P00V16N57
+v16n57:     mov    clkge,r20            ; get ground elapsed clock
+            call   clkout               ; output clock elements
+            wait                        ; wait until next cycle
+            jmp    v16n57
+
+; *************************************
+; ***** Equivalent to CSM V16 N08 *****
+; *************************************
+            prog   P00V16N58
+v16n58:     mov    clkut,r20            ; get universal clock
+            call   clkout               ; output clock elements
+            wait                        ; wait until next cycle
+            jmp    v16n58
+
+; *************************************
+; ***** Equivalent to CSM V16 N09 *****
+; *************************************
+            prog   P00V16N59
+v16n59:     mov    clkap,r20            ; get time til apoapsis
+            call   clkout               ; output clock elements
+            wait                        ; wait until next cycle
+            jmp    v16n59
+
+; *************************************
+; ***** Equivalent to CSM V16 N10 *****
+; *************************************
+            prog   P00V16N60
+v16n60:     mov    clkpe,r20            ; get time til apoapsis
+            call   clkout               ; output clock elements
+            wait                        ; wait until next cycle
+            jmp    v16n60
+
+; *************************************
+; ***** Equivalent to CSM V16 N12 *****
+; *************************************
+            prog   P00V16N62
+v16n62:     mov    alt,r1               ; get altitude
+            mov    tlng,r2              ; get target longitude
+            mov    tlat,r3              ; get target latitude
+            wait
+            jmp    v16n62
+
+; *************************************
+; ***** Equivalent to CSM V16 N14 *****
+; *************************************
+            prog   P00V16N64
+v16n64:     mov    mass,r20             ; get mass of vehicle
+            sub    r20,fuel             ; subtract fuel
+            mov    mass,r1              ; need to divide mass by this
+            div    r1,r20
+            log    r1,r1                ; then take log of result
+            mul    r1,isp               ; multiply by isp
+            mul    r1,g                 ; and g
+            mov    mass,r20             ; get mass of vehicle
+            sub    r20,rfuel            ; subtract rcs fuel
+            mov    mass,r2              ; get mass of vehicle
+            div    r2,r20               ; divide by mass-fuel
+            log    r2,r2                ; then take log of result
+            mul    r2,risp              ; multiply by rcs isp
+            mul    r2,g                 ; and g
+            mov    fflow,r3             ; put fuel flow into register 3
+            wait                        ; wait until next cycle
+            jmp    v16n64               ; and repeat
+
+
+; **********************************************************************
+; ***** Decompose clock in r20 to hh,mm,ss and display in r1,r2,r3 *****
+; **********************************************************************
+clkout:     ldi    r21,3600             ; seconds in an hour
+            mov    r20,r1               ; move time to register 1
+            div    r1,r21               ; convert to hours
+            int    r1,r1                ; convert to integer
+            mod    r20,r21              ; remaining seconds
+            ldi    r21,60               ; seconds in a minute
+            mov    r20,r2               ; move minutes
+            div    r2,r21               ; convert to minutes
+            int    r2,r2                ; and convert to integer
+            mod    r20,r21              ; get remaining seconds
+            int    r20,r3               ; write as integer to register 3
+            ret                         ; return to caller
+
+
+
+
+
 
             prog   P60V00N00
 p60lp1:     call   posrelmet            ; Display POS^REL in meters

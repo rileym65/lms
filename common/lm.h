@@ -83,6 +83,7 @@ class LunarModule : public Spacecraft {
     virtual Double DescentDryWeight(Double d);
     virtual Double DescentIsp(Double d);
     virtual Double DescentNewtons(Double d);
+    virtual Double RcsIsp();
     virtual Double RcsIsp(Double d);
     virtual Double RcsNewtons(Double d);
     virtual Double Battery();
@@ -93,7 +94,9 @@ class LunarModule : public Spacecraft {
     virtual Int8   DescentJettisoned();
     virtual Double EBattery();
     virtual Double EOxygen();
+    virtual Double Fuel();
     virtual void   InitPanel();
+    virtual Double Isp();
     virtual Int8   Landed();
     virtual Double Mass();
     virtual Double MaxAscentFuel();

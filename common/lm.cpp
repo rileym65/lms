@@ -166,6 +166,15 @@ Double LunarModule::DescentNewtons(Double d) {
   return descentNewtons;
   }
 
+Double LunarModule::Isp() {
+  if (descentJettisoned) return ascentIsp;
+  return descentIsp;
+  }
+
+Double LunarModule::RcsIsp() {
+  return rcsIsp;
+  }
+
 Double LunarModule::RcsIsp(Double d) {
   rcsIsp = d;
   rcsFuelRate = rcsNewtons / (9.81 * rcsIsp);
@@ -203,6 +212,11 @@ Double LunarModule::DescentFuel(Double d) {
 
 Int8 LunarModule::DescentJettisoned() {
   return descentJettisoned;
+  }
+
+Double LunarModule::Fuel() {
+  if (descentJettisoned) return AscentFuel();
+  return DescentFuel();
   }
 
 Int8 LunarModule::Landed() {
@@ -361,7 +375,7 @@ void LunarModule::Abort() {
   clockBu = 0;
   liftoffMet = clockMi;
   numBurns++;
-  if (landed) velocity = orbiting->Velocity();
+  if (landed) velocity = Orbiting()->Velocity();
   burn[numBurns-1].start = clockMi;
   if (descentJettisoned) {
     burn[numBurns-1].fuelUsed = ascentFuel;
@@ -615,7 +629,7 @@ void LunarModule::Cycle() {
     }
   fuelUsed *= GRAN;
   Spacecraft::Cycle();
-  if (radius <= orbiting->Radius()) {
+  if (Radius() <= Orbiting()->Radius()) {
     vVel = fabs(velocityAltitude);
     hVel = sqrt(lm->VelocityEast() * lm->VelocityEast() +
                 lm->LatitudeVelocity() * lm->LatitudeVelocity());
@@ -665,16 +679,16 @@ void LunarModule::Cycle() {
     velocityAltitude = 0;
     landed = -1;
     throttle = 0;
-    position = (position - orbiting->Position()).Norm().Scale(orbiting->Radius()) +
-               orbiting->Position();
+    position = (position - Orbiting()->Position()).Norm().Scale(Orbiting()->Radius()) +
+               Orbiting()->Position();
     rcsFbMode = ' ';
     rcsLrMode = ' ';
     rcsUdMode = ' ';
-    altitude = 0;
-    radius = orbiting->Radius();
+    Altitude(0);
+    Radius(Orbiting()->Radius());
     landedMet = clockMi;
-    landedLongitude = longitude;
-    landedLatitude = latitude;
+    landedLongitude = Longitude();
+    landedLatitude = Latitude();
     clockPDI = ignitionTime;
     burn[numBurns-1].end = clockMi;
     burn[numBurns-1].fuelUsed -= descentFuel;
@@ -684,9 +698,9 @@ void LunarModule::Cycle() {
     velocityAltitude = 0;
     velocityNorth = 0;
     velocityEast = 0;
-    latitudeVel= 0.0;
-    latitudeAcc= 0.0;
-    lastLatitudeVel= 0.0;
+    ins->LatitudeVel(0.0);
+    ins->LatitudeAcc(0.0);
+    ins->LastLatitudeVel(0.0);
     }
   }
 
@@ -807,7 +821,7 @@ void LunarModule::ProcessKey(Int32 key) {
     if (key == 'I' && Throttle() == 0 && !landed) {
       Throttle(10);
       clockBu = 0;
-      ignitionAltitude = altitude;
+      ignitionAltitude = Altitude();
       ignitionTime = clockMi;
       numBurns++;
       burn[numBurns-1].start = clockMi;
@@ -828,7 +842,7 @@ void LunarModule::ProcessKey(Int32 key) {
       else
         burn[numBurns-1].fuelUsed -= descentFuel;
       if (!descentJettisoned) {
-        if (ignitionAltitude > 50000 && periapsis-orbiting->Radius() < 50000)
+        if (ignitionAltitude > 50000 && ins->Periapsis()-Orbiting()->Radius() < 50000)
           clockDOI = ignitionTime;
         }
       }

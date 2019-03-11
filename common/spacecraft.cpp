@@ -10,6 +10,7 @@
 #include "mission.h"
 
 Spacecraft::Spacecraft() {
+  isp = 0;
   rcsFbMode = ' ';
   rcsLrMode = ' ';
   rcsUdMode = ' ';
@@ -22,41 +23,41 @@ Spacecraft::Spacecraft() {
   rcsFuel = 0;
   maxRcsFuel = 0;
   type |= VT_SPACECRAFT;
-  tarLongitude = 0;
-  tarLatitude = 0;
   }
 
 Spacecraft::~Spacecraft() {
   }
 
 Double Spacecraft::Altitude() {
-  return altitude;
+  return ins->Altitude();
   }
 
 Double Spacecraft::Altitude(Double d) {
-  altitude = d;
-  radius = altitude + orbiting->Radius();
-  return altitude;
+  return ins->Altitude(d);
   }
 
 Double Spacecraft::Apoapsis() {
-  return apoapsis;
+  return ins->Apoapsis();
+  }
+
+Double Spacecraft::Apoapsis(Double d) {
+  return ins->Apoapsis(d);
   }
 
 Double Spacecraft::ArgOfPeriapsis() {
-  return argOfPeriapsis;
+  return ins->ArgOfPeriapsis();
   }
 
 Double Spacecraft::AscendingNode() {
-  return ascendingNode;
+  return ins->AscendingNode();
   }
 
 Int32 Spacecraft::ClockAp() {
-  return clockAp;
+  return ins->ClockAp();
   }
 
 Int32 Spacecraft::ClockPe() {
-  return clockPe;
+  return ins->ClockPe();
   }
 
 Double Spacecraft::DeltaV() {
@@ -68,7 +69,7 @@ Double Spacecraft::EarthG() {
   }
 
 Double Spacecraft::EccentricAnomaly() {
-  return eccentricAnomaly;
+  return ins->EccentricAnomaly();
   }
 
 Double Spacecraft::FuelUsed() {
@@ -76,7 +77,11 @@ Double Spacecraft::FuelUsed() {
   }
 
 Double Spacecraft::Inclination() {
-  return inclination;
+  return ins->Inclination();
+  }
+
+Double Spacecraft::Isp() {
+  return isp;
   }
 
 Double Spacecraft::MaxRcsFuel() {
@@ -93,11 +98,15 @@ Double Spacecraft::MoonG() {
   }
 
 Double Spacecraft::MeanAnomaly() {
-  return meanAnomaly;
+  return ins->MeanAnomaly();
   }
 
 Double Spacecraft::Periapsis() {
-  return periapsis;
+  return ins->Periapsis();
+  }
+
+Double Spacecraft::Periapsis(Double d) {
+  return ins->Periapsis(d);
   }
 
 Vector Spacecraft::Position() {
@@ -105,18 +114,16 @@ Vector Spacecraft::Position() {
   }
 
 Vector Spacecraft::Position(Vector v) {
-  Radius((v - orbiting->Position()).Length());
+  Radius((v - Orbiting()->Position()).Length());
   return Vehicle::Position(v);
   }
 
 Double Spacecraft::Radius() {
-  return radius;
+  return ins->Radius();
   }
 
 Double Spacecraft::Radius(Double d) {
-  radius = d;
-  altitude = radius - orbiting->Radius();
-  return radius;
+  return ins->Radius(d);
   }
 
 Double Spacecraft::RateOfClimb() {
@@ -206,7 +213,7 @@ Int8   Spacecraft::RcsThrottle(Int8 i) {
 Double Spacecraft::RelAltitude() {
   Vector v1,v2;
   if (targetVehicle == NULL) return 0;
-  v1 = position - orbiting->Position();
+  v1 = position - Orbiting()->Position();
   v2 = targetVehicle->Position() - targetVehicle->Orbiting()->Position();
   return v1.Length() - v2.Length();
   }
@@ -224,7 +231,7 @@ Vector Spacecraft::RelVel() {
 Double Spacecraft::RelLongitude() {
   Double ret;
   if (targetVehicle == NULL) return 0;
-  ret = longitude - targetVehicle->Longitude();
+  ret = Longitude() - targetVehicle->Longitude();
   while (ret < -180) ret += 360;
   while (ret > 180) ret -= 360;
   return ret;
@@ -233,19 +240,19 @@ Double Spacecraft::RelLongitude() {
 Double Spacecraft::RelLatitude() {
   Double ret;
   if (targetVehicle == NULL) return 0;
-  ret = latitude - targetVehicle->Latitude();
+  ret = Latitude() - targetVehicle->Latitude();
   return ret;
   }
 
 Double Spacecraft::RelOrbitTime() {
   if (targetVehicle == NULL) return 0;
-  return orbitTime - ((Spacecraft*)targetVehicle)->OrbitTime();
+  return ins->OrbitTime() - ((Spacecraft*)targetVehicle)->OrbitTime();
   }
 
 Double Spacecraft::RelMomEast() {
   Double ret;
   if (targetVehicle == NULL) return 0;
-  ret = ascendingNode - ((Spacecraft*)targetVehicle)->AscendingNode();
+  ret = ins->AscendingNode() - ((Spacecraft*)targetVehicle)->AscendingNode();
   while (ret < -180) ret += 360;
   while (ret > 180) ret -= 360;
   return ret;
@@ -254,7 +261,7 @@ Double Spacecraft::RelMomEast() {
 Double Spacecraft::RelMomNorth() {
   Double ret;
   if (targetVehicle == NULL) return 0;
-  ret = inclination - ((Spacecraft*)targetVehicle)->Inclination();
+  ret = ins->Inclination() - ((Spacecraft*)targetVehicle)->Inclination();
   while (ret < -180) ret += 360;
   while (ret > 180) ret -= 360;
   return ret;
@@ -270,27 +277,27 @@ char   Spacecraft::RcsUdMode(char c) {
   }
 
 Double Spacecraft::TargetLongitude() {
-  return tarLongitude;
+  return ins->TarLongitude();
   }
 
 Double Spacecraft::TargetLatitude() {
-  return tarLatitude;
+  return ins->TarLatitude();
   }
 
 Double Spacecraft::TargetMomEast() {
-  return tarMomEast;
+  return ins->TarMomEast();
   }
 
 Double Spacecraft::TargetMomNorth() {
-  return tarMomNorth;
+  return ins->TarMomNorth();
   }
 
 Double Spacecraft::TrueAnomaly() {
-  return trueAnomaly;
+  return ins->TrueAnomaly();
   }
 
 Double Spacecraft::TrueLongitude() {
-  return trueLongitude;
+  return ins->TrueLongitude();
   }
 
 double toDegrees(double theta) {
@@ -325,7 +332,7 @@ void Spacecraft::Prograde(Double maxRate) {
   Vector vel;
   Double d;
   Matrix m;
-  vel = (velocity - orbiting->Velocity()).Norm();
+  vel = (velocity - Orbiting()->Velocity()).Norm();
   d = (asin(faceFront.Dot(vel)) * 180 / M_PI);
   if (d > 0) d = -d;
   if (d > maxRate) d = maxRate;
@@ -342,7 +349,7 @@ void Spacecraft::Retrograde(Double maxRate) {
   Vector vel;
   Double d;
   Matrix m;
-  vel = (velocity - orbiting->Velocity()).Norm();
+  vel = (velocity - Orbiting()->Velocity()).Norm();
   d = (asin(faceFront.Dot(vel)) * 180 / M_PI);
   if (d < 0) d = -d;
   if (d > maxRate) d = maxRate;
@@ -355,51 +362,13 @@ void Spacecraft::Retrograde(Double maxRate) {
   }
 
 void Spacecraft::Ins() {
+  ins->Cycle();
+/*
   Vector L;
-//  Double E;
-//  Double v1,v2;
-//  Double s;
-//  Double e;
-//  Double g;
   Double hyp;
   Vector pos;
   Vector vel;
   Double tmp;
-  pos = position - orbiting->Position();
-  vel = velocity - orbiting->Velocity();
-  altitude = pos.Length() - orbiting->Radius();
-//  g = orbiting->Gravitation();
-//  L = vel.Cross(pos);
-//  v1 = vel.Length();
-//  v2 = pos.Length();
-//  E = ((v1 * v1) / 2) - (g/ v2);
-//  s = -g/ (2 * E);
-//  v1 = L.Length();
-//  v2 = g* g;
-//  e = sqrt(1+2*E*(v1 * v1)/(v2));
-//  eccentricity = e;
-//  apoapsis = s * (1 + e);
-//  periapsis = s * (1 - e);
-//  orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/g);
-//  hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
-//  ascendingNode = L.Y() / hyp;
-//  ascendingNode = asin(ascendingNode) * 180 / M_PI;
-//  if (L.X() < 0 && L.Y() < 0) ascendingNode = -180 - ascendingNode;
-//  if (L.X() < 0 && L.Y() >= 0) ascendingNode = 180 - ascendingNode;
-//  hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
-//  inclination = L.Z() / hyp;
-//  inclination = asin(inclination) * 180 / M_PI;
-
-  hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
-  longitude = pos.X() / hyp;
-  longitude = asin(longitude) * 180 / M_PI;
-  if (pos.X() < 0 && pos.Y() >= 0) longitude = -180 - longitude;
-  if (pos.X() >= 0 && pos.Y() >= 0) longitude = 180 - longitude;
-//  hyp = sqrt(pos.Z() * pos.Z() + hyp * hyp);
-  hyp = pos.Length();
-  latitude = pos.Z() / hyp;
-  latitude = asin(latitude) * 180 / M_PI;
-//  latitude = toDegrees(arctan2(pos.Z(), pos.Length()));
   Double Rx,Ry,Rz;
   Double Vx,Vy,Vz;
   Double Hx,Hy,Hz;
@@ -419,13 +388,25 @@ void Spacecraft::Ins() {
   Double Ey;
   Double d;
   Double spd;
+  pos = position - Orbiting()->Position();
+  vel = velocity - Orbiting()->Velocity();
+  Altitude(pos.Length() - Orbiting()->Radius());
+
+  hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
+  Longitude(pos.X() / hyp);
+  Longitude(asin(Longitude()) * 180 / M_PI);
+  if (pos.X() < 0 && pos.Y() >= 0) Longitude(-180 - Longitude());
+  if (pos.X() >= 0 && pos.Y() >= 0) Longitude(180 - Longitude());
+  hyp = pos.Length();
+  Latitude(pos.Z() / hyp);
+  Latitude(asin(Latitude()) * 180 / M_PI);
   Rx = -pos.Y();
   Ry = pos.X();
   Rz = pos.Z();
   Vx = -vel.Y();
   Vy = vel.X();
   Vz = vel.Z();
-  Mu = G * orbiting->Mass();
+  Mu = G * Orbiting()->Mass();
   R = sqrt(Rx*Rx + Ry*Ry + Rz*Rz);
   V = sqrt(Vx*Vx + Vy*Vy + Vz*Vz);
   a = 1/(2/R - V*V / Mu);
@@ -435,95 +416,74 @@ void Spacecraft::Ins() {
   H = sqrt(Hx*Hx + Hy*Hy + Hz*Hz);
   p = H*H / Mu;
   q = Rx*Vx + Ry*Vy + Rz*Vz;
-  eccentricity = sqrt(1 - p/a);
+  ins->Eccentricity(sqrt(1 - p/a));
   Ex = 1 - R/a;
   Ey = q / sqrt(a * Mu);
-  inclination = acos(Hz / H);
-  ascendingNode = 0;
-  if (inclination != 0) ascendingNode = arctan2(Hx, -Hy);
+  ins->Inclination(acos(Hz / H));
+  ins->AscendingNode(0);
+  if (ins->Inclination() != 0) ins->AscendingNode(arctan2(Hx, -Hy));
   TAx = H*H / (R*Mu) - 1;
   TAy = H*q / (R*Mu);
-  trueAnomaly = arctan2(TAy, TAx);
-  Cw = (Rx * cos(ascendingNode) + Ry * sin(ascendingNode)) / R;
+  ins->TrueAnomaly(arctan2(TAy, TAx));
+  Cw = (Rx * cos(ins->AscendingNode()) + Ry * sin(ins->AscendingNode())) / R;
   Sw = 0;
-  if (inclination ==0 || inclination == M_PI)
-    Sw = (Ry * cos(ascendingNode) - Rx * sin(ascendingNode)) / R;
+  if (ins->Inclination() ==0 || ins->Inclination() == M_PI)
+    Sw = (Ry * cos(ins->AscendingNode()) - Rx * sin(ins->AscendingNode())) / R;
   else
-    Sw = Rz / (R * sin(inclination));
-  argOfPeriapsis = arctan2(Sw, Cw) - trueAnomaly;
-  if (argOfPeriapsis < 0) argOfPeriapsis = 2*M_PI+argOfPeriapsis;
-  eccentricAnomaly = arctan2(Ey, Ex);
-  meanAnomaly = eccentricAnomaly-eccentricity * sin(eccentricAnomaly);
-  trueLongitude = argOfPeriapsis + trueAnomaly + ascendingNode;
-  while (trueLongitude >= 2*M_PI) trueLongitude = trueLongitude - 2*M_PI;
-  PlusMinus = a * eccentricity;
-  periapsis = a - PlusMinus;
-  apoapsis = a + PlusMinus;
+    Sw = Rz / (R * sin(ins->Inclination()));
+  ins->ArgOfPeriapsis(arctan2(Sw, Cw) - ins->TrueAnomaly());
+  if (ins->ArgOfPeriapsis() < 0) ins->ArgOfPeriapsis(2*M_PI+ins->ArgOfPeriapsis());
+  ins->EccentricAnomaly(arctan2(Ey, Ex));
+  ins->MeanAnomaly(ins->EccentricAnomaly()-ins->Eccentricity() * sin(ins->EccentricAnomaly()));
+  ins->TrueLongitude(ins->ArgOfPeriapsis() + ins->TrueAnomaly() + ins->AscendingNode());
+  while (ins->TrueLongitude() >= 2*M_PI)
+    ins->TrueLongitude(ins->TrueLongitude() - 2*M_PI);
+  PlusMinus = a * ins->Eccentricity();
+  ins->Periapsis(a - PlusMinus);
+  ins->Apoapsis(a + PlusMinus);
   orbitTime = 2 * M_PI * sqrt(a*a*a / Mu);
-  inclination = toDegrees(inclination);
-  ascendingNode = toDegrees(ascendingNode);
-  eccentricAnomaly = toDegrees(eccentricAnomaly);
-  meanAnomaly = toDegrees(meanAnomaly);
-  trueAnomaly = toDegrees(trueAnomaly);
-  trueLongitude = toDegrees(trueLongitude);
-  argOfPeriapsis = toDegrees(argOfPeriapsis);
+  ins->Inclination(toDegrees(ins->Inclination()));
+  ins->AscendingNode(toDegrees(ins->AscendingNode()));
+  ins->EccentricAnomaly(toDegrees(ins->EccentricAnomaly()));
+  ins->MeanAnomaly(toDegrees(ins->MeanAnomaly()));
+  ins->TrueAnomaly(toDegrees(ins->TrueAnomaly()));
+  ins->TrueLongitude(toDegrees(ins->TrueLongitude()));
+  ins->ArgOfPeriapsis(toDegrees(ins->ArgOfPeriapsis()));
 
   spd = orbitTime / 360;
-  d = 180 - meanAnomaly;
+  d = 180 - ins->MeanAnomaly();
   while (d<0) d += 360;
   while (d > 360) d -= 360;
   d *= spd;
-  clockAp = d;
-  d = 360 - meanAnomaly;
+  ins->ClockAp(d);
+  d = 360 - ins->MeanAnomaly();
   while (d<0) d += 360;
   while (d > 360) d -= 360;
   d *= spd;
-  clockPe = d;
-
-
-//if (this == csm) {
-//  GotoXY(40, 28); printf("Radius           : %.10f\n",R);
-//  GotoXY(40, 29); printf("Velocity         : %.10f\n",V);
-//  GotoXY(40, 30); printf("Semi-Major Axis  : %.10f\n",a);
-//  GotoXY(40, 31); printf("Eccentricity     : %.10f\n",eccentricity);
-//  GotoXY(40, 32); printf("Inclination      : %.10f\n",inclination);
-//  GotoXY(40, 33); printf("Ascending Node   : %.10f\n",ascendingNode);
-//  GotoXY(40, 34); printf("Arg of Periapsis : %.10f\n",argOfPeriapsis);
-//  GotoXY(40, 35); printf("Eccentric Anomaly: %.10f\n",eccentricAnomaly);
-//  GotoXY(40, 36); printf("Mean Anomaly     : %.10f\n",meanAnomaly);
-//  GotoXY(40, 37); printf("True Anomaly     : %.10f\n",trueAnomaly);
-//  GotoXY(40, 38); printf("True Longitude   : %.10f\n",trueLongitude);
-//  GotoXY(40, 39); printf("Periapsis        : %.10f\n",periapsis);
-//  GotoXY(40, 40); printf("Apoapsis         : %.10f\n",apoapsis);
-//  GotoXY(40, 41); printf("Period           : %.10f\n",orbitTime);
-//  }
-
-
-
-
-
+  ins->ClockPe(d);
 
   if (mission != NULL) {
-    tarLatitude = latitude - mission->TargetLatitude();
-    tarLongitude = longitude - mission->TargetLongitude();
-    while (tarLongitude < -180) tarLongitude += 360;
-    while (tarLongitude > 180) tarLongitude -= 360;
-    tarMomNorth = inclination - mission->TargetMomNorth();
-    tarMomEast = ascendingNode - mission->TargetMomEast();
-    while (tarMomNorth < -180) tarMomNorth += 360;
-    while (tarMomNorth > 180) tarMomNorth -= 360;
-    while (tarMomEast < -180) tarMomEast += 360;
-    while (tarMomEast > 180) tarMomEast -= 360;
+    ins->TarLatitude(Latitude() - mission->TargetLatitude());
+    ins->TarLongitude(Longitude() - mission->TargetLongitude());
+    while (ins->TarLongitude() < -180) ins->TarLongitude(ins->TarLongitude() + 360);
+    while (ins->TarLongitude() > 180) ins->TarLongitude(ins->TarLongitude() - 360);
+    ins->TarMomNorth(ins->Inclination() - mission->TargetMomNorth());
+    ins->TarMomEast(ins->AscendingNode() - mission->TargetMomEast());
+    while (ins->TarMomNorth() < -180) ins->TarMomNorth(ins->TarMomNorth() + 360);
+    while (ins->TarMomNorth() > 180) ins->TarMomNorth(ins->TarMomNorth() - 360);
+    while (ins->TarMomEast() < -180) ins->TarMomEast(ins->TarMomEast() + 360);
+    while (ins->TarMomEast() > 180) ins->TarMomEast(ins->TarMomEast() - 360);
     }
-  tmp = latitude - lastLatitude;
+  tmp = Latitude() - ins->LastLatitude();
   if (tmp <= -180) tmp += 360;
   if (tmp >= 180) tmp -= 360;
-  latitudeVel = tmp * orbiting->Meters();
+  latitudeVel = tmp * Orbiting()->Meters();
   latitudeAcc = latitudeVel - lastLatitudeVel;
 
-  lastLatitude = latitude;
-  lastLongitude = longitude;
+  ins->LastLatitude(Latitude());
+  ins->LastLongitude(Longitude());
   lastLatitudeVel = latitudeVel;
+*/
   }
 
 void Spacecraft::Cycle() {
@@ -586,27 +546,27 @@ void Spacecraft::Cycle() {
     velocity = velocity + a.Scale(1/GRAN);
     } else moonG = 0;
 
-  p1 = position - orbiting->Position();
+  p1 = position - Orbiting()->Position();
   velocity = velocity + thrust.Scale(1/GRAN);
   deltaV += thrust.Scale(1/GRAN).Length();
 
   velocity = velocity + drag.Scale(1/GRAN);
   position = position + velocity.Scale(1/GRAN);
-  r1 = radius;
-  Radius((position - orbiting->Position()).Length());
-  rateOfClimb = (radius - r1) * GRAN;
+  r1 = Radius();
+  Radius((position - Orbiting()->Position()).Length());
+  rateOfClimb = (Radius() - r1) * GRAN;
 
   if (currentVehicle == this) {
-    p2 = position - orbiting->Position();
+    p2 = position - Orbiting()->Position();
     distanceTravelled += ((p1-p2).Length());
     }
 
-  if (orbiting == Earth && moonG > earthG) {
-    orbiting = Moon;
+  if (Orbiting() == Earth && moonG > earthG) {
+    Orbiting(Moon);
     simSpeed = 100000;
     }
-  if (orbiting == Moon && earthG > moonG) {
-    orbiting = Earth;
+  if (Orbiting() == Moon && earthG > moonG) {
+    Orbiting(Earth);
     simSpeed = 100000;
     }
 
@@ -615,14 +575,14 @@ void Spacecraft::Cycle() {
 
 void Spacecraft::Save(FILE* file) {
   Vehicle::Save(file);
-  fprintf(file,"  Altitude %.18f%s",altitude,LE);
-  fprintf(file,"  Apoapsis %.18f%s",apoapsis,LE);
-  fprintf(file,"  AscendingNode %.18f%s",ascendingNode,LE);
-  fprintf(file,"  Eccentricity %.18f%s",eccentricity,LE);
+  fprintf(file,"  Altitude %.18f%s",Altitude(),LE);
+  fprintf(file,"  Apoapsis %.18f%s",ins->Apoapsis(),LE);
+  fprintf(file,"  AscendingNode %.18f%s",ins->AscendingNode(),LE);
+  fprintf(file,"  Eccentricity %.18f%s",ins->Eccentricity(),LE);
   fprintf(file,"  DeltaV %.18f%s",deltaV,LE);
-  fprintf(file,"  Inclination %.18f%s",inclination,LE);
-  fprintf(file,"  Periapsis %.18f%s",periapsis,LE);
-  fprintf(file,"  Radius %.18f%s",radius,LE);
+  fprintf(file,"  Inclination %.18f%s",ins->Inclination(),LE);
+  fprintf(file,"  Periapsis %.18f%s",ins->Periapsis(),LE);
+  fprintf(file,"  Radius %.18f%s",Radius(),LE);
   fprintf(file,"  RcsThrottle %d%s",rcsThrottle,LE);
   fprintf(file,"  RcsThrust %.18f%s",rcsThrust,LE);
   fprintf(file,"  RcsPropellant %.18f%s",rcsPropellant,LE);
@@ -634,14 +594,14 @@ void Spacecraft::Save(FILE* file) {
   }
 
 Int8 Spacecraft::SubLoad(FILE* file, char* line) {
-  if (startsWith(line,"altitude ")) altitude = atof(nw(line));
-  else if (startsWith(line,"apoapsis ")) apoapsis = atof(nw(line));
-  else if (startsWith(line,"ascendingnode ")) ascendingNode = atof(nw(line));
-  else if (startsWith(line,"eccentricity ")) eccentricity = atof(nw(line));
+  if (startsWith(line,"altitude ")) Altitude(atof(nw(line)));
+  else if (startsWith(line,"apoapsis ")) Apoapsis(atof(nw(line)));
+  else if (startsWith(line,"ascendingnode ")) ins->AscendingNode(atof(nw(line)));
+  else if (startsWith(line,"eccentricity ")) ins->Eccentricity(atof(nw(line)));
   else if (startsWith(line,"deltav ")) deltaV = atof(nw(line));
-  else if (startsWith(line,"inclination ")) inclination = atof(nw(line));
-  else if (startsWith(line,"periapsis ")) periapsis = atof(nw(line));
-  else if (startsWith(line,"radius ")) radius = atof(nw(line));
+  else if (startsWith(line,"inclination ")) ins->Inclination(atof(nw(line)));
+  else if (startsWith(line,"periapsis ")) ins->Periapsis(atof(nw(line)));
+  else if (startsWith(line,"radius ")) Radius(atof(nw(line)));
   else if (startsWith(line,"rcsthrottle ")) rcsThrottle = atoi(nw(line));
   else if (startsWith(line,"rcsthrust ")) rcsThrust = atof(nw(line));
   else if (startsWith(line,"rcspropellant ")) rcsPropellant = atof(nw(line));

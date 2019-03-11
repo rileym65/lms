@@ -75,14 +75,14 @@ Double Lrv::Value(Double d) {
 
 void Lrv::Setup() {
   Vector p;
-  latitude = lm->Latitude();
-  longitude = lm->Longitude();
+  Latitude(lm->Latitude());
+  Longitude(lm->Longitude());
   Place(lm->Position() - lm->Orbiting()->Position());
   p = faceLeft.Norm().Scale(15);
   position = position + p;
-//  position = position.Norm().Scale(orbiting->Radius());
-  position = (position - orbiting->Position()).Norm().Scale(orbiting->Radius()) +
-             orbiting->Position();
+//  position = position.Norm().Scale(Orbiting()->Radius());
+  position = (position - Orbiting()->Position()).Norm().Scale(Orbiting()->Radius()) +
+             Orbiting()->Position();
   isSetup = true;
   Heading(-90);
   return;
@@ -94,7 +94,7 @@ void Lrv::Setup() {
   Double dist;
   fp = lm->Position();
   u = lm->Position().Norm();
-  position = u.Scale(orbiting->Radius());
+  position = u.Scale(Orbiting()->Radius());
   velocity = Vector(0,0,0);
   thrust = Vector(0,0,0);
   Radius(position.Length());
@@ -196,7 +196,7 @@ void Lrv::Cycle() {
 //  velocity = velocity + thrust;
   velocity = thrust;
   position = position + velocity;
-  position = position.Norm().Scale(orbiting->Radius());
+  position = position.Norm().Scale(Orbiting()->Radius());
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
   longitude = position.X() / hyp;

@@ -37,6 +37,9 @@ class CsmComputer {
     void   _reg1(Int32 i);
     void   _reg2(Int32 i);
     void   _reg3(Int32 i);
+    void   _preg1(Int32 i);
+    void   _preg2(Int32 i);
+    void   _preg3(Int32 i);
     void   _processRequest();
     void   _program11();
     Byte   _rollProgram();

@@ -4,10 +4,12 @@
 #include "types.h"
 
 class Vehicle;
+class Ins;
 
 class Computer {
   protected:
     Vehicle *vehicle;
+    Ins     *ins;
     Boolean *running;
     Boolean p_running;
     Boolean vn_running;

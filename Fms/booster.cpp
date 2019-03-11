@@ -41,7 +41,7 @@ void Booster::Cycle() {
   Double v;
   Byte   st;
 //  alt = position.Length() - GROUND;
-  alt = position.Length() - orbiting->Radius();
+  alt = position.Length() - Orbiting()->Radius();
   thrust = Vector(0,0,0);
   drag = Vector(0,0,0);
   tth = 0;
@@ -81,14 +81,14 @@ void Booster::Cycle() {
     if (clockBsp == 0 && d > maxQ) {
       maxQ = d;
       clockMaxQ = clockGe;
-      maxQAltitude = radius - orbiting->Radius();
+      maxQAltitude = Radius() - Orbiting()->Radius();
       }
     d /= Mass();
     drag = velocity.Norm().Scale(d).Neg();
     }
   Spacecraft::Cycle();
 //  if (radius < GROUND) destroyed = true;
-  if (radius < orbiting->Radius()) destroyed = true;
+  if (Radius() < Orbiting()->Radius()) destroyed = true;
   }
 
 void Booster::Ceco(Byte stage, Double d) {
@@ -169,9 +169,9 @@ void Booster::Ignition() {
     starts[stage-1]--;
     Throttle(100);
     ignitionTime = clockGe;
-    ignitionApoapsis = apoapsis;
-    ignitionPeriapsis = periapsis;
-    ignitionEccentricity = eccentricity;
+    ignitionApoapsis = ins->Apoapsis();
+    ignitionPeriapsis = ins->Periapsis();
+    ignitionEccentricity = ins->Eccentricity();
     burn[numBurns].start = clockGe;
     burn[numBurns].fuelUsed = Fuel();
     burn[numBurns].engine = '0' + stage;

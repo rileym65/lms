@@ -5,24 +5,11 @@
 
 class Spacecraft : public Vehicle {
   protected:
-    Double    altitude;
-    Double    apoapsis;
-    Double    argOfPeriapsis;
-    Double    ascendingNode;
-    Int32     clockAp;
-    Int32     clockPe;
-    Double    eccentricity;
     Double    deltaV;
     Double    fuelUsed;
-    Double    inclination;
+    Double    isp;
     Double    maxRcsFuel;
-    Double    meanAnomaly;
-    Double    trueAnomaly;
-    Double    trueLongitude;
-    Double    eccentricAnomaly;
-    Double    periapsis;
     Double    rateOfClimb;
-    Double    radius;
     Double    rcsFuel;
     char      rcsFbMode;
     Double    rcsIsp;
@@ -34,16 +21,13 @@ class Spacecraft : public Vehicle {
     char      rcsUdMode;
     Double    moonG;
     Double    earthG;
-    Double    tarLongitude;
-    Double    tarLatitude;
-    Double    tarMomEast;
-    Double    tarMomNorth;
   public:
     Spacecraft();
     ~Spacecraft();
     virtual Double    Altitude();
     virtual Double    Altitude(Double d);
     virtual Double    Apoapsis();
+    virtual Double    Apoapsis(Double d);
     virtual Double    ArgOfPeriapsis();
     virtual Double    AscendingNode();
     virtual Int32     ClockAp();
@@ -54,11 +38,13 @@ class Spacecraft : public Vehicle {
     virtual Double    FuelUsed();
     virtual Double    Inclination();
     virtual void      Ins();
+    virtual Double    Isp();
     virtual Double    MaxRcsFuel();
     virtual Double    MaxRcsFuel(Double d);
     virtual Double    MeanAnomaly();
     virtual Double    MoonG();
     virtual Double    Periapsis();
+    virtual Double    Periapsis(Double d);
     virtual Vector    Position();
     virtual Vector    Position(Vector v);
     virtual void      Prograde(Double maxRate);

@@ -7,6 +7,7 @@
 #include "matrix.h"
 #include "panel.h"
 #include "body.h"
+#include "ins.h"
 
 class Computer;
 
@@ -27,18 +28,13 @@ class Vehicle {
     Vector    faceLeft;
     Vector    faceUp;
     Vector    gimbals;
-    Double    latitude;
-    Double    longitude;
-    Double    lastLatitude;
-    Double    lastLatitudeVel;
-    Double    lastLongitude;
-    Double    latitudeVel;
-    Double    latitudeAcc;
+//    Double    lastLatitudeVel;
+//    Double    latitudeVel;
+//    Double    latitudeAcc;
     Double    longitudeVel;
     Double    maxBattery;
     Double    maxOxygen;
-    Body*     orbiting;
-    Double    orbitTime;
+//    Double    orbitTime;
     Double    oxygen;
     Panel    *panel;
     Double    pitchRate;
@@ -53,7 +49,7 @@ class Vehicle {
     Double    velocityNorth;
     Double    yawRate;
     Vehicle  *targetVehicle;
-
+    Ins      *ins;
   public:
     Vehicle();
     virtual ~Vehicle();
@@ -82,6 +78,7 @@ class Vehicle {
     virtual Vector    FaceUp();
     virtual Vector    FaceUp(Vector v);
     virtual Double    Fuel();
+    virtual Ins      *GetIns();
     virtual Double    Latitude();
     virtual Double    Latitude(Double d);
     virtual Double    LatitudeVelocity();

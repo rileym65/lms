@@ -6,6 +6,7 @@
 #include "common.h"
 
 Vehicle::Vehicle() {
+  ins = new Ins(this);
   distanceTravelled = 0;
   velocityAltitude = 0;
   velocityEast = 0;
@@ -149,30 +150,32 @@ Double Vehicle::Fuel() {
   return 0;
   }
 
+Ins* Vehicle::GetIns() {
+  return ins;
+  }
+
 Double Vehicle::Latitude() {
-  return latitude;
+  return ins->Latitude();
   }
 
 Double Vehicle::Latitude(Double d) {
-  latitude = d;
-  return latitude;
+  return ins->Latitude(d);
   }
 
 Double Vehicle::LatitudeVelocity() {
-  return latitudeVel;
+  return ins->LatitudeVel();
   }
 
 Double Vehicle::LatitudeAcceleration() {
-  return latitudeAcc;
+  return ins->LatitudeAcc();
   }
 
 Double Vehicle::Longitude() {
-  return longitude;
+  return ins->Longitude();
   }
 
 Double Vehicle::Longitude(Double d) {
-  longitude = d;
-  return longitude;
+  return ins->Longitude(d);
   }
 
 Double Vehicle::Mass() {
@@ -214,16 +217,16 @@ Byte Vehicle::NumStages() {
   }
 
 Body* Vehicle::Orbiting() {
-  return orbiting;
+  return ins->Orbiting();
   }
 
 Body* Vehicle::Orbiting(Body* b) {
-  orbiting = b;
-  return orbiting;
+  ins->Orbiting(b);
+  return ins->Orbiting();
   }
 
 Double Vehicle::OrbitTime() {
-  return orbitTime;
+  return ins->OrbitTime();
   }
 
 Double Vehicle::Oxygen() {
@@ -375,8 +378,8 @@ void Vehicle::Cycle() {
   Double vel;
 //  Double tmp;
   Vector vnorm;
-  rvel = velocity - orbiting->Velocity();
-  rpos = position - orbiting->Position();
+  rvel = velocity - Orbiting()->Velocity();
+  rpos = position - Orbiting()->Position();
 //  Double g;
 //  lastLatitude = latitude;
 //  lastLongitude = longitude;
@@ -505,8 +508,8 @@ void Vehicle::ProcessKey(Int32 key) {
   }
 
 void Vehicle::Save(FILE* file) {
-  fprintf(file,"  Latitude %.18f%s",latitude,LE);
-  fprintf(file,"  Longitude %.18f%s",longitude,LE);
+  fprintf(file,"  Latitude %.18f%s",ins->Latitude(),LE);
+  fprintf(file,"  Longitude %.18f%s",ins->Longitude(),LE);
   fprintf(file,"  Distance %.18f%s",distanceTravelled,LE);
   fprintf(file,"  Battery %.18f%s",battery,LE);
   fprintf(file,"  MaxBattery %.18f%s",maxBattery,LE);
@@ -518,7 +521,7 @@ void Vehicle::Save(FILE* file) {
   fprintf(file,"  RollRate %.18f%s",rollRate,LE);
   fprintf(file,"  YawRate %.18f%s",yawRate,LE);
   fprintf(file,"  PitchRate %.18f%s",pitchRate,LE);
-  fprintf(file,"  Orbiting %s%s",orbiting->Name(),LE);
+  fprintf(file,"  Orbiting %s%s",Orbiting()->Name(),LE);
   fprintf(file,"  Gimbals %.18f %.18f %.18f%s",gimbals.X(),gimbals.Y(),gimbals.Z(),LE);
   fprintf(file,"  FaceFront %.18f %.18f %.18f%s",faceFront.X(),faceFront.Y(),faceFront.Z(),LE);
   fprintf(file,"  FaceUp %.18f %.18f %.18f%s",faceUp.X(),faceUp.Y(),faceUp.Z(),LE);
@@ -539,8 +542,8 @@ void Vehicle::SetupPanel() {
   }
 
 Int8 Vehicle::SubLoad(FILE* file, char* line) {
-  if (startsWith(line,"latitude ")) latitude = atof(nw(line));
-  else if (startsWith(line,"longitude ")) longitude = atof(nw(line));
+  if (startsWith(line,"latitude ")) ins->Latitude(atof(nw(line)));
+  else if (startsWith(line,"longitude ")) ins->Longitude(atof(nw(line)));
   else if (startsWith(line,"distance ")) distanceTravelled = atof(nw(line));
   else if (startsWith(line,"gimbals ")) gimbals = atov(nw(line));
   else if (startsWith(line,"facefront ")) faceFront = atov(nw(line));
@@ -563,8 +566,8 @@ Int8 Vehicle::SubLoad(FILE* file, char* line) {
   else if (startsWith(line,"roll ")) gimbals.X(atof(nw(line)));
   else if (startsWith(line,"yaw ")) gimbals.Z(atof(nw(line)));
   else if (startsWith(line,"dryweight ")) dryWeight = atof(nw(line));
-  else if (startsWith(line,"orbiting earth")) orbiting = Earth;
-  else if (startsWith(line,"orbiting moon")) orbiting = Moon;
+  else if (startsWith(line,"orbiting earth")) Orbiting(Earth);
+  else if (startsWith(line,"orbiting moon")) Orbiting(Moon);
   else return 0;
   return -1;
   }

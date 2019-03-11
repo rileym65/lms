@@ -32,13 +32,13 @@ void Plss::Init() {
 
 void Plss::BeginEva(Vehicle* from) {
   Vector p;
-  latitude = from->Latitude();
-  longitude = from->Longitude();
+  Latitude(from->Latitude());
+  Longitude(from->Longitude());
   Place(from->Position() - from->Orbiting()->Position());
   p = faceFront.Norm().Scale(15);
   position = position + p;
-  position = (position - orbiting->Position()).Norm().Scale(orbiting->Radius()) +
-             orbiting->Position();
+  position = (position - Orbiting()->Position()).Norm().Scale(Orbiting()->Radius()) +
+             Orbiting()->Position();
   carrying = ' ';
   Heading(0);
   return;
@@ -50,7 +50,7 @@ void Plss::BeginEva(Vehicle* from) {
   Double dist;
   fp = from->Position();
   u = from->Position().Norm();
-  position = u.Scale(orbiting->Radius());
+  position = u.Scale(Orbiting()->Radius());
   velocity = Vector(0,0,0);
   thrust = Vector(0,0,0);
   Radius(position.Length());

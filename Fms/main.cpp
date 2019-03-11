@@ -922,6 +922,7 @@ int main(int argc, char** argv) {
   mission->Name((char*)"Default");
   seq = new Sequencer();
   map = new Map();
+printf("a\n");
   if (load("fms.sav") == 0) {
     ClrScr();
     printf("1. Mercury/Redstone\n");
@@ -1018,6 +1019,7 @@ int main(int argc, char** argv) {
     if (lm != NULL) lm->TargetVehicle(csm);
     plss->TargetVehicle(lm);
     }
+printf("b\n");
   simSpeed = 100000;
   OpenTerminal();
   HideCursor();
