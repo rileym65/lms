@@ -63,7 +63,7 @@ void CommandModule::Cutoff() {
   }
 
 Double CommandModule::Apoapsis() {
-  return apoapsis;
+  return ins->Apoapsis();
   }
 
 Boolean CommandModule::Armed() {
@@ -71,7 +71,7 @@ Boolean CommandModule::Armed() {
   }
 
 Double CommandModule::AscendingNode() {
-  return ascendingNode;
+  return ins->AscendingNode();
   }
 
 Double CommandModule::CommandModuleRcsIsp(Double d) {
@@ -139,7 +139,7 @@ void CommandModule::Ignition() {
   }
 
 Double CommandModule::Inclination() {
-  return inclination;
+  return ins->Inclination();
   }
 
 void CommandModule::Launch() {
@@ -202,7 +202,7 @@ Byte CommandModule::NumStages() {
   }
 
 Double CommandModule::OrbitTime() {
-  return orbitTime;
+  return ins->OrbitTime();
   }
 
 Double CommandModule::ParachuteDeployment() {
@@ -215,7 +215,7 @@ void CommandModule::ParachuteDiameter(Double d) {
   }
 
 Double CommandModule::Periapsis() {
-  return periapsis;
+  return ins->Periapsis();
   }
 
 Double CommandModule::PitchRate() {
@@ -227,12 +227,11 @@ Double CommandModule::RcsFuel() {
   }
 
 Double CommandModule::Radius() {
-  return radius;
+  return ins->Radius();
   }
 
 Double CommandModule::Radius(Double d) {
-  radius = d;
-  return radius;
+  return ins->Radius(d);
   }
 
 Double CommandModule::RateOfClimb() {
