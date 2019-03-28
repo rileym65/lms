@@ -46,26 +46,28 @@ void Body::CalculateOrbit() {
 void Body::Cycle(Double gran) {
   Double d;
   Double hyp;
+  Double scale;
   if (orbiting == NULL) return;
-  position = position + velocity.Scale(1/GRAN);
+  scale = 1 / gran;
+  position = position + velocity.Scale(scale);
   if (lm != NULL) {
     if (lm ->Orbiting() == this && lm->Landed()) {
-      lm->Position(lm->Position() + velocity.Scale(1/GRAN));
+      lm->Position(lm->Position() + velocity.Scale(scale));
       }
     }
   if (lrv != NULL) {
     if (lrv ->Orbiting() == this) {
-      lrv->Position(lrv->Position() + velocity.Scale(1/GRAN));
+      lrv->Position(lrv->Position() + velocity.Scale(scale));
       }
     }
   if (plss != NULL) {
     if (plss ->Orbiting() == this) {
-      plss->Position(plss->Position() + velocity.Scale(1/GRAN));
+      plss->Position(plss->Position() + velocity.Scale(scale));
       }
     }
   d = position.Length();
   d = ((G * mass * orbiting->Mass()) / (d * d) ) / mass;
-  d = d / GRAN;
+  d = d / gran;
   velocity = velocity - position.Norm().Scale(d);
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
   longitude = position.X() / hyp;
