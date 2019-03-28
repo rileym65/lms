@@ -188,6 +188,11 @@ void CsmComputer::_doShow() {
          _reg2(j);
          _reg3(i);
          break;
+    case 17:
+         _reg1(csm->GetIns()->RateOfClimb() * 100);
+         _reg2(csm->GetIns()->DeltaROC() * 100);
+         _reg3(csm->GetIns()->DeltaApoapsis() * 100);
+         break;
     }
   }
 
@@ -902,6 +907,19 @@ void CsmComputer::Cycle() {
   else if (prog == 32) {
     csm->Retrograde(3);
     }
+  else if (prog == 33) {
+    csm->Norm(3);
+    }
+  else if (prog == 34) {
+    csm->Anorm(3);
+    }
+  else if (prog == 35) {
+    csm->Inside(3);
+    }
+  else if (prog == 36) {
+    csm->Outside(3);
+    }
+
   else if (prog == 50) {
     mission->TargetLongitude((Double)preg1 / 100.0);
     mission->TargetLatitude((Double)preg2 / 100.0);

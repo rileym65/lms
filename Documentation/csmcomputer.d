@@ -39,6 +39,7 @@
 	|  16  |  12  | tarAlt      | TarLong      | TarLat     |
 	|  16  |  14  | Main DeltaV | Rcs DeltaV   | Fuel flow  |
 	|  16  |  16  | Event HH    | Event MM     | Event SS   |
+	|  16  |  17  | ROC         | Delta ROC    | Delta Apo  |
 [TE]
 [=]
 [TB]
@@ -55,6 +56,10 @@
 	|  30  | Hohmann Transfer                          |
 	|  31  | Hold prograde attitude                    |
 	|  32  | Hold retrograde attitude                  |
+	|  33  | Hold orbit normal attitude                |
+        |  34  | Hold orbit anti-normal attitude           |
+        |  35  | Hold orbit inside attitude                |
+        |  36  | Hold orbit outside attitude               |
 [TE]
 [=]
 [H2]	Programs

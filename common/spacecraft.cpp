@@ -333,8 +333,9 @@ void Spacecraft::Prograde(Double maxRate) {
   Double d;
   Matrix m;
   vel = (velocity - Orbiting()->Velocity()).Norm();
-  d = (asin(faceFront.Dot(vel)) * 180 / M_PI);
+  d = 180 - (acos(faceUp.Dot(vel)) * 180 / M_PI);
   if (d > 0) d = -d;
+  if (d > -0.001) return;
   if (d > maxRate) d = maxRate;
   if (d < -maxRate) d = -maxRate;
   crs = vel.Cross(faceUp).Norm();
@@ -350,11 +351,98 @@ void Spacecraft::Retrograde(Double maxRate) {
   Double d;
   Matrix m;
   vel = (velocity - Orbiting()->Velocity()).Norm();
-  d = (asin(faceFront.Dot(vel)) * 180 / M_PI);
+  d = 180 - (acos(faceUp.Dot(vel)) * 180 / M_PI);
   if (d < 0) d = -d;
+  if (d < 0.001) return;
   if (d > maxRate) d = maxRate;
   if (d < -maxRate) d = -maxRate;
   crs = vel.Cross(faceUp).Norm();
+  m = Matrix::Rotate(crs, d / GRAN);
+  faceUp = m.Transform(faceUp).Norm();
+  faceLeft = m.Transform(faceLeft).Norm();
+  faceFront = m.Transform(faceFront).Norm();
+  }
+
+void Spacecraft::Anorm(Double maxRate) {
+  Vector crs;
+  Vector pos;
+  Vector vel;
+  Double d;
+  Matrix m;
+  pos = (position - Orbiting()->Position()).Norm();
+  vel = (velocity - Orbiting()->Velocity()).Norm();
+  crs = vel.Cross(pos).Norm();
+  d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  if (d < 0) d = -d;
+  if (d < 0.001) return;
+  if (d > maxRate) d = maxRate;
+  if (d < -maxRate) d = -maxRate;
+  crs = crs.Cross(faceUp).Norm();
+  m = Matrix::Rotate(crs, d / GRAN);
+  faceUp = m.Transform(faceUp).Norm();
+  faceLeft = m.Transform(faceLeft).Norm();
+  faceFront = m.Transform(faceFront).Norm();
+  }
+
+void Spacecraft::Norm(Double maxRate) {
+  Vector crs;
+  Vector pos;
+  Vector vel;
+  Double d;
+  Matrix m;
+  pos = (position - Orbiting()->Position()).Norm();
+  vel = (velocity - Orbiting()->Velocity()).Norm();
+  crs = vel.Cross(pos).Neg().Norm();
+  d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  if (d < 0) d = -d;
+  if (d < 0.001) return;
+  if (d > maxRate) d = maxRate;
+  if (d < -maxRate) d = -maxRate;
+  crs = crs.Cross(faceUp).Norm();
+  m = Matrix::Rotate(crs, d / GRAN);
+  faceUp = m.Transform(faceUp).Norm();
+  faceLeft = m.Transform(faceLeft).Norm();
+  faceFront = m.Transform(faceFront).Norm();
+  }
+
+void Spacecraft::Inside(Double maxRate) {
+  Vector crs;
+  Vector pos;
+  Vector vel;
+  Double d;
+  Matrix m;
+  pos = (position - Orbiting()->Position()).Norm();
+  vel = (velocity - Orbiting()->Velocity()).Norm();
+  crs = vel.Cross(pos).Norm();
+  crs = crs.Cross(vel).Norm();
+  d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  if (d < 0) d = -d;
+  if (d < 0.001) return;
+  if (d > maxRate) d = maxRate;
+  if (d < -maxRate) d = -maxRate;
+  crs = crs.Cross(faceUp).Norm();
+  m = Matrix::Rotate(crs, d / GRAN);
+  faceUp = m.Transform(faceUp).Norm();
+  faceLeft = m.Transform(faceLeft).Norm();
+  faceFront = m.Transform(faceFront).Norm();
+  }
+
+void Spacecraft::Outside(Double maxRate) {
+  Vector crs;
+  Vector pos;
+  Vector vel;
+  Double d;
+  Matrix m;
+  pos = (position - Orbiting()->Position()).Norm();
+  vel = (velocity - Orbiting()->Velocity()).Norm();
+  crs = vel.Cross(pos).Norm();
+  crs = crs.Cross(vel).Neg().Norm();
+  d = 180 - (acos(faceFront.Dot(crs)) * 180 / M_PI);
+  if (d < 0) d = -d;
+  if (d < 0.001) return;
+  if (d > maxRate) d = maxRate;
+  if (d < -maxRate) d = -maxRate;
+  crs = crs.Cross(faceUp).Norm();
   m = Matrix::Rotate(crs, d / GRAN);
   faceUp = m.Transform(faceUp).Norm();
   faceLeft = m.Transform(faceLeft).Norm();

@@ -26,6 +26,7 @@ class Spacecraft : public Vehicle {
     ~Spacecraft();
     virtual Double    Altitude();
     virtual Double    Altitude(Double d);
+    virtual void      Anorm(Double maxRate);
     virtual Double    Apoapsis();
     virtual Double    Apoapsis(Double d);
     virtual Double    ArgOfPeriapsis();
@@ -38,11 +39,14 @@ class Spacecraft : public Vehicle {
     virtual Double    FuelUsed();
     virtual Double    Inclination();
     virtual void      Ins();
+    virtual void      Inside(Double maxRate);
     virtual Double    Isp();
     virtual Double    MaxRcsFuel();
     virtual Double    MaxRcsFuel(Double d);
     virtual Double    MeanAnomaly();
     virtual Double    MoonG();
+    virtual void      Norm(Double maxRate);
+    virtual void      Outside(Double maxRate);
     virtual Double    Periapsis();
     virtual Double    Periapsis(Double d);
     virtual Vector    Position();
