@@ -36,8 +36,8 @@ void G_Moon::Update() {
   sprintf(buffer,"%6.2f",Moon->Latitude());
   GotoXY(x+18,y+2); Write(buffer);
   d = (Moon->Longitude() + 360) - (vehicle->Longitude() + 360) - 360;
-  if (d >= 180) d -= 360;
-  if (d <= -180) d += 360;
+  while (d >= 180) d -= 360;
+  while (d <= -180) d += 360;
   sprintf(buffer,"%6.2f",d);
   GotoXY(x+18,y+1); Write(buffer);
   if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
