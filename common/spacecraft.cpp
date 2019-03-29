@@ -334,6 +334,7 @@ void Spacecraft::Prograde(Double maxRate) {
   Matrix m;
   vel = (velocity - Orbiting()->Velocity()).Norm();
   d = 180 - (acos(faceUp.Dot(vel)) * 180 / M_PI);
+  if (isnan(d)) return;
   if (d > 0) d = -d;
   if (d > -0.001) return;
   if (d > maxRate) d = maxRate;
@@ -352,6 +353,7 @@ void Spacecraft::Retrograde(Double maxRate) {
   Matrix m;
   vel = (velocity - Orbiting()->Velocity()).Norm();
   d = 180 - (acos(faceUp.Dot(vel)) * 180 / M_PI);
+  if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
   if (d > maxRate) d = maxRate;
@@ -373,6 +375,7 @@ void Spacecraft::Anorm(Double maxRate) {
   vel = (velocity - Orbiting()->Velocity()).Norm();
   crs = vel.Cross(pos).Norm();
   d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
   if (d > maxRate) d = maxRate;
@@ -394,6 +397,7 @@ void Spacecraft::Norm(Double maxRate) {
   vel = (velocity - Orbiting()->Velocity()).Norm();
   crs = vel.Cross(pos).Neg().Norm();
   d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
   if (d > maxRate) d = maxRate;
@@ -416,6 +420,7 @@ void Spacecraft::Inside(Double maxRate) {
   crs = vel.Cross(pos).Norm();
   crs = crs.Cross(vel).Norm();
   d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
   if (d > maxRate) d = maxRate;
@@ -438,6 +443,7 @@ void Spacecraft::Outside(Double maxRate) {
   crs = vel.Cross(pos).Norm();
   crs = crs.Cross(vel).Neg().Norm();
   d = 180 - (acos(faceFront.Dot(crs)) * 180 / M_PI);
+  if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
   if (d > maxRate) d = maxRate;
