@@ -11,6 +11,8 @@ Ins::Ins(Vehicle* v) {
   argOfPeriapsis = 0.0;
   clockAp = 0;
   clockPe = 0;
+  deltaApoapsis = 0.0;
+  deltaROC = 0.0;
   eccentricAnomaly = 0.0;
   eccentricity = 0.0;
   inclination = 0.0;
@@ -18,13 +20,17 @@ Ins::Ins(Vehicle* v) {
   latitudeAcc = 0.0;
   latitudeVel = 0.0;
   longitude = 0.0;
+  lastAltitude = 0.0;
+  lastApoapsis = 0.0;
   lastLatitude = 0.0;
   lastLatitudeVel = 0.0;
   lastLongitude = 0.0;
+  lastROC = 0.0;
   meanAnomaly = 0.0;
   orbiting = NULL;
   orbitTime = 0.0;
   periapsis = 0.0;
+  rateOfClimb = 0.0;
   tarLatitude = 0.0;
   tarLongitude = 0.0;
   tarMomEast = 0.0;
@@ -92,6 +98,14 @@ Int32 Ins::ClockPe() {
 Int32 Ins::ClockPe(Int32 i) {
   clockPe = i;
   return clockPe;
+  }
+
+Double Ins::DeltaApoapsis() {
+  return deltaApoapsis;
+  }
+
+Double Ins::DeltaROC() {
+  return deltaROC;
   }
 
 Double Ins::EccentricAnomaly() {
@@ -231,6 +245,10 @@ Double Ins::Radius(Double d) {
   else
     altitude = radius;
   return radius;
+  }
+
+Double Ins::RateOfClimb() {
+  return rateOfClimb;
   }
 
 Double Ins::TarLatitude() {
@@ -403,8 +421,15 @@ void Ins::Cycle() {
   latitudeVel = tmp * Orbiting()->Meters();
   latitudeAcc = latitudeVel - lastLatitudeVel;
 
+  rateOfClimb = altitude - lastAltitude;
+  deltaROC = rateOfClimb - lastROC;
+  deltaApoapsis = apoapsis - lastApoapsis;
+
+  lastAltitude = altitude;
   lastLatitude = latitude;
   lastLongitude = longitude;
   lastLatitudeVel = latitudeVel;
+  lastROC = rateOfClimb;
+  lastApoapsis = apoapsis;
   }
 

@@ -56,6 +56,7 @@
 	| ALT    | Altitude in meters                               |
 	| ANOD   | Longitude of ascending node                      |
 	| APOL   | Apolune in meters                                |
+	| ARGP   | Argument of Periapsis                            |
 	| AVEL   | Altitude velocity in m/s                         |
 	| C1     | Contant value of 1                               |
 	| C10    | Contant value of 10                              |
@@ -172,9 +173,9 @@
         |  16  |  51  | Apoapsis    | Periapsis    | Orbit time |
         |  16  |  52  | Longitude   | Latitude     |            |
         |  16  |  53  | Mass        | Fuel kg      | RCS Fuel kg|
-        |  16  |  04  | Roll Gimbal | Pitch Gimbal | Yaw Gimbal |
+        |  16  |  54  | Roll Gimbal | Pitch Gimbal | Yaw Gimbal |
         |  16  |  55  | true anom.  | mean anom.   | ecc. anom. |
-        |  16  |  06  | Asc. Node   | Arg. Peri.   | Peri. Long.|
+        |  16  |  56  | Asc. Node   | Arg. Peri.   | Peri. Long.|
         |  16  |  57  | GET HH      | GET MM       | GET SS     |
         |  16  |  58  | UTC HH      | UTC MM       | UTC SS     |
         |  16  |  59  | Apo HH      | Apo MM       | Apo SS     |
@@ -182,6 +183,8 @@
         |  16  |  62  | tarAlt      | TarLong      | TarLat     |
         |  16  |  64  | Main DeltaV | Rcs DeltaV   | Fuel flow  |
         |  16  |  16  | Event HH    | Event MM     | Event SS   |
+	|  16  |  71  |             | LAN          | Incl       |
+	|      |      | Periapsis   | Apoapsis     | Orbit time |
 [TE]
 [=]
 

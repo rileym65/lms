@@ -15,14 +15,19 @@ class Ins {
     Double ascendingNode;
     Int32  clockAp;
     Int32  clockPe;
+    Double deltaROC;
+    Double deltaApoapsis;
     Double eccentricAnomaly;
     Double eccentricity;
     Double inclination;
     Double latitude;
     Double longitude;
+    Double lastAltitude;
+    Double lastApoapsis;
     Double lastLatitude;
     Double lastLatitudeVel;
     Double lastLongitude;
+    Double lastROC;
     Double latitudeAcc;
     Double latitudeVel;
     Double meanAnomaly;
@@ -30,6 +35,7 @@ class Ins {
     Double orbitTime;
     Double periapsis;
     Double radius;
+    Double rateOfClimb;
     Double tarLatitude;
     Double tarLongitude;
     Double trueAnomaly;
@@ -52,6 +58,8 @@ class Ins {
     Int32  ClockAp(Int32 i);
     Int32  ClockPe();
     Int32  ClockPe(Int32 i);
+    Double DeltaApoapsis();
+    Double DeltaROC();
     Double EccentricAnomaly();
     Double EccentricAnomaly(Double d);
     Double Eccentricity();
@@ -82,6 +90,7 @@ class Ins {
     Double Periapsis(Double d);
     Double Radius();
     Double Radius(Double d);
+    Double RateOfClimb();
     Double TarLatitude();
     Double TarLatitude(Double d);
     Double TarLongitude();

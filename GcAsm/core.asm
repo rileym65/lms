@@ -311,6 +311,16 @@ v16n53:     mov    mass,r1              ; put vehicle mass into register 1
             jmp    v16n53               ; and repeat
 
 ; *************************************
+; ***** Equivalent to CSM V16 N04 *****
+; *************************************
+            prog   P00V16N54
+v16n54:     mov    roll,r1              ; show roll gimbal in register 1
+            mov    pitch,r2             ; show pitch gimbal in reigster 2
+            mov    yaw,r3               ; show yaw gimbal in register 3
+            wait                        ; wait until next cycle
+            jmp    v16n54               ; and repeat
+
+; *************************************
 ; ***** Equivalent to CSM V16 N05 *****
 ; *************************************
             prog   P00V16N55
@@ -319,6 +329,17 @@ v16n55:     mov    tanom,r1             ; put true anomaly into register 1
             mov    eanom,r3             ; put eccentric anomaly into register 3
             wait                        ; wait until next cycle
             jmp    v16n55               ; and repeat
+
+; *************************************
+; ***** Equivalent to CSM V16 N06 *****
+; *************************************
+            prog   P00V16N56
+v16n56:     mov    anod,r1              ; put ascending node into register 1
+            mov    argp,r2              ; put argument of periapsis into register 2
+            mov    anod,r3              ; Get longitude of ascending node
+            add    r3,argp              ; and add argument of periapsis
+            wait                        ; wait until next cycle
+            jmp    v16n56               ; and repeat
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N07 *****
@@ -388,6 +409,15 @@ v16n64:     mov    mass,r20             ; get mass of vehicle
             wait                        ; wait until next cycle
             jmp    v16n64               ; and repeat
 
+
+; *****************************
+; ***** Show ORBvABS data *****
+; *****************************
+            prog   P00V16N71
+v16n71:     call   periapo             ; display perilune/apolune
+            call   absorbit            ; display orbital information
+            wait
+            jmp    v16n71
 
 ; **********************************************************************
 ; ***** Decompose clock in r20 to hh,mm,ss and display in r1,r2,r3 *****

@@ -54,7 +54,8 @@ class Computer {
     virtual Boolean Running();
     virtual Boolean Input();
     virtual Boolean Err();
-    virtual void Cycle();
+    virtual void PCycle();
+    virtual void VnCycle();
     virtual void Reset();
     virtual void ProcessKey(Int32 key);
     virtual UInt32 Check();

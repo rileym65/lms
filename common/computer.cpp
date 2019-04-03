@@ -350,6 +350,7 @@ Double Computer::read(UInt16 addr) {
       case 0x3a: return sc->Isp();
       case 0x3b: return sc->RcsIsp();
       case 0x3c: return sc->FuelUsed();
+      case 0x3d: return ins->ArgOfPeriapsis();
       }
     }
   if ((addr & 0xf00) == 0x600) {
@@ -702,7 +703,7 @@ Boolean Computer::exec(UInt32 cmd) {
     }
   }
 
-void Computer::Cycle() {
+void Computer::PCycle() {
   Boolean flag;
   Int16 count;
   flag = true;
@@ -723,6 +724,11 @@ void Computer::Cycle() {
       if (--count <= 0) flag = false;
       }
     }
+  }
+
+void Computer::VnCycle() {
+  Boolean flag;
+  Int16 count;
   count = 50;
   flag = true;
   stack = vn_stack;
