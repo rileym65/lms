@@ -26,15 +26,15 @@ void G_CsmDock::Reset() {
   }
 
 void G_CsmDock::Display() {
-  GotoXY(x,y+0); Write("      v      Align       ");
-  GotoXY(x,y+1); Write(" +----|----+ pX: +99.9999");
-  GotoXY(x,y+2); Write(" |         | dX: +99.9999");
+  GotoXY(x,y+0); Write("      ^                  ");
+  GotoXY(x,y+1); Write(" +----|----+ pX: ---.----");
+  GotoXY(x,y+2); Write(" |         | dX: ---.----");
   GotoXY(x,y+3); Write(" |         |             ");
-  GotoXY(x,y+4); Write(">-    +    - pY: +99.9999");
-  GotoXY(x,y+5); Write(" |         | dY: +99.9999");
+  GotoXY(x,y+4); Write("<-    +    - pY: ---.----");
+  GotoXY(x,y+5); Write(" |         | dY: ---.----");
   GotoXY(x,y+6); Write(" |         |             ");
-  GotoXY(x,y+7); Write(" +----|----+ pZ: +99.9999");
-  GotoXY(x,y+8); Write("      ^      dZ: +99.9999");
+  GotoXY(x,y+7); Write(" +----|----+ pZ: ---.----");
+  GotoXY(x,y+8); Write("      v      dZ: ---.----");
   }
 
 void G_CsmDock::Update() {

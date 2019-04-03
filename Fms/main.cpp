@@ -839,7 +839,7 @@ void cycle() {
     seq->Cycle();
     if (lm != NULL) {
       lm->Ins();
-      if (lm->Comp() != NULL) lm->Comp()->Cycle();
+      if (lm->Comp() != NULL) lm->Comp()->VnCycle();
       }
     if (mission->Vehicle() < 5 && !docked && lm != NULL) {
       if ((csm->Position() - lm->Position()).Length() < 5.275) {
@@ -922,7 +922,6 @@ int main(int argc, char** argv) {
   mission->Name((char*)"Default");
   seq = new Sequencer();
   map = new Map();
-printf("a\n");
   if (load("fms.sav") == 0) {
     ClrScr();
     printf("1. Mercury/Redstone\n");
@@ -1019,7 +1018,6 @@ printf("a\n");
     if (lm != NULL) lm->TargetVehicle(csm);
     plss->TargetVehicle(lm);
     }
-printf("b\n");
   simSpeed = 100000;
   OpenTerminal();
   HideCursor();
