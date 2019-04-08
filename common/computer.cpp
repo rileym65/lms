@@ -43,8 +43,9 @@ UInt32 defaultprog[] = {
   0xffffffff,
   };
 
-Computer::Computer(Vehicle* v) {
+Computer::Computer(Vehicle* v,const char* core) {
   vehicle = v;
+  strcpy(corefile,core);
   ins = vehicle->GetIns();
   rom = NULL;
   romLength = 0;
@@ -177,8 +178,13 @@ Boolean Computer::loadCoreFile() {
   Boolean valid;
   FILE *file;
   char line[1024];
-  file = fopen("core.bin","r");
-  if (file == NULL) return false;
+//  file = fopen("core.bin","r");
+  file = fopen(corefile,"r");
+  if (file == NULL) {
+    printf("Could not open core file: %s\n",corefile);
+    exit(1);
+    return false;
+    }
   addr = 0;
   while (fgets(line, 1023, file) != NULL) {
     opcode = 0;

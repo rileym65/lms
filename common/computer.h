@@ -34,6 +34,7 @@ class Computer {
     Int32   p_pc;
     Int32   vn_pc;
     Int32  *pc;
+    char    corefile[256];
     Double  read(UInt16 addr);
     void    write(UInt16 addr,Double value);
     Vector  readVector(UInt16 addr);
@@ -45,7 +46,7 @@ class Computer {
     Int32   findProgram(UInt32 code);
     void    Push(UInt32 v);
   public:
-    Computer(Vehicle* v);
+    Computer(Vehicle* v,const char* core);
     virtual ~Computer();
     virtual char* Prog();
     virtual char* Noun();

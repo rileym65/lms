@@ -187,7 +187,7 @@ Int8 load(const char* filename) {
     else if (startsWith(pline,"lunarmodule {")) {
       lm = new LunarModule();
       lm->Load(file);
-      lm->Comp(new Computer(lm));
+      lm->Comp(new Computer(lm,"core.lm"));
       }
     else if (startsWith(pline,"plss {")) {
       plss = new Plss();

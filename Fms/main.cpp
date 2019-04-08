@@ -254,7 +254,7 @@ void saturnV(UInt8 lem) {
     }
   if (lem != 0) {
     lm = new LunarModule();
-    lm->Comp(new Computer(lm));
+    lm->Comp(new Computer(lm,"core.lm"));
     }
   booster->Height(85.9);
   booster->CmOffset(17.25);
@@ -361,7 +361,7 @@ void saturnVb(UInt8 lem) {
     }
   if (lem != 0) {
     lm = new LunarModule();
-    lm->Comp(new Computer(lm));
+    lm->Comp(new Computer(lm,"core.lm"));
     }
   booster->Height(85.9);
   booster->CmOffset(17.25);
