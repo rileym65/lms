@@ -64,6 +64,8 @@ INST inst[] = {
   { "INT",  0x28000000, ARGS2 },
   { "MOD",  0x29000000, ARGS2 },
   { "LOG",  0x2a000000, ARGS2 },
+  { "ORNT", 0x2b000000, ARGS1 },
+  { "RUN",  0x2c000000, ARGS1 },
   { "",     0x7fffffff, 0     },
   };
 
@@ -130,6 +132,12 @@ SYMBOL symtab[] = {
   { "RISP",   0x0000023b },
   { "FFLOW",  0x0000023c },
   { "ARGP",   0x0000023d },
+  { "OPRO",   0x00000001 },
+  { "ORET",   0x00000002 },
+  { "ONORM",  0x00000003 },
+  { "OANORM", 0x00000004 },
+  { "OIN",    0x00000005 },
+  { "OOUT",   0x00000006 },
 
   { "VEL",    0x00000300 },
   { "POS",    0x00000301 },
@@ -156,6 +164,7 @@ SYMBOL symtab[] = {
   { "RCSD",   0x00000609 },
   { "RCSL",   0x0000060a },
   { "RCSR",   0x0000060b },
+  { "PRG",    0x0000060c },
   { "",       0x7fffffff },
   };
 

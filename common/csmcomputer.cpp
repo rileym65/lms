@@ -784,7 +784,7 @@ void CsmComputer::Cycle() {
 /* ***** into the flight.  Commenting it out for now until I have  ***** */
 /* ***** time to figure why it fails                               ***** */
 /* ********************************************************************* */
-//    _preg3((Int32)csm->Velocity().Length());
+    _preg3((Int32)csm->Velocity().Length());
     }
   else if (prog == 15) {
     csm->Prograde(3);

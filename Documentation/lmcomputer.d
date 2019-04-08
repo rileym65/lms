@@ -30,8 +30,10 @@
 	| MUL    | r1,r2    | Multiply r1 by r2                        |
 	| NEG    | rs,rd    | Negate rs and place into rd              |
 	| NORM   | vs,vd    | Normalize a vector                       |
+	| ORNT   | vs       | Orient spacecraft                        |
 	| PROG   | pvn      | Set program identity at current location |
 	| RET    |          | Return to caller                         |
+	| RUN    | ad       | Run program at ad                        |
 	| SIN    | rs,rd    | Place sin of rs in degrees into rd       |
 	| SQR    | rs,rd    | Place square of rs into rd               |
 	| SQRT   | rs,rd    | Place square root of rs into rd          |
@@ -141,6 +143,7 @@
 	| RCSRTH | RCS rotation throttle                         |
 	| RCSTH  | RCS translation throttle                      |
 	| RLRAT  | Roll rate                                     |
+	| PRG    | Program display register                      |
 	| THRTL  | Main engine throttle                          |
 	| YWRAT  | Yaw rate                                      |
 	| RCSF   | Rcs Face thruster on/off                      |
@@ -163,6 +166,12 @@
 	| 00 | 16 | 13 | Display POS^REL data in meters         |
 	| 00 | 16 | 21 | Display POS^ABS and ascent fuel usage  |
 	| 00 | 16 | 22 | Display POS^TAR and descent fuel usage |
+	| 31 | 00 | 00 | Hold prograde attitude                 |
+        | 32 | 00 | 00 | Hold retrograde attitude               |
+	| 33 | 00 | 00 | Hold orbit normal attitude             |
+	| 34 | 00 | 00 | Hold orbit anti-normal attitude        |
+	| 35 | 00 | 00 | Hold orbit inside attitude             |
+	| 36 | 00 | 00 | Hold orbit outside attitude            |
 [TE]
 [I-4]
 

@@ -826,7 +826,7 @@ void cycle() {
           return;
           }
         }
-
+      if (lm->Comp() != NULL) lm->Comp()->PCycle();
       }
     if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
       plss->UseOxygen(1);
@@ -899,9 +899,16 @@ void Launch() {
 int main(int argc, char** argv) {
   char buffer[32];
   UInt32 v;
+  Int32 i;
   UInt32  key;
   FILE   *file;
   mission = NULL;
+  plog = false;
+  vnlog = false;
+  for (i=0; i<argc; i++) {
+    if (strcmp(argv[i], "-plog") == 0) plog = true;
+    if (strcmp(argv[i], "-vnlog") == 0) vnlog = true;
+    }
   Earth = new Body("Earth", 5.972e+24, 6378100);
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
   Moon->Position(Vector(325266766, 0, 177193935));

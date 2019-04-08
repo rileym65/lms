@@ -167,6 +167,7 @@ CLINK Body        *Moon;
 CLINK Int32        numBurns;
 CLINK Int16        numSamples;
 CLINK char         pilotLocation;
+CLINK Boolean      plog;
 CLINK Plss        *plss;
 CLINK Int8         plssOn;
 CLINK Int8         plssPacks;
@@ -182,6 +183,7 @@ CLINK Int32        simSpeed;
 CLINK Double       softInjury;
 CLINK Int8         spaceSuitOn;
 CLINK Int8         ticks;
+CLINK Boolean      vnlog;
 CLINK Int8         cabinPressurized;
 
 CLINK UInt8        sampleType;

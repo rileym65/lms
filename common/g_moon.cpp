@@ -41,7 +41,7 @@ void G_Moon::Update() {
   sprintf(buffer,"%6.2f",d);
   GotoXY(x+18,y+1); Write(buffer);
   if ((vehicle->Type() & VT_SPACECRAFT) == 0) return;
-  sprintf(buffer,"%7.2f",((Spacecraft*)vehicle)->MoonG());
+  sprintf(buffer,"%7.4f",((Spacecraft*)vehicle)->MoonG());
   GotoXY(x+17,y+0); Write(buffer);
   }
 

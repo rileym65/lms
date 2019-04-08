@@ -1,3 +1,8 @@
+            prog   P00V00N00
+            run    P00V00N00
+idle:       mov    zero,prg
+            end
+            jmp    idle
 
 ; *************************************************************************
 ; ***** Prog: 00   Verb: 00   Noun: 01                                *****
@@ -436,9 +441,77 @@ clkout:     ldi    r21,3600             ; seconds in an hour
             ret                         ; return to caller
 
 
+            prog   P00V37N31
+            run    P31V00N00
+            end
 
+            prog   P00V37N32
+            run    P32V00N00
+            end
 
+            prog   P00V37n33
+            run    P33V00N00
+            end
 
+            prog   P00V37n34
+            run    P34V00N00
+            end
+
+            prog   P00V37n35
+            run    P35V00N00
+            end
+
+            prog   P00V37n36
+            run    P36V00N00
+            end
+
+; ***************************************************
+; ***** P31 - orient and hold prograde attitude *****
+; ***************************************************
+            prog   P31V00N00
+p31:        ornt   OPRO                 ; orient spacecraft prograde
+            wait                        ; wait until next cycle
+            jmp    p31                  ; keep looping
+
+; *****************************************************
+; ***** P32 - orient and hold retrograde attitude *****
+; *****************************************************
+            prog   P32V00N00
+p32:        ornt   ORET
+            wait
+            jmp    p32
+
+; *******************************************************
+; ***** P33 - orient and hold orbit normal attitude *****
+; *******************************************************
+            prog   P33V00N00
+p33:        ornt   ONORM
+            wait
+            jmp    p33
+
+; ************************************************************
+; ***** P34 - orient and hold orbit anti-normal attitude *****
+; ************************************************************
+            prog   P34V00N00
+p34:        ornt   OANORM
+            wait
+            jmp    p34
+
+; *******************************************************
+; ***** P35 - orient and hold orbit inside attitude *****
+; *******************************************************
+            prog   P35V00N00
+p35:        ornt   OIN
+            wait
+            jmp    p35
+
+; ********************************************************
+; ***** P36 - orient and hold orbit outside attitude *****
+; ********************************************************
+            prog   P36V00N00
+p36:        ornt   OOUT
+            wait
+            jmp    p36
 
             prog   P60V00N00
 p60lp1:     call   posrelmet            ; Display POS^REL in meters

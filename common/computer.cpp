@@ -24,6 +24,7 @@
 #define ERR_STK_UNDER    1003
 #define ERR_DIV0         1004
 #define ERR_INV_INST     1005
+#define ERR_OVERRUN      1006
 
 char compOutput[128];
 
@@ -90,8 +91,16 @@ void Computer::Load(FILE* file) {
     else if (startsWith(pline,"vnsp ")) vn_sp = atoi(nw(pline));
     else if (startsWith(pline,"vnpc ")) vn_pc = atoi(nw(pline));
     else if (startsWith(pline,"check ")) check = atoi(nw(pline));
-    else if (startsWith(pline,"running true")) run = true;
-    else if (startsWith(pline,"running false")) run = false;
+    else if (startsWith(pline,"running true")) {
+      p_running = true;
+      run = true;
+      }
+    else if (startsWith(pline,"running false")) {
+      p_running = false;
+      run = false;
+      }
+    else if (startsWith(pline,"vnrunning true")) vn_running = true;
+    else if (startsWith(pline,"vnrunning false")) vn_running = false;
     else if (startsWith(pline,"register ")) {
       pline = nw(pline);
       i = atoi(pline);
@@ -128,8 +137,10 @@ void Computer::Save(FILE* file) {
   fprintf(file,"  PC %d%s",p_pc,LE);
   fprintf(file,"  VNSP %d%s",vn_sp,LE);
   fprintf(file,"  VNPC %d%s",vn_pc,LE);
-  if (running) fprintf(file,"  Running True%s",LE);
+  if (p_running) fprintf(file,"  Running True%s",LE);
     else fprintf(file,"  Running False%s",LE);
+  if (vn_running) fprintf(file,"  VNRunning True%s",LE);
+    else fprintf(file,"  VNRunning False%s",LE);
   for (i=0; i<p_sp; i++)
     fprintf(file,"  Stack %d %d%s",i,p_stack[i],LE);
   for (i=0; i<p_sp; i++)
@@ -276,7 +287,7 @@ Boolean Computer::Input() {
   }
 
 Boolean Computer::Running() {
-  return running;
+  return p_running;
   }
 
 Boolean Computer::Err() {
@@ -361,6 +372,7 @@ Double Computer::read(UInt16 addr) {
       case 0x03: return vehicle->YawRate();
       case 0x04: return ((Spacecraft*)vehicle)->RcsThrottle();
       case 0x05: return ((Spacecraft*)vehicle)->RcsRotThrottle();
+      case 0x0c: return prog;
       }
     }
   return 0;
@@ -382,6 +394,7 @@ void Computer::write(UInt16 addr,Double value) {
       case 0x09: ((Spacecraft*)vehicle)->RcsUdMode((value == 0) ? ' ' : 'D'); break;
       case 0x0a: ((Spacecraft*)vehicle)->RcsLrMode((value == 0) ? ' ' : 'L'); break;
       case 0x0b: ((Spacecraft*)vehicle)->RcsLrMode((value == 0) ? ' ' : 'R'); break;
+      case 0x0c: prog = (int)value;
       }
     }
   }
@@ -445,15 +458,23 @@ Boolean Computer::exec(UInt32 cmd) {
   UInt16 arg2;
   Double d1;
   Double a1,a2;
+  FILE  *logfile;
   Int32 i1,i2;
   Vector v1,v2,v3;
   arg1 = (cmd >> 12) & 0xfff;
   arg2 = cmd & 0xfff;
+  if (plog && &p_pc == pc) {
+    logfile = fopen("plog.txt", "a");
+    fprintf(logfile,"%8x  %8x\n",(*pc)-1,cmd);
+    fclose(logfile);
+    }
+  if (vnlog && &vn_pc == pc) {
+    logfile = fopen("vnlog.txt", "a");
+    fprintf(logfile,"%8x  %8x\n",(*pc)-1,cmd);
+    fclose(logfile);
+    }
   switch (cmd & 0xff000000) {
     case 0x01000000:                                         /* PROG */
-         prog = (cmd >> 16) & 0xff;
-         verb = (cmd >> 8) & 0xff;
-         noun = cmd & 0xff;
          return true;
     case 0x02000000:                                         /* MOV */
          write(cmd & 0xfff, read((cmd >> 12) & 0xfff));
@@ -693,6 +714,28 @@ Boolean Computer::exec(UInt32 cmd) {
          d1 = log(a1);
          write(arg1, d1);
          return true;
+    case 0x2b000000:                                         /* ORNT */
+         if (arg2 == 1) ((Spacecraft*)(vehicle))->Prograde(3);
+         if (arg2 == 2) ((Spacecraft*)(vehicle))->Retrograde(3);
+         if (arg2 == 3) ((Spacecraft*)(vehicle))->Norm(3);
+         if (arg2 == 4) ((Spacecraft*)(vehicle))->Anorm(3);
+         if (arg2 == 5) ((Spacecraft*)(vehicle))->Inside(3);
+         if (arg2 == 6) ((Spacecraft*)(vehicle))->Outside(3);
+         return true;
+    case 0x2c000000:                                         /* RUN */
+         if (pc == &p_pc) return true;
+         i1 = findProgram(cmd & 0xffffff);
+         if (i1 == -1) {
+           *running = false;
+           err = true;
+           regs[13] = ERR_NO_PRGM;
+           return false;
+           }
+         p_pc = i1;
+         p_sp = 0;
+         prog = (cmd & 0xff0000) >> 16;
+         p_running = true;
+         return true;
     default:
          *running = false;
          err = true;
@@ -714,10 +757,12 @@ void Computer::PCycle() {
   sp = &p_sp;
   pc = &p_pc;
   while (flag) {
-    if ((UInt32)pc >= romLength) {
+    if ((UInt32)p_pc >= romLength) {
       *running = false;
       flag = false;
       err = true;
+      regs[13] = ERR_OVERRUN;
+      regs[14] = 1;
       }
     else {
       flag = exec(rom[(*pc)++]);
@@ -740,6 +785,8 @@ void Computer::VnCycle() {
     if ((UInt32)vn_pc >= romLength) {
       *running = false;
       flag = false;
+      regs[13] = ERR_OVERRUN;
+      regs[14] = 2;
       }
     else {
       flag = exec(rom[vn_pc++]);
@@ -776,15 +823,37 @@ void Computer::ProcessKey(Int32 key) {
     code |= noun;
     vn_pc = findProgram(code);
     if (vn_pc == -1) {
-      vn_running = false;
-      err = true;
-      regs[13] = ERR_NO_PRGM;
+      code = 0x00000000;
+      code |= (verb << 8);
+      code |= noun;
+      vn_pc = findProgram(code);
+      if (vn_pc == -1) {
+        code = 0x00000000;
+        code |= (verb << 8);
+        vn_pc = findProgram(code);
+        if (vn_pc == 01) {
+          vn_running = false;
+          err = true;
+          regs[13] = ERR_NO_PRGM;
+          }
+        else {
+          vn_running = true;
+          vn_sp = 0;
+          }
+        }
+      else {
+        vn_running = true;
+        vn_sp = 0;
+        }
       }
     else {
       vn_running = true;
       vn_sp = 0;
       }
     }
+    if (key == 'p') {
+      p_running = !p_running;
+      }
 //  if (key == 'p' && inputMode == 0) {
 //    p_running = false;
 //    err = false;
