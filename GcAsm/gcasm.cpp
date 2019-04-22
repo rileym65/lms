@@ -66,6 +66,13 @@ INST inst[] = {
   { "LOG",  0x2a000000, ARGS2 },
   { "ORNT", 0x2b000000, ARGS1 },
   { "RUN",  0x2c000000, ARGS1 },
+  { "INP",  0x2d000000, ARGS1 },
+  { "EVSTP",0x2e000000, ARGS0 },
+  { "EVUP", 0x2f000000, ARGS0 },
+  { "EVDN", 0x30000000, ARGS0 },
+  { "EVCNT",0x31000000, ARGS0 },
+  { "EVSET",0x32000000, ARGS0 },
+  { "EVCLR",0x33000000, ARGS0 },
   { "",     0x7fffffff, 0     },
   };
 
@@ -138,6 +145,7 @@ SYMBOL symtab[] = {
   { "OANORM", 0x00000004 },
   { "OIN",    0x00000005 },
   { "OOUT",   0x00000006 },
+  { "CLKEV",  0x0000023e },
 
   { "VEL",    0x00000300 },
   { "POS",    0x00000301 },
@@ -151,6 +159,8 @@ SYMBOL symtab[] = {
   { "RVEL",   0x00000309 },
   { "RPOS",   0x0000030a },
   { "TPOS",   0x0000030b },
+  { "OPOS",   0x0000030c },
+  { "OVEL",   0x0000030d },
 
   { "THRTL",  0x00000600 },
   { "RLRAT",  0x00000601 },

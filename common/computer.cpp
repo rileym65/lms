@@ -18,6 +18,9 @@
 #define MODE_INP_N_1     6
 #define MODE_INP_N_2     7
 #define MODE_INP_N_3     8
+#define MODE_INP_R_1     9
+#define MODE_INP_R_2     10
+#define MODE_INP_R_3     11
 
 #define ERR_NO_PRGM      1001
 #define ERR_STK_OVER     1002
@@ -25,6 +28,8 @@
 #define ERR_DIV0         1004
 #define ERR_INV_INST     1005
 #define ERR_OVERRUN      1006
+#define ERR_RANGE        1007
+#define ERR_INPUT        1008
 
 char compOutput[128];
 
@@ -158,6 +163,9 @@ void Computer::Reset() {
   prog = 0;
   verb = 0;
   noun = 1;
+  event = 0;
+  eventMode = 'U';
+  eventRunning = false;
   p_running = false;
   vn_running = false;
   input = false;
@@ -230,6 +238,9 @@ void Computer::addOpcode(UInt16 addr,UInt32 opcode) {
   }
 
 char* Computer::Reg(UInt8 n) {
+  if (n == 1 && input && inputMode == MODE_INP_R_1) return inputBuffer;
+  if (n == 2 && input && inputMode == MODE_INP_R_2) return inputBuffer;
+  if (n == 3 && input && inputMode == MODE_INP_R_3) return inputBuffer;
   if (n > 0 && n < 16) {
     if (fabs(regs[n]) > 9999999) sprintf(compOutput,"99999999");
     else if (fabs(regs[n]) > 99999) sprintf(compOutput,"%8.0f",regs[n]);
@@ -368,6 +379,7 @@ Double Computer::read(UInt16 addr) {
       case 0x3b: return sc->RcsIsp();
       case 0x3c: return sc->FuelUsed();
       case 0x3d: return ins->ArgOfPeriapsis();
+      case 0x3e: return event;
       }
     }
   if ((addr & 0xf00) == 0x600) {
@@ -431,6 +443,8 @@ Vector Computer::readVector(UInt16 addr) {
                  v = Vector(x,y,z);
                  v += Moon->Position();
                  return v;
+      case 0x0c: return vehicle->Position() - vehicle->Orbiting()->Position();
+      case 0x0d: return vehicle->Velocity() - vehicle->Orbiting()->Velocity();
       }
     }
   if ((addr & 0xf00) == 0x100) {
@@ -742,6 +756,47 @@ Boolean Computer::exec(UInt32 cmd) {
          prog = (cmd & 0xff0000) >> 16;
          p_running = true;
          return true;
+    case 0x2d000000:                                         /* INP */
+         if (input) {
+           *running = false;
+           err = true;
+           regs[13] = ERR_INPUT;
+           return false;
+           }
+         inputMode = 0;
+         if (arg2 == 0x101) inputMode = MODE_INP_R_1;
+         if (arg2 == 0x102) inputMode = MODE_INP_R_2;
+         if (arg2 == 0x103) inputMode = MODE_INP_R_3;
+         if (inputMode == 0) {
+           *running = false;
+           err = true;
+           regs[13] = ERR_RANGE;
+           regs[14] = arg1 - 0x100;
+           return false;
+           }
+         strcpy(inputBuffer,"+_____");
+         input = true;
+         return true;
+    case 0x2e000000:                                         /* EVSTP */
+         eventRunning = false;
+         return true;
+    case 0x2f000000:                                         /* EVUP */
+         eventMode = 'U';
+         eventRunning = true;
+         return true;
+    case 0x30000000:                                         /* EVDN */
+         eventMode = 'D';
+         eventRunning = true;
+         return true;
+    case 0x31000000:                                         /* EVCNT */
+         eventRunning = true;
+         return true;
+    case 0x32000000:                                         /* EVSET */
+         event = (regs[1] * 3600) + (regs[2] * 60) + regs[3];
+         return true;
+    case 0x33000000:                                         /* EVCLR */
+         event = 0;
+         return true;
     default:
          *running = false;
          err = true;
@@ -801,6 +856,20 @@ void Computer::VnCycle() {
     }
   }
 
+void Computer::SCycle() {
+  if (eventRunning) {
+    if (eventMode == 'U') {
+      event++;
+      }
+    else {
+      if (event > 0) {
+        event--;
+        if (event == 0) eventRunning = false;
+        }
+      }
+    }
+  }
+
 Int32 Computer::findProgram(UInt32 code) {
   Int32 ret;
   UInt32 i;
@@ -815,32 +884,54 @@ Int32 Computer::findProgram(UInt32 code) {
   }
 
 void Computer::ProcessKey(Int32 key) {
+  Int32 pos;
+  UInt32 i;
   UInt32 code;
-  if ((key == 13 || key == 10 || key == 'e') &&
-      (inputMode == MODE_INP_V_3 || inputMode == MODE_INP_N_3)) {
-    if (inputMode == MODE_INP_V_3) verb = verbIn;
-    if (inputMode == MODE_INP_N_3) noun = nounIn;
-    inputMode = 0;
-    input = false;
-    err = false;
-    code = 0x00000000;
-    code |= (prog << 16);
-    code |= (verb << 8);
-    code |= noun;
-    vn_pc = findProgram(code);
-    if (vn_pc == -1) {
+  if (key == 13 || key == 10 || key == 'e') {
+    if (inputMode == MODE_INP_R_1) {
+      regs[1] = atoi(inputBuffer);
+      input = false;
+      inputMode = 0;
+      }
+    if (inputMode == MODE_INP_R_2) {
+      regs[2] = atoi(inputBuffer);
+      input = false;
+      inputMode = 0;
+      }
+    if (inputMode == MODE_INP_R_3) {
+      regs[3] = atoi(inputBuffer);
+      input = false;
+      inputMode = 0;
+      }
+    if (inputMode == MODE_INP_V_3 || inputMode == MODE_INP_N_3) {
+      if (inputMode == MODE_INP_V_3) verb = verbIn;
+      if (inputMode == MODE_INP_N_3) noun = nounIn;
+      inputMode = 0;
+      input = false;
+      err = false;
       code = 0x00000000;
+      code |= (prog << 16);
       code |= (verb << 8);
       code |= noun;
       vn_pc = findProgram(code);
       if (vn_pc == -1) {
         code = 0x00000000;
         code |= (verb << 8);
+        code |= noun;
         vn_pc = findProgram(code);
-        if (vn_pc == 01) {
-          vn_running = false;
-          err = true;
-          regs[13] = ERR_NO_PRGM;
+        if (vn_pc == -1) {
+          code = 0x00000000;
+          code |= (verb << 8);
+          vn_pc = findProgram(code);
+          if (vn_pc == 01) {
+            vn_running = false;
+            err = true;
+            regs[13] = ERR_NO_PRGM;
+            }
+          else {
+            vn_running = true;
+            vn_sp = 0;
+            }
           }
         else {
           vn_running = true;
@@ -852,20 +943,10 @@ void Computer::ProcessKey(Int32 key) {
         vn_sp = 0;
         }
       }
-    else {
-      vn_running = true;
-      vn_sp = 0;
-      }
     }
-    if (key == 'p') {
-      p_running = !p_running;
-      }
-//  if (key == 'p' && inputMode == 0) {
-//    p_running = false;
-//    err = false;
-//    input = true;
-//    inputMode = MODE_INP_P_1;
-//    }
+  if (key == 'p') {
+    p_running = !p_running;
+    }
   if (key == 'v' && inputMode == 0) {
     verbIn = 0;
     vn_running = false;
@@ -901,6 +982,21 @@ void Computer::ProcessKey(Int32 key) {
       nounIn = 0;
       inputMode = MODE_INP_N_1;
       }
+    if (inputMode == MODE_INP_R_1 ||
+        inputMode == MODE_INP_R_2 ||
+        inputMode == MODE_INP_R_3) {
+      strcpy(inputBuffer,"+_____");
+      }
+    }
+  if (key == '+' && (inputMode == MODE_INP_R_1 ||
+                     inputMode == MODE_INP_R_2 ||
+                     inputMode == MODE_INP_R_3)) {
+    if (inputBuffer[0] == '-') inputBuffer[0] = '+';
+    }
+  if (key == '-' && (inputMode == MODE_INP_R_1 ||
+                     inputMode == MODE_INP_R_2 ||
+                     inputMode == MODE_INP_R_3)) {
+    if (inputBuffer[0] == '+') inputBuffer[0] = '-';
     }
   if (key >= '0' && key <= '9') {
     switch (inputMode) {
@@ -928,6 +1024,16 @@ void Computer::ProcessKey(Int32 key) {
       case MODE_INP_N_2:
            nounIn += (key - '0');
            inputMode = MODE_INP_N_3;
+           break;
+      case MODE_INP_R_1:
+      case MODE_INP_R_2:
+      case MODE_INP_R_3:
+           pos = -1;
+           for (i=0; i<strlen(inputBuffer); i++)
+             if (pos < 0 && inputBuffer[i] == '_') pos = i;
+           if (pos >= 0) {
+             inputBuffer[pos] = key;
+             }
            break;
       }
     }

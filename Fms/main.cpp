@@ -839,7 +839,10 @@ void cycle() {
     seq->Cycle();
     if (lm != NULL) {
       lm->Ins();
-      if (lm->Comp() != NULL) lm->Comp()->VnCycle();
+      if (lm->Comp() != NULL) {
+        lm->Comp()->SCycle();
+        lm->Comp()->VnCycle();
+        }
       }
     if (mission->Vehicle() < 5 && !docked && lm != NULL) {
       if ((csm->Position() - lm->Position()).Length() < 5.275) {

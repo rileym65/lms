@@ -15,6 +15,11 @@ class Computer {
     Boolean vn_running;
     Boolean input;
     Boolean err;
+    UInt32  event;
+    char    eventMode;
+    Boolean eventRunning;
+    char    inputBuffer[10];
+    Int8    inputPos;
     Int8    prog;
     Int8    noun;
     Int8    verb;
@@ -57,6 +62,7 @@ class Computer {
     virtual Boolean Err();
     virtual void PCycle();
     virtual void VnCycle();
+    virtual void SCycle();
     virtual void Reset();
     virtual void ProcessKey(Int32 key);
     virtual UInt32 Check();

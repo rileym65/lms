@@ -14,6 +14,11 @@
 	| DIV    | r1,r2    | Divide r1 by r2                          |
 	| DOT    | v1,v2    | Dot product of two vectors, result in R0 |
 	| END    |          | End program execution                    |
+	| EVCNT  |          | Restart event clock                      |
+	| EVDN   |          | Start event clock in down mode           |
+	| EVSTP  |          | Stop event clock                         |
+	| EVUP   |          | Start event clock in up mode             |
+	| INP    | rd       | Enter input mode for register rd         |
 	| INT    | rs,rd    | Integer value of rs to rd                |
 	| INV    | rs,rd    | Place 1/rs into rd                       |
 	| JEQ    | r1,r2,ad | Jump to ad if r1 equals r2               |
@@ -67,6 +72,7 @@
 	| CKKBU  | Current value of engine burn clock in seconds    |
 	| CLKGE  | Current value of GET in seconds                  |
 	| CLKAP  | Time til apoapsis in seconds                     |
+	| CLKEV  | Event clock                                      |
 	| CLKMI  | Current value of mission clock in seconds        |
 	| CLKOR  | Orbit time in seconds                            |
 	| CLKPE  | Time til periapsis in seconds                    |
@@ -75,7 +81,10 @@
 	| EACC   | Longitudinal acceleration in m/s                 |
 	| EANOM  | Eccentirc anomaly                                |
 	| EAST   | Longitude in degrees                             |
+	| EVDN   | Start event clock counting down                  |
 	| EVEL   | Longitudinal velocity in m/s                     |
+	| EVSTP  | Stop event clock                                 |
+	| EVUP   | Start event clock counting up                    |
 	| FFLOW  | Fuel flow in kg/s                                |
 	| FUEL   | Fuel of current stage                            |
 	| G      | Gravitational constant. 9.80665                  |
@@ -124,6 +133,8 @@
 	| DOWN  | Orientation of Down face                        |
 	| FRONT | Orientation of Front face                       |
 	| LEFT  | Orientation of Left face                        |
+	| OPOS  | Orbital position                                |
+	| OVEL  | Orbital velocity                                |
 	| POS   | Current absolute position                       |
 	| RIGHT | Orientation of Right face                       |
 	| RPOS  | Relative position to CSM                        |
@@ -166,6 +177,14 @@
 	| 00 | 16 | 13 | Display POS^REL data in meters         |
 	| 00 | 16 | 21 | Display POS^ABS and ascent fuel usage  |
 	| 00 | 16 | 22 | Display POS^TAR and descent fuel usage |
+	| 00 | 21 |    | Input register 1                       |
+	| 00 | 22 |    | Input register 2                       |
+	| 00 | 23 |    | Input register 3                       |
+	| 00 | 41 |    | Clear event clock                      |
+	| 00 | 42 |    | Set event clock to Reg1,Reg2,Reg3      |
+	| 00 | 43 |    | Start event clock in up mode           |
+	| 00 | 44 |    | Start event clock in down mode         |
+	| 00 | 45 |    | Stop event clock                       |
 	| 31 | 00 | 00 | Hold prograde attitude                 |
         | 32 | 00 | 00 | Hold retrograde attitude               |
 	| 33 | 00 | 00 | Hold orbit normal attitude             |
@@ -191,7 +210,8 @@
         |  16  |  60  | Per HH      | Per MM       | Per SS     |
         |  16  |  62  | tarAlt      | TarLong      | TarLat     |
         |  16  |  64  | Main DeltaV | Rcs DeltaV   | Fuel flow  |
-        |  16  |  16  | Event HH    | Event MM     | Event SS   |
+        |  16  |  66  | Event HH    | Event MM     | Event SS   |
+	|  16  |  67  | Orb. Vel.   |              |            |
 	|  16  |  71  |             | LAN          | Incl       |
 	|      |      | Periapsis   | Apoapsis     | Orbit time |
 [TE]

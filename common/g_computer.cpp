@@ -98,18 +98,21 @@ void G_Computer::Update() {
   if (strcmp(c->Reg(1),lastReg1) != 0) {
     GotoXY(x+1, y+1); 
     sprintf(buffer,"%s",c->Reg(1));
+    while (strlen(buffer) < 8) strcat(buffer," ");
     Write(buffer);
     strcpy(lastReg1,c->Reg(1));
     }
   if (strcmp(c->Reg(2),lastReg2) != 0) {
     GotoXY(x+11, y+1); 
     sprintf(buffer,"%s",c->Reg(2));
+    while (strlen(buffer) < 8) strcat(buffer," ");
     Write(buffer);
     strcpy(lastReg2,c->Reg(2));
     }
   if (strcmp(c->Reg(3),lastReg3) != 0) {
     GotoXY(x+21, y+1); 
     sprintf(buffer,"%s",c->Reg(3));
+    while (strlen(buffer) < 8) strcat(buffer," ");
     Write(buffer);
     strcpy(lastReg3,c->Reg(3));
     }

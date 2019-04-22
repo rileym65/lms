@@ -127,6 +127,8 @@ loop000102: call   postarmet           ; Display POS^TAR in meters
             vlen   r20,r13             ; get length
             div    r13,c1000           ; convert to kilometers
 
+            vlen   ovel,r14            ; display orbital velocity in reg 14
+
             jeq    R11,ZERO,notrun     ; jump if engine not running
             mov    R12,R10             ; get Descent fuel
             div    R10,R11             ; divide by burn rate to get seconds
@@ -414,6 +416,23 @@ v16n64:     mov    mass,r20             ; get mass of vehicle
             wait                        ; wait until next cycle
             jmp    v16n64               ; and repeat
 
+; *************************************
+; ***** Equivalent to CSM V16 N16 *****
+; *************************************
+            prog   P00V16N66
+v16n66:     mov    clkev,r20            ; get event clock
+            call   clkout               ; output clock elements
+            wait                        ; wait until next cycle
+            jmp    v16n66
+
+
+; ************************************
+; ***** Display orbital velocity *****
+; ************************************
+            prog   P00V16N67
+v16n67:     vlen   ovel,r1
+            wait
+            jmp    v16n67
 
 ; *****************************
 ; ***** Show ORBvABS data *****
@@ -441,6 +460,29 @@ clkout:     ldi    r21,3600             ; seconds in an hour
             ret                         ; return to caller
 
 
+; **********************************
+; ***** V21 - Input register 1 *****
+; **********************************
+            prog   P00V21N00
+v21n00:     inp    r1                   ; Input register 1
+            end                         ; and end
+
+
+; **********************************
+; ***** V22 - Input register 2 *****
+; **********************************
+            prog   P00V22N00
+v22n00:     inp    r2                   ; Input register 2
+            end                         ; and end
+
+
+; **********************************
+; ***** V23 - Input register 3 *****
+; **********************************
+            prog   P00V23N00
+v23n00:     inp    r3                   ; Input register 3
+            end                         ; and end
+
             prog   P00V37N31
             run    P31V00N00
             end
@@ -464,6 +506,46 @@ clkout:     ldi    r21,3600             ; seconds in an hour
             prog   P00V37n36
             run    P36V00N00
             end
+
+
+; ***********************************
+; ***** V41 - Clear event clock *****
+; ***********************************
+            prog   P00V41N00
+v41n00:     evclr                       ; clear event clock
+            end                         ; then end
+
+
+; **************************************************************
+; ***** V42 - Set event clock to Reg1(H), Reg2(M), Reg3(S) *****
+; **************************************************************
+            prog   P00V42N00
+v42n00:     evset                       ; set event clock to reg1,reg2,reg3
+            end                         ; then end
+
+
+; **********************************************
+; ***** V43 - Start event clock in up mode *****
+; **********************************************
+            prog   P00V43N00
+v43n00:     evup                        ; Start event clock in up mode
+            end                         ; then end
+
+
+; ************************************************
+; ***** V44 - Start event clock in down mode *****
+; ************************************************
+            prog   P00V44N00
+v44n00:     evdn                        ; Start event clock in down mode
+            end                         ; then end
+
+
+; **********************************
+; ***** V45 - Stop event clock *****
+; **********************************
+            prog   P00V45N00
+v45n00:     evstp                       ; Stop event clock
+            end                         ; then end
 
 ; ***************************************************
 ; ***** P31 - orient and hold prograde attitude *****
