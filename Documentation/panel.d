@@ -1888,6 +1888,19 @@
 [--]
 [=]
 
+[h2]	Vehicle
+[er]
+	+----------+
+	|Apollo J  |
+	+----------+
+[ee]
+	This gause indicates what type of vehicle the CSM is.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	Velocity
 [er]
 	+------------+
