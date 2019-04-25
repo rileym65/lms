@@ -19,6 +19,7 @@
 #include "command.h"
 #include "booster.h"
 #include "body.h"
+#include "flight.h"
 
 // #define GROUND 6378100
 // #define METERS ((GROUND*2*M_PI) / 360.0)
@@ -62,6 +63,7 @@ LINK Double  maxQAltitude;
 LINK Vector  pos;
 LINK Booster* booster;
 LINK Vector  vel;
+LINK Flight* flight;
 //LINK CommandModule* csm;
 
 extern Double AirDensity(Double altitude);

@@ -76,6 +76,7 @@ PHEADERS = \
 	../common/g_rollrate.h \
 	../common/g_seq.h \
 	../common/g_throttle.h \
+	../common/g_vehicle.h \
 	../common/g_velocity.h \
 	../common/g_yawrate.h
 

@@ -235,6 +235,9 @@
 ../common/g_throttle.o: ../common/gauge.h ../common/g_throttle.h ../common/terminal.h ../common/g_throttle.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_throttle.cpp -o ../common/g_throttle.o
 
+../common/g_vehicle.o: ../common/gauge.h ../common/g_vehicle.h ../common/terminal.h ../common/g_vehicle.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_vehicle.cpp -o ../common/g_vehicle.o
+
 ../common/g_velocity.o: ../common/gauge.h ../common/g_velocity.h ../common/terminal.h ../common/g_velocity.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_velocity.cpp -o ../common/g_velocity.o
 

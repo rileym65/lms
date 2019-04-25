@@ -76,6 +76,7 @@ POBJS = \
 	../common/g_rollrate.o \
 	../common/g_seq.o \
 	../common/g_throttle.o \
+	../common/g_vehicle.o \
 	../common/g_velocity.o \
 	../common/g_yawrate.o \
 	../common/panel.o

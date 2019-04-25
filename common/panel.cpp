@@ -81,6 +81,7 @@
 #include "g_rollrate.h"
 #include "g_seq.h"
 #include "g_throttle.h"
+#include "g_vehicle.h"
 #include "g_velocity.h"
 #include "g_yawrate.h"
 
@@ -284,6 +285,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Seq(x1, y1, false, vehicle));
       else if (strcasecmp(str,"throttle") == 0)
         addGauge(new G_Throttle(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"vehicle") == 0)
+        addGauge(new G_Vehicle(x1, y1, false, vehicle));
       else if (strcasecmp(str,"velocity") == 0)
         addGauge(new G_Velocity(x1, y1, false, vehicle));
       else if (strcasecmp(str,"yawrate") == 0)
@@ -362,6 +365,7 @@ void Panel::useDefault(const char* filename) {
     addGauge(new G_CsmComputer(57,2, false, vehicle));
     addGauge(new G_CsmDock(54,11, false, vehicle));
     addGauge(new G_AmsMessage(64,10, false, vehicle));
+    addGauge(new G_Vehicle(3,23, false, vehicle));
     return;
     }
   if (strcmp(filename,"csms.pnl") == 0) {

@@ -46,3 +46,4 @@ Line 64,6,64,9
 Gauge CsmComputer 57,2
 Gauge CsmDock 54,11
 Gauge Ams_Message 64,10
+Gauge Vehicle 3,23

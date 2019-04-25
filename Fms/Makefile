@@ -33,6 +33,7 @@ OBJS = \
 	airdensity.o \
 	booster.o \
 	command.o \
+	flight.o \
 	load.o \
 	missionreport.o \
 	save.o \
@@ -65,6 +66,7 @@ airdensity.o:    $(HEADERS) airdensity.cpp
 booster.o:       $(HEADERS) booster.cpp
 command.o:       $(HEADERS) command.cpp
 csmcomputer.o:   $(HEADERS) csmcomputer.cpp
+flight.o:        $(HEADERS) flight.cpp
 gauge.o:         $(HEADERS) gauge.cpp
 load.o:          $(HEADERS) load.cpp
 main.o:          $(HEADERS) main.cpp
