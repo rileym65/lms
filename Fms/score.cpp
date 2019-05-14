@@ -116,8 +116,14 @@ void Score() {
   if (ScoreDockLVel < 0) ScoreDockLVel = 0;
   ScoreDockVel = 1000 - (fabs(fabs(dockingVel) - 0.3) * 10000.0);
   if (ScoreDockVel < 0) ScoreDockVel = 0;
+  ScoreDockXAlign = 1000 - (fabs(dockingXAlign) * 2000.0);
+  if (ScoreDockXAlign < 0) ScoreDockXAlign = 0;
+  ScoreDockYAlign = 1000 - (fabs(dockingYAlign) * 2000.0);
+  if (ScoreDockYAlign < 0) ScoreDockYAlign = 0;
 
-  ScoreDockTotal = ScoreDockTime + ScoreDockAscentFuel + ScoreDockRcsFuel;
+  ScoreDockTotal = ScoreDockTime + ScoreDockAscentFuel + ScoreDockRcsFuel +
+                   ScoreDockLVel + ScoreDockVel +
+                   ScoreDockXAlign + ScoreDockYAlign;
 
   ScoreTotal = ScoreLanding + ScoreEvaTotal + ScoreDockTotal;
 

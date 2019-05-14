@@ -489,11 +489,12 @@ void Ins::Cycle() {
   lastApoapsis = apoapsis;
 
   if (vehicle->TargetVehicle() == NULL || dockingRadarOn == 0) {
-    tarDockX = 99999.9;
-    tarDockY = 99999.9;
-    tarDockVelX = 99999.9;
-    tarDockVelY = 99999.9;
-    tarDockVelZ = 99999.9;
+    tarDockX = 9999.9;
+    tarDockY = 9999.9;
+    tarDockZ = 9999.9;
+    tarDockVelX = 9999.9;
+    tarDockVelY = 9999.9;
+    tarDockVelZ = 9999.9;
     return; 
     }
   if (docked) {

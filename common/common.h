@@ -251,6 +251,8 @@ CLINK Int32        ScoreDockRcsFuel;
 CLINK Int32        ScoreDockTotal;
 CLINK Int32        ScoreDockLVel;
 CLINK Int32        ScoreDockVel;
+CLINK Int32        ScoreDockXAlign;
+CLINK Int32        ScoreDockYAlign;
 CLINK Int32        ScoreTotal;
 
 

@@ -402,6 +402,8 @@ void MissionReport() {
     fprintf(file,"  Docking Time:         %d%s",ScoreDockTime,LE);
     fprintf(file,"  Docking Velocity:     %d%s",ScoreDockVel,LE);
     fprintf(file,"  Lateral Velocity:     %d%s",ScoreDockLVel,LE);
+    fprintf(file,"  X Alignment:          %d%s",ScoreDockXAlign,LE);
+    fprintf(file,"  Y Alignment:          %d%s",ScoreDockYAlign,LE);
     fprintf(file,"  Asc Fuel Remaining:   %d%s",ScoreDockAscentFuel,LE);
     fprintf(file,"  RCS Fuel Remaining:   %d%s",ScoreDockRcsFuel,LE);
     fprintf(file,"                                --------%s",LE);
