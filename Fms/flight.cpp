@@ -193,6 +193,15 @@ void Flight::cycle() {
           seq->Dock();
           if (currentVehicle == csm && clockLmDk == 0)
             clockLmDk = clockGe;
+          if (currentVehicle == lm) {
+            dockingXAlign = lm->GetIns()->TarDockX();
+            dockingYAlign = lm->GetIns()->TarDockY();
+            dockingVel = lm->GetIns()->TarDockVelZ();
+            dockingLVel = sqrt(
+              lm->GetIns()->TarDockVelX() * lm->GetIns()->TarDockVelX() +
+              lm->GetIns()->TarDockVelY() * lm->GetIns()->TarDockVelY()
+              );
+            }
           }
         else {
           v = csm->Velocity() - csm->TargetVehicle()->Velocity();

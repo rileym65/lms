@@ -78,6 +78,12 @@
 	| CLKPE  | Time til periapsis in seconds                    |
 	| CLKUT  | UTC clock in seconds                             |
 	| DFUEL  | Descent stage fuel                               |
+	| DOCKX  | X position in relation to target docking port    |
+	| DOCKY  | Y position in relation to target docking port    |
+	| DOCKZ  | Z position in relation to target docking port    |
+	| DOCKVX | X velocity in relation to target docking port    |
+	| DOCKVY | Y velocity in relation to target docking port    |
+	| DOCKVZ | Z velocity in relation to target docking port    |
 	| EACC   | Longitudinal acceleration in m/s                 |
 	| EANOM  | Eccentirc anomaly                                |
 	| EAST   | Longitude in degrees                             |

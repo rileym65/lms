@@ -78,6 +78,12 @@ loop000012: call   postarmet           ; Display POS^TAR in meters
 ; *************************************************************************
             prog   P00V16N13
 loop000013: call   posrelmet           ; Display POS^REL in meters
+            mov    dockx,R11           ; Show x position of docking port
+            mov    docky,R10           ; Show y position of docking port
+            mov    dockz,R12           ; show Z position of docking port
+            mov    dockvy,R13          ; show y velocity of docking port
+            mov    dockvx,R14          ; show x velocity of docking port
+            mov    dockvz,R15          ; show z velocity of docking port
             wait
             jmp    loop000013
 

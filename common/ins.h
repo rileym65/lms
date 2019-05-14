@@ -42,6 +42,12 @@ class Ins {
     Double trueLongitude;
     Double tarMomEast;
     Double tarMomNorth;
+    Double tarDockX;
+    Double tarDockY;
+    Double tarDockZ;
+    Double tarDockVelX;
+    Double tarDockVelY;
+    Double tarDockVelZ;
     Vehicle* vehicle;
   public:
     Ins(Vehicle* v);
@@ -99,6 +105,18 @@ class Ins {
     Double TarMomEast(Double d);
     Double TarMomNorth();
     Double TarMomNorth(Double d);
+    Double TarDockX();
+    Double TarDockX(Double d);
+    Double TarDockY();
+    Double TarDockY(Double d);
+    Double TarDockZ();
+    Double TarDockZ(Double d);
+    Double TarDockVelX();
+    Double TarDockVelX(Double d);
+    Double TarDockVelY();
+    Double TarDockVelY(Double d);
+    Double TarDockVelZ();
+    Double TarDockVelZ(Double d);
     Double TrueAnomaly();
     Double TrueAnomaly(Double d);
     Double TrueLongitude();

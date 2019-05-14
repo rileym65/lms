@@ -110,12 +110,14 @@ void G_AmsDock::Update() {
 
 
 
-  px = pos.Norm().Dot(tvLf);
-  py = pos.Norm().Dot(tvFr);
+//  px = pos.Norm().Dot(tvLf);
+//  py = pos.Norm().Dot(tvFr);
 
-  px = px * pos.Length();
-  py = py * pos.Length();
+//  px = px * pos.Length();
+//  py = py * pos.Length();
 
+  px = vehicle->GetIns()->TarDockX();
+  py = vehicle->GetIns()->TarDockY();
   if (px <= -2.5) lastDockingRadarPosX = 4;
   else if (px < -1.5) lastDockingRadarPosX = 3;
   else if (px < -0.5) lastDockingRadarPosX = 2;

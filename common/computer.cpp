@@ -380,6 +380,12 @@ Double Computer::read(UInt16 addr) {
       case 0x3c: return sc->FuelUsed();
       case 0x3d: return ins->ArgOfPeriapsis();
       case 0x3e: return event;
+      case 0x3f: return vehicle->GetIns()->TarDockX();
+      case 0x40: return vehicle->GetIns()->TarDockY();
+      case 0x41: return vehicle->GetIns()->TarDockVelX();
+      case 0x42: return vehicle->GetIns()->TarDockVelY();
+      case 0x43: return vehicle->GetIns()->TarDockVelZ();
+      case 0x44: return vehicle->GetIns()->TarDockZ();
       }
     }
   if ((addr & 0xf00) == 0x600) {

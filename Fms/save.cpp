@@ -46,6 +46,8 @@ void save() {
   fprintf(file,"  HighestVel %.18f%s",highestVelocity,LE);
   fprintf(file,"  DockingVel %.18f%s",dockingVel,LE);
   fprintf(file,"  DockingLVel %.18f%s",dockingLVel,LE);
+  fprintf(file,"  DockingXAlign %.18f%s",dockingXAlign,LE);
+  fprintf(file,"  DockingYAlign %.18f%s",dockingYAlign,LE);
   fprintf(file,"  ModeAbo %d%s",mode_abo,LE);
   fprintf(file,"  ModeArm %d%s",mode_arm,LE);
   fprintf(file,"  ModeJet %d%s",mode_jet,LE);

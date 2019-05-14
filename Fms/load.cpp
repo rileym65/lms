@@ -47,6 +47,8 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"highestvel ")) highestVelocity = atof(nw(pline));
     else if (startsWith(pline,"dockingvel ")) dockingVel = atof(nw(pline));
     else if (startsWith(pline,"dockinglvel ")) dockingLVel = atof(nw(pline));
+    else if (startsWith(pline,"dockingxalign ")) dockingXAlign = atof(nw(pline));
+    else if (startsWith(pline,"dockingyalign ")) dockingYAlign = atof(nw(pline));
     else if (startsWith(pline,"modeabo ")) mode_abo = atoi(nw(pline));
     else if (startsWith(pline,"modearm ")) mode_arm = atoi(nw(pline));
     else if (startsWith(pline,"modejet ")) mode_jet = atoi(nw(pline));

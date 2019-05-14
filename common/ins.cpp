@@ -35,6 +35,8 @@ Ins::Ins(Vehicle* v) {
   tarLongitude = 0.0;
   tarMomEast = 0.0;
   tarMomNorth = 0.0;
+  tarDockX = 0.0;
+  tarDockY = 0.0;
   trueAnomaly = 0.0;
   trueLongitude = 0.0;
   }
@@ -287,6 +289,60 @@ Double Ins::TarMomNorth(Double d) {
   return tarMomNorth;
   }
 
+Double Ins::TarDockX() {
+  return tarDockX;
+  }
+
+Double Ins::TarDockX(Double d) {
+  tarDockX = d;
+  return tarDockX;
+  }
+
+Double Ins::TarDockY() {
+  return tarDockY;
+  }
+
+Double Ins::TarDockY(Double d) {
+  tarDockY = d;
+  return tarDockY;
+  }
+
+Double Ins::TarDockZ() {
+  return tarDockZ;
+  }
+
+Double Ins::TarDockZ(Double d) {
+  tarDockZ = d;
+  return tarDockZ;
+  }
+
+Double Ins::TarDockVelX() {
+  return tarDockVelX;
+  }
+
+Double Ins::TarDockVelX(Double d) {
+  tarDockVelX = d;
+  return tarDockVelX;
+  }
+
+Double Ins::TarDockVelY() {
+  return tarDockVelY;
+  }
+
+Double Ins::TarDockVelY(Double d) {
+  tarDockVelY = d;
+  return tarDockVelY;
+  }
+
+Double Ins::TarDockVelZ() {
+  return tarDockVelZ;
+  }
+
+Double Ins::TarDockVelZ(Double d) {
+  tarDockVelZ = d;
+  return tarDockVelZ;
+  }
+
 Double Ins::TrueAnomaly() {
   return trueAnomaly;
   }
@@ -431,5 +487,36 @@ void Ins::Cycle() {
   lastLatitudeVel = latitudeVel;
   lastROC = rateOfClimb;
   lastApoapsis = apoapsis;
+
+  if (vehicle->TargetVehicle() == NULL || dockingRadarOn == 0) {
+    tarDockX = 99999.9;
+    tarDockY = 99999.9;
+    tarDockVelX = 99999.9;
+    tarDockVelY = 99999.9;
+    tarDockVelZ = 99999.9;
+    return; 
+    }
+  if (docked) {
+    tarDockX = 0;
+    tarDockY = 0;
+    tarDockZ = 0;
+    tarDockVelX = 0;
+    tarDockVelY = 0;
+    tarDockVelZ = 0;
+    return;
+    }
+  pos = vehicle->Position() - (vehicle->TargetVehicle()->Position());
+  L =  vehicle->TargetVehicle()->FaceLeft().Norm();
+  tarDockX = pos.Norm().Dot(L) * pos.Length();
+  L =  vehicle->TargetVehicle()->FaceFront().Norm();
+  tarDockY = pos.Norm().Dot(L) * pos.Length();
+  tarDockZ = pos.Length() - 5.275;
+  vel = vehicle->Velocity() - (vehicle->TargetVehicle()->Velocity());
+  L =  vehicle->TargetVehicle()->FaceLeft().Norm();
+  tarDockVelX = vel.Norm().Dot(L) * vel.Length();
+  L =  vehicle->TargetVehicle()->FaceFront().Norm();
+  tarDockVelY = vel.Norm().Dot(L) * vel.Length();
+  L =  vehicle->TargetVehicle()->FaceUp().Norm();
+  tarDockVelZ = vel.Norm().Dot(L) * vel.Length();
   }
 
