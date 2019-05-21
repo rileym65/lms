@@ -507,6 +507,15 @@ void Ins::Cycle() {
     return;
     }
   pos = vehicle->Position() - (vehicle->TargetVehicle()->Position());
+  if (pos.Length() > 250) {
+    tarDockX = 9999.9;
+    tarDockY = 9999.9;
+    tarDockZ = 9999.9;
+    tarDockVelX = 9999.9;
+    tarDockVelY = 9999.9;
+    tarDockVelZ = 9999.9;
+    return; 
+    }
   L =  vehicle->TargetVehicle()->FaceLeft().Norm();
   tarDockX = pos.Norm().Dot(L) * pos.Length();
   L =  vehicle->TargetVehicle()->FaceFront().Norm();
