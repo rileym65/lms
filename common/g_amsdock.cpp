@@ -47,6 +47,11 @@ void G_AmsDock::Update() {
   Vector vUp;
   Vector vFr;
   Vector vLf;
+  char nsVel;
+  char lVel;
+  char rVel;
+  char fVel;
+  char bVel;
   Double d;
   Double px,py;
   Int8   aligned;
@@ -143,6 +148,21 @@ void G_AmsDock::Update() {
     GotoXY(x+6+lastDockingRadarYaw, y+4+lastDockingRadarPitch); Write("X");
     GotoXY(x+6+lastDockingRadarPosX, y+4+lastDockingRadarPosY); Write("+");
     }
+
+  if (vehicle->GetIns()->TarDockVelZ() < -0.4) nsVel = '+';
+  else if (vehicle->GetIns()->TarDockVelZ() > 0) nsVel = '-';
+  else if (vehicle->GetIns()->TarDockVelZ() > -0.2) nsVel = '-';
+  else nsVel = '|';
+  rVel = (vehicle->GetIns()->TarDockVelX() < -0.02) ? '<' : '|';
+  lVel = (vehicle->GetIns()->TarDockVelX() > 0.02) ? '>' : '|';
+  bVel = (vehicle->GetIns()->TarDockVelY() < -0.02) ? 'v' : '-';
+  fVel = (vehicle->GetIns()->TarDockVelY() > 0.02) ? '^' : '-';
+  GotoXY(x+1,y+1+1); sprintf(buffer,"%c",nsVel); Write(buffer);
+  GotoXY(x+1+10,y+1+1); sprintf(buffer,"%c",nsVel); Write(buffer);
+  GotoXY(x+1+9,y+1); sprintf(buffer,"%c",fVel); Write(buffer);
+  GotoXY(x+1+9,y+1+6); sprintf(buffer,"%c",bVel); Write(buffer);
+  GotoXY(x+1,y+1+5); sprintf(buffer,"%c",rVel); Write(buffer);
+  GotoXY(x+1+10,y+1+5); sprintf(buffer,"%c",lVel); Write(buffer);
 return;
 
 
