@@ -14,6 +14,7 @@
 #define P11_ORBIT    11
 #define P11_AZIMUTH  12
 #define P11_ASCMODE  13
+#define R_LASTVEL    100
 
 CsmComputer::CsmComputer(CommandModule* c) {
   prog = 0;
@@ -192,6 +193,11 @@ void CsmComputer::_doShow() {
          _reg1(csm->GetIns()->RateOfClimb() * 100);
          _reg2(csm->GetIns()->DeltaROC() * 100);
          _reg3(csm->GetIns()->DeltaApoapsis() * 100);
+         break;
+    case 18:
+         _reg1(csm->GetIns()->Velocity());
+         _reg2(csm->GetIns()->Acceleration() * 100);
+         _reg3(csm->GetIns()->Acceleration() / 9.80665 * 100);
          break;
     }
   }

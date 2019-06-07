@@ -5,14 +5,14 @@ idle:       mov    zero,prg
             jmp    idle
 
 ; *************************************************************************
-; ***** Prog: 00   Verb: 00   Noun: 01                                *****
+; ***** Prog: 00   Verb: 16   Noun: 51                                *****
 ; ***** Type: Main program                                            *****
 ; ***** This program displays the data associated with INS POS^ABS    *****
 ; *****                                                               *****
 ; ***** This program displays the POS^ABS and ORB^ABS data from the   *****
 ; ***** INS                                                           *****
 ; *************************************************************************
-            prog   P00V16N01
+            prog   P00V16N51
 loop000001: call   posabs              ; Display POS^ABS data
             call   periapo             ; display perilune/apolune
             call   absorbit            ; display orbital information
@@ -21,14 +21,14 @@ loop000001: call   posabs              ; Display POS^ABS data
 
 
 ; *************************************************************************
-; ***** Prog: 00   Verb: 00   Noun: 02                                *****
+; ***** Prog: 00   Verb: 16   Noun: 52                                *****
 ; ***** Type: Main program                                            *****
 ; ***** This program displays the data associated with INS POS^TAR    *****
 ; *****                                                               *****
 ; ***** This program displays the POS^TAR and ORB^TAR data from the   *****
 ; ***** INS                                                           *****
 ; *************************************************************************
-            prog   P00V16N02
+            prog   P00V16N52
 loop000002: call   postar              ; Display POS^TAR data
             call   periapo             ; display perilune/apolune
             call   tarorbit            ; display orbital information
@@ -42,11 +42,11 @@ loop000002: call   postar              ; Display POS^TAR data
 
 
 ; *************************************************************************
-; ***** Prog: 00   Verb: 00   Noun: 03                                *****
+; ***** Prog: 00   Verb: 16   Noun: 53                                *****
 ; ***** Type: Main program                                            *****
 ; ***** This program displays the data associated with INS POS^REL    *****
 ; *************************************************************************
-            prog   P00V16N03
+            prog   P00V16N53
 loop000003: call   posrel              ; Display POS^REL data
             call   periapo             ; display perilune/apolune
             call   relorbit            ; display orbital information
@@ -59,24 +59,24 @@ loop000003: call   posrel              ; Display POS^REL data
 
 
 ; *************************************************************************
-; ***** Prog: 00   Verb: 00   Noun: 12                                *****
+; ***** Prog: 00   Verb: 16   Noun: 62                                *****
 ; ***** Type: Main program                                            *****
 ; ***** This program displays the data associated with INS POS^TAR    *****
 ; ***** North and east are represented in meters instead of degrees   *****
 ; *************************************************************************
-            prog   P00V16N12
+            prog   P00V16N62
 loop000012: call   postarmet           ; Display POS^TAR in meters
             wait
             jmp    loop000012
 
 
 ; *************************************************************************
-; ***** Prog: 00   Verb: 00   Noun: 13                                *****
+; ***** Prog: 00   Verb: 16   Noun: 63                                *****
 ; ***** Type: Main program                                            *****
 ; ***** This program displays the data associated with INS POS^REL    *****
 ; ***** North and east are represented in meters instead of degrees   *****
 ; *************************************************************************
-            prog   P00V16N13
+            prog   P00V16N63
 loop000013: call   posrelmet           ; Display POS^REL in meters
             mov    dockx,R11           ; Show x position of docking port
             mov    docky,R10           ; Show y position of docking port
@@ -89,16 +89,16 @@ loop000013: call   posrelmet           ; Display POS^REL in meters
 
 
 ; *************************************************************************
-; ***** Prog: 00   Verb: 01   Noun: 01                                *****
+; ***** Prog: 00   Verb: 16   Noun: 71                                *****
 ; ***** Type: Main program                                            *****
 ; ***** This program displays the data associated with INS POS^ABS    *****
 ; ***** Display ascent fuel info in R10,R11,R12                       *****
 ; *************************************************************************
-            prog   P00V16N21
+            prog   P00V16N71
 loop000101: call   posabs              ; Display POS^ABS data
             call   periapo             ; display perilune/apolune
             mov    afuel,R10
-            ldi    r11,5
+            ldi    r11,fflow
             div    r10,r11
             mov    afuel,r12
             wait
@@ -106,7 +106,7 @@ loop000101: call   posabs              ; Display POS^ABS data
 
 
 ; *************************************************************************
-; ***** Prog: 00   Verb: 01   Noun: 02                                *****
+; ***** Prog: 00   Verb: 16   Noun: 72                                *****
 ; ***** Type: Main program                                            *****
 ; ***** This program displays the data associated with INS POS^TAR    *****
 ; ***** Display descent fuel info in R10,R11,R12                      *****
@@ -115,17 +115,13 @@ loop000101: call   posabs              ; Display POS^ABS data
 ; ***** distances to target in meters as well as the descent fuel     *****
 ; ***** remaining, burn rate and seconds of fuel remaining            *****
 ; *************************************************************************
-            prog   P00V16N22
+            prog   P00V16N72
 loop000102: call   postarmet           ; Display POS^TAR in meters
             call   periapo             ; display perilune/apolune
             mov    latvel,r6           ; Display latitude velocity
             mov    latacc,r9           ; Display latitude acceleration
             mov    dfuel,r12           ; Display remaining descent fuel
-            mov    thrtl,R20           ; Get current throttle setting
-            div    R20,C100            ; divide by 100
-            ldi    R21,15              ; 15kg/s is maximum thrust
-            mul    R20,R21             ; Now have fuel burn rate
-            mov    R20,R11             ; Show burn rate in register 11
+            mov    fflow,R11           ; show fuel flow in register 11
 
             vmov   tpos,r20            ; get target position
             vmov   pos,r23             ; get current position
@@ -292,119 +288,126 @@ relorbit:   mov    RANOD,R11
             mov    RINCL,R12
             ret
 
+
+
+
+; *******************************************************
+; ***** Informational displays that are same as CSM *****
+; *******************************************************
+
 ; *************************************
 ; ***** Equivalent to CSM V16 N01 *****
 ; *************************************
-            prog   P00V16N51
-v16n51:     mov    apol,r1              ; put apoapsis into register 1
+            prog   P00V16N01
+v16n01:     mov    apol,r1              ; put apoapsis into register 1
             sub    r1,grnd              ; convert radius to altitude
             mov    perl,r2              ; put periapsis into register 2
             sub    r2,grnd              ; convert radius to altitude
             mov    clkor,r3             ; put orbit time into register 3
             wait                        ; wait until next cycle
-            jmp    v16n51               ; and repeat
+            jmp    v16n01               ; and repeat
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N02 *****
 ; *************************************
-            prog   P00V16N52
-v16n52:     mov    east,r1              ; put longitude into register 1
+            prog   P00V16N02
+v16n02:     mov    east,r1              ; put longitude into register 1
             mov    nrth,r2              ; put latitude into register 2
             wait                        ; wait until next cycle
-            jmp    v16n52               ; and repeat
+            jmp    v16n02               ; and repeat
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N03 *****
 ; *************************************
-            prog   P00V16N53
-v16n53:     mov    mass,r1              ; put vehicle mass into register 1
+            prog   P00V16N03
+v16n03:     mov    mass,r1              ; put vehicle mass into register 1
             mov    fuel,r2              ; Put current stage fuel into register 2
             mov    rfuel,r3             ; Put rcs fuel into register 3
             wait                        ; wait until next cycle
-            jmp    v16n53               ; and repeat
+            jmp    v16n03               ; and repeat
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N04 *****
 ; *************************************
-            prog   P00V16N54
-v16n54:     mov    roll,r1              ; show roll gimbal in register 1
+            prog   P00V16N04
+v16n04:     mov    roll,r1              ; show roll gimbal in register 1
             mov    pitch,r2             ; show pitch gimbal in reigster 2
             mov    yaw,r3               ; show yaw gimbal in register 3
             wait                        ; wait until next cycle
-            jmp    v16n54               ; and repeat
+            jmp    v16n04               ; and repeat
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N05 *****
 ; *************************************
-            prog   P00V16N55
-v16n55:     mov    tanom,r1             ; put true anomaly into register 1
+            prog   P00V16N05
+v16n05:     mov    tanom,r1             ; put true anomaly into register 1
             mov    manom,r2             ; put mean anomaly into register 2
             mov    eanom,r3             ; put eccentric anomaly into register 3
             wait                        ; wait until next cycle
-            jmp    v16n55               ; and repeat
+            jmp    v16n05               ; and repeat
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N06 *****
 ; *************************************
-            prog   P00V16N56
-v16n56:     mov    anod,r1              ; put ascending node into register 1
+            prog   P00V16N06
+v16n06:     mov    anod,r1              ; put ascending node into register 1
             mov    argp,r2              ; put argument of periapsis into register 2
             mov    anod,r3              ; Get longitude of ascending node
             add    r3,argp              ; and add argument of periapsis
             wait                        ; wait until next cycle
-            jmp    v16n56               ; and repeat
+            jmp    v16n06               ; and repeat
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N07 *****
 ; *************************************
-            prog   P00V16N57
-v16n57:     mov    clkge,r20            ; get ground elapsed clock
+            prog   P00V16N07
+v16n07:     mov    clkge,r20            ; get ground elapsed clock
             call   clkout               ; output clock elements
             wait                        ; wait until next cycle
-            jmp    v16n57
+            jmp    v16n07
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N08 *****
 ; *************************************
-            prog   P00V16N58
-v16n58:     mov    clkut,r20            ; get universal clock
+            prog   P00V16N08
+v16n08:     mov    clkut,r20            ; get universal clock
             call   clkout               ; output clock elements
             wait                        ; wait until next cycle
-            jmp    v16n58
+            jmp    v16n08
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N09 *****
 ; *************************************
-            prog   P00V16N59
-v16n59:     mov    clkap,r20            ; get time til apoapsis
+            prog   P00V16N09
+v16n09:     mov    clkap,r20            ; get time til apoapsis
             call   clkout               ; output clock elements
             wait                        ; wait until next cycle
-            jmp    v16n59
+            jmp    v16n09
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N10 *****
 ; *************************************
-            prog   P00V16N60
-v16n60:     mov    clkpe,r20            ; get time til apoapsis
+            prog   P00V16N10
+v16n10:     mov    clkpe,r20            ; get time til apoapsis
             call   clkout               ; output clock elements
             wait                        ; wait until next cycle
-            jmp    v16n60
+            jmp    v16n10
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N12 *****
 ; *************************************
-            prog   P00V16N62
-v16n62:     mov    alt,r1               ; get altitude
+            prog   P00V16N12
+v16n12:     mov    alt,r1               ; get altitude
             mov    tlng,r2              ; get target longitude
             mov    tlat,r3              ; get target latitude
             wait
-            jmp    v16n62
+            jmp    v16n12
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N14 *****
 ; *************************************
-            prog   P00V16N64
-v16n64:     mov    mass,r20             ; get mass of vehicle
+            prog   P00V16N14
+v16n14:     mov    mass,r20             ; get mass of vehicle
             sub    r20,fuel             ; subtract fuel
             mov    mass,r1              ; need to divide mass by this
             div    r1,r20
@@ -420,34 +423,34 @@ v16n64:     mov    mass,r20             ; get mass of vehicle
             mul    r2,g                 ; and g
             mov    fflow,r3             ; put fuel flow into register 3
             wait                        ; wait until next cycle
-            jmp    v16n64               ; and repeat
+            jmp    v16n14               ; and repeat
 
 ; *************************************
 ; ***** Equivalent to CSM V16 N16 *****
 ; *************************************
-            prog   P00V16N66
-v16n66:     mov    clkev,r20            ; get event clock
+            prog   P00V16N16
+v16n16:     mov    clkev,r20            ; get event clock
             call   clkout               ; output clock elements
             wait                        ; wait until next cycle
-            jmp    v16n66
+            jmp    v16n16
 
 
 ; ************************************
 ; ***** Display orbital velocity *****
 ; ************************************
-            prog   P00V16N67
-v16n67:     vlen   ovel,r1
+            prog   P00V16N17
+v16n17:     vlen   ovel,r1
             wait
-            jmp    v16n67
+            jmp    v16n17
 
 ; *****************************
 ; ***** Show ORBvABS data *****
 ; *****************************
-            prog   P00V16N71
-v16n71:     call   periapo             ; display perilune/apolune
+            prog   P00V16N75
+v16n75:     call   periapo             ; display perilune/apolune
             call   absorbit            ; display orbital information
             wait
-            jmp    v16n71
+            jmp    v16n75
 
 ; **********************************************************************
 ; ***** Decompose clock in r20 to hh,mm,ss and display in r1,r2,r3 *****
@@ -488,6 +491,10 @@ v22n00:     inp    r2                   ; Input register 2
             prog   P00V23N00
 v23n00:     inp    r3                   ; Input register 3
             end                         ; and end
+
+            prog   P00V37N00
+            run    P00V00N00
+            end
 
             prog   P00V37N31
             run    P31V00N00

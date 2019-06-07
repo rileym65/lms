@@ -169,6 +169,9 @@ void Flight::cycle() {
           }
         }
       if (lm->Comp() != NULL) lm->Comp()->PCycle();
+      csm->GetIns()->FastCycle();
+      if (lm != NULL) lm->GetIns()->FastCycle();
+
       }
     if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {
       plss->UseOxygen(1);

@@ -386,6 +386,8 @@ Double Computer::read(UInt16 addr) {
       case 0x42: return vehicle->GetIns()->TarDockVelY();
       case 0x43: return vehicle->GetIns()->TarDockVelZ();
       case 0x44: return vehicle->GetIns()->TarDockZ();
+      case 0x45: return vehicle->GetIns()->Velocity();
+      case 0x46: return vehicle->GetIns()->Acceleration();
       }
     }
   if ((addr & 0xf00) == 0x600) {

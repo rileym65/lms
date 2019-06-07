@@ -9,6 +9,7 @@
 
 class Ins {
   protected:
+    Double acceleration;
     Double altitude;
     Double apoapsis;
     Double argOfPeriapsis;
@@ -28,6 +29,7 @@ class Ins {
     Double lastLatitudeVel;
     Double lastLongitude;
     Double lastROC;
+    Double lastVelocity;
     Double latitudeAcc;
     Double latitudeVel;
     Double meanAnomaly;
@@ -48,10 +50,12 @@ class Ins {
     Double tarDockVelX;
     Double tarDockVelY;
     Double tarDockVelZ;
+    Double velocity;
     Vehicle* vehicle;
   public:
     Ins(Vehicle* v);
     ~Ins();
+    Double Acceleration();
     Double Altitude();
     Double Altitude(Double d);
     Double Apoapsis();
@@ -121,8 +125,10 @@ class Ins {
     Double TrueAnomaly(Double d);
     Double TrueLongitude();
     Double TrueLongitude(Double d);
+    Double Velocity();
 
     void Cycle();
+    void FastCycle();
   };
 
 #endif

@@ -5,6 +5,7 @@
 #include "helpers.h"
 
 Ins::Ins(Vehicle* v) {
+  acceleration = 0.0;
   vehicle = v;
   altitude = 0.0;
   apoapsis = 0.0;
@@ -26,6 +27,7 @@ Ins::Ins(Vehicle* v) {
   lastLatitudeVel = 0.0;
   lastLongitude = 0.0;
   lastROC = 0.0;
+  lastVelocity = 0.0;
   meanAnomaly = 0.0;
   orbiting = NULL;
   orbitTime = 0.0;
@@ -39,9 +41,14 @@ Ins::Ins(Vehicle* v) {
   tarDockY = 0.0;
   trueAnomaly = 0.0;
   trueLongitude = 0.0;
+  velocity = 0.0;
   }
 
 Ins::~Ins() {
+  }
+
+Double Ins::Acceleration() {
+  return acceleration;
   }
 
 Double Ins::Altitude() {
@@ -361,6 +368,10 @@ Double Ins::TrueLongitude(Double d) {
   return trueLongitude;
   }
 
+Double Ins::Velocity() {
+  return velocity;
+  }
+
 void Ins::Cycle() {
   Vector L;
   Double hyp;
@@ -488,6 +499,7 @@ void Ins::Cycle() {
   lastROC = rateOfClimb;
   lastApoapsis = apoapsis;
 
+
   if (vehicle->TargetVehicle() == NULL || dockingRadarOn == 0) {
     tarDockX = 9999.9;
     tarDockY = 9999.9;
@@ -528,5 +540,11 @@ void Ins::Cycle() {
   tarDockVelY = vel.Norm().Dot(L) * vel.Length();
   L =  vehicle->TargetVehicle()->FaceUp().Norm();
   tarDockVelZ = vel.Norm().Dot(L) * vel.Length();
+  }
+
+void Ins::FastCycle() {
+  lastVelocity = velocity;
+  velocity = vehicle->Velocity().Length();
+  acceleration = fabs(velocity - lastVelocity) * GRAN;
   }
 
