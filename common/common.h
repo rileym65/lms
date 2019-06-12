@@ -172,6 +172,7 @@ CLINK Plss        *plss;
 CLINK Int8         plssOn;
 CLINK Int8         plssPacks;
 CLINK UInt32       primarySamples;
+CLINK Double       rendezvousDistance;
 CLINK Random       rng;
 CLINK Boolean      run;
 CLINK LOCATION     samples[240];
@@ -254,6 +255,7 @@ CLINK Int32        ScoreDockVel;
 CLINK Int32        ScoreDockXAlign;
 CLINK Int32        ScoreDockYAlign;
 CLINK Int32        ScoreTotal;
+CLINK Int32        ScoreRendezvous;
 
 
 

@@ -133,6 +133,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"launched true")) launched = true;
     else if (startsWith(pline,"launched false")) launched = false;
     else if (startsWith(pline,"inatmosphere ")) inAtmosphere = atoi(nw(pline));
+    else if (startsWith(pline,"rendezvousdistance ")) rendezvousDistance = atof(nw(pline));
 
     else if (startsWith(pline,"sample ")) {
       pline = nw(pline);

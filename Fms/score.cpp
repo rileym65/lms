@@ -108,6 +108,8 @@ void Score() {
                    ScoreEvaSecondary2Samples + ScoreEvaSecondary3Samples;
   ScoreEvaTotal += ScoreEvaVariety;
 
+  ScoreRendezvous = (10000 - rendezvousDistance) / 10.0;
+  if (ScoreRendezvous < 0) ScoreRendezvous = 0;
   ScoreDockTime = 1000 - (clockDk - 5400);
   if (ScoreDockTime < 0) ScoreDockTime = 0;
   ScoreDockAscentFuel = lm->AscentFuel();
@@ -122,7 +124,7 @@ void Score() {
   if (ScoreDockYAlign < 0) ScoreDockYAlign = 0;
 
   ScoreDockTotal = ScoreDockTime + ScoreDockAscentFuel + ScoreDockRcsFuel +
-                   ScoreDockLVel + ScoreDockVel +
+                   ScoreDockLVel + ScoreDockVel + ScoreRendezvous +
                    ScoreDockXAlign + ScoreDockYAlign;
 
   ScoreTotal = ScoreLanding + ScoreEvaTotal + ScoreDockTotal;

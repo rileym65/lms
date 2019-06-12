@@ -175,12 +175,12 @@ void MissionReport() {
     fprintf(file,"  Landed Latitude       : %.2f%s",landedLatitude,LE);
     dist = distance(landedLongitude,landedLatitude,mission->TargetLongitude(),
                mission->TargetLatitude());
-    fprintf(file,"  Distance From Target  : %.2f%s",
+    fprintf(file,"  Distance From Target  : %.2fm%s",
       distance(landedLongitude,landedLatitude,mission->TargetLongitude(),
                mission->TargetLatitude()),LE);
-    fprintf(file,"  Vertical Velocity     : %.2f%s",landedVVel,LE);
-    fprintf(file,"  Horizontal Velocity   : %.2f%s",landedHVel,LE);
-    fprintf(file,"  Descent Fuel Remaining: %.2f%s",lm->DescentFuel(),LE);
+    fprintf(file,"  Vertical Velocity     : %.2fm/s%s",landedVVel,LE);
+    fprintf(file,"  Horizontal Velocity   : %.2fm/s%s",landedHVel,LE);
+    fprintf(file,"  Descent Fuel Remaining: %.2fkg%s",lm->DescentFuel(),LE);
     fprintf(file,"%s",LE);
     fprintf(file,"EVA:%s",LE);
     fprintf(file,"  Number of EVAs     : %d%s",evaCount,LE);
@@ -227,12 +227,18 @@ void MissionReport() {
     fprintf(file,"%s",LE);
     fprintf(file,"Rendevous/Docking:%s",LE);
     fprintf(file,"  Time to dock         : %s%s",ClockToString(buffer,clockDk),LE);
+    if (rendezvousDistance > 0) {
+      if (rendezvousDistance >= 10000)
+        fprintf(file,"  Rendezvous distance  : %.2fkm%s",rendezvousDistance/1000.0,LE);
+      else
+        fprintf(file,"  Rendezvous distance  : %.2fm%s",rendezvousDistance,LE);
+      }
     fprintf(file,"  Docking velocity     : %.2fm/s%s",dockingVel,LE);
     fprintf(file,"  Lateral velocity     : %.2fm/s%s",dockingLVel,LE);
     fprintf(file,"  Docking X alignemnent: %.2fm%s",dockingXAlign,LE);
     fprintf(file,"  Docking Y alignemnent: %.2fm%s",dockingYAlign,LE);
-    fprintf(file,"  Ascent Fuel Remaining: %.2f%s",lm->AscentFuel(),LE);
-    fprintf(file,"  RCS Fuel Remaining   : %.2f%s",lm->RcsFuel(),LE);
+    fprintf(file,"  Ascent Fuel Remaining: %.2fkg%s",lm->AscentFuel(),LE);
+    fprintf(file,"  RCS Fuel Remaining   : %.2fkg%s",lm->RcsFuel(),LE);
     fprintf(file,"%s",LE);
     }
   fprintf(file,"Engine Burns:%s",LE);
@@ -305,6 +311,13 @@ void MissionReport() {
     if (landedMet < records->ShortestLanding) {
       records->ShortestLanding = landedMet;
       fprintf(file,"  Shortest Time to Land   : %s%s",ClockToString(buffer,landedMet),LE);
+      }
+    if (rendezvousDistance > 0) {
+      if (records->ClosestRendezvous < 0 || 
+          rendezvousDistance < records->ClosestRendezvous) {
+        records->ClosestRendezvous = rendezvousDistance;
+        fprintf(file,"  Closest Rendezvous      : %.1fm%s",rendezvousDistance,LE);
+        }
       }
     if (clockDk < records->ShortestDocking) {
       records->ShortestDocking = clockDk;
@@ -400,6 +413,7 @@ void MissionReport() {
     fprintf(file,"%s",LE);
     fprintf(file,"Rendevous/Docking Score:%s",LE);
     fprintf(file,"  Docking Time:         %d%s",ScoreDockTime,LE);
+    fprintf(file,"  Rendezvous Distance:  %d%s",ScoreRendezvous,LE);
     fprintf(file,"  Docking Velocity:     %d%s",ScoreDockVel,LE);
     fprintf(file,"  Lateral Velocity:     %d%s",ScoreDockLVel,LE);
     fprintf(file,"  X Alignment:          %d%s",ScoreDockXAlign,LE);

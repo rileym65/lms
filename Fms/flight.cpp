@@ -743,6 +743,7 @@ void Flight::Init() {
   mission->TargetLongitude(0.0);
   plssOn = 0;
   plssPacks = 4;
+  rendezvousDistance = 0;
   spaceSuitOn = 0;
   sampleSmallRock = 0;
   sampleMediumRock = 0;

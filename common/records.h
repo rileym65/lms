@@ -33,6 +33,7 @@ class Records {
     Int32  ShortestDocking;
     Int32  ShortestLanding;
     Int32  Samples;
+    Double ClosestRendezvous;
     Records();
     ~Records();
     void Save();

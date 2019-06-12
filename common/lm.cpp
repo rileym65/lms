@@ -822,6 +822,8 @@ void LunarModule::ProcessKey(Int32 key) {
       Throttle(10);
       clockBu = 0;
       ignitionAltitude = Altitude();
+      ignitionApoapsis = Apoapsis();
+      ignitionPeriapsis = Periapsis();
       ignitionTime = clockMi;
       numBurns++;
       burn[numBurns-1].start = clockMi;
@@ -844,6 +846,13 @@ void LunarModule::ProcessKey(Int32 key) {
       if (!descentJettisoned) {
         if (ignitionAltitude > 50000 && ins->Periapsis()-Orbiting()->Radius() < 50000)
           clockDOI = ignitionTime;
+        }
+      if (descentJettisoned && rendezvousDistance == 0) {
+        if (ignitionAltitude > 90000 &&
+            ignitionPeriapsis-Orbiting()->Radius() < 50000 &&
+            Periapsis()-Orbiting()->Radius() > 50000) {
+          rendezvousDistance = (lm->Position() - csm->Position()).Length();
+          }
         }
       }
     if (key == 'K') seq->Kill();

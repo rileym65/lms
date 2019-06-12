@@ -60,6 +60,7 @@ void save() {
   fprintf(file,"  LandedLatitude %.18f%s",landedLatitude,LE);
   fprintf(file,"  LandedHVel %.18f%s",landedHVel,LE);
   fprintf(file,"  LandedVVel %.18f%s",landedVVel,LE);
+  fprintf(file,"  RendezvousDistance %.18f%s",rendezvousDistance,LE);
   fprintf(file,"  FarthestDistance %.18f%s",farthest,LE);
   fprintf(file,"  FarthestFromEarth %.18f%s",farthestFromEarth,LE);
   fprintf(file,"  FlagPlanted %d%s",flagPlanted,LE);

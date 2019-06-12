@@ -6,6 +6,30 @@
 #include "helpers.h"
 
 Records::Records() {
+  AscentFuel = 0;
+  ClosestToTarget = 400000000;
+  ClosestRendezvous = -1;
+  DescentFuel = 0;
+  DistanceTravelled = 0;
+  FarthestFromEarth = 0;
+  FarthestFromLM = 0;
+  GreatestSampleValue = 0;
+  HighestLatitude = 0;
+  HighestVelocity = 0;
+  LongestAverageEva = 0;
+  LongestEva = 0;
+  LongestMission = 0;
+  LongestLunarMission = 0;
+  LongestSingleDrive = 0.0;
+  LongestSingleWalk = 0.0;
+  LongestTotalEva = 0;
+  LongestTotalDrive = 0.0;
+  LongestTotalWalk = 0.0;
+  LowestLatitude = 0.0;
+  RcsFuel = 0;
+  ShortestDocking = 999999999;
+  ShortestLanding = 999999999;
+  Samples = 0;
   load();
   }
 
@@ -19,6 +43,7 @@ void Records::load() {
   if (file == NULL) {
     AscentFuel = 0;
     ClosestToTarget = 400000000;
+    ClosestRendezvous = -1;
     DescentFuel = 0;
     DistanceTravelled = 0;
     FarthestFromEarth = 0;
@@ -45,6 +70,7 @@ void Records::load() {
     while ((pline = nextLine(file)) != NULL) {
       if (startsWith(pline,"AscentFuel")) AscentFuel = atof(nw(pline));
       if (startsWith(pline,"ClosestToTarget")) ClosestToTarget = atof(nw(pline));
+      if (startsWith(pline,"ClosestRendezvous")) ClosestRendezvous = atof(nw(pline));
       if (startsWith(pline,"DescentFuel")) DescentFuel = atof(nw(pline));
       if (startsWith(pline,"DistanceTravelled")) DistanceTravelled = atof(nw(pline));
       if (startsWith(pline,"FarthestFromEarth")) FarthestFromEarth = atof(nw(pline));
@@ -77,6 +103,7 @@ void Records::Save() {
   file = fopen("records.dat","w");
   fprintf(file,"AscentFuel %.18f%s",AscentFuel,LE);
   fprintf(file,"ClosestToTarget %.18f%s",ClosestToTarget,LE);
+  fprintf(file,"ClosestRendezvous %.18f%s",ClosestRendezvous,LE);
   fprintf(file,"DescentFuel %.18f%s",DescentFuel,LE);
   fprintf(file,"DistanceTravelled %.18f%s",DistanceTravelled,LE);
   fprintf(file,"FarthestFromEarth %.18f%s",FarthestFromEarth,LE);
@@ -115,6 +142,12 @@ void Records::Save() {
     fprintf(file,"  Closest to Target       : %9.2fkm%s",ClosestToTarget/1000.0,LE);
   else 
     fprintf(file,"  Closest to Target       : %9.2fm%s",ClosestToTarget,LE);
+  if (ClosestRendezvous >= 0) {
+    if (ClosestRendezvous >= 10000)
+      fprintf(file,"  Closest Rendezvous      : %9.2fkm%s",ClosestRendezvous/1000.0,LE);
+    else
+      fprintf(file,"  Closest Rendezvous      : %9.2fm%s",ClosestRendezvous,LE);
+    }
   fprintf(file,"  Highest Latitude Landing: %9.2f%s",HighestLatitude,LE);
   fprintf(file,"  Lowest Latitude Landing : %9.2f%s",LowestLatitude,LE);
   fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",LongestSingleWalk/1000.0,LE);
