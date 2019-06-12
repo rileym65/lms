@@ -650,7 +650,8 @@ void Spacecraft::Cycle() {
   Radius((position - Orbiting()->Position()).Length());
   rateOfClimb = (Radius() - r1) * GRAN;
 
-  if (currentVehicle == this) {
+  if (currentVehicle == this ||
+      this == csm->LaunchVehicle()) {
     p2 = position - Orbiting()->Position();
     distanceTravelled += ((p1-p2).Length());
     }

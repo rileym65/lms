@@ -270,6 +270,7 @@ Matrix m;
     faceFront = booster->FaceFront();
     Latitude(booster->Latitude());
     Longitude(booster->Longitude());
+    distanceTravelled = booster->DistanceTravelled();
     }
 //  computer->Cycle();
 

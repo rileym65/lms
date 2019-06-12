@@ -86,6 +86,11 @@ Double Vehicle::DistanceTravelled() {
   return distanceTravelled;
   }
 
+Double Vehicle::DistanceTravelled(Double d) {
+  distanceTravelled = d;
+  return distanceTravelled;
+  }
+
 Double Vehicle::DryWeight() {
   return dryWeight;
   }

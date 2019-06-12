@@ -64,6 +64,7 @@ class Vehicle {
     virtual void      Damage(Double dmg);
     virtual Boolean   Destroyed();
     virtual Double    DistanceTravelled();
+    virtual Double    DistanceTravelled(Double d);
     virtual Double    DryWeight();
     virtual Double    DryWeight(Double d);
     virtual Double    EBattery();
