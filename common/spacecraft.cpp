@@ -656,11 +656,11 @@ void Spacecraft::Cycle() {
     distanceTravelled += ((p1-p2).Length());
     }
 
-  if (Orbiting() == Earth && moonG > earthG) {
+  if (this == csm && Orbiting() == Earth && moonG > earthG) {
     Orbiting(Moon);
     simSpeed = 100000;
     }
-  if (Orbiting() == Moon && earthG > moonG) {
+  if (this == csm && Orbiting() == Moon && earthG > moonG) {
     Orbiting(Earth);
     simSpeed = 100000;
     }
