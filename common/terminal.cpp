@@ -11,6 +11,8 @@
 #ifndef MINGW
 #include <termios.h>
 #include <unistd.h>
+#include <time.h>
+#include <sys/time.h>
 struct termios original;
 #endif
 
