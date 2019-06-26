@@ -24,6 +24,9 @@ Mission::Mission() {
   targetLongitude = -99999;
   targetLatitude = -99999;
   Vehicle(VEHICLE_APOLLO_MKII);
+  startLocation = 'E';
+  startLAN = 90.0;
+  startInc = 179.999;
   }
 
 Mission::~Mission() {
@@ -271,6 +274,34 @@ Double Mission::Secondary3Longitude(Double d) {
   return secondary3Longitude;
   }
 
+Double Mission::StartInc() {
+  return startInc;
+  }
+
+Double Mission::StartInc(Double d) {
+  startInc = d;
+  return startInc;
+  }
+
+Double Mission::StartLAN() {
+  return startLAN;
+  }
+
+Double Mission::StartLAN(Double d) {
+  startLAN = d;
+  return startLAN;
+  }
+
+char Mission::StartLocation() {
+  return startLocation;
+  }
+
+char Mission::StartLocation(char c) {
+  if (c != 'E' && c != 'M') return startLocation;
+  startLocation = c;
+  return startLocation;
+  }
+
 Double Mission::TargetLatitude() {
   return targetLatitude;
   }
@@ -350,6 +381,9 @@ void Mission::Load(FILE* file) {
     else if (startsWith(pline,"rover ")) rover = atoi(nw(pline));
     else if (startsWith(pline,"lsep ")) lsep = atoi(nw(pline));
     else if (startsWith(pline,"laser ")) laser = atoi(nw(pline));
+    else if (startsWith(pline,"startlocation ")) startLocation = nw(pline)[0];
+    else if (startsWith(pline,"startlan ")) startLAN = atof(nw(pline));
+    else if (startsWith(pline,"startinc ")) startInc = atof(nw(pline));
     }
   _computeTargetData();
   validate();
@@ -389,6 +423,9 @@ void Mission::Save(FILE* file) {
   fprintf(file,"  Rover %d%s",rover,LE);
   fprintf(file,"  Lsep %d%s",lsep,LE);
   fprintf(file,"  Laser %d%s",laser,LE);
+  fprintf(file,"  StartLocation %c%s",startLocation,LE);
+  fprintf(file,"  StartLAN %f%s",startLAN,LE);
+  fprintf(file,"  StartInc %f%s",startInc,LE);
   fprintf(file,"  }%s",LE);
   }
 

@@ -29,12 +29,15 @@ class Mission {
     Byte    lsep;
     Byte    laser;
     Lander *lander;
-    void    validate();
+    Double  startLAN;
+    Double  startInc;
+    char    startLocation;
     Vector  targetPos;
     Vector  targetVel;
     Double  targetMomEast;
     Double  targetMomNorth;
     void    _computeTargetData();
+    void    validate();
   public:
     Mission();
     ~Mission();
@@ -79,6 +82,12 @@ class Mission {
     Double Secondary3Latitude(Double d);
     Double Secondary3Longitude();
     Double Secondary3Longitude(Double d);
+    Double StartInc();
+    Double StartInc(Double d);
+    Double StartLAN();
+    Double StartLAN(Double d);
+    char   StartLocation();
+    char   StartLocation(char c);
     Double TargetLatitude();
     Double TargetLatitude(Double d);
     Double TargetLongitude();
