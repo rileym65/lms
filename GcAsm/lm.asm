@@ -99,6 +99,8 @@ loop000101: call   posabs              ; Display POS^ABS data
             call   periapo             ; display perilune/apolune
             mov    afuel,R10
             ldi    r11,fflow
+            jne    r11,zero,V17N71L1   ; jump if it was zero
+            ldi    R11,5
             div    r10,r11
             mov    afuel,r12
             wait
