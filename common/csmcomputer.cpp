@@ -688,6 +688,98 @@ void CsmComputer::_program11() {
            running = 0;
            }
          break;
+
+/* **************************************************************** */
+/* *****                     Apollo SaturnV                   ***** */
+/* **************************************************************** */
+
+    case VEHICLE_APOLLO_MKII:
+         /* ************************ */
+         /* ***** Clear launch tower */
+         /* ************************ */
+         if (ram[P11_MODE] == 1) {
+           pos = csm->Position() - csm->Orbiting()->Position();
+           if (pos.Length() > csm->Orbiting()->Radius() + 200) {
+             ram[P11_MODE] = 2;
+             }
+           }
+         /* ****************************************** */
+         /* ***** Perform roll to launch azimuth ***** */
+         /* ****************************************** */
+         if (ram[P11_MODE] == 2) {
+           if (_rollProgram()) ram[P11_MODE] = 3;
+           }
+         /* ********************************************************* */
+         /* ***** Pitch back to 20 degrees and hold until 8000m ***** */
+         /* ********************************************************* */
+         if (ram[P11_MODE] == 3) {
+           if (_ascent(20,1.0,ram[P11_ORBIT]) >= 8000) ram[P11_MODE] = 4;
+           if (csm->Throttle() == 0) ram[P11_MODE] = 4;
+           }
+         /* ********************************************* */
+         /* ***** Picth back to 63 degrees and hold ***** */
+         /* ********************************************* */
+         if (ram[P11_MODE] == 4) {
+           _ascent(63,1.0,ram[P11_ORBIT]);
+           if (csm->Throttle() == 0) {
+             ram[P11_MODE] = 5;
+             ram[P11_CLOCKGE] = clockGe;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+         /* ******************************************************* */
+         /* ***** Wait three seconds and then perform staging ***** */
+         /* ******************************************************* */
+         if (ram[P11_MODE] == 5) {
+           if (clockGe - ram[P11_CLOCKGE] > 3) {
+             csm->LaunchVehicle()->NextStage();
+             ram[P11_MODE] = 6;
+             }
+           }
+         /* ************************ */
+         /* ***** Second stage ***** */
+         /* ************************ */
+         if (ram[P11_MODE] == 6) {
+           _ascent(63,1.0,ram[P11_ORBIT]);
+           if (csm->Velocity().Length() > ram[P11_TARGETVEL]) {
+             ram[P11_MODE] = 9;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           if (csm->Throttle() == 0) {
+             ram[P11_MODE] = 7;
+             csm->LaunchVehicle()->PitchRate(0);
+             ram[P11_CLOCKGE] = clockGe;
+             }
+           }
+         /* ******************************************************* */
+         /* ***** Wait three seconds and then perform staging ***** */
+         /* ******************************************************* */
+         if (ram[P11_MODE] == 7) {
+           if (clockGe - ram[P11_CLOCKGE] > 3) {
+             csm->LaunchVehicle()->NextStage();
+             ram[P11_MODE] = 8;
+             }
+           }
+         /* *********************** */
+         /* ***** Third stage ***** */
+         /* *********************** */
+         if (ram[P11_MODE] == 8) {
+           _ascent(65,1.0,ram[P11_ORBIT]);
+           if (csm->Velocity().Length() > ram[P11_TARGETVEL]) {
+             ram[P11_MODE] = 9;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           if (csm->Throttle() == 0) {
+             ram[P11_MODE] = 9;
+             csm->LaunchVehicle()->PitchRate(0);
+             }
+           }
+
+         if (ram[P11_MODE] == 9) {
+           csm->Cutoff();
+           running = 0;
+           }
+         break;
     }
   }
 
