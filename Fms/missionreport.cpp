@@ -50,6 +50,11 @@ void MissionReport() {
   Double singleWalk;
   Double singleDrive;
   Double dist;
+  Double cost_vehicle;
+  Double cost_launchVehicle;
+  Double cost_operations;
+  Double cost_lander;
+  Double cost_total;
   records = new Records();
   i = 0;
   sprintf(filename,"report_%04d.txt",i);
@@ -269,6 +274,78 @@ void MissionReport() {
       else fprintf(file,"Ascent%s",LE);
     }
   fprintf(file,"%s",LE);
+
+  fprintf(file,"Mission Cost:%s",LE);
+  switch (mission->Vehicle()) {
+    case VEHICLE_MERCURY_REDSTONE:
+         cost_vehicle = 5500000;
+         cost_launchVehicle = 1900000;
+         cost_operations = clockGe * 23.57;
+         cost_lander = 0;
+         break;
+    case VEHICLE_MERCURY_ATLAS:
+         cost_vehicle = 5500000;
+         cost_launchVehicle = 3500000;
+         cost_operations = clockGe * 23.57;
+         cost_lander = 0;
+         break;
+    case VEHICLE_GEMINI_TITAN:
+         cost_vehicle = 13000000;
+         cost_launchVehicle = 3150000;
+         cost_operations = clockGe * 84.53;
+         cost_lander = 0;
+         break;
+    case VEHICLE_APOLLO_SATURN_V:
+         cost_vehicle = 77000000;
+         cost_launchVehicle = 185000000;
+         cost_operations = clockGe * 117.10;
+         cost_lander = 0;
+         break;
+    case VEHICLE_APOLLO_SATURN_IB:
+         cost_vehicle = 77000000;
+         cost_launchVehicle = 85000000;
+         cost_operations = clockGe * 117.10;
+         cost_lander = 0;
+         break;
+    case VEHICLE_APOLLO:
+         cost_vehicle = 77000000;
+         cost_launchVehicle = 185000000;
+         cost_operations = clockGe * 117.10;
+         cost_lander = 50000000;
+         break;
+    case VEHICLE_APOLLO_J:
+         cost_vehicle = 77000000;
+         cost_launchVehicle = 185000000;
+         cost_operations = clockGe * 117.10;
+         cost_lander = 52500000;
+         break;
+    case VEHICLE_APOLLO_MKII:
+         cost_vehicle = 82000000;
+         cost_launchVehicle = 210000000;
+         cost_operations = clockGe * 117.10;
+         cost_lander = 65000000;
+         break;
+    case VEHICLE_APOLLO_MKIII:
+         cost_vehicle = 105000000;
+         cost_launchVehicle = 285000000;
+         cost_operations = clockGe * 117.10;
+         cost_lander = 97500000;
+         break;
+    }
+  cost_vehicle /= 1000000.0;
+  cost_launchVehicle /= 1000000.0;
+  cost_lander /= 1000000.0;
+  cost_operations /= 1000000.0;
+  cost_total = cost_vehicle + cost_launchVehicle + cost_operations + cost_lander;
+  fprintf(file,"  Vehicle Cost            : $%12.2f million%s",cost_vehicle,LE);
+  fprintf(file,"  Launch Vehicle Cost     : $%12.2f million%s",cost_launchVehicle,LE);
+  if (cost_lander > 0)
+    fprintf(file,"  Lander Cost             : $%12.2f million%s",cost_lander,LE);
+  fprintf(file,"  Operations Cost         : $%12.2f million%s",cost_operations,LE);
+  fprintf(file,"                            ---------------------%s",LE);
+  fprintf(file,"  Total Cost              : $%12.2f million%s",cost_total,LE);
+  fprintf(file,"%s",LE);
+  
 
   /* ******************* */
   /* ***** Records ***** */
