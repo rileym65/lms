@@ -427,9 +427,10 @@ void Panel::useDefault(const char* filename) {
     VLine(73,16,24);
     Box(52,22,68,24);
     addGauge(new G_ClockUT(61,17, false, vehicle));
-    addGauge(new G_ClockMI(61,18, false, vehicle));
-    addGauge(new G_ClockEV(61,19, false, vehicle));
-    addGauge(new G_ClockTE(61,20, false, vehicle));
+    addGauge(new G_ClockGE(61,18, false, vehicle));
+    addGauge(new G_ClockMI(61,19, false, vehicle));
+    addGauge(new G_ClockEV(61,20, false, vehicle));
+    addGauge(new G_ClockTE(61,21, false, vehicle));
     addGauge(new G_AmsDown(55,2, false, vehicle));
     addGauge(new G_AmsLrv(48,12, false, vehicle));
     addGauge(new G_AmsMessage(53,23, false, vehicle));
@@ -451,9 +452,10 @@ void Panel::useDefault(const char* filename) {
     VLine(73,16,24);
     Box(52,22,68,24);
     addGauge(new G_ClockUT(61,17, false, vehicle));
-    addGauge(new G_ClockMI(61,18, false, vehicle));
-    addGauge(new G_ClockEV(61,19, false, vehicle));
-    addGauge(new G_ClockTE(61,20, false, vehicle));
+    addGauge(new G_ClockGE(61,18, false, vehicle));
+    addGauge(new G_ClockMI(61,19, false, vehicle));
+    addGauge(new G_ClockEV(61,20, false, vehicle));
+    addGauge(new G_ClockTE(61,21, false, vehicle));
     addGauge(new G_AmsDown(55,2, false, vehicle));
     addGauge(new G_AmsLrv(48,12, false, vehicle));
     addGauge(new G_AmsMessage(53,23, false, vehicle));
