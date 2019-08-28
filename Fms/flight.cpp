@@ -423,14 +423,14 @@ void Flight::saturn1B() {
   csm->CommandModuleRcsMaxFuel(csm->CommandModuleRcsFuel());
   csm->MaxOxygen(csm->Oxygen());
   csm->MaxBattery(csm->Battery());
-  booster->Height(43.2);
+  booster->Payload(csm->Mass());
+  booster->Height(42.25);
   booster->CmOffset(17.25);
   booster->NumStages(2);
-  booster->DryWeight(1, 40856);
+  booster->DryWeight(1, 42000);
   booster->DryWeight(2, 10600);
-  booster->Fuel(1, 411952);
-  booster->Fuel(2, 105795);
-  booster->Payload(csm->Mass());
+  booster->Fuel(1, 399000);
+  booster->Fuel(2, 103700);
   booster->Stage(1);
   booster->NumEngines(1, 8);
   booster->NumEngines(2, 1);
@@ -451,7 +451,7 @@ void Flight::saturn1B() {
   booster->IspVac(1, 7, 289);
   booster->IspVac(1, 8, 289);
   booster->IspSl(2, 1, 200);
-  booster->IspVac(2, 1, 420);
+  booster->IspVac(2, 1, 421);
   booster->ThrustVac(1, 1, 900000);
   booster->ThrustVac(1, 2, 900000);
   booster->ThrustVac(1, 3, 900000);
@@ -460,7 +460,7 @@ void Flight::saturn1B() {
   booster->ThrustVac(1, 6, 900000);
   booster->ThrustVac(1, 7, 900000);
   booster->ThrustVac(1, 8, 900000);
-  booster->ThrustVac(2, 1, 890000);
+  booster->ThrustVac(2, 1, 1033100);
   booster->ThrustSl(1, 1, 900000);
   booster->ThrustSl(1, 2, 900000);
   booster->ThrustSl(1, 3, 900000);
@@ -469,7 +469,7 @@ void Flight::saturn1B() {
   booster->ThrustSl(1, 6, 900000);
   booster->ThrustSl(1, 7, 900000);
   booster->ThrustSl(1, 8, 900000);
-  booster->ThrustSl(2, 1, 445000);
+  booster->ThrustSl(2, 1, 486200);
   booster->Starts(1,1);
   booster->Starts(2,1);
   booster->Diameter(1, 6.53);
