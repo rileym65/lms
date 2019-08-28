@@ -87,7 +87,6 @@ void Booster::Cycle() {
     drag = velocity.Norm().Scale(d).Neg();
     }
   Spacecraft::Cycle();
-//  if (radius < GROUND) destroyed = true;
   if (Radius() < Orbiting()->Radius()) destroyed = true;
   }
 
