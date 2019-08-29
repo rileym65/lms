@@ -41,6 +41,8 @@
 	|  16  |  16  | Event HH    | Event MM     | Event SS   |
 	|  16  |  17  | ROC         | Delta ROC    | Delta Apo  |
 	|  16  |  18  | L. Velocity | Acceleration | Gs         |
+	|  16  |  20  | E. Long.    | E. Lat       |            |
+	|  16  |  21  | M. Long.    | M. Lat.      |            |
 [TE]
 [=]
 [TB]

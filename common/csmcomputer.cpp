@@ -89,6 +89,10 @@ void CsmComputer::_preg3(Int32 i) {
 void CsmComputer::_doShow() {
   Double d;
   UInt32 i,j;
+  Vector pos;
+  Double longitude;
+  Double latitude;
+  Double hyp;
   switch (pnoun) {
     case 0:
          _reg1(preg1);
@@ -198,6 +202,35 @@ void CsmComputer::_doShow() {
          _reg1(csm->GetIns()->Velocity());
          _reg2(csm->GetIns()->Acceleration() * 100);
          _reg3(csm->GetIns()->Acceleration() / 9.80665 * 100);
+         break;
+    case 20:
+         pos = csm->Position() - Earth->Position();
+         hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
+         longitude = pos.X() / hyp;
+         longitude = asin(longitude) * 180 / M_PI;
+         if (pos.X() < 0 && pos.Y() >= 0) longitude = -180 - longitude;
+         if (pos.X() >= 0 && pos.Y() >= 0) longitude = 180 - longitude;
+         hyp = pos.Length();
+         latitude = pos.Z() / hyp;
+         latitude = asin(latitude) * 180 / M_PI;
+         longitude = longitude - kscAngle - 80.6077;
+         while (longitude >= 180) longitude -= 360;
+         while (longitude <= -180) longitude += 360;
+         _reg1(longitude * 100.0);
+         _reg2(latitude * 100.0);
+         break;
+    case 21:
+         pos = csm->Position() - Moon->Position();
+         hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
+         longitude = pos.X() / hyp;
+         longitude = asin(longitude) * 180 / M_PI;
+         if (pos.X() < 0 && pos.Y() >= 0) longitude = -180 - longitude;
+         if (pos.X() >= 0 && pos.Y() >= 0) longitude = 180 - longitude;
+         hyp = pos.Length();
+         latitude = pos.Z() / hyp;
+         latitude = asin(latitude) * 180 / M_PI;
+         _reg1(longitude * 100.0);
+         _reg2(latitude * 100.0);
          break;
     }
   }
@@ -1064,6 +1097,8 @@ void CsmComputer::_processRequest() {
   pverb = verb;
   if (verb == 0) {
     running = 0;
+    prog = 0;
+    strcpy(dprog,"00");
     }
   if (verb == 6) {
     _doShow();
