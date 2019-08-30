@@ -50,6 +50,12 @@ void G_CsmDock::Update() {
   Int8   aligned;
   char buffer[32];
   if (csm->TargetVehicle() == NULL) return;
+  if (lm == NULL) return;
+  if (mission->Vehicle() == VEHICLE_MERCURY_REDSTONE) return;
+  if (mission->Vehicle() == VEHICLE_MERCURY_ATLAS) return;
+  if (mission->Vehicle() == VEHICLE_GEMINI_TITAN) return;
+  if (mission->Vehicle() == VEHICLE_APOLLO_SATURN_IB) return;
+  if (mission->Vehicle() == VEHICLE_APOLLO_SATURN_V) return;
   aligned = -1;
   pos = csm->Position() - (csm->TargetVehicle())->Position();
   tvUp = csm->TargetVehicle()->FaceUp().Norm();
