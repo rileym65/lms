@@ -46,6 +46,7 @@
 [li]	Mercury/Redstone
 [li]	Mercury/Atlas
 [li]	Germini/Titan II
+[li]	Apollo/Saturn 1B
 [li]	Apollo/Saturn IV
 [li]	Apollo/Saturn V
 [le]
@@ -71,6 +72,7 @@
 	| csmcomputer.doc | Documentation for the CSM computer           |
 	| lmcomputer.doc  | Documentation for the LM computer            |
 	| template.txt    | Template file for helping you create panels  |
+	| tutorial_1.doc  | Tutorial for sub-orbital flight              |
 [te]
 [i-4]
 [=]

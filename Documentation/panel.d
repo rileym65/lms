@@ -656,6 +656,20 @@
 [--]
 [=]
 
+[h2]	ClockDk
+[er]
+	+------------+
+	|Dk:  0:00:00|
+	+------------+
+[ee]
+	This clock shows the elapsed time from lunar liftoff.  This clock
+	stops running once docked with the CSM.
+[e-]
+
+[=]
+[--]
+[=]
+
 [h2]	ClockEV
 [er]
 	+------------+

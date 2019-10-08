@@ -177,51 +177,92 @@
 [h2]	Core Programs
 [I4]
 [TB]
-	| P  | V  | N  | Program                                |
-	| 00 | 16 | 51 | Monitor POS^ABS and ORB^ABS data       |
-	| 00 | 16 | 52 | Monitor POS^TAR and ORB^TAR data       |
-	| 00 | 16 | 53 | Monitor POS^REL and ORB^REL data       |
-	| 00 | 16 | 62 | Display POS^TAR data in meters         |
-	| 00 | 16 | 63 | Display POS^REL data in meters         |
-	| 00 | 16 | 71 | Display POS^ABS and ascent fuel usage  |
-	| 00 | 16 | 72 | Display POS^TAR and descent fuel usage |
-	| 00 | 21 |    | Input register 1                       |
-	| 00 | 22 |    | Input register 2                       |
-	| 00 | 23 |    | Input register 3                       |
-	| 00 | 41 |    | Clear event clock                      |
-	| 00 | 42 |    | Set event clock to Reg1,Reg2,Reg3      |
-	| 00 | 43 |    | Start event clock in up mode           |
-	| 00 | 44 |    | Start event clock in down mode         |
-	| 00 | 45 |    | Stop event clock                       |
-	| 31 | 00 | 00 | Hold prograde attitude                 |
-        | 32 | 00 | 00 | Hold retrograde attitude               |
-	| 33 | 00 | 00 | Hold orbit normal attitude             |
-	| 34 | 00 | 00 | Hold orbit anti-normal attitude        |
-	| 35 | 00 | 00 | Hold orbit inside attitude             |
-	| 36 | 00 | 00 | Hold orbit outside attitude            |
+	| P  | Program                                |
+	| 31 | Hold prograde attitude                 |
+        | 32 | Hold retrograde attitude               |
+	| 33 | Hold orbit normal attitude             |
+	| 34 | Hold orbit anti-normal attitude        |
+	| 35 | Hold orbit inside attitude             |
+	| 36 | Hold orbit outside attitude            |
 [TE]
 [I-4]
 
-[h2]	Verb/Noun combinations
+[=]
+
+[H2]	Verbs
+[I4]
 [TB]
-        | Verb | Noun | Reg1        | Reg2         | Reg 3      |
-        |  16  |  00  | preg1       | preg2        | preg3      |
-        |  16  |  01  | Apoapsis    | Periapsis    | Orbit time |
-        |  16  |  02  | Longitude   | Latitude     |            |
-        |  16  |  03  | Mass        | Fuel kg      | RCS Fuel kg|
-        |  16  |  04  | Roll Gimbal | Pitch Gimbal | Yaw Gimbal |
-        |  16  |  05  | true anom.  | mean anom.   | ecc. anom. |
-        |  16  |  06  | Asc. Node   | Arg. Peri.   | Peri. Long.|
-        |  16  |  07  | GET HH      | GET MM       | GET SS     |
-        |  16  |  08  | UTC HH      | UTC MM       | UTC SS     |
-        |  16  |  09  | Apo HH      | Apo MM       | Apo SS     |
-        |  16  |  10  | Per HH      | Per MM       | Per SS     |
-        |  16  |  12  | tarAlt      | TarLong      | TarLat     |
-        |  16  |  14  | Main DeltaV | Rcs DeltaV   | Fuel flow  |
-        |  16  |  16  | Event HH    | Event MM     | Event SS   |
-	|  16  |  17  | Orb. Vel.   |              |            |
-	|  16  |  75  |             | LAN          | Incl       |
-	|      |      | Periapsis   | Apoapsis     | Orbit time |
+	| V  | N  | Program                                |
+	| 16 | ?? | Monitor data                           |
+	| 21 |    | Input register 1                       |
+	| 22 |    | Input register 2                       |
+	| 23 |    | Input register 3                       |
+	| 37 | ?? | Execute program                        |
+	| 41 |    | Clear event clock                      |
+	| 42 |    | Set event clock to Reg1,Reg2,Reg3      |
+	| 43 |    | Start event clock in up mode           |
+	| 44 |    | Start event clock in down mode         |
+	| 45 |    | Stop event clock                       |
+[TE]
+[I-4]
+
+[=]
+
+[h2]	Verb 16 combinations
+[TB]
+        | Verb | Noun | Reg1          | Reg2           | Reg 3         |
+        |  16  |  00  | preg1         | preg2          | preg3         |
+        |  16  |  01  | Apoapsis      | Periapsis      | Orbit time    |
+        |  16  |  02  | Longitude     | Latitude       |               |
+        |  16  |  03  | Mass          | Fuel kg        | RCS Fuel kg   |
+        |  16  |  04  | Roll Gimbal   | Pitch Gimbal   | Yaw Gimbal    |
+        |  16  |  05  | true anom.    | mean anom.     | ecc. anom.    |
+        |  16  |  06  | Asc. Node     | Arg. Peri.     | Peri. Long.   |
+        |  16  |  07  | GET HH        | GET MM         | GET SS        |
+        |  16  |  08  | UTC HH        | UTC MM         | UTC SS        |
+        |  16  |  09  | Apo HH        | Apo MM         | Apo SS        |
+        |  16  |  10  | Per HH        | Per MM         | Per SS        |
+        |  16  |  12  | tarAlt        | TarLong        | TarLat        |
+        |  16  |  14  | Main DeltaV   | Rcs DeltaV     | Fuel flow     |
+        |  16  |  16  | Event HH      | Event MM       | Event SS      |
+	|  16  |  17  | Orb. Vel.     |                |               |
+	|  16  |  51  | Abs Alt.      | Abs. Long.     | Abs. Lat.     |
+	|      |      | Abs ROC       | Abs. Vel. E    | Abs. Vel. N   |
+	|      |      | Abs Acc ROC   | Abs. Acc. E    | Abs. Acc. N   |
+	|      |      |               | Abs. LAN       | Abs. Incl.    |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|  16  |  52  | Tar Alt.      | Tar. Long.     | Tar. Lat.     |
+	|      |      | Tar ROC       | Tar. Vel. E    | Tar. Vel. N   |
+	|      |      | Tar Acc ROC   | Tar. Acc. E    | Tar. Acc. N   |
+	|      |      | Tar dist. (m) | Tar. LAN       | Tar. Incl.    |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|  16  |  53  | Rel Alt.      | Rel. Long.     | Rel. Lat.     |
+	|      |      | Rel ROC       | Rel. Vel. E    | Rel. Vel. N   |
+	|      |      | Rel Acc ROC   | Rel. Acc. E    | Rel. Acc. N   |
+	|      |      | Rel dist. (m) | Rel. LAN       | Rel. Incl.    |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|  16  |  62  | Tar Alt.      | Tar. Long. (m) | Tar. Lat. (m) |
+	|      |      | Tar ROC       | Tar. Vel. E    | Tar. Vel. N   |
+	|      |      | Tar Acc ROC   | Tar. Acc. E    | Tar. Acc. N   |
+	|      |      | Tar dist. (m) | Tar. LAN       | Tar. Incl.    |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|  16  |  63  | Rel Alt.      | Rel. Long. (m) | Rel. Lat. (m) |
+	|      |      | Rel ROC       | Rel. Vel. E    | Rel. Vel. N   |
+	|      |      | Rel Acc ROC   | Rel. Acc. E    | Rel. Acc. N   |
+	|      |      | Rel dist. (m) | Rel. LAN       | Rel. Incl.    |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|  16  |  71  | Abs Alt.      | Abs. Long.     | Abs. Lat.     |
+	|      |      | Abs ROC       | Abs. Vel. E    | Abs. Vel. N   |
+	|      |      | Abs Acc ROC   | Abs. Acc. E    | Abs. Acc. N   |
+	|      |      | Time left     | Fuel burn rate | Asc. Fuel     |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|  16  |  72  | Tar Alt.      | Tar. Long. (m) | Tar. Lat. (m) |
+	|      |      | Tar ROC       | Tar. Vel. E    | Tar. Vel. N   |
+	|      |      | Tar Acc ROC   | Tar. Acc. E    | Tar. Acc. N   |
+	|      |      | Time left     | Fuel burn rate | Dsc. Fuel     |
+	|      |      | Dist. (m)     | Abs. Velocity  | Orbit time    |
+	|  16  |  75  |               | LAN            | Incl          |
+	|      |      | Periapsis     | Apoapsis       | Orbit time    |
 [TE]
 [=]
 
