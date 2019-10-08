@@ -27,6 +27,7 @@
 #include "g_attitude.h"
 #include "g_battery.h"
 #include "g_clockbu.h"
+#include "g_clockdk.h"
 #include "g_clockev.h"
 #include "g_clockge.h"
 #include "g_clockmi.h"
@@ -175,6 +176,8 @@ Int8 Panel::loadFile(const char* filename) {
         addGauge(new G_Battery(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockbu") == 0)
         addGauge(new G_ClockBU(x1, y1, false, vehicle));
+      else if (strcasecmp(str,"clockdk") == 0)
+        addGauge(new G_ClockDK(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockev") == 0)
         addGauge(new G_ClockEV(x1, y1, false, vehicle));
       else if (strcasecmp(str,"clockge") == 0)
@@ -400,7 +403,11 @@ void Panel::useDefault(const char* filename) {
     addGauge(new G_AmsLand(28,4, false, vehicle));
     addGauge(new G_AmsMessage(39,15, false, vehicle));
     addGauge(new G_PrecAxis(2,2, false, vehicle));
-    addGauge(new G_Clocks(61,17, false, vehicle));
+    addGauge(new G_ClockUT(61,17, false, vehicle));
+    addGauge(new G_ClockGE(61,18, false, vehicle));
+    addGauge(new G_ClockMI(61,19, false, vehicle));
+    addGauge(new G_ClockBU(61,20, false, vehicle));
+    addGauge(new G_ClockDK(61,21, false, vehicle));
     addGauge(new G_EvaPrep(53,23, false, vehicle));
     addGauge(new G_LmFuel(53,17, false, vehicle));
     addGauge(new G_LmRock(74,23, false, vehicle));

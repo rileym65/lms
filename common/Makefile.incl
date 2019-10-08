@@ -73,6 +73,9 @@
 ../common/g_clockbu.o: ../common/gauge.h ../common/g_clockbu.h ../common/terminal.h ../common/g_clockbu.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockbu.cpp -o ../common/g_clockbu.o
 
+../common/g_clockdk.o: ../common/gauge.h ../common/g_clockdk.h ../common/terminal.h ../common/g_clockdk.cpp
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockdk.cpp -o ../common/g_clockdk.o
+
 ../common/g_clockev.o: ../common/gauge.h ../common/g_clockev.h ../common/terminal.h ../common/g_clockev.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/g_clockev.cpp -o ../common/g_clockev.o
 
