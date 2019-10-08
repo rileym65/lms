@@ -34,6 +34,7 @@ class Records {
     Int32  ShortestLanding;
     Int32  Samples;
     Double ClosestRendezvous;
+    Int32  LongestSurface;
     Records();
     ~Records();
     void Save();

@@ -30,6 +30,7 @@ Records::Records() {
   ShortestDocking = 999999999;
   ShortestLanding = 999999999;
   Samples = 0;
+  LongestSurface = 0;
   load();
   }
 
@@ -65,6 +66,7 @@ void Records::load() {
     ShortestDocking = 999999999;
     ShortestLanding = 999999999;
     Samples = 0;
+    LongestSurface = 0;
     }
   else {
     while ((pline = nextLine(file)) != NULL) {
@@ -92,6 +94,7 @@ void Records::load() {
       if (startsWith(pline,"ShortestDocking")) ShortestDocking = atoi(nw(pline));
       if (startsWith(pline,"ShortestLanding")) ShortestLanding = atoi(nw(pline));
       if (startsWith(pline,"Samples")) Samples = atoi(nw(pline));
+      if (startsWith(pline,"LongestSurface")) LongestSurface = atoi(nw(pline));
       }
     fclose(file);
     }
@@ -125,6 +128,7 @@ void Records::Save() {
   fprintf(file,"ShortestDocking %d%s",ShortestDocking,LE);
   fprintf(file,"ShortestLanding %d%s",ShortestLanding,LE);
   fprintf(file,"Samples %d%s",Samples,LE);
+  fprintf(file,"LongestSurface %d%s",LongestSurface,LE);
   fclose(file);
 
   file = fopen("records.txt","w");
@@ -157,6 +161,7 @@ void Records::Save() {
   fprintf(file,"  Farthest From LM        : %9.2fkm%s",FarthestFromLM/1000.0,LE);
   fprintf(file,"  Greatest Sample Value   : %9.2f%s",GreatestSampleValue,LE);
   fprintf(file,"  Samples Collected       : %9dkg%s",Samples,LE);
+  fprintf(file,"  Time on Lunar Surface   : %s%s",ClockToString(buffer,LongestSurface),LE);
   fprintf(file,"  Descent Fuel Remaining  : %9.2fkg%s",DescentFuel,LE);
   fprintf(file,"  Ascent Fuel Remaining   : %9.2fkg%s",AscentFuel,LE);
   fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",RcsFuel,LE);

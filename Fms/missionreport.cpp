@@ -55,6 +55,7 @@ void MissionReport() {
   Double cost_operations;
   Double cost_lander;
   Double cost_total;
+  Int32  clockSf;
   records = new Records();
   i = 0;
   sprintf(filename,"report_%04d.txt",i);
@@ -123,6 +124,11 @@ void MissionReport() {
   if (clockRent != 0) AddEvent(clockRent, "Re-entry");
   if (clockPara != 0) AddEvent(clockPara, "Parachutes");
 
+  if (liftoffMet != 0 && landedMet != 0) 
+    clockSf = liftoffMet - landedMet;
+  else
+    clockSf = 0;
+
   for (i=0; i<numBurns; i++) {
     if (burn[i].engine >= '1' && burn[i].engine <= '3') {
       sprintf(buffer,"Stage %d Ignition",i+1);
@@ -186,6 +192,7 @@ void MissionReport() {
     fprintf(file,"  Vertical Velocity     : %.2fm/s%s",landedVVel,LE);
     fprintf(file,"  Horizontal Velocity   : %.2fm/s%s",landedHVel,LE);
     fprintf(file,"  Descent Fuel Remaining: %.2fkg%s",lm->DescentFuel(),LE);
+    fprintf(file,"  Time on Lunar Surface : %s%s",ClockToString(buffer,clockSf),LE);
     fprintf(file,"%s",LE);
     fprintf(file,"EVA:%s",LE);
     fprintf(file,"  Number of EVAs     : %d%s",evaCount,LE);
@@ -303,7 +310,7 @@ void MissionReport() {
          break;
     case VEHICLE_APOLLO_SATURN_IB:
          cost_vehicle = 77000000;
-         cost_launchVehicle = 85000000;
+         cost_launchVehicle = 55000000;
          cost_operations = clockGe * 117.10;
          cost_lander = 0;
          break;
@@ -317,7 +324,7 @@ void MissionReport() {
          cost_vehicle = 77000000;
          cost_launchVehicle = 185000000;
          cost_operations = clockGe * 117.10;
-         cost_lander = 52500000;
+         cost_lander = 59500000;
          break;
     case VEHICLE_APOLLO_MKII:
          cost_vehicle = 82000000;
@@ -372,6 +379,10 @@ void MissionReport() {
     if (clockMi > records->LongestLunarMission) {
       records->LongestLunarMission = clockMi;
       fprintf(file,"  Longest Lunar Mission   : %s%s",ClockToString(buffer,clockMi),LE);
+      }
+    if (clockSf > records->LongestSurface) {
+      records->LongestSurface = clockSf;
+      fprintf(file,"  Time on Lunar Surface   : %s%s",ClockToString(buffer,clockSf),LE);
       }
     if (longestEVA > records->LongestEva) {
       records->LongestEva = longestEVA;
