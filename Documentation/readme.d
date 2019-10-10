@@ -73,6 +73,7 @@
 	| lmcomputer.doc  | Documentation for the LM computer            |
 	| template.txt    | Template file for helping you create panels  |
 	| tutorial_1.doc  | Tutorial for sub-orbital flight              |
+	| tutorial_2.doc  | Tutorial for launch to orbit                 |
 [te]
 [i-4]
 [=]
