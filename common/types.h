@@ -41,5 +41,13 @@ typedef bool      Boolean;
 
 #endif
 
+typedef struct {
+  Int32  cellX;
+  Int32  cellY;
+  Int32  clockGe;
+  Double value;
+  Int32  type;
+  } SAMPLE;
+
 #endif
 

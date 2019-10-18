@@ -11,7 +11,10 @@
 #include "common.h"
 #include "helpers.h"
 
+static Int32 samplePos;
+
 LunarModule::LunarModule() {
+  samplePos = 0;
   landed = 0;
   throttle = 0;
   pitchRate = 0;
@@ -349,11 +352,6 @@ Int16 LunarModule::Rock() {
   return rock;
   }
 
-Int16 LunarModule::Rock(Int16 i) {
-  rock = i;
-  return rock;
-  }
-
 Double LunarModule::Value() {
   return value;
   }
@@ -367,6 +365,31 @@ Double LunarModule::Value(Double d) {
 /* ************************* */
 /* ***** Other methods ***** */
 /* ************************* */
+
+void LunarModule::AddSample(SAMPLE s) {
+  if (rock >= 512) return;
+  samples[rock++] = s;
+  switch (s.type) {
+    case S_SMALL_CRATER:sampleSmallCrater++; break;
+    case S_MEDIUM_CRATER:sampleMediumCrater++; break;
+    case S_LARGE_CRATER:sampleLargeCrater++; break;
+    case S_SMALL_ROCK:sampleSmallRock++; break;
+    case S_MEDIUM_ROCK:sampleMediumRock++; break;
+    case S_LARGE_ROCK:sampleLargeRock++; break;
+    case S_RISE:sampleRise++; break;
+    case S_CRATERWALL:sampleCraterWall++; break;
+    case S_DEPRESSION:sampleDepression++; break;
+    case S_PLAINS:samplePlains++; break;
+    case S_SPECIAL:sampleSpecial++; break;
+    }
+  }
+
+Boolean LunarModule::DuplicateSample(SAMPLE s) {
+  Int16 i;
+  for (i=0; i<rock; i++)
+    if (s.cellX == samples[i].cellX && s.cellY == samples[i].cellY) return true;
+  return false;
+  }
 
 void LunarModule::Abort() {
   descentJettisoned = -1;
@@ -930,7 +953,16 @@ void LunarModule::ProcessKey(Int32 key) {
   if (comp != NULL) comp->ProcessKey(key);
   }
 
+SAMPLE LunarModule::Sample(Int32 i) {
+  SAMPLE ret;
+  if (i < rock) return samples[i];
+  ret.value = 0;
+  ret.type = 0;
+  return ret;
+  }
+
 void LunarModule::Save(FILE* file) {
+  Int16 i;
   fprintf(file,"LunarModule {%s",LE);
   Spacecraft::Save(file);
   fprintf(file,"  RcsFbMode %d%s",rcsFbMode,LE);
@@ -979,10 +1011,14 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  MaxDescentOxygen %.18f%s",maxDescentOxygen,LE);
   fprintf(file,"  MaxDescentEOxygen %.18f%s",maxDescentEOxygen,LE);
   fprintf(file,"  MaxRcsFuel %.18f%s",maxRcsFuel,LE);
+  for (i=0; i<rock; i++)
+    fprintf(file,"  Sample %d,%d,%d,%f,%d",samples[i].cellX,samples[i].cellY,
+            samples[i].clockGe,samples[i].value,samples[i].type);
   fprintf(file,"  }%s",LE);
   }
 
 Int8 LunarModule::SubLoad(FILE* file, char* pline) {
+  SAMPLE sample;
   if (startsWith(pline,"ascentfuel ")) ascentFuel = atof(nw(pline));
   else if (startsWith(pline,"descentfuel ")) descentFuel = atof(nw(pline));
   else if (startsWith(pline,"rcsfuel ")) rcsFuel = atof(nw(pline));
@@ -1026,6 +1062,10 @@ Int8 LunarModule::SubLoad(FILE* file, char* pline) {
   else if (startsWith(pline,"maxdescentoxygen ")) maxDescentOxygen = atof(nw(pline));
   else if (startsWith(pline,"maxdescenteoxygen ")) maxDescentEOxygen = atof(nw(pline));
   else if (startsWith(pline,"maxrcsfuel ")) maxRcsFuel = atof(nw(pline));
+  else if (startsWith(pline,"sample ")) {
+    sample = ParseSample(nw(pline));
+    samples[samplePos++] = sample;
+    }
   else return Spacecraft::SubLoad(file, pline);
   return -1;
   }

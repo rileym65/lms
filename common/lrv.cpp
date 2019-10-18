@@ -9,7 +9,10 @@
 #include "random.h"
 #include "sequencer.h"
 
+static Int32 samplePos;
+
 Lrv::Lrv() {
+  samplePos = 0;
   Init();
   type |= VT_ROVER;
   }
@@ -27,6 +30,29 @@ void Lrv::Init() {
   boxes = 8;
   driven = 0;
   damageReportStep = 0;
+  }
+
+void Lrv::AddSample(SAMPLE s) {
+  if (rock >= 30) return;
+  samples[rock++] = s;
+  }
+
+SAMPLE Lrv::TakeSample() {
+  SAMPLE ret;
+  if (rock > 0) {
+    rock--;
+    return samples[rock];
+    }
+  ret.type = 0;
+  ret.value = 0;
+  return ret;
+  }
+
+Boolean Lrv::DuplicateSample(SAMPLE s) {
+  Int32 i;
+  for (i=0; i<rock; i++)
+    if (s.cellX == samples[i].cellX && s.cellY == samples[i].cellY) return true;
+  return false;
   }
 
 Int8 Lrv::Boxes() {
@@ -58,19 +84,13 @@ Int8 Lrv::Rock() {
   return rock;
   }
 
-Int8 Lrv::Rock(Int8 i) {
-  rock = i;
-  if (rock > 30) rock = 30;
-  return rock;
-  }
-
 Double Lrv::Value() {
-  return value;
-  }
-
-Double Lrv::Value(Double d) {
-  value = d;
-  return value;
+  Int32 i;
+  Double ret;
+  ret = 0;
+  for (i=0; i<rock; i++)
+    ret += samples[i].value;
+  return ret;
   }
 
 void Lrv::Setup() {
@@ -210,27 +230,35 @@ void Lrv::Cycle() {
 */
 
 Int8 Lrv::SubLoad(FILE* file, char* pline) {
-  if (startsWith(pline,"value ")) value = atof(nw(pline));
-  else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
+  SAMPLE sample;
+  if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
   else if (startsWith(pline,"sampleboxes ")) boxes = atoi(nw(pline));
   else if (startsWith(pline,"issetup true")) isSetup = true;
   else if (startsWith(pline,"issetup false")) isSetup = false;
   else if (startsWith(pline,"driven ")) driven = atof(nw(pline));
+  else if (startsWith(pline,"sample ")) {
+    sample = ParseSample(nw(pline));
+    samples[samplePos++] = sample;
+    }
   else return GroundVehicle::SubLoad(file, pline);
   return -1;
   }
 
 void Lrv::Save(FILE* file) {
+  Int32 i;
   fprintf(file,"Lrv {%s",LE);
   GroundVehicle::Save(file);
   fprintf(file,"  Rock %d%s",rock,LE);
-  fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  SampleBoxes %d%s",boxes,LE);
   if (isSetup)
     fprintf(file,"  IsSetup true%s",LE);
   else 
     fprintf(file,"  IsSetup false%s",LE);
   fprintf(file,"  Driven %.18f%s",driven,LE);
+  for (i=0; i<rock; i++)
+    fprintf(file,"    Sample %d,%d,%d,%f,%d",samples[i].cellX,samples[i].cellY,
+            samples[i].clockGe,samples[i].value,samples[i].type);
+
   fprintf(file,"  }%s",LE);
   }
 

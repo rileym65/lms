@@ -102,28 +102,6 @@ void save() {
   fprintf(file,"  SampleSpecial %d%s",sampleSpecial,LE);
   fprintf(file,"  SampleDepression %d%s",sampleDepression,LE);
   fprintf(file,"  SampleCraterWall %d%s",sampleCraterWall,LE);
-  fprintf(file,"  LrvSampleSmallRock %d%s",lrvSampleSmallRock,LE);
-  fprintf(file,"  LrvSampleMediumRock %d%s",lrvSampleMediumRock,LE);
-  fprintf(file,"  LrvSampleLargeRock %d%s",lrvSampleLargeRock,LE);
-  fprintf(file,"  LrvSampleSmallCrater %d%s",lrvSampleSmallCrater,LE);
-  fprintf(file,"  LrvSampleMediumCrater %d%s",lrvSampleMediumCrater,LE);
-  fprintf(file,"  LrvSampleLargeCrater %d%s",lrvSampleLargeCrater,LE);
-  fprintf(file,"  LrvSampleRise %d%s",lrvSampleRise,LE);
-  fprintf(file,"  LrvSamplePlains %d%s",lrvSamplePlains,LE);
-  fprintf(file,"  LrvSampleSpecial %d%s",lrvSampleSpecial,LE);
-  fprintf(file,"  LrvSampleDepression %d%s",lrvSampleDepression,LE);
-  fprintf(file,"  LrvSampleCraterWall %d%s",lrvSampleCraterWall,LE);
-  fprintf(file,"  CartSampleSmallRock %d%s",cartSampleSmallRock,LE);
-  fprintf(file,"  CartSampleMediumRock %d%s",cartSampleMediumRock,LE);
-  fprintf(file,"  CartSampleLargeRock %d%s",cartSampleLargeRock,LE);
-  fprintf(file,"  CartSampleSmallCrater %d%s",cartSampleSmallCrater,LE);
-  fprintf(file,"  CartSampleMediumCrater %d%s",cartSampleMediumCrater,LE);
-  fprintf(file,"  CartSampleLargeCrater %d%s",cartSampleLargeCrater,LE);
-  fprintf(file,"  CartSampleRise %d%s",cartSampleRise,LE);
-  fprintf(file,"  CartSamplePlains %d%s",cartSamplePlains,LE);
-  fprintf(file,"  CartSampleSpecial %d%s",cartSampleSpecial,LE);
-  fprintf(file,"  CartSampleDepression %d%s",cartSampleDepression,LE);
-  fprintf(file,"  CartSampleCraterWall %d%s",cartSampleCraterWall,LE);
   fprintf(file,"  Days %d%s",days,LE);
   fprintf(file,"  KscAngle %.18f%s",kscAngle,LE);
   fprintf(file,"  Distance %.18f%s",distanceTravelled,LE);
@@ -132,8 +110,6 @@ void save() {
   fprintf(file,"  MaxQAltitude %.18f%s",maxQAltitude,LE);
   if (launched) fprintf(file,"  Launched true%s",LE);
     else fprintf(file,"  Launched false%s",LE);
-  for (i=0; i<numSamples; i++)
-    fprintf(file,"  Sample %d,%d%s",samples[i].cellX,samples[i].cellY,LE);
   fprintf(file,"  }%s",LE);
   for (i=0; i<evaCount; i++) {
     fprintf(file,"EVA %d {%s",i,LE);

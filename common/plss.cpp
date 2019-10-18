@@ -10,6 +10,8 @@
 #include "common.h"
 #include "helpers.h"
 
+static Int32 samplePos;
+
 Plss::Plss() {
   Init();
   }
@@ -28,6 +30,7 @@ void Plss::Init() {
   damageReportStep = 0;
   oxygenLeakage = 0;
   cart = 0;
+  samplePos = 0;
   }
 
 void Plss::BeginEva(Vehicle* from) {
@@ -82,11 +85,28 @@ printf("Len: %.18f\n",f.Length());
   exit(1);
   }
 
-Boolean Plss::AddToCart(Double v) {
+Boolean Plss::AddToCart(SAMPLE s) {
   if (cart >= 10) return false;
-  cart++;
-  cartValue += v;
+  samples[cart++] = s;
   return true;
+  }
+
+SAMPLE Plss::TakeFromCart() {
+  SAMPLE ret;
+  if (cart > 0) {
+    cart--;
+    return samples[cart];
+    }
+  ret.type = 0;
+  ret.value = 0;
+  return ret;
+  }
+
+Boolean Plss::DuplicateSample(SAMPLE s) {
+  UInt32 i;
+  for (i=0; i<cart; i++)
+    if (s.cellX == samples[i].cellX && s.cellY == samples[i].cellY) return true;
+  return false;
   }
 
 char Plss::Carrying() {
@@ -109,12 +129,12 @@ UInt32 Plss::Cart(UInt32 i) {
   }
 
 Double Plss::CartValue() {
-  return cartValue;
-  }
-
-Double Plss::CartValue(Double d) {
-  cartValue = d;
-  return cartValue;
+  UInt32 i;
+  Double ret;
+  ret = 0;
+  for (i=0; i<cart; i++)
+    ret += samples[i].value;
+  return ret;
   }
 
 void Plss::Damage(Double dmg) {
@@ -122,13 +142,13 @@ void Plss::Damage(Double dmg) {
   if (rng.Next(100) < dmg) oxygenLeakage += ((Double)rng.Next(dmg) / 100.0);
   }
 
-Double Plss::Value() {
-  return value;
+SAMPLE Plss::Sample() {
+  return sample;
   }
 
-Double Plss::Value(Double d) {
-  value = d;
-  return value;
+SAMPLE Plss::Sample(SAMPLE s) {
+  sample = s;
+  return sample;
   }
 
 Double Plss::Walked() {
@@ -200,25 +220,30 @@ void Plss::Cycle() {
   }
 
 Int8 Plss::SubLoad(FILE* file, char* pline) {
+  SAMPLE sample;
   if (startsWith(pline,"carrying ")) carrying = atoi(nw(pline));
-  else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else if (startsWith(pline,"walked ")) walked = atof(nw(pline));
   else if (startsWith(pline,"oxygenleakage ")) oxygenLeakage = atof(nw(pline));
   else if (startsWith(pline,"cart ")) cart = atoi(nw(pline));
-  else if (startsWith(pline,"cartvalue ")) cartValue = atof(nw(pline));
+  else if (startsWith(pline,"sample ")) {
+    sample = ParseSample(nw(pline));
+    samples[samplePos++] = sample;
+    }
   else return GroundVehicle::SubLoad(file, pline);
   return -1;
   }
 
 void Plss::Save(FILE* file) {
+  UInt32 i;
   fprintf(file,"Plss {%s",LE);
   GroundVehicle::Save(file);
   fprintf(file,"  Carrying %d%s",carrying,LE);
-  fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  Walked %.18f%s",walked,LE);
   fprintf(file,"  OxygenLeakage %.18f%s",oxygenLeakage,LE);
   fprintf(file,"  Cart %d%s",cart,LE);
-  fprintf(file,"  CartValue %.18f%s",cartValue,LE);
+  for (i=0; i<cart; i++)
+    fprintf(file,"    Sample %d,%d,%d,%f,%d",samples[i].cellX,samples[i].cellY,
+            samples[i].clockGe,samples[i].value,samples[i].type);
   fprintf(file,"  }%s",LE);
   }
 

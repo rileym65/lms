@@ -11,6 +11,7 @@ void Score() {
   Double sampleAvg;
   Double sampleChi;
   Double sampleDiv;
+  SAMPLE sample;
 
   ScoreLandedTime = 1000 - (landedMet - 10800);
   if (ScoreLandedTime < 0) ScoreLandedTime = 0;
@@ -62,26 +63,27 @@ void Score() {
   secondary1Samples = 0;
   secondary2Samples = 0;
   secondary3Samples = 0;
-  for (i=0; i<numSamples; i++) {
+  for (i=0; i<lm->Rock(); i++) {
+    sample = lm->Sample(i);
     cellX = map->Cell(mission->PrimaryLongitude());
     cellY = map->Cell(mission->PrimaryLatitude());
-    if (abs(samples[i].cellX - cellX) <= 20 &&
-        abs(samples[i].cellY - cellY) <= 20) primarySamples++;
+    if (abs(sample.cellX - cellX) <= 20 &&
+        abs(sample.cellY - cellY) <= 20) primarySamples++;
     else {
       cellX = map->Cell(mission->Secondary1Longitude());
       cellY = map->Cell(mission->Secondary1Latitude());
-      if (abs(samples[i].cellX - cellX) <= 20 &&
-          abs(samples[i].cellY - cellY) <= 20) secondary1Samples++;
+      if (abs(sample.cellX - cellX) <= 20 &&
+          abs(sample.cellY - cellY) <= 20) secondary1Samples++;
       else {
         cellX = map->Cell(mission->Secondary2Longitude());
         cellY = map->Cell(mission->Secondary2Latitude());
-        if (abs(samples[i].cellX - cellX) <= 20 &&
-            abs(samples[i].cellY - cellY) <= 20) secondary2Samples++;
+        if (abs(sample.cellX - cellX) <= 20 &&
+            abs(sample.cellY - cellY) <= 20) secondary2Samples++;
         else {
           cellX = map->Cell(mission->Secondary3Longitude());
           cellY = map->Cell(mission->Secondary3Latitude());
-          if (abs(samples[i].cellX - cellX) <= 20 &&
-              abs(samples[i].cellY - cellY) <= 20) secondary3Samples++;
+          if (abs(sample.cellX - cellX) <= 20 &&
+              abs(sample.cellY - cellY) <= 20) secondary3Samples++;
           }
         }
       }

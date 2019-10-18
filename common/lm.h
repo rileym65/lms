@@ -13,6 +13,7 @@ class LunarModule : public Spacecraft {
     Int8   landed;
     Double rcsFuel;
     Int16  rock;
+    SAMPLE samples[512];
     Double value;
     Double ascentOxygen;
     Double descentOxygen;
@@ -59,6 +60,8 @@ class LunarModule : public Spacecraft {
     LunarModule();
     virtual ~LunarModule();
     virtual void   Abort();
+    virtual void   AddSample(SAMPLE s);
+    virtual Boolean DuplicateSample(SAMPLE s);
     virtual Double AscentFuel();
     virtual Double AscentFuel(Double d);
     virtual Double AscentOxygen();
@@ -126,7 +129,7 @@ class LunarModule : public Spacecraft {
     virtual Double RcsFuel();
     virtual Double RcsFuel(Double d);
     virtual Int16  Rock();
-    virtual Int16  Rock(Int16 i);
+    virtual SAMPLE Sample(Int32 i);
     virtual void   Save(FILE* file);
     virtual Int8   SubLoad(FILE* file, char* line);
     virtual Boolean UseBattery(Double units);

@@ -4,12 +4,10 @@
 #include <math.h>
 #include "body.h"
 #include "mission.h"
-#include "lrv.h"
 #include "lm.h"
 #include "map.h"
 #include "sequencer.h"
 #include "random.h"
-#include "plss.h"
 #include "command.h"
 
 #define PILOT_CSM 'c'
@@ -89,10 +87,8 @@ typedef struct {
   Int32  samples;
   } EVA;
 
-typedef struct {
-  Int32 cellX;
-  Int32 cellY;
-  } LOCATION;
+#include "lrv.h"
+#include "plss.h"
 
 CLINK Int8         alsepSetup;
 CLINK Double       alsepLongitude;
@@ -165,7 +161,6 @@ CLINK Int8         mode_kil;
 CLINK Int8         mode_lif;
 CLINK Body        *Moon;
 CLINK Int32        numBurns;
-CLINK Int16        numSamples;
 CLINK char         pilotLocation;
 CLINK Boolean      plog;
 CLINK Plss        *plss;
@@ -175,7 +170,6 @@ CLINK UInt32       primarySamples;
 CLINK Double       rendezvousDistance;
 CLINK Random       rng;
 CLINK Boolean      run;
-CLINK LOCATION     samples[240];
 CLINK UInt32       secondary1Samples;
 CLINK UInt32       secondary2Samples;
 CLINK UInt32       secondary3Samples;
@@ -199,28 +193,6 @@ CLINK UInt8        sampleRise;
 CLINK UInt8        sampleSpecial;
 CLINK UInt8        sampleDepression;
 CLINK UInt8        sampleCraterWall;
-CLINK UInt8        lrvSampleSmallRock;
-CLINK UInt8        lrvSampleMediumRock;
-CLINK UInt8        lrvSampleLargeRock;
-CLINK UInt8        lrvSampleSmallCrater;
-CLINK UInt8        lrvSampleMediumCrater;
-CLINK UInt8        lrvSampleLargeCrater;
-CLINK UInt8        lrvSamplePlains;
-CLINK UInt8        lrvSampleRise;
-CLINK UInt8        lrvSampleSpecial;
-CLINK UInt8        lrvSampleDepression;
-CLINK UInt8        lrvSampleCraterWall;
-CLINK UInt8        cartSampleSmallRock;
-CLINK UInt8        cartSampleMediumRock;
-CLINK UInt8        cartSampleLargeRock;
-CLINK UInt8        cartSampleSmallCrater;
-CLINK UInt8        cartSampleMediumCrater;
-CLINK UInt8        cartSampleLargeCrater;
-CLINK UInt8        cartSamplePlains;
-CLINK UInt8        cartSampleRise;
-CLINK UInt8        cartSampleSpecial;
-CLINK UInt8        cartSampleDepression;
-CLINK UInt8        cartSampleCraterWall;
 
 CLINK Int32        ScoreLandedTime;
 CLINK Int32        ScoreDescentFuel;
@@ -258,7 +230,7 @@ CLINK Int32        ScoreTotal;
 CLINK Int32        ScoreRendezvous;
 CLINK Int32        ScoreSampleDiv;
 
-
+extern SAMPLE ParseSample(char* line);
 
 
 

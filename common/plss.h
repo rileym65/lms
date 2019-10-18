@@ -10,31 +10,32 @@
 class Plss : public GroundVehicle {
   protected:
     char   carrying;
-    Double value;
     Double walked;
     Int8    damageReportStep;
     Double  oxygenLeakage;
     UInt32  cart;
-    Double  cartValue;
+    SAMPLE  samples[10];
+    SAMPLE  sample;
   public:
     Plss();
     virtual ~Plss();
     virtual void Init();
     virtual void Cycle();
-    virtual Boolean AddToCart(Double v);
+    virtual Boolean AddToCart(SAMPLE s);
+    virtual SAMPLE  TakeFromCart();
     virtual void   BeginEva(Vehicle* from);
     virtual char   Carrying();
     virtual char   Carrying(char c);
     virtual UInt32 Cart();
     virtual UInt32 Cart(UInt32 i);
     virtual Double CartValue();
-    virtual Double CartValue(Double d);
     virtual void   Damage(Double dmg);
+    virtual Boolean DuplicateSample(SAMPLE s);
     virtual Int8   SubLoad(FILE* file, char* line);
+    virtual SAMPLE Sample();
+    virtual SAMPLE Sample(SAMPLE s);
     virtual void   Save(FILE* file);
     virtual void   ProcessKey(Int32 key);
-    virtual Double Value();
-    virtual Double Value(Double d);
     virtual Double Walked();
     virtual Double Walked(Double d);
   };

@@ -13,6 +13,7 @@ COBJS = \
 	../common/map.o \
 	../common/matrix.o \
 	../common/mission.o \
+	../common/parsesample.o \
 	../common/plss.o \
 	../common/random.o \
 	../common/records.o \

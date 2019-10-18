@@ -283,6 +283,9 @@
 ../common/panel.o: ../common/types.h ../common/panel.h ../common/panel.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/panel.cpp -o ../common/panel.o
 
+../common/parsesample.o: ../common/types.h
+	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/parsesample.cpp -o ../common/parsesample.o
+	
 ../common/matrix.o: ../common/types.h ../common/matrix.h ../common/matrix.cpp
 	$(CC) $(CFLAGS) $(DEFS) $(INCDIR) $(INCS) -c ../common/matrix.cpp -o ../common/matrix.o
 

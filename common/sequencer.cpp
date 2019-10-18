@@ -34,10 +34,8 @@ void Sequencer::Message(const char* msg, Int32 v, Int32 t) {
   }
 
 void Sequencer::Complete() {
-  Int32 i;
-  Int32 cellX, cellY;
-  Boolean dup;
   char  cell;
+  SAMPLE sample;
   switch (function) {
     case SEQ_END_EVA:
          pilotLocation = PILOT_LM;
@@ -115,48 +113,43 @@ void Sequencer::Complete() {
          cabinPressurized = -1;
          break;
     case SEQ_TAKESAMPLE:
-         plss->Carrying('R');
-         cellX = map->Cell(plss->Longitude());
-         cellY = map->Cell(plss->Latitude());
+         sample.clockGe = clockGe;
+         sample.cellX = map->Cell(plss->Longitude());
+         sample.cellY = map->Cell(plss->Latitude());
          cell = map->Lurrain(plss->Longitude(), plss->Latitude());
          switch (cell) {
-           case '.': plss->Value(1.0); sampleType = S_SMALL_CRATER; break;
-           case 'o': plss->Value(1.2); sampleType = S_MEDIUM_CRATER; break;
-           case 'O': plss->Value(1.4); sampleType = S_LARGE_CRATER; break;
-           case ',': plss->Value(1.2); sampleType = S_SMALL_ROCK; break;
-           case '+': plss->Value(1.4); sampleType = S_MEDIUM_ROCK; break;
-           case '*': plss->Value(1.6); sampleType = S_LARGE_ROCK; break;
-           case '^': plss->Value(2.0); sampleType = S_RISE; break;
-           case '(': plss->Value(2.1); sampleType = S_CRATERWALL; break;
-           case ')': plss->Value(2.1); sampleType = S_CRATERWALL; break;
-           case 'u': plss->Value(2.0); sampleType = S_DEPRESSION; break;
-           case ' ': plss->Value(0.5); sampleType = S_PLAINS; break;
-           case '=': plss->Value(25.0); sampleType = S_SPECIAL; break;
-           case '%': plss->Value(25.0); sampleType = S_SPECIAL; break;
-           case 'f': plss->Value(25.0); sampleType = S_SPECIAL; break;
-           case '&': plss->Value(25.0); sampleType = S_SPECIAL; break;
-           case '/': plss->Value(25.0); sampleType = S_SPECIAL; break;
-           case '"': plss->Value(25.0); sampleType = S_SPECIAL; break;
-           case '_': plss->Value(25.0); sampleType = S_SPECIAL; break;
-           default : plss->Value(0.5); sampleType = 0; break;
+           case '.': sample.value=1.0; sample.type = S_SMALL_CRATER; break;
+           case 'o': sample.value=1.2; sample.type = S_MEDIUM_CRATER; break;
+           case 'O': sample.value=1.4; sample.type = S_LARGE_CRATER; break;
+           case ',': sample.value=1.2; sample.type = S_SMALL_ROCK; break;
+           case '+': sample.value=1.4; sample.type = S_MEDIUM_ROCK; break;
+           case '*': sample.value=1.6; sample.type = S_LARGE_ROCK; break;
+           case '^': sample.value=2.0; sample.type = S_RISE; break;
+           case '(': sample.value=2.1; sample.type = S_CRATERWALL; break;
+           case ')': sample.value=2.1; sample.type = S_CRATERWALL; break;
+           case 'u': sample.value=2.0; sample.type = S_DEPRESSION; break;
+           case ' ': sample.value=0.5; sample.type = S_PLAINS; break;
+           case '=': sample.value=25.0; sample.type = S_SPECIAL; break;
+           case '%': sample.value=25.0; sample.type = S_SPECIAL; break;
+           case 'f': sample.value=25.0; sample.type = S_SPECIAL; break;
+           case '&': sample.value=25.0; sample.type = S_SPECIAL; break;
+           case '/': sample.value=25.0; sample.type = S_SPECIAL; break;
+           case '"': sample.value=25.0; sample.type = S_SPECIAL; break;
+           case '_': sample.value=25.0; sample.type = S_SPECIAL; break;
+           default : sample.value=0.5; sample.type = 0; break;
            }
          if ((cell >= '0' && cell <= '9') ||
              (cell >= 'A' && cell < 'O') ||
              (cell > 'O' && cell < 'Z')) {
-           plss->Value(25.0);
-           sampleType = S_SPECIAL;
+           sample.value=25.0;
+           sample.type = S_SPECIAL;
            }
-         dup = false;
-         for (i=0; i<numSamples; i++)
-           if (samples[i].cellX == cellX && samples[i].cellY == cellY) {
-             plss->Value(0.1);
-             dup = true;
-             }
-         if (!dup) {
-           samples[numSamples].cellX = cellX;
-           samples[numSamples].cellY = cellY;
-           if (numSamples < 240) numSamples++;
-           }
+         if (plss->DuplicateSample(sample)) sample.value = 0.1;
+         if (lrv->DuplicateSample(sample)) sample.value = 0.1;
+         if (lm->DuplicateSample(sample)) sample.value = 0.1;
+         sampleType = sample.type;
+         plss->Carrying('R');
+         plss->Sample(sample);
          break;
     case SEQ_DROPSAMPLE:
          plss->Carrying(' ');
@@ -165,41 +158,16 @@ void Sequencer::Complete() {
          lrv->Setup();
          break;
     case SEQ_STORESAMPLE:
-         plss->Carrying(' ');
-         lrv->Rock(lrv->Rock() + 1);
-         lrv->Value(lrv->Value() + plss->Value());
-         switch (sampleType) {
-           case S_SMALL_ROCK: lrvSampleSmallRock++; break;
-           case S_MEDIUM_ROCK: lrvSampleMediumRock++; break;
-           case S_LARGE_ROCK: lrvSampleLargeRock++; break;
-           case S_SMALL_CRATER: lrvSampleSmallCrater++; break;
-           case S_MEDIUM_CRATER: lrvSampleMediumCrater++; break;
-           case S_LARGE_CRATER: lrvSampleLargeCrater++; break;
-           case S_RISE: lrvSampleRise++; break;
-           case S_PLAINS: lrvSamplePlains++; break;
-           case S_SPECIAL: lrvSampleSpecial++; break;
-           case S_DEPRESSION: lrvSampleDepression++; break;
-           case S_CRATERWALL: lrvSampleCraterWall++; break;
+         if (lrv->Rock() < 30) {
+           lrv->AddSample(plss->Sample());
+           plss->Carrying(' ');
+           evas[evaCount-1].samples++;
            }
-         evas[evaCount-1].samples++;
          break;
     case SEQ_TOCART:
-         if (plss->AddToCart(plss->Value())) {
-           switch (sampleType) {
-             case S_SMALL_ROCK: cartSampleSmallRock++; break;
-             case S_MEDIUM_ROCK: cartSampleMediumRock++; break;
-             case S_LARGE_ROCK: cartSampleLargeRock++; break;
-             case S_SMALL_CRATER: cartSampleSmallCrater++; break;
-             case S_MEDIUM_CRATER: cartSampleMediumCrater++; break;
-             case S_LARGE_CRATER: cartSampleLargeCrater++; break;
-             case S_RISE: cartSampleRise++; break;
-             case S_PLAINS: cartSamplePlains++; break;
-             case S_SPECIAL: cartSampleSpecial++; break;
-             case S_DEPRESSION: cartSampleDepression++; break;
-             case S_CRATERWALL: cartSampleCraterWall++; break;
-             }
+         if (plss->Cart() < 10) {
+           plss->AddToCart(plss->Sample());
            plss->Carrying(' ');
-           plss->Value(0);
            evas[evaCount-1].samples++;
            }
          break;
@@ -208,134 +176,20 @@ void Sequencer::Complete() {
          break;
     case SEQ_BOXLM:
          plss->Carrying(' ');
-         lm->Rock(lm->Rock() + lrv->Rock());
-         lrv->Rock(0);
+         while (lrv->Rock() >0) {
+           lm->AddSample(lrv->TakeSample());
+           }
          lrv->Boxes(lrv->Boxes() - 1);
-         lm->Value(lm->Value() + lrv->Value());
-         lrv->Value(0);
-         sampleSmallRock += lrvSampleSmallRock;
-         sampleMediumRock += lrvSampleMediumRock;
-         sampleLargeRock += lrvSampleLargeRock;
-         sampleSmallCrater += lrvSampleSmallCrater;
-         sampleMediumCrater += lrvSampleMediumCrater;
-         sampleLargeCrater += lrvSampleLargeCrater;
-         sampleRise += lrvSampleRise;
-         samplePlains += lrvSamplePlains;
-         sampleSpecial += lrvSampleSpecial;
-         sampleDepression += lrvSampleDepression;
-         sampleCraterWall += lrvSampleCraterWall;
-         lrvSampleSmallRock = 0;
-         lrvSampleMediumRock = 0;
-         lrvSampleLargeRock = 0;
-         lrvSampleSmallCrater = 0;
-         lrvSampleMediumCrater = 0;
-         lrvSampleLargeCrater = 0;
-         lrvSampleRise = 0;
-         lrvSamplePlains = 0;
-         lrvSampleSpecial = 0;
-         lrvSampleDepression = 0;
-         lrvSampleCraterWall = 0;
          break;
     case SEQ_CARTTOLM:
-         lm->Rock(lm->Rock() + plss->Cart());
-         plss->Cart(0);
-         lm->Value(lm->Value() + plss->CartValue());
-         plss->CartValue(0);
-         sampleSmallRock += cartSampleSmallRock;
-         sampleMediumRock += cartSampleMediumRock;
-         sampleLargeRock += cartSampleLargeRock;
-         sampleSmallCrater += cartSampleSmallCrater;
-         sampleMediumCrater += cartSampleMediumCrater;
-         sampleLargeCrater += cartSampleLargeCrater;
-         sampleRise += cartSampleRise;
-         samplePlains += cartSamplePlains;
-         sampleSpecial += cartSampleSpecial;
-         sampleDepression += cartSampleDepression;
-         sampleCraterWall += cartSampleCraterWall;
-         cartSampleSmallRock = 0;
-         cartSampleMediumRock = 0;
-         cartSampleLargeRock = 0;
-         cartSampleSmallCrater = 0;
-         cartSampleMediumCrater = 0;
-         cartSampleLargeCrater = 0;
-         cartSampleRise = 0;
-         cartSamplePlains = 0;
-         cartSampleSpecial = 0;
-         cartSampleDepression = 0;
-         cartSampleCraterWall = 0;
+         while (plss->Cart() > 0) {
+           lm->AddSample(plss->TakeFromCart());
+           }
          break;
     case SEQ_CARTTOLRV:
          while (lrv->Rock() < 30 && plss->Cart() > 0) {
-           lrv->Rock(lrv->Rock() + 1);
-           plss->Cart(plss->Cart() - 1);
-           if (cartSampleSmallRock > 0) {
-             lrvSampleSmallRock++;
-             cartSampleSmallRock--;
-             lrv->Value(lrv->Value() + 1.2);
-             plss->CartValue(plss->CartValue() - 1.2);
-             }
-           if (cartSampleMediumRock > 0) {
-             lrvSampleMediumRock++;
-             cartSampleMediumRock--;
-             lrv->Value(lrv->Value() + 1.4);
-             plss->CartValue(plss->CartValue() - 1.4);
-             }
-           if (cartSampleLargeRock > 0) {
-             lrvSampleLargeRock++;
-             cartSampleLargeRock--;
-             lrv->Value(lrv->Value() + 1.6);
-             plss->CartValue(plss->CartValue() - 1.6);
-             }
-           if (cartSampleSmallCrater > 0) {
-             lrvSampleSmallCrater++;
-             cartSampleSmallCrater--;
-             lrv->Value(lrv->Value() + 1.0);
-             plss->CartValue(plss->CartValue() - 1.0);
-             }
-           if (cartSampleMediumCrater > 0) {
-             lrvSampleMediumCrater++;
-             cartSampleMediumCrater--;
-             lrv->Value(lrv->Value() + 1.2);
-             plss->CartValue(plss->CartValue() - 1.2);
-             }
-           if (cartSampleLargeCrater > 0) {
-             lrvSampleLargeCrater++;
-             cartSampleLargeCrater--;
-             lrv->Value(lrv->Value() + 1.4);
-             plss->CartValue(plss->CartValue() - 1.4);
-             }
-           if (cartSampleRise > 0) {
-             lrvSampleRise++;
-             cartSampleRise--;
-             lrv->Value(lrv->Value() + 2.0);
-             plss->CartValue(plss->CartValue() - 2.0);
-             }
-           if (cartSampleDepression > 0) {
-             lrvSampleDepression++;
-             cartSampleDepression--;
-             lrv->Value(lrv->Value() + 2.0);
-             plss->CartValue(plss->CartValue() - 2.0);
-             }
-           if (cartSamplePlains > 0) {
-             lrvSamplePlains++;
-             cartSamplePlains--;
-             lrv->Value(lrv->Value() + 0.5);
-             plss->CartValue(plss->CartValue() - 0.5);
-             }
-           if (cartSampleSpecial > 0) {
-             lrvSampleSpecial++;
-             cartSampleSpecial--;
-             lrv->Value(lrv->Value() + 25.0);
-             plss->CartValue(plss->CartValue() - 25.0);
-             }
-           if (cartSampleCraterWall > 0) {
-             lrvSampleCraterWall++;
-             cartSampleCraterWall--;
-             lrv->Value(lrv->Value() + 2.1);
-             plss->CartValue(plss->CartValue() - 2.1);
-             }
+           lrv->AddSample(plss->TakeFromCart());
            }
-         if (plss->Cart() <= 0) plss->CartValue(0);
          break;
     case SEQ_BOXLRV:
          plss->Carrying(' ');
