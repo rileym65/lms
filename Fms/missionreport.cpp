@@ -218,6 +218,7 @@ void MissionReport() {
       if (evas[i].driven > singleDrive) singleDrive = evas[i].driven;
       }
     fprintf(file,"%s",LE);
+    
     fprintf(file,"Samples:%s",LE);
     fprintf(file,"  Total Samples Collected: %d%s",lm->Rock(),LE);
     fprintf(file,"  Samples collected from:%s",LE);
@@ -236,6 +237,7 @@ void MissionReport() {
     fprintf(file,"    Secondary site 1 : %d%s",secondary1Samples,LE);
     fprintf(file,"    Secondary site 2 : %d%s",secondary2Samples,LE);
     fprintf(file,"    Secondary site 3 : %d%s",secondary3Samples,LE);
+    fprintf(file,"  Sample diversity   : %d%% %s",ScoreSampleDiv/10,LE);
     fprintf(file,"%s",LE);
     fprintf(file,"Rendevous/Docking:%s",LE);
     fprintf(file,"  Time to dock         : %s%s",ClockToString(buffer,clockDk),LE);
@@ -450,6 +452,10 @@ void MissionReport() {
       records->GreatestSampleValue = lm->Value();
       fprintf(file,"  Greatest Sample Value   : %9.2f%s",lm->Value(),LE);
       }
+    if (ScoreSampleDiv/10.0 > records->GreatestSampleDiversity) {
+      records->GreatestSampleDiversity = ScoreSampleDiv/10.0;
+      fprintf(file,"  Sample Diversity        : %9.1f%s",ScoreSampleDiv/10.0,LE);
+      }
     if (lm->Rock() > records->Samples) {
       records->Samples = lm->Rock();
       fprintf(file,"  Samples Collected       : %9dkg%s",lm->Rock(),LE);
@@ -489,6 +495,7 @@ void MissionReport() {
     fprintf(file,"  ALSEP Setup:          %d%s",ScoreEvaAlsepSetup,LE);
     fprintf(file,"  Samples Collected:    %d%s",ScoreEvaSamples,LE);
     fprintf(file,"  Sample Variety:       %d%s",ScoreEvaVariety,LE);
+    fprintf(file,"  Sample Diversity:     %d%s",ScoreSampleDiv,LE);
     fprintf(file,"  Primary Samples:      %d%s",ScoreEvaPrimarySamples,LE);
     fprintf(file,"  Sec. Site 1 Samples:  %d%s",ScoreEvaSecondary1Samples,LE);
     fprintf(file,"  Sec. Site 2 Samples:  %d%s",ScoreEvaSecondary2Samples,LE);

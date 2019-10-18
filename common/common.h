@@ -256,6 +256,7 @@ CLINK Int32        ScoreDockXAlign;
 CLINK Int32        ScoreDockYAlign;
 CLINK Int32        ScoreTotal;
 CLINK Int32        ScoreRendezvous;
+CLINK Int32        ScoreSampleDiv;
 
 
 

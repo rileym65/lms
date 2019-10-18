@@ -17,6 +17,7 @@ class Records {
     Double FarthestFromEarth;
     Double FarthestFromLM;
     Double GreatestSampleValue;
+    Double GreatestSampleDiversity;
     Double HighestLatitude;
     Double HighestVelocity;
     Int32  LongestAverageEva;

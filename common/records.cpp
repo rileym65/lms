@@ -14,6 +14,7 @@ Records::Records() {
   FarthestFromEarth = 0;
   FarthestFromLM = 0;
   GreatestSampleValue = 0;
+  GreatestSampleDiversity = 0;
   HighestLatitude = 0;
   HighestVelocity = 0;
   LongestAverageEva = 0;
@@ -78,6 +79,7 @@ void Records::load() {
       if (startsWith(pline,"FarthestFromEarth")) FarthestFromEarth = atof(nw(pline));
       if (startsWith(pline,"FarthestFromLM")) FarthestFromLM = atof(nw(pline));
       if (startsWith(pline,"GreatestSampleValue")) GreatestSampleValue = atof(nw(pline));
+      if (startsWith(pline,"GreatestSampleDiversity")) GreatestSampleDiversity = atof(nw(pline));
       if (startsWith(pline,"HighestLatitude")) HighestLatitude = atof(nw(pline));
       if (startsWith(pline,"HighestVelocity")) HighestVelocity = atof(nw(pline));
       if (startsWith(pline,"LongestAverageEva")) LongestAverageEva = atoi(nw(pline));
@@ -112,6 +114,7 @@ void Records::Save() {
   fprintf(file,"FarthestFromEarth %.18f%s",FarthestFromEarth,LE);
   fprintf(file,"FarthestFromLM %.18f%s",FarthestFromLM,LE);
   fprintf(file,"GreatestSampleValue %.18f%s",GreatestSampleValue,LE);
+  fprintf(file,"GreatestSampleDiversity %.18f%s",GreatestSampleDiversity,LE);
   fprintf(file,"HighestLatitude %.18f%s",HighestLatitude,LE);
   fprintf(file,"HighestVelocity %.18f%s",HighestVelocity,LE);
   fprintf(file,"LongestAverageEva %d%s",LongestAverageEva,LE);
@@ -152,18 +155,19 @@ void Records::Save() {
     else
       fprintf(file,"  Closest Rendezvous      : %9.2fm%s",ClosestRendezvous,LE);
     }
-  fprintf(file,"  Highest Latitude Landing: %9.2f%s",HighestLatitude,LE);
-  fprintf(file,"  Lowest Latitude Landing : %9.2f%s",LowestLatitude,LE);
-  fprintf(file,"  Longest Ind. EVA Walked : %9.2fkm%s",LongestSingleWalk/1000.0,LE);
-  fprintf(file,"  Longest Tot. EVA Walked : %9.2fkm%s",LongestTotalWalk/1000.0,LE);
-  fprintf(file,"  Longest Ind. EVA Driven : %9.2fkm%s",LongestSingleDrive/1000.0,LE);
-  fprintf(file,"  Longest Tot. EVA Driven : %9.2fkm%s",LongestTotalDrive/1000.0,LE);
-  fprintf(file,"  Farthest From LM        : %9.2fkm%s",FarthestFromLM/1000.0,LE);
-  fprintf(file,"  Greatest Sample Value   : %9.2f%s",GreatestSampleValue,LE);
-  fprintf(file,"  Samples Collected       : %9dkg%s",Samples,LE);
-  fprintf(file,"  Time on Lunar Surface   : %s%s",ClockToString(buffer,LongestSurface),LE);
-  fprintf(file,"  Descent Fuel Remaining  : %9.2fkg%s",DescentFuel,LE);
-  fprintf(file,"  Ascent Fuel Remaining   : %9.2fkg%s",AscentFuel,LE);
-  fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",RcsFuel,LE);
+  fprintf(file,"  Highest Latitude Landing  : %9.2f%s",HighestLatitude,LE);
+  fprintf(file,"  Lowest Latitude Landing   : %9.2f%s",LowestLatitude,LE);
+  fprintf(file,"  Longest Ind. EVA Walked   : %9.2fkm%s",LongestSingleWalk/1000.0,LE);
+  fprintf(file,"  Longest Tot. EVA Walked   : %9.2fkm%s",LongestTotalWalk/1000.0,LE);
+  fprintf(file,"  Longest Ind. EVA Driven   : %9.2fkm%s",LongestSingleDrive/1000.0,LE);
+  fprintf(file,"  Longest Tot. EVA Driven   : %9.2fkm%s",LongestTotalDrive/1000.0,LE);
+  fprintf(file,"  Farthest From LM          : %9.2fkm%s",FarthestFromLM/1000.0,LE);
+  fprintf(file,"  Greatest Sample Value     : %9.2f%s",GreatestSampleValue,LE);
+  fprintf(file,"  Greatest Sample Diversity : %9.2f%s",GreatestSampleDiversity,LE);
+  fprintf(file,"  Samples Collected         : %9dkg%s",Samples,LE);
+  fprintf(file,"  Time on Lunar Surface     : %s%s",ClockToString(buffer,LongestSurface),LE);
+  fprintf(file,"  Descent Fuel Remaining    : %9.2fkg%s",DescentFuel,LE);
+  fprintf(file,"  Ascent Fuel Remaining     : %9.2fkg%s",AscentFuel,LE);
+  fprintf(file,"  RCS Fuel Remaining        : %9.2fkg%s",RcsFuel,LE);
   fclose(file);
   }

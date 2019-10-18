@@ -8,6 +8,10 @@
 void Score() {
   int i;
   Int32 cellX,cellY;
+  Double sampleAvg;
+  Double sampleChi;
+  Double sampleDiv;
+
   ScoreLandedTime = 1000 - (landedMet - 10800);
   if (ScoreLandedTime < 0) ScoreLandedTime = 0;
   ScoreDescentFuel = lm->DescentFuel();
@@ -99,6 +103,23 @@ void Score() {
   if (sampleDepression) ScoreEvaVariety += 100;
   if (sampleCraterWall) ScoreEvaVariety += 100;
 
+  sampleAvg = sampleSmallRock + sampleMediumRock + sampleLargeRock +
+              sampleSmallCrater + sampleMediumCrater + sampleLargeCrater +
+              samplePlains + sampleRise + sampleDepression;
+  sampleAvg /= 9.0;
+  sampleChi = (sampleSmallRock - sampleAvg) * (sampleSmallRock - sampleAvg);
+  sampleChi += (sampleMediumRock - sampleAvg) * (sampleMediumRock - sampleAvg);
+  sampleChi += (sampleLargeRock - sampleAvg) * (sampleLargeRock - sampleAvg);
+  sampleChi += (sampleSmallCrater - sampleAvg) * (sampleSmallCrater - sampleAvg);
+  sampleChi += (sampleMediumCrater - sampleAvg) * (sampleMediumCrater - sampleAvg);
+  sampleChi += (sampleLargeCrater - sampleAvg) * (sampleLargeCrater - sampleAvg);
+  sampleChi += (samplePlains - sampleAvg) * (samplePlains - sampleAvg);
+  sampleChi += (sampleRise - sampleAvg) * (sampleRise - sampleAvg);
+  sampleChi += (sampleDepression - sampleAvg) * (sampleDepression - sampleAvg);
+  sampleDiv = 1000.0 - sampleChi;
+  if (sampleDiv < 0) sampleDiv = 0;
+  ScoreSampleDiv = (Int32)sampleDiv;
+
   
   ScoreEvaTotal = ScoreEvaCompleted + ScoreEvaSamples + ScoreEvaTime +
                   ScoreEvaValue + ScoreEvaFarthest + ScoreEvaDriven;
@@ -106,7 +127,7 @@ void Score() {
                    ScoreEvaLaserSetup + ScoreEvaAlsepSetup;
   ScoreEvaTotal += ScoreEvaPrimarySamples + ScoreEvaSecondary1Samples +
                    ScoreEvaSecondary2Samples + ScoreEvaSecondary3Samples;
-  ScoreEvaTotal += ScoreEvaVariety;
+  ScoreEvaTotal += ScoreEvaVariety + ScoreSampleDiv;
 
   ScoreRendezvous = (10000 - rendezvousDistance) / 10.0;
   if (ScoreRendezvous < 0) ScoreRendezvous = 0;
