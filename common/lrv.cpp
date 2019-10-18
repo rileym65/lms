@@ -256,8 +256,8 @@ void Lrv::Save(FILE* file) {
     fprintf(file,"  IsSetup false%s",LE);
   fprintf(file,"  Driven %.18f%s",driven,LE);
   for (i=0; i<rock; i++)
-    fprintf(file,"    Sample %d,%d,%d,%f,%d",samples[i].cellX,samples[i].cellY,
-            samples[i].clockGe,samples[i].value,samples[i].type);
+    fprintf(file,"  Sample %d,%d,%d,%f,%d%s",samples[i].cellX,samples[i].cellY,
+            samples[i].clockGe,samples[i].value,samples[i].type,LE);
 
   fprintf(file,"  }%s",LE);
   }

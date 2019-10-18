@@ -242,8 +242,8 @@ void Plss::Save(FILE* file) {
   fprintf(file,"  OxygenLeakage %.18f%s",oxygenLeakage,LE);
   fprintf(file,"  Cart %d%s",cart,LE);
   for (i=0; i<cart; i++)
-    fprintf(file,"    Sample %d,%d,%d,%f,%d",samples[i].cellX,samples[i].cellY,
-            samples[i].clockGe,samples[i].value,samples[i].type);
+    fprintf(file,"  Sample %d,%d,%d,%f,%d%s",samples[i].cellX,samples[i].cellY,
+            samples[i].clockGe,samples[i].value,samples[i].type,LE);
   fprintf(file,"  }%s",LE);
   }
 
