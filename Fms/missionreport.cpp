@@ -229,7 +229,7 @@ void MissionReport() {
     fprintf(file,"    Medium Crater    : %d%s",sampleMediumCrater,LE);
     fprintf(file,"    Large Crater     : %d%s",sampleLargeCrater,LE);
     fprintf(file,"    Crater Wall      : %d%s",sampleCraterWall,LE);
-    fprintf(file,"    Plains           : %d%s",samplePlains,LE);
+    fprintf(file,"    Regolith         : %d%s",samplePlains,LE);
     fprintf(file,"    Rises            : %d%s",sampleRise,LE);
     fprintf(file,"    Depressions      : %d%s",sampleDepression,LE);
     fprintf(file,"    Special          : %d%s",sampleSpecial,LE);
