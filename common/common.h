@@ -45,6 +45,12 @@
 #define S_SPECIAL         9
 #define S_DEPRESSION     10
 #define S_CRATERWALL     11
+#define S_FLAG           12
+#define S_ALSEP          13
+#define S_LSRF           14
+#define S_DESCENT        15
+#define S_LRV            16
+#define S_DEBRIS         17
 #define PLSS_OXYGEN 36000.0
 #define PLSS_BATTERY 36000.0
 #define PLSS_EOXYGEN 3600.0

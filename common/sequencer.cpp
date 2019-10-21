@@ -129,13 +129,13 @@ void Sequencer::Complete() {
            case ')': sample.value=2.1; sample.type = S_CRATERWALL; break;
            case 'u': sample.value=2.0; sample.type = S_DEPRESSION; break;
            case ' ': sample.value=0.5; sample.type = S_PLAINS; break;
-           case '=': sample.value=25.0; sample.type = S_SPECIAL; break;
-           case '%': sample.value=25.0; sample.type = S_SPECIAL; break;
-           case 'f': sample.value=25.0; sample.type = S_SPECIAL; break;
-           case '&': sample.value=25.0; sample.type = S_SPECIAL; break;
+           case '=': sample.value=25.0; sample.type = S_DESCENT; break;
+           case '%': sample.value=25.0; sample.type = S_LRV; break;
+           case 'f': sample.value=25.0; sample.type = S_FLAG; break;
+           case '&': sample.value=25.0; sample.type = S_DEBRIS; break;
            case '/': sample.value=25.0; sample.type = S_SPECIAL; break;
-           case '"': sample.value=25.0; sample.type = S_SPECIAL; break;
-           case '_': sample.value=25.0; sample.type = S_SPECIAL; break;
+           case '"': sample.value=25.0; sample.type = S_ALSEP; break;
+           case '_': sample.value=25.0; sample.type = S_LSRF; break;
            default : sample.value=0.5; sample.type = 0; break;
            }
          if ((cell >= '0' && cell <= '9') ||

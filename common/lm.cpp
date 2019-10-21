@@ -381,6 +381,12 @@ void LunarModule::AddSample(SAMPLE s) {
     case S_DEPRESSION:sampleDepression++; break;
     case S_PLAINS:samplePlains++; break;
     case S_SPECIAL:sampleSpecial++; break;
+    case S_FLAG:sampleSpecial++; break;
+    case S_ALSEP:sampleSpecial++; break;
+    case S_LSRF:sampleSpecial++; break;
+    case S_DESCENT:sampleSpecial++; break;
+    case S_LRV:sampleSpecial++; break;
+    case S_DEBRIS:sampleSpecial++; break;
     }
   }
 
