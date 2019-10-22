@@ -353,12 +353,12 @@ Int16 LunarModule::Rock() {
   }
 
 Double LunarModule::Value() {
-  return value;
-  }
-
-Double LunarModule::Value(Double d) {
-  value = d;
-  return value;
+  Int32 i;
+  Double ret;
+  ret = 0;
+  for (i=0; i<rock; i++)
+    ret += samples[i].value;
+  return ret;
   }
 
 
@@ -967,6 +967,23 @@ SAMPLE LunarModule::Sample(Int32 i) {
   return ret;
   }
 
+void LunarModule::SortSamples() {
+  Boolean flag;
+  SAMPLE  tmp;
+  Int32   i;
+  flag = true;
+  while (flag) {
+    flag = false;
+    for (i=0; i<rock-1; i++)
+      if (samples[i].clockGe > samples[i+1].clockGe) {
+        flag = true;
+        tmp = samples[i];
+        samples[i] = samples[i+1];
+        samples[i+1] = tmp;
+        }
+    }
+  }
+
 void LunarModule::Save(FILE* file) {
   Int16 i;
   fprintf(file,"LunarModule {%s",LE);
@@ -980,7 +997,6 @@ void LunarModule::Save(FILE* file) {
   fprintf(file,"  Landed %d%s",landed,LE);
   fprintf(file,"  DescentJettisoned %d%s",descentJettisoned,LE);
   fprintf(file,"  Rock %d%s",rock,LE);
-  fprintf(file,"  Value %.18f%s",value,LE);
   fprintf(file,"  AscentOxygen %.18f%s",ascentOxygen,LE);
   fprintf(file,"  AscentBattery %.18f%s",ascentBattery,LE);
   fprintf(file,"  DescentOxygen %.18f%s",descentOxygen,LE);
@@ -1031,7 +1047,6 @@ Int8 LunarModule::SubLoad(FILE* file, char* pline) {
   else if (startsWith(pline,"landed ")) landed = atoi(nw(pline));
   else if (startsWith(pline,"descentjettisoned ")) descentJettisoned = atoi(nw(pline));
   else if (startsWith(pline,"rock ")) rock = atoi(nw(pline));
-  else if (startsWith(pline,"value ")) value = atof(nw(pline));
   else if (startsWith(pline,"ascentoxygen ")) ascentOxygen = atof(nw(pline));
   else if (startsWith(pline,"ascentbattery ")) ascentBattery = atof(nw(pline));
   else if (startsWith(pline,"descentoxygen ")) descentOxygen = atof(nw(pline));

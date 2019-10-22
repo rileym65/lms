@@ -39,6 +39,26 @@ void SortEvents() {
     }
   }
 
+char* ToLongLat(Double d,char* buffer) {
+  Int32  degrees;
+  Int32  minutes;
+  char  sign;
+  if (d < 0) {
+    sign = '-';
+    d = -d;
+    }
+  else {
+    sign = '+';
+    }
+  degrees = (Int32)d;
+  d = d - degrees;
+  d *= 3600.0;
+  minutes = d / 60;
+  d -= (minutes * 60);
+  sprintf(buffer,"%c%3d %02d %06.3f",sign,degrees,minutes,d);
+  return buffer;
+  }
+
 void MissionReport() {
   Int32 i;
   char  buffer[128];
@@ -56,6 +76,7 @@ void MissionReport() {
   Double cost_lander;
   Double cost_total;
   Int32  clockSf;
+  SAMPLE sample;
   records = new Records();
   i = 0;
   sprintf(filename,"report_%04d.txt",i);
@@ -521,6 +542,37 @@ void MissionReport() {
     fprintf(file,"                                --------%s",LE);
     fprintf(file,"    Total Score:                %d%s",ScoreTotal,LE);
     fprintf(file,"%s%s",LE,LE);
+    lm->SortSamples();
+    fprintf(file,"%s%s",LE,LE);
+    fprintf(file,"Samples Collected:%s",LE);
+    fprintf(file,"    #  GET        Longitue        Latitude        Colleced from%s",LE);
+
+    for (i=0; i<lm->Rock(); i++) {
+      sample = lm->Sample(i);
+      fprintf(file,"  %3d: %s  %s  %s  ",i+1,
+        ClockToString(buffer,sample.clockGe),
+        ToLongLat(map->Degrees(sample.cellX), buffer2),
+        ToLongLat(map->Degrees(sample.cellY), buffer3)
+        );
+      if (sample.type == S_SMALL_ROCK) fprintf(file,"Small rock");
+      if (sample.type == S_MEDIUM_ROCK) fprintf(file,"Medium rock");
+      if (sample.type == S_LARGE_ROCK) fprintf(file,"Large rock");
+      if (sample.type == S_SMALL_CRATER) fprintf(file,"Small crater");
+      if (sample.type == S_MEDIUM_CRATER) fprintf(file,"Medium crater");
+      if (sample.type == S_LARGE_CRATER) fprintf(file,"Large crater");
+      if (sample.type == S_PLAINS) fprintf(file,"Regolith");
+      if (sample.type == S_RISE) fprintf(file,"Rise");
+      if (sample.type == S_SPECIAL) fprintf(file,"Special");
+      if (sample.type == S_DEPRESSION) fprintf(file,"Depression");
+      if (sample.type == S_CRATERWALL) fprintf(file,"Crater wall");
+      if (sample.type == S_FLAG) fprintf(file,"Old mission flag");
+      if (sample.type == S_ALSEP) fprintf(file,"Old mission ALSEP");
+      if (sample.type == S_LSRF) fprintf(file,"Old mission LSRF");
+      if (sample.type == S_DESCENT) fprintf(file,"Old mission Descent stage");
+      if (sample.type == S_LRV) fprintf(file,"Old mission LRV");
+      if (sample.type == S_DEBRIS) fprintf(file,"Crash debris");
+      fprintf(file,"%s",LE);
+      }
     }
 
   if (file != stdout) fclose(file);
