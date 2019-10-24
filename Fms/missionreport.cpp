@@ -545,7 +545,7 @@ void MissionReport() {
     lm->SortSamples();
     fprintf(file,"%s%s",LE,LE);
     fprintf(file,"Samples Collected:%s",LE);
-    fprintf(file,"    #  GET        Longitue        Latitude        Colleced from%s",LE);
+    fprintf(file,"    #  GET        Longitude       Latitude        Collected from%s",LE);
 
     for (i=0; i<lm->Rock(); i++) {
       sample = lm->Sample(i);
