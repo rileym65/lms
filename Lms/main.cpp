@@ -47,6 +47,7 @@ Vector t;
   lrv->MaxSpeed(6.0);
   lrv->MaxBattery(LRV_BATTERY);
   cabinPressurized = -1;
+  clockGe = 0;
   clockBu = 0;
   clockDk = 0;
   clockEv = 0;
@@ -521,6 +522,7 @@ int main(int argc, char** argv) {
       if (lm->Throttle() != 0) clockBu++;
       if (!docked) {
         clockMi++;
+        clockGe = clockMi;
         if (pilotLocation == PILOT_LM) lm->UseBattery(1);
           else lm->UseBattery(0.3);
         if (pilotLocation == PILOT_LM && cabinPressurized) {
