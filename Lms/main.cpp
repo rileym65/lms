@@ -65,7 +65,6 @@ Vector t;
   insMode = INS_MODE_POS_ABS;
   landingRadarOn = 0;
   metabolicRate = 30.0;
-  numSamples = 0;
   mission->TargetLatitude(0.0);
   mission->TargetLongitude(0.0);
   plssOn = 0;
@@ -80,28 +79,6 @@ Vector t;
   samplePlains = 0;
   sampleRise = 0;
   sampleCraterWall = 0;
-  lrvSampleSmallRock = 0;
-  lrvSampleMediumRock = 0;
-  lrvSampleLargeRock = 0;
-  lrvSampleSmallCrater = 0;
-  lrvSampleMediumCrater = 0;
-  lrvSampleLargeCrater = 0;
-  lrvSamplePlains = 0;
-  lrvSampleRise = 0;
-  lrvSampleSpecial = 0;
-  lrvSampleDepression = 0;
-  lrvSampleCraterWall = 0;
-  cartSampleSmallRock = 0;
-  cartSampleMediumRock = 0;
-  cartSampleLargeRock = 0;
-  cartSampleSmallCrater = 0;
-  cartSampleMediumCrater = 0;
-  cartSampleLargeCrater = 0;
-  cartSamplePlains = 0;
-  cartSampleRise = 0;
-  cartSampleSpecial = 0;
-  cartSampleDepression = 0;
-  cartSampleCraterWall = 0;
   landedMet = 0;
   liftoffMet = 0;
   landedLongitude = 0;
@@ -335,7 +312,8 @@ void cycle() {
     }
   csm->Ins();
   lm->Ins();
-  if (lm->Comp() != NULL) lm->Comp()->Cycle();
+  if (lm->Comp() != NULL) lm->Comp()->PCycle();
+  if (lm != NULL) lm->GetIns()->FastCycle();
 
 
   if (metabolicRate > 99) metabolicRate = 99;
@@ -436,7 +414,7 @@ int main(int argc, char** argv) {
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
   csm = new CommandModule();
   lm = new LunarModule();
-  lm->Comp(new Computer(lm));
+  lm->Comp(new Computer(lm,"core.lm"));
   plss = new Plss();
   lrv = new Lrv();
   seq = new Sequencer();
