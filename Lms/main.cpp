@@ -309,11 +309,19 @@ void cycle() {
           }
         }
       }
+    if (lm->Comp() != NULL) lm->Comp()->PCycle();
+    if (lm != NULL) lm->GetIns()->FastCycle();
     }
   csm->Ins();
   lm->Ins();
-  if (lm->Comp() != NULL) lm->Comp()->PCycle();
-  if (lm != NULL) lm->GetIns()->FastCycle();
+  if (lm != NULL) {
+    lm->Ins();
+    if (lm->Comp() != NULL) {
+      lm->Comp()->SCycle();
+      lm->Comp()->VnCycle();
+      }
+    }
+
 
 
   if (metabolicRate > 99) metabolicRate = 99;
