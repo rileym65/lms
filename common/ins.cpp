@@ -529,13 +529,13 @@ void Ins::Cycle() {
     return; 
     }
   L =  vehicle->TargetVehicle()->FaceLeft().Norm();
-  tarDockX = pos.Norm().Dot(L) * pos.Length();
+  tarDockX = -pos.Norm().Dot(L) * pos.Length();
   L =  vehicle->TargetVehicle()->FaceFront().Norm();
   tarDockY = pos.Norm().Dot(L) * pos.Length();
   tarDockZ = pos.Length() - 5.275;
   vel = vehicle->Velocity() - (vehicle->TargetVehicle()->Velocity());
   L =  vehicle->TargetVehicle()->FaceLeft().Norm();
-  tarDockVelX = vel.Norm().Dot(L) * vel.Length();
+  tarDockVelX = -vel.Norm().Dot(L) * vel.Length();
   L =  vehicle->TargetVehicle()->FaceFront().Norm();
   tarDockVelY = vel.Norm().Dot(L) * vel.Length();
   L =  vehicle->TargetVehicle()->FaceUp().Norm();
