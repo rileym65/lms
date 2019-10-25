@@ -1,9 +1,0 @@
-Features:
----------
-
-Bugs:
------
-
-
-Done, but needs further testing:
---------------------------------
