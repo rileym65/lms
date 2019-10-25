@@ -314,7 +314,7 @@ void cycle() {
     if (lm != NULL) lm->GetIns()->FastCycle();
     }
   csm->Ins();
-  lm->Ins();
+  seq->Cycle();
   if (lm != NULL) {
     lm->Ins();
     if (lm->Comp() != NULL) {
@@ -555,7 +555,6 @@ int main(int argc, char** argv) {
         }
       cycle();
       ticks = 0;
-      seq->Cycle();
       if (injury >= 100) {
         run = false;
         endReason = END_DEAD;
