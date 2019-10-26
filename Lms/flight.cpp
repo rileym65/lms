@@ -930,7 +930,7 @@ UInt32 Flight::Fly() {
           alsepLatitude, alsepLongitude,LE);
       fclose(file);
       }
-    unlink("fms.sav");
+    unlink("lms.sav");
     return FLIGHT_COMPLETE;
     }
 

@@ -12,7 +12,7 @@
 void save() {
   Int32 i;
   FILE *file;
-  file = fopen("fms.sav","w");
+  file = fopen("lms.sav","w");
   fprintf(file,"Simulation {%s",LE);
 
   fprintf(file,"  CabinPressurized %d%s",cabinPressurized,LE);
