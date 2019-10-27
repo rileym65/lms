@@ -159,6 +159,10 @@ Ins* Vehicle::GetIns() {
   return ins;
   }
 
+Panel* Vehicle::GetPanel() {
+  return panel;
+  }
+
 Double Vehicle::Latitude() {
   return ins->Latitude();
   }

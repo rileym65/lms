@@ -87,8 +87,18 @@
 #include "g_yawrate.h"
 
 Panel::Panel(const char* filename,Vehicle* v) {
-  UInt8 x,y;
   vehicle = v;
+  clearPanel();
+  if (loadFile(filename) == 0) useDefault(filename);
+  }
+
+Panel::~Panel() {
+  UInt32 i;
+  for (i=0; i<numGauges; i++) delete(gauges[i]);
+  }
+
+void Panel::clearPanel() {
+  UInt8 x,y;
   for (y=0; y<24; y++)
     for (x=0; x<80; x++)
       screen[y][x] = ' ';
@@ -97,10 +107,13 @@ Panel::Panel(const char* filename,Vehicle* v) {
   for (x=0; x<100; x++)
     gauges[x] = NULL;
   numGauges = 0;
-  if (loadFile(filename) == 0) useDefault(filename);
   }
 
-Panel::~Panel() {
+void Panel::ResetPanel(const char* filename) {
+  UInt32 i;
+  for (i=0; i<numGauges; i++) delete(gauges[i]);
+  clearPanel();
+  if (loadFile(filename) == 0) useDefault(filename);
   }
 
 Int8 Panel::loadFile(const char* filename) {

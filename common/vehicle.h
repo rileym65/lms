@@ -99,6 +99,7 @@ class Vehicle {
     virtual Double    OrbitTime();
     virtual Double    Oxygen();
     virtual Double    Oxygen(Double d);
+    virtual Panel*    GetPanel();
     virtual Double    Pitch();
     virtual Double    Pitch(Double d);
     virtual Double    PitchRate();

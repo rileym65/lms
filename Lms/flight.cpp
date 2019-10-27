@@ -882,6 +882,7 @@ void Flight::Init() {
     csm->FaceFront(Vector(1,0,0));
     csm->FaceLeft(Vector(0,-1,0));
     csm->FaceUp(Vector(0,0,1));
+    csm->GetPanel()->ResetPanel("csms.pnl");
     }
   }
 
