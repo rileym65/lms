@@ -1,76 +1,16 @@
 #include <stdio.h>
 #include <string.h>
 #include "header.h"
+#include "helpers.h"
 #include "computer.h"
 #include "terminal.h"
-#include "common.h"
-#include "g_clockev.h"
-#include "g_clockte.h"
+#include "g_clockbu.h"
+#include "g_clockmi.h"
+#include "g_clocktb.h"
 #include "g_clockut.h"
-
-/*
-char* trim(char* buffer) {
-  Int16 p;
-  p = strlen(buffer) - 1;
-  while (p >= 0 && buffer[p] > 0 && buffer[p] <= ' ') {
-    buffer[p] = 0;
-    p--;
-    }
-  while (buffer[0] > 0 && buffer[0] <= ' ') buffer++;
-  return buffer;
-  }
-
-char* nextLine(FILE* file) {
-  static char line[1024];
-  if (fgets(line,1024,file) == NULL) return NULL;
-  return trim(line);
-  }
-
-Int8 startsWith(char* buffer, const char* check) {
-  if (strncasecmp(buffer,check,strlen(check)) == 0) return -1;
-  return 0;
-  }
-
-char* nw(char* buffer) {
-  while (buffer[0] > 0 && buffer[0] != ' ') buffer++;
-  while (buffer[0] > 0 && buffer[0] == ' ') buffer++;
-  return buffer;
-  }
-
-Vector atov(char* buffer) {
-  Vector ret;
-  ret.X(atof(buffer));
-  buffer = nw(buffer);
-  ret.Y(atof(buffer));
-  buffer = nw(buffer);
-  ret.Z(atof(buffer));
-  return ret;
-  }
-
-Matrix atom(char* buffer) {
-  Double ax,ay,az;
-  Double bx,by,bz;
-  Double cx,cy,cz;
-  ax = atof(buffer);
-  buffer = nw(buffer);
-  ay = atof(buffer);
-  buffer = nw(buffer);
-  az = atof(buffer);
-  buffer = nw(buffer);
-  bx = atof(buffer);
-  buffer = nw(buffer);
-  by = atof(buffer);
-  buffer = nw(buffer);
-  bz = atof(buffer);
-  buffer = nw(buffer);
-  cx = atof(buffer);
-  buffer = nw(buffer);
-  cy = atof(buffer);
-  buffer = nw(buffer);
-  cz = atof(buffer);
-  return Matrix(ax,ay,az,bx,by,bz,cx,cy,cz);
-  }
-*/
+#include "g_days.h"
+#include "g_moon.h"
+#include "g_position.h"
 
 void loadSimulation(FILE* file) {
   char* pline;
@@ -80,15 +20,35 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"clockbu ")) clockBu = atoi(nw(pline));
     else if (startsWith(pline,"clockdk ")) clockDk = atoi(nw(pline));
     else if (startsWith(pline,"clockev ")) clockEv = atoi(nw(pline));
+    else if (startsWith(pline,"clockge ")) clockGe = atoi(nw(pline));
     else if (startsWith(pline,"clockor ")) clockOr = atoi(nw(pline));
     else if (startsWith(pline,"clockmi ")) clockMi = atoi(nw(pline));
     else if (startsWith(pline,"clockut ")) clockUt = atoi(nw(pline));
+    else if (startsWith(pline,"clocktb ")) clockTb = atoi(nw(pline));
     else if (startsWith(pline,"clockte ")) clockTe = atoi(nw(pline));
     else if (startsWith(pline,"clockud ")) clockUd = atoi(nw(pline));
     else if (startsWith(pline,"clockdoi ")) clockDOI = atoi(nw(pline));
     else if (startsWith(pline,"clockpdi ")) clockPDI = atoi(nw(pline));
+    else if (startsWith(pline,"clockbsp ")) clockBsp = atoi(nw(pline));
+    else if (startsWith(pline,"clocklo ")) clockLo = atoi(nw(pline));
+    else if (startsWith(pline,"clockmaxq ")) clockMaxQ = atoi(nw(pline));
+    else if (startsWith(pline,"clockpara ")) clockPara = atoi(nw(pline));
+    else if (startsWith(pline,"clockrent ")) clockRent = atoi(nw(pline));
+    else if (startsWith(pline,"clocksmjt ")) clockSmJt = atoi(nw(pline));
+    else if (startsWith(pline,"clockrmjt ")) clockRmJt = atoi(nw(pline));
+    else if (startsWith(pline,"clocktli ")) clockTli = atoi(nw(pline));
+    else if (startsWith(pline,"clocktei ")) clockTei = atoi(nw(pline));
+    else if (startsWith(pline,"clockloi ")) clockLoi = atoi(nw(pline));
+    else if (startsWith(pline,"clockmsoi ")) clockMSoi = atoi(nw(pline));
+    else if (startsWith(pline,"clockesoi ")) clockESoi = atoi(nw(pline));
+    else if (startsWith(pline,"clocklmdk ")) clockLmDk = atoi(nw(pline));
+    else if (startsWith(pline,"clocklext ")) clockLExt = atoi(nw(pline));
+    else if (startsWith(pline,"clocklmjt ")) clockLmJt = atoi(nw(pline));
+    else if (startsWith(pline,"highestvel ")) highestVelocity = atof(nw(pline));
     else if (startsWith(pline,"dockingvel ")) dockingVel = atof(nw(pline));
     else if (startsWith(pline,"dockinglvel ")) dockingLVel = atof(nw(pline));
+    else if (startsWith(pline,"dockingxalign ")) dockingXAlign = atof(nw(pline));
+    else if (startsWith(pline,"dockingyalign ")) dockingYAlign = atof(nw(pline));
     else if (startsWith(pline,"modeabo ")) mode_abo = atoi(nw(pline));
     else if (startsWith(pline,"modearm ")) mode_arm = atoi(nw(pline));
     else if (startsWith(pline,"modejet ")) mode_jet = atoi(nw(pline));
@@ -102,6 +62,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"landedhvel ")) landedHVel = atof(nw(pline));
     else if (startsWith(pline,"landedvvel ")) landedVVel = atof(nw(pline));
     else if (startsWith(pline,"farthestdistance ")) farthest = atof(nw(pline));
+    else if (startsWith(pline,"farthestfromearth ")) farthestFromEarth = atof(nw(pline));
     else if (startsWith(pline,"flagplanted ")) flagPlanted = atoi(nw(pline));
     else if (startsWith(pline,"flaglongitude ")) flagLongitude = atof(nw(pline));
     else if (startsWith(pline,"flaglatitude ")) flagLatitude = atof(nw(pline));
@@ -113,6 +74,7 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"alseplatitude ")) alsepLatitude = atof(nw(pline));
     else if (startsWith(pline,"longesteva ")) longestEVA = atoi(nw(pline));
     else if (startsWith(pline,"docked ")) docked = atoi(nw(pline));
+    else if (startsWith(pline,"lmextracted ")) lmExtracted = atoi(nw(pline));
     else if (startsWith(pline,"dockingradaron ")) dockingRadarOn = atoi(nw(pline));
     else if (startsWith(pline,"dsnon ")) dsnOn = atoi(nw(pline));
     else if (startsWith(pline,"efficiency ")) efficiency = atof(nw(pline));
@@ -140,11 +102,34 @@ void loadSimulation(FILE* file) {
     else if (startsWith(pline,"samplespecial ")) sampleSpecial = atoi(nw(pline));
     else if (startsWith(pline,"sampledepression ")) sampleDepression = atoi(nw(pline));
     else if (startsWith(pline,"samplecraterwall ")) sampleCraterWall = atoi(nw(pline));
+    else if (startsWith(pline,"days ")) days = atoi(nw(pline));
+    else if (startsWith(pline,"kscangle ")) kscAngle = atof(nw(pline));
+    else if (startsWith(pline,"distance ")) distanceTravelled = atof(nw(pline));
+    else if (startsWith(pline,"maxq ")) maxQ = atof(nw(pline));
+    else if (startsWith(pline,"maxqaltitude ")) maxQAltitude = atof(nw(pline));
+    else if (startsWith(pline,"launched true")) launched = true;
+    else if (startsWith(pline,"launched false")) launched = false;
+    else if (startsWith(pline,"inatmosphere ")) inAtmosphere = atoi(nw(pline));
+    else if (startsWith(pline,"rendezvousdistance ")) rendezvousDistance = atof(nw(pline));
+
     else {
       Write("Unknown line found in save file: ");
       WriteLn(pline);
       exit(1);
       }
+    }
+  }
+
+void LoadBurn(FILE* file, char*line) {
+  Int32 i;
+  char* pline;
+  i = atoi(line);
+  while ((pline = nextLine(file)) != NULL) {
+    if (startsWith(pline,"}")) return;
+    else if (startsWith(pline,"start ")) burn[i].start = atoi(nw(pline));
+    else if (startsWith(pline,"end ")) burn[i].end = atoi(nw(pline));
+    else if (startsWith(pline,"fuelused ")) burn[i].fuelUsed = atof(nw(pline));
+    else if (startsWith(pline,"engine ")) burn[i].engine = nw(pline)[0];
     }
   }
 
@@ -163,34 +148,37 @@ void LoadEva(FILE* file, char*line) {
     }
   }
 
-void LoadBurn(FILE* file, char*line) {
-  Int32 i;
-  char* pline;
-  i = atoi(line);
-  while ((pline = nextLine(file)) != NULL) {
-    if (startsWith(pline,"}")) return;
-    else if (startsWith(pline,"start ")) burn[i].start = atoi(nw(pline));
-    else if (startsWith(pline,"end ")) burn[i].end = atoi(nw(pline));
-    else if (startsWith(pline,"fuelused ")) burn[i].fuelUsed = atof(nw(pline));
-    else if (startsWith(pline,"engine ")) burn[i].engine = nw(pline)[0];
-    }
-  }
-
-Int8 load(char* filename) {
+Int8 load(const char* filename) {
   FILE* file;
   char* pline;
+  csm->LaunchVehicle(booster);
   file = fopen(filename,"r");
   if (file == NULL) return 0;
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"simulation {")) loadSimulation(file);
+    else if (startsWith(pline,"booster {")) booster->Load(file);
     else if (startsWith(pline,"commandmodule {")) csm->Load(file);
-    else if (startsWith(pline,"lunarmodule {")) lm->Load(file);
-    else if (startsWith(pline,"plss {")) plss->Load(file);
+    else if (startsWith(pline,"lunarmodule {")) {
+      lm = new LunarModule();
+      lm->Load(file);
+      lm->Comp(new Computer(lm,"core.lm"));
+      }
+    else if (startsWith(pline,"plss {")) {
+      plss = new Plss();
+      plss->Load(file);
+      }
     else if (startsWith(pline,"lrv {")) lrv->Load(file);
     else if (startsWith(pline,"mission {")) mission->Load(file);
-    else if (startsWith(pline,"eva ")) LoadEva(file,nw(pline));
     else if (startsWith(pline,"burn ")) LoadBurn(file,nw(pline));
+    else if (startsWith(pline,"eva ")) LoadEva(file,nw(pline));
+    else if (startsWith(pline,"earth {")) Earth->Load(file);
+    else if (startsWith(pline,"moon {")) Moon->Load(file);
     else if (startsWith(pline,"computer ")) {
+      if (lm == NULL) {
+        WriteLn("Save file contains computer settings but no LM is defined");
+        WriteLn("Aborting");
+        exit(1);
+        }
       if (lm->Comp() == NULL) {
         WriteLn("Save file contains computer settings but LM does not");
         WriteLn("have a computer defined.  Aborting");
@@ -204,8 +192,17 @@ Int8 load(char* filename) {
       exit(1);
       }
     }
-
+  csm->TargetVehicle(lm);
+  if (lm != NULL) {
+    lm->TargetVehicle(csm);
+    if (lm->Orbiting() == NULL) lm->Orbiting(csm->Orbiting());
+    }
   fclose(file);
+  if (pilotLocation == PILOT_CSM) currentVehicle = csm;
+  if (pilotLocation == PILOT_LM) currentVehicle = lm;
+  if (pilotLocation == PILOT_EVA) currentVehicle = plss;
+  if (pilotLocation == PILOT_LRV) currentVehicle = lrv;
+  currentVehicle->SetupPanel();
   return -1;
   }
 

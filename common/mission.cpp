@@ -24,7 +24,7 @@ Mission::Mission() {
   targetLongitude = -99999;
   targetLatitude = -99999;
   Vehicle(VEHICLE_APOLLO_MKII);
-  startLocation = 'E';
+  startLocation = 'M';
   startLAN = 90.0;
   startInc = 179.999;
   }
