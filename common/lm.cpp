@@ -22,6 +22,7 @@ LunarModule::LunarModule() {
   yawRate = 0;
   descentJettisoned = 0;
   rock = 0;
+  dryWeight = 0;
   ascentBatteryLeakage = 0;
   ascentOxygenLeakage = 0;
   ascentFuelLeakage = 0;
