@@ -168,7 +168,11 @@ Int8 load(const char* filename) {
       plss->Load(file);
       }
     else if (startsWith(pline,"lrv {")) lrv->Load(file);
-    else if (startsWith(pline,"mission {")) mission->Load(file);
+    else if (startsWith(pline,"mission {")) {
+      mission->Load(file);
+      if (mission->StartLocation() == 'M')
+        csm->GetPanel()->ResetPanel("csms.pnl");
+      }
     else if (startsWith(pline,"burn ")) LoadBurn(file,nw(pline));
     else if (startsWith(pline,"eva ")) LoadEva(file,nw(pline));
     else if (startsWith(pline,"earth {")) Earth->Load(file);
