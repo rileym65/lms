@@ -708,6 +708,12 @@ void CommandModule::ProcessKey(Int32 key) {
   Double rf;
   if (!launchVehicleJettisoned) booster->ProcessKey(key);
   if (panel != NULL) panel->ProcessKey(key);
+  if (mission->StartLocation() == 'M') {
+    if (key == 'M' && docked && lm != NULL) {
+      seq->MoveLm();
+      }
+    return;
+    }
   if (computer != NULL) computer->ProcessKey(key);
   if (key == 9) {
     armed = !armed;
