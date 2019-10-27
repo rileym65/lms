@@ -911,7 +911,8 @@ UInt32 Flight::Fly() {
         endReason = END_QUIT;
         }
       if (key == 'L' && !launched) Launch();
-      if (key == 'S' && launched) booster->NextStage();
+      if (key == 'S' && launched && !csm->LaunchVehicleJettisoned())
+        booster->NextStage();
       currentVehicle->ProcessKey(key);
       }
     if (endReason != 0) run = false;
