@@ -17,6 +17,8 @@
 #define R_LASTVEL    100
 
 CsmComputer::CsmComputer(CommandModule* c) {
+  int i;
+  for (i=0; i<256; i++) ram[i] = 0;
   prog = 0;
   csm = c;
   altitude = 0;
