@@ -180,8 +180,33 @@ void startFromMoon() {
   }
 
 void startFromMission() {
-  printf("Start from Mission not yet supported%s",LE);
-  exit(1);
+  UInt32 i;
+  FILE* file;
+  char buffer[64];
+  for (i=6; i<20; i++) {
+    GotoXY(1,i);
+    printf("%75s"," ");
+    }
+  GotoXY(25,7); printf("Enter name of mission profile: ");
+  fgets(buffer,55,stdin);
+  while (strlen(buffer) > 0 && buffer[strlen(buffer)-1] < 32)
+    buffer[strlen(buffer)-1] = 0;
+  if (strchr(buffer,'.') == NULL) strcat(buffer,".msn");
+  file = fopen(buffer,"r");
+  if (file == NULL) {
+    printf("%s%s",LE,LE);
+    printf("Mission profile \"%s\" could not be found%s%s",buffer,LE,LE);
+    exit(1);
+    }
+  mission->Load(file);
+  fclose(file);
+  flight->Init();
+  csm->Orbiting(Moon);
+  csm->SetupPanel();
+  booster->Orbiting(Earth);
+  currentVehicle = csm;
+  plss->Orbiting(Moon);
+  lrv->Orbiting(Moon);
   }
 
 void startFromFile() {
