@@ -738,8 +738,6 @@ void Flight::Init() {
   landingRadarOn = 0;
   maxQ = 0;
   metabolicRate = 30.0;
-  mission->TargetLatitude(0.0);
-  mission->TargetLongitude(0.0);
   plssOn = 0;
   plssPacks = 4;
   rendezvousDistance = 0;
@@ -780,7 +778,7 @@ void Flight::Init() {
   mode_lif = 0;
   days = 0;
   engines = 0;
-  launched = false;
+  launched = (mission->StartLocation() == 'M') ? true : false;
   kscAngle = 0;
   distanceTravelled = 0;
   if (mission->Vehicle() == VEHICLE_MERCURY_REDSTONE) mercuryRedstone();
@@ -871,6 +869,19 @@ void Flight::Init() {
     lrv->MaxSpeed(12.0);
     lrv->Battery(2000000);
     lrv->MaxBattery(2000000);
+    }
+  if (mission->StartLocation() == 'M') {
+    csm->LaunchVehicleJettisoned(true);
+    docked = true;
+    lmExtracted = -1;
+    inAtmosphere = 0;
+    lm->Orbiting(Moon);
+    csm->Orbiting(Moon);
+    csm->Position(Moon->Position()+Vector(99810+1738300,100,100));
+    csm->Velocity(Moon->Velocity()+Vector(0,-1634,0.0));
+    csm->FaceFront(Vector(1,0,0));
+    csm->FaceLeft(Vector(0,-1,0));
+    csm->FaceUp(Vector(0,0,1));
     }
   }
 

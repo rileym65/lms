@@ -32,6 +32,8 @@ void startFromEarth() {
   UInt32 v;
   char buffer[32];
   mission->StartLocation('E');
+  mission->TargetLatitude(0.0);
+  mission->TargetLongitude(0.0);
   for (i=6; i<20; i++) {
     GotoXY(1,i);
     printf("%75s"," ");
@@ -46,8 +48,8 @@ void startFromEarth() {
     GotoXY(27, 12); printf("6. Apollo/LM/Saturn V");
     GotoXY(27, 13); printf("7. Apollo/LM-J/Saturn V");
     GotoXY(27, 14); printf("8. Apollo/LM-MkII/Saturn V");
-    GotoXY(27, 15); printf("                     ");
-    GotoXY(27, 15); printf("   Vehicle: ");
+    GotoXY(27, 16); printf("                     ");
+    GotoXY(27, 16); printf("   Vehicle: ");
     fgets(buffer,31,stdin);
     v = atoi(buffer);
     }
@@ -121,8 +123,8 @@ void startFromEarth() {
     mission->Description("Apollo/Saturn V");
     mission->Vehicle(VEHICLE_APOLLO_MKII);
     }
-  flight->Init();
   csm->Orbiting(Earth);
+  flight->Init();
   csm->SetupPanel();
   booster->Orbiting(Earth);
   currentVehicle = csm;
@@ -131,8 +133,50 @@ void startFromEarth() {
   }
 
 void startFromMoon() {
-  printf("Start from Moon not yet supported%s",LE);
-  exit(1);
+  UInt32 i;
+  UInt32 v;
+  Double d;
+  char buffer[32];
+  mission->StartLocation('M');
+  for (i=6; i<20; i++) {
+    GotoXY(1,i);
+    printf("%75s"," ");
+    }
+  v = 0;
+  while (v<1 || v > 4) {
+    GotoXY(33,  7); printf("1. Apollo");
+    GotoXY(33,  8); printf("2. Apollo-J");
+    GotoXY(33,  9); printf("3. Apollo Mk II");
+    GotoXY(33, 10); printf("4. Apollo Mk III");
+    GotoXY(33, 12); printf("                     ");
+    GotoXY(33, 12); printf("   Vehicle: ");
+    fgets(buffer,31,stdin);
+    v = atoi(buffer);
+    }
+  mission->Vehicle(v);
+  d = -9999;
+  while (d < -180 || d > 180) {
+    GotoXY(30, 14); printf("                              ");
+    GotoXY(30, 14); printf("Target Longitude: ");
+    fgets(buffer,10,stdin);
+    sscanf(buffer,"%lf",&d);
+    }
+  mission->TargetLongitude(d);
+  d = -9999;
+  while (d < -90 || d > 90) {
+    GotoXY(30, 16); printf("                              ");
+    GotoXY(30, 16); printf("Target Latitude: ");
+    fgets(buffer,10,stdin);
+    sscanf(buffer,"%lf",&d);
+    }
+  mission->TargetLatitude(d);
+  flight->Init();
+  csm->Orbiting(Moon);
+  csm->SetupPanel();
+  booster->Orbiting(Earth);
+  currentVehicle = csm;
+  plss->Orbiting(Moon);
+  lrv->Orbiting(Moon);
   }
 
 void startFromMission() {
@@ -186,8 +230,8 @@ int init() {
     GotoXY(26,  7); printf("1. Start from Earth%s",LE);
     GotoXY(26,  8); printf("2. Start from the Moon%s",LE);
     GotoXY(26,  9); printf("3. Start from mission profile%s",LE);
-    GotoXY(26, 10); printf("                   ");
-    GotoXY(26, 10); printf("   Option ? ");
+    GotoXY(26, 11); printf("                   ");
+    GotoXY(26, 11); printf("   Option ? ");
     fgets(buffer,31,stdin);
     v = atoi(buffer);
     }
