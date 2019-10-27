@@ -124,15 +124,15 @@ void MissionReport() {
   numEvents = 0;
   longestDesc = 0;
 
-  if (clockTli > 0) AddEvent(clockTli, "TLI");
-  if (clockTei > 0) AddEvent(clockTei, "TEI");
-  if (clockLoi > 0) AddEvent(clockLoi, "LOI");
-  if (clockMaxQ > 0) AddEvent(clockMaxQ, "Max Q");
+  if (clockTli > 10) AddEvent(clockTli, "TLI");
+  if (clockTei > 10) AddEvent(clockTei, "TEI");
+  if (clockLoi > 10) AddEvent(clockLoi, "LOI");
+  if (clockMaxQ > 10) AddEvent(clockMaxQ, "Max Q");
   if (clockBsp > 0) AddEvent(clockBsp, "Booster Sep");
   if (clockLmDk > 0) AddEvent(clockLmDk, "LM Docking");
   if (clockLExt > 0) AddEvent(clockLExt, "LM Extraction");
-  if (clockMSoi != 0) AddEvent(clockMSoi, "Moon SOI");
-  if (clockESoi != 0) AddEvent(clockESoi, "Earth SOI");
+  if (clockMSoi > 10) AddEvent(clockMSoi, "Moon SOI");
+  if (clockESoi > 10) AddEvent(clockESoi, "Earth SOI");
   if (clockUd != 0) AddEvent(clockUd, "LM Undock");
   if (clockDOI != 0) AddEvent(clockDOI+clockUd, "DOI");
   if (clockPDI != 0) AddEvent(clockPDI+clockUd, "PDI");
@@ -152,9 +152,9 @@ void MissionReport() {
 
   for (i=0; i<numBurns; i++) {
     if (burn[i].engine >= '1' && burn[i].engine <= '3') {
-      sprintf(buffer,"Stage %d Ignition",i+1);
+      sprintf(buffer,"Stage %c Ignition",burn[i].engine);
       AddEvent(burn[i].start, buffer);
-      sprintf(buffer,"Stage %d Cutoff",i+1);
+      sprintf(buffer,"Stage %c Cutoff",burn[i].engine);
       AddEvent(burn[i].end, buffer);
       }
     if (burn[i].engine == 'S') {
@@ -184,13 +184,15 @@ void MissionReport() {
 
 
 
-  AddEvent(clockGe, "Landing");
+  if (mission->StartLocation() == 'E') AddEvent(clockGe, "Landing");
 
   SortEvents();
 
-  strcpy(buffer2,"Launch UTC");
-  while (strlen(buffer2) < longestDesc) strcat(buffer2," ");
-  fprintf(file,"  %s : %s%s", buffer2,ClockToString(buffer,clockLo),LE);
+  if (mission->StartLocation() == 'E') {
+    strcpy(buffer2,"Launch UTC");
+    while (strlen(buffer2) < longestDesc) strcat(buffer2," ");
+    fprintf(file,"  %s : %s%s", buffer2,ClockToString(buffer,clockLo),LE);
+    }
   
   for (i=0; i<numEvents; i++) {
     while (strlen(eventDesc[i]) < longestDesc) strcat(eventDesc[i], " ");
