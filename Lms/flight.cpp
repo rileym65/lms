@@ -907,6 +907,7 @@ UInt32 Flight::Fly() {
       if (key == '#') simSpeed = 1000;
       if (key == '$') simSpeed = 100;
       if (key == '%') simSpeed = 10;
+      if (key == '^') simSpeed = 1;
       if (key == 'Q') {
         run = false;
         endReason = END_QUIT;
