@@ -10,11 +10,11 @@
 	simulator, it will save your current state and reload it when you
 	start the simulator again.
 [=]
-	1. Erase any fms.sav file that may already be present in the
+	1. Erase any lms.sav file that may already be present in the
 	directory, otherwise the simulator will start with this file rather
 	than allowing you to create a new flight.
 [=]
-	2. Start up fms and select option: "1. Mercury/Redstone" as the
+	2. Start up lms and select option: "1. Mercury/Redstone" as the
 	vehicle to fly.
 [=]
 	3. This will bring you to the main simulation screen, sitting in

@@ -20,7 +20,7 @@
 [h2]	Earth
 [=]
 	The real Earth has a mass of 5.972e+24kg, an equitoral radius of
-	6,378.1km and a mean radius of 6,371.0km. The modeled Earth in FMS
+	6,378.1km and a mean radius of 6,371.0km. The modeled Earth in LMS
 	uses the correct mass value, but does not model the oblique spheroid
 	shape of the real Earth. The simulator models a perfectly round Earth
 	using 6,378.1km as the surface radius.
@@ -31,10 +31,9 @@
 	I will do any Earth surface modelling in the future, but I would not
 	rule it out.
 [=]
-	The Earth is not modeled in LMS and is at the center of the universe
-	in FMS, being located at cartesian coordinates of 0,0,0. The Earth
-	is not in motion but does rotate, completing one complete rotation
-	in 0.99726968 days.
+	The Earth is at the center of the universe in LMS, being located at
+	cartesian coordinates of 0,0,0. The Earth is not in motion but does
+	rotate, completing one complete rotation in 0.99726968 days.
 [=]
 	The Earth's atmosphere is very simply modeled in this simulation.
 	While I do use the real drag formula, which uses air density as one

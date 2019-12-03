@@ -12,7 +12,7 @@
 	want to fly that mission first, or at the very least read the
 	beginning section that describes instrument panel gauges.
 [=]
-	Remove or rename any fms.sav file that may be present in the
+	Remove or rename any lms.sav file that may be present in the
 	simulation directory, we want to start a new flight. One the
 	simulator starts, select option 7 "Apollo/LM-J/Saturn V" as the
 	vehicle to fly. Although there are numerous choices for vehicles

@@ -10,7 +10,7 @@
 [=]
 	Way back when I was playing these early games I had spent many
 	hours playing AMS, although there were two changes I would have
-	liked in the game.  First was the metabolic rage/efficiency used
+	liked in the game.  First was the metabolic rate/efficiency used
 	by the game was seriously flawed, leading to many crashes that
 	were more an artifact of the RNG ignoring keystrokes for too long
 	at critcal times rather than a failure in my decision making.
@@ -33,12 +33,7 @@
 	is in fact mostly complete.  The documentation on the other hand
 	is horribly sparse, but will be improved upon over time.
 [=]
-	LMS actually consists of two different simulators.  First is LMS,
-	which is an AMS-like simulator.  It starts in Lunar orbit, and 
-	ends once docked again with the CSM in Lunar orbit.  As an
-	extension, FMS (Full Mission Simulator) was created to simulate
-	complete missions from launch to splashdown.  FMS can also
-	simulate more than just the Apollo missions.  It can also
+	LMS can also simulate more than just the Apollo missions.  It can
 	simulate the following vehicles:
 [=]
 [i4]
@@ -47,8 +42,9 @@
 [li]	Mercury/Atlas
 [li]	Germini/Titan II
 [li]	Apollo/Saturn 1B
-[li]	Apollo/Saturn IV
 [li]	Apollo/Saturn V
+[li]	Apollo J/Saturn V
+[li]	Apollo MkII/Saturn VB (fictional)
 [le]
 [i-4]
 [=]
@@ -59,12 +55,11 @@
 [i4]
 [tb]
 	| lms             | Lunar Mission Simulator executable           |
-	| fms             | Full Mission Simulator executable            |
 	| mapgen          | Program for creating Lunar surface maps      |
 	| planner         | Program for creating mission profiles        |
 	| gcasm           | Program for creating LM ccomputer cores      |
-	| core.asm        | Assembly source for LM computer core         |
-	| core.bin        | Binary file for LM computer core             |
+	| lm.asm          | Assembly source for LM computer core         |
+	| core.lm         | Binary file for LM computer core             |
 	| ams.pnl         | Generic panel based on AMS                   |
 	| readme.doc      | This file                                    |
 	| keys.doc        | Documentation for key commands               |
@@ -94,7 +89,6 @@
 	| records.dat | This file holds the current mission records    |
 	| records.txt | Mission records in a more human friendly form  |
 	| lms.sav     | Save file from lms                             |
-	| fms.sav     | Save file from fms                             |
 	| *.msn       | Mission profiles created from planner          |
 	| userref.txt | File containing objects left on the moon       |
 	| report*.txt | Mission reports                                |

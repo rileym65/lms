@@ -15,7 +15,7 @@
 [li]	Be able to orient and maneuver the spacecraft
 [le]
 [=]
-	Remove or rename any fms.sav file that may be present in the
+	Remove or rename any lms.sav file that may be present in the
 	simulation directory, we want to start a new flight. Once the
 	simulator starts, select option 7 "Apollo/LM-J/Saturn V" as the
 	vehicle to fly. The real Apollo 8 mission did not take a LM with
