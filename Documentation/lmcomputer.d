@@ -263,6 +263,11 @@
 	|      |      | Dist. (m)     | Abs. Velocity  | Orbit time    |
 	|  16  |  75  |               | LAN            | Incl          |
 	|      |      | Periapsis     | Apoapsis       | Orbit time    |
+	|  16  |  81  | Abs Alt.      | Abs. Long.     | Abs. Lat.     |
+	|      |      | Abs ROC       | Abs. Vel. E    | Abs. Vel. N   |
+	|      |      | Abs Acc ROC   | Abs. Acc. E    | Abs. Acc. N   |
+	|      |      | Apo HH        | Apo MM         | Apo SS        |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
 [TE]
 [=]
 

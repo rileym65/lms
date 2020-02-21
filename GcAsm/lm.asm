@@ -454,6 +454,25 @@ v16n75:     call   periapo             ; display perilune/apolune
             wait
             jmp    v16n75
 
+; *************************************************************************
+; ***** Prog: 00   Verb: 16   Noun: 51                                *****
+; ***** Type: Main program                                            *****
+; ***** This program displays the data associated with INS POS^ABS    *****
+; *****                                                               *****
+; ***** This program displays the POS^ABS and ORB^ABS data from the   *****
+; ***** INS                                                           *****
+; *************************************************************************
+            prog   P00V16N81
+v16n81:     mov    clkap,r20            ; get time til apoapsis
+            call   clkout               ; output clock elements
+            mov    r1,r10               ; move clock to R10,R11, R12
+            mov    r2,r11
+            mov    r3,r12
+            call   posabs              ; Display POS^ABS data
+            call   periapo             ; display perilune/apolune
+            wait
+            jmp    v16n81
+
 ; **********************************************************************
 ; ***** Decompose clock in r20 to hh,mm,ss and display in r1,r2,r3 *****
 ; **********************************************************************
