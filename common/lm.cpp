@@ -812,7 +812,22 @@ void LunarModule::ProcessKey(Int32 key) {
     landingRadarOn = -1;
     }
   if (key == 27 && !landed && mode_arm != 0 && !descentJettisoned) {
+    if (Throttle() > 0) { 
+      Throttle(0);
+      burn[numBurns-1].end = clockMi;
+      if (descentJettisoned)
+        burn[numBurns-1].fuelUsed -= ascentFuel;
+      else
+        burn[numBurns-1].fuelUsed -= descentFuel;
+      if (!descentJettisoned) {
+        if (ignitionAltitude > 50000 && ins->Periapsis()-Orbiting()->Radius() < 50000)
+          clockDOI = ignitionTime;
+        if (ignitionAltitude < 30000 && ins->Periapsis()-Orbiting()->Radius() < 10000)
+          clockPDI = ignitionTime;
+        }
+      }
     seq->Abort();
+    clockAbort = clockGe;
     }
   if (landed) {
     if (key == '*') seq->Rest();

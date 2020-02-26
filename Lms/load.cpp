@@ -17,6 +17,7 @@ void loadSimulation(FILE* file) {
   while ((pline = nextLine(file)) != NULL) {
     if (startsWith(pline,"}")) return;
     else if (startsWith(pline,"cabinpressurized ")) cabinPressurized = atoi(nw(pline));
+    else if (startsWith(pline,"clockabort ")) clockAbort = atoi(nw(pline));
     else if (startsWith(pline,"clockbu ")) clockBu = atoi(nw(pline));
     else if (startsWith(pline,"clockdk ")) clockDk = atoi(nw(pline));
     else if (startsWith(pline,"clockev ")) clockEv = atoi(nw(pline));

@@ -100,6 +100,7 @@ CLINK Int8         alsepSetup;
 CLINK Double       alsepLongitude;
 CLINK Double       alsepLatitude;
 CLINK BURN         burn[1000];
+CLINK Int32        clockAbort;
 CLINK Int32        clockBu;
 CLINK Int32        clockDk;
 CLINK Int32        clockDOI;

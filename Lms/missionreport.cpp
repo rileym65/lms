@@ -144,6 +144,7 @@ void MissionReport() {
   if (clockRmJt != 0) AddEvent(clockRmJt, "RM Jet.");
   if (clockRent != 0) AddEvent(clockRent, "Re-entry");
   if (clockPara != 0) AddEvent(clockPara, "Parachutes");
+  if (clockAbort != 0) AddEvent(clockAbort, "Abort");
 
   if (liftoffMet != 0 && landedMet != 0) 
     clockSf = liftoffMet - landedMet;

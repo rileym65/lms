@@ -696,6 +696,7 @@ void Flight::saturnVb(UInt8 lem) {
 void Flight::Init() {
   Double dry;
   cabinPressurized = -1;
+  clockAbort = 0;
   clockBu = 0;
   clockBsp = 0;
   clockDk = 0;

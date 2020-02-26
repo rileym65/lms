@@ -16,6 +16,7 @@ void save() {
   fprintf(file,"Simulation {%s",LE);
 
   fprintf(file,"  CabinPressurized %d%s",cabinPressurized,LE);
+  fprintf(file,"  ClockAbort %d%s",clockAbort,LE);
   fprintf(file,"  ClockBU %d%s",clockBu,LE);
   fprintf(file,"  ClockDK %d%s",clockDk,LE);
   fprintf(file,"  ClockEV %d%s",clockEv,LE);
