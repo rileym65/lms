@@ -14,6 +14,7 @@
 #define P11_ORBIT    11
 #define P11_AZIMUTH  12
 #define P11_ASCMODE  13
+#define P21_LASTLAT  14
 #define R_LASTVEL    100
 
 CsmComputer::CsmComputer(CommandModule* c) {
@@ -220,6 +221,8 @@ void CsmComputer::_doShow() {
          while (longitude <= -180) longitude += 360;
          _reg1(longitude * 100.0);
          _reg2(latitude * 100.0);
+         _reg3((latitude - ram[P21_LASTLAT]) * 100000000.0);
+         ram[P21_LASTLAT] = latitude;
          break;
     case 21:
          pos = csm->Position() - Moon->Position();
@@ -233,6 +236,8 @@ void CsmComputer::_doShow() {
          latitude = asin(latitude) * 180 / M_PI;
          _reg1(longitude * 100.0);
          _reg2(latitude * 100.0);
+         _reg3((latitude - ram[P21_LASTLAT]) * 100000000.0);
+         ram[P21_LASTLAT] = latitude;
          break;
     }
   }
