@@ -150,16 +150,16 @@
 	so feel free to use the time compression controls.
 [e-]
 [=]
-	4. At an angle of around 145.00 press the <tab> key to arm the
+	4. At an angle of around 150.00 press the <tab> key to arm the
 	engine. Remember to keep adjusting your orientation so that the
 	spacecraft remains oriented prograde.
 [=]
 [er]
 	+-------------+
-	| Ang: 138.93 |
+	| Ang: 144.87 |
 	+-------------+
 [ee]
-	When the angle reaches 138.95 press <shift><I> to ignite the engine.
+	When the angle reaches 144.87 press <shift><I> to ignite the engine.
 	It is critical that at the point of ignition and during the entire
 	TLI burn that the spacecraft remain oriented prograde. Keep an eye
 	on the U: Elev gauge on the Prograde panel and keep that number as

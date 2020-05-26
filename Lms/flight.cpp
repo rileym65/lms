@@ -243,10 +243,10 @@ void Flight::cycle() {
     if (efficiency < 20) efficiency = 20;
     currentVehicle->UpdatePanel();
     }
-    if (injury >= 100) {
-      run = false;
-      endReason = END_DEAD;
-      }
+  if (injury >= 100) {
+    run = false;
+    endReason = END_DEAD;
+    }
   }
 
 void Flight::Launch() {

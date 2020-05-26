@@ -226,8 +226,10 @@ int init() {
   mission = NULL;
   Earth = new Body("Earth", 5.972e+24, 6378100);
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
-  Moon->Position(Vector(325266766, 0, 177193935));
-  Moon->Velocity(Vector(0,1060,0));
+
+  Moon->Position(Vector( 0, -363295494.9, 0));
+  Moon->Velocity(Vector(950.852988, 0, 516.915869));
+
   Moon->Orbiting(Earth);
   Moon->CalculateOrbit();
   booster = new Booster();

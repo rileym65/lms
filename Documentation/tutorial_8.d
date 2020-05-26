@@ -84,13 +84,13 @@
 	start with: [V24], Register 1 is now ready for input, here we input
 	our desired transfer orbit apoapsis: [00500] for an apoapsis of
 	500,000km. Now regitser 2 is ready for input, this is the Moon
-	angle that we want TLI to begin, enter: [13895] for 138.95 degrees.
+	angle that we want TLI to begin, enter: [14487] for 144.87 degrees.
 	And lastly load and start program 15: [V37N15].
 [=]
 	At this point the computer is controlling the spacecraft. The GC
 	will orient the spacecraft prograde and keep it oriented prograde
 	from now until the end of TLI. You can watch the Ang gauge on the
-	Moon information panel and when it gets to 138.95 degrees you will
+	Moon information panel and when it gets to 144.87 degrees you will
 	see the engine of the SIVB start. Now you can watch the Apo gauge
 	and the Vel gauge increasing as the engine fires. The GC will cutoff
 	the engine when the Apo gauge shows a reading of 500,000km.
