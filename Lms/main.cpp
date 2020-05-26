@@ -14,6 +14,7 @@
 #include "mission.h"
 #include "common.h"
 #include "csmcomputer.h"
+#include "orbit.h"
 
 double mn,mx;
 
@@ -221,14 +222,29 @@ void startFromFile() {
 
 int init() {
   UInt32 v;
-  char buffer[32];
-  FILE* file;
+  char   buffer[32];
+  FILE*  file;
+  Orbit  orb;
+  double ma;
   mission = NULL;
   Earth = new Body("Earth", 5.972e+24, 6378100);
   Moon = new Body("Moon", 7.34767309e+22, 1738300);
 
-  Moon->Position(Vector( 0, -363295494.9, 0));
-  Moon->Velocity(Vector(950.852988, 0, 516.915869));
+  ma = 0;
+  orb.PrimaryMass(5.972e+24);
+  orb.SecondaryMass(7.34767309e+22);
+  orb.SemiMajorAxis(384399000);
+  orb.Eccentricity(0.0549);
+  orb.Inclination(28.53);
+  orb.LongitudeAscendingNode(0);
+  orb.ArgumentOfPeriapsis(0);
+  orb.MeanAnomoly(ma);
+  orb.ComputeRemainingOrbitalElements();
+  orb.ComputeStateVectors();
+  Moon->Position(Vector(orb.Y(), -orb.X(), orb.Z()));
+  Moon->Velocity(Vector(orb.VY(), orb.VX(), orb.VZ()));
+//  Moon->Position(Vector( 0, -363295494.9, 0));
+//  Moon->Velocity(Vector(950.852988, 0, 516.915869));
 
   Moon->Orbiting(Earth);
   Moon->CalculateOrbit();

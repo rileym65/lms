@@ -36,6 +36,7 @@ OBJS = \
 	flight.o \
 	load.o \
 	missionreport.o \
+	orbit.o \
 	save.o \
 	score.o \
 	main.o
@@ -69,8 +70,9 @@ csmcomputer.o:   $(HEADERS) csmcomputer.cpp
 flight.o:        $(HEADERS) flight.cpp
 gauge.o:         $(HEADERS) gauge.cpp
 load.o:          $(HEADERS) load.cpp
-main.o:          $(HEADERS) main.cpp
+main.o:          $(HEADERS) orbit.h main.cpp
 missionreport.o: $(HEADERS) missionreport.cpp
+orbit.o:         $(HEADERS) orbit.h orbit.cpp
 save.o:          $(HEADERS) save.cpp
 score.o:         $(HEADERS) score.cpp
 terminal.o:      $(HEADERS) terminal.cpp
