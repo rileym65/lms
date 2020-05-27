@@ -249,8 +249,8 @@
 	|  16  |  63  | Rel Alt.      | Rel. Long. (m) | Rel. Lat. (m) |
 	|      |      | Rel ROC       | Rel. Vel. E    | Rel. Vel. N   |
 	|      |      | Rel Acc ROC   | Rel. Acc. E    | Rel. Acc. N   |
-	|      |      | Rel dist. (m) | Rel. LAN       | Rel. Incl.    |
-	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|      |      | Dck distX (m) | Dck distY (m)  | Dck distZ(m)  |
+	|      |      | Dck velX      | Dck velY       | Dck velZ      |
 	|  16  |  71  | Abs Alt.      | Abs. Long.     | Abs. Lat.     |
 	|      |      | Abs ROC       | Abs. Vel. E    | Abs. Vel. N   |
 	|      |      | Abs Acc ROC   | Abs. Acc. E    | Abs. Acc. N   |

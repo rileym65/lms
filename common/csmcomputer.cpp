@@ -93,6 +93,7 @@ void CsmComputer::_doShow() {
   Double d;
   UInt32 i,j;
   Vector pos;
+  Vector vel;
   Double longitude;
   Double latitude;
   Double hyp;
@@ -221,7 +222,8 @@ void CsmComputer::_doShow() {
          while (longitude <= -180) longitude += 360;
          _reg1(longitude * 100.0);
          _reg2(latitude * 100.0);
-         _reg3((latitude - ram[P21_LASTLAT]) * 100000000.0);
+         vel = csm->Velocity() - Earth->Velocity();
+         _reg3(vel.Z());
          ram[P21_LASTLAT] = latitude;
          break;
     case 21:
@@ -236,8 +238,21 @@ void CsmComputer::_doShow() {
          latitude = asin(latitude) * 180 / M_PI;
          _reg1(longitude * 100.0);
          _reg2(latitude * 100.0);
-         _reg3((latitude - ram[P21_LASTLAT]) * 100000000.0);
+         vel = csm->Velocity() - Moon->Velocity();
+         _reg3(vel.Z());
          ram[P21_LASTLAT] = latitude;
+         break;
+    case 22:
+         vel = csm->Velocity() - Earth->Velocity();
+         _reg1(vel.X());
+         _reg2(vel.Y());
+         _reg3(vel.Z());
+         break;
+    case 23:
+         vel = csm->Velocity() - Moon->Velocity();
+         _reg1(vel.X());
+         _reg2(vel.Y());
+         _reg3(vel.Z());
          break;
     }
   }

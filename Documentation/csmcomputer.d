@@ -43,6 +43,8 @@
 	|  16  |  18  | L. Velocity | Acceleration | Gs         |
 	|  16  |  20  | E. Long.    | E. Lat       |            |
 	|  16  |  21  | M. Long.    | M. Lat.      |            |
+	|  16  |  22  | E. Vel X    | E. Vel Y     | E. Vel Z   |
+	|  16  |  23  | M. Vel X    | M. Vel Y     | M. Vel Z   |
 [TE]
 [=]
 [TB]
