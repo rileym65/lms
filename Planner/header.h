@@ -52,6 +52,7 @@ extern void    Menu();
 extern void    MissionEditor();
 extern Double  NumericDialog(char* msg, Double max);
 extern Boolean SelectFromMap(Double* latitude, Double* longitude);
+extern void    SelectOrbit();
 extern void    SelectVehicle();
 extern void    ShowLoadout();
 extern void    ShowMap();

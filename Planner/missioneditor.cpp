@@ -24,6 +24,7 @@ GotoXY(2,2);
     if (key =='h') key = 'H';
     if (key =='i') key = 'I';
     if (key =='j') key = 'J';
+    if (key =='k') key = 'K';
     if (key == 'A') {
       GotoXY(24,3); Write("                                                ");
       if (Input(24,3,buffer,false)) {
@@ -101,6 +102,10 @@ GotoXY(2,2);
       }
     if (key == 'J') {
       DoLoadout();
+      Menu();
+      }
+    if (key == 'K') {
+      SelectOrbit();
       Menu();
       }
     if (key == 's') {

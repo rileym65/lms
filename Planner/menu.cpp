@@ -62,6 +62,9 @@ void Menu() {
   if (mission->Vehicle() == 3) WriteLn("Apollo Mk II");
   if (mission->Vehicle() == 4) WriteLn("Apollo Mk III");
   GotoXY(5,12); Write("J. Loadout");
+  GotoXY(5,13); Write("K. CSM Orbit      : ");
+  sprintf(buffer,"LAN: %6.2f  INC: %6.2f",mission->StartLAN(), mission->StartInc());
+  WriteLn(buffer);
   GotoXY(5,18); WriteLn("S. Save and exit");
   GotoXY(5,19); WriteLn("Q. Quit without saving");
   GotoXY(8,21); Write("Option ? ");

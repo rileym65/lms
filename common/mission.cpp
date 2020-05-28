@@ -26,7 +26,7 @@ Mission::Mission() {
   Vehicle(VEHICLE_APOLLO_MKII);
   startLocation = 'M';
   startLAN = 90.0;
-  startInc = 179.999;
+  startInc = 0.00001;
   }
 
 Mission::~Mission() {

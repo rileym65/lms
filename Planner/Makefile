@@ -30,6 +30,7 @@ OBJS = \
 	missioneditor.o \
 	numericdialog.o \
 	selectfrommap.o \
+        selectorbit.o \
 	selectvehicle.o \
 	showloadout.o \
 	showmap.o \
@@ -76,6 +77,7 @@ menu.o:                  $(HEADERS) menu.cpp
 missioneditor.o:         $(HEADERS) missioneditor.cpp
 numericdialog.o:         $(HEADERS) numericdialog.cpp
 selectfrommap.o:         $(HEADERS) selectfrommap.cpp
+selectorbit.o:           $(HEADERS) selectorbit.cpp
 selectvehicle.o:         $(HEADERS) selectvehicle.cpp
 showloadout.o:           $(HEADERS) showloadout.cpp
 showmap.o:               $(HEADERS) showmap.cpp
@@ -84,3 +86,6 @@ showmapdata.o:           $(HEADERS) showmapdata.cpp
 showselections.o:        $(HEADERS) showselections.cpp
 showvehicle.o:           $(HEADERS) showvehicle.cpp
 writecentered.o:         $(HEADERS) writecentered.cpp
+
+include ../common/Makefile.incl
+
