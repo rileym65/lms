@@ -165,12 +165,28 @@ void startFromMoon() {
   mission->TargetLongitude(d);
   d = -9999;
   while (d < -90 || d > 90) {
-    GotoXY(30, 16); printf("                              ");
-    GotoXY(30, 16); printf("Target Latitude: ");
+    GotoXY(30, 15); printf("                              ");
+    GotoXY(30, 15); printf("Target Latitude: ");
     fgets(buffer,10,stdin);
     sscanf(buffer,"%lf",&d);
     }
   mission->TargetLatitude(d);
+  d = -9999;
+  while (d < 0 || d >= 360) {
+    GotoXY(30, 16); printf("                                           ");
+    GotoXY(30, 16); printf("CSM Longitude Ascending Node (0-359): ");
+    fgets(buffer,10,stdin);
+    sscanf(buffer,"%lf",&d);
+    }
+  csmLAN = d;
+  d = -9999;
+  while (d < 0 || d >= 60) {
+    GotoXY(30, 17); printf("                                        ");
+    GotoXY(30, 17); printf("CSM Inclination (0-60): ");
+    fgets(buffer,10,stdin);
+    sscanf(buffer,"%lf",&d);
+    }
+  csmInc = d;
   flight->Init();
   csm->Orbiting(Moon);
   csm->SetupPanel();
@@ -263,6 +279,8 @@ int init() {
   mission->Name((char*)"Default");
   seq = new Sequencer();
   map = new Map();
+  csmLAN = 0;
+  csmInc = 0.01;
   file = fopen("lms.sav","r");
   if (file != NULL) {
     fclose(file);

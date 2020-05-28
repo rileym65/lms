@@ -3,6 +3,7 @@
 #include "csmcomputer.h"
 #include "common.h"
 #include "flight.h"
+#include "orbit.h"
 
 Int8 Flight::alignedForDocking() {
   Vector pos;
@@ -695,6 +696,7 @@ void Flight::saturnVb(UInt8 lem) {
 
 void Flight::Init() {
   Double dry;
+  Orbit  orb;
   cabinPressurized = -1;
   clockAbort = 0;
   clockBu = 0;
@@ -876,10 +878,22 @@ void Flight::Init() {
     docked = true;
     lmExtracted = -1;
     inAtmosphere = 0;
+    orb.PrimaryMass(7.34767309e+22);
+    orb.SecondaryMass(35000);
+    orb.SemiMajorAxis(1838300);
+    orb.Eccentricity(0.00001);
+    orb.Inclination(csmInc);
+    orb.LongitudeAscendingNode(csmLAN);
+    orb.ArgumentOfPeriapsis(0);
+    orb.MeanAnomoly(0);
+    orb.ComputeRemainingOrbitalElements();
+    orb.ComputeStateVectors();
     lm->Orbiting(Moon);
     csm->Orbiting(Moon);
-    csm->Position(Moon->Position()+Vector(99810+1738300,100,100));
-    csm->Velocity(Moon->Velocity()+Vector(0,-1634,0.0));
+    csm->Position(Moon->Position()+Vector(orb.Y(), -orb.X(), orb.Z()));
+    csm->Velocity(Moon->Velocity()+Vector(-orb.VY(), orb.VX(), orb.VZ()));
+//    csm->Position(Moon->Position()+Vector(99810+1738300,100,100));
+//    csm->Velocity(Moon->Velocity()+Vector(0,-1634,0.0));
     csm->FaceFront(Vector(1,0,0));
     csm->FaceLeft(Vector(0,-1,0));
     csm->FaceUp(Vector(0,0,1));

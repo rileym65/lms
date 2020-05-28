@@ -115,6 +115,8 @@ CLINK Int32        clockTe;
 CLINK Int32        clockUd;
 CLINK Int32        clockUt;
 CLINK CommandModule *csm;
+CLINK Double       csmLAN;
+CLINK Double       csmInc;
 CLINK Vehicle*     currentVehicle;
 CLINK UInt32       days;
 CLINK Int8         docked;
