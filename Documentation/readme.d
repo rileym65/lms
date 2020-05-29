@@ -71,6 +71,7 @@
 	| tutorial_2.doc  | Tutorial for launch to orbit                 |
 	| tutorial_7.doc  | Tutorial for getting to the Moon             |
 	| tutorial_8.doc  | Tutorial for using the CSM guidance computer |
+	| tutorial_10.doc | Tutorial on Lunar Surface Operations         |
 [te]
 [i-4]
 [=]
