@@ -32,9 +32,9 @@ class Orbit {
     double co;
     double so;
   public:
-    static const double Gr = 6.6725985e-11;
-    static const double M_EARTH = 5.972e+24;
-    static const double M_MOON  = 7.34767309e+22;
+    static constexpr double Gr = 6.6725985e-11;
+    static constexpr double M_EARTH = 5.972e+24;
+    static constexpr double M_MOON  = 7.34767309e+22;
     Orbit();
     ~Orbit();
     double PrimaryMass();
