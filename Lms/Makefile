@@ -4,7 +4,7 @@ CC = g++
 #DEFS = -Wall -DMINGW -UWIN32 -static-libstdc++ -static-libgcc -static
 
 #Linux
-DEFS = -Wall
+DEFS = -Wall -std=c++11
 
 
 INCDIR = -I../common
