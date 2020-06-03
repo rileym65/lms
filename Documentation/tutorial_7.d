@@ -108,7 +108,7 @@
 	and you are best off starting over.
 [=]
 [er]
-        +--------+
+	+--------+
 	| R    P |
 	|     02 |
 	|   V  N |
@@ -381,15 +381,15 @@
 [e-]
 [=]
 [er]
-        +-----------------------------+
+	+-----------------------------+
 	| Alt:   99954   Vel:  1633.4 |
 	| Roc:       0   Acc:    -0.0 |
 	| Rta:   38.56   Dec:   21.69 |
-        +-----------------------------+
+	+-----------------------------+
 	| Apo:   100.3   Lan:  171.25 |
 	| Per:   100.0   Inc:  151.58 |
 	| OT:  1:57:52   Gnd:  -88.65 |
-        +-----------------------------+
+	+-----------------------------+
 [ee]
 	10. Here is what a good lunar orbit looks like. Your altitude
 	should be right around 100km, velocity should be in the neighborhood

@@ -37,9 +37,9 @@
 [=]
 [=]
 [er]
-        +------+
+	+------+
 	|MB: 39|
-        +------+
+	+------+
 [ee]
 	5. Notice that while putting on your EVA suit that your metabolic
 	rate, MB on the right side of the panel, has been climbing.  It
@@ -193,13 +193,13 @@
 [e-]
 [=]
 [er]
-        +------------+
+	+------------+
 	|east: 104.69|
 	|nrth:  12.60|
 	|mode: ABS   |
 	| thr:  0    |
 	| spd:  0.0  |
-        +------------+
+	+------------+
 [ee]
 	Below the LRV panel is the EVA computer panel.  This panel gives
 	you information about where you are and can operate in several

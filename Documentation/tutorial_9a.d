@@ -1,4 +1,4 @@
-[c]	Starting at the Moon
+[c]	Starting from the Earth
 [=]
 	This short tutorial will show you how to setup the simulator for a
 	Lunar landing starting from Earth.  This is to prepare you for
