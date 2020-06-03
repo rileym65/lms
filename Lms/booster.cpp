@@ -105,7 +105,7 @@ Double Booster::CmOffset(Double d) {
 
 void Booster::Diameter(Byte stage, Double d) {
   d = d/2;
-  area[stage-1] = d * d * M_PI;
+  area[stage-1] = d * d * PI;
   }
 
 Double Booster::DryWeight(Byte stage) {

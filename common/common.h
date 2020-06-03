@@ -10,6 +10,7 @@
 #include "random.h"
 #include "command.h"
 
+#define PI           3.14159265358979323846
 #define PILOT_CSM 'c'
 #define PILOT_LRV 'v'
 #define PILOT_LM  'm'
@@ -30,7 +31,7 @@
 #define VT_ROVER      32
 #define LRV_BATTERY  200000.0
 #define GROUND 1738300
-#define METERS ((GROUND*2*M_PI) / 360.0)
+#define METERS ((GROUND*2*PI) / 360.0)
 #define MAPCELL           (1.0/(METERS/10.0))
 #define CELL (METERS / 10)
 #define DR  (3.14159265358979323846 / 180)
@@ -64,6 +65,7 @@
 #define VEHICLE_GEMINI_TITAN          7
 #define VEHICLE_APOLLO_SATURN_IB      8
 #define VEHICLE_APOLLO_SATURN_V       9
+
 
 #ifdef MINGW
 #define LE   "\r\n"

@@ -9,7 +9,7 @@
 #include "vehicle.h"
 
 #define GROUND 1738300
-#define METERS ((GROUND*2*M_PI) / 360.0)
+#define METERS ((GROUND*2*PI) / 360.0)
 #define MAPCELL           (1.0/(METERS/10.0))
 
 G_MapMed::G_MapMed(Int8 x,Int8 y,Boolean f,Vehicle* v) :

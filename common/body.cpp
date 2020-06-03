@@ -15,7 +15,7 @@ Body::Body(const char* n, Double m, Double r) {
   position = Vector(0,0,0);
   velocity = Vector(0,0,0);
   orbiting = NULL;
-  meters = (radius * 2 * M_PI) / 360.0;
+  meters = (radius * 2 * PI) / 360.0;
   }
 
 Body::~Body() {
@@ -35,12 +35,12 @@ void Body::CalculateOrbit() {
   L = velocity.Cross(position);
   hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
   ascendingNode = L.Y() / hyp;
-  ascendingNode = asin(ascendingNode) * 180 / M_PI;
+  ascendingNode = asin(ascendingNode) * 180 / PI;
   if (L.X() < 0 && L.Y() < 0) ascendingNode = -180 - ascendingNode;
   if (L.X() < 0 && L.Y() >= 0) ascendingNode = 180 - ascendingNode;
   hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
   inclination = L.Z() / hyp;
-  inclination = asin(inclination) * 180 / M_PI;
+  inclination = asin(inclination) * 180 / PI;
   }
 
 void Body::Cycle(Double gran) {
@@ -71,12 +71,12 @@ void Body::Cycle(Double gran) {
   velocity = velocity - position.Norm().Scale(d);
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
   longitude = position.X() / hyp;
-  longitude = asin(longitude) * 180 / M_PI;
+  longitude = asin(longitude) * 180 / PI;
   if (position.X() < 0 && position.Y() >= 0) longitude = -180 - longitude;
   if (position.X() >= 0 && position.Y() >= 0) longitude = 180 - longitude;
   hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
   latitude = position.Z() / hyp;
-  latitude = asin(latitude) * 180 / M_PI;
+  latitude = asin(latitude) * 180 / PI;
   }
 
 char* Body::Name() {

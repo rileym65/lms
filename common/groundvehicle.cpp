@@ -54,12 +54,12 @@ void GroundVehicle::Cycle() {
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
   Longitude(position.X() / hyp);
-  Longitude(asin(Longitude()) * 180 / M_PI);
+  Longitude(asin(Longitude()) * 180 / PI);
   if (position.X() < 0 && position.Y() >= 0) Longitude(-180 - Longitude());
   if (position.X() >= 0 && position.Y() >= 0) Longitude(180 - Longitude());
   hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
   Latitude(position.Z() / hyp);
-  Latitude(asin(Latitude()) * 180 / M_PI);
+  Latitude(asin(Latitude()) * 180 / PI);
   position = position + Orbiting()->Position();
   hyp = (position - lm->Position()).Length();
   if (pilotLocation == PILOT_EVA || pilotLocation == PILOT_LRV) {

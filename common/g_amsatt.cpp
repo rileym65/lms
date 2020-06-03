@@ -40,17 +40,17 @@ void G_AmsAtt::Update() {
   sc = (Spacecraft*)vehicle;
   vel = vehicle->Velocity() - vehicle->Orbiting()->Velocity();
   pos = vehicle->Position() - vehicle->Orbiting()->Position();
-  i = (int)(acos(pos.Norm().Dot(sc->FaceUp())) * 180 / M_PI + .4);
+  i = (int)(acos(pos.Norm().Dot(sc->FaceUp())) * 180 / PI + .4);
   if (lastUr != i) {
     GotoXY(x+4, y+1); sprintf(buffer,"%3d",i); Write(buffer);
     lastUr = i;
     }
-  i = (int)(acos(pos.Norm().Dot(sc->FaceFront())) * 180 / M_PI+.4);
+  i = (int)(acos(pos.Norm().Dot(sc->FaceFront())) * 180 / PI+.4);
   if (lastFr != i) {
     GotoXY(x+4, y+2); sprintf(buffer,"%3d",i); Write(buffer);
     lastFr = i;
     }
-  i = (int)(acos(sc->FaceLeft().Dot(Vector(0,0,-1))) * 180 / M_PI +.4);
+  i = (int)(acos(sc->FaceLeft().Dot(Vector(0,0,-1))) * 180 / PI +.4);
   if (lastLs != i) {
     GotoXY(x+4, y+3); sprintf(buffer,"%3d",i); Write(buffer);
     lastLs = i;

@@ -302,27 +302,27 @@ Double Spacecraft::TrueLongitude() {
 
 double toDegrees(double theta) {
   double d;
-  d = 180 * theta / M_PI;
+  d = 180 * theta / PI;
   while (d >= 180) d -= 360;
   while (d <= -180) d += 360;
   return d;
   }
 
 double toRadians(double theta) {
-  return M_PI*theta/180;
+  return PI*theta/180;
   }
 
 double arctan2(double Ey, double Ex) {
   double u;
   if (Ex != 0) {
     u = atan(Ey / Ex);
-    if (Ex < 0) u = u + M_PI;
-    if (Ex > 0 && Ey < 0) u = u + 2 * M_PI;
+    if (Ex < 0) u = u + PI;
+    if (Ex > 0 && Ey < 0) u = u + 2 * PI;
     }
   else {
-    if (Ey < 0) u = -M_PI / 2;
+    if (Ey < 0) u = -PI / 2;
     if (Ey == 0) u = 0;
-    if (Ey > 0) u = M_PI / 2;
+    if (Ey > 0) u = PI / 2;
     }
   return u;
   }
@@ -333,7 +333,7 @@ void Spacecraft::Prograde(Double maxRate) {
   Double d;
   Matrix m;
   vel = (velocity - Orbiting()->Velocity()).Norm();
-  d = 180 - (acos(faceUp.Dot(vel)) * 180 / M_PI);
+  d = 180 - (acos(faceUp.Dot(vel)) * 180 / PI);
   if (isnan(d)) return;
   if (d > 0) d = -d;
   if (d > -0.001) return;
@@ -352,7 +352,7 @@ void Spacecraft::Retrograde(Double maxRate) {
   Double d;
   Matrix m;
   vel = (velocity - Orbiting()->Velocity()).Norm();
-  d = 180 - (acos(faceUp.Dot(vel)) * 180 / M_PI);
+  d = 180 - (acos(faceUp.Dot(vel)) * 180 / PI);
   if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
@@ -374,7 +374,7 @@ void Spacecraft::Anorm(Double maxRate) {
   pos = (position - Orbiting()->Position()).Norm();
   vel = (velocity - Orbiting()->Velocity()).Norm();
   crs = vel.Cross(pos).Norm();
-  d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  d = 180 - (acos(faceUp.Dot(crs)) * 180 / PI);
   if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
@@ -396,7 +396,7 @@ void Spacecraft::Norm(Double maxRate) {
   pos = (position - Orbiting()->Position()).Norm();
   vel = (velocity - Orbiting()->Velocity()).Norm();
   crs = vel.Cross(pos).Neg().Norm();
-  d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  d = 180 - (acos(faceUp.Dot(crs)) * 180 / PI);
   if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
@@ -419,7 +419,7 @@ void Spacecraft::Inside(Double maxRate) {
   vel = (velocity - Orbiting()->Velocity()).Norm();
   crs = vel.Cross(pos).Norm();
   crs = crs.Cross(vel).Norm();
-  d = 180 - (acos(faceUp.Dot(crs)) * 180 / M_PI);
+  d = 180 - (acos(faceUp.Dot(crs)) * 180 / PI);
   if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
@@ -442,7 +442,7 @@ void Spacecraft::Outside(Double maxRate) {
   vel = (velocity - Orbiting()->Velocity()).Norm();
   crs = vel.Cross(pos).Norm();
   crs = crs.Cross(vel).Neg().Norm();
-  d = 180 - (acos(faceFront.Dot(crs)) * 180 / M_PI);
+  d = 180 - (acos(faceFront.Dot(crs)) * 180 / PI);
   if (isnan(d)) return;
   if (d < 0) d = -d;
   if (d < 0.001) return;
@@ -488,12 +488,12 @@ void Spacecraft::Ins() {
 
   hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
   Longitude(pos.X() / hyp);
-  Longitude(asin(Longitude()) * 180 / M_PI);
+  Longitude(asin(Longitude()) * 180 / PI);
   if (pos.X() < 0 && pos.Y() >= 0) Longitude(-180 - Longitude());
   if (pos.X() >= 0 && pos.Y() >= 0) Longitude(180 - Longitude());
   hyp = pos.Length();
   Latitude(pos.Z() / hyp);
-  Latitude(asin(Latitude()) * 180 / M_PI);
+  Latitude(asin(Latitude()) * 180 / PI);
   Rx = -pos.Y();
   Ry = pos.X();
   Rz = pos.Z();
@@ -521,21 +521,21 @@ void Spacecraft::Ins() {
   ins->TrueAnomaly(arctan2(TAy, TAx));
   Cw = (Rx * cos(ins->AscendingNode()) + Ry * sin(ins->AscendingNode())) / R;
   Sw = 0;
-  if (ins->Inclination() ==0 || ins->Inclination() == M_PI)
+  if (ins->Inclination() ==0 || ins->Inclination() == PI)
     Sw = (Ry * cos(ins->AscendingNode()) - Rx * sin(ins->AscendingNode())) / R;
   else
     Sw = Rz / (R * sin(ins->Inclination()));
   ins->ArgOfPeriapsis(arctan2(Sw, Cw) - ins->TrueAnomaly());
-  if (ins->ArgOfPeriapsis() < 0) ins->ArgOfPeriapsis(2*M_PI+ins->ArgOfPeriapsis());
+  if (ins->ArgOfPeriapsis() < 0) ins->ArgOfPeriapsis(2*PI+ins->ArgOfPeriapsis());
   ins->EccentricAnomaly(arctan2(Ey, Ex));
   ins->MeanAnomaly(ins->EccentricAnomaly()-ins->Eccentricity() * sin(ins->EccentricAnomaly()));
   ins->TrueLongitude(ins->ArgOfPeriapsis() + ins->TrueAnomaly() + ins->AscendingNode());
-  while (ins->TrueLongitude() >= 2*M_PI)
-    ins->TrueLongitude(ins->TrueLongitude() - 2*M_PI);
+  while (ins->TrueLongitude() >= 2*PI)
+    ins->TrueLongitude(ins->TrueLongitude() - 2*PI);
   PlusMinus = a * ins->Eccentricity();
   ins->Periapsis(a - PlusMinus);
   ins->Apoapsis(a + PlusMinus);
-  orbitTime = 2 * M_PI * sqrt(a*a*a / Mu);
+  orbitTime = 2 * PI * sqrt(a*a*a / Mu);
   ins->Inclination(toDegrees(ins->Inclination()));
   ins->AscendingNode(toDegrees(ins->AscendingNode()));
   ins->EccentricAnomaly(toDegrees(ins->EccentricAnomaly()));

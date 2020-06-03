@@ -1,5 +1,6 @@
 #include "math.h"
 #include "matrix.h"
+#include "common.h"
 
 Matrix::Matrix() {
   cell[0][0] = 0.0; cell[0][1] = 0.0; cell[0][2] = 0.0;
@@ -28,8 +29,8 @@ Matrix Matrix::Rotate(Vector v, Double angle) {
   ux2 = v.X() * v.X();
   uy2 = v.Y() * v.Y();
   uz2 = v.Z() * v.Z();
-  c = cos(angle * M_PI / 180);
-  s = sin(angle * M_PI / 180);
+  c = cos(angle * PI / 180);
+  s = sin(angle * PI / 180);
   return Matrix(c+ux2*(1-c)     , ux*uy*(1-c)-uz*s , ux*uz*(1-c)+uy*s,
                 ux*uy*(1-c)+uz*s, c + uy2 * (1 - c), uy*uz*(1-c) - ux*s,
                 uz*ux*(1-c)-uy*s, uz*uy*(1-c)+ux*s , c+uz2*(1-c));
@@ -37,22 +38,22 @@ Matrix Matrix::Rotate(Vector v, Double angle) {
 
 Matrix Matrix::RotateX(Double angle) {
   Double c,s;
-  c = cos(angle * M_PI / 180);
-  s = sin(angle * M_PI / 180);
+  c = cos(angle * PI / 180);
+  s = sin(angle * PI / 180);
   return Matrix(1.0,0.0,0.0, 0.0,c,-s, 0.0,s,c);
   }
 
 Matrix Matrix::RotateY(Double angle) {
   Double c,s;
-  c = cos(angle * M_PI / 180);
-  s = sin(angle * M_PI / 180);
+  c = cos(angle * PI / 180);
+  s = sin(angle * PI / 180);
   return Matrix(c,0.0,s, 0.0,1.0,0.0, -s,0.0,c);
   }
 
 Matrix Matrix::RotateZ(Double angle) {
   Double c,s;
-  c = cos(angle * M_PI / 180);
-  s = sin(angle * M_PI / 180);
+  c = cos(angle * PI / 180);
+  s = sin(angle * PI / 180);
   return Matrix(c,-s,0.0, s,c,0.0, 0.0,0.0,1.0);
   }
 

@@ -211,12 +211,12 @@ void CsmComputer::_doShow() {
          pos = csm->Position() - Earth->Position();
          hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
          longitude = pos.X() / hyp;
-         longitude = asin(longitude) * 180 / M_PI;
+         longitude = asin(longitude) * 180 / PI;
          if (pos.X() < 0 && pos.Y() >= 0) longitude = -180 - longitude;
          if (pos.X() >= 0 && pos.Y() >= 0) longitude = 180 - longitude;
          hyp = pos.Length();
          latitude = pos.Z() / hyp;
-         latitude = asin(latitude) * 180 / M_PI;
+         latitude = asin(latitude) * 180 / PI;
          longitude = longitude - kscAngle - 80.6077;
          while (longitude >= 180) longitude -= 360;
          while (longitude <= -180) longitude += 360;
@@ -230,12 +230,12 @@ void CsmComputer::_doShow() {
          pos = csm->Position() - Moon->Position();
          hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
          longitude = pos.X() / hyp;
-         longitude = asin(longitude) * 180 / M_PI;
+         longitude = asin(longitude) * 180 / PI;
          if (pos.X() < 0 && pos.Y() >= 0) longitude = -180 - longitude;
          if (pos.X() >= 0 && pos.Y() >= 0) longitude = 180 - longitude;
          hyp = pos.Length();
          latitude = pos.Z() / hyp;
-         latitude = asin(latitude) * 180 / M_PI;
+         latitude = asin(latitude) * 180 / PI;
          _reg1(longitude * 100.0);
          _reg2(latitude * 100.0);
          vel = csm->Velocity() - Moon->Velocity();
@@ -305,7 +305,7 @@ Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
 
   proc = ((apo * 100) - csm->Altitude()) / 60.0;
   a = pos.Norm().Dot(csm->FaceUp());
-  a = acos(a) * 180 / M_PI;
+  a = acos(a) * 180 / PI;
 
 GotoXY(1,26); printf("orbit: %f\n",apo * 100);
 GotoXY(1,27); printf("Roc  : %f\n",csm->RateOfClimb());
@@ -330,7 +330,7 @@ GotoXY(1,30); printf("angle: %f\n",a);
     else {
       pos = pos.Norm();
       d = pos.Dot(csm->FaceUp());
-      d = acos(d) * 180 / M_PI;
+      d = acos(d) * 180 / PI;
       d -= angle;
       if (d < -maxRate) d = -maxRate;
       if (d > maxRate) d = maxRate;
@@ -381,7 +381,7 @@ Double CsmComputer::_ascent(Double angle,Double maxRate,Double apo) {
   else {
     pos = pos.Norm();
     d = pos.Dot(csm->FaceUp());
-    d = acos(d) * 180 / M_PI;
+    d = acos(d) * 180 / PI;
     d -= angle;
     if (d < -maxRate) d = -maxRate;
     if (d > maxRate) d = maxRate;

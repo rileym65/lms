@@ -5,6 +5,10 @@
 #include "flight.h"
 #include "orbit.h"
 
+#ifdef MINGW
+#include <windows.h>
+#endif
+
 Int8 Flight::alignedForDocking() {
   Vector pos;
   Vector vel;
@@ -914,7 +918,11 @@ UInt32 Flight::Fly() {
       cycle();
       }
     else ticks++;
+#ifdef MINGW
+    Sleep(simSpeed / 1000);
+#else
     usleep(simSpeed);
+#endif
     while (KeyPressed()) {
       key = Inkey();
       if (key == '!') simSpeed = 100000;

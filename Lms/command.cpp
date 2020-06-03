@@ -148,7 +148,7 @@ Matrix m;
       if (faceUp.Dot(vel) < 0) cd = 1.1;
  
     dot = faceUp.Norm().Dot(vel.Norm());
-    angle = 180 - acos(dot)*180/M_PI;
+    angle = 180 - acos(dot)*180/PI;
     axis = vel.Norm().Cross(faceUp.Norm());
     m = Matrix::Rotate(axis, (angle / 1) / GRAN);
     faceLeft = m.Transform(faceLeft).Norm();
@@ -345,7 +345,7 @@ Double CommandModule::DeltaV() {
 
 void CommandModule::Diameter(Double d) {
   d /= 2;
-  area = d * d * M_PI;
+  area = d * d * PI;
   }
 
 Byte CommandModule::EnginesLit() {
@@ -475,7 +475,7 @@ Double CommandModule::ParachuteDeployment() {
 
 void CommandModule::ParachuteDiameter(Double d) {
   d /= 2;
-  parachuteArea = d * d * M_PI;
+  parachuteArea = d * d * PI;
   }
 
 Double CommandModule::Periapsis() {

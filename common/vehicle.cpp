@@ -422,12 +422,12 @@ void Vehicle::Cycle() {
   v1 = rvel.Dot(rpos.Norm());
 //  hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
 //  longitude = position.X() / hyp;
-//  longitude = asin(longitude) * 180 / M_PI;
+//  longitude = asin(longitude) * 180 / PI;
 //  if (position.X() < 0 && position.Y() >= 0) longitude = -180 - longitude;
 //  if (position.X() >= 0 && position.Y() >= 0) longitude = 180 - longitude;
 //  hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
 //  latitude = position.Z() / hyp;
-//  latitude = asin(latitude) * 180 / M_PI;
+//  latitude = asin(latitude) * 180 / PI;
 
   vnorm = rvel.Norm();
   v2 = rvel.Dot(rpos.Norm());
@@ -469,16 +469,16 @@ void Vehicle::Cycle() {
 //  e = sqrt(1+2*E*(L.Length()*L.Length())/(g*g));
   apoapsis = s * (1 + e);
   periapsis = s * (1 - e);
-  orbitTime = sqrt(4*(M_PI*M_PI)*(s*s*s)/g);
+  orbitTime = sqrt(4*(PI*PI)*(s*s*s)/g);
   if (thrust.Length() > 0) {
   hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
     lan = L.Y() / hyp;
-    lan = asin(lan) * 180 / M_PI;
+    lan = asin(lan) * 180 / PI;
     if (L.X() < 0 && L.Y() < 0) lan = -180 - lan;
     if (L.X() < 0 && L.Y() >= 0) lan = 180 - lan;
     hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
     incl = L.Z() / hyp;
-    incl = asin(incl) * 180 / M_PI;
+    incl = asin(incl) * 180 / PI;
     }
 */
   }

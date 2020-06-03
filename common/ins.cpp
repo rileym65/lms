@@ -403,12 +403,12 @@ void Ins::Cycle() {
 
   hyp = sqrt(pos.X() * pos.X() + pos.Y() * pos.Y());
   longitude = pos.X() / hyp;
-  longitude = asin(longitude) * 180 / M_PI;
+  longitude = asin(longitude) * 180 / PI;
   if (pos.X() < 0 && pos.Y() >= 0) longitude = -180 - longitude;
   if (pos.X() >= 0 && pos.Y() >= 0) longitude = 180 - longitude;
   hyp = pos.Length();
   latitude = pos.Z() / hyp;
-  latitude = asin(latitude) * 180 / M_PI;
+  latitude = asin(latitude) * 180 / PI;
   Rx = -pos.Y();
   Ry = pos.X();
   Rz = pos.Z();
@@ -436,20 +436,20 @@ void Ins::Cycle() {
   trueAnomaly = arctan2(TAy, TAx);
   Cw = (Rx * cos(ascendingNode) + Ry * sin(ascendingNode)) / R;
   Sw = 0;
-  if (inclination ==0 || inclination == M_PI)
+  if (inclination ==0 || inclination == PI)
     Sw = (Ry * cos(ascendingNode) - Rx * sin(ascendingNode)) / R;
   else
     Sw = Rz / (R * sin(inclination));
   argOfPeriapsis = arctan2(Sw, Cw) - trueAnomaly;
-  if (argOfPeriapsis < 0) argOfPeriapsis = 2*M_PI+argOfPeriapsis;
+  if (argOfPeriapsis < 0) argOfPeriapsis = 2*PI+argOfPeriapsis;
   eccentricAnomaly = arctan2(Ey, Ex);
   meanAnomaly = eccentricAnomaly-eccentricity * sin(eccentricAnomaly);
   trueLongitude = argOfPeriapsis + trueAnomaly + ascendingNode;
-  while (trueLongitude >= 2*M_PI) trueLongitude = trueLongitude - 2*M_PI;
+  while (trueLongitude >= 2*PI) trueLongitude = trueLongitude - 2*PI;
   PlusMinus = a * eccentricity;
   periapsis = a - PlusMinus;
   apoapsis = a + PlusMinus;
-  orbitTime = 2 * M_PI * sqrt(a*a*a / Mu);
+  orbitTime = 2 * PI * sqrt(a*a*a / Mu);
   inclination = toDegrees(inclination);
   ascendingNode = toDegrees(ascendingNode);
   eccentricAnomaly = toDegrees(eccentricAnomaly);

@@ -39,26 +39,26 @@ void Mission::_computeTargetData() {
   Double hyp;
   Double x,y,z;
   Double c,s;
-  c = -1680.226342 * cos(targetLongitude*M_PI/180);
-  s = -1680.226342 * sin(targetLongitude*M_PI/180);
-  z = sin(targetLatitude*M_PI/180);
-  x = sin(targetLongitude*M_PI/180) *
-      cos(targetLatitude*M_PI/180);
-  y = -cos(targetLongitude*M_PI/180) *
-       cos(targetLatitude*M_PI/180);
+  c = -1680.226342 * cos(targetLongitude*PI/180);
+  s = -1680.226342 * sin(targetLongitude*PI/180);
+  z = sin(targetLatitude*PI/180);
+  x = sin(targetLongitude*PI/180) *
+      cos(targetLatitude*PI/180);
+  y = -cos(targetLongitude*PI/180) *
+       cos(targetLatitude*PI/180);
   targetPos = Vector(x*1738300,y*1738300,z*1738300).Norm();
   targetVel = Vector(c,s,0).Norm();
   L = targetVel.Cross(targetPos).Norm();
   hyp = sqrt(L.X() * L.X() + L.Y() * L.Y());
   targetMomEast = L.Y() / hyp;
-  targetMomEast = asin(targetMomEast) * 180 / M_PI;
+  targetMomEast = asin(targetMomEast) * 180 / PI;
   if (L.X() < 0 && L.Y() < 0) targetMomEast = -180 - targetMomEast;
   if (L.X() < 0 && L.Y() >= 0) targetMomEast = 180 - targetMomEast;
   while (targetMomEast < -180) targetMomEast += 360;
   while (targetMomEast > 180) targetMomEast -= 360;
   hyp = sqrt(L.Z() * L.Z() + hyp * hyp);
   targetMomNorth = L.Z() / hyp;
-  targetMomNorth = asin(targetMomNorth) * 180 / M_PI;
+  targetMomNorth = asin(targetMomNorth) * 180 / PI;
   }
 
 Double Mission::AscentEmptyWeight() {

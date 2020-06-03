@@ -4,6 +4,7 @@
 #include "g_radial.h"
 #include "terminal.h"
 #include "vehicle.h"
+#include "common.h"
 
 G_Radial::G_Radial(Int8 x,Int8 y,Boolean f,Vehicle* v) :
   Gauge(x, y, f, v) {
@@ -31,15 +32,15 @@ void G_Radial::Update() {
   char   buffer[16];
   v1 = (vehicle->Position() - vehicle->Orbiting()->Position()).Norm();
   v2 = vehicle->FaceUp().Norm();
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   sprintf(buffer,"%6.1f",d);
   GotoXY(x+4,y+0); Write(buffer);
   v2 = vehicle->FaceFront().Norm();
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   sprintf(buffer,"%6.1f",d);
   GotoXY(x+4,y+1); Write(buffer);
   v2 = vehicle->FaceLeft().Norm();
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   sprintf(buffer,"%6.1f",d);
   GotoXY(x+4,y+2); Write(buffer);
   }

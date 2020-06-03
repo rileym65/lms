@@ -220,12 +220,12 @@ void Lrv::Cycle() {
   Radius(position.Length());
   hyp = sqrt(position.X() * position.X() + position.Y() * position.Y());
   longitude = position.X() / hyp;
-  longitude = asin(longitude) * 180 / M_PI;
+  longitude = asin(longitude) * 180 / PI;
   if (position.X() < 0 && position.Y() >= 0) longitude = -180 - longitude;
   if (position.X() >= 0 && position.Y() >= 0) longitude = 180 - longitude;
   hyp = sqrt(position.Z() * position.Z() + hyp * hyp);
   latitude = position.Z() / hyp;
-  latitude = asin(latitude) * 180 / M_PI;
+  latitude = asin(latitude) * 180 / PI;
   }
 */
 

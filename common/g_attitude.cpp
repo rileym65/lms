@@ -42,14 +42,14 @@ void G_Attitude::Update() {
   pos = vehicle->Position() - vehicle->Orbiting()->Position();
   v1 = pos.Norm();
   v2 = vehicle->FaceUp().Norm();
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   i = d * 10.0;
   if (i != lastUr) {
     GotoXY(x+4,y+0); sprintf(buffer,"%5.1f",d); Write(buffer);
     lastUr = i;
     }
   v2 = vehicle->FaceFront().Norm();
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   i = d * 10.0;
   if (i != lastFr) {
     GotoXY(x+4,y+1); sprintf(buffer,"%5.1f",d); Write(buffer);
@@ -57,7 +57,7 @@ void G_Attitude::Update() {
     }
   v1 = vehicle->FaceLeft().Norm();
   v2 = Vector(0,0,-1);
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   i = d * 10.0;
   if (i != lastLs) {
     GotoXY(x+4,y+2); sprintf(buffer,"%5.1f",d); Write(buffer);
@@ -65,21 +65,21 @@ void G_Attitude::Update() {
     }
   v1 = vel.Norm();
   v2 = vehicle->FaceUp().Norm();
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   i = d * 10.0;
   if (i != lastUo) {
     GotoXY(x+14,y+0); sprintf(buffer,"%5.1f",d); Write(buffer);
     lastUo = i;
     }
   v2 = vehicle->FaceFront().Norm();
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   i = d * 10.0;
   if (i != lastFo) {
     GotoXY(x+14,y+1); sprintf(buffer,"%5.1f",d); Write(buffer);
     lastFo = i;
     }
   v2 = vehicle->FaceLeft().Norm();
-  d = acos(v1.Dot(v2)) * 180 / M_PI;
+  d = acos(v1.Dot(v2)) * 180 / PI;
   i = d * 10.0;
   if (i != lastLo) {
     GotoXY(x+14,y+2); sprintf(buffer,"%5.1f",d); Write(buffer);

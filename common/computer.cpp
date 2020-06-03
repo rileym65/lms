@@ -341,7 +341,7 @@ Double Computer::read(UInt16 addr) {
       case 0x15: return sc->RelVel().X();
       case 0x16: return sc->RelVel().Y();
       case 0x17: return sc->RelVel().Z();
-      case 0x18: return M_PI;
+      case 0x18: return PI;
       case 0x19: return 1;
       case 0x1a: return 10;
       case 0x1b: return 100;
