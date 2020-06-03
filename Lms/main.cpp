@@ -178,7 +178,7 @@ void startFromMoon() {
     fgets(buffer,10,stdin);
     sscanf(buffer,"%lf",&d);
     }
-  csmLAN = d;
+  mission->StartLAN(d);
   d = -9999;
   while (d < 0 || d >= 60) {
     GotoXY(30, 17); printf("                                        ");
@@ -186,7 +186,7 @@ void startFromMoon() {
     fgets(buffer,10,stdin);
     sscanf(buffer,"%lf",&d);
     }
-  csmInc = d;
+  mission->StartInc(d);
   flight->Init();
   csm->Orbiting(Moon);
   csm->SetupPanel();
@@ -279,8 +279,8 @@ int init() {
   mission->Name((char*)"Default");
   seq = new Sequencer();
   map = new Map();
-  csmLAN = 0;
-  csmInc = 0.01;
+  mission->StartLAN(0);
+  mission->StartInc(0.01);
   file = fopen("lms.sav","r");
   if (file != NULL) {
     fclose(file);

@@ -882,8 +882,8 @@ void Flight::Init() {
     orb.SecondaryMass(35000);
     orb.SemiMajorAxis(1838300);
     orb.Eccentricity(0.00001);
-    orb.Inclination(csmInc);
-    orb.LongitudeAscendingNode(csmLAN);
+    orb.Inclination(mission->StartInc());
+    orb.LongitudeAscendingNode(mission->StartLAN());
     orb.ArgumentOfPeriapsis(0);
     orb.MeanAnomoly(0);
     orb.ComputeRemainingOrbitalElements();
