@@ -70,6 +70,7 @@
 	| tutorial_1.doc  | Tutorial for sub-orbital flight              |
 	| tutorial_2.doc  | Tutorial for launch to orbit                 |
 	| tutorial_3.doc  | Tutorial for Booster Separation/TD&E         |
+	| tutorial_4.doc  | Tutorial for Orbital Maneuvers/instrumentation  |
 	| tutorial_7.doc  | Tutorial for getting to the Moon             |
 	| tutorial_8.doc  | Tutorial for using the CSM guidance computer |
 	| tutorial_9.doc  | Tutorial for Landing on the Moon             |
