@@ -373,7 +373,7 @@ void Spacecraft::Anorm(Double maxRate) {
   Matrix m;
   pos = (position - Orbiting()->Position()).Norm();
   vel = (velocity - Orbiting()->Velocity()).Norm();
-  crs = vel.Cross(pos).Norm();
+  crs = vel.Cross(pos).Neg().Norm();
   d = 180 - (acos(faceUp.Dot(crs)) * 180 / PI);
   if (isnan(d)) return;
   if (d < 0) d = -d;
@@ -395,7 +395,7 @@ void Spacecraft::Norm(Double maxRate) {
   Matrix m;
   pos = (position - Orbiting()->Position()).Norm();
   vel = (velocity - Orbiting()->Velocity()).Norm();
-  crs = vel.Cross(pos).Neg().Norm();
+  crs = vel.Cross(pos).Norm();
   d = 180 - (acos(faceUp.Dot(crs)) * 180 / PI);
   if (isnan(d)) return;
   if (d < 0) d = -d;

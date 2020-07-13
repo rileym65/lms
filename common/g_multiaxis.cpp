@@ -159,15 +159,15 @@ void G_MultiAxis::modePrograde() {
   yVec = xVec.Cross(vel);
   zVec = vel;
   /* ***** Face ***** */
-  faceX = 12.5 + ((vehicle->FaceFront().Dot(xVec)) * 10.5);
+  faceX = 12.5 - ((vehicle->FaceFront().Dot(xVec)) * 10.5);
   faceY = 7.5 - ((vehicle->FaceFront().Dot(yVec)) * 5.5);
   faceD = vehicle->FaceFront().Dot(zVec);
   /* ***** Left ***** */
-  leftX = 12.5 + ((vehicle->FaceLeft().Dot(xVec)) * 10.5);
+  leftX = 12.5 - ((vehicle->FaceLeft().Dot(xVec)) * 10.5);
   leftY = 7.5 - ((vehicle->FaceLeft().Dot(yVec)) * 5.5);
   leftD = vehicle->FaceLeft().Dot(zVec);
   /* ***** Up ***** */
-  upX = 12.5 + ((vehicle->FaceUp().Dot(xVec)) * 10.5);
+  upX = 12.5 - ((vehicle->FaceUp().Dot(xVec)) * 10.5);
   upY = 7.5 - ((vehicle->FaceUp().Dot(yVec)) * 5.5);
   upD = vehicle->FaceUp().Dot(zVec);
   draw(faceX,faceY,faceD,leftX,leftY,leftD,upX,upY,upD);

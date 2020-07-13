@@ -124,19 +124,19 @@ void G_PrecAxis::modeDown() {
   zVec = vehicle->Position().Norm();
   xVec= yVec.Cross(zVec).Norm();
   /* ***** Face ***** */
-  dx = asin(vehicle->FaceFront().Dot(xVec)) * 180 / PI;
+  dx = -asin(vehicle->FaceFront().Dot(xVec)) * 180 / PI;
   dy = asin(vehicle->FaceFront().Dot(yVec)) * 180 / PI;
   dz = asin(vehicle->FaceFront().Dot(zVec)) * 180 / PI;
   GotoXY(x+5,y+3); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
   if (dz >= 0) Write("+"); else Write("-");
   /* ***** Left ***** */
-  dx = asin(vehicle->FaceLeft().Dot(xVec)) * 180 / PI;
+  dx = -asin(vehicle->FaceLeft().Dot(xVec)) * 180 / PI;
   dy = asin(vehicle->FaceLeft().Dot(yVec)) * 180 / PI;
   dz = asin(vehicle->FaceLeft().Dot(zVec)) * 180 / PI;
   GotoXY(x+5,y+7); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
   if (dz >= 0) Write("+"); else Write("-");
   /* ***** Up ***** */
-  dx = asin(vehicle->FaceUp().Dot(xVec)) * 180 / PI;
+  dx = -asin(vehicle->FaceUp().Dot(xVec)) * 180 / PI;
   dy = asin(vehicle->FaceUp().Dot(yVec)) * 180 / PI;
   dz = asin(vehicle->FaceUp().Dot(zVec)) * 180 / PI;
   GotoXY(x+5,y+5); sprintf(buffer,"%7.2f %7.2f  ",dy,dx); Write(buffer);
