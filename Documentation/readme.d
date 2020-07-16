@@ -72,6 +72,7 @@
 	| tutorial_3.doc  | Tutorial for Booster Separation/TD&E         |
 	| tutorial_4.doc  | Tutorial for Orbital Maneuvers/instrumentation  |
 	| tutorial_5.doc  | Tutorial for flying the LM                   |
+	| tutorial_5a.doc | Tutorial for flying the LM Part 2            |
 	| tutorial_7.doc  | Tutorial for getting to the Moon             |
 	| tutorial_8.doc  | Tutorial for using the CSM guidance computer |
 	| tutorial_9.doc  | Tutorial for Landing on the Moon             |

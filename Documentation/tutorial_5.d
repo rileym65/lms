@@ -10,6 +10,32 @@
 	This tutorial will go over the instrument panel and the next
 	4 you will take increasingly more complex flights in the LM.
 [=]
+[er]
+	+-------------------------+
+	|    LOOKING   -X         |
+	| +========-Y|==========+ |
+	| |          L          | |
+	| |                     | |
+	| |                     | |
+	| |                     |+|
+	| |                     |Z|
+	|--          F         U--|
+	|-|                     | |
+	|Z|                     | |
+	| |                     | |
+	| |                     | |
+	| |                     | |
+	| +==========|+Y========+ |
+	+-------------------------+
+[ee]
+	Before starting the tutorials on flying the LM, you should orient
+	the CSM in absolute mode to this orientation.  Commands that I will
+	show in the tutorials will assume this orientation.  Although it is
+	not absolutely necessary for you to use this orientation, if you
+	choose not to then you will need to adjust your keystrokes
+	accordingly.
+[e-]
+[=]
 	To begin you will need to transfer to the LM, you can do this
 	by pressing <shift><m> to move to the LM.  It takes about 45
 	minutes to transfer to and power up the LM, so use time
