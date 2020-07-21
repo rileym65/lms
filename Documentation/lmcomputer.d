@@ -268,6 +268,11 @@
 	|      |      | Abs Acc ROC   | Abs. Acc. E    | Abs. Acc. N   |
 	|      |      | Apo HH        | Apo MM         | Apo SS        |
 	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|  16  |  82  | Abs Alt.      | Abs. Long.     | Abs. Lat.     |
+	|      |      | Abs ROC       | Abs. Vel. E    | Abs. Vel. N   |
+	|      |      | Abs Acc ROC   | Abs. Acc. E    | Abs. Acc. N   |
+	|      |      | Peri HH       | Peri MM        | Peri SS       |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
 [TE]
 [=]
 

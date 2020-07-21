@@ -57,6 +57,20 @@ loop000003: call   posrel              ; Display POS^REL data
             wait
             jmp    loop000003
 
+; *************************************************************************
+; ***** Prog: 00   Verb: 16   Noun: 54                                *****
+; ***** Type: Main program                                            *****
+; ***** This program displays the data associated with INS POS^REL    *****
+; *************************************************************************
+            prog   P00V16N54
+loopV16N54: call   posrel              ; Display POS^REL data
+            call   periapo             ; display perilune/apolune
+            call   relorbit            ; display orbital information
+            mov    rotime,R15          ; Relative orbit time
+            mov    rmean,r10           ; Show relative mean anomaly
+            wait
+            jmp    loopV16N54
+
 
 ; *************************************************************************
 ; ***** Prog: 00   Verb: 16   Noun: 62                                *****
@@ -470,8 +484,29 @@ v16n81:     mov    clkap,r20            ; get time til apoapsis
             mov    r3,r12
             call   posabs              ; Display POS^ABS data
             call   periapo             ; display perilune/apolune
+            mov    rotime,R15          ; Relative orbit time
             wait
             jmp    v16n81
+
+; *************************************************************************
+; ***** Prog: 00   Verb: 16   Noun: 51                                *****
+; ***** Type: Main program                                            *****
+; ***** This program displays the data associated with INS POS^ABS    *****
+; *****                                                               *****
+; ***** This program displays the POS^ABS and ORB^ABS data from the   *****
+; ***** INS                                                           *****
+; *************************************************************************
+            prog   P00V16N82
+v16n82:     mov    clkpe,r20            ; get time til periapsis
+            call   clkout               ; output clock elements
+            mov    r1,r10               ; move clock to R10,R11, R12
+            mov    r2,r11
+            mov    r3,r12
+            call   posabs              ; Display POS^ABS data
+            call   periapo             ; display perilune/apolune
+            mov    rotime,R15          ; Relative orbit time
+            wait
+            jmp    v16n82
 
 ; **********************************************************************
 ; ***** Decompose clock in r20 to hh,mm,ss and display in r1,r2,r3 *****

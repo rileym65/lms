@@ -312,7 +312,10 @@ Boolean Computer::Err() {
   }
 
 Double Computer::read(UInt16 addr) {
+Double a,b;
+  Double      d;
   Spacecraft* sc;
+  Ins*        tins;
   sc = (Spacecraft*)vehicle;
   if ((addr & 0xf00) == 0x100) return regs[addr & 0xff];
   if ((addr & 0xf00) == 0x200) {
@@ -388,6 +391,18 @@ Double Computer::read(UInt16 addr) {
       case 0x44: return vehicle->GetIns()->TarDockZ();
       case 0x45: return vehicle->GetIns()->Velocity();
       case 0x46: return vehicle->GetIns()->Acceleration();
+      case 0x47:
+           tins = sc->TargetVehicle()->GetIns();
+           a = ins->MeanAnomaly()+ins->ArgOfPeriapsis()+ins->AscendingNode();
+           b = tins->MeanAnomaly()+tins->ArgOfPeriapsis()+tins->AscendingNode();
+           d = a-b;
+                 while (d <= -180) d += 360;
+                 while (d > 180) d -= 360;
+GotoXY(1,28); printf("%f\n",a);
+GotoXY(1,29); printf("%f\n",b);
+GotoXY(1,31); printf("%f  %f  %f\n",ins->AscendingNode(),ins->ArgOfPeriapsis(),ins->MeanAnomaly());
+GotoXY(1,32); printf("%f  %f  %f\n",tins->AscendingNode(),tins->ArgOfPeriapsis(),tins->MeanAnomaly());
+                 return d;
       }
     }
   if ((addr & 0xf00) == 0x600) {
