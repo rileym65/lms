@@ -74,6 +74,7 @@
 	| tutorial_5.doc  | Tutorial for flying the LM                   |
 	| tutorial_5a.doc | Tutorial for flying the LM Part 2            |
 	| tutorial_5b.doc | Tutorial for flying the LM Part 3            |
+	| tutorial_5c.doc | Tutorial for flying the LM Part 4            |
 	| tutorial_7.doc  | Tutorial for getting to the Moon             |
 	| tutorial_8.doc  | Tutorial for using the CSM guidance computer |
 	| tutorial_9.doc  | Tutorial for Landing on the Moon             |
