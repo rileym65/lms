@@ -241,6 +241,11 @@
 	|      |      | Rel Acc ROC   | Rel. Acc. E    | Rel. Acc. N   |
 	|      |      | Rel dist. (m) | Rel. LAN       | Rel. Incl.    |
 	|      |      | Perapsis      | Apoapsis       | Orbit time    |
+	|  16  |  54  | Rel Alt.      | Rel. Long.     | Rel. Lat.     |
+	|      |      | Rel ROC       | Rel. Vel. E    | Rel. Vel. N   |
+	|      |      | Rel Acc ROC   | Rel. Acc. E    | Rel. Acc. N   |
+	|      |      | Phase angle   | Rel. LAN       | Rel. Incl.    |
+	|      |      | Perapsis      | Apoapsis       | Orbit time    |
 	|  16  |  62  | Tar Alt.      | Tar. Long. (m) | Tar. Lat. (m) |
 	|      |      | Tar ROC       | Tar. Vel. E    | Tar. Vel. N   |
 	|      |      | Tar Acc ROC   | Tar. Acc. E    | Tar. Acc. N   |
