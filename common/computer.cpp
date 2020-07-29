@@ -398,10 +398,6 @@ Double a,b;
            d = a-b;
                  while (d <= -180) d += 360;
                  while (d > 180) d -= 360;
-GotoXY(1,28); printf("%f\n",a);
-GotoXY(1,29); printf("%f\n",b);
-GotoXY(1,31); printf("%f  %f  %f\n",ins->AscendingNode(),ins->ArgOfPeriapsis(),ins->MeanAnomaly());
-GotoXY(1,32); printf("%f  %f  %f\n",tins->AscendingNode(),tins->ArgOfPeriapsis(),tins->MeanAnomaly());
                  return d;
       }
     }
