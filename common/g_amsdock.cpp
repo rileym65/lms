@@ -32,9 +32,9 @@ void G_AmsDock::Display() {
   GotoXY(x,y+0); Write("    dock     ");
   GotoXY(x,y+1); Write(" +---f|----+ ");
   GotoXY(x,y+2); Write(" |         | ");
-  GotoXY(x,y+3); Write(" |         |l");
+  GotoXY(x,y+3); Write(" |         |r");
   GotoXY(x,y+4); Write("--         --");
-  GotoXY(x,y+5); Write("r|         | ");
+  GotoXY(x,y+5); Write("l|         | ");
   GotoXY(x,y+6); Write(" |         | ");
   GotoXY(x,y+7); Write(" +----|b---+ ");
   }
