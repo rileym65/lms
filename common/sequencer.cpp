@@ -35,6 +35,7 @@ void Sequencer::Message(const char* msg, Int32 v, Int32 t) {
 
 void Sequencer::Complete() {
   char  cell;
+  int   count;
   SAMPLE sample;
   switch (function) {
     case SEQ_END_EVA:
@@ -177,8 +178,10 @@ void Sequencer::Complete() {
          break;
     case SEQ_BOXLM:
          plss->Carrying(' ');
-         while (lrv->Rock() >0) {
+         count = 0;
+         while (lrv->Rock() >0 && count < 30) {
            lm->AddSample(lrv->TakeSample());
+           count++;
            }
          lrv->Boxes(lrv->Boxes() - 1);
          break;
@@ -188,7 +191,7 @@ void Sequencer::Complete() {
            }
          break;
     case SEQ_CARTTOLRV:
-         while (lrv->Rock() < 30 && plss->Cart() > 0) {
+         while (lrv->Rock() < lrv->Boxes() * 30 && plss->Cart() > 0) {
            lrv->AddSample(plss->TakeFromCart());
            }
          break;

@@ -9,10 +9,10 @@ class Lrv : public GroundVehicle {
   protected:
     Boolean isSetup;
     Int8    boxes;
-    Int8    rock;
+    Int16   rock;
     Double  driven;
     Int8    damageReportStep;
-    SAMPLE  samples[30];
+    SAMPLE  samples[240];
   public:
     Lrv();
     virtual ~Lrv();
@@ -27,7 +27,7 @@ class Lrv : public GroundVehicle {
     virtual Int8   Boxes(Int8 i);
     virtual void   Damage(Double dmg);
     virtual Double Driven();
-    virtual Int8   Rock();
+    virtual Int16  Rock();
     virtual Int8   SubLoad(FILE* file, char* line);
     virtual void   Save(FILE* file);
     virtual void   ProcessKey(Int32 key);

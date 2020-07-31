@@ -33,7 +33,7 @@ void Lrv::Init() {
   }
 
 void Lrv::AddSample(SAMPLE s) {
-  if (rock >= 30) return;
+  if (rock >= 240) return;
   samples[rock++] = s;
   }
 
@@ -80,7 +80,7 @@ Boolean Lrv::IsSetup() {
   return isSetup;
   }
 
-Int8 Lrv::Rock() {
+Int16 Lrv::Rock() {
   return rock;
   }
 

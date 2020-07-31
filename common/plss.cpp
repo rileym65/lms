@@ -268,7 +268,7 @@ void Plss::ProcessKey(Int32 key) {
       }
     if (key == 'S') {
       if (carrying == 'R' && lrvPos < 50) {
-        if (lrv->Rock() < 30 && lrv->Boxes() > 0) seq->StoreSample();
+        if (lrv->Rock() < lrv->Boxes() * 30) seq->StoreSample();
         }
       if (carrying == 'B' && lmPos < 50 && lrv->Boxes() > 0)
         seq->BoxToLm();

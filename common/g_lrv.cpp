@@ -30,7 +30,7 @@ void G_Lrv::Display() {
   GotoXY(x,y+1); Write("OXY:--");
   GotoXY(x,y+2); Write("BAT:  ");
   GotoXY(x,y+3); Write("BOX:  ");
-  GotoXY(x,y+4); Write("ROK:  ");
+  GotoXY(x,y+4); Write("RK:   ");
   }
 
 void G_Lrv::Update() {
@@ -55,7 +55,8 @@ void G_Lrv::Update() {
     lastSampleBoxes = lrv->Boxes();
     }
   if (lrv->Rock() != lastRock) {
-    GotoXY(x+4,y+4); sprintf(buffer,"%2d",lrv->Rock()); Write(buffer);
+    i = lrv->Rock();
+    GotoXY(x+3,y+4); sprintf(buffer,"%3d",i); Write(buffer);
     lastRock = lrv->Rock();
     }
   if (lrv->IsSetup() != lastSetup) {
