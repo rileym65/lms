@@ -426,7 +426,7 @@
 	In this tutorial we did a same-orbit rendevous, which is something
 	that you should not need to do in an actual Lunar mission.  The
 	only reason to do this type of rendevous during a Lunar mission is
-	because you did not time your initial rendevous correctly and end
+	because you did not time your initial rendevous correctly and ended
 	up too far ahead or behind the CSM, in which case you would go
 	ahead and circulariaze your orbit and perform a same-orbit
 	rendevous to get to the CSM.

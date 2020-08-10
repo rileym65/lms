@@ -21,6 +21,7 @@ all: csmcomputer.d lmcomputer.d panel.d keys.d
 	makedoc $(FLAGS) tutorial_5a.d
 	makedoc $(FLAGS) tutorial_5b.d
 	makedoc $(FLAGS) tutorial_5c.d
+	makedoc $(FLAGS) tutorial_5d.d
 	makedoc $(FLAGS) tutorial_7.d
 	makedoc $(FLAGS) tutorial_8.d
 	makedoc $(FLAGS) tutorial_9.d
