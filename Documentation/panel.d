@@ -344,7 +344,7 @@
 	|^  lrv|
 	|BAT:99|
 	|BOX: 8|
-	|ROK: 0|
+	|RK:  0|
 	+------+	
 [ee]
 	This group of displays shows information about the rover.  BAT
@@ -1217,7 +1217,7 @@
 	|OXY:--|
 	|BAT:47|
 	|BOX: 6|
-	|ROK:20|
+	|RK: 20|
 	+------+
 [ee]
 	This guage provides information about the LRV.  If the lrv has
@@ -1236,7 +1236,7 @@
 	this number shows zero then you can no longer store samples on
 	the rover.
 [=]
-	ROK indicates how many of kilograms of samples are currently
+	RK indicates how many of kilograms of samples are currently
 	stored on the rover.
 [e-]
 

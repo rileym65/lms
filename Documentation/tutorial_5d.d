@@ -38,7 +38,7 @@
 	For purposes of calculation we can use a single number for GM,
 	since that is just the multiplication of the gravitational constant
 	with the mass of the Moon, we cann just say that GM = 4.9075e+12,
-	and we can simpligy the 2 * pi to be 2PI = 6.283185308.
+	and we can simplify the 2 * pi to be 2PI = 6.283185308.
 [=]
 	This gives us a new formula of:
 [=]
@@ -91,14 +91,14 @@
 [=]
 [lb1]
 [li]	Start by calculating the radius of the LM's orbit. Remember the
-	Moon's radius is 1738.3km and we need to add our oribt altitude,
+	Moon's radius is 1738.3km and we need to add our orbit altitude,
 	so 1738.3km + 20km = 1758.3 km.
 [li]	Next we need the radius of the target orbit, the orbit the CSM
 	is in, so 1738.3km + 100km = 1838.3km.  Which is also the same
 	number from step 1 above where we were calculating the CSM's orbit
 	time.
 [li]	Now add this number to the one we got in step 1: 1758.3km + 1838.3km
-	= 3,596.6km.  This is the major axis of th transfer orbit.
+	= 3,596.6km.  This is the major axis of the transfer orbit.
 [li]	To get the semi-major axis, just divide that number by 2: 3,596.6km
 	/ 2 = 1,798.2km.
 [li]	Now we just need to follow the rest of the steps from above, first
