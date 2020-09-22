@@ -32,6 +32,9 @@ Records::Records() {
   ShortestLanding = 999999999;
   Samples = 0;
   LongestSurface = 0;
+  LowestAscentFuel = 99999.99;
+  LowestDescentFuel = 99999.99;
+  LowestRcsFuel = 99999.99;
   load();
   }
 
@@ -68,13 +71,18 @@ void Records::load() {
     ShortestLanding = 999999999;
     Samples = 0;
     LongestSurface = 0;
+  LowestAscentFuel = 99999.99;
+  LowestDescentFuel = 99999.99;
+  LowestRcsFuel = 99999.99;
     }
   else {
     while ((pline = nextLine(file)) != NULL) {
       if (startsWith(pline,"AscentFuel")) AscentFuel = atof(nw(pline));
+      if (startsWith(pline,"LowestAscentFuel")) LowestAscentFuel = atof(nw(pline));
       if (startsWith(pline,"ClosestToTarget")) ClosestToTarget = atof(nw(pline));
       if (startsWith(pline,"ClosestRendezvous")) ClosestRendezvous = atof(nw(pline));
       if (startsWith(pline,"DescentFuel")) DescentFuel = atof(nw(pline));
+      if (startsWith(pline,"LowestDescentFuel")) LowestDescentFuel = atof(nw(pline));
       if (startsWith(pline,"DistanceTravelled")) DistanceTravelled = atof(nw(pline));
       if (startsWith(pline,"FarthestFromEarth")) FarthestFromEarth = atof(nw(pline));
       if (startsWith(pline,"FarthestFromLM")) FarthestFromLM = atof(nw(pline));
@@ -93,6 +101,7 @@ void Records::load() {
       if (startsWith(pline,"LongestTotalWalk")) LongestTotalWalk = atof(nw(pline));
       if (startsWith(pline,"LowestLatitude")) LowestLatitude = atof(nw(pline));
       if (startsWith(pline,"RcsFuel")) RcsFuel = atof(nw(pline));
+      if (startsWith(pline,"LowestRcsFuel")) LowestRcsFuel = atof(nw(pline));
       if (startsWith(pline,"ShortestDocking")) ShortestDocking = atoi(nw(pline));
       if (startsWith(pline,"ShortestLanding")) ShortestLanding = atoi(nw(pline));
       if (startsWith(pline,"Samples")) Samples = atoi(nw(pline));
@@ -107,9 +116,11 @@ void Records::Save() {
   FILE* file;
   file = fopen("records.dat","w");
   fprintf(file,"AscentFuel %.18f%s",AscentFuel,LE);
+  fprintf(file,"LowestAscentFuel %.18f%s",LowestAscentFuel,LE);
   fprintf(file,"ClosestToTarget %.18f%s",ClosestToTarget,LE);
   fprintf(file,"ClosestRendezvous %.18f%s",ClosestRendezvous,LE);
   fprintf(file,"DescentFuel %.18f%s",DescentFuel,LE);
+  fprintf(file,"LowestDescentFuel %.18f%s",LowestDescentFuel,LE);
   fprintf(file,"DistanceTravelled %.18f%s",DistanceTravelled,LE);
   fprintf(file,"FarthestFromEarth %.18f%s",FarthestFromEarth,LE);
   fprintf(file,"FarthestFromLM %.18f%s",FarthestFromLM,LE);
@@ -128,6 +139,7 @@ void Records::Save() {
   fprintf(file,"LongestTotalWalk %.18f%s",LongestTotalWalk,LE);
   fprintf(file,"LowestLatitude %.18f%s",LowestLatitude,LE);
   fprintf(file,"RcsFuel %.18f%s",RcsFuel,LE);
+  fprintf(file,"LowestRcsFuel %.18f%s",LowestRcsFuel,LE);
   fprintf(file,"ShortestDocking %d%s",ShortestDocking,LE);
   fprintf(file,"ShortestLanding %d%s",ShortestLanding,LE);
   fprintf(file,"Samples %d%s",Samples,LE);
@@ -169,5 +181,8 @@ void Records::Save() {
   fprintf(file,"  Descent Fuel Remaining    : %9.2fkg%s",DescentFuel,LE);
   fprintf(file,"  Ascent Fuel Remaining     : %9.2fkg%s",AscentFuel,LE);
   fprintf(file,"  RCS Fuel Remaining        : %9.2fkg%s",RcsFuel,LE);
+  fprintf(file,"  Lowest Descent Fuel       : %9.2fkg%s",LowestDescentFuel,LE);
+  fprintf(file,"  Lowest Ascent Fuel        : %9.2fkg%s",LowestAscentFuel,LE);
+  fprintf(file,"  Lowest RCS Fuel           : %9.2fkg%s",LowestRcsFuel,LE);
   fclose(file);
   }

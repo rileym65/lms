@@ -496,6 +496,18 @@ void MissionReport() {
       records->RcsFuel = lm->RcsFuel();
       fprintf(file,"  RCS Fuel Remaining      : %9.2fkg%s",lm->RcsFuel(),LE);
       }
+    if (lm->DescentFuel() < records->LowestDescentFuel) {
+      records->LowestDescentFuel = lm->DescentFuel();
+      fprintf(file,"  Lowest Descent Fuel     : %9.2fkg%s",lm->DescentFuel(),LE);
+      }
+    if (lm->AscentFuel() < records->LowestAscentFuel) {
+      records->LowestAscentFuel = lm->AscentFuel();
+      fprintf(file,"  Lowest Ascent Fuel      : %9.2fkg%s",lm->AscentFuel(),LE);
+      }
+    if (lm->RcsFuel() < records->LowestRcsFuel) {
+      records->LowestRcsFuel = lm->RcsFuel();
+      fprintf(file,"  Lowest RCS Fuel         : %9.2fkg%s",lm->RcsFuel(),LE);
+      }
     }
   if (landedMet > 0) {
     fprintf(file,"%s%s",LE,LE);

@@ -36,6 +36,9 @@ class Records {
     Int32  Samples;
     Double ClosestRendezvous;
     Int32  LongestSurface;
+    Double LowestAscentFuel;
+    Double LowestDescentFuel;
+    Double LowestRcsFuel;
     Records();
     ~Records();
     void Save();
