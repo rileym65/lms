@@ -90,7 +90,8 @@
 	will also show if the Abort/Liftoff function is armed.  The
 	following indicators can appear in this area:
 [=]
-[TB]
+[tb]
+	| Ind | Meaning |
         | ARM | indicates that the ascent engine is armed and ready for
                 either and abort or liftoff action.|
         | ABO | indicates that the abort sequencer has been activated. |
@@ -99,7 +100,7 @@
         | KIL | indicates that the rotation kill function has begun.|
         | LIF | shows that the liftoff from lunar surface sequence has
                 been started. |
-[TE]
+[te]
 [e-]
 [=]
 [er]
@@ -253,7 +254,8 @@
 	has various lights that indicate status conditions of the spacecraft.
 	The following indicators that can appear here are:
 [=]
-[TB]
+[tb]
+	| IND |   | Meaning |
         | ASC | - | The ascent engine is currently running.          |
         | DSC | - | The descent engine is currently running.         |
         | RCS | - | An RCS translation thruster is on.               |
@@ -264,16 +266,12 @@
         | DCK | - | The spacecraft is currently docked.              |
         | LCT | - | The spacecraft is in contact with the lunar surface.  |
         | OXY | - | The available oxygen has fallen below 10%.            |
-        | EMG | - | This lamp below the OXY lamp indicates that emergency
-        oxygen is currently being used.                                   |
-        | ELO | - | This lamp below the OXY lamp indicates that emergency
-        oxygen has fallen below 10%.                                      |
+        | EMG | - | This lamp below the OXY lamp indicates that emergency oxygen is currently being used.                                   |
+        | ELO | - | This lamp below the OXY lamp indicates that emergency oxygen has fallen below 10%.                                      |
         | BAT | - | This indicates that battery power has fallen below 10%. |
-        | EMG | - | This lamp below the BAT lamp indicates that emergency
-        battery power is being used.                                        |
-        | ELO | - | This lamp below the BAT lamp indicates that emergency
-        battery power has fallen below 10%.                                 |
-[TE]
+        | EMG | - | This lamp below the BAT lamp indicates that emergency battery power is being used.                                        |
+        | ELO | - | This lamp below the BAT lamp indicates that emergency battery power has fallen below 10%.                                 |
+[te]
 [e-]
 [=]
 [er]
