@@ -38,6 +38,7 @@ class Plss : public GroundVehicle {
     virtual void   ProcessKey(Int32 key);
     virtual Double Walked();
     virtual Double Walked(Double d);
+    virtual Boolean   UseOxygen(Double units);
   };
 
 #endif

@@ -326,3 +326,18 @@ void Plss::ProcessKey(Int32 key) {
   panel->ProcessKey(key);
   }
 
+Boolean Plss::UseOxygen(Double units) {
+  if (metabolicRate < 60) units += (.2 * ((metabolicRate - 30) / 30.0));
+  if (metabolicRate >= 60) {
+    units += .2;
+    units += ((metabolicRate - 60) / 10.0);
+    }
+  oxygen -= units;
+  if (oxygen >= 0) return true;
+  eoxygen += oxygen;
+  oxygen = 0;
+  if (eoxygen >= 0) return true;
+  eoxygen = 0;
+  return false;
+  }
+
