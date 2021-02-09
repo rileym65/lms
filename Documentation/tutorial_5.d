@@ -95,11 +95,9 @@
         | ARM | indicates that the ascent engine is armed and ready for
                 either and abort or liftoff action.|
         | ABO | indicates that the abort sequencer has been activated. |
-        | JET | shows that the descent stage jettison sequence has been
-                started. |
+        | JET | shows that the descent stage jettison sequence has been started. |
         | KIL | indicates that the rotation kill function has begun.|
-        | LIF | shows that the liftoff from lunar surface sequence has
-                been started. |
+        | LIF | shows that the liftoff from lunar surface sequence has been started. |
 [te]
 [e-]
 [=]
