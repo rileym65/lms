@@ -134,9 +134,9 @@
 	+-------------------------+
 [ee]
 	6. We are going to need to perform a circuliraztion burn when we
-	reach periapsis.  We can prepare for that now.  Using the 'u/r'
+	reach apoapsis.  We can prepare for that now.  Using the 'u/r'
 	angle, keep your u/r angle around 86-87 decrees.  When we reach
-	periapsis we will need to fire up the engine again and we want to
+	apoapsis we will need to fire up the engine again and we want to
 	make sure that during that burn we keep a rate of climb of zero.
 	By starting this burn with a u/r angle between 86 and 87 we should
 	not need to make too drastic an adjustment when we start the
@@ -258,7 +258,7 @@
 	|  100.052   100.134   7072.40|
 	+-----------------------------+
 [ee]
-	11. Keep an eye on the time to periapsis (regs 10-12) and when
+	11. Keep an eye on the time to apoapsis (regs 10-12) and when
 	down to 3 seconds to go press <shift><i> to engage the ascent
 	engine to bring the periapsis up.  When register 13 shows the
 	periapsis is above 90km press the <i> key to stop the ascent
