@@ -91,6 +91,7 @@ void CsmComputer::_preg3(Int32 i) {
 
 void CsmComputer::_doShow() {
   Double d;
+  UInt32 v1,v2,v3;
   UInt32 i,j;
   Vector pos;
   Vector vel;
@@ -253,6 +254,17 @@ void CsmComputer::_doShow() {
          _reg1(vel.X());
          _reg2(vel.Y());
          _reg3(vel.Z());
+         break;
+    case 24:
+         i = csm->DistanceTravelled() / 1000;
+         v1 = i / 1000000;
+         i -= (v1 * 1000000);
+         v2 = i / 1000;
+         i -= (v2 * 1000);
+         v3 = i;
+         _reg1(v1);
+         _reg2(v2);
+         _reg3(v3);
          break;
     }
   }

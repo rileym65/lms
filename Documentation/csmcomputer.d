@@ -45,6 +45,7 @@
 	|  16  |  21  | M. Long.    | M. Lat.      |            |
 	|  16  |  22  | E. Vel X    | E. Vel Y     | E. Vel Z   |
 	|  16  |  23  | M. Vel X    | M. Vel Y     | M. Vel Z   |
+	|  16  |  24  | M/KM        | K/KM         | KM         |
 [TE]
 [=]
 [TB]
