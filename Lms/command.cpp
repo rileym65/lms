@@ -34,6 +34,7 @@ CommandModule::CommandModule() {
   retroModuleThrust = 0;
   armed = false;
   type |= VT_COMMAND;
+  maxHeat = 0;
   computer = new CsmComputer(this);
   }
 
@@ -143,6 +144,7 @@ Matrix m;
     thrust = Vector(0,0,0);
     drag = Vector(0,0,0);
     air = AirDensity(alt);
+    heat = 0;
     if (air > 0) {
       cd = 0.8;
       if (faceUp.Dot(vel) < 0) cd = 1.1;
@@ -165,6 +167,8 @@ Matrix m;
         }
       v = vel.Length();
       d = cd * a * 0.5 * (air * 1.2 * v * v);
+      heat = d / area * 0.060136581;
+      if (heat > maxHeat) maxHeat = heat;
       d /= Mass();
       drag = vel.Norm().Scale(d).Neg();
       }
@@ -365,6 +369,10 @@ Double CommandModule::FuelUsed() {
   return fuelUsed;
   }
 
+Double CommandModule::Heat() {
+  return heat;
+  }
+
 Double CommandModule::Isp() {
   if (!launchVehicleJettisoned) return booster->Isp();
   else if (serviceModuleDryWeight > 0) return serviceModuleIsp;
@@ -431,6 +439,10 @@ Double CommandModule::Mass() {
     }
   if (!launchVehicleJettisoned) ret += booster->Mass();
   return ret;
+  }
+
+Double CommandModule::MaxHeat() {
+  return maxHeat;
   }
 
 Double CommandModule::MaxRcsFuel() {

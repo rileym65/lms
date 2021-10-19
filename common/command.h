@@ -10,6 +10,8 @@ class CsmComputer;
 class CommandModule : public Spacecraft {
   protected:
     Double   area;
+    Double   heat;
+    Double   maxHeat;
     Boolean  armed;
     Booster* launchVehicle;
     Boolean  launchVehicleJettisoned;
@@ -59,12 +61,14 @@ class CommandModule : public Spacecraft {
     virtual void   Diameter(Double d);
     virtual Byte   EnginesLit();
     virtual Double FuelUsed();
+    virtual Double Heat();
     virtual void   Ignition();
     virtual Double Inclination();
     virtual void   Ins();
     virtual Double Isp();
     virtual void   Launch();
     virtual Double Mass();
+    virtual Double MaxHeat();
     virtual Double MaxRcsFuel();
     virtual Byte   NumEngines();
     virtual Byte   NumEngines(Byte stage);

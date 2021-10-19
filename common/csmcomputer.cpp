@@ -266,6 +266,12 @@ void CsmComputer::_doShow() {
          _reg2(v2);
          _reg3(v3);
          break;
+    case 25:
+         v1 = csm->Heat();
+         v2 = csm->MaxHeat();
+         _reg1(v1);
+         _reg2(v2);
+         break;
     }
   }
 
