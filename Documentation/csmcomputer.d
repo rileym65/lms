@@ -47,6 +47,7 @@
 	|  16  |  23  | M. Vel X    | M. Vel Y     | M. Vel Z   |
 	|  16  |  24  | M/KM        | K/KM         | KM         |
 	|  16  |  25  | Heat        | Max Heat     |            |
+        |  16  |  26  | Gs          | Max +Gs      | Max -Gs    |
 [TE]
 [=]
 [TB]

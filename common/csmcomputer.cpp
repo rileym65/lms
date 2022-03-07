@@ -15,6 +15,8 @@
 #define P11_AZIMUTH  12
 #define P11_ASCMODE  13
 #define P21_LASTLAT  14
+#define P26_MAXGS    15
+#define P26_MINGS    16
 #define R_LASTVEL    100
 
 CsmComputer::CsmComputer(CommandModule* c) {
@@ -271,6 +273,14 @@ void CsmComputer::_doShow() {
          v2 = csm->MaxHeat();
          _reg1(v1);
          _reg2(v2);
+         break;
+    case 26:
+         v1 = csm->AccGs() * 100;
+         v2 = csm->MaxGs() * 100;
+         v3 = csm->MinGs() * 100;
+         _reg1(v1);
+         _reg2(v2);
+         _reg3(v3);
          break;
     }
   }

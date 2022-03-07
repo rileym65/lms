@@ -12,6 +12,8 @@ class CommandModule : public Spacecraft {
     Double   area;
     Double   heat;
     Double   maxHeat;
+    Double   maxGs;
+    Double   minGs;
     Boolean  armed;
     Booster* launchVehicle;
     Boolean  launchVehicleJettisoned;
@@ -46,6 +48,9 @@ class CommandModule : public Spacecraft {
     CommandModule();
     ~CommandModule();
     void Cycle();
+    virtual Double AccGs();
+    virtual Double MaxGs();
+    virtual Double MinGs();
     virtual Double AscendingNode();
     virtual Double Apoapsis();
     virtual Boolean Armed();

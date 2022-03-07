@@ -68,6 +68,9 @@ void CommandModule::Ins() {
   if (Orbiting() == Earth && clockESoi == 0 && clockMSoi != 0) {
     clockESoi = clockGe;
     }
+  if (!launchVehicleJettisoned) accGs =  booster->AccGs();
+  if (accGs > maxGs) maxGs = accGs;
+  if (accGs < minGs) minGs = accGs;
   }
 
 void CommandModule::capsuleSep() {
@@ -105,6 +108,8 @@ void CommandModule::Launch() {
   Vector vu;
   Vector vl;
   Vector vf;
+  minGs = 0;
+  maxGs = 0;
   booster->Ignition();
   vu = booster->Position().Norm();
   vf = Vector(-vu.Y(), vu.X(), 0).Norm();
@@ -294,6 +299,17 @@ void CommandModule::Cutoff() {
   if (Orbiting() == Earth) {
     if (ignitionApoapsis < 200000000 && ins->Apoapsis() > 350000000) clockTli = ignitionTime;
     }
+  }
+Double CommandModule::AccGs() {
+  return accGs;
+  }
+
+Double CommandModule::MaxGs() {
+  return maxGs;
+  }
+
+Double CommandModule::MinGs() {
+  return minGs;
   }
 
 Double CommandModule::Apoapsis() {

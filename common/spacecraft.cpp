@@ -28,6 +28,10 @@ Spacecraft::Spacecraft() {
 Spacecraft::~Spacecraft() {
   }
 
+Double Spacecraft::AccGs() {
+  return accGs;
+  }
+
 Double Spacecraft::Altitude() {
   return ins->Altitude();
   }
@@ -649,6 +653,9 @@ void Spacecraft::Cycle() {
   r1 = Radius();
   Radius((position - Orbiting()->Position()).Length());
   rateOfClimb = (Radius() - r1) * GRAN;
+
+  accGs = thrust.Length() - drag.Length();
+  accGs = accGs / 9.80665;
 
   if (currentVehicle == this ||
       this == csm->LaunchVehicle()) {

@@ -5,6 +5,7 @@
 
 class Spacecraft : public Vehicle {
   protected:
+    Double    accGs;
     Double    deltaV;
     Double    fuelUsed;
     Double    isp;
@@ -24,6 +25,7 @@ class Spacecraft : public Vehicle {
   public:
     Spacecraft();
     ~Spacecraft();
+    virtual Double    AccGs();
     virtual Double    Altitude();
     virtual Double    Altitude(Double d);
     virtual void      Anorm(Double maxRate);
